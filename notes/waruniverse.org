@@ -1,0 +1,1010 @@
+#+title: Waruniverse
+* Creation Tools
+- For Tiles - Tilesetter
+- For Textures ?
+- Game Engine - RayLib
+* TODO
+- separate flint and hardstone (possibly granite) tools as early toolheads, one brittle but sharp, other more durable
+- add stats for hardstone as building material
+- coastal mountains, leeway affect on biome generation, and
+* Notes
+1. Copper
+
+    Use: Early metal for tools, ornaments, and weapons (often alloyed with tin to create bronze).
+    Early Game:
+        Surface mining: Found in riverbeds and shallow deposits near the surface, in the form of nuggets or oxide ores.
+        Tools: Use copper nuggets or malachite (copper carbonate) in shallow areas.
+    Mid Game:
+        Copper ore in oxidized rock near surface veins or in copper-rich regions.
+        Can be found at shallow to moderate depths (around 10-100 meters).
+
+2. Tin
+
+    Use: Mixed with copper to create bronze (an alloy that revolutionized tools and weapons).
+    Early Game:
+        Surface mining: Found in alluvial deposits (rivers and stream beds), especially in wetlands.
+        Cassiterite (tin oxide) deposits near the surface.
+    Mid Game:
+        Tin veins in granite rock formations.
+        Can be found at moderate depths (around 30-100 meters).
+
+3. Gold
+
+    Use: Used for jewelry, coinage, and as a sign of wealth and status.
+    Early Game:
+        Panning in riverbeds: Placer gold is the primary form found in rivers and stream beds.
+        Gold nuggets can be found in shallow rivers and shallow surface deposits.
+    Mid Game:
+        Gold veins in quartz or bedrock at moderate depths (10-100 meters).
+        Can also be extracted from ancient surface deposits in mountains.
+
+4. Iron
+
+    Use: Widely used in tools, weapons, and construction (starting with early iron age civilizations).
+    Early Game:
+        Surface mining: Found in the form of iron-rich rocks like hematite, magnetite, and limonite.
+        Bog iron can be found in wetlands or rivers where iron deposits have been naturally concentrated.
+    Mid Game:
+        Iron veins in sedimentary rock layers, typically in mountainous or hilly areas.
+        Can be found at moderate to deep depths (50-200 meters), depending on the type of ore.
+
+5. Silver
+
+    Use: Used for coins, jewelry, and ornamentation.
+    Early Game:
+        Surface mining of silver-bearing ores like argentite in riverbeds.
+        Placer deposits where silver is found alongside gold.
+    Mid Game:
+        Silver veins in mountainous areas or mineralized regions with high metal content.
+        Can be found at mid depths (50-100 meters), often near lead or copper deposits.
+
+6. Lead
+
+    Use: Used for pipes, storage, and in alloys (e.g., bronze or glassmaking).
+    Early Game:
+        Surface mining: Found in riverbeds and shallow deposits of galena (lead sulfide).
+    Mid Game:
+        Lead veins in sedimentary rock or metamorphic rocks, often alongside silver or zinc.
+        Can be found at moderate depths (30-150 meters).
+
+7. Bronze (Alloy of Copper and Tin)
+
+    Use: Revolutionized tool and weapon making; stronger and more durable than pure copper.
+    Mid Game:
+        Tin and copper are collected separately and then alloyed to create bronze.
+        Copper is found at shallow to moderate depths, while tin is found at shallow depths in wetland deposits or surface mines.
+
+8. Zinc
+
+    Use: Used in the creation of brass (an alloy with copper) and for galvanizing.
+    Mid Game:
+        Zinc ores (e.g., sphalerite) are found in sedimentary rock.
+        Found in regions with other base metals like lead or copper, at moderate depths (100-300 meters).
+
+9. Arsenic
+
+    Use: Copper alloys, medicine, and poisoning (later in history).
+    Mid Game:
+        Found in mineralized veins in mountainous or volcanic areas, often alongside gold or silver ores.
+        Found at mid to deep depths (50-200 meters).
+* Possible Updates
+- TODO: water-powered hammers
+- add more trainer classes
+- flesh out leader classes, maybe add more leader classes
+- Advanced farming: soil types, fertilizers, waterlogging, diseases, weeding, specific sunlight sensitivity
+- Advanced Cuisine - Food variety, Different meats and cheeses, more spices, berries
+- Rust and decay (entropy update) (buildings and tools naturally wear)
+- Bamboo
+- Advanced Fishing
+- Ores extended: Brass, Lead, Nickel
+- Materials extended: Hardwoods, softwoods, Hardstones, softstones
+- Natural Dangers: disease, workplace injuries
+- Architecture expanded: Domes, Arches
+- Advanced Water: Dry Areas, Qanats, Ice, Distillation, Treatment, Salt/Freshwater
+- Weeds
+- Advanced Clothing - buffs for clothes, clothes wear, etc
+- Winds: Sailing, jfarming, knocking small objects
+* Time and Age Goals
+** Paleolithic
+~ Goal of how long the age takes in real time at 2x average speed: 5-7 hours
+- Starting pawns: Childrearer, Scavenger, Child
+  - Scavenger quickly discovers Knapper after finding flint or rocks and being idle
+  - First scavengers that gather sticks and wood and flint discover fire, or put stick in lighting fire to make a torch, unlocking Firekeeper
+  - Scavenger can become Scout
+- Knapper can make primitive spear, discovering Spear Hunter
+- When a fire is made, that unlocks Storyteller
+- Older pawns become Elder or Shaman
+- Elder thinks of Ornamenter from Animals or found bones, Basket Weaver if hemp or flax is found, Woodcutter if have knapped primitive hand axes, Craftsman, or Shelter Builder if have wood and other materials, and Fish Hunter if around Primitive Spearman, exiting the age (at least one original adult must reach maturity in this age)
+
+** Mesolithic
+~ Goal of how long the age takes in real time at 2x average speed: 7-12 hours
+- Starting pawns: All paleolitic (though a few that do not tree to elder may not be discovered)
+
+
+* Units
+- By default, newly discovered units are intermediary units or viable evolutions who are taught by the researcher who discovered the new technology. The amount of teaching time depends on the new technology.
+** Professional Mana
+Each pawn has a set amount of professional mana, which determines the amount of units it can occupy at once. Some units, which perform simple tasks, cost a low amount of professional mana, so the same pawn can choose to be several of these units. A pawn keeps working on a unit's task until there is nothing left to be done by that unit or if manually switched by the player or another unit's orders. Some units require all the professional mana a pawn has, and thus that pawn can only be that unit.
+** Unit Stats
+*** isSoldier
+*** Class
+***
+** Trainee
+Trainees are basic units, which have not become a specialist yet. For every main class, there is a trainee. Unless otherwise specified, the trainee of a class can evolve into any unit if it has gained enough experience and also has the material requirements to create that unit.
+
+Any trainee can switch to any other trainee unit (except Young Noble, which is automatically created by those birthed to Leader classes), but they will lose all their experience, and will also lose most of their experience if they switch from training to become one subclass versus another. Experience is gained naturally, and is sped up by Trainers.
+*** Child
+All units which are born start as Child. The Child can evolve into any other trainee unit after a set amount of experienced has been gained.
+*** Young Hunter
+Only evolves into Hunters.
+*** Labor Helper
+Evolves into Resource/Hauling Classes
+*** Apprentice
+Evolves into Producer/Artist Classes
+*** Cadet
+Evolves into Melee/Ranged Classes
+** Melee
+** Ranged
+** Support
+** Resource
+** Producer
+** Trainer
+** Researcher
+** Artist
+** Leader
+** Notes
+For which class to list first in sheets.
+
+Leader > Melee > Ranged > Defense > Support > Resource > Producer > Trainer > Researcher > Artist
+* Order
+Determined by dimensions:
+1. Legal
+2. Administrative
+3. Cultural
+4. Satisfaction
+5. Force
+
+If Order is low, it is likely certain units will become criminals or rebels, killing other units, especially Leader units, and captured foreign units will be more likely to desert or rebel. It is also more likely the player will be aggressively attacked by other civilizations.
+
+If Order is high, all units get a passive boost.
+** Legal
+This source of order is stable and really only hard to keep above a minimum level, or go down quickly, if High Leaders have recently been killed. However, it is hard for it to get to a high level. Raising Legal Order too high also causes Satisfaction Order to decrease, and makes it harder to produce Administrative Order.
+- Produced in large amounts passively by High Leaders
+- High Leaders have abilities to raise Legal Order immeadiately
+- Produced by Priests, High Priests, Lawyers, Judges, Senators
+- Senators can also ensure that Legal Order doesn't increase past a certain amount
+- Reduced when New Knowledge is discovered
+** Administrative
+This source of Order depends on Legal Order. If Legal Order is too low or too high, Administrative Order will also be harder to create. As Legal Order goes up from a certain point, Administrative Order will also decrease, at a smaller rate. High Administrative Order also means that the Strength Order requirements are lower. Administrative Order can also be spent to enact certain Leader abilities, and is decently easy to create quickly. Low administrative order will also lower the amount of actual taxes that are collected, despite the set tax rate. Most importantly, Administrative Order affects Production Command.
+- High Leaders produce large amounts passively, depending on their personality traits
+- Produced by Landowner Subclasses, Bureaucrat, Senator, and Governor
+- Raised by ample Royal wealth
+- Lowered by large debt
+** Cultural
+This source of Order is difficult to create rapidly, and depends on many factors. High Cultural Order gives all Units a passive boost, and also unlocks certain Rituals which give further boosts or abilities. The only downside of having Cultural Order super high is that captured foreign units will have a larger debuff before they are assimilated.
+- High Leaders produce an amount, depending on their personality traits
+- Mostly produced by Art, especially Artifact Artists, which is multiplied based on the varieties, beauty level, and history of that artform in the nation.
+- Also produced by Shamans, Priests, High Priests
+- Modified positively or negatively by the amount of recently discovered Academic Knowledge
+** Satisfaction
+This source of Order is the easiest kind of Order to create rapidly, as long as the player has enough resources and units. However, if Satisfaction is quite low it is also likely that the player is lacking in other crucial resources. High Satisfaction also means that the Strength Order requirements are lower.
+- Depends primarily on food supply, shelter supply
+- Secondarily on food variety, art indulgence, art variety, shelter quality, and wealth.
+- Tertiarily on environment beauty
+- Lowered by large amounts of soldiers, and somewhat by large amounts of resource workers
+- Lowered by high set taxes
+- Hugely lowered by mass death, especially of civilians
+** Strength
+This source of Order is also quite difficult to relate because it is primarily based on army size and unit quality.
+- Calculated by the total strength of army
+- Also increased by landowners
+* Knowledge
+The forms of Knowledge are:
+1. Exploration
+2. Technology
+3. Units
+4. Foreign
+5. Academic
+
+New Knowledge of all forms will be unlocked passively at a certain rate (assuming certain units are doing other tasks), except Exploration, but the main source of Knowledge is Researchers. Knowledge itself, also affects other stats such as Cultural Order and Legal Order.
+
+with units that can evolve into other units that have not been discovered randomly having a "Eureka" moment rarely, if the required resources to create that new unit are also available to the player.
+** Exploration
+Explorers discover previously hidden tiles on the map which stay revealed, unlike other units, which will reveal them for a time and then fog of war will reappear. As explorers permanently reveal tiles, Exploration Knowledge increases. Since the world is infinite, Exploration Knowledge is always decreasing at a fixed rate. Maps from foreign nations can also be bought, which increases Exploration Knowledge and reveals areas of the map.
+** Academic
+This Knowledge functions more like an Order type. Academic Knowledge does nothing by itself, but vastly speeds up the production of other types of Knowledge and Order.
+
+Perhaps the most important function of Academic Knowledge is that it can be used to create certain roles from Students through Trainers and books, and boost unit and technology research. There are also some technologies which are near impossible to unlock without a certain level of Academic research.
+
+There are four subcategories of Academic Research:
+1. Natural
+2. Philosophy
+3. Mathematics
+4. History
+
+The rate at which Academic Knowledge decays is lessened by the production of books.
+*** Natural
+AKA "Natural Philosophy", what we would think of as Science.
+**** Techs which Require
+**** Units which Require
+**** Boosts
+*** Philosophy
+This boosts Legal Order and boosts/allows training for Order Supporters. Also, it is a prerequisite for some Order Tech/Units. If too low, Legal Order will be set at a minimum.
+*** Mathematics
+This boosts/allows training for Engineering Tech Researchers, Explorers, Trade, and Structures Producers.
+*** History
+This boosts/allows training for Cultural Order and Foreign Researchers.
+** Technology
+The required tools which units need to do their roles. Sometimes, it will unlock a new role immediately (usually when a new level metal is discovered), but sometimes, the new roles need to be discovered independently of the technology they use (e.g: priest, scribe).
+
+There is a small chance new technology can be invented by related classes, usually by the unit that evolves into the unit that uses or makes that technology, if the required resources to craft that technology are nearby. However, the most reliable way to unlock new technologies is by having a tech researcher near the required materials (which often means a large set of materials), where he will start to "work on" the problem, and then after a randomized amount of time will "discover" the new technology. Alternatively, technology researchers can be given related books instead when they become available, and given enough time will unlock related technologies.
+** Units
+Closely intertwined with technology, but often unlocking a new technology can unlock no units, one unit, or many units, and some units can be unlocked only ages after the technological requirements have been unlocked. The same discovery processes that apply to tech apply to units, but instead Researchers are assigned to follow around Units which are predecessors to the Unit that needs to be unlocked (though of course, unless the player has played the game before, they do not know what the unit is). Like technologies, researchers can also be given books.
+** Foreign
+This Knowledge allows closer relations with friendlies, or advantages in warfare against enemies. It also boosts Trade.
+
+If a nation is an enemy (at war), only Spies can be sent, but if a nation is a friendly or neutral, all types of Foreign researchers can be sent. If a nation dislikes your nation, the ruler may or may not allow other Foreign Researchers.
+
+If Foreign Research is high, it will also boost Academic, Technology, and Unit Research through Knowledge sharing, or Exploration Research by purchasing maps.
+* Economy
+** Trade
+Separated into three holistic scores, Foreign (Exports), Foreign (Imports) and Domestic, which are affected respectively by the "Trade" intangibles of each type produced by Trader and Banker class units.
+*** Foreign (Exports)
+Amalgam of the /amount of exports/ and /average profit/.
+**** Amount of Exports
+Affected by:
+- Surplus production (production set aside by player, that is not to be made or used by domestic workers)
+- Amount of Trade(Foreign) produced by Trader Units
+- Tarriff Rate
+- Domestic Opinion of Foreign Nation
+- Foreign Opinion of Domestic Nation
+- Knowledge (Foreign)
+- Trade Deals and Embargos (can set amount to 0)
+- Wars or Previous Wars
+***** Tarriff Rate
+Because tarriffs set by foreign governments are often actually paid by the foreign customers, this affects the amount of exports as well as the profit, since foreign customers are less likely to buy, and domestic traders are les likely to sell.
+***** Trade Deals
+***** Embargos
+Foreign Nations can choose to completely limit foreign exports from your nation.
+**** Average Profit
+Affected by:
+- Demand of Goods
+- Amount of Exports (negatively)
+- Amount of Trade(Foreign) produced by Trader Units
+- Foreign Opinion of Domestic Nation
+- Knowledge (Foreign)
+- Tarriff Rate
+- Trade Deals
+*** Foreign (Imports)
+The amount of useful imports that are purchased by your nation. This number matters less, but the actual products you or your units are buying likely matters more. However, one the scores that affects it, /average savings/, likely does matter and determines whether you will make future imports. You can enact Royal Decrees to order quotas of specific imports, or leave it up to your traders based on your regular production quotas, if you have selected to "substitute imports for production".
+
+Like Exports, this is an amalgam of /amount of imports/ and /average savings/.
+**** Amount of Imports
+The amount of imports you are buying. You can see this in a pie-chart view based on certain general classes of goods.
+Affected by:
+- Set Quotas by Royal Decrees
+- Foreign Tarriffs placed by player
+- Foreign Opinion
+- Trade(Foreign) produced by Trader units
+- Domestic Opinion of Foreign Nation
+- Trade Deals/Embargos placed by player
+- War/recent war
+**** Average Savings
+Affected by:
+- Domestic goods production
+- Amount of Imports (positively)
+- Foreign Tarriffs placed by player
+- Trade(Foreign) produced by Trader units
+- Foreign Opinion
+- Trade Deals
+*** Domestic
+Amount of Profit made domestically. Increases taxes and Order(Satisfaction), or more precisely, the recreation hours needed to increase Order(Satisfaction). Also increases Order generally. Decreases Production Command. Decreases bartering time dramatically.
+
+Affected by:
+- Amount of Bankers
+- Inflation
+- Currency Coverage
+- Production Command (negatively)
+**** Inflation
+Increased when more money is minted.
+**** Currency Coverage
+A rate that increases as more money is minted, and less barter occurs, and increases Order g
+* Items
+** Resources
+*** Farmable
+**** Crops (Seeds)
+***** Grains
+Wheat !
+Oat !
+Corn !
+Unmilled Rice !
+***** Vegetables
+Corn !
+Tomato !
+Onion !
+Potato !
+Cabbage !
+Olive
+Pepper !
+Carrot !
+***** Fruit
+Grape !
+Blueberry
+Strawberry
+***** Herbs
+Lavendar !
+Saffron !
+Aloe Vera !
+Poppy !
+Hemp !
+Rhubarb
+Senna
+****** Spices
+Thyme
+Mint
+Sage
+***** Fiber/Textile
+Flax !
+Cotton !
+Hemp !
+Raw Papyrus !
+***** Flowers
+***** Trees (Wood)
+Deciduous !
+Evergreen !
+Tropical !
+Pioneer !
+Desert
+***** Trees (Fruit)
+Apple !
+Fig !
+Pear !
+Banana
+Mango
+Orange !
+***** Other
+Hay
+**** Animal Products
+Corpses
+Milk
+Goat Milk
+Egg
+Fish
+Honey
+Wax
+Wool
+**** Animals
+Ox
+Horse
+***** Livestock
+Cow !
+Chicken !
+Pig !
+Sheep !
+Goat
+*** Wild
+**** Surface
+Water !
+Trees !
+Log
+Pebbles !
+Rocks !
+Large Rock !
+Boulders !
+Bitumen
+Sand
+Clay
+**** Earth Materials
+Dirt
+Stone
+Flint
+Marble
+Limestone
+Copper Ore
+Tin Ore
+Iron Ore
+Gold Ore
+Silver Ore
+Salt
+***** Gemstones
+Ruby
+Emerald
+Diamond
+Sapphire
+Amethyst
+Garnet
+Topaz
+** Products
+*** Foodstuffs
+**** Ingredients
+***** Incomplete
+Flour (Grain, Corn)
+Grist (Flour)
+Oat
+Animal Fat (Corpse)
+***** Grains
+Bread (Flour, Water)
+Pastry (Flour, Fruit/Sugar, Water)
+Pie (Fruit/Meat, Flour, Water)
+Porridge (Oats, Water)
+Milled Rice (Rice)
+***** Meat
+Fish
+Raw Beef (Cow Corpse)
+Raw Chicken (Chicken Corpse)
+Raw Pork (Pig Corpse)
+Raw Lamb (Sheep Corpse)
+Raw Goat (Goat Corpse)
+Raw Ox (Ox Corpse)
+Raw Duck (Duck Corpse)
+Raw Venison (Deer Corpse)
+***** Animal Products
+Eggs
+Milk
+Goat Milk
+Honey
+****** Cheeses
+Cheese (Milk)
+Goat Cheese (Goat Milk)
+Blue Cheese (Cheese, Salt)
+***** Vegetables
+Corn
+Tomato
+Onion
+Potato
+Cabbage
+Olive
+Pepper
+***** Fruits
+Apple
+Fig
+Pear
+Grape
+***** Preserved
+Pickled Fruit/Vegetable (Vinegar, Fruit/Vegetable)
+Salted Ingredients (Fruit/Vegetable/Meat, Salt)
+Smoked Meat (Meat, Wood, Salt, (Vinegar))
+Vinegar (Wine/Beer/Cider)
+Butter (Animal Fat)
+***** Cooking Oils
+Olive Oil (Olives)
+Vegetable Oil (Vegatables)
+Truffle Oil (Truffle)
+Butter (Animal Fat)
+***** Cheap
+Bread (Flour, Water)
+Porridge (Oat, Water)
+Corn
+Pea
+Potato
+Carrot
+Cabbage
+Pepper
+Ox Meat
+Horse Meat
+Drinking Water
+Vegetable Oil
+Corn Oil
+***** Average
+Tomato
+Onion
+Garlic
+Milk
+Goat Milk
+Fruits
+Eggs
+Cow Meat
+Pork
+Chicken Meat
+Lamb
+Goat Meat
+Beer
+Cider
+Juice
+Butter
+***** Expensive
+Venison Meat (Deer Corpse)
+Duck Meat (Duck Corpse)
+Cheese
+Honey
+Mead
+Wine
+Chili Powder
+Olive Oil
+Preserved Foods
+***** Delicacy
+Shellfish (Shrimp/Oyster/Crab)
+Candied Fruit (Sugar, Fruit)
+Aged Wine (Wine)
+Blue Cheese (Cheese, Salt)
+Pie (Meat/Fruit, Flour, Sugar)
+Truffle Oil (Truffle)
+Peacock (Peacock Corpse)
+Ground Black Pepper (Black peppercorn)
+***** Light
+Chili Powder
+Ground Black Pepper
+Garlic
+Sugar
+Honey
+Salt
+Oils
+***** Drinks
+Drinking Water (Water)
+Wine (Grapes, Water)
+Mead (Honey, Water)
+Juice (Fruit, Water)
+Beer (Wheat, Water)
+Cider (Fruit, Water)
+Aged Wine (Wine)
+**** Consumables
+Bland Meal (All Same Food)
+Cheap Meal (All Cheap Foods/1 Food Group)
+Average Meal (At least 1 Expensive Foods/2 Food Group)
+Good Meal (Cooking Oil,At least 2 Expensive Foods,/3 Food Group)
+Luxurious Meal (Expensive Oil/Delicacy Oil, All Expensive Foods,No Cheap Foods,3 Food Groups)
+Delicacy Meal (Expensive Oil+,No Cheap Foods, 2 Delicacy)
+*** Building/Crafting Materials
+**** Base Materials
+***** Metals
+Copper (Copper Ore, Fuel)
+Bronze (Copper Ore, Tin Ore, Fuel)
+Iron (Iron Ore, Charcoal+)
+Gold (Gold Ore, Fuel)
+Silver (Silver Ore, Fuel)
+Steel (Iron Ore, Charcoal+)
+***** Wood-based
+Wood (Trees, Log)
+Planks (Wood)
+Beams (Wood)
+Log ((Trees))
+Log Beam (Log)
+***** Stone-based
+Cut Stone (Stone)
+Cut Stone Sheet (Stone)
+Cut Marble (Marble)
+Lime (Limestone)
+Paving Stone (Cut Stone Sheet)
+Concrete (Lime,Sand)
+***** Glass
+Pane (Sand, Fuel)
+Colored Pane (Glass Pane,Dyes)
+***** Clay
+Cob (Clay, Sand, Water, Hay)
+Fired Clay (Clay)
+Bricks (Fired Clay, Lime)
+***** Fuel
+Charcoal (Wood)
+***** Animal Products
+Raw Beef (Cow Corpse)
+Raw Chicken (Chicken Corpse)
+Raw Pork (Pig Corpse)
+Raw Lamb (Sheep Corpse)
+Raw Goat (Goat Corpse)
+Raw Ox (Ox Corpse)
+Sinew (Corpse)
+Bone (Corpse)
+Animal Hair (Corpse)
+Feather (Corpse(Bird))
+Animal Hides (Corpse)
+Wool (Corpse)
+***** Other
+Rope (Animal Hair)
+Fiber (Trees, Plants(Any))
+Soot (Wood(Any),Food(Any),Crops(Any))
+Hay (Grass)
+Cured Hides (Animal Hides)
+**** Smithing
+Clips (Bronze+)
+***** Molds
+Spear Head Mold (sand/clay)
+Axe Head Mold (sand/clay)
+Small Blade Mold (sand/clay)
+Large Blade Mold (sand/clay)
+Greataxe Head Mold (sand/clay)
+Halberd Head Mold (sand/clay)
+Pike Head Mold (sand/clay)
+Mallet Head Mold (sand/clay)
+Chisel Head Mold (sand/clay)
+Graver Head Mold (sand/clay)
+Ard Head Mold (sand/clay)
+Scythe Head Mold (sand/clay)
+Hoe Head Mold (sand/clay)
+Pick Head Mold (sand/clay)
+Cutter Head Mold (sand/clay)
+Saw Head Mold (sand/clay)
+Spade Head Mold (sand/clay)
+Shovel Head Mold (sand/clay)
+Circular Sawpiece Mold (ceramic/sand)
+Trigger Mold (ceramic/sand)
+Gear Mold (sand/clay)
+**** Assembly
+Needles (Metals(Any except Copper))
+Lens (Glass)
+Wick (Linen)
+***** Building
+Glue (Milk/Eggs/Bones/Cured Hides)
+Resin (Trees)
+Primitive String (Sinew/Fiber)
+String (Sinew/Thread/Silk)
+Axle (Wood/Metal)
+Large Axle (Log/Metal)
+Gear (Wood/Metal)
+Wheel (Wood/Stone/Metal)
+Nails (Metals(Any))
+Peg (Bone/Wood)
+Wedge (Wood/Metal)
+Socket (Metals)
+Rivet (Nails)
+***** Tool Parts
+Mallet Head (Rock/Metals)
+Chisel Head (Rock/Metals)
+Graver Head (Metals)
+Ard Head (Rock/Metals)
+Scythe Head (Bone/Metals)
+Hoe Head (Rock/Metals)
+Pick Head (Rock/Metals)
+Cutter Head (Bone/Metals)
+Saw Head (Stone/Metals)
+Spade Head (Bone/Metals)
+Shovel Head (Metals)
+Circular Sawpiece (Iron/Steel)
+Brick Mold (Clay/Metal)
+***** Weapon Parts
+Handle (Wood/Stick)
+Arrowhead (Bone/Rock/Metals)
+Spear Head (Bone/Rock/Metals)
+Axe Head (Rock/Metals)
+Small Blade (Bone/Rock/Metals)
+Large Blade (Metals)
+Greataxe Head (Metals)
+Halberd Head (Metals)
+Pike Head (Metals)
+Trigger (Iron/Steel)
+Notch (Bone/Iron/Steel)
+**** Artistic
+***** Textiles
+Linen (Flax)
+Wool
+Silk
+Cloth (Cotton)
+Thread (Fibers(Any))
+***** Dyes
+Red (Madder/Red Ochre)
+Blue (Indigo/Lapis Lazuli)
+Yellow (Saffron)
+Bleach (Lime/White Ash/Vinegar)
+Ink (Soot)
+***** Incense
+Incense (Tree Resin, Lavendar)
+***** Writing Mediums
+****** Permanent
+Stone Tablet (Cut Stone)
+Papyrus (Raw Papyrus,(Bleach))
+Parchment (Cured Hides,(Bleach))
+****** Temporary (Equippable) @
+Wax Tablet (Wax)
+Clay Tablet (Clay)
+*** Disposables
+**** Medicine
+Weak Painkiller (Tree Resin/Tea/Garlic)
+Painkiller (Poppy/Cannabis/Wine)
+Primitive Medicine(Aloe Vera/Sage/Thyme/Mint)
+Theriac (Poppy, Saffron, Mint, Honey, Wine)
+Gilead Balm (Olive Oil, Wax, Incense)
+Elactuarium (Honey, Thyme, Syrup)
+Medicinal Soap (Soot, Animal Fat,Lavendar/Tree Resin)
+Laxative (Rhubarb/Senna/AloeVera)
+Tonic (Dandelion/Turmeric/Ginger/Aloe Vera)
+Bandage (Cloth)
+**** Poison
+Hemlock (Hemlock Plant)
+Arsenic (Arsenic Ore)
+Cyanide (Fruits)
+**** Farming @
+Fertilizer (Bone Meal/Fish Meal/Ash/Lime,Dirt)
+*** Other @
+Unmarked Coins (Metals, Silver, Gold)
+Coins (Unmarked Coins)
+** Equippables
+*** Ammo
+Smoothed Pebbles (Pebbles)
+Javelin (Bone/Stone/Metals)
+Arrow (Arrowhead, Glue, Bone, Wood, Feather)
+*** Weapons
+**** Ranged
+Sling (Handle, Leather)
+Shortbow (Wood,Bone,String)
+Bow (Wood,Bone,String)
+Crossbow (Wood, Trigger, Notch, String)
+Longbow (Wood, Notch x2, String)
+**** Melee
+Spear (Spear Head, Handle, Rivet)
+Axe (Axe Head, Handle, Wedge)
+Sword (Sword Head, Handle, Rivet)
+Greataxe (Greataxe Head, Handle, Socket)
+Halberd (Halberd Head, Handle, Socket)
+Pike (Pike Head, Handle, Socket)
+*** Tools
+**** Production
+Knife (Blade, Handle, Peg)
+Mallet (Mallet Head, Handle, Wedge)
+Chisel (Chisel Head, Handle, Peg)
+Graver (Graver Head, Handle, Peg)
+Cutters (Cutter Head, Handle, Peg)
+Pestle (Rock/Metal)
+Distaff (Wood, Handle)
+Saw (Saw Head, Handle, Peg)
+Shovel (Shovel Head, Handle, Wedge)
+Blowpipe (Bone/Wood)
+Tongs (Metals)
+Cheesecloth (Cloth)
+Die (Sofestone/Metals,Wood)
+Stamp (Gem/Softstone/Metal,Wood)
+Official Stamp (Gem,Wood)
+Spindle (Wood)
+Dies (Stone, Bronze+)
+**** Farming
+Basket (Hemp/Flax)
+Ard (Beam, Plowshare, Handle, Fitting)
+Scythe (Scythe Head, Handle, Wedge)
+Hoe (Hoe Head, Handle, Wedge)
+Pick (Pick Head, Handle, Wedge)
+Spade (Spade Head, Handle, Wedge)
+Heavy Plow (Beam, Plowshare, Moldboard, Colter, x2 Handle, Fitting)
+Shears (Blade, Handle, Peg)
+**** Art
+***** Pens
+Stylus (Bone, Wood, Bronze+)
+Reed Pen (Raw Papyrus)
+Quill Pen (Feather)
+Brush (Animal Hair, Handle)
+***** Musical Instruments
+Drum (Tanned Hide, Wood)
+Lur (Bronze)
+Lyre (Wood, String)
+Pan Flute (Reed)
+**** Measurement and Exploration
+Compass (Steel,Wood,Glass,Papyrus/Parchment)
+Binocular (Lens, Wood/Metal)
+Scale (Sofestone/Metal,Wood/Metal,Peg)
+Abacus (Wood,Wood/Metal,Peg)
+Measuring Tools (Wood/Metal,Rope)
+Surveying Tools (Wood/Metal, Compass, Binocular)
+Diplomatic Letter (Writing Medium)
+*** Clothes
+Basic Clothes (Cloth/Wool/Linen)
+Formal Clothes (Cloth/Silk/Linen/Wool/Fine Linen, Dyes)
+Fancy Clothes  (Silk/Fine Linen/Wool, Dyes, Leather, Jewelery x2)
+Wood Crown (Wood)
+Gold Crown (Gold)
+Royal Crown (Gold, Upper Gemstones x3, Lower Gemstones x5)
+Emperor's Staff (Gold, Upper Gemstones x3)
+**** Jewelry
+Necklace (Bone/Silver/Gold/Gem)
+Ring (Bone/Silver/Gold,(Gem))
+Earring (Bone/Silver/Gold,(Gem)
+**** Armor
+Gambeson (Linen/Wool)
+Chainmail (Iron)
+Helmet (Leather,Metals)
+Breastplate (Leather, Metals)
+Guards (Leather, Metals)
+*** Animal Equipment
+Horse Saddle (Wood, Leather)
+Ox Saddle (Wood, Leather)
+Whip (Leather)
+Horseshoes (Bronze+)
+*** Other
+Books (Leather, Papyrus/Parchment)
+Oil Lamp (Wick, Clay/Metals, Oil)
+Candle (Wax, Wick)
+** Placeables
+*** Walls & Supports
+Tent Sticks (Stick,Primitive String)
+Wattle Walls (Stick,Primitive String, Clay)
+Cob Walls (Cob)
+Wood Wall (Wood)
+Stone Wall (Cut Stone)
+Brick Wall (Bricks, Lime)
+Log Wall (Log)
+Fence (Stick/Wood,Primitive String/String)
+Gate (Stick/Wood, Primitive String/String, Peg)
+Bronze Reinforced Wall (Stone Wall/Wood Wall, Bronze)
+Iron Reinforced Wall (Stone Wall/Wood Wall, Iron)
+Steel Reinforced Wall (Stone Wall/Wood Wall, Steel)
+Pillar (Beam/Marble/Metals/Stone)
+**** City
+Tall Wall (Same as other walls, but 3x as much material)
+City Gate (Wood/Metal, Nails, Wedges, Bolts, Metal)
+*** Floors
+Foundation (Stone/Concrete/Brick)
+Wood Floor (Planks)
+Carpet (Wool,Linen,Cloth,(Dye))
+Stone Floor (Cut Stone)
+Brick Floor (Bricks, Lime)
+Dirt Floor (Wild Area)
+Plowed Dirt (Wild Area)
+*** Roofs
+Tent Cover (Animal Hide)
+Wattle Roof (Stick, Primitive String, Clay)
+Roof Beams (Beam)
+Cob Roof (Cob)
+Wood Roof (Planks)
+Stone Slab Roof (Cut Stone, Clay)
+Clay Tiled Roof (Fired Clay)
+*** Transport
+**** Wheeled
+Cart (Wheel, Plank, Wood, Nails, Axle)
+Wagon (Wheel, Plank, Wood, Nails, Wedge, Leather, Rope, Axle)
+Chariot (Wheel, Plank, Wood, Nails, Wedge, Large Axle, Leather, Rope, (Cloth (for covering)))
+**** Boats
+TODO: have masts be an item
+Canoe (Trees,Wood)
+Sailboat (Planks,Wood,Linen/Hemp/Flax/Cotton,Rope,Nails,Rivets,String)
+Large Sailboat (Planks,Wood,Linen/Hemp/Flax/Cotton,Rope,Nails,Rivets,String)
+Longboat (Trees, Wood,Linen/Hemp/Flax/Cotton,Rope, Nails, Rivets)
+Light Warship (Planks,Wood,Linen/Hemp/Flax/Cotton,Rope,Nails,Rivets,String)
+Heavy Warship (Planks,Wood,Linen/Hemp/Flax/Cotton,Rope,Nails,Rivets,String)
+Cog (Planks,Wood,Linen/Hemp/Flax/Cotton,Rope,Nails,Rivets)
+Freighter (Planks,Wood,Linen/Hemp/Flax/Cotton,Rope,Nails,Rivets,String)
+**** Roads
+Path (Dirt)
+Road (Dirt/Cut Stone Sheet/Brick/Paving Stone/Concrete)
+*** Storage/Process Containers
+{Mash Tun} (Wood, Nails)
+Pot (Clay/Metals)
+Kettle (Clay/Metals)
+Jar (Clay/Glass)
+Crucible (Clay/Bronze+)
+Bucket (Wood/Metals)
+*** Production
+Tabletop (Plank/Cut Stone,Axle,Peg/Nails)
+Stool (Plank,Axle,Peg/Nails)
+Chair (Plank,Axle,Peg/Nails)
+Waterwheel
+{Pulley} (Planks, Beam, Rope, Wood, Bolts, Nails)
+Spinning Wheel
+Backstrap Loom (Wood, Peg, String, Leather)
+Simple Loom (Wood, Peg, String)
+{Vertical Loom} (Wood, Linen, Metal/Bamboo/Reed, Nails)
+Circular Saw (Tabletop, Circular Sawpiece, Fitting x2)
+{Potter's Wheel} (Wheel(Stone) x2, Planks, Axle)
+**** Metalworking
+{Anvil} (Stone/Bronze+)
+{Charcoal Kiln}
+{Furnace}
+{Bloomery Furnace}
+{Forge} (Clay/Stone/Brick}
+Bellows {Wood/Leather/Bolts/Metals}
+Double Bellows {Wood/Leather/Bolts/Metals}
+Water-powered Bellows {Wood/Leather/Bolts/Gear/Waterwheel}
+**** Water
+Siphon
+Pump
+Aqueduct (Cut Stone)
+*** Siege Engines
+Battering Log (Log, (Bronze+, Leather))
+Battering Ram (Log, Steel, Leather, Rope, Planks, Wheel, Axle)
+Trebuchet (Beam, Plank, Nails, Bolt, Gear, Large Rocks, Rope, Leather, Axle)
+Ballista (Wood, Nails, Bolt, Gear, Rope, Trigger, Leather)
+Catapult (Beam, Plank, Nails, Large Rocks, Rope, Wheel, Large Axle)
+Siege Ladder (Axle, Beam)
+Siege Tower (Siege Ladder, Planks, Wheel)
+** Item Levels
+Every resource that can be used as the main resource in making gear items determines the "item level". The item level is what is checked when required items are checked, anything equal to or above the set item level is okay. Often an item level is skipped. There are several item level hierarchies; items (usually placeables) have their own separate item level hierarchy.
+
+Strength/Brittleness Item Levels:
+1. Wood
+2. Bone
+3. Stone
+4. Copper
+5. Bronze
+6. Iron
+7. Steel
+
+Structure Durability Levels:
+1. Sticks/Wattle
+2. Cob
+3. Brick
+4. Stone
+5. Bronze
+6. Iron
+7. Steel
+
+Beauty Item Levels:
+0. Dirt/Wattle
+1. Iron/Clay/Cob
+2. Stone
+3. Bone
+4. Steel
+5. Brick/Wood
+6. Copper/Marble
+7. Bronze
+8. Gemstones (Lower)
+9. Silver
+10. Gold
+11. Gemstones (Upper)
+
+* Units and Items
+** Item Traits
+- Renewable
+- Moves Automatically
+- Grows/Dies
+- ProducesItems
+- Final
+- Edible
+- Placeable
+  - Plantable
+- Heals
+- SupportsRoof
+- Equippable
+  - byAnimals
+  - isWearable
+    - isArmor
+      - *armorType*
+  - isWeapon
+  - isTool
+  - isAmmo
+- canHarvest
+  - *blockType* (array)
+- canProduce
+  - *itemType* (array)
+- *amtMadeOf*
+  (array)
+  - *MadeOf1*
+  - *MadeOf2*
+  - *MadeOf3*
+- *Size* (how many stored in one tile)
+- *Weight*
+**  Unit Traits
+- isAdult
+- canProduce
+  - *produces*
+  - *producesIntangibles*
+- *Consumes*
+- canHarvest
+  - *harvests*
+- *Equips*
+- canBuff
+  - *buffs*
+- canTrain
+  - *train*
+- hasAbilities
+  - *abilities*
+- canMount
+  - *mounts*
+** Automatic Gear
+Units have an inventory, wherein they can carry any type of item. They also have a gear, which is "equipped inventory". The player can control from a panel the default equipped state of each type of unit as a rule, which will globally make it so that units will automatically equip items to their gear that are set by the player if they are available and in their inventory. We use caching of checks, batch processing, and proximity-based checks to ensure minimal overhead, as well as lazy evaluation and event-driven between the inventory and the gear. This might also be something good to multithread. This can also apply to consumable items, i.e: when a carpenter runs out of wood, he will find more algorithmically.
+** Items Lists
+*** Required Items
+Units have a required items list, which they require to even be that unit themselves. If a unit loses their required item, and they are already that unit, they will remain that unit, but will be unable to do work until they fulfill all the required items in their required items list.
+*** Interactible Items List
+Though every unit can haul items, most units can only equip/consume a small number of items.
+*** Producible List
+The list of items a unit can produce.
+* Animals
+** Wild
+Deer
+Boar
+Swan
+Elephant
+Peacock
+** Cattle
+Cow
+Pig
+Sheep
+Chicken
+** Labor/Transport
+Ox
+Horse
+** Pets
+Dog
+Cat
+* War
+Regular Units can climb over regular walls, but not tall walls. Siege Towers and Siege Ladders allow units to climb over tall walls.
+* Command
+** Nation and Provinces
+Overtime, provinces will start to develop. If a province has a governor, they can be given provincial decrees, which will give that province a boost of some kind. A similar national boost is available for the entire nation, which is determined by the Monarch at apporpriate times.
+** Production Command
+The player decides how much of each item and units to produce, and the units will affect their production based on this decree, and based on Order (Administrative), the actual units will affect the actual items they produce at this speed.
