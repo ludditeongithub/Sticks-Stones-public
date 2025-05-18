@@ -4,8 +4,8 @@ TO TESTABLE STONE AGE ALPHA:
 2. finish plant aseprites (items -> foodstuffs, items -> herbs, and plants folder on github). make sure you do multiple growth stages (3-4).
    a. (Plant. for now, reuse the same tree base! we are trying to get to a playable game first, not perfection)  AppleTree, Lettuce, Kale, Garlic,  Broccoli,   MangoTree
    aii. (Food Item) Rice, Orange,   Peach, Plum, Cherry, Apricot,  Olive,  Pepper,
-   b. (foliage plants): Fern, Reed,  Cactus,
-   c. (herbs): Papyrus,  Woad,  Thyme, Cocoa, Senna
+   b. (foliage plants): Fern
+   c. (herbs):  Woad,  Thyme, Cocoa, Senna
 3. finish animal aseprites (animals folder on gh). ensure that all animals are turned over and bleeding for corpse version, and have a smaller adolescent version that also has a turned over corpse. male vs female sprites only when there is a really obvious difference. check cow.aseprite to see example
    a. all these:  Goat, Horse, Ox, Donkey, Camel, WaterBuffalo, Rabbit, Antelope, Moose, Capybara, Turtle, Elephant, Bison, Wolf, Bear, Caribou,
 4. finish scavengeable aseprites (scavengeables on gh)
