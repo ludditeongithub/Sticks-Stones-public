@@ -2,11 +2,12 @@ TOBI TASKS
 TO TESTABLE STONE AGE ALPHA:
 1. make github work. for aseprite tasks, check to make sure they are not finished, being already made in the "sprite" subfolders on gh
 2. finish plant aseprites (items -> foodstuffs, items -> herbs, and plants folder on github). make sure you do multiple growth stages (3-4).
-   a. (Fruit & veg - requires both plant and food item. for now, reuse the same tree base! we are trying to get to a playable game first, not perfection) Wheat, Oat, Rice, OrangeTree, LemonTree, LimeTree, PeachTree, PlumTree, CherryTree, ApricotTree, AppleTree, PearTree, OliveTree, BlueberryShrub, StrawberryShrub, Grapevine, Lettuce, Kale, Corn, Carrot, Beets, Potato, Onion, Garlic, Cabbage, Broccoli, Tomato, Cucumber, Pepper,
-   b. (foliage plants): Fern, Moss, Reed,  Bush, PioneerTree (Birch), DeciduousTree, EvergreenTree, TropicalTree (Rainforest),  Cactus,
-   c. (herbs): Papyrus, Cotton, Hemp, Flax, Woad, Madder, Indigo, Lavendar, Mint, Thyme, Sage, Ginseng, Poppy, Cocoa, Senna, Saffron
+   a. (Plant. for now, reuse the same tree base! we are trying to get to a playable game first, not perfection)  AppleTree, Lettuce, Kale, Garlic,  Broccoli,   MangoTree
+   aii. (Food Item) Rice, Orange,   Peach, Plum, Cherry, Apricot,  Olive,  Pepper,
+   b. (foliage plants): Fern, Reed,  Cactus,
+   c. (herbs): Papyrus,  Woad,  Thyme, Cocoa, Senna
 3. finish animal aseprites (animals folder on gh). ensure that all animals are turned over and bleeding for corpse version, and have a smaller adolescent version that also has a turned over corpse. male vs female sprites only when there is a really obvious difference. check cow.aseprite to see example
-   a. all these: Pig, Cow, Chicken, Duck, Sheep, Goat, Horse, Ox, Donkey, Camel, WaterBuffalo, Rabbit, Antelope, Deer, Moose, Capybara, Turtle, Elephant, Bison, Wolf, Bear, Caribou, Fish,
+   a. all these:  Goat, Horse, Ox, Donkey, Camel, WaterBuffalo, Rabbit, Antelope, Moose, Capybara, Turtle, Elephant, Bison, Wolf, Bear, Caribou,
 4. finish scavengeable aseprites (scavengeables on gh)
    a. Log, Stick, [Pebble, Rock, LargeRock, Boulder] (one folder), Flint, Ore, Beehive, ArtificialBeehive,
 5. finish tile aseprites (get approval for plowed tiles, and roads, and made floors) (tile on gh)
