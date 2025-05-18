@@ -12,6 +12,7 @@ enum class EventType {
 	PreyFeed,
 	HerbivoreFeed,
 	PredatorFeed,
+	PlantGermination, //plant,
 	PlantDeath,
 	AnimalBreeding,
 	Conception,

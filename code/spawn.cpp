@@ -7,8 +7,41 @@
  *
  *   perrenials or multi-year plants should spawn at a randomized growth amount. the formula for their respawns should be their total growth amount (period from ), divided by the respawn period,
  *   */
+void releasePlantSource(int plantIndex) {
+Plant plant = std::get_if<Plant>(&tileObject[tileIndex]);
+//TODO: place seed in adjacent tile nearby, instead of on the same tile
+seedCoords.push_back(tileCoords[plantIndex]);
+seeds.push_back(plant);
+//TODO: show on ground if it is tuber, bulb, cone, or other visible seed, and eventually bury over time (other seeds can be searched for, but are invisible in grass)
+}
 
-void spawnPlants(float tileChance, bool repeated) {
+// an event is sent to the event manager which triggers the mass spawn of all that type of plant, by this function, which sends events distributed over a set amount of time to germinate all seeds of that plant
+void startPlantGrowth(Plant plant) {
+for (int i = 0; i < seeds.size(); i++) {
+    if (seeds[i] == plant) {
+        //randomize time based on duration of germination period
+        int time = (int) (plant.germinationPeriod * rfloat(0.01,1.0));
+        addEvent(time, EventType::SeedGermination, (int)plant, i);
+    }
+}
+}
+
+// Germination is activated randomly as events that start triggering en-masse automatically at the time of the year the plant type in question starts germinating
+void germinate(int seedIndex) {
+std::pair<int,int> coord = seedCoords[seedIndex];
+int plantIndex = tileIndex[coord];
+tileObject[plantIndex] = seeds[seedIndex];
+PlantType plantType = plants[seeds[seedIndex]].plantType;
+if (plantType != PlantType::Root | plantType != PlantType::Tuber | plantType != PlantType::Bulb) seeds[seedIndex] = Plant::NONE;
+}
+//TODO: have seed in seeds vector become none upon pick up or consuming animals or pawns
+
+//used for moss, foliage, etc
+void spawnPlant(Plant plant) {
+
+}
+
+void spawnInitialPlants() {
 	for (int i = 0; i < (int)tileIndex.size(); i++) {
         //TODO: separate mechanism for plants that stay in the same place and those who do not
 		// mechanism to only work on some tiles for subsequent spawns.
@@ -1019,6 +1052,20 @@ if (temp > threshold) {
 }
 tileGrass[i] = grass;
 tileObject[i] = plant;
+PlantType type = plants[(int)plant].plantType;
+//plant permanent
+switch(type) {
+    case PlantType::Root:
+    case PlantType::Tuber:
+    case PlantType::Bulb:
+       seeds.push_back(plant);
+       seedCoords.push_back(tile);
+}
+//TODO: randomly generate growth stage of plant
+float multiplier = rfloat(0.001,0.998);
+plantCoords.push_back(tile);
+growthAmt.push_back(multiplier * plants[(int)plant].fullyGrownAmt);
+
 //TESTING
 // Tile tt = tileType[i];
 // Plant pt = tilePlant[i];
@@ -1027,14 +1074,7 @@ tileObject[i] = plant;
  }
 }
 
-void spawnPlantsCycle(bool original) {
-if (original) { // when world is gen
-	spawnPlants(0.0);
-} else //not first world spawn
-	  {
-	spawnPlants(0.95);
-	}
-}
+
 
 void spawnEnemies() {
 

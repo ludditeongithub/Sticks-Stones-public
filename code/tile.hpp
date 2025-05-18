@@ -16,6 +16,12 @@ vector<std::tuple<int,int,int,int>> adjacentTilesIndices(STARTING_MAP_WIDTH * ST
 vector<int> tileAlt(STARTING_MAP_WIDTH * STARTING_MAP_HEIGHT);
 vector<Tile> tileType(STARTING_MAP_WIDTH * STARTING_MAP_HEIGHT);
 vector<Object> tileObject(STARTING_MAP_WIDTH * STARTING_MAP_HEIGHT);
+vector<Plant> tilePlant(STARTING_MAP_WIDTH * STARTING_MAP_HEIGHT);
+
+// seeds (can be tubers or other plant sources) and their linked locations
+std::vector<std::pair<int,int>>	seedCoords();
+std::vector<Plant> seeds();
+
 /* linked vectors which can be used to determine the variant when the tileObject is a variant and is moved or picked up */
 vector<std::pair<float,float>> nearestVariantItem(STARTING_MAP_HEIGHT * STARTING_MAP_WIDTH);
 vector<int>	variantItemTypes(STARTING_MAP_HEIGHT * STARTING_MAP_WIDTH);

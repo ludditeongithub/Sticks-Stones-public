@@ -42,11 +42,12 @@ int findBreedingPartner(std::vector<float> queryPoint) {
 	return -1; //not found
 }
 
-void pregnancy(int animalIndex) {	pregnantAnimalIndex.push_back(animalIndex);
+void pregnancy(int animalIndex) {
+	pregnantAnimalIndex.push_back(animalIndex);
 	//TODO: finish pregnancy timings for all animals
 	switch(animals[animalIndex]) {
-		case Animal::Cow:
-			pregnantAnimalTimer.push_back()
+		default:
+			pregnantAnimalTimer.push_back(130000);
 	}
 }
 
@@ -65,7 +66,6 @@ void setInitialBreedEvent(int i) {
 		//TODO: get times for how often breeding triggers.
 		switch (animals[i]) {
 			// EGG LAYERS
-
 			 addEvent();
 
 			// NON-EGG LAYERS

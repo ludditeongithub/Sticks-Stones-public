@@ -6,17 +6,79 @@
 /* RUNTIME CROP DATA MANAGEMENT */
 
 //get current global temp and sunlight
-    float temp;
+float temp;
 float sunlight;
 float date;
 
 std::vector<Plant> cropList;
+
+std::vector<std::pair<int,int>> plantCoords;
 std::vector<float> growthAmt;
 std::vector<int> yieldMisses;
-    std::vector<float> collectedWater;
-    std::vector<float> lastFullyWatered;
-    std::vector<bool> fullyGrown;
-    std::vector<std::pair<int,int>> plantCoords;
+std::vector<float> collectedWater;
+std::vector<float> lastFullyWatered;
+std::vector<bool> fullyGrown;
+
+enum class PlantType {
+    Tree, FruitTree, Foliage, Succulent, Shrub, Flowering, FruitVeggie, Leafy, Root, Reed, Tuber, Grain, Bulb, Grapevine, Herb, Textile
+}
+
+void dropFruit() {
+
+}
+
+void disperseSeeds() {
+
+}
+
+//TODO: complete and render
+void treeDeath(int plantIndex) {
+    switch (tilePlant[plantIndex]) {
+        case Plant::PioneerTree:
+        case Plant::DeciduousTree:
+            blockSize = 2;
+            break;
+        case Plant::EvergreenTree:
+            blockSize = 3;
+            break;
+        case Plant::RainforestTree:
+            blockSize = 4;
+            break;
+        default:
+            return;
+    }
+    TileBlock tb = findNearestAdjacentEmptyTileBlock(plantIndex, blockSize);
+    std::tuple<int,int,int,int> adjacentTiles = adjacentTilesIndices[plantIndex];
+    tilePlant[plantIndex] = Plant::Stump;
+    for (int i = 1; i < blockSize; i++) {
+        if (tb.direction == Direction::North) {
+            return std::get<0>(adjacentTiles);
+        }
+        if (tb.direction == Direction::South) {
+            return std::get<2>(adjacentTiles);
+        }
+        if (tb.direction == Direction::West) {
+            return std::get<4>(adjacentTiles);
+        }
+        if (tb.direction == Direction::East) {
+            return std::get<1>(adjacentTiles);
+        }
+    }
+    tileObject[plantIndex] = Scavengeable::Log;
+
+}
+
+void cropDeath(int plantIndex) {
+        Plant plant = tilePlant[tileIndex];
+        PlantType type = plants[(int)plant].plantType;
+        switch (plantType) {
+            case Tree:
+            case FruitTree:
+                treeDeath(plantIndex);
+        }
+        tileObject[tileObjectIndex] = Plant::None;
+}
+
 // add new crop to actively tracked crops
 void addCrop(Crops crop, coord co) {
     //threading sensitive:

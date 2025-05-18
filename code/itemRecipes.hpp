@@ -61,27 +61,28 @@ inline bool hasTag(itemTags value, itemTags tag) {
 // Dirt Tile -
 // 1 Rock Salt averages 100 units of salt
 void intializeResources() {
-    resources[static_cast<int>(Item::SaltWater)] = {{Actions::Collect, Actions::Collect, Actions::Collect}, {Tile::ShallowSaltWater, Tile::DeepWater}, {0, 0}};
-    resources[static_cast<int>(Item::Water)] = {{Actions::Collect, Actions::Collect, Actions::Collect}, {Tile::FlowingWater, Tile::ShallowWater, Tile::RiverSource}, {0, 0, 0}};
-    resources[static_cast<int>(Item::Log)] = {{Actions::Lift, Actions::Chop, Actions::Chop, Actions::Chop, Actions::Chop}, {Scavengeable::Log, Plant::PioneerTree, Plant::DeciduousTree, Plant::EvergreenTree, Plant::TropicalTree}, {1,1,2,2,3}};
-    resources[static_cast<int>(Item::Pebble)] = {{Actions::Collect}, {Scavengeable::Pebble}, {1}};
-    resources[static_cast<int>(Item::Rock)] = {{Actions::Collect}, {Scavengeable::Rock}, {1}};
-    resources[static_cast<int>(Item::LargeRock)] = {{Actions::Lift}, {Scavengeable::LargeRock}, {1}};
-    resources[static_cast<int>(Item::Boulder)] = {{Actions::Lift}, {Scavengeable::Boulder}, {1}};
-    resources[static_cast<int>(Item::Sand)] = {{Actions::Collect}, {Tile::Sand}, {300}};
-    resources[static_cast<int>(Item::Sand)] = {{Actions::Collect}, {Scavengeable::Stick}, {4}};
-    resources[static_cast<int>(Item::Oxisol)] = {{Actions::Collect}, {Tile::Oxisol}, {300}};
-    resources[static_cast<int>(Item::RockySoil)] = {{Actions::Collect}, {Tile::RockySoil}, {300}};
-    resources[static_cast<int>(Item::SiltySoil)] = {{Actions::Collect}, {Tile::SiltySoil}, {300}};
-    resources[static_cast<int>(Item::SandySoil)] = {{Actions::Collect}, {Tile::SandySoil}, {300}};
-    resources[static_cast<int>(Item::PeatSoil)] = {{Actions::Collect}, {Tile::PeatSoil}, {300}};
-    resources[static_cast<int>(Item::LoamSoil)] = {{Actions::Collect}, {Tile::LoamSoil}, {300}};
-    resources[static_cast<int>(Item::Podzol)] = {{Actions::Collect}, {Tile::Podzol}, {300}};
-    resources[static_cast<int>(Item::ClaySoil)] = {{Actions::Collect}, {Tile::ClaySoil}, {300}};
-    resources[static_cast<int>(Item::Stone)] = {{Actions::Mine, Actions::Mine, Actions::Mine}, {Tile::Stone, Scavengeable::LargeRock, Scavengeable::Boulder}, {20,8,140}};
-    resources[static_cast<int>(Item::Flint)] = {{Actions::Collect}, {Scavengeable::Flint}, {1}};
-    resources[static_cast<int>(Item::RawSalt)] = {{Actions::Mine}, {Tile::RockSalt}, {10}};
-    resources[static_cast<int>(Item::Gem)] = {{Actions::Mine}, {Tile::GemOre}, {2}}; //random
+    resources[static_cast<int>(Item::SaltWater)] = {{Actions::Collect, Actions::Collect}, 10, {Tile::ShallowSaltWater, Tile::DeepWater}, {0, 0}};
+    resources[static_cast<int>(Item::Water)] = {{Actions::Collect, Actions::Collect, Actions::Collect}, 10, {Tile::FlowingWater, Tile::ShallowWater, Tile::RiverSource}, {0, 0, 0}};
+    resources[static_cast<int>(Item::Log)] = {{Actions::Lift, Actions::Chop, Actions::Chop, Actions::Chop, Actions::Chop}, 400,  {Scavengeable::Log, Plant::PioneerTree, Plant::DeciduousTree, Plant::EvergreenTree, Plant::TropicalTree}, {1,1,2,2,3}};
+    resources[static_cast<int>(Item::Pebble)] = {{Actions::Collect}, 10, {Scavengeable::Pebble}, {1}};
+    resources[static_cast<int>(Item::Rock)] = {{Actions::Collect}, 10, {Scavengeable::Rock}, {1}};
+    resources[static_cast<int>(Item::LargeRock)] = {{Actions::Lift}, 20, {Scavengeable::LargeRock}, {1}};
+    resources[static_cast<int>(Item::Boulder)] = {{Actions::Lift}, 50, {Scavengeable::Boulder}, {1}};
+    resources[static_cast<int>(Item::Sand)] = {{Actions::Collect}, 20, {Tile::Sand}, {300}};
+    resources[static_cast<int>(Item::Stick)] = {{Actions::Collect}, 10, {Scavengeable::Stick}, {4}};
+    resources[static_cast<int>(Item::LargeStick)] = {{Actions::Collect}, 10, {Scavengeable::LargeStick}, {1}};
+    resources[static_cast<int>(Item::Oxisol)] = {{Actions::Collect}, 50, {Tile::Oxisol}, {300}};
+    resources[static_cast<int>(Item::RockySoil)] = {{Actions::Collect}, 50, {Tile::RockySoil}, {300}};
+    resources[static_cast<int>(Item::SiltySoil)] = {{Actions::Collect}, 50, {Tile::SiltySoil}, {300}};
+    resources[static_cast<int>(Item::SandySoil)] = {{Actions::Collect}, 50, {Tile::SandySoil}, {300}};
+    resources[static_cast<int>(Item::PeatSoil)] = {{Actions::Collect}, 50, {Tile::PeatSoil}, {300}};
+    resources[static_cast<int>(Item::LoamSoil)] = {{Actions::Collect}, 50, {Tile::LoamSoil}, {300}};
+    resources[static_cast<int>(Item::Podzol)] = {{Actions::Collect}, 50, {Tile::Podzol}, {300}};
+    resources[static_cast<int>(Item::ClaySoil)] = {{Actions::Collect}, 50, {Tile::ClaySoil}, {300}};
+    resources[static_cast<int>(Item::Stone)] = {{Actions::Mine, Actions::Mine, Actions::Mine}, 980, {Tile::Stone, Scavengeable::LargeRock, Scavengeable::Boulder}, {20,8,140}};
+    resources[static_cast<int>(Item::Flint)] = {{Actions::Collect},10, {Scavengeable::Flint}, {1}};
+    resources[static_cast<int>(Item::RawSalt)] = {{Actions::Mine}, 1080, {Tile::RockSalt}, {10}};
+    resources[static_cast<int>(Item::Gem)] = {{Actions::Mine}, 1200, {Tile::GemOre}, {2}}; //random
     resources[static_cast<int>(Item::Corpse)] = {{Actions::Lift}, {Scavengeable::Corpse}, {1}};
     resources[static_cast<int>(Item::Milk)] = {{Actions::Milk}, {Animal::Cow}, {125}}; //twice a day
     resources[static_cast<int>(Item::GoatMilk)] = {{Actions::Milk}, {Animal::Goat}, {25}}; //twice a day
@@ -334,7 +335,7 @@ products[static_cast<int>(Item::HandaxeHeadMould)] = {Actions::Sculpt,  520, {It
 products[static_cast<int>(Item::PermanentHandaxeHeadMould)] = {Actions::Smith,6200, {Item::Metal}, .tags=itemTags::Alternate | itemTags::Mould};
 
 //long handle
-products[static_cast<int>(Item::PrimitiveSpearHead)] = {Actions::Smith, 3200, {Item::Metal}, {3}, .tags=itemTags::Alternate};
+products[static_cast<int>(Item::PrimitiveSpearHead)] = {Actions::Knapp, 1800, {Item::Rock}, {1}, .tags=itemTags::Alternate};
 products[static_cast<int>(Item::PrimitiveSpearHeadMould)] = {Actions::Sculpt, 520, {Item::Clay, Item::Sand}, {1,1}};
 products[static_cast<int>(Item::PermanentPrimitiveSpearHeadMould)] = {Actions::Smith, 560, {Item::Metal}, .tags=itemTags::Alternate | itemTags::Mould};
 products[static_cast<int>(Item::ScytheHead)] = {Actions::Smith, 3200, {Item::Metal}, {6}, .tags=itemTags::Alternate};
@@ -548,9 +549,9 @@ return {Actions::Pott, 420, {Item::Clay}};
 default:
     return {};
 }
+        return {};
 }
-    return {};
-}
+
 
 struct CorpseData {
             Item products[];
@@ -607,7 +608,6 @@ CorpseData corpseInterpreter(Station corpse) {
                 default:
                     return {};
             }
-}
 
 void meals() {
 
@@ -868,9 +868,6 @@ bulkAndWeights[static_cast<int>(Item::Bleach)] = {0.02f, 0.015f, BulkLevel::Liqu
 bulkAndWeights[static_cast<int>(Item::Glue)] = {0.02f, 0.015f, BulkLevel::Liquid};
 bulkAndWeights[static_cast<int>(Item::Ink)] = {0.02f, 0.015f, BulkLevel::Liquid};
 bulkAndWeights[static_cast<int>(Item::Resin)] = {0.03f, 0.025f, BulkLevel::Liquid};
-bulkAndWeights[static_cast<int>(Item::WeakPainkiller)] = {0.02f, 0.015f, BulkLevel::Liquid};
-bulkAndWeights[static_cast<int>(Item::Painkiller)] = {0.03f, 0.025f, BulkLevel::Liquid};
-bulkAndWeights[static_cast<int>(Item::PrimitiveMedicine)] = {0.05f, 0.04f, BulkLevel::Liquid};
 bulkAndWeights[static_cast<int>(Item::Theriac)] = {0.06f, 0.05f, BulkLevel::Liquid};
 bulkAndWeights[static_cast<int>(Item::GileadBalm)] = {0.07f, 0.06f, BulkLevel::Liquid};
 bulkAndWeights[static_cast<int>(Item::Elactuarium)] = {0.08f, 0.07f, BulkLevel::Liquid};

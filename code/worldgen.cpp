@@ -1652,6 +1652,10 @@ else if (random < currentChance + pebbleChance) {
 } else if (random < currentChance + stickChance) {
     scavengeable = Scavengeable::Stick;
 }
+//log must take up multiple tiles, and depends on tree type, which is randomly generated
+if (scavengeable == Scavengeable::Log) {
+
+}
 tileObject[i] = scavengeable;
 }
 

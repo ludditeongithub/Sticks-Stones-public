@@ -4,10 +4,15 @@
 #include "tile.hpp"
 
 Plant crops[] = {
-EMPTY, Wheat, Oat, Corn, Rice, Tomato, Onion, Potato, Cabbage, Pumpkin, Pepper, Carrot, Poppy, Cannabis, Senna, Cotton, Papyrus, Flax, Hemp, Lettuce,
+Plant::Wheat, Plant::Oat, Plant::Corn, Plant::Rice, Plant::Tomato, Plant::Onion, Plant::Potato, Plant::Cabbage, Plant::Pumpkin, Plant::Pepper, Plant::Carrot, Plant::Poppy, Plant::Cannabis, Plant::Senna, Plant::Cotton, Plant::Papyrus, Plant::Flax, Plant::Hemp, Plant::Lettuce,
+};
+
+enum class PlantType {
+EMPTY, Tree, FruitTree, Foliage, Succulent, BerryShrub, Flowering, FruitVeggie, Leafy, Root, Reed, Tuber, Bulb, Grain, Grapevine, Herb, Textile
 };
 
 struct CropTraits {
+    PlantType type = PlantType::Tree;
     //57000 fullyGrownAmt means one forty-day season to grow, at a 1.0 growth amount. Ths implies perfect growing conditions.
     float fullyGrownAmt = 78000.0;
     //temps in Celsius
@@ -25,9 +30,14 @@ struct CropTraits {
     bool requiresScythe = true;
   };
 
+void plantTable() {
+
+}
+
+
 
 Plant regrowthCrops[] = {
- Olive, Grape, Apple, Fig, Pear, Peach, Mango, Blueberry, Strawberry, Lavender, Saffron, AloeVera, Mint, Thyme, Sage, Rhubarb, Hay, REGROWTH_CROPS_MAX
+ Plant::Olive, Plant::Grape, Plant::Apple, Plant::Fig, Plant::Pear, Plant::Peach, Plant::Mango, Plant::Blueberry, Plant::Strawberry, Plant::Lavender, Plant::Saffron, Plant::AloeVera, Plant::Mint, Plant::Thyme, Plant::Sage, Plant::Rhubarb, Plant::Hay
 };
 
 struct RegrowthCropTraits {

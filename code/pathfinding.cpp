@@ -5,7 +5,7 @@
 
 float maxAltChange = 2.0;
 
-enum class direction {
+enum class Direction {
     NONE, North, South, West, East,
 };
 
@@ -411,6 +411,14 @@ bool checkEmptyTile(int tileIndex, int adjacentTileIndex) {
    if (objectToInt(tileObject[tileIndex]) != 0) return false;
 }
 
+std::pair<int, int> getAdjacentTile(int tileIndex, Direction direction) {
+    adjacentTilesIndices[tileIndex];
+    if (direction == Direction::North) return
+    if (direction == Direction::South)
+    if (direction == Direction::West)
+    if (direction == Direction::East)
+}
+
 std::pair<int, int> findNearestAdjacentEmptyTile(int startIndex) {
     std::queue<int> q;
     std::unordered_set<int> visited;
@@ -438,6 +446,83 @@ std::pair<int, int> findNearestAdjacentEmptyTile(int startIndex) {
     }
 
     return {-1, -1}; // No empty tile found
+}
+
+struct TileBlock() {
+    std::pair<int,int> startTile;
+    uint8_t blockSize;
+    Direction direction;
+}
+
+TileBlock findNearestAdjacentEmptyTileBlock(int startIndex, uint8_t blockSize) {
+    std::queue<int> q;
+    std::unordered_set<int> visited;
+    Direction direction;
+
+    q.push(startIndex);
+    visited.insert(startIndex);
+
+    while (!q.empty()) {
+        int current = q.front();
+        q.pop();
+
+        auto [above, right, below, left] = adjacentTilesIndices[current];
+        std::array<int, 4> neighbors = {above, right, below, left};
+
+        for (int neighbor : neighbors) {
+            if (neighbor < 0 || visited.count(neighbor)) continue;
+
+            if (checkEmptyTile(current, neighbor)) {
+                // Found an empty tile, now check for a block of adjacent empty tiles
+                int count = 1; // Start with the current empty tile
+                // Check horizontal and vertical directions for contiguous empty tiles
+
+                // Check to the right
+                int temp = neighbor;
+                while (checkEmptyTile(current, temp) && visited.count(temp) == 0) {
+                    count++;
+                    visited.insert(temp);
+                    temp = right; // Move right
+                    direction = west;
+                }
+
+                // Check to the left
+                temp = neighbor;
+                while (checkEmptyTile(current, temp) && visited.count(temp) == 0) {
+                    count++;
+                    visited.insert(temp);
+                    temp = left; // Move left
+                    direction = east;
+                }
+
+                // Check above
+                temp = neighbor;
+                while (checkEmptyTile(current, temp) && visited.count(temp) == 0) {
+                    count++;
+                    visited.insert(temp);
+                    temp = above; // Move above
+                    direction = north;
+                }
+
+                // Check below
+                temp = neighbor;
+                while (checkEmptyTile(current, temp) && visited.count(temp) == 0) {
+                    count++;
+                    visited.insert(temp);
+                    temp = below; // Move below
+                    direction = south;
+                }
+
+                // If count meets or exceeds required count of adjacent empty tiles
+                if (count >= blockSize) {
+                    return {tileCoords[neighbor], blockSize, direction};
+                }
+            }
+            visited.insert(neighbor);
+            q.push(neighbor);
+        }
+    }
+    return {-1, -1}; // No empty tile block found
 }
 
 

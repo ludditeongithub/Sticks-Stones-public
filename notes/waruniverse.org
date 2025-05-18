@@ -4,9 +4,11 @@
 - For Textures ?
 - Game Engine - RayLib
 * TODO
+- different logs in aseprite, and log falling animation
 - separate flint and hardstone (possibly granite) tools as early toolheads, one brittle but sharp, other more durable
 - add stats for hardstone as building material
 - coastal mountains, leeway affect on biome generation, and
+- logs collapse against trees if there are trees nearby upon another trees' death instead of finding nearest adjacentemptytile
 * Notes
 1. Copper
 
@@ -119,7 +121,6 @@
 ** Mesolithic
 ~ Goal of how long the age takes in real time at 2x average speed: 7-12 hours
 - Starting pawns: All paleolitic (though a few that do not tree to elder may not be discovered)
-
 
 * Units
 - By default, newly discovered units are intermediary units or viable evolutions who are taught by the researcher who discovered the new technology. The amount of teaching time depends on the new technology.
