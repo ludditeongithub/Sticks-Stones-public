@@ -4,18 +4,35 @@
 #include "mapdimensions.hpp"
 #include "categories.hpp"
 
+
 // DATA OF EVERY GENERATED TILES
 // lookup table: hashed coord finds indices, which are indices of every vector containing one attribute
-std::unordered_map<std::pair<int, int>, int, hashPair> tileIndex(STARTING_MAP_WIDTH * STARTING_MAP_HEIGHT);
+std::unordered_map<std::pair<int, int>, int, hashPair> tileIndices(STARTING_MAP_WIDTH * STARTING_MAP_HEIGHT);
 // reverse of above, gets coords from index
 std::vector<std::pair<int, int>> tileCoords(STARTING_MAP_WIDTH * STARTING_MAP_HEIGHT);
+
+struct TileMoveCost {
+	uint8_t up;
+	uint8_t down;
+	uint8_t left;
+	uint8_t right;
+};
+
+std::vector<TileMoveCost> adjacentTilesCost(STARTING_MAP_WIDTH * STARTING_MAP_HEIGHT);
 // the cell to which the tile belongs
 vector<uint32_t> tileCellIndex;
 // the four adjacent tiles' indices in the vectors (ABOVE, RIGHT, BELOW, LEFT)
-vector<std::tuple<int,int,int,int>> adjacentTilesIndices(STARTING_MAP_WIDTH * STARTING_MAP_HEIGHT);
+struct AdjacentTiles {
+	int up;
+	int down;
+	int left;
+	int right;
+};
+vector<AdjacentTiles> adjacentTilesIndices(STARTING_MAP_WIDTH * STARTING_MAP_HEIGHT);
 vector<int> tileAlt(STARTING_MAP_WIDTH * STARTING_MAP_HEIGHT);
 vector<Tile> tileType(STARTING_MAP_WIDTH * STARTING_MAP_HEIGHT);
 vector<Object> tileObject(STARTING_MAP_WIDTH * STARTING_MAP_HEIGHT);
+vector<int> tileObjectAmt(STARTING_MAP_WIDTH * STARTING_MAP_HEIGHT);
 vector<Plant> tilePlant(STARTING_MAP_WIDTH * STARTING_MAP_HEIGHT);
 
 // seeds (can be tubers or other plant sources) and their linked locations
@@ -27,7 +44,7 @@ vector<std::pair<float,float>> nearestVariantItem(STARTING_MAP_HEIGHT * STARTING
 vector<int>	variantItemTypes(STARTING_MAP_HEIGHT * STARTING_MAP_WIDTH);
 vector<Grass> tileGrass(STARTING_MAP_WIDTH * STARTING_MAP_HEIGHT);
 vector<bool> tileWater(STARTING_MAP_WIDTH * STARTING_MAP_HEIGHT); //whether a tile has water or not
-vector<bool> tileEmpty(STARTING_MAP_WIDTH * STARTING_MAP_HEIGHT);
+
 
 //FIND NEAR RESOURCES
 vector<std::pair<float,float>> nearestWaterTiles(STARTING_MAP_HEIGHT * STARTING_MAP_WIDTH);
@@ -57,7 +74,7 @@ vector<std::pair<float,float>> nearestDirtTiles(STARTING_MAP_HEIGHT * STARTING_M
 
 // SORT TILE METHODS
 void ultimateSort(int indexStart) {
-	for (int i = indexStart; i < tileIndex.size(); i++) {
+	for (int i = indexStart; i < tileIndices.size(); i++) {
 		std::pair<int,int> coords = tileCoords[i];
 		//WATER TILES
 		if (tileType[i] == Tile::ShallowWater || tileType[i] == Tile::DeepWater || tileType[i] == Tile::FlowingWater) {

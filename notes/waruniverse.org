@@ -4,6 +4,8 @@
 - For Textures ?
 - Game Engine - RayLib
 * TODO
+- scouts, watchmen, notify the player and pawns during attacks
+- elevation
 - different logs in aseprite, and log falling animation
 - separate flint and hardstone (possibly granite) tools as early toolheads, one brittle but sharp, other more durable
 - add stats for hardstone as building material

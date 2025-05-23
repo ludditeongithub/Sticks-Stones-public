@@ -12,12 +12,16 @@ TO TESTABLE STONE AGE ALPHA:
    a. Log, Stick, [Pebble, Rock, LargeRock, Boulder] (one folder), Flint, Ore, Beehive, ArtificialBeehive,
 5. finish tile aseprites (get approval for plowed tiles, and roads, and made floors) (tile on gh)
 DeepWater,ShallowSaltWater,RiverSource,FlowingWater,ShallowWater,Gravel, FrozenSoil, Snow, Ice, Stone, Ore, GemOre, RockSalt, Sand, Podzol, PlowedPodzol, LoamSoil, PlowedLoamSoil, PeatSoil, PlowedPeatSoil, SandySoil, PlowedSandySoil, ClaySoil, PlowedClaySoil, SiltySoil, PlowedSiltySoil, RockySoil, PlowedRockySoil, AridSoil, Oxisol, PlowedOxisol, Gleysol, Hardpan, Path, DirtRoad, StoneRoad, BrickRoad, PavedRoad, ConcreteRoad, WoodFloor, Carpet, StoneFloor, BrickFloor,
-6. finish product aseprites for stone age:
+
+b. overlay of tiles, showing naturally fallen fruit (some fallen vs lots fallen): Apple, Orange, Peach, Plum, Cherry, Apricot, Lemon, Lime, Mango
+6. finish product aseprites for paleo:
    a. (items -> clothes on gh): Tribalwear, Full Tribalwear, Child's Tribalwear, Wood Crown,
    b. (items -> containers on gh): Basket, Wood Bucket
-   c. (items -> products on gh): SmallHandle, LargeHandle,
-   d. (items -> tools) Flake, Bone Axe,  Knife, Hand Chisel, Primitive Leather Sack, Flint, Primitive Handaxe, Primitive Spear, Digging Stick
-8. finish buildable for stone age:
-   a. Tent Sticks, Tent Cover
-9. finish vehicles for stone age:
+   c. (items -> products on gh): SmallHandle, LargeHandle, Primitive Spearhead, Bleach, Yellow Dye, Blue Dye, Red Dye, Primitive Rope, Primitive String, String, Animal Hides, Feather, Animal Hair, Bone, Sinew, Wood, Peat, DrinkingWater, Cheese, GoatCheese,
+   d. (items -> tools) (ask me about these first) Hand Chisel,  Hand Axe, Torch, Stick Spear, Hammer Stone, Hand Knife, Hand Drill, Primitive Spear
+7. finish other resources:
+   a. Fruit Pit, Arsenic Ore, Ash, Gravel, Straw, Hay, Soot, Fiber, Chicken Egg, Duck Egg, Turtle Egg,
+8. finish buildable for paleo:
+   a. Tent Sticks, Tent Cover, PitFire
+9. finish vehicles for paleo:
    a. Canoe

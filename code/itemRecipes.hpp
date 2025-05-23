@@ -17,6 +17,8 @@ enum class itemTags {
     OptionalIngredient = 1 << 7,
     Mould = 1 << 8,
     Container = 1 << 9,
+    //TODO: add flammable tags
+    Flamable = 1 << 10,
 };
 
 // how resource is gotten
@@ -165,12 +167,12 @@ products[static_cast<int>(Item::ChiliPowder)] = {Actions::Mill, 100,  {Item::Pep
 
 // BASE MATERIALS
 products[static_cast<int>(Item::Metal)] = {Actions::Smelt, 0,  {Item::Ore},{5}, .tags=itemTags::VariableAmountsRequired | itemTags::VariableAmountProduced};
-products[static_cast<int>(Item::Wood)] = {Actions::Saw, 400, {Item::Log}, {25}};
+products[static_cast<int>(Item::Wood)] = {Actions::Saw, 400, {Item::Log}, {18}};
 products[static_cast<int>(Item::Timber)] = {Actions::Saw, 400, {Item::Log}, .tags=itemTags::VariableAmountProduced};
 products[static_cast<int>(Item::Plank)] = {Actions::Saw, 200, {Item::Wood}, {1}};
 products[static_cast<int>(Item::Stave)] = {Actions::Woodwork, 280,  {Item::Wood},{1}, {1}};
 products[static_cast<int>(Item::LongStave)] = {Actions::Woodwork, 660,  {Item::Log, Item::Timber},{4}, {1,2}};
-products[static_cast<int>(Item::Beam)] = {Actions::Woodwork, 280,  {Item::Wood},{1}, {1}};
+products[static_cast<int>(Item::Beam)] = {Actions::Woodwork, 280,  {Item::Wood, Item::LongStick},{2,1}, {1,1}};
 products[static_cast<int>(Item::LogBeam)] = {Actions::Saw, 570,  {Item::Log},{1}, {1}};
 products[static_cast<int>(Item::JoinedPlank)] = {Actions::Woodwork, 100,  {Item::Plank},{1}, {1}};
 products[static_cast<int>(Item::JoinedBeam)] = {Actions::Woodwork, 100,  {Item::Beam},{1}, {1}};
@@ -198,8 +200,9 @@ products[static_cast<int>(Item::AnimalHides)] = {Actions::Butcher, 0, {Item::Cor
 products[static_cast<int>(Item::Linen)] = {Actions::Treat, 950, {Item::Flax, Item::Water}, {1,10}, {1,2}, itemTags::Liquid};
 products[static_cast<int>(Item::Rope)] = {Actions::Lay, 800, {Item::AnimalHair, Item::Fiber}, {30,10}, {1,1}};
 products[static_cast<int>(Item::Fiber)] = {Actions::Cut, 20, {Item::Flax, Item::Hemp, Item::Papyrus}, {1,1,1}, {1,1,1}};
-//TODO: do soot, many items must be viable
+//TODO: do soot and ash  many items must be viable
 //products[static_cast<int>(Item::Soot)] = {Actions::Burn, 50,  {Item::Wood, Item::Fruit,  Item::Plank}, {1,1,1,1}, {1,1,1,1}, itemTags::VariableAmountsRequired | itemTags::VariableAmountProduced};
+
 products[static_cast<int>(Item::CuredHides)] = {Actions::Cur, 18000, {Item::Salt, Item::Lime, Item::AnimalHides}, {5, 2, 1}, {1,1}};
 products[static_cast<int>(Item::TanningAgent)] = {Actions::Mix, 28000,{Item::Wood, Item::Water}, {1,20}, {1,2}, itemTags::VariableAmountProduced};
 products[static_cast<int>(Item::TannedHides)] = {Actions::Tan, 30000, {Item::CuredHides, Item::TanningAgent}, {1,10}, {1,2}};
@@ -280,7 +283,8 @@ products[static_cast<int>(Item::Crossbow)] = {Actions::BowCraft, 50500, {Item::S
 products[static_cast<int>(Item::Longbow)] = {Actions::BowCraft, 23800, {Item::LongStave, Item::String}, {1,4}, {1,2,3}};
 
 //Carved Tools and Art
-products[static_cast<int>(Item::DiggingStick)] = {Actions::Carve, 1300, {Item::Stick}};
+products[static_cast<int>(Item::DiggingStick)] = {Actions::Carve, 1300, {Item::Stick, Item::LargeStick}};
+products[static_cast<int>(Item::StickSpear)] = {Actions::Carve, 900, {Item::LargeStick}};
 products[static_cast<int>(Item::PrimitiveSpearhead)] = {Actions::Knapp, 2000, {Item::Rock, Item::Bone}, .tags=itemTags::Alternate};
 products[static_cast<int>(Item::PrimitiveSpear)] = {Actions::Craft, 500, {Item::Stick, Item::LargeHandle, Item::PrimitiveString, Item::PrimitiveSpearHead}};
 products[static_cast<int>(Item::PrimitiveAxeHead)] = {Actions::Knapp, 2000, {Item::Rock}};
@@ -1003,7 +1007,7 @@ bulkAndWeights[static_cast<int>(Item::Plank)] = {1.6f, 2.2f, BulkLevel::Solid};
 bulkAndWeights[static_cast<int>(Item::Timber)] = {12.0f, 8.5f, BulkLevel::Solid};
 bulkAndWeights[static_cast<int>(Item::Stave)] = {2.1f, 2.2f, BulkLevel::Solid};
 bulkAndWeights[static_cast<int>(Item::LongStave)] = {4.6f, 6.5f, BulkLevel::Solid};
-bulkAndWeights[static_cast<int>(Item::Beams)] = {2.3f, 3.5f, BulkLevel::Solid};
+bulkAndWeights[static_cast<int>(Item::Beam)] = {2.3f, 3.5f, BulkLevel::Solid};
 bulkAndWeights[static_cast<int>(Item::LogBeam)] = {33.5f, 40.0f, BulkLevel::Solid};
 bulkAndWeights[static_cast<int>(Item::CutStone)] = {12.0f, 15.0f, BulkLevel::Solid};
 bulkAndWeights[static_cast<int>(Item::CutStoneSheet)] = {3.1f, 2.3f, BulkLevel::Solid};

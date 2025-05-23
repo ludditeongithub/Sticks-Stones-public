@@ -117,7 +117,6 @@ bool adjCheck(L& referenceMap, M& map, int y, int x, T check, int range) {
                 auto item = map[index];
 
                 if (abs(r) + abs(c) <= range && nx >= 0) {
-                    // Directly compare the item with check value
                     if (item == check) {
                         return true;
                     }
@@ -125,6 +124,15 @@ bool adjCheck(L& referenceMap, M& map, int y, int x, T check, int range) {
             }
         }
     }
+    return false;
+}
+
+bool adjCheckEntity(int firstIndex, int secondIndex, bool firstAnimal, bool secondAnimal) {
+    if (firstAnimal) std::pair<int,int> fc = animalCoords[firstIndex];
+    else std::pair<int,int> fc = currentCoords[firstIndex];
+    if (secondAnimal) std::pair<int,int> sc = animalCoords[secondIndex];
+    else std::pair<int,int> fc = currentCoords[firstIndex];
+    if ((abs(fc.first - sc.first) == 1 || abs(fc.first - sc.first) == 0) && (abs(fc.second - sc.second) == 0 || abs(fc.second - sc.second) == 1)) return true;
     return false;
 }
 
@@ -204,6 +212,22 @@ std::pair<int,int> adjGet(vector<vector<int>>& map, int y, int x, int check, int
     }
     return adj;
 }
+
+//checking any tile parameter
+template <typename T, typename C>
+std::pair<int,int> adjGetTileOfType(vector<T>& tileVector, int tileIndex, C type, int range) {
+    std::pair<int,int> adj = tileIndices(tileIndex);
+        // Ensure we're checking only directly adjacent tiles within the range
+        if (abs(r) + abs(c) <= range && nx >= 0 && nx < rows && ny >= 0 && ny < cols) {
+            if (tileVector[index] == type) {
+                    adj = tileIndices(tileIndex);
+                    return adj;
+            }
+        }
+    return adj;
+}
+
+
 
 int adjRange(std::vector<std::vector<int>>& map, int y, int x, int check) {
     int rows = map.size(), cols = map[0].size();
@@ -419,7 +443,7 @@ std::pair<int, int> getAdjacentTile(int tileIndex, Direction direction) {
     if (direction == Direction::East)
 }
 
-std::pair<int, int> findNearestAdjacentEmptyTile(int startIndex) {
+std::pair<int, int> getNearestAdjacentEmptyTile(int startIndex) {
     std::queue<int> q;
     std::unordered_set<int> visited;
 
@@ -448,13 +472,42 @@ std::pair<int, int> findNearestAdjacentEmptyTile(int startIndex) {
     return {-1, -1}; // No empty tile found
 }
 
+int getNearestAdjacentEmptyTileIndex(int startIndex) {
+    std::queue<int> q;
+    std::unordered_set<int> visited;
+
+    q.push(startIndex);
+    visited.insert(startIndex);
+
+    while (!q.empty()) {
+        int current = q.front();
+        q.pop();
+
+        auto [above, right, below, left] = adjacentTilesIndices[current];
+        std::array<int, 4> neighbors = {above, right, below, left};
+
+        for (int neighbor : neighbors) {
+            if (neighbor < 0 || visited.count(neighbor)) continue;
+
+            if (checkEmptyTile(current, neighbor)) {
+                return neighbor// Found nearest empty tile
+            }
+
+            visited.insert(neighbor);
+            q.push(neighbor);
+        }
+    }
+
+    return -1; // No empty tile found
+}
+
 struct TileBlock() {
     std::pair<int,int> startTile;
     uint8_t blockSize;
     Direction direction;
 }
 
-TileBlock findNearestAdjacentEmptyTileBlock(int startIndex, uint8_t blockSize) {
+TileBlock getNearestAdjacentEmptyTileBlock(int startIndex, uint8_t blockSize) {
     std::queue<int> q;
     std::unordered_set<int> visited;
     Direction direction;
@@ -482,7 +535,7 @@ TileBlock findNearestAdjacentEmptyTileBlock(int startIndex, uint8_t blockSize) {
                 while (checkEmptyTile(current, temp) && visited.count(temp) == 0) {
                     count++;
                     visited.insert(temp);
-                    temp = right; // Move right
+                    temp = right; // move right
                     direction = west;
                 }
 
@@ -525,70 +578,11 @@ TileBlock findNearestAdjacentEmptyTileBlock(int startIndex, uint8_t blockSize) {
     return {-1, -1}; // No empty tile block found
 }
 
-
-//TODO: factor in tiles that cannot be moved through: too high, water, too low
-void moveTo(bool animal, std::pair<int,int> targetCoords) {
-	if (animal) {
-		std::pair<int,int>& subjectCoords = animalCoords[subjectIndex];
-	} else std::pair<int,int>& subjectCoords = currentCoords[subjectIndex];
-		int yAxisDifference = targetCoords.first - subjectCoords.first;
-	int xAxisDifference = targetCoords.second - subjectCoords.second;
-	std::pair<int, int> nextTile = subjectCoords;
-
-	while ((subjectCoords != targetCoords)) {
-		if (yAxisDifference < 0) {
-		nextTile.first -= 1;
-		yAxisDifference += 1;
-		} else if (yAxisDifference > 0) {
-		nextTile.first += 1;
-		yAxisDifference -= 1;
-		}
-		if (xAxisDifference < 0) {
-		nextTile.second -= 1;
-		xAxisDifference += 1;
-		} else if (yAxisDifference > 0) {
-		nextTile.second += 1;
-		xAxisDifference -= 1;
-		}
-        tileEmpty[tileIndex[subjectCoords]] = false;
-		subjectCoords = nextTile;
-        tileEmpty[tileIndex[subjectCoords]] = true;
-	}
+int getSpeed(Animal animal) {
+    switch (animal) {
+        Pig, Cow, Chicken, Duck, Sheep, Goat, Horse, Ox, Donkey, Camel, WaterBuffalo, Rabbit, Antelope, Deer, Moose, Capybara, Turtle, Elephant, Bison, Wolf, Bear, Caribou, Fish,
+    }
 }
-
-// have subject walk until they are adjacent to target, up to the range
-void meet(int subjectIndex, bool subjectAnimal, int targetIndex, bool targetAnimal, int range) {
-	if (subjectAnimal) {
-		std::pair<int,int>& subjectCoords = animalCoords[subjectIndex];
-	} else std::pair<int,int>& subjectCoords = currentCoords[subjectIndex];
-	if (targetAnimal) {
-		std:pair<int,int>& targetCoords = animalCoords[targetIndex];
-	} else std::pair<int,int>& subjectCoords = currentCoords[targetIndex];
-	int yAxisDifference = targetCoords.first - subjectCoords.first;
-	int xAxisDifference = targetCoords.second - subjectCoords.second;
-	std::pair<int, int> nextTile = subjectCoords;
-
-	while ((subjectCoords.first < targetCoords.first + range || subjectCoords.first > targetCoords.first - range) || (subjectCoords.second < targetCoords.second + range && subjectCoords.second > targetCoords.second - range)) {
-		if (yAxisDifference < 0) {
-		nextTile.first -= 1;
-		yAxisDifference += 1;
-		} else if (yAxisDifference > 0) {
-		nextTile.first += 1;
-		yAxisDifference -= 1;
-		}
-		if (xAxisDifference < 0) {
-		nextTile.second -= 1;
-		xAxisDifference += 1;
-		} else if (yAxisDifference > 0) {
-		nextTile.second += 1;
-		xAxisDifference -= 1;
-		}
-		tileEmpty[tileIndex[subjectCoords]] = false;
-		subjectCoords = nextTile;
-        tileEmpty[tileIndex[subjectCoords]] = true;
-	}
-}
-
 
 int getSeedIndex(int y, int x, int length) {
     return y * length + x;
@@ -596,4 +590,194 @@ int getSeedIndex(int y, int x, int length) {
 
 int calculateDistance(int y, int x, const std::pair<int,int>& target) {
     return std::abs(x - target.first) + std::abs(y - target.second);
+}
+
+struct Node {
+    int index;
+    uint8_t moveCost;  // The cost of moving to this node
+    uint8_t fCost;     // fCost = gCost + heuristic
+    Node* parent;      // Parent node for path reconstruction
+
+    Node(int index, uint8_t moveCost, uint8_t fCost, Node* parent = nullptr)
+        : index(index), moveCost(moveCost), fCost(fCost), parent(parent) {}
+
+    bool operator>(const Node& other) const {
+        return fCost > other.fCost;
+    }
+};
+
+uint8_t manDist(int x1, int y1, int x2, int y2) {
+    return std::abs(x1 - x2) + std::abs(y1 - y2);
+}
+
+// returns pair of index, cost to new path vector
+std::vector<std::pair<int, int>> greedyPath(int startIndex, int endIndex) {
+    int startX = tileCoords[startIndex].first;
+    int startY = tileCoords[startIndex].second;
+
+    int goalX = tileCoords[endIndex].first;
+    int goalY = tileCoords[endIndex].second;
+    std::priority_queue<Node, std::vector<Node>, std::greater<Node>> openSet;
+    std::unordered_map<int, bool> visited;
+
+    // Start with the initial node, no parent (null)
+    openSet.push(Node(startX, startY, 0, manDistance(startX, startY, goalX, goalY), nullptr));
+
+    std::vector<std::pair<std::pair<int, int>, int>> path;
+
+    while (!openSet.empty()) {
+        Node current = openSet.top();
+        openSet.pop();
+
+        int index = current.index;
+        int cost = current.moveCost;
+
+        if (tileCoords[index].first == goalX && tileCoords[index].second == goalY) {
+            // reconstruct the path by backtracking from goal to start
+            while (current.parent != nullptr) {
+                path.push_back(index, cost);
+                current = *current.parent;
+                index = current.index
+            }
+            path.push_back(index, 0);
+            std::reverse(path.begin(), path.end()); // Reverse the path to get the correct order
+            break;
+        }
+
+        if (visited(index)) continue;
+        visited(index) = true;
+
+        for (int i = 0; i < 4; ++i) {;
+            uint8_t moveCost = 0;
+            int newIndex;
+            switch (i) {
+                case 0:  //up
+                    moveCost = adjacentTilesCost[index].up;
+                    newIndex = adjacentTilesIndices[index].up;
+                    break;
+                case 1:  //down
+                    moveCost = adjacentTilesCost[index].down;
+                    newIndex = adjacentTilesIndices[index].down;
+                    break;
+                case 2:  //left
+                    moveCost = adjacentTilesCost[index].left;
+                    newIndex = adjacentTilesIndices[index].left;
+                    break;
+                case 3:  //right
+                    moveCost = adjacentTilesCost[index].right;
+                    newIndex = adjacentTilesIndices[index].right;
+                    break;
+            }
+            if (newIndex == -1) continue;
+            if (visited(newIndex)) continue;
+            uint8_t newManDist = manDist(tileCoords[index].first, tileCoords[index].second, goalX, goalY);
+            openSet.push(Node(newIndex, moveCost, moveCost + newManDist, &current));
+        }
+    }
+    return path;
+}
+
+//use to estimate when entity will arrive at target
+int timeToDestEstimator(bool min, int subjectIndex, int targetIndex, bool subjectAnimal, bool targetAnimal) {
+        if (targetAnimal) {
+        std::pair<int,int> targetCoord = animalCoords[targetIndex];
+    } else std::pair<int,int> targetCoord = currentCoords[targetIndex];
+
+    if (subjectAnimal) {
+        std::pair<int,int> subjectCoord = animalCoords[subjectIndex];
+        Animal animal = animals[subjectIndex];
+    } else std::pair<int,int> subjectCoord = currentCoords[targetIndex];
+
+    int dist = manDist(subjectCoord.first, subjectCoord.second, targetCoord.first, targetCoord.second);
+    if (subjectAnimal) dist *= getSpeed(animal);
+    return dist;
+}
+
+void moveAnimal(vector<std::pair<int,int> path, int animalIndex) {
+ 	std::pair<int,int>& subjectCoords = animalCoords[animalIndex];
+    Animal animal = animals[animalIndex];
+
+    int nextTileMoveTime = 0;
+    for (int i = 0; i < path.size(); i++) {
+        nextTileMoveTime += path[i].second * getSpeed(animal);
+        addEvent(nextTileMoveTime, EventType::AnimalMoveTile, path[i].first, animalIndex);
+    }
+}
+
+void movePawn(vector<std::pair<int,int> path, int pawnIndex) {
+ 	std::pair<int,int>& subjectCoords = currentCoords[pawnfindex];
+    int nextTileMoveTime = 0;
+    for (int i = 0; i < path.size(); i++) {
+        nextTileMoveTime += path[i].second;
+        addEvent(nextTileMoveTime, EventType::PawnMoveTile, path[i].first, pawnIndex);
+    }
+}
+
+void moveAnimal(int entityIndex, int destCoordIndex) {
+    std::pair<int, int> ec = animalCoords[entityIndex];
+    vector<std::pair<std::pair<int,int>, int>> path = greedyPath(ec, destCoordIndex);
+    moveAnimal(path, entityIndex);
+}
+
+void movePawn(int entityIndex, int destCoordIndex) {
+    std::pair<int, int> ec = animalCoords[entityIndex];
+    std::pair<int, int> ec = currentCoords[entityIndex];
+
+    vector<std::pair<std::pair<int,int>, int>> path = greedyPath(ec, destCoordIndex);
+    movePawn(path, entityIndex);
+}
+
+//TODO: consider making the move tile events directional
+void moveAnimal(int entityIndex, int destCoordIndex, DelayedEvent event) {
+    std::pair<int, int> ec = animalCoords[entityIndex];
+    vector<std::pair<std::pair<int,int>, int>> path = greedyPath(ec, destCoordIndex);
+    Animal animal = animals[animalIndex];
+
+    int nextTileMoveTime = 0;
+    for (int i = 0; i < path.size(); i++) {
+        nextTileMoveTime += path[i].second * getSpeed(animal);
+        addEvent(nextTileMoveTime, EventType::AnimalMoveTile, path[i].first, entityIndex);
+    }
+    addEvent(nextTileMoveTime + 1, event, entityIndex);
+}
+
+void movePawn(int entityIndex, int destCoordIndex, DelayedEvent event) {
+    std::pair<int, int> ec = animalCoords[entityIndex];
+    vector<std::pair<std::pair<int,int>, int>> path = greedyPath(ec, destCoordIndex);
+
+    int nextTileMoveTime = 0;
+    for (int i = 0; i < path.size(); i++) {
+        nextTileMoveTime += path[i].second;
+        addEvent(nextTileMoveTime, EventType::PawnMoveTile, path[i].first, entityIndex);
+    }
+    addEvent(nextTileMoveTime + 1, event, entityIndex);
+}
+
+//moves a certain entity until it is adjacent with another entity and facing it.
+void meet(int finderIndex, int targetIndex, bool finderAnimal, bool targetAnimal, DelayedEvent meetType) {
+    if (finderAnimal) std::pair<int, int> fc = animalCoords[finderIndex];
+    else std::pair<int, int> fc = currentCoords[finderIndex];
+    if (targetAnimal) std::pair<int, int> tc = animalCoords[targetIndex];
+    else std::pair<int, int> tc = currentCoords[targetIndex];
+
+    vector<std::pair<std::pair<int,int>, int>> path = greedyPath(tileIndices(fc), tileIndices(tc));
+    if (finderAnimal) moveAnimal(path, animalIndex);
+    else movePawn(path, pawnIndex);
+
+    int time = timeToDestEstimator(finderIndex, targetIndex, finderAnimal, targetAnimal);
+    if (finderAnimal) {
+        if (targetAnimal) {
+            addEvent(time, EventType::CheckIfAdjacentAnimals, static_cast<int>(meetType), finderIndex, targetIndex);
+        } else addEvent(time, EventType::CheckIfAdjacentAnimalToPawn, static_cast<int>(meetType), finderIndex, targetIndex);
+    } else {
+        if (targetAnimal) {
+            addEvent(time, EventType::CheckIfAdjacentPawnToAnimal, static_cast<int>(meetType),finderIndex, targetIndex);
+        } else addEvent(time, EventType::CheckIfAdjacentPawns, static_cast<int>(meetType), finderIndex, targetIndex);
+    }
+    //TODO:fix and face entities
+}
+
+//TODO: normal state wild path algorithm for animals
+void wander() {
+
 }

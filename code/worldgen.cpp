@@ -1414,71 +1414,70 @@ if (biome == 10) {
 }
 float random = rand() / (float) RAND_MAX;
 if (random < currentChance + pigChance) {
-    animals.push_back(Animal::Pig);
-    animalCoords.push_back(tile);
+    spawnAnimal(Animal::Pig, tile);
 }
 else if (random < (currentChance += pigChance) + cowChance) {
-    animals.push_back(Animal::Cow);
+    spawnAnimal(Animal::Cow, tile);
 }
 else if (random < (currentChance += cowChance) + chickenChance) {
-    animals.push_back(Animal::Chicken);
+    spawnAnimal(Animal::Chicken, tile);
 }
 else if (random < (currentChance += chickenChance) + duckChance) {
-    animals.push_back(Animal::Duck);
+    spawnAnimal(Animal::Duck, tile);
 }
 else if (random < (currentChance += duckChance) + sheepChance) {
-    animals.push_back(Animal::Sheep);
+    spawnAnimal(Animal::Sheep, tile);
 }
 else if (random < (currentChance += sheepChance) + goatChance) {
-    animals.push_back(Animal::Goat);
+    spawnAnimal(Animal::Goat, tile);
 }
 else if (random < (currentChance += goatChance) + horseChance) {
-    animals.push_back(Animal::Horse);
+    spawnAnimal(Animal::Horse, tile);
 }
 else if (random < (currentChance += horseChance) + oxChance) {
-    animals.push_back(Animal::Ox);
+    spawnAnimal(Animal::Ox, tile);
 }
 else if (random < (currentChance += oxChance) + donkeyChance) {
-    animals.push_back(Animal::Donkey);
+    spawnAnimal(Animal::Donkey, tile);
 }
 else if (random < (currentChance += donkeyChance) + camelChance) {
-    animals.push_back(Animal::Camel);
+    spawnAnimal(Animal::Camel, tile);
 }
 else if (random < (currentChance += camelChance) + waterBuffaloChance) {
-    animals.push_back(Animal::WaterBuffalo);
+    spawnAnimal(Animal::WaterBuffalo, tile);
 }
 else if (random < (currentChance += waterBuffaloChance) + rabbitChance) {
-    animals.push_back(Animal::Rabbit);
+    spawnAnimal(Animal::Rabbit, tile);
 }
 else if (random < (currentChance += rabbitChance) + antelopeChance) {
-    animals.push_back(Animal::Antelope);
+    spawnAnimal(Animal::Antelope, tile);
 }
 else if (random < (currentChance += antelopeChance) + deerChance) {
-    animals.push_back(Animal::Deer);
+    spawnAnimal(Animal::Deer, tile);
 }
 else if (random < (currentChance += deerChance) + mooseChance) {
-    animals.push_back(Animal::Moose);
+    spawnAnimal(Animal::Moose, tile);
 }
 else if (random < (currentChance += mooseChance) + capybaraChance) {
-    animals.push_back(Animal::Capybara);
+    spawnAnimal(Animal::Capybara, tile);
 }
 else if (random < (currentChance += capybaraChance) + turtleChance) {
-    animals.push_back(Animal::Turtle);
+    spawnAnimal(Animal::Turtle, tile);
 }
 else if (random < (currentChance += turtleChance) + elephantChance) {
-    animals.push_back(Animal::Elephant);
+    spawnAnimal(Animal::Elephant, tile);
 }
 else if (random < (currentChance += elephantChance) + bisonChance) {
-    animals.push_back(Animal::Bison);
+    spawnAnimal(Animal::Bison, tile);
 }
 else if (random < (currentChance += bisonChance) + wolfChance) {
-    animals.push_back(Animal::Wolf);
+    spawnAnimal(Animal::Wolf, tile);
 }
 else if (random < (currentChance += wolfChance) + bearChance) {
-    animals.push_back(Animal::Bear);
+    spawnAnimal(Animal::Bear, tile);
 }
 else if (random < (currentChance += bearChance) + caribouChance) {
-    animals.push_back(Animal::Caribou);
+    spawnAnimal(Animal::Caribou, tile);
 }
 // SET TILE TO NOT EMPTY AS ANIMAL SPAWNED
 if (random < currentChance + caribouChance)     tileEmpty[i] = true;

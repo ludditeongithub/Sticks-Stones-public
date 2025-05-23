@@ -59,6 +59,11 @@ int rbin() {
     return dist(gen); // Returns either 0 or 1
 }
 
+bool rbool() {
+    if (rbin() == 0) return false;
+    return true;
+}
+
 float lerp(float a, float b, float t) {
     return a + t * (b - a);
 }

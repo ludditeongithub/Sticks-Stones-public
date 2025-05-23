@@ -349,7 +349,7 @@ void getResource(Item item) {
 //     //TODO: add queued actions for each that trigger once destination is reached.
 //     //TODO: specific metal hints, specific crops, DairyFarmer, Papyrus
 //     std::vector<float> queryPoint = currentCoords[pawn];
-//     int index = tileIndex[currentCoords[pawn]];
+//     int index = tileIndices[currentCoords[pawn]];
 //     size_t numResults = 1;
 //     uint32_t retIndex[numResults]; // nearest neighbor index
 //     float outDistSqr[numResults]; //distance between nn and current

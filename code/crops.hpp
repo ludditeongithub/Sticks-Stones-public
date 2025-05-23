@@ -12,6 +12,7 @@ float date;
 
 std::vector<Plant> cropList;
 
+std::vector<Plant> plants;
 std::vector<std::pair<int,int>> plantCoords;
 std::vector<float> growthAmt;
 std::vector<int> yieldMisses;
@@ -27,8 +28,19 @@ void dropFruit() {
 
 }
 
-void disperseSeeds() {
+//TODO: consider making this array, so that animals can eat and poop many seeds.
+void animalEatSeeds(int animalIndex, int foodTileIndex, bool fruitTree) {
+    //TODO: create variable digestion time
+    int digestionTime = 0;
+    Animal& animal = animals[animalIndex];
 
+    if (!fruitTree) {
+        Plant& plantType = tilePlant[foodTileIndex];
+        addEvent(digestionTime, EventType::FutureSeedDropping, (int) plantType, animalIndex);
+    } else {
+        Fruit& fruit = tileObject[foodTileIndex];
+        addEvent(digestionTime, EventType::FutureSeedDroppingFruit, (int) fruit, animalIndex);
+    }
 }
 
 //TODO: complete and render
@@ -50,9 +62,11 @@ void treeDeath(int plantIndex) {
     TileBlock tb = findNearestAdjacentEmptyTileBlock(plantIndex, blockSize);
     std::tuple<int,int,int,int> adjacentTiles = adjacentTilesIndices[plantIndex];
     tilePlant[plantIndex] = Plant::Stump;
+    int newTileIndex;
     for (int i = 1; i < blockSize; i++) {
         if (tb.direction == Direction::North) {
-            return std::get<0>(adjacentTiles);
+            newTileIndex = std::get<0>(adjacentTiles);
+            adjacentTiles = adjacentTilesIndices;
         }
         if (tb.direction == Direction::South) {
             return std::get<2>(adjacentTiles);
@@ -64,19 +78,18 @@ void treeDeath(int plantIndex) {
             return std::get<1>(adjacentTiles);
         }
     }
-    tileObject[plantIndex] = Scavengeable::Log;
-
 }
 
 void cropDeath(int plantIndex) {
         Plant plant = tilePlant[tileIndex];
         PlantType type = plants[(int)plant].plantType;
+
+        tileObject[tileObjectIndex] = Plant::None;
         switch (plantType) {
             case Tree:
             case FruitTree:
                 treeDeath(plantIndex);
         }
-        tileObject[tileObjectIndex] = Plant::None;
 }
 
 // add new crop to actively tracked crops

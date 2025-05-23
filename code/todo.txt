@@ -12,11 +12,48 @@ TO TESTABLE STONE AGE ALPHA:
 5. finish tile aseprites (get approval for plowed tiles, and roads, and made floors) (tile on gh)
 DeepWater,ShallowSaltWater,RiverSource,FlowingWater,ShallowWater,Gravel, FrozenSoil, Snow, Ice, Stone, Ore, GemOre, RockSalt, Sand, Podzol, PlowedPodzol, LoamSoil, PlowedLoamSoil, PeatSoil, PlowedPeatSoil, SandySoil, PlowedSandySoil, ClaySoil, PlowedClaySoil, SiltySoil, PlowedSiltySoil, RockySoil, PlowedRockySoil, AridSoil, Oxisol, PlowedOxisol, Gleysol, Hardpan, Path, DirtRoad, StoneRoad, BrickRoad, PavedRoad, ConcreteRoad, WoodFloor, Carpet, StoneFloor, BrickFloor,
 6. finish product aseprites for stone age:
-   a. (items -> clothes on gh): Tribalwear, Full Tribalwear, Child's Tribalwear, Wood Crown,
-   b. (items -> containers on gh): Basket, Wood Bucket
-   c. (items -> products on gh): SmallHandle, LargeHandle,
-   d. (items -> tools) Flake, Bone Axe,  Knife, Hand Chisel, Primitive Leather Sack, Flint, Primitive Handaxe, Primitive Spear, Digging Stick
+   a. (items -> clothes on gh):
+   b. (items -> containers on gh):
+   c. (items -> products on gh):
+   d. (items -> tools)
 8. finish buildable for stone age:
    a. Tent Sticks, Tent Cover
 9. finish vehicles for stone age:
    a. Canoe
+
+
+PitFire,
+Tribalwear,
+Torch,
+HandAxe,
+StickSpear,
+Hammerstone,
+HandKnife,
+HandDrill,
+HandChisel,
+PrimitiveSpear,
+PrimitiveSpearhead,
+Bleach,
+YellowDye,
+BlueDye,
+RedDye,
+PrimitiveRope,
+PrimitiveString,
+LargeHandle,
+SmallHandle,
+String,
+Ash,
+Straw,
+Hay,
+Soot,
+Fiber,
+AnimalHides,
+Feather,
+AnimalHair,
+Bone,
+Sinew,
+Wood,
+Peat,
+Salt,
+DrinkingWater,
+AnimalFat,
