@@ -1,21 +1,22 @@
 #include "animal.hpp"
 
-//build nearest search tree
-	SeedCloud animalCloud;
-        using my_kd_tree_t = nanoflann::KDTreeSingleIndexAdaptor<
-	nanoflann::L2_Simple_Adaptor<float, SeedCloud>,
-            SeedCloud, /* Our dataset */
-            2 /* 2D space */
-            >;
-void sortAnimals() {
-	nearestAnimal.clear();
-	for (int i = 0; i < animalCoords.size(); i++) {
-		nearestAnimal.push_back(animalCoords[i]);
-	}
-	animalCloud.seeds = nearestAnimal;
+
+void addAnimal(AnimalData animal, int x, int y) {
+	int ai = nextAnimalIndex.pop();
+	//consider multithreading locks here
+	animalIndices[{x,y}] = ai;
+	animals[ai] = animal.type;
+	rbool() ? animalSex[ai] = true : animalSex[ai] = false;
+	animalHealth[ai] = animal.health;
+	animalHunger[ai] = animal.hunger;
+	animalCoords[ai] = {x,y};
 }
 
-  my_kd_tree_t animalTree(2 /*dim*/, animalCloud, {10} /* max leaf size */);
+void removeAnimal(Animal animal, int x, int y) {
+	int ai = animalIndices[{x,y}];
+	nextAnimalIndex.push(ai);
+	animals[ai] = Animal::NONE;
+}
 
 int getFruitHunger(Fruit fruit) {
 	switch (fruit) {
@@ -215,16 +216,15 @@ void eatFruit(int entityIndex, int fruitTypeIndex, int tileIndex) {
 	//entityIndex can be enum class conversion to item, or tile index
 	animalHunger[entityIndex] += getFruitHunger(static_cast<Fruit>(fruitTypeIndex));
 	tileObjectAmt[tileIndex] -= 1;
-	if (tileObjectAmt[tileIndex] == 0) = Fruit::NONE;
+	if (tileObjectAmt[tileIndex] == 0) tileObject[tileIndex] = Fruit::NONE;
 }
 
-void eatPlant(int entityIndex, int plantIndex, int tileIndex) {
+void eatPlant(int entityIndex, int tileIndex) {
 	//entityIndex can be enum class conversion to item, or tile index
 	animalHunger[entityIndex] += getPlantHunger(static_cast<Plant>(plants[plantIndex]));
-	plants[plantIndex] = NONE;
+	tileObjectAmt[tileIndex] -= 1;
+	if (tileObjectAmt[tileIndex] == 0) tilePlant[tileIndex] = NONE;
 }
-
-
 
 // in ticks
 int calculateTimeTillFeed(int hungerAmount, Animal animal) {
@@ -345,24 +345,9 @@ void hatchEgg(Animal animal, int coordIndex) {
 	tileObject[index] = Scavengeable::NONE;
 }
 
-int findBreedingPartnerIndex(int animalIndex, Animal animal) {
-	std::vector<float> queryPoint = { (float) animalCoords[animalIndex].first, (float) animalCoords[animalIndex].second};
-		bool found = false;
-		size_t numResults = 5;
-		lastSearch = 0;
-	while (!found) {
-     uint32_t retIndex[numResults]; // nearest neighbor index
-     float outDistSqr[numResults]; //distance between nn and current
-	animalTree.knnSearch(&queryPoint[0], numResults, &retIndex[0], &outDistSqr[0]);
-	for (int i = lastSearch; i < numResults; i++) {
-		//if animal is male, same species, and not searching for mate already
-		if (animals[retIndex[i]] == animal && animalSex[retIndex[i]] && !(animalMatingStatus[retIndex[i]] == MatingStatus::Searching)) return i;
-	}
-	if (numResults < 20) {
-		lastSearch = numResults;
-		numResults *= 2;
-	}
-	}
+std::pair<int,int> findBreedingPartner(int x, int y, int i, Animal animal) {
+	std::pair<int,int> ne = findNearestEntity(animal, x, y);
+
 	return -1; //not found
 }
 
@@ -396,15 +381,53 @@ bool eggLayer(Animal animal) {
 	return false;
 }
 
+std::pair<int, int> getMoveTimeAndTileIndex(Direction direction) {
+	switch (direction) {
+                case Direction::Up:  //up
+                    return {adjacentTilesCost[index].up, adjacentTilesIndices[index].up};
+                case Direction::Down:  //down
+                    return {adjacentTilesCost[index].down, adjacentTilesIndices[index].down};
+                case Direction::Left:  //left
+                    return {adjacentTilesCost[index].left, adjacentTilesIndices[index].left};
+                case Direction::Right:  //right
+                    return {adjacentTilesCost[index].right, adjacentTilesIndices[index].right};
+            }
+	return {-1,-1};
+}
+
+void animalHunt(Direction direction, Animal animal, int animalIndex) {
+		//NOTE: random here, maybe simplify
+	if (rint(0, 10)	< 9) {
+
+		 //TODO: if time == night and has Tool torch, currentSight = x
+		 std::pair<int,int>	gt = getMoveTimeAndTileIndex(direction);
+		addEvent(gt.second, EventType::AnimalMoveTile, animalIndex, gt.first);
+		huntCheck(predatorDiet[animal], animalIndex, currentSight, direction, true);
+	}
+}
+
+void animalHunt(Direction direction, Animal animal, int animalIndex) {
+	while (bool found = false) {
+		Direction goDirection = direction;
+		//NOTE: random here, maybe simplify
+	if (rint(0, 20)	< 19) goDirection = getRandomAdjDirection(direction);
+		 //TODO: if time == night and has Tool torch, currentSight = x
+		 std::pair<int,int>	gt = getMoveTimeAndTileIndex(goDirection);
+		addEvent(gt.second, EventType::AnimalMoveTile, animalIndex, gt.first);
+		huntCheck(predatorDiet[animal], animalIndex, currentSight, goDirection, true);
+		if (movingStatus[pawnIndex] == MovingStatus::Pursuit) return;
+		if (movingStatus[pawnIndex] == MovingStatus::Idle) return;
+	}
+}
+
+
 //animalIndex is female, but the male partner is who goes on path to find female
-void breed(Animal animal, int animalIndex) {
-		int partnerIndex = findBreedingPartnerIndex(animalIndex, animal);
-		if (partnerIndex == -1) return;
-		if (eggLayer(animalIndex)) {
+void breed(int maleIndex, int femaleIndex) {
+		if (eggLayer(animals[femaleIndex])) {
 			//egg lays on a schedule regardless, this randomizes interest of male
-			meet(partnerIndex, animalIndex, true, true, MeetEvent::EggBreeding);
+			meet(maleIndex, femaleIndex, true, true, MeetEvent::EggBreeding);
 		}
-		else meet(partnerIndex, animalIndex, true, true, MeetEvent::Breeding);
+		else meet(maleIndex, femaleIndex, true, true, MeetEvent::Breeding);
 }
 
 // for every animal, trigger breeding if female, interpret and some chance is met, not currently processing offspring
@@ -427,11 +450,18 @@ TileBlock tb = getNearestAdjacentTileBlock(tileIndices[dest], animalSize * 2 - 1
 dest = tb.startTile;
 moveAnimal(animalIndex, tileIndices[dest]);
 // after birth, add event for next breeding in the future
+//TODO: consider sleeping
+addAnimal(animal, dest.first, dest.second);
 addEvent(getBreedingTime(animal), EventType::AnimalBreeding, static_cast<int>(animals[animalIndex]), animalIndex);
 }
 
 void preyFeed(int animalIndex) {
-	Animal feeder = animals(animalIndex);
+	Animal feeder = animals[animalIndex];
+	if (animalHunger[animalIndex] < hungerThreshold(feeder));
+	addEvent(calculateTimeTillFeed(animalHunger[animalIndex], feeder), EventType::PreyFeed, static_cast<int>(feeder), animalIndex);
+
+	int futureConsumption = 0;
+
 	 bool grassEater = false;
 	 for (int i = 0; i < grassEaters.size(); i++) {
 		 if (feeder == grassEaters[i]) {
@@ -440,10 +470,9 @@ void preyFeed(int animalIndex) {
 	 }
 	 if (grassEater) {
 		 moveAnimal(animalIndex, getNearestAdjacentEmptyTileIndex(tileIndices[animalCoords[animalIndex]]), DelayedEvent::EatGrass);
-	 } else {
+	 } else if (plantEater) {
 		 size_t numResults = 8;
-		 	while (animalHunger[animalIndex] < hungerThreshold) {
-				bool found = false;
+		bool found = false;
 		 int start = 0;
 		 while (!found) {
 			 uint32_t retIndex[numResults]; // nearest neighbor index
@@ -456,6 +485,8 @@ void preyFeed(int animalIndex) {
 				 if (plants[retIndex[i]] == diet[j]) {
 					 found = true;
 					 dest = plantCoords[retIndex];
+					 destIndex = tileIndices(dest);
+					 futureConsumption += getHunger(static_cast<Fruit>(tileObject[destIndex]));
 				 }
 			 }
 		 }
@@ -465,12 +496,42 @@ void preyFeed(int animalIndex) {
 		 }
 	 }
 		 //TODO: consume plant
-		 moveAnimal(animalIndex, tileIndices[dest], DelayedEvent::EatPlant);
-		}
-	}
-	 //calculate next feeding time and send as future event
-	 	addEvent(calculateTimeTillFeed(animalHunger[animalIndex], feeder), EventType::PreyFeed, static_cast<int>(feeder), animalIndex);
+		 moveAnimal(animalIndex, destIndex, DelayedEvent::EatPlant);
+	} else if (fruitEater) {
+		 size_t numResults = 8;
+		 bool found = false;
+		 int start = 0;
+		 while (!found) {
+			 uint32_t retIndex[numResults]; // nearest neighbor index
+			 float outDistSqr[numResults]; //distance between nn and current
+			 std::vector<float> coords = {(float)animalCoords[animalIndex].first, (float)animalCoords[animalIndex].second}
+			 fruits.knnSearch(coords, numResults, &retIndex[0], &outDistSqr[0]);
+			 std::pair<int,int> dest;
+			 int destIndex;
+		for (int i = start; i < numResults; i++) {
+			 for (int j = 0; j < diet.size(); j++) {
+				 //TODO: link fruit
+				 if (fruits[retIndex[i]] == diet[j]) {
+					 found = true;
+					 dest = plantCoords[retIndex];
+					 destIndex = tileIndices(dest);
+					 futureConsumption += getHunger(static_cast<Fruit>(tileObject[destIndex]));
+				 }
+			 }
+		 }
+		 if (!found) {
+			 start = numResults;
+			 numResults *= 2;
+		 }
+		 moveAnimal(animalIndex, destIndex, DelayedEvent::EatFruit);
+	 }
 }
+	 //calculate next feeding time and send as future event
+	 addEvent(calculateTimeTillFeed(animalHunger[animalIndex] + futureConsumption, feeder), EventType::PreyFeed, static_cast<int>(feeder), animalIndex);
+}
+
+
+
 
 //TODO: if outDistSqr not required, do not do it
 void predatorFeed(int animalIndex) {
@@ -478,39 +539,7 @@ void predatorFeed(int animalIndex) {
 	 size_t numResults = 8;
 	 int preyIndex;
 
-	while (animalHunger[animalIndex] < hungerThreshold) {
-		uint32_t retIndex[numResults]; // nearest neighbor index
-     float outDistSqr[numResults]; //distance between nn and current
-		std::vector<float> coords = {(float)animalCoords[animalIndex].first, (float)animalCoords[animalIndex].second};
-		animalTree.knnSearch(coords, numResults, &retIndex[0], &outDistSqr[0]);
-		bool found = false;
-		int start = 0;
-		while (!found) {
-			for (int i = start; i < numResults; i++) {
-			switch (predator) {
-				case Animal::Wolf:
-					for (int j = 0; j < wolfDiet.size(); j++) {
-						if (animals(retIndex[i]) == wolfDiet[j]) {
-							preyIndex = retIndex[i];
-							found = true;
-						}
-					}
-					break;
-				case Animal::Bear:
-					for (int j = 0; j < bearDiet.size(); j++) {
-						if (animals(retIndex[i]) == bearDiet[j]) {
-							preyIndex = retIndex[i];
-							found = true;
-						}
-					}
-					break;
-			}
-		}
-			if (!found) {
-				start = numResults;
-				numResults *= 2;
-				}
-		}
+
 		meet(animalIndex, true, preyIndex, true);
 		//TODO: hunting
 	}

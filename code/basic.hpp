@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <random>
 #include <queue>
+#include <stack>
 #include <ctime>
 #include <unordered_map>
 #include <unordered_set>

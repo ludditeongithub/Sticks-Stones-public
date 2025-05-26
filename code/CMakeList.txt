@@ -1,0 +1,11 @@
+cmake_minimum_required(VERSION 3.14)
+project(my_project)
+
+add_subdirectory(third_party/abseil)
+
+add_executable(my_exe main.cpp)
+
+target_link_libraries(my_exe
+    absl::flat_hash_map
+    absl::hash
+)

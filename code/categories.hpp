@@ -503,13 +503,15 @@ enum class Meat {
 };
 
 enum class Hide {
-	NONE, PigSkin, CowHide, OxHide,	SheepHide, GoatHide, HorseSkin, DonkeySkin, WaterBuffaloHide, RabbitHide, AntelopeHide, DeerHide, MooseHide, CapybaraHide, ElephantHide, BisonHide, WolfPelt,
+	NONE, PigSkin, CowHide, OxHide, SheepHide, GoatHide, HorseSkin, DonkeySkin, WaterBuffaloHide, RabbitHide, AntelopeHide, DeerHide, MooseHide, CapybaraHide, ElephantHide, BisonHide, WolfPelt,
 };
 
 enum class Fruit {
 	NONE,
     //also doubles for juice
     Orange, Apple, Lemon, Pear, Peach, Cherry, Apricot, Plum, Lime, Blueberry, Strawberry, Grape,
+    //FRUIT VEGGIES
+    Cucumber, Pepper, Tomato
 };
 
 enum class AlcoholicDrink {

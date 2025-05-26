@@ -443,7 +443,30 @@ std::pair<int, int> getAdjacentTile(int tileIndex, Direction direction) {
     if (direction == Direction::East)
 }
 
-std::pair<int, int> getNearestAdjacentEmptyTile(int startIndex) {
+Direction getRandomAdjDirection(Direction direction) {
+    if (direction == Direction::North) {
+      if (rbool()) return Direction::East;
+      return Direction::West;
+    } if (direction == Direction::South) {
+      if (rbool()) return Direction::East;
+      return Direction::West;
+    }
+    if (direction == Direction::West) {
+        if (rbool()) return Direction::North;
+      return Direction::South;
+    }
+    if (rbool()) return Direction::North;
+      return Direction::South;
+}
+
+void moveInDirection(&std::pair<int,int> coord, Direction direction) {
+    if (direction == Direction::North) coord.second += 1;
+    else if (direction == Direction::South) coord.second -= 1;
+    if (direction == Direction::East) coord.first += 1;
+    else if (direction == Direction::West) coord.second -= 1;
+}
+
+std::pair<int, int> getNearestEmptyTile(int startIndex) {
     std::queue<int> q;
     std::unordered_set<int> visited;
 
@@ -606,9 +629,11 @@ struct Node {
     }
 };
 
-uint8_t manDist(int x1, int y1, int x2, int y2) {
+uint16_t manDist(int x1, int y1, int x2, int y2) {
     return std::abs(x1 - x2) + std::abs(y1 - y2);
 }
+
+
 
 // returns pair of index, cost to new path vector
 std::vector<std::pair<int, int>> greedyPath(int startIndex, int endIndex) {
@@ -648,26 +673,14 @@ std::vector<std::pair<int, int>> greedyPath(int startIndex, int endIndex) {
         visited(index) = true;
 
         for (int i = 0; i < 4; ++i) {;
-            uint8_t moveCost = 0;
-            int newIndex;
-            switch (i) {
-                case 0:  //up
-                    moveCost = adjacentTilesCost[index].up;
-                    newIndex = adjacentTilesIndices[index].up;
-                    break;
-                case 1:  //down
-                    moveCost = adjacentTilesCost[index].down;
-                    newIndex = adjacentTilesIndices[index].down;
-                    break;
-                case 2:  //left
-                    moveCost = adjacentTilesCost[index].left;
-                    newIndex = adjacentTilesIndices[index].left;
-                    break;
-                case 3:  //right
-                    moveCost = adjacentTilesCost[index].right;
-                    newIndex = adjacentTilesIndices[index].right;
-                    break;
-            }
+            if (i == 0) std::pair<int,int> mt = getMoveTimeAndTileIndex(Direction::Up);
+            if (i == 1) std::pair<int,int> mt = getMoveTimeAndTileIndex(Direction::Down);
+            if (i == 2) std::pair<int,int> mt = getMoveTimeAndTileIndex(Direction::Left);
+            if (i == 3) std::pair<int,int> mt = getMoveTimeAndTileIndex(Direction::Right);
+
+            uint8_t moveCost = mt.first;
+            int newIndex = mt.second;
+
             if (newIndex == -1) continue;
             if (visited(newIndex)) continue;
             uint8_t newManDist = manDist(tileCoords[index].first, tileCoords[index].second, goalX, goalY);
@@ -700,16 +713,16 @@ void moveAnimal(vector<std::pair<int,int> path, int animalIndex) {
     int nextTileMoveTime = 0;
     for (int i = 0; i < path.size(); i++) {
         nextTileMoveTime += path[i].second * getSpeed(animal);
-        addEvent(nextTileMoveTime, EventType::AnimalMoveTile, path[i].first, animalIndex);
+        addEvent(nextTileMoveTime, EventType::AnimalMoveTile, animalIndex, path[i].first);
     }
 }
 
 void movePawn(vector<std::pair<int,int> path, int pawnIndex) {
- 	std::pair<int,int>& subjectCoords = currentCoords[pawnfindex];
+ 	std::pair<int,int>& subjectCoords = currentCoords[pawnIndex];
     int nextTileMoveTime = 0;
     for (int i = 0; i < path.size(); i++) {
         nextTileMoveTime += path[i].second;
-        addEvent(nextTileMoveTime, EventType::PawnMoveTile, path[i].first, pawnIndex);
+        addEvent(nextTileMoveTime, EventType::PawnMoveTile, pawnIndex, path[i].first);
     }
 }
 
@@ -736,7 +749,7 @@ void moveAnimal(int entityIndex, int destCoordIndex, DelayedEvent event) {
     int nextTileMoveTime = 0;
     for (int i = 0; i < path.size(); i++) {
         nextTileMoveTime += path[i].second * getSpeed(animal);
-        addEvent(nextTileMoveTime, EventType::AnimalMoveTile, path[i].first, entityIndex);
+        addEvent(nextTileMoveTime, EventType::AnimalMoveTile, entityIndex, path[i].first);
     }
     addEvent(nextTileMoveTime + 1, event, entityIndex);
 }
@@ -748,7 +761,7 @@ void movePawn(int entityIndex, int destCoordIndex, DelayedEvent event) {
     int nextTileMoveTime = 0;
     for (int i = 0; i < path.size(); i++) {
         nextTileMoveTime += path[i].second;
-        addEvent(nextTileMoveTime, EventType::PawnMoveTile, path[i].first, entityIndex);
+        addEvent(nextTileMoveTime, EventType::PawnMoveTile, entityIndex, path[i].first);
     }
     addEvent(nextTileMoveTime + 1, event, entityIndex);
 }
@@ -759,6 +772,8 @@ void meet(int finderIndex, int targetIndex, bool finderAnimal, bool targetAnimal
     else std::pair<int, int> fc = currentCoords[finderIndex];
     if (targetAnimal) std::pair<int, int> tc = animalCoords[targetIndex];
     else std::pair<int, int> tc = currentCoords[targetIndex];
+
+    //TODO: if hunting, give up if animal is faster and not asleep or injured
 
     vector<std::pair<std::pair<int,int>, int>> path = greedyPath(tileIndices(fc), tileIndices(tc));
     if (finderAnimal) moveAnimal(path, animalIndex);
@@ -775,9 +790,4 @@ void meet(int finderIndex, int targetIndex, bool finderAnimal, bool targetAnimal
         } else addEvent(time, EventType::CheckIfAdjacentPawns, static_cast<int>(meetType), finderIndex, targetIndex);
     }
     //TODO:fix and face entities
-}
-
-//TODO: normal state wild path algorithm for animals
-void wander() {
-
 }

@@ -37,7 +37,13 @@ enum class EventType {
 enum class DelayedEvent {
     Breeding,
 	Hunting,
-}
+	Combat,
+};
+
+enum class ProwlAction {
+Hunt,
+Breed,
+};
 
 struct Event {
 	uint64_t time;
@@ -64,6 +70,8 @@ void meetEventInterpreter(int event, int finderIndex, int targetIndex, bool find
 			//TODO: breeding animation, pregnancy chance based on age instead of guranteed
 			pregnancy(targetIndex);
 		case MeetEvent::Hunting:
+		case MeetEvent::Combat:
+			attack(killerIndex, targetIndex, finderAnimal, targetAnimal);
 	}
 }
 
@@ -87,11 +95,7 @@ void eventInterpreter(Event event) {
 			break;
 	case EventType::AnimalBreeding:
 		//TODO: maybe change this to type index
-		breed(event.entitiesIndex);
-		break;
-	break;
-	case EventType::AnimalBirth:
-		animalBirth(event.entitiesIndex);
+		breed(event.entitiesIndex, event.secondaryIndex);
 		break;
 	case EventType::PreyFeed:
 		preyFeed(event.entitiesIndex);

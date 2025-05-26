@@ -12,11 +12,13 @@
    a. also mechanisms which eliminate EMTPY items from inventories very so often
 7. Reproduction and children 2
 8. Manual production queue, role queues in depth 8
+   a. ITEM search using hash grid cell (divide into areas and search in O(1)), and unordered map hash buckets for each type of item within, and coords, which can be found in O(1) again
 9. Tech tree 20
 10. Chosing Roles, role mana, role xp 6
 11. UI 25
 12. Finish sprites 80-500
 13. Growing of plants / plant progression 12
+    a. weather generation
 14. Combat 35
 15. Leader abilities, support mechanics 10
 16. Different Seasons 1

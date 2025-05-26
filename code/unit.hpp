@@ -147,6 +147,8 @@ vector<vector<Role>> roles;
 vector<bool> sex; //t = male, f = female
 vector<std::pair<int,int>> currentCoords;
 vector<Direction> currentDirections;
+vector<MovingStatus> movingStatus;
+vector<uint16_t> health;
 //RESOURCES
 
 

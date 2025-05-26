@@ -4,7 +4,7 @@
 #include "tile.hpp"
 
 Plant crops[] = {
-Plant::Wheat, Plant::Oat, Plant::Corn, Plant::Rice, Plant::Tomato, Plant::Onion, Plant::Potato, Plant::Cabbage, Plant::Pumpkin, Plant::Pepper, Plant::Carrot, Plant::Poppy, Plant::Cannabis, Plant::Senna, Plant::Cotton, Plant::Papyrus, Plant::Flax, Plant::Hemp, Plant::Lettuce,
+Plant::Wheat, Plant::Oat, Plant::Corn, Plant::Rice, Plant::Tomato, Plant::Onion, Plant::Potato, Plant::Cabbage, Plant::Pepper, Plant::Carrot, Plant::Poppy, Plant::Senna, Plant::Cotton, Plant::Papyrus, Plant::Flax, Plant::Hemp, Plant::Lettuce,
 };
 
 enum class PlantType {
@@ -37,7 +37,7 @@ void plantTable() {
 
 
 Plant regrowthCrops[] = {
- Plant::Olive, Plant::Grape, Plant::Apple, Plant::Fig, Plant::Pear, Plant::Peach, Plant::Mango, Plant::Blueberry, Plant::Strawberry, Plant::Lavender, Plant::Saffron, Plant::AloeVera, Plant::Mint, Plant::Thyme, Plant::Sage, Plant::Rhubarb, Plant::Hay
+ Plant::OliveTree, Plant::Grapevine, Plant::AppleTree, Plant::PearTree, Plant::PeachTree, Plant::MangoTree, Plant::BlueberryShrub, Plant::StrawberryShrub, Plant::Lavendar, Plant::Saffron, Plant::AloeVera, Plant::Mint, Plant::Thyme, Plant::Sage, Plant::Rhubarb,
 };
 
 struct RegrowthCropTraits {

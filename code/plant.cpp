@@ -1,31 +1,14 @@
-#ifndef CROPS_H_
-#define CROPS_H_
-#include "basic.hpp"
-#include "cropdata.hpp"
+#include "plant.hpp"
 
-/* RUNTIME CROP DATA MANAGEMENT */
-
-//get current global temp and sunlight
-float temp;
-float sunlight;
-float date;
-
-std::vector<Plant> cropList;
-
-std::vector<Plant> plants;
-std::vector<std::pair<int,int>> plantCoords;
-std::vector<float> growthAmt;
-std::vector<int> yieldMisses;
-std::vector<float> collectedWater;
-std::vector<float> lastFullyWatered;
-std::vector<bool> fullyGrown;
-
-enum class PlantType {
-    Tree, FruitTree, Foliage, Succulent, Shrub, Flowering, FruitVeggie, Leafy, Root, Reed, Tuber, Grain, Bulb, Grapevine, Herb, Textile
-}
-
-void dropFruit() {
-
+void addPlant(Plant plant, int x, int y) {
+    int plantIndex = nextPlantIndex.pop();
+    plants.push_back(plant.type);
+    growthAmt.push_back(0);
+    yieldMisses.push_back(0);
+    collectedWater.push_back(0);
+    lastFullyWatered.push_back(0);
+    fullyGrown.push_back(false);
+    insertEntity(x, y, plantIndex);
 }
 
 //TODO: consider making this array, so that animals can eat and poop many seeds.
@@ -259,6 +242,3 @@ void updateRegrowthCrops() {
         } //if sunlight == 0
     }
 }
-
-
-#endif // CROPS_H_

@@ -3,6 +3,8 @@
 #include "basic.hpp"
 #include "categories.hpp"
 
+std::stack<uint16_t> nextItemIndex;
+
 using SourceVariant = std::variant<Tile, Plant, Animal, Scavengeable>;
 
 //TODO:: sieve, which can separte sand and clay in, liquids and soil, etc

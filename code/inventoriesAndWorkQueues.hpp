@@ -148,13 +148,16 @@ uint16_t variantContainerToInventory() {
 
 //
 void dropItem(int pawn, int itemIndex, uint16_t amount) {
-    std::pair<int,int> tile = currentCoords[pawn];
+    removeItem(pawn, itemIndex, amount);
+    int index = nextItemIndex.pop();
+    std::pair<int,int> et = getNearestEmptyTile(startIndex);
+    insertEntity(inventories[pawn].items[itemIndex].first, et.first, et.second, index);
     //TODO: create check if empty, and put on tile if so
-
-
 }
 
 void dropVariantItem(int pawn, int itemIndex,  uint16_t variant, uint16_t amount) {
+    removeVariantItem(pawn, itemIndex, variant, amount);
+    variantItemCount++;
 
 }
 
@@ -879,6 +882,5 @@ void attemptSupport(int pawn, Role role) {
 void variantItemInterpreter() {
 
 }
-
 
 #endif // INVENTORIESANDWORKQUEUES_H_
