@@ -1,26 +1,19 @@
 TOBI TASKS
 TO TESTABLE STONE AGE ALPHA:
-1. make github work. for aseprite tasks, check to make sure they are not finished, being already made in the "sprite" subfolders on gh
-2. finish plant aseprites (items -> foodstuffs, items -> herbs, and plants folder on github). make sure you do multiple growth stages (3-4).
-   a. (Plant. for now, reuse the same tree base! we are trying to get to a playable game first, not perfection)  AppleTree, Lettuce, Kale, Garlic,  Broccoli,   MangoTree
-   aii. (Food Item) Rice, Orange,   Peach, Plum, Cherry, Apricot,  Olive,  Pepper,
-   b. (foliage plants): Fern
-   c. (herbs):  Woad,  Thyme, Cocoa, Senna
-3. finish animal aseprites (animals folder on gh). ensure that all animals are turned over and bleeding for corpse version, and have a smaller adolescent version that also has a turned over corpse. male vs female sprites only when there is a really obvious difference. check cow.aseprite to see example
-   a. all these:  Goat, Horse, Ox, Donkey, Camel, WaterBuffalo, Rabbit, Antelope, Moose, Capybara, Turtle, Elephant, Bison, Wolf, Bear, Caribou,
-4. finish scavengeable aseprites (scavengeables on gh)
-   a. Log, Stick, [Pebble, Rock, LargeRock, Boulder] (one folder), Flint, Ore, Beehive, ArtificialBeehive,
-5. finish tile aseprites (get approval for plowed tiles, and roads, and made floors) (tile on gh)
-DeepWater,ShallowSaltWater,RiverSource,FlowingWater,ShallowWater,Gravel, FrozenSoil, Snow, Ice, Stone, Ore, GemOre, RockSalt, Sand, Podzol, PlowedPodzol, LoamSoil, PlowedLoamSoil, PeatSoil, PlowedPeatSoil, SandySoil, PlowedSandySoil, ClaySoil, PlowedClaySoil, SiltySoil, PlowedSiltySoil, RockySoil, PlowedRockySoil, AridSoil, Oxisol, PlowedOxisol, Gleysol, Hardpan, Path, DirtRoad, StoneRoad, BrickRoad, PavedRoad, ConcreteRoad, WoodFloor, Carpet, StoneFloor, BrickFloor,
 
-b. overlay of tiles, showing naturally fallen fruit (some fallen vs lots fallen): Apple, Orange, Peach, Plum, Cherry, Apricot, Lemon, Lime, Mango
+3. finish animal aseprites (animals folder on gh). ensure that all animals are turned over and bleeding for corpse version, and have a smaller adolescent version that also has a turned over corpse. male vs female sprites only when there is a really obvious difference. check cow.aseprite to see example
+   a. all these:   Bison, Wolf, Bear, Caribou,
+4. finish scavengeable aseprites (scavengeables on gh)
+   a. Beehive, ArtificialBeehive,
+5. finish tile aseprites (get approval for plowed tiles, and roads, and made floors) (tile on gh)
+ShallowSaltWater,RiverSource,FlowingWater, Ore, GemOre, RockSalt, PlowedPodzol, PlowedLoamSoil,  PlowedPeatSoil, SandySoil, PlowedSandySoil, PlowedClaySoil, SiltySoil, PlowedSiltySoil, PlowedRockySoil, Oxisol, PlowedOxisol, Path, BrickRoad, PavedRoad, BrickFloor,
+
 6. finish product aseprites for paleo:
-   a. (items -> clothes on gh): Tribalwear, Full Tribalwear, Child's Tribalwear, Wood Crown,
-   b. (items -> containers on gh): Basket, Wood Bucket
-   c. (items -> products on gh): SmallHandle, LargeHandle, Primitive Spearhead, Bleach, Yellow Dye, Blue Dye, Red Dye, Primitive Rope, Primitive String, String, Animal Hides, Feather, Animal Hair, Bone, Sinew, Wood, Peat, DrinkingWater, Cheese, GoatCheese,
-   d. (items -> tools) (ask me about these first) Hand Chisel,  Hand Axe, Torch, Stick Spear, Hammer Stone, Hand Knife, Hand Drill, Primitive Spear
+   a. (items -> clothes on gh): Tribalwear, Child's Tribalwear
+   b. (items -> containers on gh):  Wood Bucket
+  
 7. finish other resources:
-   a. Fruit Pit, Arsenic Ore, Ash, Gravel, Straw, Hay, Soot, Fiber, Chicken Egg, Duck Egg, Turtle Egg,
+   a. Fruit Pit, Arsenic Ore, Ash, Straw, Hay, Soot, Fiber, Chicken Egg, Duck Egg, Turtle Egg
 8. finish buildable for paleo:
    a. Tent Sticks, Tent Cover, PitFire
 9. finish vehicles for paleo:
