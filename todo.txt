@@ -3,14 +3,13 @@ TO TESTABLE STONE AGE ALPHA:
 
 3. finish animal aseprites (animals folder on gh). ensure that all animals are turned over and bleeding for corpse version, and have a smaller adolescent version that also has a turned over corpse. male vs female sprites only when there is a really obvious difference. check cow.aseprite to see example
    a. all these:   Bison, Wolf, Bear, Caribou,
-4. finish scavengeable aseprites (scavengeables on gh)
-   a. Beehive, ArtificialBeehive,
+
 5. finish tile aseprites (get approval for plowed tiles, and roads, and made floors) (tile on gh)
 ShallowSaltWater,RiverSource,FlowingWater, Ore, GemOre, RockSalt, PlowedPodzol, PlowedLoamSoil,  PlowedPeatSoil, SandySoil, PlowedSandySoil, PlowedClaySoil, SiltySoil, PlowedSiltySoil, PlowedRockySoil, Oxisol, PlowedOxisol, Path, BrickRoad, PavedRoad, BrickFloor,
 
 6. finish product aseprites for paleo:
    a. (items -> clothes on gh): Tribalwear, Child's Tribalwear
-   b. (items -> containers on gh):  Wood Bucket
+
   
 7. finish other resources:
    a. Fruit Pit, Arsenic Ore, Ash, Straw, Hay, Soot, Fiber, Chicken Egg, Duck Egg, Turtle Egg
