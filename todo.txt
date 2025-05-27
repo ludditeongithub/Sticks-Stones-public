@@ -10,9 +10,6 @@ ShallowSaltWater,RiverSource,FlowingWater, Ore, GemOre, RockSalt, PlowedPodzol, 
 6. finish product aseprites for paleo:
    a. (items -> clothes on gh): Tribalwear, Child's Tribalwear
 
-  
-7. finish other resources:
-   a. Fruit Pit, Arsenic Ore, Ash, Straw, Hay, Soot, Fiber, Chicken Egg, Duck Egg, Turtle Egg
 8. finish buildable for paleo:
    a. Tent Sticks, Tent Cover, PitFire
 9. finish vehicles for paleo:
