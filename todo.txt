@@ -3,5 +3,4 @@ TOBI TASKS
 5. finish tile aseprites (get approval for plowed tiles, and roads, and made floors) (tile on gh)
 ShallowSaltWater,RiverSource,FlowingWater, Ore, GemOre, RockSalt, PlowedPodzol, PlowedLoamSoil,  PlowedPeatSoil, SandySoil, PlowedSandySoil, PlowedClaySoil, SiltySoil, PlowedSiltySoil, PlowedRockySoil, Oxisol, PlowedOxisol, Path, BrickRoad, PavedRoad, BrickFloor,
 
-8. finish buildable for paleo:
-   a. Tent Sticks, Tent Cover, PitFire
+PitFire
