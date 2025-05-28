@@ -5,5 +5,3 @@ ShallowSaltWater,RiverSource,FlowingWater, Ore, GemOre, RockSalt, PlowedPodzol, 
 
 8. finish buildable for paleo:
    a. Tent Sticks, Tent Cover, PitFire
-9. finish vehicles for paleo:
-   a. Canoe 48x16
