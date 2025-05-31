@@ -136,6 +136,16 @@ bool adjCheckEntity(int firstIndex, int secondIndex, bool firstAnimal, bool seco
     return false;
 }
 
+//TODO: check to see if this makes sense returns None if not adjacent
+Direction adjCheckTile(std::pair<int,int> subject, std::pair<int,int> target) {
+    if (manDist(subject, target) > 1) return Direction::NONE;
+    if (subject.first - target.first == 1) return Direction::East;
+    if (subject.first - target.first == -1) return Direction::West;
+    if (subject.second - target.second == 1) return Direction::North;
+    if (subject.second - target.second == 1) return Direction::South;
+    return Direction::NONE;
+}
+
 template <typename L, typename M, typename Container>
 bool adjCheckList(L& referenceMap, M& map, int y, int x, const Container& check, int range) {
     for (int r = -range; r <= range; r++) {
@@ -633,7 +643,9 @@ uint16_t manDist(int x1, int y1, int x2, int y2) {
     return std::abs(x1 - x2) + std::abs(y1 - y2);
 }
 
-
+uint16_t manDist(std::pair<int,int> x, std::pair<int,int> y) {
+    return std::abs(x.first - y.first) + std::abs(x.second - y.second);
+}
 
 // returns pair of index, cost to new path vector
 std::vector<std::pair<int, int>> greedyPath(int startIndex, int endIndex) {

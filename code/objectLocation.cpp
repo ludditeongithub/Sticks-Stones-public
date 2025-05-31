@@ -1,4 +1,6 @@
 #include "objectLocation.hpp"
+/*NOTE: all items stored in containers are also given as if they are not stored in a container. pawns will check whether there
+ *is a container or not */
 
 // hash grid
 int cellSize = 25;
@@ -77,10 +79,47 @@ bool checkEmptyTile(int tileIndex, int adjacentTileIndex) {
 
 }
 
+std::pair<int,int> findNthNearestEntity(Entity entity, int x, int y, uint8_t n) {
+    //TODO: entity count table for different entity types, return false if entity count is 0
+    for (int i = 0; i < GRIDCELLCOUNT; i++) {
+            std::pair<int,int> gc = getNthNearestGridCell();
+            auto& cellSet = globalMap[gc.first][gc.second][entity];
+    uint16_t closest = 999999999;
+    int nearCoord = {-1,-1};
+    for (const auto& coord : cellSet) {
+        uint16_t temp = manDist(x, y, coord.get<0>, coord.get<1>);
+        if (temp < closest) {
+            closest = temp;
+            nearCoord = {coord.get<0>, coord.get<1>};
+        }
+    }
+    if (nearCoord != {-1, -1}) return nearCoord;
+    }
+    return {-1, -1};
+}
+
 std::pair<int,int> findNearestEntity(Entity entity, int x, int y) {
+    //TODO: producedInWorld counters, skip if = 0
     for (int i = 0; i < GRIDCELLCOUNT; i++) {
     std::pair<int,int> gc = getNearestGridCell(x, y);
+    auto& cellSet = globalMap[gc.first][gc.second][entity];
+    uint16_t closest = 999999999;
+    int nearCoord = {-1,-1};
+    for (const auto& coord : cellSet) {
+        uint16_t temp = manDist(x, y, coord.get<0>, coord.get<1>);
+        if (temp < closest) {
+            closest = temp;
+            nearCoord = {coord.get<0>, coord.get<1>};
+        }
+    }
+    if (nearCoord != {-1, -1}) return nearCoord;
+    }
+    return {-1, -1};
+}
 
+std::pair<int,int> findNthNearestEntity(Entity entity, int x, int y, int n) {
+    for (int i = 0; i < GRIDCELLCOUNT; i++) {
+    std::pair<int,int> gc = getNearestGridCell(x, y);
     auto& cellSet = globalMap[gc.first][gc.second][entity];
     uint16_t closest = 999999999;
     int nearCoord = {-1,-1};
@@ -115,7 +154,7 @@ int findNearestEntityIndex(Entity entity, int x, int y) {
     return -1;
 }
 
-std::pair<int,int> findNearestEntityIndexCoord(Entity entity, int x, int y) {
+std::tuple<int,int> findNearestEntityIndexCoord(Entity entity, int x, int y) {
     for (int i = 0; i < GRIDCELLCOUNT; i++) {
     std::pair<int,int> gc = getNearestGridCell(x, y);
 
@@ -132,4 +171,29 @@ std::pair<int,int> findNearestEntityIndexCoord(Entity entity, int x, int y) {
     }
     if (closest != MAX) return nearCoord;
     return {-1, -1};
+}
+
+std::pair<int,int> findNearestLiquidContainer(int x, int y) {
+    std::pair<int,int> subject = {x,y};
+    std::pair<int,int> closest = findNearestEntity(Container::Pot, x, y);
+    if (manDist(subject, closest) < manDist(findNearestEntity(subject, Container::Bucket, x, y))) closest = findNearestEntity(subject, Container::Bucket, x, y);
+    if (manDist(subject, closest) < manDist(findNearestEntity(subject, Container::LargePot, x, y))) closest = findNearestEntity(subject, Container::LargePot, x, y);
+    if (manDist(subject, closest) < manDist(findNearestEntity(subject, Container::Kettle, x, y))) closest = findNearestEntity(subject, Container::Kettle, x, y);
+    if (manDist(subject, closest) < manDist(findNearestEntity(subject, Container::Keg, x, y))) closest = findNearestEntity(subject, Container::Keg, x, y);
+    if (manDist(subject, closest) < manDist(findNearestEntity(subject, Container::Jar, x, y))) closest = findNearestEntity(subject, Container::Jar, x, y);
+    return closest;
+}
+
+        //bool is whether still processing or not. only counts ones filled with actual liquid
+std::unordered_map[std::pair<int,int>, std::pair<bool, Item>] filledLiquidContainers();
+
+void findNeccessaryTools(Action action, int pawn) {
+    for (int i = 0; i < actionToTools[static_cast<size_t>(action)]; i++) {
+        std:pair<int,int> dest = findNearestEntity(actionToTools[static_cast<size_t>(action)][i], currentCoords[pawn].first, currentCoords[pawn].second);
+        if (manDist(currentCoords[pawn], dest) > midGatherRange) {
+            currentDests[pawn] = tileIndices[dest];
+            movingStatus[pawn] = MovingStatus::ApproachTool;
+            std::promise<Tool> neededTool;
+            std::future<Tool> toolPicked = neededTool.get_future();
+        }
 }

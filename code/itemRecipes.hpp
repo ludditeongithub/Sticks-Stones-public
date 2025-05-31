@@ -60,7 +60,7 @@ inline bool hasTag(itemTags value, itemTags tag) {
 // 1L = 100 units of water/sand/dirt/clay
 // 30L - max capacity of tile
 // Water - unlimited
-// Sand - unlimited
+// Sand - unlimitled
 // ClaySoil -
 // Dirt Tile -
 // 1 Rock Salt averages 100 units of salt
@@ -232,7 +232,7 @@ products[static_cast<int>(Item::Peg)] = {Actions::Whittle, 200, {Item::Wood}, .t
 products[static_cast<int>(Item::Wedge)] = {Actions::Whittle, 250, {Item::Wood}, .tags=itemTags::VariableAmountProduced};
 products[static_cast<int>(Item::Rivet)] = {Actions::Smith, 300, {Item::Metal}};
 products[static_cast<int>(Item::SmallHandle)] = {Actions::Whittle, 200, {Item::Beam}, .tags=itemTags::VariableAmountProduced | itemTags::Alternate};
-products[static_cast<int>(Item::LargeHandle)] = {Actions::Whittle, 200, {Item::Beam}, .tags=itemTags::Alternate}};
+products[static_cast<int>(Item::LargeHandle)] = {Actions::Whittle, 200, {Item::Beam}, .tags=itemTags::Alternate};
 //products[static_cast<int>(Item::SocketedLargeHandle)] = {Actions::Whittle, 200, {Item::Beam}};
 products[static_cast<int>(Item::BrickMold)] = {Actions::Woodwork, 750, {Item::Wood}, .tags=itemTags::Mould};
 products[static_cast<int>(Item::Arrowhead)] = {Actions::Knapp, 80, {Item::Rock, Item::Bone}};
@@ -449,29 +449,29 @@ Recipe alternateInterpreter(Item product) {
     if (static_cast<int>(recipe.tags) & static_cast<int>(itemTags::Alternate)) {
         switch (product) {
             case Item::Axle:
-                return {Actions::Cast, {Item::Metal, Item::AxleMould}, {7,1}, {1,2}};
+                return {Actions::Cast, 150 {Item::Metal, Item::AxleMould}, {7,1}, {1,2}};
             case Item::LargeAxle:
-                return {Actions::Cast, {Item::Metal, Item::LargeAxleMould}, {20,1}, {1,2}};
+                return {Actions::Cast, 190 {Item::Metal, Item::LargeAxleMould}, {20,1}, {1,2}};
             case Item::Gear:
-                return {Actions::Smith, {Item::Metal, Item::GearMould}, {1,1}, {1,2}};
+                return {Actions::Smith, 90,  {Item::Metal, Item::GearMould}, {1,1}, {1,2}};
             case Item::Tube:
-                return {Actions::WoodCarve, {Item::Wood}, {4}};
+                return {Actions::WoodCarve, 480, {Item::Wood}, {4}};
             case Item::Peg:
-                return {Actions::Smith, {Item::Metal}};
+                return {Actions::Smith, 120, {Item::Metal}};
             case Item::MetalArrowhead:
-                return {Actions::Cast, {Item::Metal}, {2}};
+                return {Actions::Cast, 105 {Item::Metal}, {2}};
             case Item::ArrowShaft:
-                return {Actions::Whittle, {Item::Beam}};
+                return {Actions::Whittle, 70, {Item::Beam}};
             case Item::RedDye:
                 return {Actions::Treat, 1480, {Item::RedOchre, Item::Water}, {1,10}, {1,2}, .tags=itemTags::Liquid};
             case Item::YellowDye:
-                return {Actions::Treat, {Item::YellowOchre, Item::Water}, {1,10}, {1,2}, .tags=itemTags::Liquid};
+                return {Actions::Treat, 1480, {Item::YellowOchre, Item::Water}, {1,10}, {1,2}, .tags=itemTags::Liquid};
             case Item::BlueDye:
-                return {Actions::Treat, {Item::LapisLazuli, Item::Water}, {1,10}, {1,2}, .tags=itemTags::Liquid};
+                return {Actions::Treat, 1480, {Item::LapisLazuli, Item::Water}, {1,10}, {1,2}, .tags=itemTags::Liquid};
             case Item::Laxative:
-                return {Actions::Grind, {Item::AloeVera}, {3}};
+                return {Actions::Grind, 150, {Item::AloeVera}, {3}};
             case Item::Tonic:
-                return {Actions::Compound, {Item::DrinkingWater, Item::Salt, Item::Sugar, Item::Vinegar}, {3,2,2,1}, {1,2,3,4}, itemTags::Liquid};
+                return {Actions::Compound, 1280, {Item::DrinkingWater, Item::Salt, Item::Sugar, Item::Vinegar}, {3,2,2,1}, {1,2,3,4}, itemTags::Liquid};
             case Item::PrimitiveSpearhead:
                 return {Actions::Carve, 300, {Item::Bone}};
             case Item::SickleHead:
@@ -491,17 +491,17 @@ Recipe alternateInterpreter(Item product) {
         case Item::TrowelHead:
             return {Actions::Cast,300, {Item::Metal,  Item::TrowelHeadMould, Item::PermanentTrowelHeadMould}, {3,1,1}, {1,2,2}};
         case Item::CleaverHead:
-            return {Actions::Cast,300, {Item::Metal,  Item::CleaverHeadMould, Item::PermanentCleaverHeadMould}, {4,1,1}, {1,2,2}};
+            return {Actions::Cast, 300, {Item::Metal,  Item::CleaverHeadMould, Item::PermanentCleaverHeadMould}, {4,1,1}, {1,2,2}};
         case Item::MacheteHead:
-            return {{Actions::Cast}300,, {Item::Metal,  Item::MacheteHeadMould, Item::PermanentMacheteHeadMould}, {5,1,1}, {1,2,2}};
+            return {Actions::Cast, 300, {Item::Metal,  Item::MacheteHeadMould, Item::PermanentMacheteHeadMould}, {5,1,1}, {1,2,2}};
         case Item::SwordHead:
-            return {{Actions::Cast}300,, {Item::Metal,  Item::SwordHeadMould, Item::PermanentSwordHeadMould}, {7,1,1}, {1,2,2}};
+            return {Actions::Cast, 300, {Item::Metal,  Item::SwordHeadMould, Item::PermanentSwordHeadMould}, {7,1,1}, {1,2,2}};
         case Item::HandaxeHead:
-            return {{Actions::Cast}300,, {Item::Metal,  Item::HandaxeHeadMould, Item::PermanentHandaxeHeadMould}, {4,1,1}, {1,2,2}};
+            return {Actions::Cast, 300, {Item::Metal,  Item::HandaxeHeadMould, Item::PermanentHandaxeHeadMould}, {4,1,1}, {1,2,2}};
         case Item::PrimitiveSpearHead:
-            return {Actions::Cast,300, {Item::Metal,  Item::PrimitiveSpearHeadMould, Item::PermanentPrimitiveSpearHeadMould}, {3,1,1}, {1,2,2}};
+            return {Actions::Cast, 300, {Item::Metal,  Item::PrimitiveSpearHeadMould, Item::PermanentPrimitiveSpearHeadMould}, {3,1,1}, {1,2,2}};
 case Item::ScytheHead:
- return {Actions::Cast,300, {Item::Metal,  Item::ScytheHeadMould, Item::PermanentScytheHeadMould}, {6,1,1}, {1,2,2}};
+ return {Actions::Cast, 300, {Item::Metal,  Item::ScytheHeadMould, Item::PermanentScytheHeadMould}, {6,1,1}, {1,2,2}};
 case Item::ArdHead:
  return {Actions::Cast,300,{Item::Metal,  Item::ArdHeadMould, Item::PermanentArdHeadMould}, {7,1,1}, {1,2,2}};
 case Item::HeavySaw:
@@ -529,21 +529,21 @@ case Item::SmallHandle:
 case Item::LargeHandle:
     return {Actions::Whittle, 1260, {Item::LargeStick}, {1}};
 case Item::DyedCloth:
-return {Actions::Treat, {Item::Bleach, Item::Ink, Item::Cloth, Item::DyedCloth}, {1,1,2,2}}
+return {Actions::Treat, 980,{Item::Bleach, Item::Ink, Item::Cloth, Item::DyedCloth}, {1,1,2,2}}
 case Item::Ring:
-return {Actions::Carve, {Item::Bone}};
+return {Actions::Carve, 490, {Item::Bone}};
 case Item::Earring:
-return {Actions::Carve, {Item::Bone}};
+return {Actions::Carve, 410, {Item::Bone}};
 case Item::Helmet:
-return {Actions::Leatherwork, {Item::TannedHides, Item::Thread}};
+return {Actions::Leatherwork, 1080, {Item::TannedHides, Item::Thread}};
 case Item::Breastplate:
-return {Actions::Leatherwork, {Item::TannedHides, Item::Thread}};
+return {Actions::Leatherwork, 2390, {Item::TannedHides, Item::Thread}};
 case Item::Guards:
-return {Actions::Leatherwork, {Item::TannedHides, Item::Thread}};
+return {Actions::Leatherwork, 880, {Item::TannedHides, Item::Thread}};
 case Item::Bracers:
-return {Actions::Leatherwork, {Item::TannedHides, Item::Thread}};
+return {Actions::Leatherwork, 790, {Item::TannedHides, Item::Thread}};
 case Item::Javelin:
-return {Actions::Craft, {Item::Weaponhead, Item::Handle}};
+return {Actions::Craft, 40, {Item::Weaponhead, Item::Handle}};
 case Item::CandleMould:
 return {Actions::Pott , 230, {Item::Clay}};
 case Item::Candle:
@@ -565,7 +565,7 @@ struct CorpseData {
             Hide hide;
             Meat meat;
             int time;
-};
+}
 
 CorpseData corpseInterpreter(Station corpse) {
                 switch (corpse) {

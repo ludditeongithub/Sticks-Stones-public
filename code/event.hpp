@@ -10,7 +10,7 @@ enum class EventType {
 	AnimalMoveTile,
 	TaskComplete,
 	ProductComplete,
-	SleepComplete,
+	WakeUp,
 	CheckIfAdjacentPawns,
 	CheckIfAdjacentAnimals,
 	CheckIfAdjacentPawnToAnimal,
@@ -132,6 +132,12 @@ void eventInterpreter(Event event) {
 		if (adjCheckEntity(event.entitiesIndex, event.secondaryIndex, false, false)) {
 			meetEventInterpreter(event.typeIndex);
 		} else meet(event.entitiesIndex, event.secondaryIndex, false, false, static_cast<DelayedEvent>(event.typeIndex));
+		break;
+	case EventType::MoveStart:
+		setMovingStatus(event.entitiesIndex);
+		break;
+	case EventType::WakeUp:
+		setMovingStatus(event.entitiesIndex);
 		break;
 	case EventType::NotFertilized:
 		setUnfertilized(event.entitiesIndex);

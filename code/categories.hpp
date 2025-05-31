@@ -60,6 +60,7 @@ Breastplate,
 Helmet,
 Bracers,
 Guards,
+Gloves,
 VARIANTSMAX,
 //RESOURCES
 Saltwater,

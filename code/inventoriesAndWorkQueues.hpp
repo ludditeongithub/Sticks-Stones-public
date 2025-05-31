@@ -346,172 +346,6 @@ void getResource(Item item) {
     }
 }
 
-
-
-// void attemptResource(int pawn, Role role) {
-//     //TODO: add queued actions for each that trigger once destination is reached.
-//     //TODO: specific metal hints, specific crops, DairyFarmer, Papyrus
-//     std::vector<float> queryPoint = currentCoords[pawn];
-//     int index = tileIndices[currentCoords[pawn]];
-//     size_t numResults = 1;
-//     uint32_t retIndex[numResults]; // nearest neighbor index
-//     float outDistSqr[numResults]; //distance between nn and current
-//     float radius = 200;
-//     switch(role) {
-//         case Role::Scavenger:
-//         case Role::Gatherer:
-//             //TODO: if inventory is full, unload
-//             // if not, scavenge
-//             scavengeables.knnSearch(&queryPoint[0], numResults, &retIndex[0], &outDistSqr[0]);
-//             int nearestIndex = retIndex[0];
-//             //TODO: if digging stick in inventory, then diggables are valid too.
-//             break;
-//         case Role::EarthGatherer:
-
-//         case Role::FishHunter:
-//         case Role::Fisherman:
-//             water.knnSearch(&queryPoint[0], numResults, &retIndex[0], &outDistSqr[0]);
-//             int nearestIndex = retIndex[0];
-//             break;
-//         case Role::Woodcutter:
-//             tree.knnSearch(&queryPoint[0], numResults, &retIndex[0], &outDistSqr[0]);
-//             int nearestIndex = retIndex[0];
-//             break;
-//         case Role::SpearHunter:
-//         case Role::BowHunter:
-//         case Role::Herder:
-//         case Role::Shepherd:
-//         case Role::PoultryFarmer:
-//         case Role::DraftMaster:
-//         case Role::HorseBreeder:
-//             //TODO: make algorithm to find nearest animal last known locations, and then based on sight when reached
-
-//             //TODO: only find animals if less than max animals
-//             boolean found = false; float maxRadius = 1000;
-//             int nearestIndex;
-//             while (!found && radius < maxRadius) {
-//             std::vector<std::pair<size_t, float>> resultSet;
-//                  animal.radiusSearch(&queryPoint[0], radius, resultSet, nanoflann::SearchParams());
-//             for (int i = 0; i < checkNumResults; i++) {
-//                 if (role == Role::SpearHunter || role == Role::BowHunter) {
-//                      for (int j = 0; j < draft.size(); j++) {
-//                     if (animals[nextIndex] == !draft[j]) {
-//                         nearestIndex = resultSet[i].first;
-//                         found = true;
-//                         break;
-//                     }
-//                     }
-//                 } else if (role == Role::Shepherd) {
-//                     for (int j = 0; j < shepherdables.size(); j++) {
-//                     if (animals[nextIndex] == shepherdables[j]) {
-//                         nearestIndex = resultSet[i].first;
-//                         found = true;
-//                         break;
-//                     }
-//                     }
-//                 } else if (role == Role::Herder){
-//                        for (int j = 0; j < herdables.size(); j++) {
-//                     if (animals[nextIndex] == herdables[j]) {
-//                         nearestIndex = resultSet[i].first;
-//                         found = true;
-//                         break;
-//                     }
-//                 }
-//                 } else if (role == Role::PoultryFarmer){
-//                     for (int j = 0; j < poultry.size(); j++) {
-//                     if (animals[nextIndex] == poultry[j]) {
-//                         nearestIndex = resultSet[i].first;
-//                         found = true;
-//                         break;
-//                     }
-//                 }
-//                 } else if (role == Role::DraftMaster){
-//                    for (int j = 0; j < draft.size(); j++) {
-//                     if (animals[nextIndex] == draft[j]) {
-//                         nearestIndex = resultSet[i].first;
-//                         found = true;
-//                         break;
-//                     }
-//                 }
-//             } else if (role == Role::HorseBreeder) {
-//                     if (animals[nextIndex] == Animal::Horse) {
-//                         nearestIndex = resultSet[i].first;
-//                         found = true;
-//                     }
-//                 }
-//             }
-//             radius *= 2;
-//             }
-//             break;
-//         case Role::DairyFarmer:
-//             std::vector<std::pair<size_t, float>> resultSet;
-//                  animal.radiusSearch(&queryPoint[0], radius, resultSet, nanoflann::SearchParams());
-//             for (int j = 0; j < milkable.size(); j++) {
-//                     if (animals[nextIndex] == milkable[j]) {
-//                         nearestIndex = resultSet[i].first;
-//                         found = true;
-//                         break;
-//                     }
-//                 }
-//             if (found) break;
-//             }
-//             break;
-//         case Role::StoneMiner:
-//         case Role::CopperMiner:
-//         case Role::IronMiner:
-//         case Role::GoldMiner:
-//         case Role::QuarryMiner:
-//         case Role::SilverMiner:
-//         case Role::GemstoneMiner:
-//         case Role::SaltMiner:
-//             stone.knnSearch(&queryPoint[0], numResults, &retIndex[0], &outDistSqr[0]);
-//             int nearestIndex = retIndex[0];
-//             break;
-//         case Role::Herbalist:
-//             herb.knnSearch(&queryPoint[0], numResults, &retIndex[0], &outDistSqr[0]);
-//             break;
-//         case Role::CerealFarmer:
-//         case Role::FlaxFarmer:
-//         case Role::HerbFarmer:
-//         case Role::Horticultarlist:
-//         case Role::VineyardWorker:
-//         case Role::OrchardFarmer:
-//         case Role::CottonFarmer:
-//             vector<Plant> harvest = plantRoleMap(role);
-//             bool found = false;
-//             //here only harvesting is settled-- planting and weeding is a support class
-//         while (!found) {
-//             harvestable.radiusSearch(&queryPoint[0], radius, resultSet, nanoflann::SearchParams());
-//                 int nextIndex = retIndex[i];
-//                 for (int i = 0; i < harvest.size(); i++) {
-//                      if (tilePlant[nextIndex] == harvest[i]) {
-//                          int nearestIndex = nextIndex;
-//                          found = true;
-//                          break;
-//                      }
-//                 }
-//             radius *= 2;
-//         }
-//             break;
-//         case Role::Herbalist:
-//             herb.knnSearch(&queryPoint[0], numResults, &retIndex[0], &outDistSqr[0]);
-//                 int nearestIndex = retIndex[0];
-//                 break;
-//         case Role::CopperMiner:
-//             //TODO: first search for copper hints
-//             //then just mine stone
-//             break;
-//         case Role::Beekeeper:
-//             //get honey
-//             beehive.knnSearch(&queryPoint[0], numResults, &retIndex[0], &outDistSqr[0]);
-//             int nearestIndex = retIndex[0];
-//             break;
-//     }
-//     std::pair<int,int> targetTile = tileCoords[nearestIndex];
-//     //TODO: trigger moveto then get resource at target tile, search again for animals or moving target
-
-// }
-
 bool checkActionRequisites(Recipe recipe, int pawn) {
     if !(recipe.action == Actions::NONE) {
         //confirm pawn can perform action necessary to produce product
@@ -531,7 +365,7 @@ bool checkActionRequisites(Recipe recipe, int pawn) {
          int toolReplaceableList = actionToToolsReplaceables[action];
          for (int j = 0; j < actionToTools[action].size(); j++) {
              if (toolReplaceableList[j] < 0) continue; //optional tools
-             for (int k = 0; k < Tools[pawn].size; k++) {
+             for (int k = 0; k < tools[pawn].size; k++) {
                  if (actionToTools[action][j] == tools[pawn][k]) {
                      while (toolReplaceableList[j] == toolReplaceableList[j+1]) j++;
                  } else {
@@ -544,6 +378,11 @@ bool checkActionRequisites(Recipe recipe, int pawn) {
          if (!foundTools) return false;
          return true;
 }
+
+//RESOURCE PAWN MANAGEMENT
+ void attemptResource(int pawn, Role role) {
+
+ }
 
 //PRODUCTS PAWN MANAGEMENT
 // TODO: have pawns search nearby surroundings for items if not found, if on
@@ -563,14 +402,20 @@ void attemptProduction(int pawn, ProductVariant product, ItemType itemType) {
         attemptAlternateRecipe ? return : ConatainerRecipe recipe = containers[static_cast<int>(product)];
     }
 
-    if (!checkActionRequisites(recipe, pawn)) {
+    if (checkActionRequisites(recipe, pawn)) {
+        findNecessaryTools();
+    }
         vector<std::pair<int, int>> ingredientsFound;
     vector<std::pair<int, int>> variantIngredientsFound;
 
     //FOR LIQUIDS
     if (recipe.itemTags.hasTag(itemTags::Liquid)) {
         //TODO: find nearest unprocessing liquid vessel, or get from inventory if none
+        bool found = false;
+        while (!found) {
+            if (filledLiquidContainers.find(findNearestLiquidContainer(currentCoords[pawn].first, currentCoords[pawn]second)) != filledLiquidContainers.end())
 
+        }
         int maxAmount = 99999;
         for (int i = 0; i < recipe.ingredients.size(); i++) {
             // TODO: get amount of liquid in found vessel
@@ -643,6 +488,10 @@ void attemptProduction(int pawn, ProductVariant product, ItemType itemType) {
                 foundIngredient = true;}
         if (foundIngredient) break;
     }
+    //try to find nearest ingredient
+    //TODO: create nearest with lower man dist
+    std::pair<int,int> itemCoord = findNearestEntity(recipe.ingredients[i], currentCoords[pawn].first, currentCoords[pawn]second);
+    if (itemCoord != {-1, -1} && manDist(currentCoords[pawn], itemCoord) < nearGatherRange);
     if (!foundIngredient) {
         if (!attemptAlternateRecipe) {
             attemptAlternateRecipe = true;

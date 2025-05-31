@@ -16,6 +16,9 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <variant>
+#include <future>
+#include <chrono>
+#include <functional>
 #include "FastNoiseLite.h"
 #include "nanoflann.hpp"
 

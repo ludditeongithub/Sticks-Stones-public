@@ -23,15 +23,15 @@ struct AnimalData {
 };
 
 enum class MovingStatus {
-Sleeping,
 Idle,
 Wander,
-ProwlUp,
-ProwlDown,
-ProwlLeft,
-ProwlRight,
+Prowl,
 Flee,
-Pursuit
+Pursuit,
+AnimalPursuit,
+ApproachPlant,
+ApproachGrass,
+
 };
 
 enum class MatingStatus {
@@ -47,5 +47,21 @@ Plant diet[] = {Plant::Fern, Plant::Moss, Plant::Reed, Plant::Wheat, Plant::Oat,
 
 predatorDiet[Animal::Wolf] = {Animal::Rabbit, Animal::Sheep, Animal::Pig, Animal::Goat, Animal::Chicken, Animal::Duck, Animal::Antelope, Animal::Deer, Animal::Caribou, Animal::Capybara};
 predatorDiet[Animal::Bear] = {Animal::Rabbit, Animal::Sheep, Animal::Pig, Animal::Goat, Animal::Chicken, Animal::Duck, Animal::Antelope, Animal::Deer, Animal::Caribou, Animal::Capybara, Animal::Fish, Animal::Donkey};
+
+
+enum class Diet {
+Herbivore, Omnivore, Carnivore, Scavenger
+};
+
+int[] sightRanges[static_cast<int>(Animal::MAX)];
+
+sightRanges[static_cast<int>(Animal::)];
+
+int[] minSpeeds[];
+int[] midSpeeds[];
+int[] maxSpeeds[];
+minSpeeds[static_cast<int>(Animal::)];
+midSpeeds[static_cast<int>(Animal::)];
+maxSpeeds[static_cast<int>(Animal::)];
 
 #endif // ANIMAL_H_

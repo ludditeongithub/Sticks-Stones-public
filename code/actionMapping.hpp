@@ -37,7 +37,7 @@ void initializeActionToTools() {
   actionToTools[(size_t)Actions::Cut] = {Tool::Knife, Tool::Machete, Tool::Sword};
   actionToRoles[(size_t)Actions::Cut] = {Role::Apothecary, Role::Planter};
   actionToTools[(size_t)Actions::Chop] = {Tool::Axe, Tool::Greataxe, Station::Tree};
-    actionToRoles[(size_t)Actions::Chop] = {Role::Woodcutter};
+  actionToRoles[(size_t)Actions::Chop] = {Role::Woodcutter};
   actionToTools[(size_t)Actions::Dig] = {Tool::Shovel, Tool::Trowel};
     actionToRoles[(size_t)Actions::Dig] = {Role::Planter, Role::Structures};
   actionToTools[(size_t)Actions::Light] = {Tool::Torch, Tool::Candle, Tool::Flint};
@@ -206,7 +206,11 @@ actionToTools[(size_t)Actions::Pott] = {Station::PottersWheel,Tool::Scraper, Too
         //NON PRODUCT/RESOURCE
    actionToRoles[(size_t)Actions::Tame] = {Role::HorseBreeder, Role::Shepherd, Role::Herder};
     actionToRoles[(size_t)Actions::Command] = {Role::MilLeader, Role::Monarch, Role::Landowner};
-    }
+}
+
+bool queuedActionInterpreter(Actions actionToQueue) {
+
+}
 
 
 

@@ -19,6 +19,10 @@ const float singleBulk = 60.0;
 const float childMaxCarry = 30.0;
 const float maxCarry = 85.0;
 
+uint8_t humanSight;
+uint16_t nearGatherRange = humanSight; // the farthest a pawn will  go to fetch an item
+uint16_t midGatherRange = humanSight * 2;
+
 // Fine means that only fine objects can be carried, mid means that loose, soft, or solid objects can be carried, single means
 // that only single objects can be carried
 enum class BulkStatus {
@@ -146,9 +150,11 @@ vector<bool> occupied;
 vector<vector<Role>> roles;
 vector<bool> sex; //t = male, f = female
 vector<std::pair<int,int>> currentCoords;
+vector<int> currentDests; //indices
 vector<Direction> currentDirections;
 vector<MovingStatus> movingStatus;
 vector<uint16_t> health;
+vector<uint16_t> inertias;
 //RESOURCES
 
 
