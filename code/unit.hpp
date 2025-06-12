@@ -9,11 +9,11 @@
 // where 0.1 is 100mL
 // NOTE: idea: consider doing left and right
 const float fineBulkMax = 0.3;
-const float looseBulkMult = 5.5;
-const float softBulkMult = 2.5;
-const float solidBulkMult = 1.0;
+const float looseBulkMult = 5.5; // multiplies mid bulk
+const float softBulkMult = 2.5; // mulitiplies mid bulk
+const float solidBulkMult = 1.0; // mulitiplies mid bulk
 const float midBulkMax = 35.0;
-const float singleBulk = 60.0;
+const float singleBulkMax = 60.0;
 
 //mas weights pawns can carry
 const float childMaxCarry = 30.0;
@@ -128,16 +128,14 @@ bool validContainer(Container container, Item newItem) {
 }
 
 struct Inventory {
-    std::pair<Tool,Material> leftHand;
-    std::pair<Tool,Material> rightHand;
+    std::pair<uint8_t, Material> leftHand; //if Material == NONE, then it it CARRYING
+    std::pair<uint8_t, Material> rightHand; //if Material == NONE, then it it CARRYING
     vector<std::pair<Item, uint16_t>> items; //contains all non-variant items
     vector<std::pair<Item, uint16_t>> variantItems; //contains all variant items
     vector<uint16_t> variantItemTypes; //the enum relevant number for the enum class
     float currentBulk = 0.0;// in hands, not in containers
     BulkStatus currentBulkStatus = BulkStatus::NONE;
-    float currentWeight = 0; // in hands, not in containers
-    float totalBulk = 0.0;
-    float totalWeight = 0.0;
+    float currentWeight = 0.0; // in hands, not in containers
 };
 //ALL
 /* inventory cont'd */
@@ -146,21 +144,26 @@ vector<vector<std::pair<Tool,Material>>> tools;
 vector<vector<Container>> containers;
 
 /* end */
-vector<bool> occupied;
-vector<vector<Role>> roles;
+
+vector<vector<Role>> roles; //roles at front are prioritized in queue
+vector<int> currentRoleIndex;
 vector<bool> sex; //t = male, f = female
 vector<std::pair<int,int>> currentCoords;
-vector<int> currentDests; //indices
+vector<Object> currentTargets;
+vector<int> currentDest; //indices, can function as animal indices/human indices or tile indices depending on moving context
 vector<Direction> currentDirections;
 vector<MovingStatus> movingStatus;
 vector<uint16_t> health;
 vector<uint16_t> inertias;
+
+//TODO: work on future/consolidated futures
+std::vector<std::promise<void>> findPromise;
+std::vector<std::future<void>> findFuture;
 //RESOURCES
 
 
 //PRODUCERS
-using ProductVariant<Item, Vehicle, Buildable>;
+using ProductVariant<Item, Container, Vehicle, Buildable>;
 vector<ProductVariant> currentProducts;
-
 
 #endif // UNIT_H_

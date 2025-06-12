@@ -21,11 +21,11 @@ Animal bearDiet[] = {Animal::Pig, Animal::Chicken, Animal::Cow, Animal::Duck, An
 
 
 enum class Grass {
-NONE, Grass, SavannahGrass,
+NONE, EDIBLE, Grass, SavannahGrass,
 };
 
 enum class Plant {
-NONE, Fern, Moss, Reed, Wheat, Oat, Rice, Bush, Papyrus, PioneerTree, DeciduousTree, EvergreenTree, TropicalTree, OrangeTree, LemonTree, LimeTree, PeachTree, PlumTree, CherryTree, ApricotTree, Cactus, AppleTree, PearTree, OliveTree, BlueberryShrub, StrawberryShrub, Grapevine, Lettuce, Kale, Corn, Carrot, Beets, Potato, Onion, Garlic, Cabbage, Broccoli, Tomato, Cucumber, Pepper, Peas, Beans, Cotton, Hemp, Flax, Woad, Madder, Indigo, Lavendar, Mint, Thyme, Sage, Ginseng, Poppy, Cocoa, Senna, Saffron, MAX,
+NONE, EDIBLE, WOOD, Fern, Moss, Reed, Wheat, Oat, Rice, Bush, Papyrus, PioneerTree, DeciduousTree, EvergreenTree, TropicalTree, OrangeTree, LemonTree, LimeTree, PeachTree, PlumTree, CherryTree, ApricotTree, Cactus, AppleTree, PearTree, OliveTree, BlueberryShrub, StrawberryShrub, Grapevine, Lettuce, Kale, Corn, Carrot, Beets, Potato, Onion, Garlic, Cabbage, Broccoli, Tomato, Cucumber, Pepper, BlackPepper, Cotton, Hemp, Flax, Woad, Madder, Indigo, Lavender, Mint, Thyme, Sage, Ginseng, Rhubarb, Poppy, Cocoa, Senna, Saffron, MAX,
 };
 
 enum class Wall {
@@ -49,9 +49,10 @@ AgedAlcoholicDrink,
 Metal,
 Corpse,
 Gem,
+GreaterGem,
 Ore,
-CuredHides,
-TannedHides,
+CuredHide,
+TannedHide,
 RawMeat,
 CookedMeat,
 CandiedFruit,
@@ -90,16 +91,18 @@ ChickenEgg,
 DuckEgg,
 TurtleEgg,
 Fish,
+Shellfish,
 Honey,
 RawWax,
 Wax,
+Resin,
 Wool,
 RawSalt,
 Olive,
 Sugarcane,
 Coconut,
 Truffle,
-Wheat, Oat, Corn, Rice, Tomato, Onion, Potato, Cabbage, Pumpkin, Pepper, Carrot, Poppy, Cannabis, Senna, Cotton, Papyrus, Flax, Hemp, Lettuce, Cocoa, Cucumber, Kale, Beets, Madder, Indigo, Saffron, Ginger,
+Wheat, Oat, Corn, Rice, Tomato, Onion, Potato, Cabbage, Pumpkin, Pepper, Carrot, Poppy, Cannabis, Senna, Cotton, Papyrus, Flax, Hemp, Lettuce, Cocoa, Cucumber, Kale, Beets, Madder, Indigo, Saffron, Ginseng, Garlic, Sage,
 //TODO: add to resources
 Mint,	Thyme, Syrup, Lavender, TreeResin, Rhubarb,
 RESOURCESMAX,
@@ -120,17 +123,6 @@ Hammerstone,
 HandKnife,
 HandDrill,
 HandChisel,
-PrimitiveSpear,
-PrimitiveSpearhead,
-Bleach,
-YellowDye,
-BlueDye,
-RedDye,
-PrimitiveRope,
-PrimitiveString,
-LargeHandle,
-SmallHandle,
-String,
 Ash,
 Straw,
 Hay,
@@ -141,7 +133,6 @@ Feather,
 AnimalHair,
 Bone,
 Sinew,
-Wood,
 Peat,
 Salt,
 DrinkingWater,
@@ -158,46 +149,42 @@ Ring,
 Necklace,
 WoodCrown,
 Sling,
-StoneArtifact,
-WoodArtifact,
+PrimitiveRope,
+PrimitiveString,
+LargeHandle,
+SmallHandle,
 BoneArtifact,
 PrimitiveAxe,
 PrimitiveAxeHead,
+PrimitiveSpear,
+PrimitiveSpearHead,
 DiggingStick,
-ArrowShaft,
 Thread,
 Arrowhead,
-Resin,
 SolidWheel,
 Strap,
 PackedEarth,
-BlackPepper,
-Shellfish,
+PrimitiveArrow,
+PrimitiveBow,
 
 //neo:
-Blowpipe,
+String,
 BackstrapLoom,
-Jar,
-Kettle,
-Pot,
-OilLamp,
+ClayJar,
+ClayPot,
+ClayBowl,
 Whip,
-Arrow,
-Shortbow,
 Fertilizer,
 FishMeal,
 BoneMeal,
-Ink,
-CrushedStone,
 Daub,
 WheatGrain,
-DyedCloth,
 Cloth,
 Silk,
 Linen,
 Charcoal,
-FiredClay,
 Cob,
+Wood,
 LogBeam,
 Beam,
 Timber,
@@ -209,7 +196,11 @@ Flour,
 Sugar,
 Grist,
 MilledRice,
+WoodArtifact,
 //copper:
+Arrow,
+Shortbow,
+ArrowShaft,
 AxeHead,
 ShovelHead,
 SawHead,
@@ -230,6 +221,12 @@ AwlHead,
 SickleHead,
 KnifeHead,
 StoneTablet,
+FiredClay,
+Pot,
+Kettle,
+Jar,
+Bowl,
+OilLamp,
 Incense,
 BrickMold,
 Rivet,
@@ -256,6 +253,7 @@ JoinedPlank,
 CurvedStone,
 CutStoneSheet,
 CutStone,
+CrushedStone,
 JoinedBeam,
 LongStave,
 Stave,
@@ -266,6 +264,12 @@ OliveOil,
 BlueCheese,
 Porridge,
 //bronze:
+Blowpipe,
+StoneArtifact,
+Bleach,
+YellowDye,
+BlueDye,
+RedDye,
 HandheldBellows,
 Chair,
 Stool,
@@ -337,12 +341,14 @@ Wheel,
 Needles,
 Clips,
 Paper,
+Ink,
+DyedCloth,
 Rope,
 RopemakingFrame,
 Bricks,
 Lime,
 GroundBlackPepper,
-ChiliPowdr,
+ChiliPowder,
 TruffleOil,
 Vinegar,
 Pastry,
@@ -380,6 +386,7 @@ Coins,
 CoinBlank,
 Lens,
 CoinMould,
+Wire,
 //mediev
 Pulley,
 Waterwheel,
@@ -498,21 +505,36 @@ Waterskin,
 MAX
 };
 
+enum class ResourceType {
+NONE, Plant, Fruit, Wood,
+};
 
 enum class Meat {
-    Pork, Beef, Chicken, Duck, Sheep, Goat, Ox, Horse, Donkey, Camel, WaterBuffalo, Rabbit, Antelope, Deer, Moose, Capybara, Elephant, Bison, Wolf, Bear, Caribou,
+Pork, Beef, Chicken, Duck, Sheep, Goat, Ox, Horse, Donkey, Camel, WaterBuffalo, Rabbit, Antelope, Deer, Moose, Capybara, Elephant, Bison, Wolf, Bear, Caribou,
 };
 
 enum class Hide {
-	NONE, PigSkin, CowHide, OxHide, SheepHide, GoatHide, HorseSkin, DonkeySkin, WaterBuffaloHide, RabbitHide, AntelopeHide, DeerHide, MooseHide, CapybaraHide, ElephantHide, BisonHide, WolfPelt,
+NONE, PigSkin, CowHide, OxHide, SheepHide, GoatHide, HorseSkin, DonkeySkin, WaterBuffaloHide, RabbitHide, AntelopeHide, DeerHide, MooseHide, CapybaraHide, ElephantHide, BisonHide, WolfPelt,
 };
 
 enum class Fruit {
 	NONE,
     //also doubles for juice
-    Orange, Apple, Lemon, Pear, Peach, Cherry, Apricot, Plum, Lime, Blueberry, Strawberry, Grape,
+    Orange, Apple, Lemon, Pear, Peach, Cherry, Apricot, Plum, Lime,
+    //Non-fall fruits
+    Blueberry, Strawberry, Grape,
     //FRUIT VEGGIES
     Cucumber, Pepper, Tomato
+};
+
+struct FruitObject {
+Fruit fruit;
+uint8_t amount;
+};
+
+struct ItemObject {
+Item item;
+uint8_t amount;
 };
 
 enum class AlcoholicDrink {
@@ -540,7 +562,7 @@ enum class LargeHandle {
 };
 
 enum class Clothing {
-  Tribalwear, BasicClothing, FormalClothing, AdvancedClothing, Sandles, Boots, Gloves, Apron, Helmet, Bracers, Guards,  Cape, Gambeson, Chainmail, Breastplate, WoodCrown, GoldCrown, RoyalCrown,
+  Tribalwear, BasicClothing, FormalClothing, AdvancedClothing, Sandles, Boots, Gloves, Apron, Helmet, Bracers, Guards, Cape, Gambeson, Chainmail, Breastplate, WoodCrown, GoldCrown, RoyalCrown,
 };
 
 enum class Jewelry {
@@ -548,7 +570,7 @@ enum class Jewelry {
 };
 
 // actions require a certain job and also a certain tool. For example, "Butcher" requires a knife and also the Butcher job, while "Cut" only requires a knife. Burn needs fire, but not oven, while fire needs a kiln like structure
-enum class Actions { NONE, Collect,Hunt,Melee,Ranged,Mine,Cut,Chop,Dig,Light,Butcher,Paint,Sculpt,Chisel,Write,Pott,Smelt,Smith,Perform,Operate,Administer,Build,Command,Mould,Woodwork,Stonework,Glasswork,Saw,Engrave,Burn,Fire,Press,Carve,WoodCarve,StoneCarve,Weave,Bless,PrimitiveCook,Cook,Craft,Explore,Negotiate,Plow,Plant,Weed,Harvest,Milk,Shear,Mill,Fish,Herd,Trade,Haul, Bake, Treat, Cast, Mix, Boil, Whittle, Knapp, Spin, Grind, Preserve, LeatherCraft, Dip, Lay, WoodCraft, WheelCraft, CanoeCarve, BoatCraft, SiegeCraft, Engineer, Lift, Wait, Measure, SculptMould, Sew, Cur, Tan, CandleCast, Ponder, Tabulate, CandleMould,  Mint,
+enum class Actions { NONE, Collect, Hunt, Melee, Ranged, Mine, Cut, Chop, Dig, Light, Butcher, Paint, Sculpt, Chisel, Write, Pott, Smelt, Smith, Perform, Operate, Administer, Build, Command, Mould, Woodwork, Stonework, Glasswork, Saw, Engrave, Burn,Fire,Press,Carve,WoodCarve,StoneCarve,Weave,Bless,PrimitiveCook,Cook,Craft,Explore,Negotiate,Plow,Plant,Weed,Harvest,Milk,Shear,Mill,Fish,Herd,Trade,Haul, Bake, Treat, Cast, Mix, Boil, Whittle, Knapp, Spin, Grind, Preserve, LeatherCraft, Dip, Lay, WoodCraft, WheelCraft, CanoeCarve, BoatCraft, SiegeCraft, Engineer, Lift, Wait, Measure, SculptMould, Sew, Cur, Tan, CandleCast, Ponder, Tabulate, CandleMould,  Mint, Bind, WireDraw, MudbrickSculpt, BrickSculpt, LowFire, Brew, OilMake, Mash,
 //TODO: MAY NOT BE IN ACTIONS TO TOOL OR ROLES YET
 	Tame, Scrape, Churn, Crush, Leatherwork, Fletch, Compound, Saponify, BowCraft, MAX
 };
@@ -567,6 +589,22 @@ enum class Material {
 Wood, Stone, Bone, Copper, Bronze, Iron, Steel, Gold, Leather, Silver
 };
 
+float weightMultiplier[static_cast<int>(Material::Silver)];
+
+void initializeWeightMultipliers() {
+    weightMultiplier[static_cast<int>(Material::Wood)] = 0.7;
+    weightMultiplier[static_cast<int>(Material::Bone)] = 0.8;
+    weightMultiplier[static_cast<int>(Material::Leather)] = 0.6;
+    weightMultiplier[static_cast<int>(Material::Stone)] = 1.4;
+    weightMultiplier[static_cast<int>(Material::Copper)] = 3.8;
+    weightMultiplier[static_cast<int>(Material::Bronze)] = 3.9;
+    weightMultiplier[static_cast<int>(Material::Iron)] = 4.4;
+    weightMultiplier[static_cast<int>(Material::Steel)] = 4.45;
+    weightMultiplier[static_cast<int>(Material::Silver)] = 5.2;
+    weightMultiplier[static_cast<int>(Material::Gold)] = 5.7;
+};
+
+
 Tool oneHandedTools[] = {Tool::Basket, Tool::Jar, Tool::Pot, Tool::Plate,Tool:: Handaxe, Tool::Sword, Tool::Machete, Tool::Trowel, Tool::Torch, Tool::Candle, Tool::Flint, Tool::Knife, Tool::Cleaver, Tool::Brush, Tool::Pen, Tool::Stylus, Tool::Scraper, Tool::Hammer, Tool::Scalpel,  Tool::Sickle,  Tool::Needle, Tool::Mallet, Tool::Scroll, Tool::Book, Tool::Tongs, Tool::HandheldBellows, Tool::Blowpipe, Tool::PermanentMould,  Tool::MeasuringTools, Tool::Graver, Tool::Lens, Tool::Scale, Tool::Shuttle, Tool::Cheesecloth, Tool::Compass, Tool::Binocular, Tool::SurveyingTools, Tool::Chisel, Tool::Whip, Tool::Shears, Tool::Pestle, Tool::FishingRod, Tool::Net, Tool::Staff, Tool::Stamp, Tool::Ladle, Tool::Rock, Tool::Spindle, Tool::Distaff, Tool::DryingRack, Tool::Awl, Tool::Abacus,Tool::HandDrill, Tool::Die, Tool::Mould, Tool::Incense, Tool::Stick,  Tool::CandleMould, Tool::MeltingPot, Tool::Hammerstone, Tool::PatternedDie, Tool::Shield};
 // can be used with lower efficiency with one hand
 Tool optionalTwoHandedTools[] = { Tool::Basket, Tool::DiggingStick, Tool::Bucket, Tool::PrimitiveSpear, Tool::Spear, Tool::Pickaxe, Tool::Axe,  Tool::Saw, Tool::HeavySaw, Tool::Crucible, Tool::HeavyShield };
@@ -576,20 +614,70 @@ Tool TwoHandedTools[] = { Tool::Adze, Tool::Halberd, Tool::Shovel, Tool::Scythe,
 Tool mandatoryTwoHandedTools[] = { Tool::Greataxe, Tool::Greatsword, Tool::Lur,  Tool::Ard,  Tool::Log, Tool::Corpse, Tool::Cart, Tool::Pike };
 Tool unHandleableTools[] = { Tool::HeavyPlow,  Tool::Wagon,};
 // Collect requires no items or roles. harvesting is collect but with scythe.
-enum class Role {NONE, AdvisorFarming, AdvisorForeign, AdvisorNatural, AdvisorKnowledge, AdvisorOrderAdministrative, AdvisorOrderCulturalArtifact, AdvisorOrderCulturalPerformer, AdvisorOrderLegal, AdvisorStructures, AdvisorTrade, Armor, Arrows, Assembly, Beer, Boat, BooksAcademicAny, Reader, BooksAcademicHistory, BooksAcademicPhilosophy, BooksAcademicMathematics, BooksAcademicNatural, Transcriber, Bow, Bread, PastriesPies, Bricks, Caster, Charcoal, Chariot, Cheese, Child, Children, FoodBasic, StudentCadet, Clothes, Coins, ColoredGlass, Cotton, Flax, FruitsVegetables, Grains, Grapes, Herbs, Olives, Forage, Foreign, Glass, GlassItems, Healer, HealerAnimals, Honey,  Hunters, Jeweller, Seal, Landowner, Leader, Leather, LeatherArmor, Lighting, Letters, Butcher, Poison, MeleeSoldier, RangedSoldier, MiningLocations, MoneyProduction, CookingOil, OliveOil, OrderAdministrative, OrderStrength, OrderCultural, OrderLegal, OrderSatisfaction, Painter, Paper,  RecipeArtist,  StoneTools, BoneTools, Structures, SpearHunter, Engineer, Support, Researcher, Tech, Textiles, Tools, TradeDomestic, TradeExports, TradeImports, TradeNaval, Transport, Unit, Vinegar, Weapons, Wine,
-
+enum class Role {NONE,
+;    //MELEE
+    //RANGED
     //ARTIST
-    Performer, Sculptor,
-
+    Performer, Sculptor, WoodCarver, Musician, Bard, Poet, StoneCarver, Decorator, GlassArtist, Actor, Playwright, Painter, Writer,
+    //SUPPORT
+    //paleo
+    //meso
+    //neo
+    Plower,
+    //copper
+    Prostitute, Porter, CombatHealer, Landowner, Trader, ShipCaptain, Sailor,
+    //bronze
+    Carter, ChariotDriver,
+    //iron
+    Bureaucrat, ChariotRacer, MoneyLender, Merchant, Gladiator,
+    //classical
+    Factor, FieldSurgeon, Judge, Lawyer, Teamster, TradeBaron, Veterinarian, Governor, Senator, Mariner, Curer,
+    SUPPORTMAX,
     //RESOURCE
-    Scavenger, FishHunter, Woodcutter, Fisherman, Herder, Shepherd, StoneMiner, Herbalist,  //farmer is combination of planter and plower
-    CopperMiner, Beekeeper, Planter, CerealFarmer, HerbFarmer, Horticulturalist, TextileFarmer, VineyardWorker, OliveGrower, OrchardFarmer, PapyrusHarvester, IronMiner,  HorseBreeder, DairyFarmer, GoldMiner, LivestockFarmer,  SaltMiner, SilverMiner,  GemstoneMiner, WoodFarmer,
+    //paleo
+    Scavenger,
+    //meso
+    FishHunter, Woodcutter, Gatherer,
+    //neo
+    Herder, Shepherd, StoneMiner, Herbalist, Planter,   //farmer is combination of planter and plower
+    //copper negotiator put here instead of neo
+    CopperMiner, Fisherman, Beekeeper, CerealFarmer, HerbFarmer, Horticulturalist, TextileFarmer, Negotiater,
+    //iron, no fishmonger, no rancher, no vineyard worker,
+    PapyrusHarvester, IronMiner, OliveGrower, VineyardWorker,
+    //classical
+    GoldMiner, SaltMiner, SilverMiner, LivestockFarmer, DairyFarmer,
+    //medieval
+    CottonFarmer, GemstoneMiner,
+    OrchardFarmer, HorseBreeder, WoodFarmer,  RESOURCEMAX,
    //PRODUCER
-   Knapper, Woodworker, CopperSmelter, BronzeSmelter, IronSmelter, SteelSmelter, SilverSmelter, GoldSmelter, Coppersmith, Bronzesmith, Ironsmith, Steelsmith, Silversmith, Goldsmith, Founder, Surgeon, Apothecary, ShelterBuilder, Builder, Monarch, MilLeader, Potter, Stoneworker, Glassworker, Engraver, Firekeeper, WoodCarver, GemCarver, Carver, Weaver, Miller, Priest, Caretaker, Cook, Crafter, Explorer, Negotiater, Plower,  GrainGrinder, Trader, Hauler, Baker, Dyer, PaperMaker, Tanner, Preserver, Leathercrafter, Chandler, Ropemaker, Fletcher, Wheelwright, CanoeCarver, Shipwright, SiegeEngineer, Spinner, Philosopher, Tailor, Minter, MAX};
+   //paleo: make hidecrafter roles
+   Knapper, Carver, Firekeeper, HideCrafter,
+   //meso: tanner = hidetanner
+   CanoeCarver, BasketWeaver, Crafter,  ShelterBuilder, Tanner, Ornamenter, Mixer,
+   //neo
+   ClayWorker, Butcher, Preserver, Weaver, Woodworker, Spinner, MudbrickMaker, StoneWorker,
+   //copper
+   CopperSmelter, Coppersmith, GrainGrinder, BoatBuilder, Bowyer, Fletcher, Leathercrafter, Priest, Brewer,
+   //bronze note: no carpnter, no provisioner, no stonemason, no tanner,  wagon maker = wheelwright, no wickerworker, wise man = philosopher
+   SilverSmelter, GoldSmelter, Silversmith, Goldsmith, GemCarver,
+   Potter, Engineer, Baker, BrickMaker, BronzeSmelter, Bronzesmith, Builder, CharcoalMaker,
+ Cook, Cuirassier, Wheelwright, Scribe, Philosopher,
+  //iron: no loom weaver,
+    IronSmelter, Ironsmith, OilMaker, PaperMaker, Apothecary, Glassworker,
+   //classical, no cartwright, no cheesmaker, shipwright = naval engineer, no chef, no philosopher
+    Glassblower, Engraver, Minter, Shipwright, SiegeEngineer,
+    SteelSmelter,  Steelsmith,  Founder, Surgeon,  Monarch, MilLeader, Miller,  Caretaker, Hauler,  Dyer,  Chandler, Ropemaker, Tailor,  Armorer, PRODUCTSMAX,
+   //SUPPORTPRODUCER
+   //RESEARCHER
+   Envoy, Explorer, Navigator, Spy, Historian, Mathematician, Cartographer, Diplomat,
+   //LEADER
+   AdvisorFarming, AdvisorForeign, AdvisorNatural, AdvisorKnowledge, AdvisorOrderAdministrative, AdvisorOrderCulturalArtifact, AdvisorOrderCulturalPerformer, AdvisorOrderLegal, AdvisorStructures, AdvisorTrade,
+   Chieftan, Prince, Architect, King, Emperor, Moneyer, CivilEngineer, Aristocrat, MiningEngineer, WagonMaster, Baron,
+   MAX};
 
 //Consumes items:: operate, administer, write, bless, plan
 
-// if a task has to be peformed on a specific entity, or at a specific tile
+// if a task has to be peformed on a specific object, or at a specific tile
 enum class Station {
 	PottersWheel, Animal, ClaySculpture, Plant, Tree, Pawn, Wall, Furnace, Bellows, TemporaryMould, Press, Mill, Loom, Oven, Tabletop, PitFire, SpinningWheel, Smokehouse, Kiln, WaterWheel, Hive, Forge, Cart, Wagon, MashTun, Keg, Anvil, SculptMould, FirePit, Spinner,
 
@@ -598,12 +686,37 @@ enum class Station {
 };
 
 enum class Scavengeable {
-NONE, Log, Pebble, LargeStick, Stick, Rock, LargeRock, Boulder, Flint, Ore, Corpse, Beehive, ArtificialBeehive, Stump, ChickenEgg, DuckEgg, TurtleEgg
+NONE, Log, Pebble, LargeStick, Stick, Rock, LargeRock, Boulder, Flint, Ore, Corpse, Beehive, ArtificialBeehive, Stump, ChickenEgg, DuckEgg, TurtleEgg, Truffle
+};
+
+enum class ItemType {
+Item, Vehicle, Buildable, Tool, Container
 };
 
 //ARRAY CATEGORIES / SUB - CATEGORIES
-using Object = std::variant<Plant, Item, Scavengeable, Buildable, Animal, Vehicle>;
-using ScavengeableVariant = std::variant<Scavengeable, Plant>;
+using Object = std::variant<Plant, Container, Item, Scavengeable, Buildable, Fruit, Tool>;
+
+bool isPlant(Object obj) {
+    return std::holds_alternative<Plant>(obj);
+}
+
+bool isItem(Object obj) {
+    return std::holds_alternative<Item>(obj);
+}
+
+bool isScavengeable(Object obj) {
+    return std::holds_alternative<Scavengeable>(obj);
+}
+
+bool isFruit(Object obj) {
+    return std::holds_alternative<Fruit>(obj);
+}
+
+bool isTool(Object obj) {
+    return std::holds_alternative<Tool>(obj);
+}
+
+using ScavengeableVariant = std::variant<Scavengeable, Plant, Fruit>;
 
 enum class FoodSource {
 Grass, Fruit, Plant, Corpse, Meal

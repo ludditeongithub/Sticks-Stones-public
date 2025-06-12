@@ -3,12 +3,17 @@
 void addPlant(Plant plant, int x, int y) {
     int plantIndex = nextPlantIndex.pop();
     plants.push_back(plant.type);
+    plantIndicesFromTileIndices[tileIndices[{x,y}]] = plantIndex;
     growthAmt.push_back(0);
     yieldMisses.push_back(0);
     collectedWater.push_back(0);
     lastFullyWatered.push_back(0);
     fullyGrown.push_back(false);
-    insertEntity(x, y, plantIndex);
+    insertObject(x, y, plantIndex);
+}
+
+bool viableHarvest(int plantIndex) {
+    if (growthAmt(plantIndex) < harvestThreshold[plants[plantIndex]]) return true;
 }
 
 //TODO: consider making this array, so that animals can eat and poop many seeds.

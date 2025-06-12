@@ -20,6 +20,7 @@ struct TileMoveCost {
 
 std::vector<TileMoveCost> adjacentTilesCost(STARTING_MAP_WIDTH * STARTING_MAP_HEIGHT);
 // the cell to which the tile belongs
+// TODO: checker to see if adjacent tile cells are out of bound upon movement
 vector<uint32_t> tileCellIndex;
 // the four adjacent tiles' indices in the vectors (ABOVE, RIGHT, BELOW, LEFT)
 struct AdjacentTiles {

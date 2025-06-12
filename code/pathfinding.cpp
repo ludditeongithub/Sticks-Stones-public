@@ -127,7 +127,7 @@ bool adjCheck(L& referenceMap, M& map, int y, int x, T check, int range) {
     return false;
 }
 
-bool adjCheckEntity(int firstIndex, int secondIndex, bool firstAnimal, bool secondAnimal) {
+bool adjCheckObject(int firstIndex, int secondIndex, bool firstAnimal, bool secondAnimal) {
     if (firstAnimal) std::pair<int,int> fc = animalCoords[firstIndex];
     else std::pair<int,int> fc = currentCoords[firstIndex];
     if (secondAnimal) std::pair<int,int> sc = animalCoords[secondIndex];
@@ -236,8 +236,6 @@ std::pair<int,int> adjGetTileOfType(vector<T>& tileVector, int tileIndex, C type
         }
     return adj;
 }
-
-
 
 int adjRange(std::vector<std::vector<int>>& map, int y, int x, int check) {
     int rows = map.size(), cols = map[0].size();
@@ -523,7 +521,7 @@ int getNearestAdjacentEmptyTileIndex(int startIndex) {
             if (neighbor < 0 || visited.count(neighbor)) continue;
 
             if (checkEmptyTile(current, neighbor)) {
-                return neighbor// Found nearest empty tile
+                return neighbor;// Found nearest empty tile
             }
 
             visited.insert(neighbor);
@@ -702,7 +700,7 @@ std::vector<std::pair<int, int>> greedyPath(int startIndex, int endIndex) {
     return path;
 }
 
-//use to estimate when entity will arrive at target
+//use to estimate when object will arrive at target
 int timeToDestEstimator(bool min, int subjectIndex, int targetIndex, bool subjectAnimal, bool targetAnimal) {
         if (targetAnimal) {
         std::pair<int,int> targetCoord = animalCoords[targetIndex];
@@ -738,47 +736,47 @@ void movePawn(vector<std::pair<int,int> path, int pawnIndex) {
     }
 }
 
-void moveAnimal(int entityIndex, int destCoordIndex) {
-    std::pair<int, int> ec = animalCoords[entityIndex];
+void moveAnimal(int objectIndex, int destCoordIndex) {
+    std::pair<int, int> ec = animalCoords[objectIndex];
     vector<std::pair<std::pair<int,int>, int>> path = greedyPath(ec, destCoordIndex);
-    moveAnimal(path, entityIndex);
+    moveAnimal(path, objectIndex);
 }
 
-void movePawn(int entityIndex, int destCoordIndex) {
-    std::pair<int, int> ec = animalCoords[entityIndex];
-    std::pair<int, int> ec = currentCoords[entityIndex];
+void movePawn(int objectIndex, int destCoordIndex) {
+    std::pair<int, int> ec = animalCoords[objectIndex];
+    std::pair<int, int> ec = currentCoords[objectIndex];
 
     vector<std::pair<std::pair<int,int>, int>> path = greedyPath(ec, destCoordIndex);
-    movePawn(path, entityIndex);
+    movePawn(path, objectIndex);
 }
 
 //TODO: consider making the move tile events directional
-void moveAnimal(int entityIndex, int destCoordIndex, DelayedEvent event) {
-    std::pair<int, int> ec = animalCoords[entityIndex];
+void moveAnimal(int objectIndex, int destCoordIndex, DelayedEvent event) {
+    std::pair<int, int> ec = animalCoords[objectIndex];
     vector<std::pair<std::pair<int,int>, int>> path = greedyPath(ec, destCoordIndex);
     Animal animal = animals[animalIndex];
 
     int nextTileMoveTime = 0;
     for (int i = 0; i < path.size(); i++) {
         nextTileMoveTime += path[i].second * getSpeed(animal);
-        addEvent(nextTileMoveTime, EventType::AnimalMoveTile, entityIndex, path[i].first);
+        addEvent(nextTileMoveTime, EventType::AnimalMoveTile, objectIndex, path[i].first);
     }
-    addEvent(nextTileMoveTime + 1, event, entityIndex);
+    addEvent(nextTileMoveTime + 1, event, objectIndex);
 }
 
-void movePawn(int entityIndex, int destCoordIndex, DelayedEvent event) {
-    std::pair<int, int> ec = animalCoords[entityIndex];
+void movePawn(int objectIndex, int destCoordIndex, DelayedEvent event) {
+    std::pair<int, int> ec = animalCoords[objectIndex];
     vector<std::pair<std::pair<int,int>, int>> path = greedyPath(ec, destCoordIndex);
 
     int nextTileMoveTime = 0;
     for (int i = 0; i < path.size(); i++) {
         nextTileMoveTime += path[i].second;
-        addEvent(nextTileMoveTime, EventType::PawnMoveTile, entityIndex, path[i].first);
+        addEvent(nextTileMoveTime, EventType::PawnMoveTile, objectIndex, path[i].first);
     }
-    addEvent(nextTileMoveTime + 1, event, entityIndex);
+    addEvent(nextTileMoveTime + 1, event, objectIndex);
 }
 
-//moves a certain entity until it is adjacent with another entity and facing it.
+//moves a certain object until it is adjacent with another object and facing it.
 void meet(int finderIndex, int targetIndex, bool finderAnimal, bool targetAnimal, DelayedEvent meetType) {
     if (finderAnimal) std::pair<int, int> fc = animalCoords[finderIndex];
     else std::pair<int, int> fc = currentCoords[finderIndex];

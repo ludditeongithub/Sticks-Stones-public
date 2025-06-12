@@ -14,7 +14,7 @@ float sunlight;
 float date;
 
 std::vector<Plant> cropList;
-
+std::unordered_map(int, int) plantIndicesFromTileIndices;
 std::vector<Plant> plants;
 std::vector<uint16_t> growthAmt;
 std::vector<uint8_t> yieldMisses;

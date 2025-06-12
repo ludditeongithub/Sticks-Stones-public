@@ -8,8 +8,8 @@
 enum class EventType {
     PawnMoveTile,
 	AnimalMoveTile,
-	TaskComplete,
 	ProductComplete,
+	ResourceComplete,
 	WakeUp,
 	CheckIfAdjacentPawns,
 	CheckIfAdjacentAnimals,
@@ -48,9 +48,9 @@ Breed,
 struct Event {
 	uint64_t time;
 	EventType eventType;
-	int typeIndex; //index which converts to the enum class that is the main entity in the event in question
+	int typeIndex; //index which converts to the enum class that is the main object in the event in question
 	int entitiesIndex; //index of the vector that stores the entities of the type in question
-	int secondaryIndex; //if there is a secondary entity this converts to its enum class
+	int secondaryIndex; //if there is a secondary object this converts to its enum class
 };
 
 std::vector<Event> upcomingEvents;
@@ -114,27 +114,31 @@ void eventInterpreter(Event event) {
 		break;
 		//TODO: before this, check to see that the parameters are right
 	case EventType::CheckIfAdjacentAnimals
-		if (adjCheckEntity(event.entitiesIndex, event.secondaryIndex, true, true)) {
+		if (adjCheckObject(event.entitiesIndex, event.secondaryIndex, true, true)) {
 			meetEventInterpreter(event.typeIndex);
 		} else meet(event.entitiesIndex, event.secondaryIndex, true, true, static_cast<DelayedEvent>(event.typeIndex));
 		break;
 	case EventType::CheckIfAdjacentAnimalToPawn:
-		if (adjCheckEntity(event.entitiesIndex, event.secondaryIndex, true, false)) {
+		if (adjCheckObject(event.entitiesIndex, event.secondaryIndex, true, false)) {
 			meetEventInterpreter(event.typeIndex);
 		} else meet(event.entitiesIndex, event.secondaryIndex, true, false, static_cast<DelayedEvent>(event.typeIndex));
 		break;
 	case EventType::CheckIfAdjacentPawnToAnimal:
-		if (adjCheckEntity(event.entitiesIndex, event.secondaryIndex, false, true)) {
+		if (adjCheckObject(event.entitiesIndex, event.secondaryIndex, false, true)) {
 			meetEventInterpreter(event.typeIndex);
 		} else meet(event.entitiesIndex, event.secondaryIndex, false, true, static_cast<DelayedEvent>(event.typeIndex));
 		break;
 	case EventType::CheckIfAdjacentPawns:
-		if (adjCheckEntity(event.entitiesIndex, event.secondaryIndex, false, false)) {
+		if (adjCheckObject(event.entitiesIndex, event.secondaryIndex, false, false)) {
 			meetEventInterpreter(event.typeIndex);
 		} else meet(event.entitiesIndex, event.secondaryIndex, false, false, static_cast<DelayedEvent>(event.typeIndex));
 		break;
 	case EventType::MoveStart:
 		setMovingStatus(event.entitiesIndex);
+		break;
+	case EventType::ProductComplete:
+		productFinish(event.typeIndex, event.entitiesIndex, event.secondaryIndex);
+		decidePawnTask(event.entitiesIndex);
 		break;
 	case EventType::WakeUp:
 		setMovingStatus(event.entitiesIndex);

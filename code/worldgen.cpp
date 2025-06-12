@@ -989,6 +989,7 @@ void generateTiles() {
 
         uint32_t seedIndex = cy * HEIGHT + cx;
         std::pair<float,float> sVSeed = voronoiSites[seedIndex];
+
 //generate tiles near to randomized spawn point
         currentXMin = sVSeed.second - STARTING_MAP_WIDTH / 2;
         currentXMax = sVSeed.second + STARTING_MAP_WIDTH / 2;
@@ -1040,6 +1041,7 @@ void generateTiles() {
                     if (cell.first >= 0 && cell.first < HEIGHT && cell.second >= 0 && cell.second < WIDTH) {
                         int biome = biomeMap[cell.first][cell.second];
                          int secondBiome = biomeMap[secondCell.first][secondCell.second];
+                         //NOTE: this means that certain tiles might NEVER generate next to each other
                     float chance = (pnoise.GetNoise((float)y,(float)x) + 1.0) * 0.5;
                     if (rand() / (float)RAND_MAX < 0.8 || biome == 0) { // always water if ocean
                          tileType[ti] = getTile(biome, chance); //closest
