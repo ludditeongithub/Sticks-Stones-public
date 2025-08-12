@@ -1,5 +1,15 @@
 #include "unit.hpp"
 
+/* ROLES */
+
+void initializeRoleMana() {
+    for (int i = 0; i < remainingRoleMana.size(); i++) {
+        remainingRoleMana[i] = startingRoleMana;
+    }
+}
+
+
+
 Role getActionRole(int pawnIndex, Actions action) {
     for (int i = 0; i < actionToRoles[static_cast<int>(action)]; i++) {
         if (roles[pawnIndex] == actionToRoles[i]) return roles[pawnIndex];
@@ -18,7 +28,3 @@ void nextRole(int pawnIndex) {
     }
 }
 
-
-void birth(int unitIndex) {
-
-}

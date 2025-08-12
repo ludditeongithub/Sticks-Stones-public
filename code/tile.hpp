@@ -4,7 +4,6 @@
 #include "mapdimensions.hpp"
 #include "categories.hpp"
 
-
 // DATA OF EVERY GENERATED TILES
 // lookup table: hashed coord finds indices, which are indices of every vector containing one attribute
 std::unordered_map<std::pair<int, int>, int, hashPair> tileIndices(STARTING_MAP_WIDTH * STARTING_MAP_HEIGHT);
@@ -22,6 +21,7 @@ std::vector<TileMoveCost> adjacentTilesCost(STARTING_MAP_WIDTH * STARTING_MAP_HE
 // the cell to which the tile belongs
 // TODO: checker to see if adjacent tile cells are out of bound upon movement
 vector<uint32_t> tileCellIndex;
+
 // the four adjacent tiles' indices in the vectors (ABOVE, RIGHT, BELOW, LEFT)
 struct AdjacentTiles {
 	int up;
@@ -29,6 +29,7 @@ struct AdjacentTiles {
 	int left;
 	int right;
 };
+
 vector<AdjacentTiles> adjacentTilesIndices(STARTING_MAP_WIDTH * STARTING_MAP_HEIGHT);
 vector<int> tileAlt(STARTING_MAP_WIDTH * STARTING_MAP_HEIGHT);
 vector<Tile> tileType(STARTING_MAP_WIDTH * STARTING_MAP_HEIGHT);

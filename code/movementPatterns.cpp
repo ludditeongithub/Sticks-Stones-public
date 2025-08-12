@@ -10,24 +10,36 @@ uint16_t calcInertia(float objectInertia, std::pair<int,int> coord) {
     return static_cast<int>(objectInertia * tileInertias[tileTypes[tileIndices(coord)]]);
 }
 
+std::pair<int, int> getMoveTimeAndTileIndex(Direction direction) {
+	switch (direction) {
+                case Direction::Up:  //up
+                    return {adjacentTilesCost[index].up, adjacentTilesIndices[index].up};
+                case Direction::Down:  //down
+                    return {adjacentTilesCost[index].down, adjacentTilesIndices[index].down};
+                case Direction::Left:  //left
+                    return {adjacentTilesCost[index].left, adjacentTilesIndices[index].left};
+                case Direction::Right:  //right
+                    return {adjacentTilesCost[index].right, adjacentTilesIndices[index].right};
+            }
+	return {-1,-1};
+}
+
+
 //TODO: factor in hunger
 //TODO: add to-do to go put away items to have necessary space for tools or items etc, when pawn goes to grab items
 void movePawns() {
     //TODO: reverse order every tick, so interactions are balanced
     for (int i = 0; i < currentCoords.size(); i++) {
-        if (movingStatus[i] == MovingStatus::Idle || movingStatus[i] == MovingStatus::Sleeping) {
-            return;
+        if (movingStatus[i] == MovingStatus::Idle || movingStatus[i] == MovingStatus::Sleeping)  continue;
+        else if (inertias[i] > 0) {
+            inertias[i]--;
+            continue;
         } else if (movingStatus[i] == MovingStatus::Wander) {
-            if (inertias[i] == 0) {
                 directions[i] = getRandomAdjDirection(directions[i]);
                 moveInDirection(i, false);
                 inertias[i] = calcInertia(minSpeedPawn, currentCoords[i]);
-            } else inertias[i]--;
         } else if (movingStatus[i] == MovingStatus::Prowl || movingStatus[i] == MovingStatus::CheckProwl) { //TODO: ProwlTile
-            if (inertias[i] == 0) {
-                    if (rint(0,50) < 50) {
-                    directions[i] = getRandomAdjDirection(directions[i]);
-                    }
+                    if (rint(0,50) < 50) directions[i] = getRandomAdjDirection(directions[i]);
                     moveInDirection(i, false);
                     //check surroundings, if target is now seen
                     Object obj = currentTarget[i];
@@ -38,11 +50,8 @@ void movePawns() {
                     //TODO:: Fruit
                     //TODO:: animal
                     else if (isTools(obj)) toolCheck(pawn);
-                }
                 inertias[i] = calcSpeed(midSpeedPawn, currentCoords[i]);
-            } else inertias[i]--;
         } else if (movingStatus[i] == MovingStatus::ApproachPlant || movingStatus[i] == MovingStatus::ApproachTile || movingStatus[i] == MovingStatus::ApproachTool || movingStatus[i] == MovingStatus::ApproachItem) {
-            if (inertias[i] == 0) {
                 std::pair<Direction, bool> next = nextDirectionToTarget(i);
                 currentDirection[i] = next.first;
                 if (next.second) {
@@ -57,9 +66,7 @@ void movePawns() {
                     movingStatus[i] = MovingStatus::Idle;
                     decideTask(i);
                 }
-            } else inertias[i]--;
             } else if (movingStatus[i] == MovingStatus::GetTool || movingStatus[i] == MovingStatus::GetItem) {
-                if (inertias[i] == 0) {
                 std::pair<Direction, bool> next = nextDirectionToTarget(i);
                 currentDirection[i] = next.first;
                 if (next.second) {
@@ -70,9 +77,7 @@ void movePawns() {
                     else takeTool(i, currentCoords[i]);
                     movingStatus[i] = MovingStatus::Idle;
                     findPromise.set();
-                } else inertias[i]--;
             } else if (movingStatus[i] == MovingStatus::Pursuit || movingStatus[i] == MovingStatus::AnimalPursuit) {
-            if (inertias[i] == 0) {
                 std::pair<Direction, bool> next = nextDirectionToMovingTarget(i);
                 currentDirection[i] = next.first;
                 if (next.second) moveInDirection(i, false);
@@ -85,7 +90,6 @@ void movePawns() {
                  if (movingStatus[i] == MovingStatus::AnimalPursuit) if (attack(i, currentDest[i], false, true)) dealWithGame();
                 }
                 inertias[i] = calcSpeed(maxSpeedPawn, currentCoords[i]);
-            } else inertias[i]--;
         }
     }
 }
@@ -94,22 +98,19 @@ void movePawns() {
 
 void moveAnimals() {
     for (int i = 0; i < animalCoords.size(); i++) {
-        if (animalMovingStatus[i] == MovingStatus::Idle || animalMovingStatus[i] == MovingStatus::Sleeping) {
-            return;
+        if (animalMovingStatus[i] == MovingStatus::Idle || animalMovingStatus[i] == MovingStatus::Sleeping) continue;
+         else if (inertias[i] > 0) {
+            inertias--;
+            continue;
         } else if (animalMovingStatus[i] == MovingStatus::Wander) {
-            if (inertias[i] == 0) {
                 //NOTE: makes it stop a lot
                 if (rint(0,3) < 3) continue;
                 directions[i] = getRandomAdjDirection(directions[i]);
                 moveInDirection(i, true);
                 inertias[i] = calcInertia(minSpeed[animals[i]], currentCoords[i]);
                 if (animalHunger[i] < maxHungerThreshold[animals[i]]) animalMovingStatus[i] = MovingStatus::CheckProwl;
-            } else inertias[i]--;
         } else if (animalMovingStatus[i] == MovingStatus::Prowl || animalMovingStatus[i] == MovingStatus::CheckProwl) { //TODO: ProwlTile
-            if (inertias[i] == 0) {
-                    if (rint(0,50) < 50) {
-                    directions[i] = getRandomAdjDirection(directions[i]);
-                    }
+                    if (rint(0,50) < 50) directions[i] = getRandomAdjDirection(directions[i]);
                     moveInDirection(i, directions[i], true);
                     //check surroundings, if target is now seen
                     Object obj = currentTarget[i];
@@ -121,13 +122,25 @@ void moveAnimals() {
                             fruitCheck(i, directions[i], ran);
                         case Diet::Herbivore:
                             break;
+                        case Diet::Scavenger:
+                            corpseCheck(i, directions[i], ran);
                         case Diet::Carnivore:
                             huntCheck(i, directions[i], ran);
                     }
                     inertias[i] = calcSpeed(midSpeed[animals[i]], currentCoords[i]);
-                } else inertias[i]--;
-        } else if (movingStatus[i] == MovingStatus::AnimalPursuit) {
-            if (inertias[i] == 0) {
+     else if (animalMovingStatus[i] == MovingStatus::ApproachPlant || animalMovingStatus[i] == MovingStatus::ApproachTile || animalMovingStatus[i] == MovingStatus::ApproachGrass  || animalMovingStatus[i] == MovingStatus::ApproachFruit) {
+                std::pair<Direction, bool> next = nextDirectionToTarget(i);
+                currentDirection[i] = next.first;
+                if (next.second) {
+                    moveInDirection(i, false);
+                    inertias[i] = calcSpeed(minSpeedPawn, currentCoords[i]);
+                } else {
+                    if (movingStatus[i] == MovingStatus::ApproachPlant) eatPlant(i, currentCoords[i]);
+                    else if (movingStatus[i] == MovingStatus::ApproachFruit) eatFruit(i, currentCoords[i]);
+                    else if (movingStatus[i] == MovingStatus::ApproachGrass) eatGrass(i, currentCoords[i]);
+                    else if (movingStatus[i] == MovingStatus::ApproachTile) animalDecideMovement(i);
+                }
+    } else if (movingStatus[i] == MovingStatus::AnimalPursuit) {
                 std::pair<Direction, bool> next = nextDirectionToMovingTarget(i);
                 currentDirection[i] = next.first;
                 if (next.second) moveInDirection(i, true);
@@ -136,7 +149,7 @@ void moveAnimals() {
                     if (movingStatus[i] == MovingStatus::AnimalPursuit) if (attack(i, currentDest[i], false, true)) eatCorpse(i);
                 }
                 inertias[i] = calcSpeed(maxSpeedPawn, currentCoords[i]);
-            } else inertias[i]--;
         }
     }
 }
+

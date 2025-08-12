@@ -1,26 +1,52 @@
 #include "plant.hpp"
+#include "mapdimensions.hpp"
+#include "cropdata.hpp"
+#include "event.hpp"
+#include "animal.hpp"
+#include "unit.hpp"
+#include "objectData.hpp"
 
-void addPlant(Plant plant, int x, int y) {
-    int plantIndex = nextPlantIndex.pop();
-    plants.push_back(plant.type);
-    plantIndicesFromTileIndices[tileIndices[{x,y}]] = plantIndex;
-    growthAmt.push_back(0);
+void getCropIndex() {
+    if (nextCropIndex.empty()) return cropList.size();
+    return nextCropIndex.pop();
+}
+
+// add new crop to actively tracked crops
+void addCrop(Plant plant, coord co) {
+    cropList[getCropIndex()] = plant;
     yieldMisses.push_back(0);
-    collectedWater.push_back(0);
-    lastFullyWatered.push_back(0);
+    collectedWater.push_back(0.0);
+    lastFullyWatered.push_back(0.0);
     fullyGrown.push_back(false);
-    insertObject(x, y, plantIndex);
+    growthAmt.push_back(0.0);
+    coords.push_back(co);
+}
+
+void getRegrowthCropIndex() {
+    if (nextRegrowthCropIndex.empty()) return rCropList.size();
+    return nextRegrowthCropIndex.pop();
+}
+
+// add new regrowth crops to actively tracked regrowth crops
+void addRegrowthCrop( coord co) {
+    rCropList[getCropIndex()] = plant;
+    //size_t i = cropList.size() - 1;
+    rCollectedWater.push_back(0.0);
+    rLastFullyWatered.push_back(0.0);
+    rGrowthAmt.push_back(0.0);
+    rYieldMisses.push_back(0);
+    rCoords.push_back(co);
 }
 
 bool viableHarvest(int plantIndex) {
-    if (growthAmt(plantIndex) < harvestThreshold[plants[plantIndex]]) return true;
+    if (growthAmt[plantIndex] < maturityThreshold[static_cast<int>(plants[plantIndex])]) return true;
 }
 
 //TODO: consider making this array, so that animals can eat and poop many seeds.
 void animalEatSeeds(int animalIndex, int foodTileIndex, bool fruitTree) {
     //TODO: create variable digestion time
     int digestionTime = 0;
-    Animal& animal = animals[animalIndex];
+    Animal animal = animals[animalIndex];
 
     if (!fruitTree) {
         Plant& plantType = tilePlant[foodTileIndex];
@@ -29,6 +55,24 @@ void animalEatSeeds(int animalIndex, int foodTileIndex, bool fruitTree) {
         Fruit& fruit = tileObject[foodTileIndex];
         addEvent(digestionTime, EventType::FutureSeedDroppingFruit, (int) fruit, animalIndex);
     }
+}
+
+// event trigger, triggers after waterFall is set
+void attemptPlantGrowth(int plant, int time, int biomeIndex) {
+  if (collectedWater[plant] += waterFall[biomeIndex] < mandatoryWater[static_cast<int>(plant)]) {
+    yieldMisses[plant]++;
+  }
+  growthAmt[plant] += time;
+}
+
+void excreteSeed(int animalIndex, Plant plant) {
+  std::pair<int,int> coords = animalCoords[animalIndex];
+  addPlant(findNearestAdjacentEmptyTile(coords));
+}
+
+void plant(int unitIndex, Plant plant) {
+ std::pair<int,int> coords = currentCoords[animalIndex];
+  addPlant(findNearestAdjacentEmptyTile(coords));
 }
 
 //TODO: complete and render
@@ -80,18 +124,6 @@ void cropDeath(int plantIndex) {
         }
 }
 
-// add new crop to actively tracked crops
-void addCrop(Crops crop, coord co) {
-    //threading sensitive:
-    cropList.push_back(crop);
-    //size_t i = cropList.size() - 1;
-    yieldMisses.push_back(0);
-    collectedWater.push_back(0.0);
-    lastFullyWatered.push_back(0.0);
-    fullyGrown.push_back(false);
-    growthAmt.push_back(0.0);
-    coords.push_back(co);
-}
 
 // crops update loop
 void updateCrops() {
@@ -156,24 +188,6 @@ void updateCrops() {
     }
 }
 
-    std::vector<Plant> rCropList;
-    std::vector<float> rGrowthAmt;
-    std::vector<int> rYieldMisses;
-    std::vector<float> rCollectedWater;
-    std::vector<float> rLastFullyWatered;
-    std::vector<coord> rCoords;
-    std::vector<bool> harvestable;
-// add new regrowth crops to actively tracked regrowth crops
-void addRegrowthCrop(RegrowthCrops crop, coord co) {
-    //threading sensitive:
-    rCropList.push_back(crop);
-    //size_t i = cropList.size() - 1;
-    rCollectedWater.push_back(0.0);
-    rLastFullyWatered.push_back(0.0);
-    rGrowthAmt.push_back(0.0);
-    rYieldMisses.push_back(0);
-    rCoords.push_back(co);
-}
 
 // crops update loop
 void updateRegrowthCrops() {

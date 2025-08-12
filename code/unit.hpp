@@ -5,19 +5,23 @@
 #include "categories.hpp"
 #include "itemRecipes.hpp"
 
+// contains basic info that appplies to all units
+
+constexpr int startingRoleMana = 10;
+
 // the total volume of each bulk category hands can maximally carry.
 // where 0.1 is 100mL
 // NOTE: idea: consider doing left and right
-const float fineBulkMax = 0.3;
-const float looseBulkMult = 5.5; // multiplies mid bulk
-const float softBulkMult = 2.5; // mulitiplies mid bulk
-const float solidBulkMult = 1.0; // mulitiplies mid bulk
-const float midBulkMax = 35.0;
-const float singleBulkMax = 60.0;
+constexpr float fineBulkMax = 0.3;
+constexpr float looseBulkMult = 5.5; // multiplies mid bulk
+constexpr float softBulkMult = 2.5; // mulitiplies mid bulk
+constexpr float solidBulkMult = 1.0; // mulitiplies mid bulk
+constexpr float midBulkMax = 35.0;
+constexpr float singleBulkMax = 60.0;
 
 //mas weights pawns can carry
-const float childMaxCarry = 30.0;
-const float maxCarry = 85.0;
+constexpr float childMaxCarry = 30.0;
+constexpr float maxCarry = 85.0;
 
 uint8_t humanSight;
 uint16_t nearGatherRange = humanSight; // the farthest a pawn will  go to fetch an item
@@ -73,11 +77,12 @@ ContainerType itemToContainer(Item c) {
         case Item::Basket:
             return ContainerType::Basket;
         default:
-            return;
+            return ContainerType::NONE;
     }
 }
 
 float getContainerCapacity(ContainerType c) {
+    float capacity;
     switch (c) {
         case ContainerType::Jar:
             capacity = 0.3;
@@ -100,7 +105,7 @@ float getContainerCapacity(ContainerType c) {
         case ContainerType::Basket:
             capacity = 8.4;
         default:
-            return;
+            return capacity;
     }
 }
 
@@ -155,6 +160,7 @@ vector<Direction> currentDirections;
 vector<MovingStatus> movingStatus;
 vector<uint16_t> health;
 vector<uint16_t> inertias;
+vector<uint16_t> remainingRoleMana;
 
 //TODO: work on future/consolidated futures
 std::vector<std::promise<void>> findPromise;

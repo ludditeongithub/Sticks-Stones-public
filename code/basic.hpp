@@ -37,6 +37,10 @@ struct coord {
   int y;
 };
 
+enum class Direction {
+    NONE, North, South, West, East,
+};
+
 float rfloat(float min, float max) {
     static std::random_device rd;
     static std::mt19937 gen(rd());
@@ -94,10 +98,6 @@ std::size_t hashCoords(int x, int y) {
     auto h2 = std::hash<int>{}(y);
     return h1 ^ h2;  // Same hash mixing logic as in the struct
 }
-
-enum class Direction {
-    North, East, South, West
-};
 
 std::pair<int,int> newCoordsFromFacing(std::pair<int,int> coords, Direction direction) {
 switch(direction) {

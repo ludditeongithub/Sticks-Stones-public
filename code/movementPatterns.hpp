@@ -6,5 +6,8 @@
 #include "pathfinding.cpp"
 #include "objectInteractions.cpp"
 #include "checksAndScans.hpp"
+#include "tile.hpp"
+#include "unit.hpp"
+
 
 #endif // MOVEMENTPATTERNS_H_

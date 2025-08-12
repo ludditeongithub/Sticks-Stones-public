@@ -393,19 +393,6 @@ bool eggLayer(Animal animal) {
 	return false;
 }
 
-std::pair<int, int> getMoveTimeAndTileIndex(Direction direction) {
-	switch (direction) {
-                case Direction::Up:  //up
-                    return {adjacentTilesCost[index].up, adjacentTilesIndices[index].up};
-                case Direction::Down:  //down
-                    return {adjacentTilesCost[index].down, adjacentTilesIndices[index].down};
-                case Direction::Left:  //left
-                    return {adjacentTilesCost[index].left, adjacentTilesIndices[index].left};
-                case Direction::Right:  //right
-                    return {adjacentTilesCost[index].right, adjacentTilesIndices[index].right};
-            }
-	return {-1,-1};
-}
 
 void animalHunt(Direction direction, Animal animal, int animalIndex) {
 		//NOTE: random here, maybe simplify

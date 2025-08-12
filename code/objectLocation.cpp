@@ -1,4 +1,4 @@
-#include "objectLocation.hpp"
+#include "objectData.hpp"
 /*NOTE: all items stored in containers are also given as if they are not stored in a container. pawns will check whether there
  *is a container or not */
 
@@ -64,6 +64,10 @@ void insertObject(Object object, int x, int y) {
     std::pair<int,int> gc = getGridCell(x, y);
     //TODO: consider checks
     globalMap[gc.first][gc.second][object].insert({x,y});
+}
+
+void insertObject(uint16_t objectIndex, ObjectType type, int x, int y) {
+
 }
 
 void deleteObject(Object object, int x, int y) {
@@ -195,7 +199,6 @@ void findNecessaryTools(Action action, int pawn) {
             currentDests[pawn] = tileIndices[dest];
             movingStatus[pawn] = MovingStatus::ApproachTool;
             //NOTE:: async
-            currentTargets[pawn] = actionToTools[i];
             findPromise[pawn] = std::promise<void>();
             findFuture[pawn] = findPromise[pawn].get_future();
         } else {

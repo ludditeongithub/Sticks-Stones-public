@@ -19,7 +19,7 @@ void getResourceAction(int pawn, Item item, int sourceIndex, int variantIndex) {
             removeObject = false;
         }
     }
-    if (removeObject)
+    if (removeObject) {
     if (action == Action::Milk) removeObject = false;
     else if (action == Action::GoatMilk) removeObject = false;
     else if (action == Action::Fish) removeObject = false;
@@ -28,6 +28,7 @@ void getResourceAction(int pawn, Item item, int sourceIndex, int variantIndex) {
         if (item == regrowthCrops[i]) {
             removeObject = false;
         }
+    }
     }
     // Get amount of item to put into inventory
     if (action == Action::Lift) {
@@ -206,7 +207,9 @@ bool checkActionRequisites(Resource resource, int pawn) {
 //PRODUCTS PAWN MANAGEMENT
 // TODO: have pawns search nearby surroundings for items if not found, if on
 // Check inventory to produce new items
-void attemptProduction(int pawn, ProductVariant product, ItemType itemType) {
+void attemptProduction(int pawn, ProductVariant product) {
+    //TODO: get type of product variant to deterine itemType
+    movingStatus[pawn] = MovingStatus::Production;
     bool attemptAlternateRecipe = false;
     for (int i = 0; i < 2; i++) {
     if (itemType == ItemType::Item) {
@@ -266,7 +269,6 @@ void attemptProduction(int pawn, ProductVariant product, ItemType itemType) {
         } else return; //item not craftable
     } else {
         //start crafting
-        occupied[pawn] = true;
         addEvent(products[static_cast<int>(product)].time, EventType::ProductComplete, product, pawn);
         for (int i = 0; i < ingredientsFound.size(); i++) {
             removeItem(pawn, ingredientsFound.first, ingredientsFound.second);
@@ -277,6 +279,7 @@ void attemptProduction(int pawn, ProductVariant product, ItemType itemType) {
     }
     }
     }
+
     //CORPSE
     else if (recipe.itemTags.hasTag(itemTags::Corpse)) {
         //TODO: determine how pawn focuses on station, on when it lets go, go find corpse if needed
@@ -313,13 +316,16 @@ void attemptProduction(int pawn, ProductVariant product, ItemType itemType) {
         } else {
                 //try to find nearest ingredient
             //TODO: create nearest with lower man dist, also do for non-alternate recipe
-        //     std::pair<int,int> itemCoord = findNearestObject(recipe.ingredients[i], currentCoords[pawn].first, currentCoords[pawn]second);
-        //     if (itemCoord != {-1, -1} && manDist(currentCoords[pawn], itemCoord) < nearGatherRange) {
-        //         currentDests[pawn] = tileIndices[itemCoord];
-        //         destActions[pawn] = Actions::PickUp;
-        //         //async logic here
-        //     }
-        // }
+            std::pair<int,int> itemCoord = findNearestObject(recipe.ingredients[i], currentCoords[pawn].first, currentCoords[pawn]second);
+            if (itemCoord != {-1, -1} && manDist(currentCoords[pawn], itemCoord) < nearGatherRange) {
+                currentDests[pawn] = tileIndices[itemCoord];
+                movingStatus[pawn] = MovingStatus::ApproachItem;
+                //NOTE: async logic here?
+                findPromise[pawn] = std::promise<void>();
+                findFuture[pawn] = findPromise[pawn].get_future();
+            }
+        }
+
         }
     }
     } else {
@@ -332,21 +338,10 @@ void attemptProduction(int pawn, ProductVariant product, ItemType itemType) {
         }
     }
     }
-    }
-    }
 }
 
 
-//NOTE: can implement jump table
-void decideTask(int pawnIndex) {
-    for (int i = 0; i < roles[pawnIndex].size; i++) {
-        //TODO: check if role is producer vs resource vs etc on lookup table
-        for (int j = 0; j < producerProducts[static_cast<int>(roles[pawnIndex[i]])].size(); j++) {
-            attemptProduction(pawnIndex, producerProducts[static_cast<int>(roles[pawnIndex[i]])]);
-        }
-        attemptResource(pawnIndex, roles[pawnIndex][i]);
-    }
-}
+
 
 
 // when production of item is finished, place if buildable or vehicle or go to inventory if item, variant optional

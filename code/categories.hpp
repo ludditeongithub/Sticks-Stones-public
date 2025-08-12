@@ -25,7 +25,7 @@ NONE, EDIBLE, Grass, SavannahGrass,
 };
 
 enum class Plant {
-NONE, EDIBLE, WOOD, Fern, Moss, Reed, Wheat, Oat, Rice, Bush, Papyrus, PioneerTree, DeciduousTree, EvergreenTree, TropicalTree, OrangeTree, LemonTree, LimeTree, PeachTree, PlumTree, CherryTree, ApricotTree, Cactus, AppleTree, PearTree, OliveTree, BlueberryShrub, StrawberryShrub, Grapevine, Lettuce, Kale, Corn, Carrot, Beets, Potato, Onion, Garlic, Cabbage, Broccoli, Tomato, Cucumber, Pepper, BlackPepper, Cotton, Hemp, Flax, Woad, Madder, Indigo, Lavender, Mint, Thyme, Sage, Ginseng, Rhubarb, Poppy, Cocoa, Senna, Saffron, MAX,
+NONE, EDIBLE, WOOD, Fern, Moss, Reed, Wheat, Oat, Rice, Bush, Papyrus, PioneerTree, DeciduousTree, EvergreenTree, TropicalTree, OrangeTree, LemonTree, LimeTree, PeachTree, PlumTree, CherryTree, ApricotTree, Cactus, AppleTree, PearTree, OliveTree, BlueberryShrub, StrawberryShrub, Grapevine, Lettuce, Kale, Corn, Carrot, Beets, Potato, Onion, Garlic, Cabbage, Broccoli, Tomato, Cucumber, Pepper, BlackPepper, Cotton, Hemp, Flax, Woad, Madder, Indigo, Lavender, Mint, Thyme, Sage, Ginseng, Rhubarb, Poppy, Cocoa, Senna, Saffron, AloeVera, MAX,
 };
 
 enum class Wall {
@@ -166,6 +166,8 @@ Strap,
 PackedEarth,
 PrimitiveArrow,
 PrimitiveBow,
+Basket,
+Waterskin,
 
 //neo:
 String,
@@ -275,6 +277,7 @@ Chair,
 Stool,
 ArtificialBeehive,
 Keg,
+Bottle,
 Scroll,
 Horseshoes,
 OxSaddle,
@@ -589,7 +592,7 @@ enum class Material {
 Wood, Stone, Bone, Copper, Bronze, Iron, Steel, Gold, Leather, Silver
 };
 
-float weightMultiplier[static_cast<int>(Material::Silver)];
+float weightMultiplier[static_cast<int>(Material::Silver)+2];
 
 void initializeWeightMultipliers() {
     weightMultiplier[static_cast<int>(Material::Wood)] = 0.7;
@@ -615,7 +618,7 @@ Tool mandatoryTwoHandedTools[] = { Tool::Greataxe, Tool::Greatsword, Tool::Lur, 
 Tool unHandleableTools[] = { Tool::HeavyPlow,  Tool::Wagon,};
 // Collect requires no items or roles. harvesting is collect but with scythe.
 enum class Role {NONE,
-;    //MELEE
+    //MELEE
     //RANGED
     //ARTIST
     Performer, Sculptor, WoodCarver, Musician, Bard, Poet, StoneCarver, Decorator, GlassArtist, Actor, Playwright, Painter, Writer,
@@ -695,6 +698,10 @@ Item, Vehicle, Buildable, Tool, Container
 
 //ARRAY CATEGORIES / SUB - CATEGORIES
 using Object = std::variant<Plant, Container, Item, Scavengeable, Buildable, Fruit, Tool>;
+
+enum class ObjectType {
+NONE, Plant, Container, Item, Scavengeable, Buildable, Fruit, Tool
+};
 
 bool isPlant(Object obj) {
     return std::holds_alternative<Plant>(obj);

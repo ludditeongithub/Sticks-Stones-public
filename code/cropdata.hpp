@@ -7,6 +7,7 @@ Plant crops[] = {
 Plant::Wheat, Plant::Oat, Plant::Corn, Plant::Rice, Plant::Tomato, Plant::Onion, Plant::Potato, Plant::Cabbage, Plant::Pepper, Plant::Carrot, Plant::Poppy, Plant::Senna, Plant::Cotton, Plant::Papyrus, Plant::Flax, Plant::Hemp, Plant::Lettuce,
 };
 
+
 enum class PlantType {
 EMPTY, Tree, FruitTree, Foliage, Succulent, BerryShrub, Flowering, FruitVeggie, Leafy, Root, Reed, Tuber, Bulb, Grain, Grapevine, Herb, Textile
 };
@@ -15,6 +16,7 @@ struct CropTraits {
     PlantType type = PlantType::Tree;
     //57000 fullyGrownAmt means one forty-day season to grow, at a 1.0 growth amount. Ths implies perfect growing conditions.
     float fullyGrownAmt = 78000.0;
+    float
     //temps in Celsius
     float noGrowthMin = 4.0;
     float noGrowthMax = 38.0;
@@ -37,7 +39,7 @@ void plantTable() {
 
 
 Plant regrowthCrops[] = {
- Plant::OliveTree, Plant::Grapevine, Plant::AppleTree, Plant::PearTree, Plant::PeachTree, Plant::MangoTree, Plant::BlueberryShrub, Plant::StrawberryShrub, Plant::Lavendar, Plant::Saffron, Plant::AloeVera, Plant::Mint, Plant::Thyme, Plant::Sage, Plant::Rhubarb,
+ Plant::OliveTree, Plant::Grapevine, Plant::AppleTree, Plant::PearTree, Plant::PeachTree, Plant::OrangeTree, Plant::BlueberryShrub, Plant::StrawberryShrub, Plant::Lavender, Plant::Saffron, Plant::AloeVera, Plant::Mint, Plant::Thyme, Plant::Sage, Plant::Rhubarb,
 };
 
 struct RegrowthCropTraits {
@@ -77,7 +79,7 @@ enum class activeRegrowthCropTraits {
 
 
 // fill lookup table for CropTraits
-static constexpr size_t cropArrSize = (size_t) Crops::CROPS_MAX;
+static constexpr size_t cropArrSize = (size_t) Plant::MAX;
 
 // Separate arrays for each field of CropTraits
 std::array<float, cropArrSize> waterRequired;
@@ -92,7 +94,7 @@ std::array<float, cropArrSize> fullyGrownAmt;
 std::array<float, cropArrSize> harvestAmt;
 std::array<float, cropArrSize> requiresScythe;
 
-static constexpr size_t rCropArrSize = (size_t) RegrowthCrops::REGROWTH_CROPS_MAX;
+static constexpr size_t rCropArrSize = (size_t) Plant::MAX;
 
 std::array<float, rCropArrSize> lifespanAmt;
 std::array<float, rCropArrSize> rnoGrowthMin;

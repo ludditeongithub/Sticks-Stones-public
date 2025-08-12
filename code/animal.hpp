@@ -39,7 +39,7 @@ vector<MovingStatus> animalMovingStatus;
 vector<MatingStatus> animalMatingStatus;
 
 //TODO: specify herbivore diets and	nutrition values
-Plant diet[] = {Plant::Fern, Plant::Moss, Plant::Reed, Plant::Wheat, Plant::Oat, Plant::Rice, Plant::BlueberryShrub, Plant::StrawberryShrub, Plant::Grapvine, Plant::Lettuce, Plant::Kale, Plant::Corn, Plant::Carrot, Plant::Beets, Plant::Potato, Plant::Onion, Plant::Garlic, Plant::Cabbage, Plant::Broccoli, Plant::Tomato, Plant::Cucumber, Plant::Pepper, Plant::Peas, Plant::Beans, Plant::Cotton, Plant::Hemp, Plant::Flax, Plant::Woad, Plant::Madder, Plant::Indigo, Plant::Lavendar, Plant::Mint, Plant::Thyme, Plant::Sage, Plant::Ginseng, Plant::Poppy, Plant::Cocoa, Plant::Senna, Plant::Saffron};
+Plant diet[] = {Plant::Fern, Plant::Moss, Plant::Reed, Plant::Wheat, Plant::Oat, Plant::Rice, Plant::BlueberryShrub, Plant::StrawberryShrub, Plant::Grapevine, Plant::Lettuce, Plant::Kale, Plant::Corn, Plant::Carrot, Plant::Beets, Plant::Potato, Plant::Onion, Plant::Garlic, Plant::Cabbage, Plant::Broccoli, Plant::Tomato, Plant::Cucumber, Plant::Pepper,  Plant::Cotton, Plant::Hemp, Plant::Flax, Plant::Woad, Plant::Madder, Plant::Indigo, Plant::Lavender, Plant::Mint, Plant::Thyme, Plant::Sage, Plant::Ginseng, Plant::Poppy, Plant::Cocoa, Plant::Senna, Plant::Saffron};
 
 Animal predatorDiet[2];
 

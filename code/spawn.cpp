@@ -1,4 +1,9 @@
-#include "spawn.hpp"
+#include "basic.hpp"
+#include "timers.cpp"
+#include "categories.hpp"
+#include "tile.hpp"
+#include "worldgen.cpp"
+
 
 /*  GUIDELINES FOR SPAWNING
  *   all natural entities must roughly spawn as often as they die in nature to ensure that they are not eliminated or grow too much as the game progresses.

@@ -13,4 +13,5 @@ void initializeHatchTimes() {
     hatchTime[static_cast<int>(Scavengeable::ChickenEgg)] = 28830;
     hatchTime[static_cast<int>(Scavengeable::TurtleEgg)] = 65400;
 }
+
 #endif // EGG_H_
