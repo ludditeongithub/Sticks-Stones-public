@@ -173,18 +173,21 @@ bool init()
     return success;
 }
 
-bool loadUI()
-{
-    //File loading flag
-    bool success{ true };
-
-    //Load splash image
-    std::string imagePath{ "ui-background.png" };
-    if( uiBackground = SDL_LoadBMP( imagePath.c_str() ); uiBackground == nullptr )
+bool loadPNG(std::string imagePath) {
+     bool success{ true };
+    if( uiBackground = IMG_Load( imagePath.c_str() ); uiBackground == nullptr )
     {
-        SDL_Log( "Unable to load image %s! SDL Error: %s\n", imagePath.c_str(), SDL_GetError() );
+        SDL_Log( "Unable to load UI image %s! SDL Error: %s\n", imagePath.c_str(), SDL_GetError() );
         success = false;
     }
+    return success;
+}
+
+bool loadUI()
+{
+    bool success{ true };
+
+   if (!loadPNG("../assets/ui-background.png")) return false;
 
     return success;
 }
