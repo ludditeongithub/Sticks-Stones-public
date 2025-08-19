@@ -1,15 +1,15 @@
 #include "determineState.h"
 // COMMAND
-// The authority (you) commands what the pawns produce, and you own all goods. Large Order (Satisfaction) decrease and production decrease.
+// The authority (you) commands what the pawns produce, and you own all goods. Large Order (Satisfaction) decrease and production decrease. Resource estimates are terrible and especially if order is low
 
 // MIXED COMMAND
-// The authority (you) also sends mandatory quotas of goods pawns must produce, which they produce first, but after that pawns switch roles and produce whatever they like to produce, and also keep their goods. Pawns receive a large a small bonus and a small Order (Satisfaction) bonus, and are somewhat more likely to produce high quality items. You can buy goods from your pawns.
+// The authority (you) also sends mandatory quotas of goods pawns must produce, which they produce first, but after that pawns switch roles and produce whatever they like to produce, and also keep their goods. Pawns receive a large a small bonus and a small Order (Satisfaction) bonus, and are somewhat more likely to produce high quality items. You can buy goods from your pawns. Resource estimates are poor
 
 // MARKET
-// You can buy goods from your pawns, and also tax them, but cannot set quotas. Money is crucial in this run. Pawns receive a medium bonus and a medium Order (Satisfaction) bonus, and are quite more likely to produce high quality items.
+// You can buy goods from your pawns, and also tax them, but cannot set quotas. Money is crucial in this run. Pawns receive a medium bonus and a medium Order (Satisfaction) bonus, and are quite more likely to produce high quality items. Resource estimates are great. True bureaucratic recording is expensive
 
 // ANARCHY
-// Pawns switch roles and produce whatever they like to produce, and also keep their goods. Only minimum taxes can be set, and only certain types. However, they receive a large production bonus and a large Order (Satisfaction) bonus, and are more likely to produce high quality items. You only control truly control the government and military pawns. You can buy and sell goods from your pawns, as well as hire mercenaries that form among your pawns. Pawns buy and sell goods among each other.
+// Pawns switch roles and produce whatever they like to produce, and also keep their goods. Only minimum taxes can be set, and only certain types. However, they receive a large production bonus and a large Order (Satisfaction) bonus, and are more likely to produce high quality items. You only control truly control the government and military pawns. You can buy and sell goods from your pawns, as well as hire mercenaries that form among your pawns. Pawns buy and sell goods among each other. Resource Estimates are decent, but true bureaucratic recording is impossible
 
 /* Get jobs from  */
 //NOTE: can implement jump table. this is for authority command structure

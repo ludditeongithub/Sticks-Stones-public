@@ -232,11 +232,11 @@ AKA "Natural Philosophy", what we would think of as Science.
 **** Units which Require
 **** Boosts
 *** Philosophy
-This boosts Legal Order and boosts/allows training for Order Supporters. Also, it is a prerequisite for some Order Tech/Units. If too low, Legal Order will be set at a minimum.
+This boosts Legal and Administrative Order and boosts/allows training for Order Supporters. Also, it is a prerequisite for some Order Tech/Units. If too low, Legal Order will be set at a minimum.
 *** Mathematics
 This boosts/allows training for Engineering Tech Researchers, Explorers, Trade, and Structures Producers.
 *** History
-This boosts/allows training for Cultural Order and Foreign Researchers.
+This boosts/allows training for Cultural and Legal Order and Foreign Researchers, as well as a small boost to Satisfaction
 ** Technology
 The required tools which units need to do their roles. Sometimes, it will unlock a new role immediately (usually when a new level metal is discovered), but sometimes, the new roles need to be discovered independently of the technology they use (e.g: priest, scribe).
 
