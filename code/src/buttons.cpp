@@ -24,6 +24,13 @@ void Texture::setBlending( SDL_BlendMode blendMode )
     SDL_SetTextureBlendMode( texture, blendMode );
 }
 
+void Texture::render( float x, float y) {
+     //Set texture position
+    SDL_FRect dstRect{ x, y, static_cast<float>( width ), static_cast<float>( height ) };
+
+    SDL_RenderTexture( gRenderer, texture,  )
+}
+
 void Texture::render( float x, float y, SDL_FRect* clip, float width, float height, double degrees, SDL_FPoint* center, SDL_FlipMode flipMode )
 {
     //Set texture position
@@ -52,7 +59,6 @@ void Texture::render( float x, float y, SDL_FRect* clip, float width, float heig
 
 bool Texture::loadFromFile( std::string path )
 {
-    {
     //Clean up texture if it already exists
     destroy();
 
@@ -92,7 +98,7 @@ bool Texture::loadFromFile( std::string path )
 }
 
 /* FONTS */
-TTF_Font* arial{ nullptr };
+ TTF_Font* arial{ nullptr };
 
 
 #if defined(SDL_TTF_MAJOR_VERSION)
@@ -147,7 +153,7 @@ void Button::handleEvent(SDL_Event* e) {
         if (!inside) {
             currentSprite = buttonSprite::Unpressed;
         } else {
-            if switch( e->type )
+            switch( e->type )
             {
                 case SDL_EVENT_MOUSE_MOTION:
                 currentSprite = buttonSprite::Hover;
@@ -195,19 +201,28 @@ void Button::render()
     buttonsSpriteSheet.render( position.x, position.y, &spriteClips[ (buttonNumber * 3) + static_cast<Uint8>(currentSprite)  ] );
 }
 
-void TextButton::setText(std::string line, SDL_Color color) {
-    text.loadFromRenderedText(line, color);
-    render();
+void TextButton::setText(std::string line) {
+    text = line;
 }
 
 void TextButton::render()
 {
      switch (currentSprite) {
         case buttonSprite::Unpressed:
-             renderedText.loadFromRenderedText(text, );
+             super::render();
+             renderedText.loadFromRenderedText(text, defaultColor);
+
              break;
         case buttonSprite::Hover:
-            rendered
+            super::render();
+            renderedText.loadFromRenderedText(text, hoverColor);
+
+            break;
+        case buttonSprite::Pressed:
+            super::render();
+            renderedText.loadFromRenderedText(text, pressedColor);
+            renderedText.render( ( rawScreenWidth - renderedText.getWidth() ) / 2.f, ( rawScreenHeight - renderedText.getHeight() ) / 2.f );
+            break;
     }
 
 };

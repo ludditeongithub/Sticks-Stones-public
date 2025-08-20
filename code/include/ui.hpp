@@ -8,7 +8,8 @@
 #include <string>
 
 /* Constants */
-
+constexpr int rawScreenWidth = 480;
+constexpr int rawScreenHeight = 270;
 
 /* Class Prototypes */
 
@@ -125,6 +126,10 @@ protected:
 
 class TextButton: public Button {
     public:
+        typedef Button super;
+        TextButton(std::string t, SDL_Color d, SDL_Color h, SDL_Color p){
+            text = t; defaultColor = d; hoverColor = h; pressedColor = p;
+        };
         std::string getText();
         SDL_Color getColor();
         void setText(std::string text);
