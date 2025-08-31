@@ -2,6 +2,25 @@
 #define CATEGORIES_H_
 #include "basic.hpp"
 
+enum class SoftMaterial {
+Leather, Linen, Cloth, Silk
+};
+
+enum class HardMaterial {
+Wood, Stone, Bone, Copper, Bronze, Iron, Steel, Gold, Leather, Silver
+};
+
+using Material = std::variant<SoftMaterial, HardMaterial>;
+
+enum class Quality {
+Terrible, Poor, Average, Good, Great, Stellar, Legendary
+};
+
+enum class BodyArea {
+Head, Face, Neck, Chest, LeftShoulder, RightShoulder, LeftArm, RightArm, LeftLeg, RightLeg, LeftHand, RightHand, LeftFoot, RightFoot,
+};
+
+
 enum class Tile {
 EMPTY, DeepWater,ShallowSaltWater,RiverSource,FlowingWater,ShallowWater,Gravel, FrozenSoil, Snow, Ice, Stone, Ore, GemOre, RockSalt, Sand, Podzol, PlowedPodzol, LoamSoil, PlowedLoamSoil, PeatSoil, PlowedPeatSoil, SandySoil, PlowedSandySoil, ClaySoil, PlowedClaySoil, SiltySoil, PlowedSiltySoil, RockySoil, PlowedRockySoil, AridSoil, Oxisol, PlowedOxisol, Gleysol, Hardpan, Path, DirtRoad, StoneRoad, BrickRoad, PavedRoad, ConcreteRoad, WoodFloor, Carpet, StoneFloor, BrickFloor,  MAX,
 };
@@ -565,7 +584,7 @@ enum class LargeHandle {
 };
 
 enum class Clothing {
-  Tribalwear, BasicClothing, FormalClothing, AdvancedClothing, Sandles, Boots, Gloves, Apron, Helmet, Bracers, Guards, Cape, Gambeson, Chainmail, Breastplate, WoodCrown, GoldCrown, RoyalCrown,
+  PartTribalwear, Tribalwear, Robe, Tunic, Pants, Dress, Sandles, Boots, Scarf, Headwrap, Mitts, Shoes, Gloves, Apron, Helmet, Bracers, Guards, Cape, HeavyShirt, HeavyPants, Gambeson, Chainmail, Breastplate, HalfPlate, Plate, WoodCrown, GoldCrown, RoyalCrown,
 };
 
 enum class Jewelry {
@@ -573,49 +592,41 @@ enum class Jewelry {
 };
 
 // actions require a certain job and also a certain tool. For example, "Butcher" requires a knife and also the Butcher job, while "Cut" only requires a knife. Burn needs fire, but not oven, while fire needs a kiln like structure
-enum class Actions { NONE, Collect, Hunt, Melee, Ranged, Mine, Cut, Chop, Dig, Light, Butcher, Paint, Sculpt, Chisel, Write, Pott, Smelt, Smith, Perform, Operate, Administer, Build, Command, Mould, Woodwork, Stonework, Glasswork, Saw, Engrave, Burn,Fire,Press,Carve,WoodCarve,StoneCarve,Weave,Bless,PrimitiveCook,Cook,Craft,Explore,Negotiate,Plow,Plant,Weed,Harvest,Milk,Shear,Mill,Fish,Herd,Trade,Haul, Bake, Treat, Cast, Mix, Boil, Whittle, Knapp, Spin, Grind, Preserve, LeatherCraft, Dip, Lay, WoodCraft, WheelCraft, CanoeCarve, BoatCraft, SiegeCraft, Engineer, Lift, Wait, Measure, SculptMould, Sew, Cur, Tan, CandleCast, Ponder, Tabulate, CandleMould,  Mint, Bind, WireDraw, MudbrickSculpt, BrickSculpt, LowFire, Brew, OilMake, Mash,
+// TODO: use "FineChop" action in appropriate places, make "actions" for combat units, really weapons
+enum class Actions { NONE, Collect, Hunt, Mine, Cut, Chop, Dig, Light, Butcher, Paint, Sculpt, Chisel, Write, Pott, Smelt, Smith, Perform, Operate, Administer, Build, Command, Mould, Woodwork, Stonework, Glasswork, Saw, Engrave, Burn,Fire,Press,Carve,WoodCarve,StoneCarve,Weave,Bless,PrimitiveCook,Cook,Craft,Explore,Negotiate,Plow,Plant,Weed,Harvest,Milk,Shear,Mill,Fish,Herd,Trade,Haul, Bake, Treat, Cast, Mix, Boil, Whittle, Knapp, Spin, Grind, Preserve, LeatherCraft, Dip, Lay, WoodCraft, WheelCraft, CanoeCarve, BoatCraft, SiegeCraft, Engineer, Lift, Wait, Measure, SculptMould, Sew, Cur, Tan, CandleCast, Ponder, Tabulate, CandleMould,  Mint, Bind, WireDraw, MudbrickSculpt, BrickSculpt, LowFire, Brew, OilMake, Mash, FineChop,
 //TODO: MAY NOT BE IN ACTIONS TO TOOL OR ROLES YET
 	Tame, Scrape, Churn, Crush, Leatherwork, Fletch, Compound, Saponify, BowCraft, MAX
+};
+
+//if weapon is both weapon and tool, tool takes priority over weapon (cast doubled values from tool)
+enum class Weapon {
+NONE, CARRYING,
+//SHORT HANDLE WEAPONS
+Handaxe, Sword, Machete, Knife, Cleaver, Chisel, Hammer, PrimitiveSpear, Spear,
+//LONG HANDLE
+	Pike, Halberd, Greataxe, Greatsword, Axe, Whip,
 };
 
 enum class Tool {
 	NONE, CARRYING,
 	//SHORT HANDLE TOOLS
-Handaxe, Sword, Machete, Knife, Cleaver, Trowel, Chisel, Hammer, Scalpel,  Mallet,  Sickle, Adze, Awl, HandDrill, Graver
+Handaxe, Machete, Knife, Cleaver, Trowel, Chisel, Hammer, Scalpel,  Mallet,  Sickle, Adze, Awl,  Graver,
 	//LONG HANDLE
-	,PrimitiveSpear, Spear, Pike, Halberd, Greataxe, Greatsword, Pickaxe, Axe, Shovel, Saw, HeavySaw, Ard, HeavyPlow, Whip, FishingRod, Staff, DiggingStick, Scythe,
+ Pickaxe, Axe, Shovel, Saw,  Ard, HeavyPlow, Whip, FishingRod, Staff, DiggingStick, Scythe,
 //NO HANDLE
-Blowpipe, Shears, HandheldBellows,  Pestle, Tongs, Needle, Drum, Torch, Bucket, Basket, Jar, Pot, Plate, Candle, Flint, Brush, Pen, Stylus, Scraper, Crucible, Lyre, Lur, PanFlute, Scroll, Book, PermanentMould, MeasuringTools, Lens, Scale, HandheldLoom, Shuttle, Cheesecloth, Compass, Binocular, SurveyingTools, Net, Stamp, Cart, Wagon, Ladle, Rock, Spindle, Distaff, DryingRack, Abacus, Die, Mould, Incense, Stick, Tame, Mint, CandleMould, MeltingPot, Hammerstone, PatternedDie, Log, Shield, HeavyShield, Corpse
+Blowpipe, Shears, HandheldBellows,  Pestle, Needle, Drum, Torch, Bucket, Basket, Jar, Pot, Plate, Candle, Flint, Brush, Pen, Stylus, Scraper, Crucible, Lyre, Lur, PanFlute, Scroll, Book, PermanentMould, MeasuringTools, Lens, Scale, HandheldLoom, Shuttle, Cheesecloth, Compass, Binocular, SurveyingTools, Net, Stamp, Cart, Wagon, Ladle, Rock, Spindle, Distaff, DryingRack, Abacus, Die, Mould, Incense, Stick, Tame, Mint, CandleMould, MeltingPot, Hammerstone, PatternedDie, Log, Shield, HeavyShield, Corpse
 };
 
-enum class Material {
-Wood, Stone, Bone, Copper, Bronze, Iron, Steel, Gold, Leather, Silver
-};
-
-float weightMultiplier[static_cast<int>(Material::Silver)+2];
-
-void initializeWeightMultipliers() {
-    weightMultiplier[static_cast<int>(Material::Wood)] = 0.7;
-    weightMultiplier[static_cast<int>(Material::Bone)] = 0.8;
-    weightMultiplier[static_cast<int>(Material::Leather)] = 0.6;
-    weightMultiplier[static_cast<int>(Material::Stone)] = 1.4;
-    weightMultiplier[static_cast<int>(Material::Copper)] = 3.8;
-    weightMultiplier[static_cast<int>(Material::Bronze)] = 3.9;
-    weightMultiplier[static_cast<int>(Material::Iron)] = 4.4;
-    weightMultiplier[static_cast<int>(Material::Steel)] = 4.45;
-    weightMultiplier[static_cast<int>(Material::Silver)] = 5.2;
-    weightMultiplier[static_cast<int>(Material::Gold)] = 5.7;
-};
-
-
-Tool oneHandedTools[] = {Tool::Basket, Tool::Jar, Tool::Pot, Tool::Plate,Tool:: Handaxe, Tool::Sword, Tool::Machete, Tool::Trowel, Tool::Torch, Tool::Candle, Tool::Flint, Tool::Knife, Tool::Cleaver, Tool::Brush, Tool::Pen, Tool::Stylus, Tool::Scraper, Tool::Hammer, Tool::Scalpel,  Tool::Sickle,  Tool::Needle, Tool::Mallet, Tool::Scroll, Tool::Book, Tool::Tongs, Tool::HandheldBellows, Tool::Blowpipe, Tool::PermanentMould,  Tool::MeasuringTools, Tool::Graver, Tool::Lens, Tool::Scale, Tool::Shuttle, Tool::Cheesecloth, Tool::Compass, Tool::Binocular, Tool::SurveyingTools, Tool::Chisel, Tool::Whip, Tool::Shears, Tool::Pestle, Tool::FishingRod, Tool::Net, Tool::Staff, Tool::Stamp, Tool::Ladle, Tool::Rock, Tool::Spindle, Tool::Distaff, Tool::DryingRack, Tool::Awl, Tool::Abacus,Tool::HandDrill, Tool::Die, Tool::Mould, Tool::Incense, Tool::Stick,  Tool::CandleMould, Tool::MeltingPot, Tool::Hammerstone, Tool::PatternedDie, Tool::Shield};
+Tool oneHandedTools[] = {Tool::Basket, Tool::Jar, Tool::Pot, Tool::Plate,Tool:: Handaxe,  Tool::Machete, Tool::Trowel, Tool::Torch, Tool::Candle, Tool::Flint, Tool::Knife, Tool::Cleaver, Tool::Brush, Tool::Pen, Tool::Stylus, Tool::Scraper, Tool::Hammer, Tool::Scalpel,  Tool::Sickle,  Tool::Needle, Tool::Mallet, Tool::Scroll, Tool::Book, Tool::Tongs, Tool::HandheldBellows, Tool::Blowpipe, Tool::PermanentMould,  Tool::MeasuringTools, Tool::Graver, Tool::Lens, Tool::Scale, Tool::Shuttle, Tool::Cheesecloth, Tool::Compass, Tool::Binocular, Tool::SurveyingTools, Tool::Chisel, Tool::Whip, Tool::Shears, Tool::Pestle, Tool::FishingRod, Tool::Net, Tool::Staff, Tool::Stamp, Tool::Ladle, Tool::Rock, Tool::Spindle, Tool::Distaff, Tool::DryingRack, Tool::Awl, Tool::Abacus,Tool::HandDrill, Tool::Die, Tool::Mould, Tool::Incense, Tool::Stick,  Tool::CandleMould, Tool::MeltingPot, Tool::Hammerstone, Tool::PatternedDie, Tool::Shield};
 // can be used with lower efficiency with one hand
-Tool optionalTwoHandedTools[] = { Tool::Basket, Tool::DiggingStick, Tool::Bucket, Tool::PrimitiveSpear, Tool::Spear, Tool::Pickaxe, Tool::Axe,  Tool::Saw, Tool::HeavySaw, Tool::Crucible, Tool::HeavyShield };
+Tool optionalTwoHandedTools[] = { Tool::Basket, Tool::DiggingStick, Tool::Bucket, Tool::Pickaxe, Tool::Axe,  Tool::Saw, Tool::HeavySaw, Tool::Crucible, Tool::HeavyShield };
 // can be lifted with one hand, but must be used with two
-Tool TwoHandedTools[] = { Tool::Adze, Tool::Halberd, Tool::Shovel, Tool::Scythe,  Tool::Drum, Tool::Lyre, Tool::PanFlute, Tool::HandheldLoom, };
+Tool TwoHandedTools[] = { Tool::Adze, Tool::Shovel, Tool::Scythe,  Tool::Drum, Tool::Lyre, Tool::PanFlute, Tool::HandheldLoom, };
 //must be both used and lifted with two hands, cannot enter any other inventory slot
-Tool mandatoryTwoHandedTools[] = { Tool::Greataxe, Tool::Greatsword, Tool::Lur,  Tool::Ard,  Tool::Log, Tool::Corpse, Tool::Cart, Tool::Pike };
+Tool mandatoryTwoHandedTools[] = { Tool::Lur,  Tool::Ard,  Tool::Log, Tool::Corpse, Tool::Cart };
 Tool unHandleableTools[] = { Tool::HeavyPlow,  Tool::Wagon,};
+
+
 // Collect requires no items or roles. harvesting is collect but with scythe.
 enum class Role {NONE,
     //MELEE

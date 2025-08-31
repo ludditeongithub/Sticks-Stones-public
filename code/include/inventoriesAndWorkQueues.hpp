@@ -10,20 +10,20 @@
 //variantIndex superfluous for non-variant items
 void getResourceAction(int pawn, Item item, int sourceIndex, int variantIndex) {
     Resource resource = resources[item];
-    Action action = resource.action[sourceVariantIndex];
+    Actions action = resource.action[sourceVariantIndex];
     SourceVariant source = resource.source[sourceIndex];
     //see if Object should be removed from tile
     bool removeObject = true;
-    if (action == Action::Collect) {
+    if (action == Actions::Collect) {
         if (source == Tile::ShallowWater || source == Tile::FlowingWater || source == Tile::DeepWater || source == Tile::ShallowSaltWater || source == Tile::Sand || source == Scavengeable::Beehive || source == Scavengeable::ArtificialBeehive) {
             removeObject = false;
         }
     }
     if (removeObject) {
-    if (action == Action::Milk) removeObject = false;
-    else if (action == Action::GoatMilk) removeObject = false;
-    else if (action == Action::Fish) removeObject = false;
-    else if (action == Action::Shear) removeObject = false;
+    if (action == Actions::Milk) removeObject = false;
+    else if (action == Actions::GoatMilk) removeObject = false;
+    else if (action == Actions::Fish) removeObject = false;
+    else if (action == Actions::Shear) removeObject = false;
     else for (int i = 0; i < regrowthCrops.size(); i++) {
         if (item == regrowthCrops[i]) {
             removeObject = false;

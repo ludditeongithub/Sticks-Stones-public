@@ -30,7 +30,6 @@ RoleArray actionToRoles[static_cast<size_t>(Actions::MAX)];
 
 void initializeActionToTools() {
   actionToTools[(size_t)Actions::Hunt] = {Tool::PrimitiveSpear, Tool::Spear, Tool::Pike, Tool::Greatsword, Tool::Halberd, Station::Animal};
-  actionToTools[(size_t)Actions::Melee] = {Tool::PrimitiveSpear, Tool::Spear, Tool::Handaxe, Tool::Sword, Tool::Pike, Tool::Halberd, Tool::Greataxe, Tool::Greatsword, Station::Pawn};
   actionToRoles[(size_t)Actions::Melee] = {Role::MeleeSoldier, Role::SpearHunter};
   actionToTools[(size_t)Actions::Mine] = {Tool::Pickaxe};
   actionToRoles[(size_t)Actions::Mine] = {Role::StoneMiner, Role::CopperMiner, Role::IronMiner, Role::GoldMiner, Role::SilverMiner, Role::SaltMiner};
@@ -38,11 +37,13 @@ void initializeActionToTools() {
   actionToRoles[(size_t)Actions::Cut] = {Role::Apothecary, Role::Planter};
   actionToTools[(size_t)Actions::Chop] = {Tool::Axe, Tool::Greataxe, Station::Tree};
   actionToRoles[(size_t)Actions::Chop] = {Role::Woodcutter};
-  actionToTools[(size_t)Actions::Dig] = {Tool::Shovel, Tool::Trowel};
+  actionToTools[(size_t)Actions::FineChop] = {Tool::Knife, Tool::Cleaver, Tool::Machete}
+actionToRoles[(size_t)Actions::FineChop] = {Role::Cook, Role::Chef, Role::Apothecary};
+  actionToTools[(size_t)Actions::Dig] = {Tool::Shovel, Tool::Trowel, Tool::DiggingStick};
     actionToRoles[(size_t)Actions::Dig] = {Role::Planter, Role::Structures};
   actionToTools[(size_t)Actions::Light] = {Tool::Torch, Tool::Candle, Tool::Flint};
     actionToRoles[(size_t)Actions::Light] = {Role::NONE};
-  actionToTools[(size_t)Actions::Butcher] = {Tool::Cleaver, Tool::Knife, Station::Corpse};
+  actionToTools[(size_t)Actions::Butcher] = {Tool::Cleaver, Tool::Knife, Tool::Machete, Station::Corpse};
     actionToRoles[(size_t)Actions::Butcher] = {Role::Butcher};
   actionToTools[(size_t)Actions::Paint] = {Tool::Brush};
     actionToRoles[(size_t)Actions::Paint] = {Role::Painter};
@@ -69,6 +70,7 @@ actionToTools[(size_t)Actions::Pott] = {Station::Oven, Station::Furnace, Station
     actionToTools[(size_t)Actions::Perform] = {Tool::Lyre, Tool::Drum, Tool::Lur, Tool::PanFlute};
     actionToToolsReplaceables[(size_t)Actions::Perform] = {-1,-1,-1,-1};
     actionToRoles[(size_t)Actions::Perform] = {Role::Performer};
+    //TODO: alternate shitty operation tools
     actionToTools[(size_t)Actions::Operate] = {Tool::Scalpel,  Tool::Needle};
     actionToToolsReplaceables[(size_t)Actions::Operate] = {0,1};
     actionToRoles[(size_t)Actions::Operate] = {Role::Surgeon};
@@ -78,8 +80,8 @@ actionToTools[(size_t)Actions::Pott] = {Station::Oven, Station::Furnace, Station
     actionToRoles[(size_t)Actions::Build] = {Role::ShelterBuilder, Role::Builder};
     actionToTools[(size_t)Actions::Mould] = {Tool::Mould};
     actionToRoles[(size_t)Actions::Mould] = {Role::Chandler, Role::Potter};
-    actionToTools[(size_t)Actions::Woodwork] = {Tool::HandDrill, Tool::Adze, Tool::MeasuringTools, Tool::Chisel, Tool::Scraper, Station::Tabletop};
-    actionToToolsReplaceables[(size_t)Actions::Woodwork] = {0,1,2,3,4,5};
+    actionToTools[(size_t)Actions::Woodwork] = { Tool::Adze, Tool::MeasuringTools, Tool::Chisel, Tool::Scraper, Station::Tabletop};
+    actionToToolsReplaceables[(size_t)Actions::Woodwork] = {-1,1,2,3,4,5};
     actionToRoles[(size_t)Actions::Woodwork] = {Role::Woodworker};
     actionToTools[(size_t)Actions::Stonework] = {Tool::Chisel, Tool::Mallet, Tool::MeasuringTools, Tool::Scraper, Station::Tabletop};
     actionToToolsReplaceables[(size_t)Actions::Stonework] = {0,1,2,3,4,5};
@@ -107,7 +109,7 @@ actionToTools[(size_t)Actions::Pott] = {Station::Oven, Station::Furnace, Station
     actionToTools[(size_t)Actions::Carve] = {Tool::Knife};
     actionToRoles[(size_t)Actions::Carve] = {Role::Carver};
     actionToTools[(size_t)Actions::WoodCarve] = {Tool::Chisel, Tool::Adze, Tool::Knife, Tool::Mallet};
-        actionToToolsReplaceables[(size_t)Actions::WoodCarve] = {0,1,2};
+        actionToToolsReplaceables[(size_t)Actions::WoodCarve] = {0,1,2,0};
     actionToRoles[(size_t)Actions::WoodCarve] = {Role::WoodCarver};
     actionToTools[(size_t)Actions::Weave] = {Tool::HandheldLoom, Station::Loom};
     actionToToolsReplaceables[(size_t)Actions::Weave] = {0,1};
@@ -115,8 +117,8 @@ actionToTools[(size_t)Actions::Pott] = {Station::Oven, Station::Furnace, Station
     actionToRoles[(size_t)Actions::BasketWeave] = {Role::BasketWeaver};
     actionToTools[(size_t)Actions::Bless] = {Tool::Incense};
     actionToRoles[(size_t)Actions::Bless] = {Role::Priest};
-    actionToTools[(size_t)Actions::Cook] = {Tool::Pot, Tool::Knife, Station::Oven, Station::Tabletop};
-    actionToToolsReplaceables[(size_t)Actions::Cook] = {0,1,2,3};
+    actionToTools[(size_t)Actions::Cook] = {Tool::Pot, Station::Oven, Station::Tabletop};
+    actionToToolsReplaceables[(size_t)Actions::Cook] = {0,1,2};
     actionToRoles[(size_t)Actions::Cook] = {Role::Cook};
     actionToRoles[(size_t)Actions::Craft] = {Role::Crafter};
     actionToTools[(size_t)Actions::Explore] = {Tool::Compass, Tool::Binocular};
@@ -127,12 +129,13 @@ actionToTools[(size_t)Actions::Pott] = {Station::Oven, Station::Furnace, Station
     actionToRoles[(size_t)Actions::Plant] = {Role::Planter};
     actionToTools[(size_t)Actions::Weed] = {Tool::Trowel};
     actionToRoles[(size_t)Actions::Weed] = {Role::Planter};
-    actionToTools[(size_t)Actions::Harvest] = {Tool::Sickle};
+    actionToTools[(size_t)Actions::Harvest] = {Tool::Sickle, Tool::Scythe};
+     actionToToolsReplaceables[(size_t)Actions::Harvest] = {-1, -1};
     actionToRoles[(size_t)Actions::Harvest] = {Role::Planter};
     actionToTools[(size_t)Actions::Milk] = {Tool::Bucket, Tool::Pot, Tool::Jar};
     actionToToolsReplaceables[(size_t)Actions::Milk] = {0,0,0};
     actionToRoles[(size_t)Actions::Milk] = {Role::Herder, Role::Shepherd};
-    actionToTools[(size_t)Actions::Shear] = {Tool::Shears};
+    actionToTools[(size_t)Actions::Shear] = {Tool::Machete, Tool::Shears};
     actionToRoles[(size_t)Actions::Shear] = {Role::Herder, Role::Shepherd};
     actionToTools[(size_t)Actions::Mill] = {Tool::Pestle, Station::Mill};
     actionToRoles[(size_t)Actions::Mill] = {Role::GrainGrinder, Role::Miller};
@@ -173,6 +176,7 @@ actionToTools[(size_t)Actions::Pott] = {Station::Oven, Station::Furnace, Station
     actionToRoles[(size_t)Actions::Grind] = {Role::Apothecary};
     actionToTools[(size_t)Actions::Preserve] = {Station::Keg, Station::MashTun, Tool::Pot};
     actionToRoles[(size_t)Actions::Preserve] = {Role::Preserver};
+    //NOTE: maybe change awl to optional
     actionToTools[(size_t)Actions::LeatherCraft] = {Tool::Knife, Tool::Awl, Tool::Needle};
     actionToToolsReplaceables[(size_t)Actions::LeatherCraft] = {0,1,2};
     actionToRoles[(size_t)Actions::LeatherCraft] = {Role::Leathercrafter, Role::Cuirassier};
@@ -186,21 +190,22 @@ actionToTools[(size_t)Actions::Pott] = {Station::Oven, Station::Furnace, Station
     actionToRoles[(size_t)Actions::WoodCraft] = {Role::Woodworker};
     actionToTools[(size_t)Actions::WheelCraft] = {Tool::Adze, Tool::Hammer, Tool::Chisel};
     actionToRoles[(size_t)Actions::WheelCraft] = {Role::Wheelwright};
-    actionToTools[(size_t)Actions::CanoeCarve] = {Tool::Saw, Tool::Adze};
-        actionToToolsReplaceables[(size_t)Actions::CanoeCarve] = {0,1};
+    actionToTools[(size_t)Actions::CanoeCarve] = {Tool::Saw, Tool::Axe, Tool::Adze};
+        actionToToolsReplaceables[(size_t)Actions::CanoeCarve] = {0,0,1};
     actionToRoles[(size_t)Actions::CanoeCarve] = {Role::CanoeCarver};
     actionToTools[(size_t)Actions::BoatCraft] = {Tool::Mallet, Tool::MeasuringTools};
         actionToToolsReplaceables[(size_t)Actions::BoatCraft] = {0,1};
     actionToRoles[(size_t)Actions::BoatCraft] = {Role::BoatBuilder, Role::Shipwright};
-    actionToTools[(size_t)Actions::SiegeCraft] = {Tool::Mallet, Tool::MeasuringTools};
-        actionToToolsReplaceables[(size_t)Actions::BoatCraft] = {-1,1};
+    actionToTools[(size_t)Actions::SiegeCraft] = {Tool::Mallet, Tool::Hammerstone, Tool::MeasuringTools};
+        actionToToolsReplaceables[(size_t)Actions::BoatCraft] = {0,1};
     actionToRoles[(size_t)Actions::SiegeCraft] = {Role::SiegeEngineer};
     actionToTools[(size_t)Actions::Engineer] = {Tool::Mallet, Tool::MeasuringTools};
     actionToToolsReplaceables[(size_t)Actions::Engineer] = {-1,1};
     actionToRoles[(size_t)Actions::Engineer] = {Role::Engineer};
     actionToTools[(size_t)Actions::Wait] = {Tool::Bucket, Tool::Pot, Tool::Jar};
     actionToTools[(size_t)Actions::Measure] = {Tool::MeasuringTools, Tool::Scale};
-    actionToTools[(size_t)Actions::Crush] = {Tool::Hammer};
+    actionToTools[(size_t)Actions::Crush] = {Tool::Hammer, Tool::Hammerstone};
+    //NOTE: maybe change awl to optional
     actionToTools[(size_t)Actions::BowCraft] = {Tool::Knife, Tool::Adze, Tool::Awl, Tool::Drill};
     actionToToolsReplaceables[(size_t)Actions::Engineer] = {0,1,2,3};
     actionToRoles[(size_t)Actions::BowCraft] = {Role::Bowyer};
@@ -239,7 +244,27 @@ actionToTools[(size_t)Actions::Pott] = {Station::Oven, Station::Furnace, Station
 
 }
 
-bool queuedActionInterpreter(Actions actionToQueue) {
+
+struct ActionData {
+    Actions action;
+    bool sharp; //whether it needs to be sharp, and thus may need to be sharpened, and will decrease in sharpness, becoming slower or unusable if low
+    bool tough; //whether it needs to be tough and can absorb energy, lowering durability variably on uses, and possibly destroying tool if brittle, depending on opposite material, as well as being slower based on material comparison
+    //TODO: make enum tiers of how hard materials are, including tiles
+    float durabilityPerUse; //how much durability lost per use on the tool in question, on a non-catastrophic use
+};
+
+void initActionData {
+Collect false, false, 0
+Hunt false, false -0.1 //TODO: write code to to deal with N/A, additional processing required
+Mine false, true, 2.2
+Cut true, false, 0.05
+Chop true, true, 0.6
+Dig false, true, 0.12
+Light false, false, -0.1
+Butcher true, true,
+}
+
+bool queuedActioInnterpreter(Actions actionToQueue) {
 
 }
 

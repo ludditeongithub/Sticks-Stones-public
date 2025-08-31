@@ -1,4 +1,6 @@
 #+title: Todo
+Consider using itemTags for weapons, tools, clothing etc instead of different enum categories
+
 1. general design
 2. world generation
 3. categories of items

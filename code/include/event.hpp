@@ -2,8 +2,8 @@
 #define EVENT_H_
 #include "basic.hpp"
 #include "categories.hpp"
-#include "unit.cpp"
-#include "animal.cpp"
+#include "unit.hpp"
+#include "animal.hpp"
 
 enum class EventType {
     PawnMoveTile,

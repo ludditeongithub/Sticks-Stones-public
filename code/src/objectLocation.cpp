@@ -189,11 +189,21 @@ std::pair<int,int> findNearestLiquidContainer(int x, int y) {
 std::unordered_map[std::pair<int,int>, std::pair<bool, Item>] filledLiquidContainers();
 
 //NOTE: maybe prowl version, too
+//TODO: needs work to ensure async functionality really works
 void findNecessaryTools(Action action, int pawn) {
+    vector<int> foundToolReplaceables;
     for (int i = 0; i < actionToTools[static_cast<size_t>(action)].size(); i++) {
-        //skip if pawn already has tool
+        //skip if pawn already has tool, replaceable equivalent has already been found, or tool is optional
+        for (int j = 0; j < foundToolReplaceables.size(); j++)   if (foundToolReplaceables[j] == actionToTools[static_cast<size_t>(action)][i]) continue;
+
         for (int j = 0; j < tools[pawn].size(); j++)
-            if (tools[pawn][j] == actionToTools[i]) continue;
+            if (tools[pawn][j] == actionToTools[static_cast<size_t>(action)][i]) { foundToolsReplaceables.push_back(actionToToolsReplaceables[static_cast<size_t>(action)][i]);
+                continue;
+            }
+
+        if (actionToTools[static_cast<size_t>(action)][i] < 0) continue;
+
+
         std:pair<int,int> dest = findNearestObject(actionToTools[static_cast<size_t>(action)][i], currentCoords[pawn].first, currentCoords[pawn].second);
         if (manDist(currentCoords[pawn], dest) > midGatherRange) {
             currentDests[pawn] = tileIndices[dest];
@@ -202,7 +212,7 @@ void findNecessaryTools(Action action, int pawn) {
             findPromise[pawn] = std::promise<void>();
             findFuture[pawn] = findPromise[pawn].get_future();
         } else {
-            //TODO:: "search home function", which checks if a pawn's home contains the necessary tools
+            //TODO:: "search home function", which checks if a pawn's home contains the necessary tools, giving user warning if not
             nextRole(pawn);
         }
     }
