@@ -1,4 +1,4 @@
-#include "movementPatterns.hpp"
+#include "pathfinding.cpp"
 //TODO: trees and other large items block visibility
 
 //raw inertia value
@@ -10,15 +10,15 @@ uint16_t calcInertia(float objectInertia, std::pair<int,int> coord) {
     return static_cast<int>(objectInertia * tileInertias[tileTypes[tileIndices(coord)]]);
 }
 
-std::pair<int, int> getMoveTimeAndTileIndex(Direction direction) {
+std::pair<int, int> getMoveTimeAndTileIndex(Direction direction, int index) {
 	switch (direction) {
-                case Direction::Up:  //up
+                case Direction::North:
                     return {adjacentTilesCost[index].up, adjacentTilesIndices[index].up};
-                case Direction::Down:  //down
+                case Direction::South:  //down
                     return {adjacentTilesCost[index].down, adjacentTilesIndices[index].down};
-                case Direction::Left:  //left
+                case Direction::East:  //left
                     return {adjacentTilesCost[index].left, adjacentTilesIndices[index].left};
-                case Direction::Right:  //right
+                case Direction::West:  //right
                     return {adjacentTilesCost[index].right, adjacentTilesIndices[index].right};
             }
 	return {-1,-1};

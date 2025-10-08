@@ -39,6 +39,7 @@ void checkPackDistance(int animal) {
 }
 
 void movePackCenter() {
+
 }
 
 

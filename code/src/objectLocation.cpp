@@ -5,16 +5,16 @@
 // hash grid
 int cellSize = 25;
 
-std::pair<int,int> getGridCell(int x, int y) {
+std::pair<int,int> ObjectDatabase::getGridCell(int x, int y) {
     return std::floor(x / cellSize), std::floor(x / cellSize);
 }
 
-std::pair<int,int> getCenterPointInGridCell(int x, int y) {
+std::pair<int,int> ObjectDatabase::getCenterPointInGridCell(int x, int y) {
     return {x * cellSize, y * cellSize};
 }
 
 //TODO: be sure this is not x and y inverse
-std::pair<int, int> getNthNearestGridCell(int x, int y, uint16_t n, int cellSize) {
+std::pair<int, int> ObjectDatabase::getNthNearestGridCell(int x, int y, uint16_t n, int cellSize) {
     int gx = x / cellSize;
     int gy = y / cellSize;
 
@@ -47,9 +47,7 @@ std::pair<int, int> getNthNearestGridCell(int x, int y, uint16_t n, int cellSize
     }
 }
 
-std::vector<std::vector<absl::flat_hash_map<Object, absl::flat_hash_set<std::pair<int,int>>>>> globalMap;
-
-void preallocateSpace() {
+void ObjectDatabase::preallocateSpace() {
     for (int x = 0; x < GRIDCELLNUM; x++) {
         for (int y = 0; y < GRIDCELLNUM; y++) {
             // 0 if out of discovery range
@@ -60,27 +58,27 @@ void preallocateSpace() {
     }
 }
 
-void insertObject(Object object, int x, int y) {
+void ObjectDatabase::insertObject(Object object, int x, int y) {
     std::pair<int,int> gc = getGridCell(x, y);
     //TODO: consider checks
     globalMap[gc.first][gc.second][object].insert({x,y});
 }
 
-void insertObject(uint16_t objectIndex, ObjectType type, int x, int y) {
+void ObjectDatabase::insertObject(uint16_t objectIndex, ObjectType type, int x, int y) {
 
 }
 
-void deleteObject(Object object, int x, int y) {
+void ObjectDatabase::deleteObject(Object object, int x, int y) {
     std::pair<int,int> gc = getGridCell(x, y);
     globalMap[gc.first][gc.second][object].erase({x,y});
 
 }
 
-bool checkEmptyTile(int tileIndex, int adjacentTileIndex) {
+bool ObjectDatabase::checkEmptyTile(int tileIndex, int adjacentTileIndex) {
 
 }
 
-std::pair<int,int> findNthNearestObject(Object object, int x, int y, uint8_t n) {
+std::pair<int,int> ObjectDatabase::findNthNearestObject(Object object, int x, int y, uint8_t n) {
     //TODO: object count table for different object types, return false if object count is 0
     for (int i = 0; i < GRIDCELLCOUNT; i++) {
             std::pair<int,int> gc = getNthNearestGridCell();
@@ -99,7 +97,7 @@ std::pair<int,int> findNthNearestObject(Object object, int x, int y, uint8_t n) 
     return {-1, -1};
 }
 
-std::pair<int,int> findNearestObject(Object object, int x, int y) {
+std::pair<int,int> ObjectDatabase::findNearestObject(Object object, int x, int y) {
     //TODO: producedInWorld counters, skip if = 0
     for (int i = 0; i < GRIDCELLCOUNT; i++) {
     std::pair<int,int> gc = getNearestGridCell(x, y);
@@ -118,7 +116,7 @@ std::pair<int,int> findNearestObject(Object object, int x, int y) {
     return {-1, -1};
 }
 
-std::pair<int,int> findNthNearestObject(Object object, int x, int y, int n) {
+std::pair<int,int> ObjectDatabase::findNthNearestObject(Object object, int x, int y, int n) {
     for (int i = 0; i < GRIDCELLCOUNT; i++) {
     std::pair<int,int> gc = getNearestGridCell(x, y);
     auto& cellSet = globalMap[gc.first][gc.second][object];
@@ -174,7 +172,7 @@ std::pair<int,int> findNthNearestObject(Object object, int x, int y, int n) {
 //     return {-1, -1};
 // }
 
-std::pair<int,int> findNearestLiquidContainer(int x, int y) {
+std::pair<int,int> ObjectDatabase::findNearestLiquidContainer(int x, int y) {
     std::pair<int,int> subject = {x,y};
     std::pair<int,int> closest = findNearestObject(Container::Pot, x, y);
     if (manDist(subject, closest) < manDist(findNearestObject(subject, Container::Bucket, x, y))) closest = findNearestObject(subject, Container::Bucket, x, y);
@@ -185,12 +183,9 @@ std::pair<int,int> findNearestLiquidContainer(int x, int y) {
     return closest;
 }
 
-        //bool is whether still processing or not. only counts ones filled with actual liquid
-std::unordered_map[std::pair<int,int>, std::pair<bool, Item>] filledLiquidContainers();
-
 //NOTE: maybe prowl version, too
 //TODO: needs work to ensure async functionality really works
-void findNecessaryTools(Action action, int pawn) {
+void ObjectDatabase::findNecessaryTools(Action action, int pawn) {
     vector<int> foundToolReplaceables;
     for (int i = 0; i < actionToTools[static_cast<size_t>(action)].size(); i++) {
         //skip if pawn already has tool, replaceable equivalent has already been found, or tool is optional
@@ -218,6 +213,6 @@ void findNecessaryTools(Action action, int pawn) {
     }
 }
 
-void findNecessaryItems() {
+void ObjectDatabase::findNecessaryItems() {
 
 }

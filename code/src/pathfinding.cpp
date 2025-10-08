@@ -1,8 +1,8 @@
-#include "basic.hpp"
-#include "tile.hpp"
-#include "categories.hpp"
-#include "animal.hpp"
-#include "unit.hpp"
+#include "../include/basic.hpp"
+#include "../include/tile.hpp"
+#include "../include/categories.hpp"
+#include "../include/animal.hpp"
+#include "../include/unit.hpp"
 
 float maxAltChange = 2.0;
 

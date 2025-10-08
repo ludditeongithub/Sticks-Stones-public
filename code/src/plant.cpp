@@ -1,4 +1,4 @@
-#include "plant.hpp"
+#include "../include/plant.hpp"
 #include "mapdimensions.hpp"
 #include "cropdata.hpp"
 #include "event.hpp"
@@ -6,13 +6,64 @@
 #include "unit.hpp"
 #include "objectData.hpp"
 
-void getCropIndex() {
+//puts a source of a plant into the ground.
+void PlantDatabase::releasePlantSource(std::vector<Object>& rTileObject, std::vector<std::pair<int, int>>& rTileCoords, int tileIndex) {
+    if (isPlant(rTileObject[tileIndex])) {
+        //TODO: place seed in adjacent tile nearby, instead of on the same tile
+Plant plant = std::get<Plant>(rTileObject[tileIndex]);
+std::pair<int,int> empty = getNearestEmptyTile(tileIndex);
+seedCoords.push_back(empty);
+seeds.push_back(plant);
+setGerminationTime(seeds, plant, seeds.size());
+//TODO: show on ground if it is tuber, bulb, cone, or other visible seed, and eventually bury over time (other seeds can be searched for, but are invisible in grass)
+    }
+}
+
+// an event is sent to the event manager which triggers the mass spawn of all that type of plant, by this function, which sends events distributed over a set amount of time to germinate all seeds of that plant
+void PlantDatabase::setGerminationTime(int seedIndex) {
+  Plant plant = seeds[seedIndex];
+   //randomize time based on duration of germination period
+   int time = (int) (germinationPeriod[static_cast<int>(plant)] * rfloat(0.01,1.0));
+   addEvent(time, EventType::PlantGermination, (int)plant, seedIndex);
+}
+
+
+// Germination is activated randomly as events that start triggering en-masse automatically at the time of the year the plant type in question starts germinating. Also activates upon world spawn with a randomGrowth to generate plants.
+void PlantDatabase::germinate(int seedIndex, bool randomGrowth) {
+  Plant plant = seeds[seedIndex];
+  bool regrowthPlant = regrowthPlants[static_cast<int>(plant)];
+if (regrowthPlant) {
+  std::pair<int,int> coord = regrowthSeedCoords[seedIndex];
+  Plant plant = regrowthSeeds[seedIndex];
+  regrowthCoords.push_back(coord);
+  regrowthPlants.push_back(plant);
+  if (randomGrowth) {
+    float multiplier = rfloat(0.001,0.998);
+    regrowthGrowthAmt.push_back(multiplier * regrowthFullyGrownAmt[static_cast<int>(plant)]);
+} else regrowthGrowthAmt.push_back(0);
+} else {
+  std::pair<int,int> coord = seedCoords[seedIndex];
+  plantCoords.push_back(coord);
+  plants.push_back(plant);
+  if (randomGrowth) {
+    float multiplier = rfloat(0.001,0.998);
+    growthAmt.push_back(multiplier * fullyGrownAmt[static_cast<int>(plant)]);
+}  else growthAmt.push_back(0);
+}
+// TODO figure out how to make it so that both regrowth and non-regrowth plants
+// can be put into tile object
+ std::pair<int,int> tileCoord = getTileIndex();
+ tileObject[] = plant;
+}
+
+// Crops are those farmable by player, but do not regrow over multiple seasons
+void PlantDatabase::getCropIndex() {
     if (nextCropIndex.empty()) return cropList.size();
     return nextCropIndex.pop();
 }
 
 // add new crop to actively tracked crops
-void addCrop(Plant plant, coord co) {
+void PlantDatabase::addCrop(Plant plant, coord co) {
     cropList[getCropIndex()] = plant;
     yieldMisses.push_back(0);
     collectedWater.push_back(0.0);
@@ -22,13 +73,13 @@ void addCrop(Plant plant, coord co) {
     coords.push_back(co);
 }
 
-void getRegrowthCropIndex() {
+void PlantDatabase::getRegrowthCropIndex() {
     if (nextRegrowthCropIndex.empty()) return rCropList.size();
     return nextRegrowthCropIndex.pop();
 }
 
 // add new regrowth crops to actively tracked regrowth crops
-void addRegrowthCrop( coord co) {
+void PlantDatabase::addRegrowthCrop(Plant plant, coord co) {
     rCropList[getCropIndex()] = plant;
     //size_t i = cropList.size() - 1;
     rCollectedWater.push_back(0.0);
@@ -38,12 +89,12 @@ void addRegrowthCrop( coord co) {
     rCoords.push_back(co);
 }
 
-bool viableHarvest(int plantIndex) {
+bool PlantDatabase::viableHarvest(int plantIndex) {
     if (growthAmt[plantIndex] < maturityThreshold[static_cast<int>(plants[plantIndex])]) return true;
 }
 
 //TODO: consider making this array, so that animals can eat and poop many seeds.
-void animalEatSeeds(int animalIndex, int foodTileIndex, bool fruitTree) {
+void PlantDatabase::eatSeeds(int animalIndex, int foodTileIndex, bool fruitTree) {
     //TODO: create variable digestion time
     int digestionTime = 0;
     Animal animal = animals[animalIndex];
@@ -58,27 +109,29 @@ void animalEatSeeds(int animalIndex, int foodTileIndex, bool fruitTree) {
 }
 
 // event trigger, triggers after waterFall is set
-void attemptPlantGrowth(int plant, int time, int biomeIndex) {
+void PlantDatabase::attemptPlantGrowth(int plant, int time, int biomeIndex) {
   if (collectedWater[plant] += waterFall[biomeIndex] < mandatoryWater[static_cast<int>(plant)]) {
     yieldMisses[plant]++;
   }
   growthAmt[plant] += time;
 }
 
-void excreteSeed(int animalIndex, Plant plant) {
+void PlantDatabase::excreteSeed(int animalIndex, Plant plant) {
   std::pair<int,int> coords = animalCoords[animalIndex];
-  addPlant(findNearestAdjacentEmptyTile(coords));
+  addCrop(plant, findNearestAdjacentEmptyTile(coords));
 }
 
-void plant(int unitIndex, Plant plant) {
+void PlantDatabase::plant(int unitIndex, Plant plant) {
  std::pair<int,int> coords = currentCoords[animalIndex];
-  addPlant(findNearestAdjacentEmptyTile(coords));
+  addCrop(plant, findNearestAdjacentEmptyTile(coords));
 }
 
 //TODO: complete and render
-void treeDeath(int plantIndex) {
+void PlantDatabase::killTree(int plantIndex) {
     switch (tilePlant[plantIndex]) {
         case Plant::PioneerTree:
+            blockSize = 1;
+            break;
         case Plant::DeciduousTree:
             blockSize = 2;
             break;
@@ -112,7 +165,7 @@ void treeDeath(int plantIndex) {
     }
 }
 
-void cropDeath(int plantIndex) {
+void PlantDatabase::killPlant(int plantIndex) {
         Plant plant = tilePlant[tileIndex];
         PlantType type = plants[(int)plant].plantType;
 
@@ -124,9 +177,8 @@ void cropDeath(int plantIndex) {
         }
 }
 
-
 // crops update loop
-void updateCrops() {
+void PlantDatabase::updateCrops() {
     for (int i = 0; i < cropList.size(); i++) {
         //get data for croptype
         Crops c = cropList[i];
@@ -146,7 +198,6 @@ void updateCrops() {
         float wcomp = 1.0;
         //1. collect water from ground
         //check for waterlog
-        //3.
         if (collectedWater[i] < wr) {
             yieldMisses[i]++;
             wcomp = collectedWater[i] / wr;
@@ -158,7 +209,6 @@ void updateCrops() {
                 cropList[i] = EMPTY;
                 continue;
         }
-        //if fully grown, skip
             if (fullyGrown[i]) continue;
         //growthrate = sunlight * watercomponent *  soilquality * temperature
         if (sunlight == 0.0) {
@@ -190,8 +240,8 @@ void updateCrops() {
 
 
 // crops update loop
-void updateRegrowthCrops() {
-    for (int i = 0; i < rCropList.size(); i++) {
+void PlantDatabase::updateRegrowthCrops() {
+    for (int i = 0; i < regrowthCropList.size(); i++) {
         //get data for croptype
         RegrowthCrops c = rCropList[i];
         float la = lifespanAmt[c];
@@ -206,27 +256,26 @@ void updateRegrowthCrops() {
         float sha = rstartingHarvestAmt[c];
         float eha = rendingHarvestAmt[c];
         float rs = regrowthStart[c];
-        float r = regrowth[c];
+        float r = regrowthPeriod[c];
         /* determine water status:
          * all 3 states determined by one waterRequired variable. Plant can collect x2 of waterRequired. If <, yieldMissed, too dry. If x4, waterlogged, yieldMissed. */
         float wcomp = 1.0;
         //1. collect water from ground
         //check for waterlog
-        //3.
         if (rCollectedWater[i] < wr) {
             rYieldMisses[i]++;
             wcomp = rCollectedWater[i] / wr;
         } else {
-            rLastFullyWatered[i] = date;
+            regrowthLastFullyWatered[i] = date;
         }
         //check if plant death
         if (temp < dmin || temp > dmax || date - rLastFullyWatered[i] > wd) {
-                cropList[i] = EMPTY;
+                regrowthCropList[i] = EMPTY;
                 continue;
         }
         //growthrate = sunlight * watercomponent *  soilquality * temperature
         if (sunlight == 0.0) {
-            rGrowthAmt[i] = 0.0;
+            regrowthGrowthAmt[i] = 0.0;
         } else {
             //get temp component
         float tcomp;
@@ -246,17 +295,17 @@ void updateRegrowthCrops() {
             }
         }
         //add growthrate
-        rGrowthAmt[i] += sunlight * tcomp * wcomp;
-        if (rGrowthAmt[i] >= la) {
-            cropList[i] = EMPTY;
+        regrowthGrowthAmt[i] += sunlight * tcomp * wcomp;
+        if (regrowthGrowthAmt[i] >= la) {
+            regrowthCropList[i] = EMPTY;
             continue;
         }
         //add regrowth
-        if (rGrowthAmt[i] < rs && !harvestable[i]) {
-            regrowth[i] += sunlight * tcomp * wcomp;
+        if (regrowthGrowthAmt[i] < rs && !regrowthHarvestable[i]) {
+            regrowthAmt[i] += sunlight * tcomp * wcomp;
         }
-        if (rGrowthAmt[i] > rs) {
-            harvestable[i] = true;
+        if (regrowthAmt[i] > rs) {
+            regrowthHarvestable[i] = true;
         }
         } //if sunlight == 0
     }

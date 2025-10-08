@@ -1,9 +1,8 @@
 #ifndef INVENTORIESANDWORKQUEUES_H_
 #define INVENTORIESANDWORKQUEUES_H_
-#include "basic.hpp"
-#include "categories.hpp"
-#include "itemRecipes.hpp"
-#include "cropdata.hpp"
+#include "../include/categories.hpp"
+#include "../include/itemRecipes.hpp"
+#include "../include/cropdata.hpp"
 #include "unit.hpp"
 
 //TILE DATA

@@ -1,30 +1,33 @@
-#include "worldgen.hpp"
+#include "../include/worldMaps.hpp"
+#include "../include/tile.hpp"
+#include "pathfinding.cpp"
+
 
 //TO-DO: refactor all code to use adjacent tiles based on nearest Voronoi seeds, not square cells
 
-// 1. Generate Ocean and Land
-void generateOceanMap() {
+// 1. Generate Ocean on altitude, land, and ocean maps
+void WorldSpawner::generateOceansOnMaps() {
     for (int x = 0; x < WIDTH; ++x) {
         for (int y = 0; y < HEIGHT; ++y) {
-            if (altitudeMap[y][x] > landThreshold) {
-                oceanMap[y][x] = 1;  // Land
-                landsMap[y][x] = 2; //Land
+            if (rAltitudeMap[y][x] > landThreshold) {
+                rOceanMap[y][x] = 1;  // Land
+                rLandsMap[y][x] = 2; //Land
             } else {
-                oceanMap[y][x] = 0;  // Ocean
-                landsMap[y][x] = 0; //Ocean
-                altitudeMap[y][x] = 0;
+                rOceanMap[y][x] = 0;  // Ocean
+                rLandsMap[y][x] = 0; //Ocean
+                rAltitudeMap[y][x] = 0;
             }
         }
     }
 }
 
 //Function to mark adjacent tiles to coast as lowlands
-void markCoasts() {
+void WorldSpawner::markCoasts() {
     for (int x = 0; x < WIDTH; ++x) {
         for (int y = 0; y < HEIGHT; ++y) {
-            if (oceanMap[y][x] == 1) {  // If it's Land
-                if (adjCheck(oceanMap, y, x, 0, 1)) {
-                    landsMap[y][x] = 1; //Coast
+            if (rOceanMap[y][x] == 1) {  // If it's Land
+                if (adjCheck(rOceanMap, y, x, 0, 1)) {
+                    rLandsMap[y][x] = 1; //Coast
                 }
             }
         }
@@ -34,11 +37,11 @@ void markCoasts() {
 
 
 // Function to apply user-defined chances for unlikely transitions
-void applyExtraHighlandsAndMountains() {
+void WorldSpawner::applyExtraHighlandsAndMountains() {
     // Step 1: Transition one tile to other tile
     for (int y = 0; y < HEIGHT; ++y) {
         for (int x = 0; x < WIDTH; ++x) {
-            int lowest = getLowestAdjValue(landsMap, x, y);
+            int lowest = getLowestAdjValue(rLandsMap, x, y);
             float threshold;
             switch (lowest) {
                 case 5:
@@ -58,7 +61,7 @@ void applyExtraHighlandsAndMountains() {
             }
             float randVal = rand() / (float)RAND_MAX;
             if (randVal < threshold) {
-                landsMap[y][x] = 5;  // Mountains
+                rLandsMap[y][x] = 5;  // Mountains
             }
         }
     }
@@ -66,17 +69,17 @@ void applyExtraHighlandsAndMountains() {
     // Step 2: Apply highlands, mountains swaths
     for (int y = 0; y < HEIGHT; ++y) {
         for (int x = 0; x < WIDTH; ++x) {
-            if (landsMap[y][x] == 5) {
+            if (rLandsMap[y][x] == 5) {
                 int success;
                 int backup;
                 float chance;
                 int l;
                 int s;
 
-                if (landsMap[y][x] == 5) {
+                if (rLandsMap[y][x] == 5) {
                     success = 5;
-                    int highest = getHighestAdjValue(landsMap, y, x);
-                    int lowest = getLowestAdjValue(landsMap, y, x);
+                    int highest = getHighestAdjValue(rLandsMap, y, x);
+                    int lowest = getLowestAdjValue(rLandsMap, y, x);
                     backup = highest;
                     switch (lowest) {
                         case 5:
@@ -103,7 +106,7 @@ void applyExtraHighlandsAndMountains() {
                     l = rint(1,4);
                     s = rint(1,3);
                 }
-                pair<int,int> change = getHighestAdj(landsMap, y, x);
+                pair<int,int> change = getHighestAdj(rLandsMap, y, x);
                 int nx = change.second;
                 int ny = change.first;
 
@@ -113,12 +116,12 @@ void applyExtraHighlandsAndMountains() {
                         for (int j = 0; j < s; j++) {
                             if (nx >= 0 && nx < WIDTH && ny >= 0 && ny < HEIGHT) {
                                 // Bounds check
-                                if ((rand() / (float)RAND_MAX) > 0.8) landsMap[nx][ny] = success;
+                                if ((rand() / (float)RAND_MAX) > 0.8) rLandsMap[nx][ny] = success;
                             }
                         }
                     }
                 } else {
-                    landsMap[ny][nx] = backup;
+                    rLandsMap[ny][nx] = backup;
                 }
             }
         }
@@ -127,31 +130,31 @@ void applyExtraHighlandsAndMountains() {
     //Step 3: Apply coastal mountains chance
     for (int y = 0; y < HEIGHT; ++y) {
         for (int x = 0; x < WIDTH; x++) {
-            if (landsMap[y][x] != 0 && landsMap[y][x] != 1) {
-                pair<int,int> near = adjGet(landsMap, y, x, 1, 3);
+            if (rLandsMap[y][x] != 0 && rLandsMap[y][x] != 1) {
+                pair<int,int> near = adjGet(rLandsMap, y, x, 1, 3);
                 pair<int,int> current = {y,x};
                 if (near != current) {
                     if (rfloat(0,1.0) < coastalRangeChance) {
-                        landsMap[y][x] = 5; //Mountain
+                        rLandsMap[y][x] = 5; //Mountain
                         int size = rint(3,7);
                         for (int i = 0; i < size; i++) {
                             //get nearest lowlands
-                            pair<int,int> near2 = adjGet(landsMap, y, x, 2, 1);
+                            pair<int,int> near2 = adjGet(rLandsMap, y, x, 2, 1);
                             int nx = near2.second; int ny = near2.first;
                             //check to ensure new lowlands tile is close to coast
-                            if (adjCheck(landsMap, ny, nx, 1, 3) == true && landsMap[nx][ny] != 0 && landsMap[nx][ny] != 1)
-                                landsMap[ny][nx] = 5; //Mountain
+                            if (adjCheck(rLandsMap, ny, nx, 1, 3) == true && rLandsMap[nx][ny] != 0 && rLandsMap[nx][ny] != 1)
+                                rLandsMap[ny][nx] = 5; //Mountain
                             y = ny; x = nx;
                         }
 
                     }
                 }
                 // increase mt altitude
-                if (landsMap[y][x] == 5) {
-                    if (!adjCheck(landsMap,y,x,1,1) && !adjCheck(landsMap,y,x,1,2) && !adjCheck(landsMap,y,x,1,3)) {
-                        altitudeMap[y][x] = 30 + (rand() / (float) RAND_MAX) * 30;
+                if (rLandsMap[y][x] == 5) {
+                    if (!adjCheck(rLandsMap,y,x,1,1) && !adjCheck(rLandsMap,y,x,1,2) && !adjCheck(rLandsMap,y,x,1,3)) {
+                        rAltitudeMap[y][x] = 30 + (rand() / (float) RAND_MAX) * 30;
                     } else {
-                        altitudeMap[y][x] = 20 + (rand() / (float) RAND_MAX) * 20;
+                        rAltitudeMap[y][x] = 20 + (rand() / (float) RAND_MAX) * 20;
                     }
                 }
             }
@@ -159,57 +162,58 @@ void applyExtraHighlandsAndMountains() {
     }
 }
 
-void generateLandsMap() {
-    markCoasts();
+void WorldSpawner::generateLandsMap() {
+    markCoasts(rLandsMap, rOceanMap);
     for (int x = 0; x < WIDTH; ++x) {
         for (int y = 0; y < HEIGHT; ++y) {
-            if (oceanMap[y][x] == 1 && landsMap[y][x] != 1) {
-                if (altitudeMap[y][x] < lowlandsThreshold) {
-                    landsMap[y][x] = 2;
-                } else if (altitudeMap[y][x] < midlandsThreshold) {
-                    landsMap[y][x] = 3;
+            if (rOceanMap[y][x] == 1 && rLandsMap[y][x] != 1) {
+                if (rAltitudeMap[y][x] < lowlandsThreshold) {
+                    rLandsMap[y][x] = 2;
+                } else if (rAltitudeMap[y][x] < midlandsThreshold) {
+                    rLandsMap[y][x] = 3;
                 } else  {
-                    landsMap[y][x] = 4;
+                    rLandsMap[y][x] = 4;
                 }
             }
         }
     }
-    applyExtraHighlandsAndMountains();
+    applyExtraHighlandsAndMountains(rLandsMap, rOceanMap);
 }
 
 
-void extendRiversFromSource(int y, int x, std::vector<std::vector<bool>>& visited) {
+void WorldSpawner::extendRiversFromSource() {
     // Base case 1: Hits the edge of the map
     if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT) {
         return;  // Stop recursion if out of bounds
     }
 
-    // Base case 2: Tile is visited
-    if (visited[y][x]) {
+    // Base case 2: Tile is rVisited
+    if (rVisited[y][x]) {
         return;
     }
 
-    visited[y][x] = true;
+    rVisited[y][x] = true;
 
     // Base case 3: Hits an ocean tile
-    if (oceanMap[y][x] == 0) {
+    if (rWaterMap[y][x] == 0 || rWaterMap[y][x] == 4) {
+        rWaterMap[y][x] = 4;
         return;
     }
 
     // Base case 4: Chance of stopping if lake condition is met
-    if (getLowestAdjValue(altitudeMap, y, x) > altitudeMap[y][x]) {
-        waterMap[y][x] = 5;  // Mark as Lake
+    if (getLowestAdjValue(rAltitudeMap, y, x) > rAltitudeMap[y][x]) {
+        rWaterMap[y][x] = 5;  // Mark as Lake
         float random = rand() % 100;
          // 60% chance of stopping when adjacent tiles are not lower, and 20% of no lake
         if ((random < 70)) return;
         else if ((random < 80)) {
-            waterMap[y][x] = 7; //Mark as groundwater river end
+            rWaterMap[y][x] = 7; //Mark as groundwater river end
             return;
         }
     }
 
     // Base case 5: stops if natural river end
-     if (waterMap[y][x] == 7) {
+     if (rWaterMap[y][x] == 7) {
         return;
     }
 
@@ -225,19 +229,19 @@ void extendRiversFromSource(int y, int x, std::vector<std::vector<bool>>& visite
         // Ensure neighbors are within bounds
         if (nx >= 0 && nx < WIDTH && ny >= 0 && ny < HEIGHT) {
             // change current tile to river continues
-            if (waterMap[ny][nx] == 3 || waterMap[ny][nx] == 6 || waterMap[ny][nx] == 2 || waterMap[ny][nx] == 5 )  {
+            if (rWaterMap[ny][nx] == 3 || rWaterMap[ny][nx] == 6 || rWaterMap[ny][nx] == 2 || rWaterMap[ny][nx] == 5 )  {
                  // Check river continuation conditions
-            if (waterMap[y][x] != 2 && waterMap[y][x] != 6 && waterMap[y][x] != 5 && landsMap[y][x] != 5) {
-            if (altitudeMap[y][x] < altitudeMap[ny][nx] ) {
-                    waterMap[y][x] = 3;  // Continue river
+            if (rWaterMap[y][x] != 2 && rWaterMap[y][x] != 6 && rWaterMap[y][x] != 5 && rLandsMap[y][x] != 5) {
+            if (rAltitudeMap[y][x] < rAltitudeMap[ny][nx] ) {
+                    rWaterMap[y][x] = 3;  // Continue river
                 }
             }
-            } extendRiversFromSource(ny, nx, visited);
+            } extendRiversFromSource(rWaterMap, rLandsMap, rAltitudeMap, ny, nx, rVisited);
         }
     }
 }
 
-void markRiverEnds() {
+void WorldSpawner::markRiverEnds() {
     for (int y = 0; y < HEIGHT; ++y) {
         for (int x = 0; x < WIDTH; ++x) {
                 // Check if any adjacent tile is a river
@@ -247,13 +251,13 @@ void markRiverEnds() {
                     int nx = x + dx[i];
                     int ny = y + dy[i];
                     if (nx >= 0 && nx < WIDTH && ny >= 0 && ny < HEIGHT) {
-                        if (waterMap[ny][nx] == 3) {
-                            if (oceanMap[y][x] == 0) {
-                                 waterMap[y][x] = 4; // River mouth at ocean
+                        if (rWaterMap[ny][nx] == 3) {
+                            if (rOceanMap[y][x] == 0) {
+                                 rWaterMap[y][x] = 4; // River mouth at ocean
                                  break;
                             }
-                            if ((getLowestAdjValue(altitudeMap, y, x) > altitudeMap[y][x]) && waterMap[y][x] != 5) {
-                                    waterMap[y][x] = 7;
+                            if ((getLowestAdjValue(rAltitudeMap, y, x) > rAltitudeMap[y][x]) && rWaterMap[y][x] != 5) {
+                                    rWaterMap[y][x] = 7;
                                     break;
                             }
                         }
@@ -264,55 +268,55 @@ void markRiverEnds() {
 }
 
 
-void generateWaterMap() {
-    waterMap = oceanMap;
+void WorldSpawner::generateWaterMap() {
+    rWaterMap = rOceanMap;
 
     // generate river sources
     for (int y = 1; y < HEIGHT + 1; y++) {
         for (int x = 1; x < WIDTH + 1; x++) {  // Start from 1 to avoid borders
-            // Start from 1 to avoid borders
-            if (landsMap[y][x] != 0 && landsMap[y][x] != 1) {
+            // from 1 to avoid borders
+            if (rLandsMap[y][x] != 0 && rLandsMap[y][x] != 1) {
                 // source spawn in high altitude
-                if ((landsMap[y][x] == 4) && waterMap[y][x] != 3 && waterMap[y][x] != 4) {
+                if ((rLandsMap[y][x] == 4) && rWaterMap[y][x] != 3 && rWaterMap[y][x] != 4) {
                     if (rand() / float(RAND_MAX) < riverFromHighlandChance) {
-                        waterMap[y][x] = 2; // River Source from highland or mountain
+                        rWaterMap[y][x] = 2; // River Source from highland or mountain
                         continue;
                     }
                 }
                 //source spawn from mountain side
-                if ((adjCheck(waterMap, y, x, 5, 1)) && waterMap[y][x] != 3 && waterMap[y][x] != 4 && waterMap[y][x] != 5 && landsMap[y][x] != 1) {
+                if ((adjCheck(rWaterMap, y, x, 5, 1)) && rWaterMap[y][x] != 3 && rWaterMap[y][x] != 4 && rWaterMap[y][x] != 5 && rLandsMap[y][x] != 1) {
                     if (rand() / float(RAND_MAX) < riverFromMountainChance) {
-                        waterMap[y][x] = 2; // River Source from highland or mountain
+                        rWaterMap[y][x] = 2; // River Source from highland or mountain
                         continue;
                     }
                 }
             }
 
                         //check for lake spawns on land
-                        if (landsMap[y][x] == 2 && rand() / float(RAND_MAX) < lakeFromLowlandsChance) {
-                            waterMap[y][x] = 5;
+                        if (rLandsMap[y][x] == 2 && rand() / float(RAND_MAX) < lakeFromLowlandsChance) {
+                            rWaterMap[y][x] = 5;
                         }
-                        if (landsMap[y][x] == 3 && rand() / float(RAND_MAX) < lakeFromMidlandsChance) {
-                            waterMap[y][x] = 5;
+                        if (rLandsMap[y][x] == 3 && rand() / float(RAND_MAX) < lakeFromMidlandsChance) {
+                            rWaterMap[y][x] = 5;
                         }
                          // generate river extensions from sources
                         // check for river extensions
-                        std::fill(visited.begin(), visited.end(), std::vector<bool>(HEIGHT + 1, false));
-                        if (waterMap[y][x] == 2) extendRiversFromSource(y,x,visited);
+                        std::fill(rVisited.begin(), rVisited.end(), std::vector<bool>(HEIGHT + 1, false));
+                        if (rWaterMap[y][x] == 2) extendRiversFromSource(rWaterMap, rLandsMap, rAltitudeMap, y,x,rVisited);
                     }
                 }
 
      for (int y = 1; y < HEIGHT + 1; y++) {
         for (int x = 1; x < WIDTH + 1; x++) {
             //generate rivers from lakes
-            std::fill(visited.begin(), visited.end(), std::vector<bool>(HEIGHT + 1, false));
-            if (waterMap[y][x] == 5 && rand() / (float) RAND_MAX < riverFromLakeChance) extendRiversFromSource(y,x,visited);
+            std::fill(rVisited.begin(), rVisited.end(), std::vector<bool>(HEIGHT + 1, false));
+            if (rWaterMap[y][x] == 5 && rand() / (float) RAND_MAX < riverFromLakeChance) extendRiversFromSource(rWaterMap, rLandsMap, rAltitudeMap, y, x, rVisited);
         }
      }
 }
 
 // BFS function to calculate the distance from the ocean
-std::vector<std::vector<int>> calculateOceanDistance(bool lake, bool river) {
+std::vector<std::vector<int>> calculateOceanDistance(vector<vector<int>>& rWaterMap, bool lake, bool river) {
     std::vector<std::vector<int>> distanceMap(HEIGHT, std::vector<int>(WIDTH, WIDTH * HEIGHT));  // Initialize with large values
 
     int water = lake ? 5 : 0;
@@ -323,7 +327,7 @@ std::vector<std::vector<int>> calculateOceanDistance(bool lake, bool river) {
     // Initialize distances and queue
     for (int y = 0; y < HEIGHT; ++y) {
         for (int x = 0; x < WIDTH; ++x) {
-            if (waterMap[y][x] == water) {  // Check waterMap, not landsMap
+            if (rWaterMap[y][x] == water) {  // Check rWaterMap, not rLandsMap
                 distanceMap[y][x] = 0;
                 q.push({y, x});
             }
@@ -348,34 +352,33 @@ std::vector<std::vector<int>> calculateOceanDistance(bool lake, bool river) {
     return distanceMap;
 }
 
-std::vector<std::vector<int>> oceanDistance(HEIGHT, std::vector<int>(WIDTH, WIDTH * HEIGHT));
-
-void generateWBDistances() {
-    oceanDistance = calculateOceanDistance(false, false);
+vector<vector<int>> generateWBDistances(std::vector<std::vector<int>>& rWaterMap) {
+    vector<vector<int>> oceanDistance = calculateOceanDistance(rWaterMap, false, false);
+    return oceanDistance;
 }
 
-void generateTemperatureMap() {
+void WorldSpawner::generateTemperatureMap() {
     for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < WIDTH; x++) {
-            if (oceanMap[y][x] == 0) continue;
+            if (rOceanMap[y][x] == 0) continue;
             int edist = std::abs(y - EQUATOR);
             int odist = oceanDistance[y][x];
             int temperature = 90;
             // affect temp by latitude
             temperature -= (pow(edist,1.05) * 94 / HEIGHT);
             //affect temp by altitude
-            temperature -= std::min(12, static_cast<int>(altitudeMap[y][x] / 3.2f));
+            temperature -= std::min(12, static_cast<int>(rAltitudeMap[y][x] / 3.2f));
             // mountain tiles affect temp relative to the ocean
-            int range = adjRange(landsMap, y, x, 5); //find mountain
-            if (range < 4 && landsMap[y][x] != 5) {
-                pair ag = adjGet(landsMap, y, x, 5, range+1);
+            int range = adjRange(rLandsMap, y, x, 5); //find mountain
+            if (range < 4 && rLandsMap[y][x] != 5) {
+                pair ag = adjGet(rLandsMap, y, x, 5, range+1);
                 int nx = ag.second; int ny = ag.first;
                 // get and see if mountain is between current tile and coast
-                if (adjRange(landsMap, ny, nx, 0) < 3 && adjRange(landsMap, ny, nx, 0) < range) {
+                if (adjRange(rLandsMap, ny, nx, 0) < 3 && adjRange(rLandsMap, ny, nx, 0) < range) {
                     temperature -= rint(2,7);
-                    altitudeMap[y][x] -= rint(3,6);
+                    rAltitudeMap[y][x] -= rint(3,6);
                     // check if tile is between mountain and coast
-                } if (adjRange(landsMap, y, x, 0) < adjRange(landsMap, ny, nx, 0) && range < 3) {
+                } if (adjRange(rLandsMap, y, x, 0) < adjRange(rLandsMap, ny, nx, 0) && range < 3) {
                     temperature += rint(2,7);
                 }
             }
@@ -389,12 +392,12 @@ void generateTemperatureMap() {
             if (temperature < 45 && odist >= 1) {
                 temperature += (temperature - otemp) * 1.6 / std::max(odist, 1);
             }
-            temperatureMap[y][x] = temperature;
+            rTemperatureMap[y][x] = temperature;
         }
     }
 }
 
-std::vector<std::tuple<float, bool, bool>> humidityAndRainShadowEffects(int y, int x, int water, bool biomes) {
+std::vector<std::tuple<float, bool, bool>> humidityAndRainShadowEffects(vector<vector<int>>& rWaterMap, vector<vector<int>>& rLandsMap, int y, int x, int water, bool biomes) {
     std::vector<std::tuple<float,bool,bool>> ret;
     bool leewardEffect = false;  bool windwardEffect = false;
     float min; float power; int wdistance; float hincrease; int dist;
@@ -417,7 +420,7 @@ std::vector<std::tuple<float, bool, bool>> humidityAndRainShadowEffects(int y, i
             power = 2.5;
             dist = 3;
         }
-        ocoords = adjGetAll(waterMap, y, x, water, dist);
+        ocoords = adjGetAll(rWaterMap, y, x, water, dist);
     } else {
         if (water == 4) { //wetlands
             min = 3.2;
@@ -443,7 +446,7 @@ std::vector<std::tuple<float, bool, bool>> humidityAndRainShadowEffects(int y, i
         pair<int, int> waterBody = {get<0>(t), get<1>(t)};
 
         if (water == 0) {
-            if (!adjCheck(landsMap, waterBody.first, waterBody.second,1,1)){
+            if (!adjCheck(rLandsMap, waterBody.first, waterBody.second,1,1)){
                 continue;
             }
         }
@@ -454,11 +457,11 @@ std::vector<std::tuple<float, bool, bool>> humidityAndRainShadowEffects(int y, i
         // increase humidity by distance from water body
         hincrease = fmax(0.0, (min+1.0 - pow(wdistance, power)));
         // check if mountain is between current tile and water body
-        if (isInPath(landsMap, current, waterBody, 5)) leewardEffect = true;
+        if (isInPath(rLandsMap, current, waterBody, 5)) leewardEffect = true;
 
         // get windward effect
         // get all mountains near water body
-        vector<std::tuple<int, int, int>> mcoords = adjGetAll(landsMap, waterBody.first, waterBody.second, 5, 4);
+        vector<std::tuple<int, int, int>> mcoords = adjGetAll(rLandsMap, waterBody.first, waterBody.second, 5, 4);
         for (int i = 0; i < (int)mcoords.size(); i++) {
             std::tuple<int, int, int> t = mcoords[i];
             pair<int, int> mount ={std::get<0>(t), std::get<1>(t)};
@@ -472,13 +475,13 @@ std::vector<std::tuple<float, bool, bool>> humidityAndRainShadowEffects(int y, i
     return ret;
 }
 
-float totalCreatedHumidity(int y, int x) {
+float totalCreatedHumidity(vector<vector<int>>& rLandsMap, int y, int x) {
     float createdhumidity = 0.0; int waterBody;
     for (int c = 0; c < 3; c++) {
         if (c == 0) waterBody = 0;
         if (c == 1) waterBody = 5;
         if (c == 2) waterBody = 3;
-        std::vector<std::tuple<float,bool,bool>> waterBodies = humidityAndRainShadowEffects(y,x,waterBody,false);
+        std::vector<std::tuple<float,bool,bool>> waterBodies = humidityAndRainShadowEffects(rLandsMap, y,x,waterBody,false);
         for (int i = 0; i < (int)waterBodies.size(); i++) {
             std::tuple<float,bool,bool> t = waterBodies[i];
             float ah = std::get<0>(t);
@@ -492,17 +495,14 @@ float totalCreatedHumidity(int y, int x) {
     return createdhumidity;
 }
 
-// Function to generate the humidity map based on distance to ocean and altitude
-void generateHumidityMap() {
-    // Create a distance map to store the distance from the nearest ocean
-    // Get maps for the ocean and lake distances using BFS
-    // Set the humidity values based on altitude and distance from the ocean
+// generate the humidity map based on distance to ocean and altitude
+void WorldSpawner::generateHumidityMap() {
     for (int x = 0; x < WIDTH; ++x) {
         for (int y = 0; y < HEIGHT; ++y) {
-            if (oceanMap[y][x] == 0) {  // Ocean
+            if (rOceanMap[y][x] == 0) {  // Ocean
                 humidityMap[y][x] = 0;
             } else {
-                // Humidity will be influenced by distance to the ocean and elevation
+
                 float potentialhumidity = 0.0;
                 int humidity;
 
@@ -514,7 +514,7 @@ void generateHumidityMap() {
                 float latitude = std::abs(adjustedLat - equator);
                 float latEffect = 0.0;
 
-                // Simulate Hadley Effect, which lowers humidity at 30 and 90, raises at 0 and 60
+                // simulate hadley effect, which lowers humidity at 30 and 90, raises at 0 and 60
                 if (latitude <= (1.0 / 3.0)) {  // Roughly between 0 and 30
                     latEffect = cos((latitude / (1.0 / 3.0)) * M_PI) * 1.6;  // Peak at 30
                 } else if (latitude <= (2.0 / 3.0)) {  // Roughly between 30 and 60
@@ -527,9 +527,9 @@ void generateHumidityMap() {
                 latEffect = std::max(1.0f, std::min(latEffect, 2.0f));
                 //
                 //calculate created humidity based on nearby water bodies and rain shadow effect
-                float evap = ((pow(temperatureMap[y][x]/ 22, 1.1)) + (altitudeMap[y][x] / 12)) / 6;
-                float createdHumidity = ((humidityMult * totalCreatedHumidity(y, x)) * evap);
-                //potentialhumidity += fmax(3,((0.6 * (pow((temperatureMap[y][x] / 2.4), 1.5) - pow(landsMap[x][y],2.1))) - 30));
+                float evap = ((pow(rTemperatureMap[y][x]/ 22, 1.1)) + (rAltitudeMap[y][x] / 12)) / 6;
+                float createdHumidity = ((humidityMult * totalCreatedHumidity(rLandsMap, y, x)) * evap);
+                //potentialhumidity += fmax(3,((0.6 * (pow((rTemperatureMap[y][x] / 2.4), 1.5) - pow(rLandsMap[x][y],2.1))) - 30));
 
                 humidityMap[y][x] = fmax(1, fmin(120, createdHumidity - latEffect));
                 //potentialHumidityMap[y][x] = potentialhumidity;
@@ -540,16 +540,16 @@ void generateHumidityMap() {
     }
 }
 
-void factorWetlandsJunglesAndForests(int s) {
+void WorldSpawner::factorWetlandsJunglesAndForests() {
     for (int x = s; x < WIDTH; x+=5) {
         for (int y = s; y < HEIGHT; y++) {
-            if (oceanMap[y][x] == 0) continue;
+            if (rOceanMap[y][x] == 0) continue;
             float createdhumidity = 0.0; int biome;
             for (int c = 0; c < 3; c++) {
                 if (c == 0) biome = 4;
                 if (c == 1) biome = 5;
                 if (c == 2) biome = 7;
-                std::vector<std::tuple<float,bool,bool>> biomes = humidityAndRainShadowEffects(y,x,biome,true);
+                std::vector<std::tuple<float,bool,bool>> biomes = humidityAndRainShadowEffects(rWaterMap, rLandsMap, y,x,biome,true);
                 for (int i = 0; i < (int)biomes.size(); i++) {
                     std::tuple<float,bool,bool> t = biomes[i];
                     float ah = std::get<0>(t);
@@ -558,7 +558,7 @@ void factorWetlandsJunglesAndForests(int s) {
                     if (leeward) ah *= 0.3;
                     if (windward) ah *= 1.4;
                     createdhumidity += ah;
-                    float evap = ((pow(temperatureMap[y][x]/ 24, 1.8)) + (altitudeMap[y][x] / 12)) / 5;
+                    float evap = ((pow(rTemperatureMap[y][x]/ 24, 1.8)) + (rAltitudeMap[y][x] / 12)) / 5;
                     humidityMap[y][x] += fmax(0,(humidityMult * createdhumidity * evap));
                     if (humidityMap[y][x] > 120) humidityMap[y][x] = 120;
                 }
@@ -578,7 +578,7 @@ void factorWetlandsJunglesAndForests(int s) {
 // 8. Rocky/Badlands
 // 9. Tundra
 // 10. Cold Desert
-void generateBiomes() {
+void WorldSpawner::generateBiomes() {
     //load data of each biome
     std::tuple<int, int, int, float, float, float, float> biomeData[11];
     int size = 11;
@@ -593,14 +593,15 @@ void generateBiomes() {
     biomeData[8] =  {15,25,52,1,3,1.4,0.4}; // Rocky
     biomeData[9] =  {5,31,20,4,6.0,1,0.7}; // Tundra
     biomeData[10] = {10, 8 ,40,0.4,1,0.6,0.5};   // Cold Desert
+
     for (int s = 0; s < 5; s++) {
         for (int x = s; x < WIDTH; x+=5) {
             for (int y = s; y < HEIGHT; y++) {
-                if (biomeMap[x][y] != 0) continue;
-                if (oceanMap[x][y] == 0) continue;
-                int humidity = humidityMap[x][y];
-                int altitude = altitudeMap[x][y];
-                int temp = temperatureMap[x][y];
+                if (rBiomeMap[x][y] != 0) continue;
+                if (rOceanMap[x][y] == 0) continue;
+                int humidity = rHumidityMap[x][y];
+                int altitude = rAltitudeMap[x][y];
+                int temp = rTemperatureMap[x][y];
                 float lowestScore = RAND_MAX;
                 int biome = 0;
 
@@ -613,58 +614,55 @@ void generateBiomes() {
                         lowestScore = humDistance + altDistance + tempDistance;
                         biome = i;
                     }
-                    biomeMap[x][y] = biome;
+                    rBiomeMap[x][y] = biome;
                 }
             }
         }
-        factorWetlandsJunglesAndForests(s);
+        factorWetlandsJunglesAndForests(rTemperatureMap, rOceanMap, rLandsMap, rAltitudeMap, rHumidityMap, rWaterMap, s);
     }
 }
 
 
-void generateAltitudeMap(FastNoiseLite noise) {
+void WorldSpawner::generateAltitudeMap() {
     for (int y = 0; y < HEIGHT; ++y) {
         for (int x = 0; x < WIDTH; ++x) {
             // Generate noise value in range [-1, 1]
-            float noiseValue = noise.GetNoise((float)y, (float)x);
+            float noiseValue = rNoise.GetNoise((float)y, (float)x);
             // Map the noise value to a HEIGHT range (e.g., 0 to 255)
             int altitude = static_cast<int>(pow((noiseValue * 23), 1.2)); // Converts from [-1, 1] to [-100, 100]
-            altitudeMap[y][x] = altitude;
+            rAltitudeMap[y][x] = altitude;
         }
     }
 }
 
-void getRiversFromGroundwater() {
+void WorldSpawner::getRiversFromGroundwater() {
     for (int y = 0; y < HEIGHT; ++y) {
         for (int x = 0; x < WIDTH; ++x) {
             //skip tiles that already have water
-            if (waterMap[y][x] != 1) continue;
-            if (oceanMap[y][x] == 0) continue;
+            if (rWaterMap[y][x] != 1) continue;
+            if (rOceanMap[y][x] == 0) continue;
             if (humidityMap[y][x] > groundWaterThreshold) {
                 if (rand() / (float) RAND_MAX > riverFromGroundwaterChance) {
-                    waterMap[y][x] = 6; //river source from groundwater
-                     std::fill(visited.begin(), visited.end(), std::vector<bool>(HEIGHT + 1, false));
-                     extendRiversFromSource(y,x,visited);
+                    rWaterMap[y][x] = 6; //river source from groundwater
+                     std::fill(rVisited.begin(), rVisited.end(), std::vector<bool>(HEIGHT + 1, false));
+                     extendRiversFromSource(rWaterMap, rLandsMap, rAltitudeMap, y,x,rVisited);
                 }
-            }
-            }
-        }
-    // mark river ends
-    markRiverEnds();
-}
-
-
-void cleanAltitudeMap() {
-    for (int y = 0; y < HEIGHT; ++y) {
-        for (int x = 0; x < WIDTH; ++x) {
-            if (altitudeMap[y][x] < landThreshold) {
-                altitudeMap[y][x] = 0;
             }
         }
     }
 }
 
-void addDepressions() {
+void WorldSpawner::cleanAltitudeMap() {
+    for (int y = 0; y < HEIGHT; ++y) {
+        for (int x = 0; x < WIDTH; ++x) {
+            if (rAltitudeMap[y][x] < landThreshold) {
+                rAltitudeMap[y][x] = 0;
+            }
+        }
+    }
+}
+
+void WorldSpawner::addDepressions() {
     FastNoiseLite noiseGenerator;
     noiseGenerator.SetSeed(43543);
     noiseGenerator.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
@@ -673,8 +671,8 @@ void addDepressions() {
         for (int x = 0; x < WIDTH; x++) {
             float noiseValue = noiseGenerator.GetNoise((float)y, (float)x);
             float altitude = static_cast<int>((noiseValue) * 100); // Converts from [-1, 1] to [-100, 100]
-            if (altitude < depressionThreshold && altitude > 0 && oceanMap[x][y] == 1) {
-                altitudeMap[y][x] = fmax(1, (lerp((float)altitude, (float)altitudeMap[y][x], 0.2)));
+            if (altitude < depressionThreshold && altitude > 0 && rOceanMap[x][y] == 1) {
+                rAltitudeMap[y][x] = fmax(1, (lerp((float)altitude, (float)rAltitudeMap[y][x], 0.2)));
             }
         }
     }
@@ -682,15 +680,15 @@ void addDepressions() {
 
 // MAKE MICRO MAP
 // Function to generate Voronoi sites, and each biome, altitude, avg temperature generated before will be assigned to a voronoi site
-void generateVoronoiSites() {
+void WorldSpawner::generateVoronoiSites() {
     FastNoiseLite noise;
     noise.SetNoiseType(FastNoiseLite::NoiseType_Cellular);
     for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < WIDTH; x++) {
             float vx = (rand() % WORLD_WIDTH);
             float vy = (rand() % WORLD_HEIGHT);
-            voronoiSites.push_back({vy, vx});
-            mapsLink[y*HEIGHT+x] = {y,x};
+            rVoronoiSites.push_back({vy, vx});
+            rMapsLink[y*HEIGHT+x] = {y,x};
         }
     }
 }
@@ -710,17 +708,6 @@ void generateVoronoiSites() {
 //     return closestSite;
 // }
 
-// Generate a cell using the precomputed Voronoi sites
-void generateCell(int cellX, int cellY) {
-    for (int localX = 0; localX < CELL_SIZE; localX++) {
-        for (int localY = 0; localY < CELL_SIZE; localY++) {
-            int worldX = cellX * CELL_SIZE + localX;
-            int worldY = cellY * CELL_SIZE + localY;
-
-        }
-    }
-}
-
 struct SeedCloud {
     std::vector<std::pair<float, float>> seeds; // Using std::pair<float, float>
 
@@ -738,17 +725,17 @@ struct SeedCloud {
 };
 
 // Function to find the next tile to flow to (either towards target (lake or river end) or lowest elevation)
-void applyRiverTiles(int y, int x, const std::pair<int,int> target) {
-    int index = tileIndex[{y,x}];
+void WorldSpawner::applyRiverTiles() {
+    int index = rTileIndex[{y,x}];
     // base case: reached target
     if (y == target.first && x == target.second) {
         return;
     }
     // base case: reached lake or ocean tile
-    if (tileType[index] == Tile::ShallowWater) {
+    if (rTileType[index] == Tile::ShallowWater) {
         return;
     }
-    int minElevation = tileAlt[index];
+    int minElevation = rTileAlt[index];
     int currentElevation = minElevation;
     int minDist = calculateDistance(y, x, target);
     std::pair<int,int> nextTile = {y, x};
@@ -760,7 +747,7 @@ void applyRiverTiles(int y, int x, const std::pair<int,int> target) {
         int ny = y + dir.first;
 
             int distToTarget = calculateDistance(ny, nx, target);
-            int newIndex = tileIndex[{ny,nx}];
+            int newIndex = rTileIndex[{ny,nx}];
             if (tileAlt[newIndex] < minElevation) {
                 minElevation = tileAlt[newIndex];
                 minDist = distToTarget;
@@ -794,10 +781,10 @@ void applyRiverTiles(int y, int x, const std::pair<int,int> target) {
     }
     int ty = nextTile.first; int tx = nextTile.second;
     //apply nextTile as riverTile
-    int nextIndex = tileIndex[{ty,tx}];
-    tileType[nextIndex] = Tile::FlowingWater;
-    tileAlt[nextIndex] -= 1;
-    applyRiverTiles(ty, tx, target);
+    int nextIndex = rTileIndex[{ty,tx}];
+    rTileType[nextIndex] = Tile::FlowingWater;
+    rTileAlt[nextIndex] -= 1;
+    applyRiverTiles(rTileAlt, rTileType, rTileIndex, ty, tx, target);
 }
 
 Tile getTile(int biome, float chance) {
@@ -896,7 +883,7 @@ Tile getTile(int biome, float chance) {
 }
 
 
-void recursiveLower(int y, int x, double decreaseAmount) {
+void WorldSpawner::recursiveLower() {
     if (decreaseAmount < 0) {
         return; // Stop recursion if altitude is not decreasing (coast of lake has been reached)
     }
@@ -907,8 +894,8 @@ void recursiveLower(int y, int x, double decreaseAmount) {
     }
 
     // Lower the elevation by the decrease amount
-    int index = tileIndex[{y,x}];
-    tileAlt[index] -= decreaseAmount;
+    int index = rTileIndex[{y,x}];
+    rTileAlt[index] -= decreaseAmount;
 
     // Recursively lower neighboring cells
     for (const auto& delta : std::vector<std::pair<int, int>>{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}) {
@@ -920,14 +907,14 @@ void recursiveLower(int y, int x, double decreaseAmount) {
     }
 }
 
-void recursiveFill(int y, int x, int altThreshold) {
-    int index = tileIndex[{y,x}];
+void WorldSpawner::recursiveFill() {
+    int index = rTileIndex[{y,x}];
     if (tileAlt[index] > altThreshold) {
         return;
     }
     //fill with water
-    tileType[index] = Tile::ShallowWater;
-    tileWater[index] = true;
+    rTileType[index] = Tile::ShallowWater;
+    rTileWater[index] = true;
 
     // Recursively lower neighboring cells
     for (const auto& delta : std::vector<std::pair<int, int>>{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}) {
@@ -940,7 +927,7 @@ void recursiveFill(int y, int x, int altThreshold) {
 }
 
 // generates starting tiles based on amount of cells fully generated (loaded into memory)
-void generateTiles() {
+void WorldSpawner::generateTiles() {
         //cout << "Tiles" << endl;
 //generate Voronoi Noise
         FastNoiseLite noise;
@@ -981,7 +968,7 @@ void generateTiles() {
 // select cell as randomized spawn point
         bool selected = false;
         while (!selected){
-            if (biomeMap[cy][cx] == 0) {
+ ;           if (rBiomeMap[cy][cx] == 0) {
                 cx = rint(WIDTH / 7, 6 * WIDTH / 7);
                 cy = rint(HEIGHT / 7, 6 * HEIGHT / 7);
             } else selected = true;
@@ -1000,7 +987,7 @@ void generateTiles() {
         for (int y = currentYMin; y < currentYMax; y++) {
             for (int x = currentXMin; x < currentXMax; x++) {
                 //store index of tile linked to coords for future linking
-                tileIndex[{y,x}] = index++;
+                rTileIndex[{y,x}] = index++;
                 tileCoords[index] = {y,x};
                 std::vector<float> queryPoint = {(float)y, (float)x};
                 // Perform the nearest neighbor search, numResults is # of neighbors
@@ -1010,7 +997,7 @@ void generateTiles() {
 
                 tree.knnSearch(&queryPoint[0], numResults, &retIndex[0], &outDistSqr[0]);
 // check if tile is still part of current cell
-                    int ti = tileIndex[{y,x}];
+                    int ti = rTileIndex[{y,x}];
 
                     // calculate altitude based on weighted average
                     float currentAlt = 0;
@@ -1018,38 +1005,38 @@ void generateTiles() {
                     float denominator = 0.0000000001;
                     for (int i = 0; i < numResults; i++) {
                         int index = (int)retIndex[i];
-                        if (index >= 0 && index < mapsLink.size()) {
-                            std::pair<float,float> select = mapsLink[index];
+                        if (index >= 0 && index < rMapsLink.size()) {
+                            std::pair<float,float> select = rMapsLink[index];
                         // get inversed distances for strengths
                         strengths[i] = 1 / (outDistSqr[i] + CELL_SIZE / 2);
-                        float tileAlt = altitudeMap[select.first][select.second];
-                        currentAlt += strengths[i] * tileAlt;
+                        float rTileAlt = rAltitudeMap[select.first][select.second];
+                        currentAlt += strengths[i] * rTileAlt;
                         denominator += strengths[i];
                         }
                     }
                     int calcAlt = (int) currentAlt / denominator;
-                    tileAlt.push_back(calcAlt);
+                    rTileAlt.push_back(calcAlt);
 
-                    std::pair<float,float> cell = mapsLink[retIndex[0]];
-                    std::pair<float,float> secondCell = mapsLink[retIndex[1]];
+                    std::pair<float,float> cell = rMapsLink[retIndex[0]];
+                    std::pair<float,float> secondCell = rMapsLink[retIndex[1]];
                      // set tile's owner Cell index
-                    tileCellIndex.push_back(retIndex[0]);
-                    cout << " Inserting Tile Cell: " << tileCellIndex.back();
-                    cout << " Tile Cell Size: " << tileCellIndex.size();
+                    rTileCellIndex.push_back(retIndex[0]);
+                    cout << " Inserting Tile Cell: " << rTileCellIndex.back();
+                    cout << " Tile Cell Size: " << rTileCellIndex.size();
                     cout << " Tile Index: " << index;
-                    // set tileType based on chance from most common tiles of two closest seeds' biomes
+                    // set rTileType based on chance from most common tiles of two closest seeds' biomes
                     if (cell.first >= 0 && cell.first < HEIGHT && cell.second >= 0 && cell.second < WIDTH) {
-                        int biome = biomeMap[cell.first][cell.second];
-                         int secondBiome = biomeMap[secondCell.first][secondCell.second];
+                        int biome = rBiomeMap[cell.first][cell.second];
+                         int secondBiome = rBiomeMap[secondCell.first][secondCell.second];
                          //NOTE: this means that certain tiles might NEVER generate next to each other
                     float chance = (pnoise.GetNoise((float)y,(float)x) + 1.0) * 0.5;
                     if (rand() / (float)RAND_MAX < 0.8 || biome == 0) { // always water if ocean
-                         tileType[ti] = getTile(biome, chance); //closest
+                         rTileType[ti] = getTile(biome, chance); //closest
                     } else {
-                        tileType[ti] = getTile(secondBiome,chance); //second closest
+                        rTileType[ti] = getTile(secondBiome,chance); //second closest
                     }
-                    if (tileType[ti] == Tile::ShallowWater || tileType[ti] == Tile::SaltWater || tileType[ti] == Tile::DeepWater || tileType[yi] == Tile::RiverSource) {
-                        tileWater[ti] = true;
+                    if (rTileType[ti] == Tile::ShallowWater || rTileType[ti] == Tile::SaltWater || rTileType[ti] == Tile::DeepWater || rTileType[yi] == Tile::RiverSource) {
+                        rTileWater[ti] = true;
                         tileEmpty[ti] = true;
                     }
                     }
@@ -1057,13 +1044,13 @@ void generateTiles() {
                 }
             }
              //generate water bodies
-        // for (int i = 0; i < (int)tileCellIndex.size(); i++) {
-        //         uint32_t index = tileCellIndex[i];
+        // for (int i = 0; i < (int)rTileCellIndex.size(); i++) {
+        //         uint32_t index = rTileCellIndex[i];
         //         std::pair mapCoord = mapsLink[index];
         //         //get seed of cell
         //         std::pair seed = voronoiSites[index];
         //         // add river source tiles for those near mountain cells (due to snowmelt)
-        //             if (waterMap[mapCoord.first][mapCoord.second] == 2) {
+        //             if (rWaterMap[mapCoord.first][mapCoord.second] == 2) {
         //             // goal: put sources close to mountian tiles
         //             // 1. get closest adj mountain tile
 
@@ -1077,7 +1064,7 @@ void generateTiles() {
         //                 int cellIndex = (int)retIndex[0];
         //                 std::pair nearCellCoord = mapsLink[cellIndex];
         //                 // if found nearby point is a mountain
-        //                 if (landsMap[nearCellCoord.first][nearCellCoord.second] == 5) {
+        //                 if (rLandsMap[nearCellCoord.first][nearCellCoord.second] == 5) {
         //                     foundMountain = true;
         //                     //find good source tiles in between mountain seed tile and current seed tile
         //                     std::pair mountainSeed = voronoiSites[cellIndex];
@@ -1086,11 +1073,11 @@ void generateTiles() {
         //                     // int length = rint(3,10);
         //                     // for (int w = 0; w < width; w++) {
         //                     //      for (int l = 0; l < length; l++) {
-        //                     //          int ti = tileIndex[{sourceTile.first+w,sourceTile.second+l}];
-        //                     if (tileIndex.find({sourceTile.first,sourceTile.second}) != tileIndex.end()) {
-        //                          int ti = tileIndex[{sourceTile.first, sourceTile.second}];
-        //                     tileWater[ti] = true;
-        //                              tileType[ti] = Tile::RiverSource;
+        //                     //          int ti = rTileIndex[{sourceTile.first+w,sourceTile.second+l}];
+        //                     if (rTileIndex.find({sourceTile.first,sourceTile.second}) != rTileIndex.end()) {
+        //                          int ti = rTileIndex[{sourceTile.first, sourceTile.second}];
+        //                     rTileWater[ti] = true;
+        //                              rTileType[ti] = Tile::RiverSource;
         //                              riverSources.push_back(sourceTile);
         //                     }
         //                     //     }
@@ -1099,44 +1086,44 @@ void generateTiles() {
         //                 if (foundMountain == true) break;
         //             }
         //         }
-        //         if (waterMap[mapCoord.first][mapCoord.second] == 6) {
+        //         if (rWaterMap[mapCoord.first][mapCoord.second] == 6) {
         //             // put sources from highlands or groundwater in random spot in cell
         //             std::pair<int,int> random = {(int)seed.first + rint((-CELL_SIZE/2)+10,(CELL_SIZE/2)-10),seed.second + rint((-CELL_SIZE/2)+10,(CELL_SIZE/2)-10)};
-        //             if (tileIndex.find({random.first,random.second}) != tileIndex.end()) {
-        //                         int ti = tileIndex[{random.first,random.second}];
-        //                         tileWater[ti] = true;
-        //                         tileAlt[ti] -= 2;
-        //                         tileType[ti] = Tile::RiverSource;
+        //             if (rTileIndex.find({random.first,random.second}) != rTileIndex.end()) {
+        //                         int ti = rTileIndex[{random.first,random.second}];
+        //                         rTileWater[ti] = true;
+        //                         rTileAlt[ti] -= 2;
+        //                         rTileType[ti] = Tile::RiverSource;
         //                         riverSources.push_back(random);
         //                     }
         //         }
         //         // add lakes
-        //         if (waterMap[mapCoord.first][mapCoord.second] == 5) {
+        //         if (rWaterMap[mapCoord.first][mapCoord.second] == 5) {
         //             //check if lake takes up more than one cell
-        //             // std::vector<std::tuple<int,int,int>> lakePieces = adjGetAll(waterMap,mapCoord.first,mapCoord.second,5,1);
+        //             // std::vector<std::tuple<int,int,int>> lakePieces = adjGetAll(rWaterMap,mapCoord.first,mapCoord.second,5,1);
         //             // while (int i = 0 < lakePieces.size()) {
         //             //     lakePieces[i];
         //             //     i++;
         //             // }
         //             // create altitude depressions to fill lakes with
         //              std::pair<int,int> depressionCenter = {seed.first + rint((-CELL_SIZE/2)+10,(CELL_SIZE/2)-10),seed.second + rint((-CELL_SIZE/2)+10,(CELL_SIZE/2)-10)};
-        //              if (tileIndex.find({depressionCenter.first,depressionCenter.second}) != tileIndex.end()) {
-        //              int ti = tileIndex[{depressionCenter.first,depressionCenter.second}];
+        //              if (rTileIndex.find({depressionCenter.first,depressionCenter.second}) != rTileIndex.end()) {
+        //              int ti = rTileIndex[{depressionCenter.first,depressionCenter.second}];
         //              //add depressionCenter to lake centers
         //              riverEnds.push_back(depressionCenter);
         //              lakeOrEnd[{depressionCenter.first, depressionCenter.second}] = true;
-        //              int altThreshold = tileAlt[ti];
+        //              int altThreshold = rTileAlt[ti];
         //              recursiveLower(depressionCenter.first, depressionCenter.second,rint(1,4));
         //              // fill all tiles with water that are lower than the original center tile of the new lake
         //              recursiveFill(depressionCenter.first, depressionCenter.second,altThreshold);
         //              }
         //         }
         //         // add river ends
-        //         if (waterMap[mapCoord.first][mapCoord.second] == 4) { // at ocean
+        //         if (rWaterMap[mapCoord.first][mapCoord.second] == 4) { // at ocean
         //              riverEnds.push_back(seed);
         //             lakeOrEnd[{seed.first, seed.second}] = false;
         //         }
-        //           if (waterMap[mapCoord.first][mapCoord.second] == 7) { // inland
+        //           if (rWaterMap[mapCoord.first][mapCoord.second] == 7) { // inland
         //                 std::pair<int,int> center = {(int)seed.first + rint((-CELL_SIZE/2)+10,(CELL_SIZE/2)-10), (int)seed.second + rint((-CELL_SIZE/2)+8,(CELL_SIZE/2)-8)};
         //              riverEnds.push_back(center);
         //              lakeOrEnd[{center.first, center.second}] = false;
@@ -1193,13 +1180,1031 @@ float rangePenalty(float originalValue, float minValue, float maxValue, float ad
 // temperature
 // humidity
 // neighboring plants
-void spawnFirstPlants() {
-    //TEST
-    spawnPlantsCycle(true);
+void WorldSpawner::spawnFirstPlants() {
+        //plant databse holds all plant data
+        PlantDatabase plantDatabase = new PlantDatabase();
+        bool regrowthPlant = false;
+    	for (int i = 0; i < (int)tileIndex.size(); i++) {
+        //TODO: separate mechanism for plants that stay in the same place and those who do not
+		// mechanism to only work on some tiles for subsequent spawns.
+		if (tileChance != 0.0) {
+			if (rfloat(0.0,1.0) > tileChance) continue;
+		}
+
+         std::pair<int,int> tile = tileCoords[i];
+		 float temp = 0.0;
+		 float threshold = 0.0;
+         float optimal = 0.55;
+         float great = 0.4;
+         float good = 0.25;
+         float poorly = 0.05;
+         float rarely = 0.01;
+
+         Tile type = tileType[i];
+         Plant plant = Plant::NONE;
+         Grass grass = Grass::NONE;
+         // invalid tiles
+         if (type == Tile::Ice) continue;
+         if (type == Tile::FrozenSoil) continue;
+         if (type == Tile::Gravel) continue;
+         if (type == Tile::Stone) continue;
+         if (type == Tile::ShallowWater) continue;
+         if (type == Tile::FlowingWater) continue;
+         if (type == Tile::DeepWater) continue;
+         if (type == Tile::Sand) continue;
+         if (type == Tile::Snow) continue;
+         uint32_t cell = tileCellIndex[i];
+         cout << " Cell: " << cell;
+         std::pair<float,float> cellCoord = mapsLink[cell];
+         cout << " Cell Coords: " << cellCoord.first << "," << cellCoord.second << endl;
+         int biome = biomeMap[(int)cellCoord.first][(int)cellCoord.second];
+         int temperature = temperatureMap[(int)cellCoord.first][(int)cellCoord.second];
+         int humidity = humidityMap[(int)cellCoord.first][(int)cellCoord.second];
+
+// PLANT CATEGORY RARITIES - chance of each plant type spawning in each biome, on a tile, not adjusted for other checks (trees have higher raw spawn rate due to not being able to spawn next to other trees)
+// the threshold that the random generated number needs to pass to ensure that the plant species even has a chance of competing.
+
+    //% of much non-grass plants appear on tiles and grass plants respectively
+    float treesChance = 0.0;
+    float citrusChance = 0.0;
+    float stoneChance = 0.0;
+    float pomeChance = 0.0;
+    float oliveChance = 0.0;
+    float mossChance = 0.0;
+        float fernChance = 0.0;
+        float bushChance = 0.0;
+        float succulentChance = 0.0;
+        float berryShrubChance = 0.0;
+        float floweringChance = 0.0;
+        float fruitVeggieChance = 0.0;
+        float leafyChance = 0.0;
+        float rootChance = 0.0;
+        float reedChance = 0.0;
+        float tuberChance = 0.0;
+        float bulbChance = 0.0;
+        float grainChance = 0.0;
+        float grapevineChance = 0.0;
+        float herbChance = 0.0;
+        float textileChance = 0.0;
+    float plantCoverage = 0.0;
+    float grassCoverage = 0.0;
+
+    if (biome == 1) {
+        treesChance = 0.04; // acacia
+        citrusChance = 0.0;
+        stoneChance = 0.0;
+        pomeChance = 0.0;
+        oliveChance = 0.06;
+        mossChance = 0.0;
+        fernChance = 0.0;
+        bushChance = 0.45;
+        succulentChance = 0.7;
+        berryShrubChance = 0.0;
+        leafyChance = 0.00;
+        rootChance = 0.0;
+        tuberChance = 0.0;
+        bulbChance = 0.06;
+        grainChance = 0.0;
+        grapevineChance = 0.0;
+        herbChance = 0.075;
+        textileChance = 0.02;
+
+        plantCoverage = 0.15;
+        grassCoverage = 0.03;
+    }
+    if (biome == 2) {
+        treesChance = 0.2;
+        citrusChance = 0.0;
+        stoneChance = 0.0;
+     pomeChance = 0.0;
+     oliveChance = 0.0;
+     mossChance = 0.2;
+     fernChance = 0.2;
+     bushChance = 0.3;
+     succulentChance = 0.06;
+     berryShrubChance = 0.2;
+     leafyChance = 0.2;
+     rootChance = 0.1;
+     reedChance = 0.0;
+     tuberChance = 0.04;
+     bulbChance = 0.06;
+     grainChance = 0.35;
+     grapevineChance = 0.0;
+     herbChance = 0.25;
+     textileChance = 0.06;
+
+     plantCoverage = 0.2;
+     grassCoverage = 0.97;
+    }
+    if (biome == 3) {
+    treesChance = 0.80;
+    citrusChance = 0.08;
+    stoneChance = 0.08;
+    pomeChance = 0.0;
+    oliveChance = 0.08;
+    mossChance = 0.04;
+    fernChance = 0.08;
+    bushChance = 0.6;
+    succulentChance = 0.16;
+    berryShrubChance = 0.12;
+    leafyChance = 0.08;
+    rootChance = 0.1;
+    tuberChance = 0.08;
+    bulbChance = 0.12;
+    grainChance = 0.2;
+    grapevineChance = 0.0;
+    herbChance = 0.2;
+    textileChance = 0.04;
+
+    plantCoverage = 0.25;
+    grassCoverage = 0.75;
+}
+if (biome == 4) {
+    treesChance = 0.3;
+    citrusChance = 0.0;
+    stoneChance = 0.0;
+    pomeChance = 0.0;
+    oliveChance = 0.0;
+    mossChance = 0.15;
+    fernChance = 0.3;
+    bushChance = 0.3;
+    reedChance = 0.4;
+    succulentChance = 0.06;
+    berryShrubChance = 0.09;
+    leafyChance = 0.0; // increase when adding duckweed and other water plants
+    rootChance = 0.0; // increase when adding wetland root plants
+    tuberChance = 0.0; // increase when adding water tubers
+    bulbChance = 0.0;
+    grainChance = 0.3;
+    grapevineChance = 0.0;
+     herbChance = 0.3;
+    textileChance = 0.02;
+
+    plantCoverage = 0.55;
+    grassCoverage = 0.35;
+}
+if (biome == 5) {
+    treesChance = 0.92;
+    citrusChance = 0.02;
+    stoneChance = 0.02;
+    pomeChance = 0.0;
+    oliveChance = 0.0;
+    mossChance = 0.25;
+    fernChance = 0.35;
+    bushChance = 0.2;
+    reedChance = 0.05;
+    succulentChance = 0.04;
+    berryShrubChance = 0.1;
+    leafyChance = 0.1;
+    rootChance = 0.1;
+    tuberChance = 0.08;
+    bulbChance = 0.07;
+    grainChance = 0.1;
+    grapevineChance = 0.04;
+    herbChance = 0.18;
+    textileChance = 0.02;
+
+    plantCoverage = 0.93;
+    grassCoverage = 0.08;
+}
+if (biome == 6) {
+    treesChance = 0.85;
+    citrusChance = 0.0;
+    stoneChance = 0.0;
+    pomeChance = 0.0;
+    oliveChance = 0.0;
+    mossChance = 0.2;
+    fernChance = 0.14;
+    bushChance = 0.2;
+    succulentChance = 0.02;
+    berryShrubChance = 0.2;
+    leafyChance = 0.08;
+    rootChance = 0.08;
+    tuberChance = 0.02;
+    bulbChance = 0.04;
+    grainChance = 0.06;
+    grapevineChance = 0.0;
+     herbChance = 0.08;
+    textileChance = 0.02;
+
+    plantCoverage = 0.94;
+    grassCoverage = 0.05;
+}
+if (biome == 7) {
+    treesChance = 0.85;
+    citrusChance = 0.02;
+    stoneChance = 0.02;
+    pomeChance = 0.0;
+    oliveChance = 0.0;
+    mossChance = 0.2;
+    fernChance = 0.3;
+    bushChance = 0.2;
+    reedChance = 0.02;
+    succulentChance = 0.0;
+    berryShrubChance = 0.2;
+    leafyChance = 0.05; //add more later
+    rootChance = 0.06;
+    tuberChance = 0.05;
+    bulbChance = 0.04;
+    grainChance = 0.07;
+    grapevineChance = 0.04;
+     herbChance = 0.18;
+    textileChance = 0.02;
+
+    plantCoverage = 0.96;
+    grassCoverage = 0.04;
+}
+if (biome == 8) {
+    treesChance = 0.25;
+    citrusChance = 0.0;
+    stoneChance = 0.0;
+    pomeChance = 0.0;
+    oliveChance = 0.0;
+    mossChance = 0.5;
+    fernChance = 0.4;
+    bushChance = 0.5;
+    succulentChance = 0.3;
+    berryShrubChance = 0.1;
+    leafyChance = 0.3;
+    rootChance = 0.2;
+    tuberChance = 0.2;
+    bulbChance = 0.15;
+    grainChance = 0.04;
+    herbChance = 0.05;
+    grapevineChance = 0.05;
+    textileChance = 0.01;
+
+    plantCoverage = 0.2;
+    grassCoverage = 0.1;
+}
+if (biome == 9) {
+    treesChance = 0.0;
+    citrusChance = 0.0;
+    stoneChance = 0.0;
+    pomeChance = 0.0;
+    oliveChance = 0.0;
+    mossChance = 0.6;
+    fernChance = 0.06;
+    bushChance = 0.4;
+    succulentChance = 0.07;
+    berryShrubChance = 0.0;
+    leafyChance = 0.2;
+    rootChance = 0.2;
+    tuberChance = 0.0;
+    bulbChance = 0.0;
+    grainChance = 0.0;
+    grapevineChance = 0.0;
+    herbChance = 0.02;
+    textileChance = 0.0;
+
+    plantCoverage = 0.15;
+    grassCoverage = 0.075;
+}
+if (biome == 10) {
+    treesChance = 0.0; // make trees later
+    citrusChance = 0.0;
+    stoneChance = 0.0;
+    pomeChance = 0.0;
+    oliveChance = 0.0;
+    mossChance = 0.2;
+    fernChance = 0.05;
+    bushChance = 0.3;
+    succulentChance = 0.2;
+    berryShrubChance = 0.05;
+    leafyChance = 0.15;
+    rootChance = 0.15;
+    tuberChance = 0.05;
+    bulbChance = 0.05;
+    grainChance = 0.0;
+    grapevineChance = 0.0;
+    herbChance = 0.02;
+    textileChance = 0.03;
+
+    plantCoverage = 0.1;
+    grassCoverage = 0.04;
+}
+
+
+constexpr std::array<Plant, 4> trees = {
+    Plant::DeciduousTree,
+    Plant::EvergreenTree,
+    Plant::PioneerTree,
+    Plant::TropicalTree
+};
+
+// SPAWN ALL PLANTS
+if (rand() / (float) RAND_MAX < plantCoverage) {
+	tileEmpty[tileIndex] = false;
+if (rand() / (float) RAND_MAX < treesChance) {
+if (adjCheckList(tileIndex, tilePlant, (int)tile.first, (int)tile.second, trees, 1))  {
+     // TREES
+         //if tree is adjacent, skip trees
+         // Deciduous
+temp = 0;
+    if (type == Tile::Podzol) temp += poorly;
+         if (type == Tile::LoamSoil) temp += optimal;
+         if (type == Tile::PeatSoil) temp += poorly;
+         if (type == Tile::SandySoil) temp += poorly;
+         if (type == Tile::ClaySoil) temp += poorly;
+         if (type == Tile::SiltySoil) temp += optimal;
+         if (type == Tile::RockySoil) temp = 0;
+         if (type == Tile::AridSoil) temp += poorly;
+         if (type == Tile::Oxisol) temp += poorly;
+         if (type == Tile::Gleysol) temp += rarely;
+         rangePenalty(temperature,64,77,temp);
+         rangePenalty(humidity,52,78,temp);
+         if (temp > threshold) {
+             threshold = temp;
+             plant = Plant::DeciduousTree;
+         }
+
+         // Evergreen
+temp = 0;
+         if (type == Tile::Podzol) temp += good;
+if (type == Tile::LoamSoil) temp += good;
+if (type == Tile::PeatSoil) temp += poorly;
+if (type == Tile::SandySoil) temp += good;
+if (type == Tile::ClaySoil) temp += poorly;
+if (type == Tile::SiltySoil) temp += good;
+if (type == Tile::RockySoil) temp += poorly;
+if (type == Tile::AridSoil) temp += rarely;
+if (type == Tile::Oxisol) temp += poorly;
+if (type == Tile::Gleysol) temp += poorly;
+ rangePenalty(temperature,46,68,temp);
+  rangePenalty(humidity,60,87,temp);
+if (temp > threshold) {
+             threshold = temp;
+             plant = Plant::EvergreenTree;
+         }
+
+         // Pioneer
+temp = 0;
+if (type == Tile::Podzol) temp += rarely;
+if (type == Tile::LoamSoil) temp += optimal;
+if (type == Tile::PeatSoil) temp += great;
+if (type == Tile::SandySoil) temp += good;
+if (type == Tile::ClaySoil) temp += poorly;
+if (type == Tile::SiltySoil) temp += optimal;
+if (type == Tile::RockySoil) temp += rarely;
+if (type == Tile::AridSoil) temp += poorly;
+if (type == Tile::Oxisol) temp += poorly;
+if (type == Tile::Gleysol) temp += great;
+ rangePenalty(temperature,55,86,temp);
+ rangePenalty(humidity,50,80,temp);
+ if (temp > threshold && plant != Plant::EvergreenTree && plant != Plant::DeciduousTree) {
+             threshold = temp;
+             plant = Plant::PioneerTree;
+         }
+         // Tropical
+temp = 0;
+if (type == Tile::Podzol) temp += poorly;
+if (type == Tile::LoamSoil) temp += optimal;
+if (type == Tile::PeatSoil) temp += optimal;
+if (type == Tile::SandySoil) temp += good;
+if (type == Tile::ClaySoil) temp += poorly;
+if (type == Tile::SiltySoil) temp += good;
+if (type == Tile::RockySoil) temp = 0;
+if (type == Tile::AridSoil) temp += poorly;
+if (type == Tile::Oxisol) temp += optimal;
+if (type == Tile::Gleysol) temp += optimal;
+ rangePenalty(temperature,73,87,temp);
+ rangePenalty(humidity,80,120,temp);
+ if (temp > threshold) {
+             threshold = temp;
+             plant = Plant::TropicalTree;
+         }
+}
+}
+
+if (rand() / (float) RAND_MAX < mossChance) {
+    // Moss
+temp = 0;
+    if (type == Tile::Podzol) temp += great;
+if (type == Tile::LoamSoil) temp += great;
+if (type == Tile::PeatSoil) temp += optimal;
+if (type == Tile::SandySoil) temp += good;
+if (type == Tile::ClaySoil) temp += good;
+if (type == Tile::SiltySoil) temp += great;
+if (type == Tile::RockySoil) temp += great;
+if (type == Tile::AridSoil) temp = 0;
+if (type == Tile::Oxisol) temp += poorly;
+if (type == Tile::Gleysol) temp += optimal;
+rangePenalty(temperature,40,75,temp);
+         rangePenalty(humidity,85,120,temp);
+if (temp > threshold) {
+        threshold = temp;
+        plant = Plant::Moss;
+}
+}
+if (rand() / (float) RAND_MAX < bushChance) {
+         // BUSHES
+if (type == Tile::Podzol) temp += optimal;
+if (type == Tile::LoamSoil) temp += optimal;
+if (type == Tile::PeatSoil) temp += great;
+if (type == Tile::SandySoil) temp += good;
+if (type == Tile::ClaySoil) temp += good;
+if (type == Tile::SiltySoil) temp += great;
+if (type == Tile::RockySoil) temp += poorly;
+if (type == Tile::AridSoil) temp += rarely;
+if (type == Tile::Oxisol) temp += great;
+if (type == Tile::Gleysol) temp += great;
+ rangePenalty(temperature,45,86,temp);
+ rangePenalty(humidity,60,87,temp);
+ if (temp > threshold) {
+             threshold = temp;
+             plant = Plant::Bush;
+         }
+}
+if (rand() / (float) RAND_MAX < succulentChance) {
+//Cacti
+temp = 0;
+    if (type == Tile::Podzol) temp += rarely;
+if (type == Tile::LoamSoil) temp += great;
+if (type == Tile::PeatSoil) temp += poorly;
+if (type == Tile::SandySoil) temp += optimal;
+if (type == Tile::ClaySoil) temp += good;
+if (type == Tile::SiltySoil) temp += great;
+if (type == Tile::RockySoil) temp += good;
+if (type == Tile::AridSoil) temp += optimal;
+if (type == Tile::Oxisol) temp += great;
+if (type == Tile::Gleysol) temp += rarely;
+rangePenalty(temperature, 45, 86, temp);
+rangePenalty(humidity, 1, 30, temp);
+if (temp > threshold) {
+             threshold = temp;
+             plant = Plant::Cactus;
+         }
+}
+
+// FRUIT TREES
+if (rand() / (float) RAND_MAX < citrusChance) {
+// Citrus
+temp = 0;
+    if (type == Tile::Podzol) temp += poorly;
+if (type == Tile::LoamSoil) temp += optimal;
+if (type == Tile::PeatSoil) temp += good;
+if (type == Tile::SandySoil) temp += great;
+if (type == Tile::ClaySoil) temp += poorly;
+if (type == Tile::SiltySoil) temp += great;
+if (type == Tile::RockySoil) temp += rarely;
+if (type == Tile::AridSoil) temp += rarely;
+if (type == Tile::Oxisol) temp += poorly;
+if (type == Tile::Gleysol) temp += poorly;
+rangePenalty(temperature, 70, 80, temp);
+rangePenalty(humidity, 60, 75, temp);
+if (temp > threshold) {
+             threshold = temp;
+             int ran = rint(0,2);
+             if (ran == 0) plant = Plant::OrangeTree;
+             if (ran == 1) plant = Plant::LemonTree;
+             if (ran == 2) plant = Plant::LimeTree;
+         }
+}
+if (rand() / (float) RAND_MAX < stoneChance) {
+// Stone/Drupe
+temp = 0;
+    if (type == Tile::Podzol) temp += poorly;
+if (type == Tile::LoamSoil) temp += optimal;
+if (type == Tile::PeatSoil) temp += good;
+if (type == Tile::SandySoil) temp += great;
+if (type == Tile::ClaySoil) temp += poorly;
+if (type == Tile::SiltySoil) temp += great;
+if (type == Tile::RockySoil) temp += rarely;
+if (type == Tile::AridSoil) temp += rarely;
+if (type == Tile::Oxisol) temp += poorly;
+if (type == Tile::Gleysol) temp += poorly;
+rangePenalty(temperature, 60, 75, temp);
+rangePenalty(humidity, 45, 68, temp);
+if (temp > threshold) {
+             threshold = temp;
+             int ran = rint(0,3);
+             if (ran == 0) plant = Plant::PeachTree;
+             if (ran == 1) plant = Plant::PlumTree;
+             if (ran == 2) plant = Plant::CherryTree;
+             if (ran == 3) plant = Plant::ApricotTree;
+         }
+}
+if (rand() / (float) RAND_MAX < pomeChance) {
+// Pome
+temp = 0;
+    if (type == Tile::Podzol) temp += poorly;
+if (type == Tile::LoamSoil) temp += optimal;
+if (type == Tile::PeatSoil) temp += good;
+if (type == Tile::SandySoil) temp += great;
+if (type == Tile::ClaySoil) temp += poorly;
+if (type == Tile::SiltySoil) temp += great;
+if (type == Tile::RockySoil)temp += rarely;
+if (type == Tile::AridSoil)temp += rarely;
+if (type == Tile::Oxisol)temp += poorly;
+if (type == Tile::Gleysol)temp += poorly;
+rangePenalty(temperature, 55, 72, temp);
+rangePenalty(humidity, 55, 75, temp);
+if (temp > threshold) {
+             threshold = temp;
+             int ran = rint(0,1);
+             if (ran == 0) plant = Plant::AppleTree;
+             if (ran == 1) plant = Plant::PearTree;
+     }
+}
+if (rand() / (float) RAND_MAX < oliveChance) {
+// Olive Trees
+temp = 0;
+    if (type == Tile::Podzol) temp += rarely;
+if (type == Tile::LoamSoil) temp += great;
+if (type == Tile::PeatSoil) temp += rarely;
+if (type == Tile::SandySoil) temp += optimal;
+if (type == Tile::ClaySoil) temp += rarely;
+if (type == Tile::SiltySoil) temp += great;
+if (type == Tile::RockySoil) temp += good;
+if (type == Tile::AridSoil) temp += optimal;
+if (type == Tile::Oxisol) temp += poorly;
+if (type == Tile::Gleysol) temp += rarely;
+rangePenalty(temperature, 61, 80, temp);
+rangePenalty(humidity, 33, 58, temp);
+if (temp > threshold) {
+             threshold = temp;
+             plant = Plant::OliveTree;
+     }
+}
+
+if (rand() / (float) RAND_MAX < berryShrubChance) {
+// Berry Shrubs
+temp = 0;
+if (type == Tile::Podzol) temp += good;
+if (type == Tile::LoamSoil) temp += optimal;
+if (type == Tile::PeatSoil) temp += great;
+if (type == Tile::SandySoil) temp += good;
+if (type == Tile::ClaySoil) temp += poorly;
+if (type == Tile::SiltySoil) temp += great;
+if (type == Tile::RockySoil) temp += rarely;
+if (type == Tile::AridSoil) temp += rarely;
+if (type == Tile::Oxisol) temp += poorly;
+if (type == Tile::Gleysol) temp += good;
+rangePenalty(temperature, 61, 75, temp);
+rangePenalty(humidity, 65, 90, temp);
+if (temp > threshold) {
+             threshold = temp;
+             int ran = rint(0,3);
+             if (ran == 0) plant = Plant::BlueberryShrub;
+             if (ran == 1) plant = Plant::StrawberryShrub;
+         }
+}
+if (rand() / (float) RAND_MAX < grapevineChance) {
+// Grapevines
+temp = 0;
+if (type == Tile::Podzol) temp += rarely;
+if (type == Tile::LoamSoil) temp += optimal;
+if (type == Tile::PeatSoil) temp += good;
+if (type == Tile::SandySoil) temp += great;
+if (type == Tile::ClaySoil) temp += poorly;
+if (type == Tile::SiltySoil) temp += great;
+if (type == Tile::RockySoil) temp += good;
+if (type == Tile::AridSoil) temp += good;
+if (type == Tile::Oxisol) temp += poorly;
+if (type == Tile::Gleysol) temp += rarely;
+rangePenalty(temperature, 61, 80, temp);
+rangePenalty(humidity, 45, 68, temp);
+if (temp > threshold) {
+             threshold = temp;
+             plant = Plant::Grapevine;
+       }
+}
+if (rand() / (float) RAND_MAX < grainChance) {
+//GRAINS
+// Wheat
+temp = 0;
+if (type == Tile::Podzol) temp += poorly;
+if (type == Tile::LoamSoil) temp += optimal;
+if (type == Tile::PeatSoil) temp += good;
+if (type == Tile::SandySoil) temp += good;
+if (type == Tile::ClaySoil) temp += good;
+if (type == Tile::SiltySoil) temp += good;
+if (type == Tile::RockySoil) temp += poorly;
+if (type == Tile::AridSoil) temp += poorly;
+if (type == Tile::Oxisol) temp += poorly;
+if (type == Tile::Gleysol) temp += rarely;
+
+rangePenalty(temperature, 58, 75, temp);
+rangePenalty(humidity, 45, 70, temp);
+
+if (temp > threshold) {
+    threshold = temp;
+    plant = Plant::Wheat;
+}
+
+// Rice
+temp = 0;
+if (type == Tile::Podzol) temp += poorly;
+if (type == Tile::LoamSoil) temp += good;
+if (type == Tile::PeatSoil) temp += great;
+if (type == Tile::SandySoil) temp += poorly;
+if (type == Tile::ClaySoil) temp += optimal;
+if (type == Tile::SiltySoil) temp += optimal;
+if (type == Tile::RockySoil) temp += poorly;
+if (type == Tile::AridSoil) temp += poorly;
+if (type == Tile::Oxisol) temp += poorly;
+if (type == Tile::Gleysol) temp += great;
+
+rangePenalty(temperature, 75, 92, temp);
+rangePenalty(humidity, 75, 100, temp);
+if (temp > threshold) {
+    threshold = temp;
+    plant = Plant::Rice;
+}
+// Oat
+temp = 0;
+if (type == Tile::Podzol) temp += rarely;
+if (type == Tile::LoamSoil) temp += optimal;
+if (type == Tile::PeatSoil) temp += good;
+if (type == Tile::SandySoil) temp += great;
+if (type == Tile::ClaySoil) temp += poorly;
+if (type == Tile::SiltySoil) temp += good;
+if (type == Tile::RockySoil) temp += good;
+if (type == Tile::AridSoil) temp += good;
+if (type == Tile::Oxisol) temp += poorly;
+if (type == Tile::Gleysol) temp += rarely;
+
+rangePenalty(temperature, 61, 80, temp);
+rangePenalty(humidity, 45, 68, temp);
+
+if (temp > threshold) {
+    threshold = temp;
+    plant = Plant::Oat;
+}
+}
+
+// VEGETABLES
+if (rand() / (float) RAND_MAX < leafyChance) {
+temp = 0;
+// Leafy Vegetables
+if (type == Tile::Podzol) temp += good;
+if (type == Tile::LoamSoil) temp += optimal;
+if (type == Tile::PeatSoil) temp += great;
+if (type == Tile::SandySoil) temp += poorly;
+if (type == Tile::ClaySoil) temp += good;
+if (type == Tile::SiltySoil) temp += optimal;
+if (type == Tile::RockySoil) temp += rarely;
+if (type == Tile::AridSoil) temp += rarely;
+if (type == Tile::Oxisol) temp += poorly;
+if (type == Tile::Gleysol) temp += great;
+rangePenalty(temperature, 50, 72, temp);
+rangePenalty(humidity, 65, 88, temp);
+if (temp > threshold) {
+             threshold = temp;
+             int ran = rint(0,1);
+             if (ran == 0) plant = Plant::Lettuce;
+             if (ran == 1) plant = Plant::Kale;
+       }
+}
+if (rand() / (float) RAND_MAX < rootChance) {
+    temp = 0;
+    // Root Vegetables
+if (type == Tile::Podzol) temp += good;
+if (type == Tile::LoamSoil) temp += optimal;
+if (type == Tile::PeatSoil) temp += poorly;
+if (type == Tile::SandySoil) temp += great;
+if (type == Tile::ClaySoil) temp += poorly;
+if (type == Tile::SiltySoil) temp += good;
+if (type == Tile::RockySoil) temp += rarely;
+if (type == Tile::AridSoil) temp += rarely;
+if (type == Tile::Oxisol) temp += poorly;
+if (type == Tile::Gleysol) temp += rarely;
+rangePenalty(temperature, 56, 69, temp);
+rangePenalty(humidity, 55, 78, temp);
+if (temp > threshold) {
+             threshold = temp;
+             int ran = rint(0,1);
+             if (ran == 0) plant = Plant::Carrot;
+             if (ran == 1) plant = Plant::Beets;
+       }
+}
+if (rand() / (float) RAND_MAX < tuberChance) {
+    temp = 0;
+// Tubers
+if (type == Tile::Podzol) temp += good;
+if (type == Tile::LoamSoil) temp += great;
+if (type == Tile::PeatSoil) temp += poorly;
+if (type == Tile::SandySoil) temp += optimal;
+if (type == Tile::ClaySoil) temp += poorly;
+if (type == Tile::SiltySoil) temp += good;
+if (type == Tile::RockySoil) temp += rarely;
+if (type == Tile::AridSoil) temp += rarely;
+if (type == Tile::Oxisol) temp += poorly;
+if (type == Tile::Gleysol) temp += rarely;
+rangePenalty(temperature, 60, 67, temp);
+rangePenalty(humidity, 65, 88, temp);
+if (temp > threshold) {
+             threshold = temp;
+             plant = Plant::Potatoes;
+       }
+}
+if (rand() / (float) RAND_MAX < bulbChance) {
+    // Bulbs
+if (type == Tile::Podzol) temp += good;
+if (type == Tile::LoamSoil) temp += optimal;
+if (type == Tile::PeatSoil) temp += poorly;
+if (type == Tile::SandySoil) temp += great;
+if (type == Tile::ClaySoil) temp += poorly;
+if (type == Tile::SiltySoil) temp += good;
+if (type == Tile::RockySoil) temp += rarely;
+if (type == Tile::AridSoil) temp += rarely;
+if (type == Tile::Oxisol) temp += poorly;
+if (type == Tile::Gleysol) temp += rarely;
+rangePenalty(temperature, 60, 70, temp);
+rangePenalty(humidity, 55, 77, temp);
+if (temp > threshold) {
+             threshold = temp;
+             int ran = rint(0,1);
+             if (ran == 0) plant = Plant::Onion;
+             if (ran == 1) plant = Plant::Garlic;
+       }
+}
+if (rand() / (float) RAND_MAX < floweringChance) {
+    // Flowering Vegetables
+if (type == Tile::Podzol) temp += good;
+if (type == Tile::LoamSoil) temp += optimal;
+if (type == Tile::PeatSoil) temp += poorly;
+if (type == Tile::SandySoil) temp += good;
+if (type == Tile::ClaySoil) temp += poorly;
+if (type == Tile::SiltySoil) temp += great;
+if (type == Tile::RockySoil) temp += rarely;
+if (type == Tile::AridSoil) temp += rarely;
+if (type == Tile::Oxisol) temp += poorly;
+if (type == Tile::Gleysol) temp += rarely;
+rangePenalty(temperature, 56, 67, temp);
+rangePenalty(humidity, 65, 88, temp);
+if (temp > threshold) {
+             threshold = temp;
+             int ran = rint(0,1);
+             if (ran == 0) plant = Plant::Cabbage;
+             if (ran == 1) plant = Plant::Broccoli;
+       }
+}
+if (rand() / (float) RAND_MAX < fruitVeggieChance) {
+   // Fruit Vegetables
+if (type == Tile::Podzol) temp += good;
+if (type == Tile::LoamSoil) temp += optimal;
+if (type == Tile::PeatSoil) temp += poorly;
+if (type == Tile::SandySoil) temp += great;
+if (type == Tile::ClaySoil) temp += poorly;
+if (type == Tile::SiltySoil) temp += good;
+if (type == Tile::RockySoil) temp += rarely;
+if (type == Tile::AridSoil) temp += rarely;
+if (type == Tile::Oxisol) temp += poorly;
+if (type == Tile::Gleysol) temp += rarely;
+rangePenalty(temperature, 69, 81, temp);
+rangePenalty(humidity, 55, 78, temp);
+if (temp > threshold) {
+             threshold = temp;
+             int ran = rint(0,2);
+             if (ran == 0) plant = Plant::Tomato;
+             if (ran == 1) plant = Plant::Cucumber;
+             if (ran == 2) plant = Plant::Pepper;
+       }
+}
+
+// // Seed and Pod Vegetables
+// if (type == Tile::Podzol) temp += good;
+// if (type == Tile::LoamSoil) temp += optimal;
+// if (type == Tile::PeatSoil) temp += poorly;
+// if (type == Tile::SandySoil) temp += great;
+// if (type == Tile::ClaySoil) temp += poorly;
+// if (type == Tile::SiltySoil) temp += good;
+// if (type == Tile::RockySoil) temp += rarely;
+// if (type == Tile::AridSoil) temp += rarely;
+// if (type == Tile::Oxisol) temp += poorly;
+// if (type == Tile::Gleysol) temp += rarely;
+// rangePenalty(temperature, 56, 70, temp);
+// rangePenalty(humidity, 55, 78, temp);
+// if (temp > threshold) {
+//              threshold = temp;
+//              int ran = rint(0,2);
+//              if (ran == 0) plant = Plant::Peas;
+//              if (ran == 1) plant = Plant::Beans;
+//        }
+
+// HERBS
+if (rand() / (float) RAND_MAX < herbChance) {
+// Sun-Loving Herbs
+if (type == Tile::Podzol) temp += poorly;
+if (type == Tile::LoamSoil) temp += optimal;
+if (type == Tile::PeatSoil) temp += poorly;
+if (type == Tile::SandySoil) temp += great;
+if (type == Tile::ClaySoil) temp += poorly;
+if (type == Tile::SiltySoil) temp += good;
+if (type == Tile::RockySoil) temp += rarely;
+if (type == Tile::AridSoil) temp += rarely;
+if (type == Tile::Oxisol) temp += poorly;
+rangePenalty(temperature, 70, 90, temp);
+rangePenalty(humidity, 40, 60, temp);
+if (temp > threshold) {
+             threshold = temp;
+             int ran = rint(0,2);
+             if (ran == 0) plant = Plant::Woad;
+             if (ran == 1) plant = Plant::Indigo;
+             if (ran == 2) plant = Plant::Poppy;
+       }
+// Shade-Loving Herbs
+if (type == Tile::Podzol) temp += good;
+if (type == Tile::LoamSoil) temp += optimal;
+if (type == Tile::PeatSoil) temp += great;
+if (type == Tile::SandySoil) temp += poorly;
+if (type == Tile::ClaySoil) temp += good;
+if (type == Tile::SiltySoil) temp += good;
+if (type == Tile::RockySoil) temp += rarely;
+if (type == Tile::AridSoil) temp += rarely;
+if (type == Tile::Oxisol) temp += poorly;
+rangePenalty(temperature, 50, 70, temp);
+rangePenalty(humidity, 60, 80, temp);
+if (temp > threshold) {
+             threshold = temp;
+             int ran = rint(0,1);
+             if (ran == 0) plant = Plant::Hemp;
+             if (ran == 1) plant = Plant::Ginseng;
+       }
+// Drought-Tolerant Herbs (Low Water Requirements)
+if (type == Tile::Podzol) temp += poorly;
+if (type == Tile::LoamSoil) temp += optimal;
+if (type == Tile::PeatSoil) temp += poorly;
+if (type == Tile::SandySoil) temp += great;
+if (type == Tile::ClaySoil) temp += poorly;
+if (type == Tile::SiltySoil) temp += good;
+if (type == Tile::RockySoil) temp += rarely;
+if (type == Tile::AridSoil) temp += great;
+if (type == Tile::Oxisol) temp += poorly;
+rangePenalty(temperature, 70, 100, temp);
+rangePenalty(humidity, 20, 40, temp);
+if (temp > threshold) {
+             threshold = temp;
+             int ran = rint(0,2);
+             if (ran == 0) plant = Plant::Lavendar;
+             if (ran == 1) plant = Plant::Sage;
+             if (ran == 2) plant = Plant::Madder;
+       }
+// Moisture-Loving Herbs
+if (type == Tile::Podzol) temp += great;
+if (type == Tile::LoamSoil) temp += optimal;
+if (type == Tile::PeatSoil) temp += great;
+if (type == Tile::SandySoil) temp += poorly;
+if (type == Tile::ClaySoil) temp += good;
+if (type == Tile::SiltySoil) temp += great;
+if (type == Tile::RockySoil) temp += rarely;
+if (type == Tile::AridSoil) temp += poorly;
+if (type == Tile::Oxisol) temp += poorly;
+rangePenalty(temperature, 60, 80, temp);
+rangePenalty(humidity, 60, 80, temp);
+if (temp > threshold) {
+             threshold = temp;
+             plant = Plant::Mint;
+       }
+// Cold-Hardy Herbs (Cold-Tolerant)
+if (type == Tile::Podzol) temp += great;
+if (type == Tile::LoamSoil) temp += optimal;
+if (type == Tile::PeatSoil) temp += good;
+if (type == Tile::SandySoil) temp += poorly;
+if (type == Tile::ClaySoil) temp += good;
+if (type == Tile::SiltySoil) temp += good;
+if (type == Tile::RockySoil) temp += rarely;
+if (type == Tile::AridSoil) temp += rarely;
+if (type == Tile::Oxisol) temp += poorly;
+rangePenalty(temperature, 40, 60, temp);
+rangePenalty(humidity, 40, 60, temp);
+if (temp > threshold) {
+             threshold = temp;
+             plant = Plant::Thyme;
+       }
+}
+//TEXTILE
+if (rand() / (float) RAND_MAX < textileChance) {
+    temp = 0;
+if (type == Tile::Podzol) temp += poorly;
+if (type == Tile::LoamSoil) temp += optimal;
+if (type == Tile::PeatSoil) temp += poorly;
+if (type == Tile::SandySoil) temp += great;
+if (type == Tile::ClaySoil) temp += poorly;
+if (type == Tile::SiltySoil) temp += good;
+if (type == Tile::RockySoil) temp += rarely;
+if (type == Tile::AridSoil) temp += rarely;
+if (type == Tile::Oxisol) temp += poorly;
+rangePenalty(temperature, 60, 79, temp);
+rangePenalty(humidity, 55, 78, temp);
+if (temp > threshold) {
+             threshold = temp;
+             int ran = rint(0,2);
+             if (ran == 0) plant = Plant::Cotton;
+             if (ran == 1) plant = Plant::Hemp;
+             if (ran == 2) plant = Plant::Flax;
+       }
+}
+if (rand() / (float) RAND_MAX < fernChance) {
+    temp = 0;
+// Ferns
+if (biome == 4) temp += 0.3;
+if (biome == 5) temp += 0.2;
+if (biome == 6) temp += 0.2;
+if (biome == 7) temp += 0.3;
+if (biome == 8) temp += 0.2;
+if (type == Tile::Podzol) temp += great;
+if (type == Tile::LoamSoil) temp += optimal;
+if (type == Tile::PeatSoil) temp += optimal;
+if (type == Tile::SandySoil) temp += poorly;
+if (type == Tile::ClaySoil) temp += rarely;
+if (type == Tile::SiltySoil) temp += great;
+if (type == Tile::RockySoil) temp += rarely;
+if (type == Tile::AridSoil) temp = 0;
+if (type == Tile::Oxisol) temp += poorly;
+if (type == Tile::Gleysol) temp += great;
+rangePenalty(temperature,50,77,temp);
+         rangePenalty(humidity,75,115,temp);
+if (temp > threshold) {
+             threshold = temp;
+             plant = Plant::Fern;
+         }
+}
+if (rand() / (float) RAND_MAX < reedChance) {
+    temp = 0;
+//Reeds
+if (biome == 4) temp += 0.15;
+if (adjCheck(tileIndex, tileType, (int)tile.first, (int)tile.second, Tile::ShallowWater, 1)) temp += 0.45;
+if (type == Tile::Podzol)        temp += good;
+if (type == Tile::LoamSoil)      temp += great;
+if (type == Tile::PeatSoil)      temp += optimal;
+if (type == Tile::SandySoil)     temp += poorly;
+if (type == Tile::ClaySoil)      temp += good;
+if (type == Tile::SiltySoil)     temp += great;
+if (type == Tile::RockySoil)     temp += poorly;
+if (type == Tile::AridSoil)      temp = 0;
+if (type == Tile::Oxisol)        temp += poorly;
+if (type == Tile::Gleysol)       temp += optimal;
+rangePenalty(temperature,50,86,temp);
+         rangePenalty(humidity,75,120,temp);
+if (temp > threshold) {
+             threshold = temp;
+             plant = Plant::Reed;
+        }
+}
+} // end of plants, checking random value against plant coverage
+// GRASSES
+if (rand() / (float) RAND_MAX < grassCoverage) {
+    temp = 0;
+    threshold = 0;
+// Prairie Grasses
+temp += 0.2;
+temp -= (0.05 * adjCheckListCount(tileIndex, tilePlant, (int)tile.first, (int)tile.second, trees, 3));
+if (biome == 2) temp += 0.45;
+if (biome == 4) temp += 0.05;
+if (type == Tile::Podzol) temp += good;
+if (type == Tile::LoamSoil) temp += optimal;
+if (type == Tile::PeatSoil) temp += rarely;
+if (type == Tile::SandySoil) temp += great;
+if (type == Tile::ClaySoil) temp += poorly;
+if (type == Tile::SiltySoil) temp += optimal;
+if (type == Tile::RockySoil) temp += rarely;
+if (type == Tile::AridSoil) temp += good;
+if (type == Tile::Oxisol) temp += poorly;
+if (type == Tile::Gleysol) temp += poorly;
+ rangePenalty(temperature,41,86,temp);
+ rangePenalty(humidity,30,80,temp);
+if (temp > threshold) {
+             threshold = temp;
+             grass = Grass::Grass;
+         }
+// Savannah Grasses
+    temp = 0;
+temp += 0.2;
+temp -= (0.05 * adjCheckListCount(tileIndex, tilePlant, (int)tile.first, (int)tile.second, trees, 3));
+if (biome == 3) temp += 0.5;
+if (type == Tile::Podzol) temp += poorly;
+if (type == Tile::LoamSoil) temp += great;
+if (type == Tile::PeatSoil) temp += rarely;
+if (type == Tile::SandySoil) temp += optimal;
+if (type == Tile::ClaySoil) temp += good;
+if (type == Tile::SiltySoil) temp += great;
+if (type == Tile::RockySoil) temp += rarely;
+if (type == Tile::AridSoil) temp += good;
+if (type == Tile::Oxisol) temp += good;
+if (type == Tile::Gleysol) temp += poorly;
+rangePenalty(temperature,64,95,temp);
+rangePenalty(humidity,20,60,temp);
+
+if (temp > threshold) {
+             threshold = temp;
+             grass = Grass::SavannahGrass;
+         }
+}
+tileGrass[i] = grass;
+regrowthPlant = regrowthPlant[static_cast<int>(Plant)];
+plantDatabase.germinate(i, regrowthPlant, true);
+//TESTING
+// Tile tt = tileType[i];
+// Plant pt = tilePlant[i];
+// Grass gt = tileGrass[i];
+// cout << "coords: " << (int)tile.first << "," << (int)tile.second <<  " biome: " << biome << " tile: " << static_cast<int>(tt) << " plant: " << static_cast<int>(pt) << " grass: " << static_cast<int>(gt) << ";";
+ }
 }
 
 // APPLY ANIMAL SPAWNS
-void spawnAnimals() {
+void WorldSpawner::spawnAnimals() {
     float dominant = 0.003;
     float abundant = 0.0015;
     float common = 0.0008;
@@ -1210,20 +2215,20 @@ void spawnAnimals() {
     float endangered = 0.00001;
     float never = 0.0;
 
-     for (int i = 0; i < (int)tileIndex.size(); i++) {
+     for (int i = 0; i < (int) rTileIndex.size(); i++) {
          if (tileEmpty[i]) continue;
          //TODO: ensure this line is working rather than checking for all enum class NONE
-         if (static_cast<int>(tileObject[i]) != 0) continue;
+         if (static_cast<int>(rTileObject[i]) != 0) continue;
          std::pair<int,int> tile = tileCoords[i];
          float threshold = 0.0; // amount animal must pass to be spawned
          float temp = 0.0;
 
-         Tile type = tileType[i];
+         Tile type = rTileType[i];
          Scavengeable scavengeable = Scavengeable::NONE;
 
-          uint32_t cell = tileCellIndex[i];
-         std::pair<int,int> cellCoord = mapsLink[cell];
-         int biome = biomeMap[cellCoord.first][cellCoord.second];
+          uint32_t cell = rTileCellIndex[i];
+         std::pair<int,int> cellCoord = rMapsLink[cell];
+         int biome = rBiomeMap[cellCoord.first][cellCoord.second];
 
          float currentChance = 0.0;
          float pigChance = 0.0;
@@ -1486,7 +2491,7 @@ if (random < currentChance + caribouChance)     tileEmpty[i] = true;
      }
 }
 
-void spawnScavengeables() {
+void WorldSpawner::spawnScavengeables() {
     float dominant = 0.009;
     float abundant = 0.003;
     float common = 0.001;
@@ -1496,11 +2501,11 @@ void spawnScavengeables() {
     float veryrare = 0.000066;
     float legendary = 0.000033;
     float never = 0.0;
-for (int i = 0; i < tileIndex.size(); i++) {
-    if (static_cast<int>(tileObject[i]) != 0) continue;
-     uint32_t cell = tileCellIndex[i];
-         std::pair<int,int> cellCoord = mapsLink[cell];
-     int biome = biomeMap[cellCoord.first][cellCoord.second];
+for (int i = 0; i < rTileIndex.size(); i++) {
+    if (static_cast<int>(rTileObject[i]) != 0) continue;
+     uint32_t cell = rTileCellIndex[i];
+         std::pair<int,int> cellCoord = rMapsLink[cell];
+     int biome = rBiomeMap[cellCoord.first][cellCoord.second];
      Scavengeable scavengeable;
      float logChance = 0.0;
      float pebbleChance = 0.0;
@@ -1657,11 +2662,11 @@ else if (random < currentChance + pebbleChance) {
 if (scavengeable == Scavengeable::Log) {
 
 }
-tileObject[i] = scavengeable;
+rTileObject[i] = scavengeable;
 }
 
     template<typename T>
-        void printMap(vector<vector<T>>& map) {
+        void WorldSpawner::printMap() {
         for (int x = 0; x < WIDTH; ++x) {
             for (int y = 0; y < HEIGHT; ++y) {
                 cout << map[x][y] << " ";
@@ -1670,10 +2675,6 @@ tileObject[i] = scavengeable;
         }
     }
 
-    void cleanupUnusedDS() {
-        //globalVec.clear();         // Remove all elements
-        //globalVec.shrink_to_fit(); // Force memory deallocation (not guaranteed)
-    }
 
     int main() {
         FastNoiseLite noiseLayer;
@@ -1684,37 +2685,39 @@ tileObject[i] = scavengeable;
         noiseLayer.SetFractalLacunarity(1.8f); //chaos
         noiseLayer.SetFractalOctaves(7); //more detail, extremes appear in cells
 
-        generateAltitudeMap(noiseLayer);
-        generateOceanMap();
-        cleanAltitudeMap();
-        generateLandsMap();
-        generateWaterMap();
-        generateWBDistances();
-        generateTemperatureMap();
-        generateHumidityMap();
-        generateBiomes();
-        getRiversFromGroundwater();
+        // MAPS
+        WorldSpawner world = new WorldSpawner();
+        world.generateAltitudeMap(noiseLayer);
+        world.generateOceansOnMaps(rOceanMap, rAltitudeMap, rLandsMap, landThreshold);
+        world.cleanAltitudeMap();
+        world.generateLandsMap()
+        world.generateWaterMap();
+        world.generateWBDistances();
+        world.generateTemperatureMap();
+        world.generateHumidityMap();
+        world.generateBiomes();
+        world.getRiversFromGroundwater();
         // cout << "Ocean" << endl;
-        //printMap(oceanMap);
+        //printMap(rOceanMap);
         cout << "Lands" << endl;
-        printMap(landsMap);
+        printMap();
         cout << "Altitude" << endl;
-        printMap(altitudeMap);
+        printMap();
         cout << "Water Bodies" << endl;
-        printMap(waterMap);
+        printMap();
         cout << "Temperature" << endl;
-        printMap(temperatureMap);
+        printMap();
         cout << "Humidity" << endl;
-        printMap(humidityMap);
+        printMap();
         cout << "Biomes" << endl;
-        printMap(biomeMap);
+        printMap();
         generateTiles();
-        spawnPlants();
+        spawnFirstPlants();
         cout << "PLANTS SPAWNED" << endl;
         spawnAnimals();
-        cout << "TILE AMOUNT:" << tileIndex.size() << endl;
-        int cell = tileCellIndex[5];
-         cout << " Cell: " << cell;
-         spawnScavengeables();
+        cout << "TILE AMOUNT:" << rTileIndex.size() << endl;
+        int cell = rTileCellIndex[5];
+        cout << " Cell: " << cell;
+        spawnScavengeables();
         return 0;
     }

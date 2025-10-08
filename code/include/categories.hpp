@@ -44,7 +44,7 @@ NONE, EDIBLE, Grass, SavannahGrass,
 };
 
 enum class Plant {
-NONE, EDIBLE, WOOD, Fern, Moss, Reed, Wheat, Oat, Rice, Bush, Papyrus, PioneerTree, DeciduousTree, EvergreenTree, TropicalTree, OrangeTree, LemonTree, LimeTree, PeachTree, PlumTree, CherryTree, ApricotTree, Cactus, AppleTree, PearTree, OliveTree, BlueberryShrub, StrawberryShrub, Grapevine, Lettuce, Kale, Corn, Carrot, Beets, Potato, Onion, Garlic, Cabbage, Broccoli, Tomato, Cucumber, Pepper, BlackPepper, Cotton, Hemp, Flax, Woad, Madder, Indigo, Lavender, Mint, Thyme, Sage, Ginseng, Rhubarb, Poppy, Cocoa, Senna, Saffron, AloeVera, MAX,
+NONE, EDIBLE, WOOD, Fern, Moss, Reed, Wheat, Oat, Rice, Bush, Papyrus, PioneerTree, DeciduousTree, EvergreenTree, TropicalTree, OrangeTree, LemonTree, LimeTree, PeachTree, PlumTree, CherryTree, ApricotTree, MangoTree, Cactus, AppleTree, PearTree, OliveTree, BlueberryShrub, StrawberryShrub, Grapevine, Lettuce, Kale, Corn, Carrot, Beets, Potato, Onion, Garlic, Cabbage, Broccoli, Tomato, Cucumber, Pepper, BlackPepper, Cotton, Hemp, Flax, Woad, Madder, Indigo, Lavender, Mint, Thyme, Sage, Ginseng, Rhubarb, Poppy, Cocoa, Senna, Saffron, AloeVera, MAX,
 };
 
 enum class Wall {
@@ -225,7 +225,6 @@ ArrowShaft,
 AxeHead,
 ShovelHead,
 SawHead,
-HeavySawHead,
 ArdHead,
 ScytheHead,
 HandaxeHead,
@@ -315,8 +314,6 @@ PermanentShovelHeadMould,
 ShovelHeadMould,
 PermanentSawHeadMould,
 SawHeadMould,
-PermanentHeavySawHeadMould,
-HeavySawHeadMould,
 PermanentArdHeadMould,
 ArdHeadMould,
 PermanentScytheHeadMould,
@@ -617,9 +614,9 @@ Handaxe, Machete, Knife, Cleaver, Trowel, Chisel, Hammer, Scalpel,  Mallet,  Sic
 Blowpipe, Shears, HandheldBellows,  Pestle, Needle, Drum, Torch, Bucket, Basket, Jar, Pot, Plate, Candle, Flint, Brush, Pen, Stylus, Scraper, Crucible, Lyre, Lur, PanFlute, Scroll, Book, PermanentMould, MeasuringTools, Lens, Scale, HandheldLoom, Shuttle, Cheesecloth, Compass, Binocular, SurveyingTools, Net, Stamp, Cart, Wagon, Ladle, Rock, Spindle, Distaff, DryingRack, Abacus, Die, Mould, Incense, Stick, Tame, Mint, CandleMould, MeltingPot, Hammerstone, PatternedDie, Log, Shield, HeavyShield, Corpse
 };
 
-Tool oneHandedTools[] = {Tool::Basket, Tool::Jar, Tool::Pot, Tool::Plate,Tool:: Handaxe,  Tool::Machete, Tool::Trowel, Tool::Torch, Tool::Candle, Tool::Flint, Tool::Knife, Tool::Cleaver, Tool::Brush, Tool::Pen, Tool::Stylus, Tool::Scraper, Tool::Hammer, Tool::Scalpel,  Tool::Sickle,  Tool::Needle, Tool::Mallet, Tool::Scroll, Tool::Book, Tool::Tongs, Tool::HandheldBellows, Tool::Blowpipe, Tool::PermanentMould,  Tool::MeasuringTools, Tool::Graver, Tool::Lens, Tool::Scale, Tool::Shuttle, Tool::Cheesecloth, Tool::Compass, Tool::Binocular, Tool::SurveyingTools, Tool::Chisel, Tool::Whip, Tool::Shears, Tool::Pestle, Tool::FishingRod, Tool::Net, Tool::Staff, Tool::Stamp, Tool::Ladle, Tool::Rock, Tool::Spindle, Tool::Distaff, Tool::DryingRack, Tool::Awl, Tool::Abacus,Tool::HandDrill, Tool::Die, Tool::Mould, Tool::Incense, Tool::Stick,  Tool::CandleMould, Tool::MeltingPot, Tool::Hammerstone, Tool::PatternedDie, Tool::Shield};
+Tool oneHandedTools[] = {Tool::Basket, Tool::Jar, Tool::Pot, Tool::Plate,Tool:: Handaxe,  Tool::Machete, Tool::Trowel, Tool::Torch, Tool::Candle, Tool::Flint, Tool::Knife, Tool::Cleaver, Tool::Brush, Tool::Pen, Tool::Stylus, Tool::Scraper, Tool::Hammer, Tool::Scalpel,  Tool::Sickle,  Tool::Needle, Tool::Mallet, Tool::Scroll, Tool::Book, Tool::HandheldBellows, Tool::Blowpipe, Tool::PermanentMould,  Tool::MeasuringTools, Tool::Graver, Tool::Lens, Tool::Scale, Tool::Shuttle, Tool::Cheesecloth, Tool::Compass, Tool::Binocular, Tool::SurveyingTools, Tool::Chisel, Tool::Whip, Tool::Shears, Tool::Pestle, Tool::FishingRod, Tool::Net, Tool::Staff, Tool::Stamp, Tool::Ladle, Tool::Rock, Tool::Spindle, Tool::Distaff, Tool::DryingRack, Tool::Awl, Tool::Abacus, Tool::Die, Tool::Mould, Tool::Incense, Tool::Stick,  Tool::CandleMould, Tool::MeltingPot, Tool::Hammerstone, Tool::PatternedDie, Tool::Shield};
 // can be used with lower efficiency with one hand
-Tool optionalTwoHandedTools[] = { Tool::Basket, Tool::DiggingStick, Tool::Bucket, Tool::Pickaxe, Tool::Axe,  Tool::Saw, Tool::HeavySaw, Tool::Crucible, Tool::HeavyShield };
+Tool optionalTwoHandedTools[] = { Tool::Basket, Tool::DiggingStick, Tool::Bucket, Tool::Pickaxe, Tool::Axe,  Tool::Saw, Tool::Crucible, Tool::HeavyShield };
 // can be lifted with one hand, but must be used with two
 Tool TwoHandedTools[] = { Tool::Adze, Tool::Shovel, Tool::Scythe,  Tool::Drum, Tool::Lyre, Tool::PanFlute, Tool::HandheldLoom, };
 //must be both used and lifted with two hands, cannot enter any other inventory slot

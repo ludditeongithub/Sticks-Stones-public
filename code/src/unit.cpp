@@ -1,19 +1,19 @@
-#include "unit.hpp"
+#include "../include/categories.hpp"
 
 /* ROLES */
 
-void initializeRoleMana() {
+void initRoleMana() {
     for (int i = 0; i < remainingRoleMana.size(); i++) {
         remainingRoleMana[i] = startingRoleMana;
     }
 }
 
 
-
 Role getActionRole(int pawnIndex, Actions action) {
     for (int i = 0; i < actionToRoles[static_cast<int>(action)]; i++) {
         if (roles[pawnIndex] == actionToRoles[i]) return roles[pawnIndex];
 }
+
 
 void nextRole(int pawnIndex) {
     // pawn cannot move to next role if only has 1 role
@@ -27,4 +27,3 @@ void nextRole(int pawnIndex) {
         currentRole[pawnIndex] = 0;
     }
 }
-

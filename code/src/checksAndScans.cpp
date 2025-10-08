@@ -33,7 +33,6 @@ Direction checkIfAdjTarget(int pawn) {
     return Direction::NONE;
 }
 
-
 void moveInDirection(int pawn, bool animal) {
     Direction direction = currentDirection[pawn];
     if (animal) {

@@ -1,6 +1,7 @@
 #include "roles.hpp"
 #include "basic.hpp"
 #include "categories.hpp"
+
 // without upgrades, a pawn can only be an apprentice of one role at a time.
 
 std::stack nextApprenticeIndex;
@@ -35,3 +36,4 @@ void finishApprenticeship(uint16_t apprenticeIndex) {
     add
     nextApprenticeIndex.push(apprenticeIndex);
 }
+
