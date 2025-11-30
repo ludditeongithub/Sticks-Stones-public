@@ -58,14 +58,14 @@ void ObjectDatabase::preallocateSpace() {
     }
 }
 
-void ObjectDatabase::insertObject(Object object, int x, int y) {
+void ObjectDatabase::addObject(Object object, int x, int y) {
     std::pair<int,int> gc = getGridCell(x, y);
     //TODO: consider checks
     globalMap[gc.first][gc.second][object].insert({x,y});
 }
 
-void ObjectDatabase::insertObject(uint16_t objectIndex, ObjectType type, int x, int y) {
-
+void ObjectDatabase::addObject(uint16_t objectIndex, ObjectType type, int x, int y) {
+  
 }
 
 void ObjectDatabase::deleteObject(Object object, int x, int y) {
@@ -199,9 +199,9 @@ void ObjectDatabase::findNecessaryTools(Action action, int pawn) {
         if (actionToTools[static_cast<size_t>(action)][i] < 0) continue;
 
 
-        std:pair<int,int> dest = findNearestObject(actionToTools[static_cast<size_t>(action)][i], currentCoords[pawn].first, currentCoords[pawn].second);
-        if (manDist(currentCoords[pawn], dest) > midGatherRange) {
-            currentDests[pawn] = tileIndices[dest];
+        std:pair<int,int> dest = findNearestObject(actionToTools[static_cast<size_t>(action)][i], coords[pawn].first, coords[pawn].second);
+        if (manDist(coords[pawn], dest) > midGatherRange) {
+            dests[pawn] = tileIndices[dest];
             movingStatus[pawn] = MovingStatus::ApproachTool;
             //NOTE:: async
             findPromise[pawn] = std::promise<void>();
@@ -216,3 +216,4 @@ void ObjectDatabase::findNecessaryTools(Action action, int pawn) {
 void ObjectDatabase::findNecessaryItems() {
 
 }
+

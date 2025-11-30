@@ -4,33 +4,27 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include <cstdint>
-#include <array>
 #include <cmath>
 #include <map>
 #include <algorithm>
 #include <random>
-#include <queue>
-#include <stack>
 #include <ctime>
 #include <unordered_map>
-#include <unordered_set>
-#include <variant>
-#include <future>
-#include <chrono>
 #include <functional>
 #include "FastNoiseLite.h"
 #include "nanoflann.hpp"
 
-using std::string;
-using std::cout;
-using std::endl;
-using std::vector;
 using std::cout;
 using std::endl;
 using std::get;
 using std::pair;
+using std::string;
 using std::unordered_map;
+using std::vector;
+
+using alt = float;
+constexpr float altMax = 950.0f;
+constexpr float altMin = -180.0f;
 
 struct coord {
   int x;
@@ -38,13 +32,20 @@ struct coord {
 };
 
 enum class Direction {
-    NONE, North, South, West, East,
+  NONE,
+  North,
+  South,
+  West,
+  East,
+  MAX
 };
 
-float rfloat(float min, float max) {
     static std::random_device rd;
     static std::mt19937 gen(rd());
 
+
+float rfloat(float min, float max) {
+  
     std::uniform_real_distribution<float> dis(min, max);
     return dis(gen);
 }
@@ -52,17 +53,12 @@ float rfloat(float min, float max) {
 int rint(int min, int max) {
     if (min > max) std::swap(min, max); // Prevent crash on invalid input
 
-    static std::random_device rd;
-    static std::mt19937 gen(rd());
-
     std::uniform_int_distribution<int> dis(min, max);
     return dis(gen);
 }
 
 
 int rbin() {
-    static std::random_device rd;
-    static std::mt19937 gen(rd());
     static std::uniform_int_distribution<int> dist(0, 1);
     return dist(gen); // Returns either 0 or 1
 }
@@ -70,6 +66,22 @@ int rbin() {
 bool rbool() {
     if (rbin() == 0) return false;
     return true;
+}
+
+bool rchance(double chance) {
+    std::bernoulli_distribution dist(chance);
+    return dist(gen);
+}
+
+template<typename E>
+E random_enum()
+{
+    using U = std::underlying_type_t<E>;
+    std::uniform_int_distribution<U> dist(
+        static_cast<U>(E::NONE) + 1,
+        static_cast<U>(E::MAX) - 1
+    );
+    return static_cast<E>(dist(gen));
 }
 
 float lerp(float a, float b, float t) {
@@ -83,6 +95,17 @@ int chebyshev(int x1, int y1, int x2, int y2) {
 float euclideanDist(float x1, float y1, float x2, float y2) {
     return std::sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
+
+struct Percentage {
+    double value;
+
+    explicit Percentage(double v) : value(v) {
+        if (v < 0.0 || v > 1.0) {
+            throw std::out_of_range("Percentage must be between 0.0 and 1.0");
+        }
+    }
+};
+
 
 // Custom hash function for pair<int, int>
 struct hashPair {

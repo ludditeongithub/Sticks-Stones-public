@@ -29,23 +29,12 @@ std::vector<Tile> plowableDirts = { Tile::Podzol, Tile::LoamSoil, Tile::ClaySoil
 
 std::vector<Tile> plowedDirts = { Tile::PlowedPodzol, Tile::PlowedLoamSoil, Tile::PlowedSandySoil, Tile::PlowedClaySoil, Tile::PlowedSiltySoil, Tile::PlowedRockySoil, Tile::PlowedOxisol  };
 
-enum class Animal {
-NONE, Pig, Cow, Chicken, Duck, Sheep, Goat, Horse, Ox, Donkey, Camel, WaterBuffalo, Rabbit, Antelope, Deer, Moose, Capybara, Turtle, Elephant, Bison, Wolf, Bear, Caribou, Fish, MAX,
-};
-
-Animal grassEaters[] = {Animal::Cow, Animal::Sheep, Animal::Goat, Animal::Rabbit, Animal::Antelope, Animal::Deer, Animal::Caribou};
-
-Animal wolfDiet[] = {Animal::Pig, Animal::Chicken, Animal::Duck, Animal::Sheep, Animal::Goat, Animal::Rabbit, Animal::Antelope, Animal::Deer, Animal::Capybara, Animal::Caribou};
-Animal bearDiet[] = {Animal::Pig, Animal::Chicken, Animal::Cow, Animal::Duck, Animal::Sheep, Animal::Goat, Animal::Ox, Animal::WaterBuffalo, Animal::Rabbit, Animal::Antelope, Animal::Deer, Animal::Capybara, Animal::Caribou, Animal::Fish};
 
 
 enum class Grass {
 NONE, EDIBLE, Grass, SavannahGrass,
 };
 
-enum class Plant {
-NONE, EDIBLE, WOOD, Fern, Moss, Reed, Wheat, Oat, Rice, Bush, Papyrus, PioneerTree, DeciduousTree, EvergreenTree, TropicalTree, OrangeTree, LemonTree, LimeTree, PeachTree, PlumTree, CherryTree, ApricotTree, MangoTree, Cactus, AppleTree, PearTree, OliveTree, BlueberryShrub, StrawberryShrub, Grapevine, Lettuce, Kale, Corn, Carrot, Beets, Potato, Onion, Garlic, Cabbage, Broccoli, Tomato, Cucumber, Pepper, BlackPepper, Cotton, Hemp, Flax, Woad, Madder, Indigo, Lavender, Mint, Thyme, Sage, Ginseng, Rhubarb, Poppy, Cocoa, Senna, Saffron, AloeVera, MAX,
-};
 
 enum class Wall {
 NONE, TentSticks, Wattle, Cob, Wood, Stone, Brick, Log, Fence, Gate, Bronze, Iron, Steel, Pillar, Door, CityGate, MAX
@@ -536,21 +525,6 @@ enum class Hide {
 NONE, PigSkin, CowHide, OxHide, SheepHide, GoatHide, HorseSkin, DonkeySkin, WaterBuffaloHide, RabbitHide, AntelopeHide, DeerHide, MooseHide, CapybaraHide, ElephantHide, BisonHide, WolfPelt,
 };
 
-enum class Fruit {
-	NONE,
-    //also doubles for juice
-    Orange, Apple, Lemon, Pear, Peach, Cherry, Apricot, Plum, Lime,
-    //Non-fall fruits
-    Blueberry, Strawberry, Grape,
-    //FRUIT VEGGIES
-    Cucumber, Pepper, Tomato
-};
-
-struct FruitObject {
-Fruit fruit;
-uint8_t amount;
-};
-
 struct ItemObject {
 Item item;
 uint8_t amount;
@@ -697,7 +671,29 @@ enum class Station {
 };
 
 enum class Scavengeable {
-NONE, Log, Pebble, LargeStick, Stick, Rock, LargeRock, Boulder, Flint, Ore, Corpse, Beehive, ArtificialBeehive, Stump, ChickenEgg, DuckEgg, TurtleEgg, Truffle
+  NONE,
+  Log,
+  Pebble,
+  LargeStick,
+  Stick,
+  Rock,
+  LargeRock,
+  Boulder,
+  Flint,
+  Ore,
+  Corpse,
+  Beehive,
+  ArtificialBeehive,
+  Stump,
+  ChickenEgg,
+  DuckEgg,
+  TurtleEgg,
+  Truffle,
+   Orange, Apple, Lemon, Pear, Peach, Cherry, Apricot, Plum, Lime,
+    //Non-fall fruits
+   // Blueberry, Strawberry, Grape,
+    //FRUIT VEGGIES
+    Cucumber, Pepper, Tomato
 };
 
 enum class ItemType {
@@ -798,6 +794,35 @@ int objectToInt(Object object) {
     }, object);
 }
 
+enum class MovingStatus {
+Idle,
+Wander,
+Prowl, // looking for targets, but don't know where
+Flee,
+//PursuitX means sprinting to visible target
+Pursuit,
+AnimalPursuit,
+// ApproachX means walking to known/visible target
+ApproachPlant,
+ApproachGrass,
+ReturnHome,
+};
+
+enum class MatingStatus {
+  Idle,
+  Searching,
+  Pregnant, // equivalent of fertilized for egg layers
+  Infertile
+};
+
+enum class Diet {
+Herbivore, Omnivore, Carnivore, Scavenger
+};
+
+
 //TODO: animal diet categories
 
+
+
 #endif // CATEGORIES_H_
+

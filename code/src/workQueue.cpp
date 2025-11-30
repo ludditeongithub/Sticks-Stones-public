@@ -5,6 +5,19 @@
 #include "../include/cropdata.hpp"
 #include "unit.hpp"
 
+bool checkOccupied(int pawn) {
+  switch (movingStatus[pawn]) {
+  case MovingStatus::Idle:
+    return false;
+  case MovingStatus::Wander:
+    return false;
+  case MovingStatus::Relax:
+    return false;
+  }
+  return true;
+  }
+}
+
 //TILE DATA
 //variantIndex superfluous for non-variant items
 void getResourceAction(int pawn, Item item, int sourceIndex, int variantIndex) {
@@ -48,7 +61,7 @@ void getResourceAction(int pawn, Item item, int sourceIndex, int variantIndex) {
 //RESOURCES PAWN MANAGEMENT
 
 // gets resource at certain tile, when pawn is adjacent to it, by confirming action.
-void getResource(Item item) {
+void collectResource(Item item) {
     if (item < Item::RESOURCEMAX) return;
     Source resource = resources[item];
     //find available pawns who can perform actions (On^3)
@@ -56,8 +69,8 @@ void getResource(Item item) {
     int pawnIndex;
     int actionIndex;
     Role role;
-    for (int i = 0; i < occupied.size(); i++) { // check each pawn
-        if (occupied[i] <= 0) {
+    for (int i = 0; i < roles.size(); i++) { // check each pawn
+      if (!checkOccuppied(i)) {
             for (int j = 0; j < roles[i].size(); j++) {
                 for (int k = 0; k < resources.action.size(); k++) {
                     if (actionToRoles[resources.action[k]] == roles[i][j]) {
@@ -186,14 +199,14 @@ bool checkActionRequisites(Resource resource, int pawn) {
 //TODO: check if item or fruit object is removed, if amt 0, remove from objectLocation
 
 //RESOURCE PAWN MANAGEMENT
- void attemptResource(int pawn, Role role) {
-     if (role !< Role:RESOURCEMAX) return;
+ void setTargetResource(int pawn, Role role) {
+     if !(role < Role:RESOURCEMAX) return;
      for (int i = 0; i < resourceUnitResources[static_cat<int>(role)].size(); i++) {
          Item item = resourceUnitResources[static_cast<int>(role)][i];
-         Resource resource = resources[static_cast<int>(item)];
+         Resource resource = itemToResource(item);
          if !(checkActionRequisites(resource, pawn)) return;
         /* TODO: max man dist, nearest search logic for known areas
-        currentDests[pawn] = findNearestObjectIndex(item, pawnCoords[pawn].first, pawnCoords[pawn].second);
+        dests[pawn] = findNearestObjectIndex(item, pawnCoords[pawn].first, pawnCoords[pawn].second);
         */
         //method 2 (unpreferred): prowl for resource
         currentTarget[pawn] = item;
@@ -232,7 +245,7 @@ bool attemptProduction(int pawn, ProductVariant product) {
         //TODO: find nearest unprocessing liquid vessel, or get from inventory if none
         bool found = false;
         while (!found) {
-            if (filledLiquidContainers.find(findNearestLiquidContainer(currentCoords[pawn].first, currentCoords[pawn]second)) != filledLiquidContainers.end())
+            if (filledLiquidContainers.find(findNearestLiquidContainer(coords[pawn].first, coords[pawn]second)) != filledLiquidContainers.end())
 
         }
         int maxAmount = 99999;
@@ -319,9 +332,9 @@ bool attemptProduction(int pawn, ProductVariant product) {
         } else {
                 //try to find nearest ingredient
             //TODO: create nearest with lower man dist, also do for non-alternate recipe
-            std::pair<int,int> itemCoord = findNearestObject(recipe.ingredients[i], currentCoords[pawn].first, currentCoords[pawn]second);
-            if (itemCoord != {-1, -1} && manDist(currentCoords[pawn], itemCoord) < nearGatherRange) {
-                currentDests[pawn] = tileIndices[itemCoord];
+            std::pair<int,int> itemCoord = findNearestObject(recipe.ingredients[i], coords[pawn].first, coords[pawn]second);
+            if (itemCoord != {-1, -1} && manDist(coords[pawn], itemCoord) < nearGatherRange) {
+                dests[pawn] = tileIndices[itemCoord];
                 movingStatus[pawn] = MovingStatus::ApproachItem;
                 //NOTE: async logic here?
                 findPromise[pawn] = std::promise<void>();
@@ -378,11 +391,11 @@ void productFinish(ProductVariant product, int pawn, Actions action, uint16_t va
             //TODO: deal with if container doesnt fit
         //BUILDABLE
         } else if (std::holds_alternative<Buildable>(currentProducts[pawn])) {
-             std::pair<int,int> itemCoords = coordsFromFacing(currentCoords[pawn], currentDirections[pawn]);
+             std::pair<int,int> itemCoords = coordsFromFacing(coords[pawn], directions[pawn]);
             tileObject[tileIndex[itemCoords]] = currentProducts[pawn];
         //VEHICLE
         } else if (std::holds_alternative<Vehicle>(currentProducts[pawn])) {
-            std::pair<int,int> itemCoords = coordsFromFacing(currentCoords[pawn], currentDirections[pawn]);
+            std::pair<int,int> itemCoords = coordsFromFacing(coords[pawn], directions[pawn]);
             tileObject[tileIndex[itemCoords]] = currentProducts[pawn];
     } //OTHER ITEMS
             else {

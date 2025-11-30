@@ -1,232 +1,35 @@
 #include "animal.hpp"
 
-void addAnimal(AnimalData animal, int x, int y) {
-	int ai = nextAnimalIndex.pop();
-	//consider multithreading locks here
-	animalIndices[{x,y}] = ai;
-	animals[ai] = animal.type;
-	rbool() ? animalSex[ai] = true : animalSex[ai] = false;
-	animalHealth[ai] = animal.health;
-	animalHunger[ai] = animal.hunger;
-	animalCoords[ai] = {x,y};
-}
 
-void animalDeath(int animalIndex) {
-	addCorpse(animals[animalIndex], animalCoords.first, animalCoords.second);
-	nextAnimalIndex.push(animalIndex);
-	animals[animalIndex] = Animal::NONE;
-}
-
-int getFruitHunger(Fruit fruit) {
-	switch (fruit) {
-		case Fruit::Apple:
-			return 360;
-		case Fruit::Orange:
-			return 340;
-		case Fruit::Pear:
-			return 320;
-		case Fruit::Peach:
-			return 300;
-		case Fruit::Plum:
-			return 180;
-		case Fruit::Apricot:
-			return 160;
-		case Fruit::Cherry:
-			return 100;
-		case Fruit::Blueberry:
-			return 200;
-		case Fruit::Strawberry:
-			return 120;
-		case Fruit::Grape:
-			return 240;
-		case Fruit::Lemon:
-			return 20;
-		case Fruit::Lime:
-			return 20;
-	}
-}
-
-//TODO: large corpses can be only partially eaten, and remain with the hunger points not consumed until they rot
-int getCorpseHunger(Station corpse) {
-	switch (corpse) {
-		case Station::PigCorpse:
-			return 19500;
-		case Station::CowCorpse:
-			return 40500;
-		case Station::ChickenCorpse:
-			return 800;
-		case Station::DuckCorpse:
-			return 1000;
-		case Station::SheepCorpse:
-			return 10000;
-		case Station::GoatCorpse:
-			return 8500;
-		case Station::OxCorpse:
-			return 700000;
-		case Station::HorseCorpse:
-			return 32500;
-		case Station::DonkeyCorpse:
-			return 9500;
-		case Station::CamelCorpse:
-			return 26500;
-		case Station::WaterBuffaloCorpse:
-			return 38000;
-		case Station::RabbitCorpse:
-			return 500;
-		case Station::AntelopeCorpse:
-			return 15000;
-		case Station::DeerCorpse:
-			return 16000;
-		case Station::MooseCorpse:
-			return 49000;
-		case Station::CapybaraCorpse:
-			return 6400;
-		case Station::ElephantCorpse:
-			return 650000;
-		case Station::BisonCorpse:
-			return 85000;
-		case Station::WolfCorpse:
-			return 5500;
-		case Station::BearCorpse:
-			return 65000;
-		case Station::CaribouCorpse:
-			return 22500;
-	default:
-			return 0;
-	}
-}
-
-int getMeatAmount(Corpse corpse) {
-	switch (corpse) {
-		case Station::PigCorpse:
-			return 98;
-		case Station::CowCorpse:
-			return 260;
-		case Station::ChickenCorpse:
-			return 7;
-		case Station::DuckCorpse:
-			return 5;
-		case Station::SheepCorpse:
-			return 36;
-		case Station::GoatCorpse:
-			return 32;
-		case Station::OxCorpse:
-			return 312;
-		case Station::HorseCorpse:
-			return 242;
-		case Station::DonkeyCorpse:
-			return 162;
-		case Station::CamelCorpse:
-			return 308;
-		case Station::WaterBuffaloCorpse:
-			return 320;
-		case Station::RabbitCorpse:
-			return 3;
-		case Station::AntelopeCorpse:
-			return 43;
-		case Station::DeerCorpse:
-			return 39;
-		case Station::MooseCorpse:
-			return 412;
-		case Station::CapybaraCorpse:
-			return 28;
-		case Station::ElephantCorpse:
-			return 1280;
-		case Station::BisonCorpse:
-			return 350;
-		case Station::WolfCorpse:
-			return 12;
-		case Station::BearCorpse:
-			return 580;
-		case Station::CaribouCorpse:
-			return 65;
-	default:
-			return 0;
-}
-
-int getPlantHunger(Plant plant) {
-	case Plant::Fern: return 1;
-case Plant::Moss: return 0;
-case Plant::Reed: return 4;
-case Plant::Wheat: return 4;
-case Plant::Oat: return 5;
-case Plant::Rice: return 4;
-case Plant::Bush: return 3;
-case Plant::Papyrus: return 4;
-case Plant::PioneerTree: return 4;
-case Plant::DeciduousTree: return 7;
-case Plant::EvergreenTree: return 5;
-case Plant::TropicalTree: return 8;
-case Plant::OrangeTree: return 6;
-case Plant::LemonTree: return 6;
-case Plant::LimeTree: return 6;
-case Plant::PeachTree: return 6;
-case Plant::PlumTree: return 6;
-case Plant::CherryTree: return 6;
-case Plant::ApricotTree: return 6;
-case Plant::Cactus: return 6;
-case Plant::AppleTree: return 7;
-case Plant::PearTree: return 6;
-case Plant::OliveTree: return 5;
-case Plant::BlueberryShrub: return 4;
-case Plant::StrawberryShrub: return 4;
-case Plant::Grapevine: return 6;
-case Plant::Lettuce: return 3;
-case Plant::Kale: return 3;
-case Plant::Corn: return 6;
-case Plant::Carrot: return 4;
-case Plant::Beets: return 4;
-case Plant::Potato: return 5;
-case Plant::Onion: return 3;
-case Plant::Garlic: return 3;
-case Plant::Cabbage: return 4;
-case Plant::Broccoli: return 4;
-case Plant::Tomato: return 3;
-case Plant::Cucumber: return 3;
-case Plant::Pepper: return 3;
-case Plant::Peas: return 4;
-case Plant::Beans: return 4;
-case Plant::Cotton: return 2;
-case Plant::Hemp: return 2;
-case Plant::Flax: return 2;
-case Plant::Woad: return 1;
-case Plant::Madder: return 1;
-case Plant::Indigo: return 1;
-case Plant::Lavendar: return 1;
-case Plant::Mint: return 4;
-case Plant::Thyme: return 3;
-case Plant::Sage: return 3;
-case Plant::Ginseng: return 1;
-case Plant::Poppy: return 2;
-case Plant::Cocoa: return 4;
-case Plant::Senna: return 1;
-case Plant::Saffron: return 0;
-return 0;
-}
-
-void eatGrass(int objectIndex, int tileIndex {
+void AnimalDatabase::eatGrass(int index, int tileIndex, TileDatabase &tdb) {
 	//objectIndex can be enum class conversion to item, or tile index
-	animalHunger[objectIndex] += grassHunger;
+    uint16_t maxGrassFill = calcGrassHungerFill(grassLength[tileIndex]);
+    uint16_t maxHunger = calcMaxHunger(index);
+    uint16_t hungerTillMax = maxHunger - hunger[index];
+    uint16_t grassDemanded = calcGrassLengthForHungerFill(hungerTillMax);
+    hunger[index] = min(maxHunger, hunger[index] + maxGrassFill);
+    tdb.cutGrass(tileIndex, );
 	//TODO: cut grass between long and short
-	tileGrass[tileIndex] = Grass::NONE;
+	renderTile(tileIndex);
 }
 
-void eatFruit(int objectIndex, int fruitTypeIndex, int tileIndex) {
+void AnimalDatabase::eatFruit(int index, int fruitTypeIndex, int tileIndex) {
 	//objectIndex can be enum class conversion to item, or tile index
-	animalHunger[objectIndex] += getFruitHunger(static_cast<Fruit>(fruitTypeIndex));
+  hunger[index] = min(hunger[index] + fruitHungerFill[static_cast<Fruit>(fruitTypeIndex)], maxHunger[animal]);
 	tileObjectAmt[tileIndex] -= 1;
 	if (tileObjectAmt[tileIndex] == 0) tileObject[tileIndex] = Fruit::NONE;
 }
 
-void eatPlant(int objectIndex, int tileIndex) {
+void AnimalDatabase::eatPlant(int index, int tileIndex) {
 	//objectIndex can be enum class conversion to item, or tile index
-	animalHunger[objectIndex] += getPlantHunger(static_cast<Plant>(plants[plantIndex]));
-	tileObjectAmt[tileIndex] -= 1;
-	if (tileObjectAmt[tileIndex] == 0) tilePlant[tileIndex] = NONE;
+        Plant& plant = tileIndexToPlantIndex[tileIndex];
+	
+	hunger[objectIndex] = min(hunger[index] + plantHungerFill[static_cast<Fruit>(fruitTypeIndex)], maxHunger[animal]);
+	//TODO: make it affect the object database	
 }
 
 // in ticks
-int calculateTimeTillFeed(int hungerAmount, Animal animal) {
+int AnimalDatabase::calculateTimeTillFeed(int hungerAmount, Animal animal) {
 	float maxHunger;
 	float tickBurnRate;
 	int timeTillFeed;
@@ -312,10 +115,10 @@ void buildAnimalTree() {
 
 void spawnAnimal(Animal animal, int coordIndex) {
 	animals.push_back(animal);
-	rbool() ? animalSex.push_back(true) : animalSex.push_back(false);
-	animalCoords.push_back(tileCoords[coordIndex]);
-	animalHealth.push_back(getFullAnimalHealth(animal));
-	animalHunger.push_back(getFullAnimalHunger(animal));
+	rbool() ? sex.push_back(true) : sex.push_back(false);
+	coords.push_back(tileCoords[coordIndex]);
+	health.push_back(getFullAnimalHealth(animal));
+	hunger.push_back(getFullAnimalHunger(animal));
 	//spawn new graphic here
 }
 
@@ -343,58 +146,7 @@ void addEgg(std::pair<int,int> coords, int index, Animal animal, bool fertilized
 	}
 }
 
-void layEgg(Animal animal, int animalIndex) {
-	std::pair<int, int> animalCoord = animalCoords[animalIndex];
-	int index = tileIndices(animalCoords);
-	//TODO: make variable hatching times for each egg
-    animalMatingStatus[animalIndex] == MatingStatus::Pregnant ? bool fertilized = true : bool fertilized = false;
-	addEgg(animalCoord, index, animal, fertilized);
-
-}
-
-void hatchEgg(Animal animal, int coordIndex) {
-	spawnAnimal(animal, coordIndex);
-	tileObject[index] = Scavengeable::NONE;
-}
-
-std::pair<int,int> findBreedingPartner(int x, int y, int i, Animal animal) {
-	std::pair<int,int> ne = findNearestObject(animal, x, y);
-
-	return -1; //not found
-}
-
-// doubles as carrying fertile egg for egg layers
-void pregnancy(int animalIndex) {
-	animalMatingStatus[animalIndex] = MatingStatus::Pregnant;
-	//event which adds timer when hen becomes unfertilized and needs to mate again
-	if (eggLayer(animals[animalIndex])) {
-		//TODO: change values based on animal
-		addEvent(40300, EventType::NotFertilized, 0, animalIndex);
-		return;
-	}
-	//TODO: finish pregnancy timings for all animals
-	switch(animals[animalIndex]) {
-		default:
-			pregnantAnimalTimer.push_back(160000);
-	}
-}
-
-void setUnfertilized(int animalIndex) {
-	animalMatingStatus[animalIndex] = MatingStatus::Idle;
-}
-
-bool eggLayer(Animal animal) {
-	switch (animal) {
-		case Animal::Duck:
-		case Animal::Chicken:
-		case Animal::Turtle:
-			return true;
-	}
-	return false;
-}
-
-
-void animalHunt(Direction direction, Animal animal, int animalIndex) {
+void AnimalDatabase::animalHunt(Direction direction, Animal animal, int animalIndex) {
 		//NOTE: random here, maybe simplify
 	if (rint(0, 10)	< 9) {
 
@@ -405,7 +157,7 @@ void animalHunt(Direction direction, Animal animal, int animalIndex) {
 	}
 }
 
-void animalHunt(Direction direction, Animal animal, int animalIndex) {
+void AnimalDatabase::animalHunt(Direction direction, Animal animal, int animalIndex) {
 	while (bool found = false) {
 		Direction goDirection = direction;
 		//NOTE: random here, maybe simplify
@@ -421,7 +173,7 @@ void animalHunt(Direction direction, Animal animal, int animalIndex) {
 
 
 //animalIndex is female, but the male partner is who goes on path to find female
-// void breed(int maleIndex, int femaleIndex) {
+/void AnimalDatabase::breed(int maleIndex, int femaleIndex) {
 // 		if (eggLayer(animals[femaleIndex])) {
 // 			//egg lays on a schedule regardless, this randomizes interest of male
 // 			meet(maleIndex, femaleIndex, true, true, MeetEvent::EggBreeding);
@@ -430,8 +182,8 @@ void animalHunt(Direction direction, Animal animal, int animalIndex) {
 // }
 
 // for every animal, trigger breeding if female, interpret and some chance is met, not currently processing offspring
-void setInitialBreedEvent(int i) {
-	if (animalSex[i]) continue;
+void AnimalDatabase::setInitialBreedEvent(int i) {
+	if (sex[i]) continue;
 	if (isPregant[i]) continue;
 		//TODO: get times for how often breeding triggers.
 		switch (animals[i]) {
@@ -439,10 +191,10 @@ void setInitialBreedEvent(int i) {
 				addEvent(30000, EventType::AnimalBreeding, static_cast<int>(animals[i]), i);
 		}
 }
-
-void animalBirth(Animal animal, int animalIndex) {
+ 
+void AnimalDatabase::birthAnimal(Animal animal, int animalIndex) {
 // TODO: perhaps include age lowering fertility later
-std::pair<int,int> dest = animalCoords(animalIndex);
+std::pair<int,int> dest = coords(animalIndex);
 int animalSize = getAnimalSize(animal);
 //TODO: make non-index versions of all pathfinding algos
 TileBlock tb = getNearestAdjacentTileBlock(tileIndices[dest], animalSize * 2 - 1);
@@ -454,93 +206,17 @@ addAnimal(animal, dest.first, dest.second);
 addEvent(getBreedingTime(animal), EventType::AnimalBreeding, static_cast<int>(animals[animalIndex]), animalIndex);
 }
 
-// void preyFeed(int animalIndex) {
-// 	Animal feeder = animals[animalIndex];
-// 	if (animalHunger[animalIndex] < hungerThreshold(feeder));
-// 	addEvent(calculateTimeTillFeed(animalHunger[animalIndex], feeder), EventType::PreyFeed, static_cast<int>(feeder), animalIndex);
-
-// 	int futureConsumption = 0;
-
-// 	 bool grassEater = false;
-// 	 for (int i = 0; i < grassEaters.size(); i++) {
-// 		 if (feeder == grassEaters[i]) {
-// 			 grassEater = true;
-// 		 }
-// 	 }
-// 	 if (grassEater) {
-// 		 moveAnimal(animalIndex, getNearestAdjacentEmptyTileIndex(tileIndices[animalCoords[animalIndex]]), DelayedEvent::EatGrass);
-// 	 } else if (plantEater) {
-// 		 size_t numResults = 8;
-// 		bool found = false;
-// 		 int start = 0;
-// 		 while (!found) {
-// 			 uint32_t retIndex[numResults]; // nearest neighbor index
-// 		 float outDistSqr[numResults]; //distance between nn and current
-// 		 std::vector<float> coords = {(float)animalCoords[animalIndex].first, (float)animalCoords[animalIndex].second}
-// 		 plants.knnSearch(coords, numResults, &retIndex[0], &outDistSqr[0]);
-// 		 std::pair<int,int> dest;
-// 		 for (int i = start; i < numResults; i++) {
-// 			 for (int j = 0; j < diet.size(); j++) {
-// 				 if (plants[retIndex[i]] == diet[j]) {
-// 					 found = true;
-// 					 dest = plantCoords[retIndex];
-// 					 destIndex = tileIndices(dest);
-// 					 futureConsumption += getHunger(static_cast<Fruit>(tileObject[destIndex]));
-// 				 }
-// 			 }
-// 		 }
-// 		 if (!found) {
-// 			 start = numResults;
-// 			 numResults *= 2;
-// 		 }
-// 	 }
-// 		 //TODO: consume plant
-// 		 moveAnimal(animalIndex, destIndex, DelayedEvent::EatPlant);
-// 	} else if (fruitEater) {
-// 		 size_t numResults = 8;
-// 		 bool found = false;
-// 		 int start = 0;
-// 		 while (!found) {
-// 			 uint32_t retIndex[numResults]; // nearest neighbor index
-// 			 float outDistSqr[numResults]; //distance between nn and current
-// 			 std::vector<float> coords = {(float)animalCoords[animalIndex].first, (float)animalCoords[animalIndex].second}
-// 			 fruits.knnSearch(coords, numResults, &retIndex[0], &outDistSqr[0]);
-// 			 std::pair<int,int> dest;
-// 			 int destIndex;
-// 		for (int i = start; i < numResults; i++) {
-// 			 for (int j = 0; j < diet.size(); j++) {
-// 				 //TODO: link fruit
-// 				 if (fruits[retIndex[i]] == diet[j]) {
-// 					 found = true;
-// 					 dest = plantCoords[retIndex];
-// 					 destIndex = tileIndices(dest);
-// 					 futureConsumption += getHunger(static_cast<Fruit>(tileObject[destIndex]));
-// 				 }
-// 			 }
-// 		 }
-// 		 if (!found) {
-// 			 start = numResults;
-// 			 numResults *= 2;
-// 		 }
-// 		 moveAnimal(animalIndex, destIndex, DelayedEvent::EatFruit);
-// 	 }
-// }
-// 	 //calculate next feeding time and send as future event
-// 	 addEvent(calculateTimeTillFeed(animalHunger[animalIndex] + futureConsumption, feeder), EventType::PreyFeed, static_cast<int>(feeder), animalIndex);
-// }
-
-void preyFeed(int animalIndex) {
-
-	addEvent(calculateTimeTillFeed(animalHunger[animalIndex] + futureConsumption, feeder), EventType::PreyFeed, static_cast<int>(feeder), animalIndex);
+void AnimalDatabase::preparePreyFeed(int animalIndex) {
+	addEvent(calculateTimeTillFeed(hunger[animalIndex] + futureConsumption, feeder), EventType::PreyFeed, static_cast<int>(feeder), animalIndex);
 }
 
 //TODO: if outDistSqr not required, do not do it
-void predatorFeed(int animalIndex) {
+void AnimalDatabase::preparePredatorFeed(int animalIndex) {
 
-	addEvent(calculateTimeTillFeed(animalHunger[animalIndex] + futureConsumption, feeder), EventType::PredatorFeed, animalType, animalIndex);
+	addEvent(calculateTimeTillFeed(hunger[animalIndex] + futureConsumption, feeder), EventType::PredatorFeed, animalType, animalIndex);
 }
-
-void setInitialFeedingTime(int animalIndex) {
+ 
+void AnimalDatabase::setInitialFeedingTime(int animalIndex) {
 	Animal animal = animals(animalIndex);
 	//calculate feeding time
 	bool predator;

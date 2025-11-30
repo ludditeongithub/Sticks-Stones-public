@@ -854,4 +854,6 @@ vehicles[static_cast<int>(Buildable::Catapult)] = {Actions::SiegeCraft, 38000, {
 vehicles[static_cast<int>(Tool::SiegeLadder)] = {Actions::Craft, 580, {Item::LargeAxle, Item::Beam}, {2,14}, {1,2}};
 vehicles[static_cast<int>(Vehicle::SiegeTower)] = {Actions::SiegeCraft, 12800, {Item::SiegeLadder, Item::Planks, Item::Nail, Item::LargeAxle, Item::Wheel}, {1, 40, 80, 2, 4}, {1,2,3,4,5}};
 }
+
+
 #endif // ITEMRECIPES_H_

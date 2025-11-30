@@ -1,8 +1,10 @@
-#include "checksAndScans.h"
+#include "../include/basic.hpp"
+#include "../include/categories.hpp"
+#include "../include/unit.hpp"
 
 //NOTE: may not work
 Direction checkIfAdjTarget(int pawn) {
-    std::pair<int,int> coords = currentCoords[pawn];
+    std::pair<int,int> coords = coords[pawn];
     Object obj;
     for (int i = 0; i < 4; i++) {
         switch (i) {
@@ -44,11 +46,11 @@ void moveInDirection(int pawn, bool animal) {
         else if (direction == Direction::West) animalCoords[pawn].first -= 1;
         insertObject(entity, animalCoords[pawn].first, animalCoords[pawn].second);
     } else {
-        if (direction == Direction::North) currentCoords[pawn].second += 1;
-        else if (direction == Direction::South) currentCoords[pawn].second -= 1;
-        if (direction == Direction::East) currentCoords[pawn].first += 1;
-        else if (direction == Direction::West) currentCoords[pawn].first -= 1;
-        currentIndices[currentCoords[pawn]] = pawn;
+        if (direction == Direction::North) coords[pawn].second += 1;
+        else if (direction == Direction::South) coords[pawn].second -= 1;
+        if (direction == Direction::East) coords[pawn].first += 1;
+        else if (direction == Direction::West) coords[pawn].first -= 1;
+        currentIndices[coords[pawn]] = pawn;
     }
 }
 
@@ -57,19 +59,19 @@ void moveInDirection(int pawn, bool animal) {
 //right now, tells you direction and if you should move (if you have reached target)
 // for when dest is tile
 std::pair<Direction, bool> nextDirectionToTarget(int pawnIndex) {
-    if (adjCheckTile(currentCoords[pawnIndex], currentDest[pawnIndex]) != Direction::NONE) return {adjCheckTile(currentCoords[pawnIndex], currentDest[pawnIndex]), false};
+    if (adjCheckTile(coords[pawnIndex], dest[pawnIndex]) != Direction::NONE) return {adjCheckTile(coords[pawnIndex], dest[pawnIndex]), false};
     Direction direction = Direction::NONE;
-    int dx = tileCoords[dest[pawnIndex]].first - currentCoords[pawnIndex].first;
-    int dy = tileCoords[dest[pawnIndex]].second - currentCoords[pawnIndex].second;
+    int dx = tileCoords[dest[pawnIndex]].first - coords[pawnIndex].first;
+    int dy = tileCoords[dest[pawnIndex]].second - coords[pawnIndex].second;
     if (dx > 0) {
         direction = Direction::West;
     } else {
         direction = Direction::East;
     } else if (dy > 0) {
-        if (getInertia(currentCoords, Direcion::North)  < getInertia(currentCoords, direction))
+        if (getInertia(coords, Direcion::North)  < getInertia(coords, direction))
         direction = Direction::North;
     } else {
-        if (getInertia(currentCoords, Direcion::South)  < getInertia(currentCoords, direction))
+        if (getInertia(coords, Direcion::South)  < getInertia(coords, direction))
         direction = Direction::South;
     }
     return {direction, true};
@@ -78,23 +80,23 @@ std::pair<Direction, bool> nextDirectionToTarget(int pawnIndex) {
 //for when dest is animal or human
 std::pair<Direction, bool> nextDirectionToMovingTarget(int pawnIndex, bool animal) {
     if (animal) {
-        int targetIndex = tileIndices[animalCoords[currentDest[i]]];
-    } else int targetIndex = tileIndices[currentCoords[currentDest[i]]];
+        int targetIndex = tileIndices[animalCoords[dest[i]]];
+    } else int targetIndex = tileIndices[coords[dest[i]]];
 
-    if (adjCheckTile(currentCoords[pawnIndex], targetIndex) != Direction::NONE) return {adjCheckTile(currentCoords[pawnIndex], targetIndex), false};
+    if (adjCheckTile(coords[pawnIndex], targetIndex) != Direction::NONE) return {adjCheckTile(coords[pawnIndex], targetIndex), false};
 
       Direction direction = Direction::NONE;
-    int dx = currentDest[pawnIndex].first - currentCoords[pawnIndex].first;
-    int dy = currentDest[pawnIndex].second - currentCoords[pawnIndex].second;
+    int dx = dest[pawnIndex].first - coords[pawnIndex].first;
+    int dy = dest[pawnIndex].second - coords[pawnIndex].second;
     if (dx > 0) {
         direction = Direction::West;
     } else {
         direction = Direction::East;
     } else if (dy > 0) {
-        if (getInertia(currentCoords, Direcion::North)  < getInertia(currentCoords, direction))
+        if (getInertia(coords, Direcion::North)  < getInertia(coords, direction))
         direction = Direction::North;
     } else {
-        if (getInertia(currentCoords, Direcion::South)  < getInertia(currentCoords, direction))
+        if (getInertia(coords, Direcion::South)  < getInertia(coords, direction))
         direction = Direction::South;
     }
     return {direction, true};
@@ -173,7 +175,7 @@ void huntCheck(Animal& huntList[], int pawnIndex, Direction direction, bool anim
                 animalDest[pawnIndex] = animalIndex;
                  animalMovingStatus[pawnIndex] = MovingStatus::AnimalPursuit;
                 } else {
-                    currentDest[pawnIndex] = animalIndex;
+                    dest[pawnIndex] = animalIndex;
                     movingStatus[pawnIndex] = MovingStatus::AnimalPursuit;
                 }
             }
@@ -222,7 +224,7 @@ void searchPlantCheck(int pawn, Direction direction, bool total) {
         if !(isPlant(tileObject[index])) continue;
         for (int i = 0; i < .size(); i++) {
             if (tileObject[index] == herbivoreDiet[i]) {
-                currentDest[pawn] = index;
+                dest[pawn] = index;
                 movingStatus[pawn] = MovingStatus::ApproachPlant;
             }
         }
@@ -236,7 +238,7 @@ void itemCheck(int pawn, Direction direction, bool total) {
     for (int x = 0; x < de.size(); x++) {
         int index = tileIndices(de[x]);
         if (tileObject[index] == currentTarget[pawn]) {
-            currentDest[pawn] = index;
+            dest[pawn] = index;
             movingStatus[pawn] = MovingStatus::GetItem;
         }
     }
@@ -248,7 +250,7 @@ void scavengeableCheck(int pawn, Direction direction, bool total) {
     for (int x = 0; x < de.size(); x++) {
         int index = tileIndices(de[x]);
         if (tileObject[index] == currentTarget[pawn]) {
-            currentDest[pawn] = index;
+            dest[pawn] = index;
             movingStatus[pawn] = MovingStatus::ApproachScavengeable;
         }
     }

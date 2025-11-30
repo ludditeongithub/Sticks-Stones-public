@@ -1,7 +1,7 @@
 #include "manageInventory.hpp"
 
 uint16_t addItems(int pawn, Item item, uint16_t productAmount) {
-    float remainingSpace = min(currentMaxBulk(inventories[pawn].currentBulkStatus, false) - inventories[pawn].totalBulk, 0);
+    float remainingSpace = min(currentMaxBulk(inventories[pawn].bulkStatus, false) - inventories[pawn].totalBulk, 0);
     uint16_t amount = (uint16_t) min((productAmount, (int)(remainingSpace / bulkAndWeights[item].bulk)));
     if (remainingSpace > bulksAndWeights[static_cast<int>(item)].bulk) {
     if (amount > 0) {
@@ -18,7 +18,7 @@ uint16_t addItems(int pawn, Item item, uint16_t productAmount) {
 }
 
 uint16_t addVariantItems(int pawn, Item item, uint16_t productAmount, int variant) {
-    float remainingSpace = min(currentMaxBulk(inventories[pawn].currentBulkStatus, false) - inventories[pawn].totalBulk, 0);
+    float remainingSpace = min(currentMaxBulk(inventories[pawn].bulkStatus, false) - inventories[pawn].totalBulk, 0);
         uint16_t amount = (uint16_t) min((productAmount, (int)(remainingSpace / bulkAndWeights[item].bulk)));
     if (remainingSpace > bulksAndWeights[static_cast<int>(item)].bulk) {
     if (amount > 0) {
@@ -46,20 +46,20 @@ void removeVariantItem(int pawn, int index, uint16_t amount) {
 void addContainer(int pawn, Container& container) {
     Inventory &in = inventories[pawn];
                 // Add bulk, weight of container, and then put items into container if necessary
-                in.currentBulk += bulkAndWeights[c].bulk;
-                in.currentWeight += bulkAndWeights[c].weight;
+                in.bulk += bulkAndWeights[c].bulk;
+                in.weight += bulkAndWeights[c].weight;
 
             // if single mode, put into container or drop all items
-            if (in.currentBulkStatus == BulkStatus::Single) {
+            if (in.bulkStatus == BulkStatus::Single) {
                 for (int i = 0; i < in.items.size(); i++) {
                     if (in.items[i].second > 0) {
-                        if (bulkAndWeight[in.items[i].first].bulk + container.currentBulk <= capacity) {
+                        if (bulkAndWeight[in.items[i].first].bulk + container.bulk <= capacity) {
                             uint16_t amount = (uint16_t)min((int)in.items[i].second, (int)(capacity / bulkAndWeight[in.items[i].first].bulk));
                             addItemtoContainer(pawn, container, i, amount);
                         } else dropItem(pawn, in.items[i].first, in.items[i].second);
                     }
                     for (int i = 0; i < in.variantItems.size(); i++) {
-                        if (in.variantItems[i].second > 0 && bulkAndWeight[in.variantItems[i].first].bulk + container.currentBulk <= capacity) {
+                        if (in.variantItems[i].second > 0 && bulkAndWeight[in.variantItems[i].first].bulk + container.bulk <= capacity) {
                             uint16_t amount = (uint16_t)min((int)in.variantItems[i].second, (int)(capacity / bulkAndWeight[in.variantItems[i].first].bulk));
                             addVariantItemtoContainer(pawn, container, i, amount);
                         }
@@ -68,25 +68,25 @@ void addContainer(int pawn, Container& container) {
             }
 
             //if mid mode, only put bulk over limit into container
-            if (in.currentBulkStatus == BulkStatus::Mid) {
-                while (in.currentBulk > midBulkMax) {
+            if (in.bulkStatus == BulkStatus::Mid) {
+                while (in.bulk > midBulkMax) {
                     for (int i = 0; i < in.items.size(); i++) {
                     if (in.items[i].second > 0) {
-                        if (bulkAndWeight[in.items[i].first].bulk + container.currentBulk <= capacity) {
-                            uint16_t amount = (uint16_t) (fmin(in.currentBulk - midBulkMax) / bulkAndWeight[in.items[i].first].bulk) + 1;
+                        if (bulkAndWeight[in.items[i].first].bulk + container.bulk <= capacity) {
+                            uint16_t amount = (uint16_t) (fmin(in.bulk - midBulkMax) / bulkAndWeight[in.items[i].first].bulk) + 1;
                             addItemtoContainer(pawn, container, i, amount);
                         } else dropItem(pawn, in.items[i].first, in.items[i].second);
-                        if (in.currentBulk <= midBulkMax) break;
+                        if (in.bulk <= midBulkMax) break;
                     }
-                      if (in.currentBulk <= midBulkMaxx) break;
+                      if (in.bulk <= midBulkMaxx) break;
                     for (int i = 0; i < in.variantItems.size(); i++) {
                         if (in.variantItems[i].second > 0) {
-                            if (&& bulkAndWeight[in.variantItems[i].first].bulk + container.currentBulk <= capacity) {
+                            if (&& bulkAndWeight[in.variantItems[i].first].bulk + container.bulk <= capacity) {
                             uint16_t amount = (uint16_t)min((int)in.variantItems[i].second, (int)(capacity / bulkAndWeight[in.variantItems[i].first].bulk));
                             addVariantItemtoContainer(pawn, container, i, amount);
-                            if (in.currentBulk <= midBulkMax) break;
+                            if (in.bulk <= midBulkMax) break;
                         } else dropItem(pawn, in.items[i].first, in.items[i].second);
-                            if (in.currentBulk <= midBulkMax) break;
+                            if (in.bulk <= midBulkMax) break;
                         }
                     }
                 }
@@ -103,7 +103,7 @@ void fullAddContainer(int pawn, Container c, bool child) {
     else float maxWeight = maxCarry;
 
             //drop if container is too heavy
-    if (currentWeights[pawn] + containerBulkAndWeight[c].weight > maxWeight) return;
+    if (weights[pawn] + containerBulkAndWeight[c].weight > maxWeight) return;
 
     ContainerType ct = itemToContainer(c);
     Container container;
@@ -114,9 +114,9 @@ void fullAddContainer(int pawn, Container c, bool child) {
     bool found = false;
     // put Container in left or right hand, removing tool if necessary
             if (in.leftHand.second == Material::CARRYING) {
-                if (maxCarry < in.currentWeight) addContainer(pawn, container);
+                if (maxCarry < in.weight) addContainer(pawn, container);
             } else if (in.rightHand.second == Material::CARRYING) {
-                if (maxCarry < in.currentWeight) addContainer(pawn, container);
+                if (maxCarry < in.weight) addContainer(pawn, container);
             } else {
                 //attempt to put tool into container
                 if !(toolToContainer(pawn, container, leftHand.first)) {
@@ -141,14 +141,14 @@ void fullAddContainer(int pawn, Container c, bool child) {
                 return;
             }
 
-            if (in.currentBulk == 0) in.currentBulkStatus = BulkStatus::NONE;
-            if (in.currentBulkStatus == BulkStatus::NONE) {
+            if (in.bulk == 0) in.bulkStatus = BulkStatus::NONE;
+            if (in.bulkStatus == BulkStatus::NONE) {
                 switch (containerBulkAndWeights[c].bulklevel) {
                     case BulkLevel::Single:
-                        in.currentBulkStatus = BulkStatus::Single;
+                        in.bulkStatus = BulkStatus::Single;
                         break;
                     default:
-                        in.currentBulkStatus = BulkStatus::Mid;
+                        in.bulkStatus = BulkStatus::Mid;
                 }
             }
 }
@@ -162,11 +162,11 @@ void dropContainer(int pawn, int index) {
 
 uint16_t addItemToContainer(int pawn, Container& container, Item item, uint16_t amount) {
     SizeData sd = bulkAndWeights[static_cast<int>(item)];
-    float remainderBulk = getContainerCapacity(container.containerType) - container.currentBulk;
+    float remainderBulk = getContainerCapacity(container.containerType) - container.bulk;
     if (remainderBulk < sd.bulk || !validContainer(container, item)) return productAmount;
     Inventory& in = inventories[pawn];
     uint16_t amount = (uint16_t) min(min((productAmount, (int)(remainderBulk / bulkAndWeights[item].bulk))), in.items[itemIndex].second);
-    container.currentBulk += sd.bulk * amount;
+    container.bulk += sd.bulk * amount;
     container.curentWeight += sd.weight * amount;
     for (int i = 0; i < container.items.size(); i++) {
         if (container.items[i].first == item) container.items[i].second += amount;
@@ -178,16 +178,16 @@ uint16_t addItemToContainer(int pawn, Container& container, Item item, uint16_t 
 
 uint16_t inventoryToContainer(int pawn, Container& container, int itemIndex, uint16_t productAmount) {
     SizeData sd = bulkAndWeights[static_cast<int>(item)];
-    float remainderBulk = getContainerCapacity(container.containerType) - container.currentBulk;
+    float remainderBulk = getContainerCapacity(container.containerType) - container.bulk;
     if (remainderBulk < sd.bulk || !validContainer(container, item)) return productAmount;
     Inventory& in = inventories[pawn];
     uint16_t amount = (uint16_t) min(min((productAmount, (int)(remainderBulk / bulkAndWeights[item].bulk))), in.items[itemIndex].second);
     Item item = in.items[itemIndex].first;
-    container.currentBulk += sd.bulk * amount;
+    container.bulk += sd.bulk * amount;
     container.curentWeight += sd.weight * amount;
-    in.currentBulk -= sd.bulk * amount;
-    in.currentWeight -= sd.weight * amount;
-    if (currentBulk[pawn] == 0) currentBulkStatus = BulkStatus::NONE;
+    in.bulk -= sd.bulk * amount;
+    in.weight -= sd.weight * amount;
+    if (bulk[pawn] == 0) bulkStatus = BulkStatus::NONE;
     in.items[itemIndex].second -= amount;
     if (in.items[itemIndex].second == 0) in.items[itemIndex].first == Item::NONE;
     for (int i = 0; i < container.items.size(); i++) {
@@ -205,11 +205,11 @@ void moveItemBetweenContainers(int pawn, Container& from, Container& to, Item it
 
 uint16_t addVariantItemToContainer(int pawn, Container& container, Item item, uint16_t variant, uint16_t productAmount) {
     SizeData sd = bulkAndWeights[static_cast<int>(item)];
-    float remainderBulk = getContainerCapacity(container.containerType) - container.currentBulk;
+    float remainderBulk = getContainerCapacity(container.containerType) - container.bulk;
     if (remainderBulk < sd.bulk || !validContainer(container, item)) return productAmount;
     Inventory& in = inventories[pawn];
     uint16_t amount = (uint16_t) min(min((productAmount, (int)(remainderBulk / bulkAndWeights[item].bulk))), in.variantItems[itemIndex].second);
-    container.currentBulk += sd.bulk * amount;
+    container.bulk += sd.bulk * amount;
     container.curentWeight += sd.weight * amount;
     for (int i = 0; i < container.variantItems.size(); i++) {
         if (container.variantItems[i].first == item) container.variantItems[i].second += amount;
@@ -223,16 +223,16 @@ uint16_t addVariantItemToContainer(int pawn, Container& container, Item item, ui
 uint16_t variantInventoryToContainer(int pawn, Container& container, int itemIndex, uint16_t amount) {
     SizeData sd = bulkAndWeights[static_cast<int>(item)];
     uint16_t ret;
-    float remainderBulk = getContainerCapacity(container.containerType) - container.currentBulk;
+    float remainderBulk = getContainerCapacity(container.containerType) - container.bulk;
     if (remainderBulk < sd.bulk || !validContainer(container, item)) return amount;
     Inventory& in = inventories[pawn];
     uint16_t amount = (uint16_t) min(min((productAmount, (int)(remainderBulk / bulkAndWeights[item].bulk))), in.variantItems[itemIndex].second);
     Item item = in.variantItems[itemIndex].first;
-    container.currentBulk += sd.bulk * amount;
+    container.bulk += sd.bulk * amount;
     container.curentWeight += sd.weight * amount;
-    in.currentBulk -= sd.bulk * amount;
-    in.currentWeight -= sd.weight * amount;
-    if (currentBulk[pawn] == 0) currentBulkStatus = BulkStatus::NONE;
+    in.bulk -= sd.bulk * amount;
+    in.weight -= sd.weight * amount;
+    if (bulk[pawn] == 0) bulkStatus = BulkStatus::NONE;
     in.variantItems[itemIndex].second -= amount;
     if (in.variantItems[itemIndex].second == 0) in.variantItems[itemIndex].first == Item::NONE;
     for (int i = 0; i < container.variantItems.size(); i++) {
@@ -250,14 +250,14 @@ bool toolToContainer(int pawn, Container& container, uint8_t toolIndex) {
     Material material = tools[toolIndex].second;
     float bulk = toolBulkAndWeights[static_cast<int>(tool)].bulk;
     float weight = toolBulkAndWeights[static_cast<int>(tool)].weight * weightMultiplier[static_cast<int>(material)];
-    float remainderBulk = getContainerCapacity(container.containerType) - container.currentBulk;
+    float remainderBulk = getContainerCapacity(container.containerType) - container.bulk;
     if (remainderBulk < sd.bulk || !validContainer(container, item)) return false;
     Inventory& in = inventories[pawn];
-    container.currentBulk += sd.bulk;
+    container.bulk += sd.bulk;
     container.curentWeight += sd.weight;
-    in.currentBulk -= sd.bulk;
-    in.currentWeight -= sd.weight;
-    if (currentBulk[pawn] == 0) currentBulkStatus = BulkStatus::NONE;
+    in.bulk -= sd.bulk;
+    in.weight -= sd.weight;
+    if (bulk[pawn] == 0) bulkStatus = BulkStatus::NONE;
     in.tools[toolIndex].first == Tools::NONE;
     container.tools.push_back({tool, material});
     return true;

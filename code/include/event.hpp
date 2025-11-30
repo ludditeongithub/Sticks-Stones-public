@@ -6,7 +6,7 @@
 #include "animal.hpp"
 
 enum class EventType {
-    PawnMoveTile,
+        PawnMoveTile,
 	AnimalMoveTile,
 	ProductComplete,
 	ResourceComplete,
