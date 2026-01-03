@@ -1,0 +1,71 @@
+#ifndef ENUMS_HPP
+#define ENUMS_HPP
+
+namespace animal {
+
+enum class Type {
+  NONE,
+  Pig,
+  Cow,
+  Chicken,
+  Duck,
+  Sheep,
+  Goat,
+  Horse,
+  Ox,
+  Donkey,
+  Camel,
+  WaterBuffalo,
+  Rabbit,
+  Antelope,
+  Deer,
+  Moose,
+  Capybara,
+  Turtle,
+  Elephant,
+  Bison,
+  Wolf,
+  Bear,
+  Caribou,
+  // TODO: fish
+  // lizard
+  // frog
+  // snake
+  // rat
+  // chipmunk
+  // mole
+  // hawk
+  // owl
+  // eagle
+  // crocodile
+  // rhino
+  // hippo
+  // giraffe
+  MAX,
+};
+
+enum class MovingStatus {
+Idle,
+Wander,
+Prowl, // looking for targets, but don't know where
+Flee,
+//PursuitX means sprinting to visible target
+Pursuit,
+Hunt,
+// ApproachX means walking to known/visible target
+ApproachForage,
+ReturnHome,
+};
+
+enum class MatingStatus {
+  Idle,
+  Searching,
+  Pregnant, // equivalent of fertilized for egg layers
+  Infertile
+};
+
+enum class Diet { Herbivore, Omnivore, Carnivore, Scavenger };
+
+}
+
+#endif

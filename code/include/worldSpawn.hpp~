@@ -1,0 +1,119 @@
+#ifndef WORLDGEN_H_
+#define WORLDGEN_H_
+#include "FastNoiseLite.h"
+#include "nanoflann.hpp"
+#include <vector>
+
+using std::vector;
+
+class WorldSpawner {
+    public:
+// Constants
+// IN CELLS
+int currentXMin = 0;
+int currentXMax = 0;
+int currentYMin = 0;
+int currentYMax = 0;
+
+const float coastThreshold = -0.2f;
+const float landThreshold = -25.0f;
+const float lowlandsThreshold = 9.0f;
+const float midlandsThreshold = 14.0f;
+
+const int depressionThreshold = 15;
+const float lowlandsToHighlandsChance = 0.01f; // chance of const lowlands becoming highlands
+const float lowlandsToLakeChance = 0.04f; //additional threshold const to become lake
+const float highlandsChance = 0.20f;
+const float coastalRangeChance = 0.005f;
+const float riverFromMountainChance = 0.5f;
+const float riverFromHighlandChance = 0.2f;
+const float riverFromGroundwaterChance = 0.3f;
+const float riverEndChance = 0.50f;
+const float lakeFromRiverChance = 0.60f;
+const float lakeFromLowlandsChance = 0.05f;
+const float lakeFromMidlandsChance = 0.01f;
+const float lakeExpansionChance = 0.60f;
+const float riverFromLakeChance = 0.40f;
+const float groundWaterThreshold = 80.0f; // how high humidity needs to be for a chance of substantial groundwater to form
+const float humidityMult = 2.2f;
+const float lakeTileChance = 0.07f; //chance that lake tile does NOT happen (smaller sizes mean larger lakes)
+
+private:
+  const int WIDTH = 50;  // Amount of Cells generated WIDTH
+const int HEIGHT = 50; // Amount of Cells generated HEIGHT
+const int BORDER_WIDTH = 3; // Border WIDTH
+const int BORDER_HEIGHT = 3; // Border HEIGHT
+const int CELL_SIZE = 10; // average WIDTH and HEIGHT of each cell
+const int EQUATOR = HEIGHT / 2;
+// IN TILES
+const int WORLD_WIDTH = WIDTH * CELL_SIZE;
+const int WORLD_HEIGHT = HEIGHT * CELL_SIZE;
+const int STARTING_MAP_WIDTH = 300; //for starting player map
+const int STARTING_MAP_HEIGHT = 300;
+
+// New variables to store the size of the map with borders
+const int WIDTH_WITH_BORDER = WIDTH + BORDER_WIDTH * 2;
+const int HEIGHT_WITH_BORDER = HEIGHT + BORDER_HEIGHT * 2;
+
+  vector<vector<int>> oceanMap;
+  vector<vector<int>> landsMap;  
+  vector<vector<int>> altitudeMap;
+  vector<vector<int>> temperatureMap;
+  vector<vector<int>> waterMap; 
+  vector<vector<int>> potentialHumidityMap;  
+  vector<vector<int>> createdHumidityMap;
+  vector<vector<int>> humidityMap; 
+  vector<vector<int>> biomeMap; 
+  vector<vector<bool>> instantiatedWaterMap; 
+  vector<vector<int>> oceanDistance; 
+
+        WorldSpawner() {
+	  oceanMap = vector<vector<int>>(WIDTH_WITH_BORDER, vector<int>(HEIGHT_WITH_BORDER, 0));
+          landsMap = vector<vector<int>>(WIDTH_WITH_BORDER, vector<int>(HEIGHT_WITH_BORDER, 0));
+          altitudeMap = vector<vector<int>>(WIDTH_WITH_BORDER, vector<int>(HEIGHT_WITH_BORDER, 0));
+	  temperatureMap = vector<vector<int>>(WIDTH_WITH_BORDER, vector<int>(HEIGHT_WITH_BORDER, 0));
+	  waterMap = vector<vector<int>>(WIDTH_WITH_BORDER, vector<int>(HEIGHT_WITH_BORDER, 0));
+          potentialHumidityMap = vector<vector<int>>(WIDTH_WITH_BORDER, vector<int>(HEIGHT_WITH_BORDER, 0));
+          createdHumidityMap = vector<vector<int>>(WIDTH_WITH_BORDER, vector<int>(HEIGHT_WITH_BORDER, 0));
+          biomeMap = vector<vector<int>>(WIDTH_WITH_BORDER,
+                                         vector<int>(HEIGHT_WITH_BORDER, 0));
+	  oceanDistance = vector<vector<int>>(HEIGHT, vector<int>(WIDTH, WIDTH * HEIGHT));
+	}
+
+        void generateOceansOnMaps();
+        void  markCoasts();
+        void  applyExtraHighlandsAndMountains();
+        void  generateLandsMap();
+        void  extendRiversFromSource();
+        void  markRiverEnds();
+        void  generateWaterMap();
+
+        void  generateTemperatureMap();
+        void  generateHumidityMap();
+        void  factorWetlandsJunglesAndForests();
+        void  generateBiomes();
+        void  generateAltitudeMap();
+        void  getRiversFromGroundwater();
+        void  cleanAltitudeMap();
+        void  addDepressions();
+        void  generateVoronoiSites();
+        void  applyRiverTiles();
+        void  recursiveLower();
+        void  recursiveFill();
+        void  generateTiles();
+        void  spawnFirstPlants();
+        void  spawnAnimals();
+        void  spawnScavengeables();
+        void  printMap();
+        void  cleanupUnusedDS();
+        void markCoasts();
+        void classifyLands(FastNoiseLite noiseLayer1);
+
+};
+/*
+ * NOTES:
+ * Need to ensure that if a block of tile generates, that some of those tiles aren't actually river tiles,  but haven't been generated as such because neighboring ungenerated tiles which should have river sources on them have not been generated. Thus, need to check if generated cells are river ends of any sort, or lakes, and then for each of those recursively check if there are river continues, following up the chain, until I find the original river sources/lakes, and then recursively generate rivers all the way down, even if those tiles haven't been generated.
+ *
+ */
+
+#endif // WORLDGEN_H_

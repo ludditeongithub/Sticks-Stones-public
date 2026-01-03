@@ -6,7 +6,18 @@
 #include "unit.hpp"
 #include "objectData.hpp"
 
-
+//puts a source of a plant into the ground.
+void PlantDatabase::releasePlantSource(std::vector<Object>& rTileObject, std::vector<std::pair<int, int>>& rTileCoords, int tileIndex) {
+    if (isPlant(rTileObject[tileIndex])) {
+        //TODO: place seed in adjacent tile nearby, instead of on the same tile
+Plant plant = std::get<Plant>(rTileObject[tileIndex]);
+std::pair<int,int> empty = getNearestEmptyTile(tileIndex);
+seedCoords.push_back(empty);
+seeds.push_back(plant);
+ setGerminationTime();
+//TODO: show on ground if it is tuber, bulb, cone, or other visible seed, and eventually bury over time (other seeds can be searched for, but are invisible in grass)
+    }
+}
 
 // an event is sent to the event manager which triggers the mass spawn of all that type of plant, by this function, which sends events distributed over a set amount of time to germinate all seeds of that plant
 void PlantDatabase::setGerminationTime(int seedIndex) {
@@ -181,7 +192,7 @@ void PlantDatabase::updatePlants() {
         } else {
             lastFullyWatered[i] = date;
         }
-        //check if plant death
+        //ch  updateTaskJobPriorities(hm, pq, pt);eck if plant death
         if (temp < dmin || temp > dmax || date - lastFullyWatered[i] > wd) {
                 plantList[i] = EMPTY;
                 continue;

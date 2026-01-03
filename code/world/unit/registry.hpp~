@@ -1,0 +1,58 @@
+#ifndef UNIT_H_
+#define UNIT_H_
+
+#include "basic.hpp"
+#include "categories.hpp"
+#include "itemRecipes.hpp"
+
+// contains basic info that appplies to all units
+ 
+class UnitDatabase
+{
+private:
+  constexpr int startingRoleMana = 10;
+
+struct Inventory {
+    std::pair<uint8_t, Material> leftHand; //if Material == NONE, then it it CARRYING
+    std::pair<uint8_t, Material> rightHand; //if Material == NONE, then it it CARRYING
+    vector<std::pair<Item, uint16_t>> items; //contains all non-variant items
+    vector<std::pair<Item, uint16_t>> variantItems; //contains all variant items
+    vector<uint16_t> variantItemTypes; //the enum relevant number for the enum class
+    float bulk = 0.0;// in hands, not in containers
+    BulkStatus bulkStatus = BulkStatus::NONE;
+    float weight = 0.0; // in hands, not in containers
+};
+
+  vector<Inventory> inventories;
+  vector<vector<std::pair<Tool,Material>>> tools;
+  vector<vector<Container>> containers;
+
+  
+vector<vector<Role>> roles; //roles at front are prioritized in queue
+vector<int> roleIndex;
+vector<bool> sex; //t = male, f = female
+vector<std::pair<int,int>> coords;
+vector<Object> targets;
+vector<int> dest; //indices, can function as animal indices/human indices or tile indices depending on moving context
+vector<Direction> directions;
+vector<MovingStatus> movingStatus;
+vector<uint16_t> health;
+vector<uint16_t> inertias;
+vector<uint16_t> remainingRoleMana;
+public:
+  UnitDatabase() {};
+
+};
+
+
+//TODO: work on future/consolidated futures
+std::vector<std::promise<void>> findPromise;
+std::vector<std::future<void>> findFuture;
+//RESOURCES
+
+
+//PRODUCERS
+using ProductVariant<Item, Container, Vehicle, Buildable>;
+vector<ProductVariant> currentProducts;
+
+#endif // UNIT_H_

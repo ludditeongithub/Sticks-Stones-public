@@ -1,0 +1,11 @@
+
+
+struct Percentage {
+    double value;
+
+    explicit Percentage(double v) : value(v) {
+        if (v < 0.0 || v > 1.0) {
+            throw std::out_of_range("Percentage must be between 0.0 and 1.0");
+        }
+    }
+};

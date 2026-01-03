@@ -1,0 +1,22 @@
+class RegionDatabase
+{
+private:
+//each of these values are generated from worldSpawn.cpp, and then afterwards can be assigned to a region.
+  std::vector<std::vector<uint16_t>> humidityMap;
+  std::vector<std::vector<uint16_t>> temperatureMap;
+  std::vector<std::vector<std::pair<uint16_t, uint16_t>>> voronoiSites;
+
+  
+  // a region is created whenever a player explores a neighboring region. Databases which contain objects that do not move are only managed whenever the player enters the region (a tile within the region becomes visible). Databases which contian objects that move by themselves (and thus move per cycle) are managed separately, as are inventories.
+public:
+  RegionDatabase() {};
+
+  void createRegions();
+  
+  void setVoronoiSites();
+  void setTempeartureMap();
+  void setHumidityMap();
+  
+};
+
+

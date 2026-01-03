@@ -1,0 +1,11 @@
+#ifndef STATION_H_
+#define STATION_H_
+
+enum class Station {
+	PottersWheel, Animal, ClaySculpture, Plant, Tree, Pawn, Wall, Furnace, Bellows, TemporaryMould, Press, Mill, Loom, Oven, Tabletop, PitFire, SpinningWheel, Smokehouse, Kiln, WaterWheel, Hive, Forge, Cart, Wagon, MashTun, Keg, Anvil, SculptMould, FirePit, Spinner,
+
+	//Corpses
+	PigCorpse, CowCorpse, ChickenCorpse, DuckCorpse, SheepCorpse, GoatCorpse, OxCorpse, HorseCorpse, DonkeyCorpse, CamelCorpse, WaterBuffaloCorpse, RabbitCorpse, AntelopeCorpse, DeerCorpse, MooseCorpse, CapybaraCorpse, ElephantCorpse, BisonCorpse, WolfCorpse, BearCorpse, CaribouCorpse,
+};
+
+#endif // STATION_H_

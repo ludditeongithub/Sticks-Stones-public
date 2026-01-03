@@ -1,0 +1,59 @@
+#include <animal/feeding_manager.hpp>
+#include <animal/bio_data.hpp>
+#include <animal/diets.hpp>
+
+
+void FeedingManager::setInitialFeedingTime(entt::registry&reg, entt::entity& e) {
+        auto type = reg.get<Type>(e);
+	//TODO::calculate feeding time	
+}
+
+// TODO: events like these, what happesn to the grass tile is 
+bool FeedingManager::eatGrass(entt::registry&reg, entt::entity& e) {
+  // objectIndex can be enum class conversion to item, or tile index
+    Type t = reg.get<Type>(e);
+    uint16_t gf = calcGrassHungerFill(grassLength[tileIndex]);
+    if (gf == 0) return false;
+    uint16_t mh = maxHunger[type];
+    uint16_t& hv = mh * reg.get<Hunger>(e);
+    hv = min(mh, hv + gf);    
+    return true;
+}
+
+void FeedingManager::eatFruit(entt::registry &reg, entt::entity &e, fruit::Type f) {
+        Hunger &h = reg.get<Hunger>(e);  
+        h = min(h + fruitHungerFill[f], maxHunger[animal]);
+}
+
+void FeedingManager::eatPlant(entt::registry &reg, entt::entity &e,
+                              plant::Type p) {
+  Hunger &h = reg.get<Hunger>(e);
+  	h  = min(hunger[index] + plantHungerFill[plant], maxHunger[animal]);
+}
+
+uint16_t FeedingManager::findFoodPrey(entt::registry& reg, entt::entity& e) {
+  const Type t = reg.get<Type>(e); 
+  
+}
+
+
+// in ticks
+int FeedingManager::calculateTimeTillFeed(int hungerAmount, Animal animal) {
+	float maxHunger;
+	float tickBurnRate;
+	int timeTillFeed;
+
+	int feedingThreshold = maxHunger / 2;
+	if (hungerAmount < feedingThreshold) return 0;
+	else return static_cast<int>((hungerAmount - feedingThreshold) / burnRate);
+}
+
+void FeedingManager::preparePreyFeed(int animalIndex) {
+	addEvent(calculateTimeTillFeed(hunger[animalIndex] + futureConsumption, feeder), EventType::PreyFeed, static_cast<int>(feeder), animalIndex);
+}
+
+//TODO: if outDistSqr not required, do not do it
+void FeedingManager::preparePredatorFeed(int animalIndex) {
+
+	addEvent(calculateTimeTillFeed(hunger[animalIndex] + futureConsumption, feeder), EventType::PredatorFeed, animalType, animalIndex);
+}

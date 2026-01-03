@@ -1,0 +1,42 @@
+float rfloat(float min, float max) {
+  
+    std::uniform_real_distribution<float> dis(min, max);
+    return dis(gen);
+}
+
+int rint(int min, int max) {
+    if (min > max) std::swap(min, max); 
+
+    std::uniform_int_distribution<int> dis(min, max);
+    return dis(gen);
+}
+
+
+int rbin() {
+    static std::uniform_int_distribution<int> dist(0, 1);
+    return dist(gen); // Returns either 0 or 1
+}
+
+bool rbool() {
+    if (rbin() == 0) return false;
+    return true;
+}
+
+bool rchance(double chance) {
+    std::bernoulli_distribution dist(chance);
+    return dist(gen);
+}
+
+template<typename E>
+E random_enum()
+{
+    using U = std::underlying_type_t<E>;
+    std::uniform_int_distribution<U> dist(
+        static_cast<U>(E::NONE) + 1,
+        static_cast<U>(E::MAX) - 1
+    );
+    return static_cast<E>(dist(gen));
+}
+
+    static std::random_device rd;
+    static std::mt19937 gen(rd());

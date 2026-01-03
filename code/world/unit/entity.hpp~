@@ -1,0 +1,25 @@
+struct Inventory {
+    std::pair<uint8_t, Material> leftHand; //if Material == NONE, then it it CARRYING
+    std::pair<uint8_t, Material> rightHand; //if Material == NONE, then it it CARRYING
+    vector<std::pair<Item, uint16_t>> items; //contains all non-variant items
+    vector<std::pair<Item, uint16_t>> variantItems; //contains all variant items
+    vector<uint16_t> variantItemTypes; //the enum relevant number for the enum class
+    float bulk = 0.0;// in hands, not in containers
+    BulkStatus bulkStatus = BulkStatus::NONE;
+    float weight = 0.0; // in hands, not in containers
+};
+
+  vector<Inventory> inventories;
+  vector<vector<std::pair<Tool,Material>>> tools;
+  vector<vector<Container>> containers;
+
+  
+struct Roles { vector<Role> roles; };
+struct Sex { bool sex; };
+vector<Object> targets;
+vector<int> dest; //indices, can function as animal indices/human indices or tile indices depending on moving context
+vector<Direction> directions;
+vector<MovingStatus> movingStatus;
+vector<uint16_t> health;
+vector<uint16_t> inertias;
+vector<uint16_t> remainingRoleMana;

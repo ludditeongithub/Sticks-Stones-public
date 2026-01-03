@@ -1,0 +1,9 @@
+alt noiseToAltitude(float noiseValue) {
+  if (noiseValue > 1) {
+    // TODO: ERROR MESSAGE
+    noiseValue = 1.0f;
+  } else if (noiseValue < -1) {
+    noiseValue = -1.0f;
+  }
+  
+}

@@ -1,4 +1,36 @@
 #+title: Waruniverse
+* Hot and Cold Algorithms
+Estimates are based on:
+- chunk size 32x32
+- player is loading roughly 160 active chunks in late game, passively processing 290 chunks from enemy civs covered by fog of war (update speed vastly slowed on passive chunks)
+** ACTIVE
+Tiles: 163840
+Grass: 113000
+Plants: 28800
+Animals: 2000
+Units: 1450
+
+Total Movables: 3450
+** Hottest 1000+ per frame
+- check if units should move (every tick, x2000)
+*** Plant growth/death update (not death by event)
+- require updates ~ every 30 frames, so ~1300 per frame, can be reduced to Hot if every 60 frames
+*** path job, tile checks
+- ~ 2000 movables have pathfinding being calculated, and 4x tiles need to be checked so >8000 per frame (can improve from A*)
+**** Implementation 
+** Hot 100-1000 per frame
+** Medium 10-50 per frame
+- atttacking unit events
+** Cold 1-10 per frame
+*** temperature update for every chunk
+only ~ second, but for >100 chunks
+*** Jobs of any type started/finished/paused (average job takes thousands of ticks)
+[this should really be wrapped up in contiguous event processing], however ~1.5k units could be initiating/ending jobs that take ~5-10 secs per job
+  - job scheduling identity tag per unit, so that if the job was paused, the job over event taken off the stack must match the right unit and its current scheduling identity tag, which changes whenever the job is paused and is started again (a new event with a new identity tag is calculated whenever the job is (re)started
+** Coldest 1 per frame
+* New Core Implementation
+** Bounding Box Chunks, Enemy Detection for Factions
+Each unit (including animals) belong to a faction. Tiles belong to bounding box. Unit is inside a bounding box, bounding box loses 'ownership' of unit when unit leaves and another bounding box gained it. Each faction has a vector which shows identity of all bounding boxes it has currently detected, which means one or more units in that faction can see that box. Whenever a unit enters a new box, it is checked to see if any enemy factions can see that box. If an enemy faction can see the box, algorithm is triggered to manually detect all members of that faction that can see the box (and therefore the enemy unit which has entered it)-- this may be (often is) none. (or perhaps the detecting units are put on a 'high alert state', which can transition into a enemy detected state' where that can choose how to react (kill enemy, alert other units)). Counter-detection options may also be given to the unit that was detected entering the box. This minimizes checking for detection for every move, when the player and enemies are likely at peace, and also allows for better single unit detection and targeting later.
 * New Core Ideas
 ** More civilizational development
 I have charted the western pathway, chart other possible pathways. perhaps less focus on specialization, more focus on developing each individual even MORE deeply.
@@ -12,6 +44,8 @@ I have charted the western pathway, chart other possible pathways. perhaps less 
        certain systems of government and culture are better at creating high quality goods, others are good at creating owned quality goods fast.
 
        player can control multiple tribes/nations/corporations which may also battle with each other, and if too disparate the player may have to choose one or the other to influence. 
+** Complex Roles vs Production roles (Social roles)
+Social roles can be tied to production roles (or not), and also have requirements (property, satisfaction, food) that if not met makes unit with that role unhappy.
 ** User-Determined Aesthetic Culture Buffs
 The user can choose certain colours, and certain simple shapes (consider picking common ones from that psychological theorist who posited that our formation of objects is made up of several individual simple shapes, or perhaps it should be angular features (sharpness, curved, etc). The user then is able to get 'inspirations' for that aesthetic-- if a pawn is attacked by a tiger, the user may get an inspiration for the colour orange, with the value 'ferocity'. Every once in a while they may be able to get enough cultural points for a free aesthetic feature -> buff without inspiration points. Whenever the player's tribe builds an artifact or art that has that aesthetic feature, the player's tribe will receive that additional mini-buff. These aesthetic features can be wider kfpmotifs, or materials, as well. 
 * TODO (now)
@@ -22,7 +56,7 @@ The user can choose certain colours, and certain simple shapes (consider picking
    b. Group connected local minima into basins (cluster adjacent low tiles).
    c. For each basin, compute:
        - Basin area = number of connected low tiles
-       - Basin depth potential = minimum height difference between basin floor and lowest surrounding rim
+       - Basin depth potential = minimum height difference between basin floor and lowest surrounding rim (lake height is randomized-- stored contiguosly with volume, and actual altitude lowers of volume reaches certain threshold due to player actions or seasons)
    d. Discard basins with depth < minimum threshold (e.g., 1-2 tiles)
 
 2. Compute Water Input for Each Basin

@@ -1,0 +1,9 @@
+#ifndef MOVEMENT_MANAGER_HPP
+#define MOVEMENT_MANAGER_HPP
+
+class MovementManager {
+
+};
+
+
+#endif

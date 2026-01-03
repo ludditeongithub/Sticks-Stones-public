@@ -1,0 +1,71 @@
+#include <cstdint>
+#include <basic/coord.hpp>
+#include <tile/data.hpp>
+#include <math.h>
+#include <vector>
+
+namespace movable {
+
+// CONSTANTS
+constexpr int MAX_PATH_SIZE = 256; 
+constexpr uint16_t SENTINEL = 65535;
+constexpr uint32_t PATH_QUEUE_SIZE = 10000;
+
+// HOT
+struct Entity {
+  Coord c;
+  Direction d;
+};
+
+struct PathExecution {
+  uint16_t startIndex;
+  Coord start;
+  uint8_t length;
+};
+
+struct Pathfinding {
+  std::vector<uint16_t> gCost;
+  std::vector<uint16_t> fCost;
+  std::vector<uint16_t> parents;
+  std::vector<bool> openFlag;
+  std::vector<bool> closedFlag;
+
+  std::priority_queue<int> pq;
+
+void initializePathfindingData(size_t s) {
+  gCost.resize(s);
+  fCost.resize(s);
+  parents.resize(s);
+  openFlag.resize(s);
+  closedFlag.resize(s);
+}
+
+ vector<uint16_t> aStar(uint16_t start, uint16_t goal, entt::registry& reg) {
+    gCost[start] = 0;
+    fCost[start] = heuristic(start, goal);
+    
+    pq.push(start);
+    openFlag[start] = true;
+    
+    while (!pq.empty()) {
+      auto c = pq.pop();
+      if (c == goal) return reconstructPath(c,goal);
+      
+      auto neighbors = getNeighbors(c);
+      for (auto n: neighbors) {
+	if (closedFlag[n]) continue;
+		
+	auto tg = gCost[c] + costs[];
+      }
+    }
+};
+
+
+
+std::array<Direction, PATH_QUEUE_SIZE> paths;
+
+std::array<PathExecution, PATH_QUEUE_SIZE> pathExecutionQueue;
+
+  
+
+}

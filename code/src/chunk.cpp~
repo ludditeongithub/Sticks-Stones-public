@@ -1,0 +1,11 @@
+void ChunkDatabase::createChunk() {
+  tileDB.addTiles();
+}
+
+void ChunkDatabase::activateChunk() {
+
+}
+
+void ChunkDatabase::deactivateChunk() {
+
+}

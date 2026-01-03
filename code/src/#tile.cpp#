@@ -1,0 +1,10 @@
+void TileDatabase::addTiles(std::vector<std::vector<Tile>> tileType,
+                            std::vector<Grass> tileGrass,
+                            std::vector<std::vector<uint16_t>> altitude,
+                            std::vector<std::vector<Biome>> tileBiome) {
+  for (int index = 0; index < tiles.length(); index++) {
+    tiles[index] = {tileType[index], true, tileGrass[index], altitude[index], tileBiome[index]};
+  }
+}
+
+

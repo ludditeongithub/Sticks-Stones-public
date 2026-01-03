@@ -1,0 +1,25 @@
+
+
+//TODO: factor in variable distances creating variable chance of hitting
+void updateAttack(float* chances, Weapon* weapons, Stats* stats, Coord* positions, float* healths, int* targets, States* states) {
+  for (int i = 0; i < ; i++) {
+    if (timers[i] <= 0 && states[i] == State::Attack) {
+      float& h = healths[targets[i]];
+      if (attackSuccess(positions, chances))) ] h -= getDamage(weapon[i], stats[i]);
+  if (h <= 0.0) states[i] = State::Assign;
+    }
+  }
+}
+
+void getNewActions(roleData& rd, ) {
+  for (int i = 0; i < unitsSize; i++) {
+    if (healths[i] <= 0) states[i] = State::Dead;
+    if (states[i] == State::Assign) {
+      //get best role for pawn to inhabit
+      float jobScore = std::numeric_limits<float>(min);
+      for (int i = 0; i < ; i++) {
+	
+      } 
+    }
+  }
+}

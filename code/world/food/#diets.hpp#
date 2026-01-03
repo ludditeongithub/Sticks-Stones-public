@@ -1,0 +1,136 @@
+#ifndef DIETS_HPP
+#define DIETS_HPP
+
+#include "categories.hpp"
+#include <animal/enum.hpp>
+#include <plant/enum.hpp>
+#include <basic/structs.hpp>
+
+
+namespace food {
+  using enum Category;
+  using enum animal::Type;
+
+  constexpr BitsetTable<animal::Type> carnivores = [] {
+    BitsetTable<animal::Type> s;
+    s.set(Pig);
+    s.set(Wolf);
+    s.set(Bear);
+    return s;
+  };
+  
+  inline constexpr LookupTable2D<animal::Type, Category> dietCategories = [] {
+    LookupTable2D<animal::Type, Category> lt{};
+
+    lt[NONE] = {};
+    lt[Pig]	=            { Grass, Leaves, Fruit, Tuber, SmallMammals, SmallReptiles };
+    lt[Cow]	=            { Grass, Leaves };
+    lt[Chicken] =        { Leaves, Fruit, Reeds };
+    lt[Duck]	=           { Leaves, Fruit, Fish, Reeds };
+    lt[Sheep]	=          { Leaves };
+    lt[Goat]	=           { Leaves, Fruit, Tuber };
+    lt[Horse]	=          { Grass, Leaves };
+    lt[Ox]	=             { Grass, Leaves };
+    lt[Donkey]	=         { Grass, Leaves };
+    lt[Camel] =          { Grass, Leaves, Fruit };
+    lt[WaterBuffalo] =   { Grass, Leaves };
+    lt[Rabbit] =         { Grass, Leaves, Fruit, Tuber };
+    lt[Antelope] =       { Grass, Leaves, Fruit };
+    lt[Deer] =           { Grass, Leaves, Fruit, Tuber };
+    lt[Moose] =          { Grass, Leaves, Fruit };
+    lt[Capybara] =       { Leaves, Fruit };
+    lt[Turtle] =         { Leaves, Fruit, Fish };
+    lt[Elephant] =       { Leaves, Fruit, Tuber };
+    lt[Bison] = {Grass, Leaves};   
+    lt[Caribou] =        { Grass, Leaves, Tuber, Fruit };
+
+    lt[Wolf] =           { MediumMammals, SmallMammals, Birds, Fish, SmallReptiles };
+    lt[Bear] =           { Leaves, Fruit, Fish, SmallMammals, MediumMammals, Birds, SmallReptiles };
+
+    lt[MAX] = {};
+
+    return lt;
+  }();
+
+  BitsetTable& getFoodTable(Category c) {
+    switch (c) {
+    case Leaves:
+      return leaves;
+    case Fruit:
+      return fruit;
+    case Grain:
+      return grain;
+    case Underground:
+      return underground;
+    case Stem:
+      return stem;
+    case Birds:
+      return birds;
+    case Fish:
+      return fish;
+    case SmallMammals:
+      return smallMammals;
+    case LargeMammals:
+      return largeMammals;
+    case SmallReptiles:
+      return smallReptiles;
+    case LargeReptiles:
+      return largeReptiles;    
+    }
+  };
+
+  BitsetTable getHerbivoreDiet(animal::Type a) {
+    std::array<Category, 5> &cats = dietCategories[a];
+    BitsetTable b;
+    for (auto x : cats) 
+      if !(meatCategories[x]) b |= getFoodTable(x);    
+    return b;
+  };
+
+  BitsetTable getCarnivoreDiet(animal::Type a) {
+      std::array<Category, 5> &cats = dietCategories[a];
+    BitsetTable b;
+    for (auto x : cats) 
+      if (meatCategories[x]) b |= getFoodTable(x);    
+    return b;
+  };
+
+  inline constexpr LookupTable<BitsetTable<animal::Type>> herbivoreDiets = [] {
+    LookupTable<BitsetTable<animal::Type>> lt{};    
+    lt[Pig]	=            getHerbivoreDiet(Pig);
+    lt[Cow]	=            getHerbivoreDiet(Cow);
+    lt[Chicken] =        getHerbivoreDiet(Chicken);
+    lt[Duck]	=           getHerbivoreDiet(Duck);
+    lt[Sheep]	=          getHerbivoreDiet(Sheep);
+    lt[Goat]	=           getHerbivoreDiet(Goat);
+    lt[Horse]	=          getHerbivoreDiet(Horse);
+    lt[Ox]	=             getHerbivoreDiet(Ox);
+    lt[Donkey]	=         getHerbivoreDiet(Donkey);
+    lt[Camel] =          getHerbivoreDiet(Camel);
+    lt[WaterBuffalo] =   getHerbivoreDiet(WaterBuffalo);
+    lt[Rabbit] =         getHerbivoreDiet(Rabbit);
+    lt[Antelope] =       getHerbivoreDiet(Antelope);
+    lt[Deer] =           getHerbivoreDiet(Deer);
+    lt[Moose] =          getHerbivoreDiet(Moose);
+    lt[Capybara] =       getHerbivoreDiet(Capybara);
+    lt[Turtle] =         getHerbivoreDiet(Turtle);
+    lt[Elephant] =       getHerbivoreDiet(Elephant);
+    lt[Bison] = getHerbivoreDiet(Bison);
+    lt[Caribou] =        getHerbivoreDiet(Caribou);
+  return lt;
+  }();
+
+
+  inline constexpr LookupTable<BitsetTable<animal::Type>> carnivoreDiets = [] {
+    LookupTable<BitsetTable<animal::Type>> lt{};
+    
+    lt[Pig]	=            getCarnivoreDiet(Pig);
+    lt[Wolf] = getCarnivoreDiet(Wolf);    
+    lt[Bear] =           getCarnivoreDiet(Bear);
+
+  return lt;
+  }();  
+
+};
+
+#endif

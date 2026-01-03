@@ -1,0 +1,335 @@
+#ifndef TABLES_HPP
+#define TABLES_HPP
+
+namespace regrowth {
+
+inline constexpr std::array<float, static_cast<int>(Type::MAX)> regrowthPeriod =
+    [] {
+      std::array<float, static_cast<int>(Type::MAX)> arr{};
+      regrowthPeriod[static_cast<int>(Type::OliveTree)] = 31000.0;
+      regrowthPeriod[static_cast<int>(Type::Grapevine)] = 30000.0;
+      regrowthPeriod[static_cast<int>(Type::Fig)] = 42000.0;
+      regrowthPeriod[static_cast<int>(Type::Pear)] = 40000.0;
+      regrowthPeriod[static_cast<int>(Type::Peach)] = 42000.0;
+      regrowthPeriod[static_cast<int>(Type::Mango)] = 45000.0;
+      regrowthPeriod[static_cast<int>(Type::Blueberry)] = 38000.0;
+      regrowthPeriod[static_cast<int>(Type::Strawberry)] = 35000.0;
+      regrowthPeriod[static_cast<int>(Type::Lavender)] = 40000.0;
+
+      return arr;
+    }();
+
+inline constexpr std::array<float, static_cast<int>(Type::MAX)> regrowthStart =
+    [] {
+      std::array<float, static_cast<int>(Type::MAX)> arr{};
+      regrowthStart[static_cast<int>(Type::OliveTree)] = 1152000.0;
+      regrowthStart[static_cast<int>(Type::Grapevine)] = 0.25 * 4560000.0;
+      regrowthStart[static_cast<int>(Type::AppleTree)] = 4560000.0 / 6.0;
+      regrowthStart[static_cast<int>(Type::Fig)] = 70000;
+      regrowthStart[static_cast<int>(Type::Pear)] = 0.29 * 4560000.0;
+      regrowthStart[static_cast<int>(Type::Peach)] = 684000.0;
+      regrowthStart[static_cast<int>(Type::Mango)] = 720000.0;
+      regrowthStart[static_cast<int>(Type::Blueberry)] = 600000.0;
+      regrowthStart[static_cast<int>(Type::Strawberry)] = 32000.0;
+      regrowthStart[static_cast<int>(Type::Lavender)] = 620000.0;
+
+      return arr;
+    }();
+
+inline constexpr std::array<float, static_cast<int>(Type::MAX)>
+    endingHarvestAmt = [] {
+      std::array<float, static_cast<int>(Type::MAX)> arr{};
+      endingHarvestAmt[static_cast<int>(Type::OliveTree)] = 1000;
+      endingHarvestAmt[static_cast<int>(Type::Grapevine)] = 1200;
+      endingHarvestAmt[static_cast<int>(Type::AppleTree)] = 1500;
+      endingHarvestAmt[static_cast<int>(Type::Fig)] = 1400;
+      endingHarvestAmt[static_cast<int>(Type::Pear)] = 1450;
+      endingHarvestAmt[static_cast<int>(Type::Peach)] = 1500;
+      endingHarvestAmt[static_cast<int>(Type::Mango)] = 1600;
+      endingHarvestAmt[static_cast<int>(Type::Blueberry)] = 1000;
+      endingHarvestAmt[static_cast<int>(Type::Strawberry)] = 120;
+      endingHarvestAmt[static_cast<int>(Type::Lavender)] = 800;
+      
+      return arr;
+    }();
+
+inline constexpr std::array<float, static_cast<int>(Type::MAX)>
+    startingHarvestAmt = [] {
+      std::array<float, static_cast<int>(Type::MAX)> arr{};
+      startingHarvestAmt[static_cast<int>(Type::OliveTree)] = 50;
+      startingHarvestAmt[static_cast<int>(Type::Grapevine)] = 80;
+      startingHarvestAmt[static_cast<int>(Type::AppleTree)] = 35;
+      startingHarvestAmt[static_cast<int>(Type::Fig)] = 35;
+      startingHarvestAmt[static_cast<int>(Type::Pear)] = 38;
+      startingHarvestAmt[static_cast<int>(Type::Peach)] = 25;
+      startingHarvestAmt[static_cast<int>(Type::Mango)] = 30;
+      startingHarvestAmt[static_cast<int>(Type::Blueberry)] = 20;
+      startingHarvestAmt[static_cast<int>(Type::Strawberry)] = 40;
+      startingHarvestAmt[static_cast<int>(Type::Lavender)] = 15;
+      
+      return arr;
+    }();
+
+inline constexpr std::array<float, static_cast<int>(Type::MAX)> waterDeath =
+    [] {
+      std::array<float, static_cast<int>(Type::MAX)> arr{};
+      waterDeath[static_cast<int>(Type::OliveTree)] = 800.0;
+      waterDeath[static_cast<int>(Type::Grapevine)] = 850.0;
+      waterDeath[static_cast<int>(Type::AppleTree)] = 940.0;
+      waterDeath[static_cast<int>(Type::Fig)] = 920.0;
+      waterDeath[static_cast<int>(Type::Pear)] = 930.0;
+      waterDeath[static_cast<int>(Type::Peach)] = 900.0;
+      waterDeath[static_cast<int>(Type::Mango)] = 950.0;
+      waterDeath[static_cast<int>(Type::Blueberry)] = 700.0;
+      waterDeath[static_cast<int>(Type::Strawberry)] = 650.0;
+      waterDeath[static_cast<int>(Type::Lavender)] = 500.0;
+
+      return arr;
+    }();
+
+inline constexpr std::array<float, static_cast<int>(Type::MAX)> waterRequired =
+    [] {
+      std::array<float, static_cast<int>(Type::MAX)> arr{};
+      waterRequired[static_cast<int>(Type::OliveTree)] = 20.0;
+      waterRequired[static_cast<int>(Type::Grapevine)] = 22.0;
+      waterRequired[static_cast<int>(Type::AppleTree)] = 25.0;
+      waterRequired[static_cast<int>(Type::Fig)] = 30.0;
+      waterRequired[static_cast<int>(Type::Pear)] = 27.0;
+      waterRequired[static_cast<int>(Type::Peach)] = 40.0;
+      waterRequired[static_cast<int>(Type::Mango)] = 50.0;
+      waterRequired[static_cast<int>(Type::Blueberry)] = 30.0;
+      waterRequired[static_cast<int>(Type::Strawberry)] = 35.0;
+      waterRequired[static_cast<int>(Type::Lavender)] = 20.0;
+
+      return arr;
+    }();
+
+inline constexpr std::array<float, static_cast<int>(Type::MAX)> deathMax = [] {
+  std::array<float, static_cast<int>(Type::MAX)> arr{};
+  deathMax[static_cast<int>(Type::OliveTree)] = 45.0;
+  deathMax[static_cast<int>(Type::Grapevine)] = 40.0;
+  deathMax[static_cast<int>(Type::AppleTree)] = 40.0;
+  deathMax[static_cast<int>(Type::Fig)] = 38.0;
+  deathMax[static_cast<int>(Type::Pear)] = 39.0;
+  deathMax[static_cast<int>(Type::Peach)] = 38.0;
+  deathMax[static_cast<int>(Type::Mango)] = 42.0;
+  deathMax[static_cast<int>(Type::Blueberry)] = 35.0;
+  deathMax[static_cast<int>(Type::Strawberry)] = 33.0;
+  deathMax[static_cast<int>(Type::Lavender)] = 38.0;
+  
+  return arr;
+}();
+  
+line constexpr std::array<float, static_cast<int>(Type::MAX)> deathMin = [] {
+  std::array<float, static_cast<int>(Type::MAX)> arr{};
+
+  deathMin[static_cast<int>(Type::OliveTree)] = -7.0;
+  deathMin[static_cast<int>(Type::Grapevine)] = -5.0;
+  deathMin[static_cast<int>(Type::AppleTree)] = -20.0;
+  deathMin[static_cast<int>(Type::Fig)] = -10.0;
+  deathMin[static_cast<int>(Type::Pear)] = -15.0;
+  deathMin[static_cast<int>(Type::Peach)] = -15.0;
+  deathMin[static_cast<int>(Type::Mango)] = -5.0;
+  deathMin[static_cast<int>(Type::Blueberry)] = -25.0;
+  deathMin[static_cast<int>(Type::Strawberry)] = -10.0;
+  deathMin[static_cast<int>(Type::Lavender)] = -10.0;
+  return arr;
+}();
+
+inline constexpr std::array<float, static_cast<int>(Type::MAX)> optimalMax =
+    optimalMax[static_cast<int>(Type::Grapevine)] = 26.0;
+optimalMax[static_cast<int>(Type::AppleTree)] = 25.0;
+optimalMax[static_cast<int>(Type::Fig)] = 27.0;
+optimalMax[static_cast<int>(Type::Pear)] = 24.0;
+optimalMax[static_cast<int>(Type::Peach)] = 28.0;
+optimalMax[static_cast<int>(Type::Mango)] = 30.0;
+optimalMax[static_cast<int>(Type::Blueberry)] = 24.0;
+optimalMax[static_cast<int>(Type::Strawberry)] = 23.0;
+  optimalMax[static_cast<int>(Type::Lavender)] = 26.0;
+    [] {
+      std::array<float, static_cast<int>(Type::MAX)> arr{};
+
+      return arr; }();
+
+  inline constexpr std::array<float, static_cast<int>(Type::MAX)> optimalMin =
+      [] {
+        std::array<float, static_cast<int>(Type::MAX)> arr{};
+        optimalMin[static_cast<int>(Type::OliveTree)] = 15.0;
+        optimalMin[static_cast<int>(Type::Grapevine)] = 16.0;
+        optimalMin[static_cast<int>(Type::AppleTree)] = 15.0;
+        optimalMin[static_cast<int>(Type::Fig)] = 18.0;
+        optimalMin[static_cast<int>(Type::Pear)] = 14.0;
+        optimalMin[static_cast<int>(Type::Peach)] = 18.0;
+        optimalMin[static_cast<int>(Type::Mango)] = 20.0;
+        optimalMin[static_cast<int>(Type::Blueberry)] = 16.0;
+        optimalMin[static_cast<int>(Type::Strawberry)] = 15.0;
+	optimalMin[static_cast<int>(Type::Lavender)] = 17.0;
+      
+   return arr;
+    }();
+
+inline constexpr std::array<float, static_cast<int>(Type::MAX)> noGrowthMax =
+    [] {
+      std::array<float, static_cast<int>(Type::MAX)> arr{};
+      noGrowthMax[static_cast<int>(Type::OliveTree)] = 38.0;
+      noGrowthMax[static_cast<int>(Type::Grapevine)] = 35.0;
+      noGrowthMax[static_cast<int>(Type::AppleTree)] = 38.0;
+      noGrowthMax[static_cast<int>(Type::Fig)] = 35.0;
+      noGrowthMax[static_cast<int>(Type::Pear)] = 36.0;
+      noGrowthMax[static_cast<int>(Type::Peach)] = 36.0;
+      noGrowthMax[static_cast<int>(Type::Mango)] = 40.0;
+      noGrowthMax[static_cast<int>(Type::Blueberry)] = 32.0;
+      noGrowthMax[static_cast<int>(Type::Strawberry)] = 30.0;
+      noGrowthMax[static_cast<int>(Type::Lavender)] = 35.0;
+
+      return arr;
+    }();
+
+inline constexpr std::array<float, static_cast<int>(Type::MAX)> noGrowthMin =
+    [] {
+      std::array<float, static_cast<int>(Type::MAX)> arr{};
+      noGrowthMin[static_cast<int>(Type::OliveTree)] = 5.0;
+      noGrowthMin[static_cast<int>(Type::Grapevine)] = 6.0;
+      noGrowthMin[static_cast<int>(Type::AppleTree)] = 4.0;
+      noGrowthMin[static_cast<int>(Type::Fig)] = 10.0;
+      noGrowthMin[static_cast<int>(Type::Pear)] = 3.0;
+      noGrowthMin[static_cast<int>(Type::Peach)] = 6.0;
+      noGrowthMin[static_cast<int>(Type::Mango)] = 10.0;
+      noGrowthMin[static_cast<int>(Type::Blueberry)] = 3.0;
+      noGrowthMin[static_cast<int>(Type::Strawberry)] = 2.0;
+      noGrowthMin[static_cast<int>(Type::Lavender)] = 5.0;
+
+      return arr;
+    }();
+
+inline constexpr std::array<float, static_cast<int>(Type::MAX)> fullyGrownAmt =
+    [] {
+      std::array<float, static_cast<int>(Type::MAX)> arr{};
+      fullyGrownAmt[static_cast<int>(Type::OliveTree)] = 2750000.0;
+      fullyGrownAmt[static_cast<int>(Type::Grapevine)] = 400000.0;
+      fullyGrownAmt[static_cast<int>(Type::AppleTree)] = 4000000.0;
+      fullyGrownAmt[static_cast<int>(Type::Fig)] = 450000.0;
+      fullyGrownAmt[static_cast<int>(Type::Pear)] = 4560000.0;
+      fullyGrownAmt[static_cast<int>(Type::Peach)] = 4200000.0;
+      fullyGrownAmt[static_cast<int>(Type::Mango)] = 4800000.0;
+      fullyGrownAmt[static_cast<int>(Type::Blueberry)] = 4200000.0;
+      fullyGrownAmt[static_cast<int>(Type::Strawberry)] = 360000.0;
+      fullyGrownAmt[static_cast<int>(Type::Lavender)] = 15000.0;
+
+      return arr;
+    }();
+
+  
+
+
+
+
+
+// Saffron
+fullyGrownAmt[static_cast<int>(Type::Saffron)] = 100000.0;
+noGrowthMin[static_cast<int>(Type::Saffron)] = 5.0;
+noGrowthMax[static_cast<int>(Type::Saffron)] = 30.0;
+optimalMin[static_cast<int>(Type::Saffron)] = 10.0;
+optimalMax[static_cast<int>(Type::Saffron)] = 20.0;
+deathMin[static_cast<int>(Type::Saffron)] = -10.0;
+deathMax[static_cast<int>(Type::Saffron)] = 35.0;
+waterRequired[static_cast<int>(Type::Saffron)] = 10.0;
+waterDeath[static_cast<int>(Type::Saffron)] = 300.0;
+startingHarvestAmt[static_cast<int>(Type::Saffron)] = 1;
+endingHarvestAmt[static_cast<int>(Type::Saffron)] = 1;
+regrowthStart[static_cast<int>(Type::Saffron)] = 100000.0 / 4.0;
+regrowthPeriod[static_cast<int>(Type::Saffron)] = 5000.0;
+
+// Aloe static_cast<int>(Type::Vera)
+fullyGrownAmt[static_cast<int>(Type::AloeVera)] = 600000.0;
+noGrowthMin[static_cast<int>(Type::AloeVera)] = 5.0;
+noGrowthMax[static_cast<int>(Type::AloeVera)] = 35.0;
+optimalMin[static_cast<int>(Type::AloeVera)] = 15.0;
+optimalMax[static_cast<int>(Type::AloeVera)] = 30.0;
+deathMin[static_cast<int>(Type::AloeVera)] = -5.0;
+deathMax[static_cast<int>(Type::AloeVera)] = 40.0;
+waterRequired[static_cast<int>(Type::AloeVera)] = 5.0;
+waterDeath[static_cast<int>(Type::AloeVera)] = 600.0;
+startingHarvestAmt[static_cast<int>(Type::AloeVera)] = 1;
+endingHarvestAmt[static_cast<int>(Type::AloeVera)] = 15;
+regrowthStart[static_cast<int>(Type::AloeVera)] = 600000.0 / 6.0;
+regrowthPeriod[static_cast<int>(Type::AloeVera)] = 25000.0;
+
+// Mint
+fullyGrownAmt[static_cast<int>(Type::Mint)] = 300000.0;
+noGrowthMin[static_cast<int>(Type::Mint)] = 5.0;
+noGrowthMax[static_cast<int>(Type::Mint)] = 30.0;
+optimalMin[static_cast<int>(Type::Mint)] = 13.0;
+optimalMax[static_cast<int>(Type::Mint)] = 25.0;
+deathMin[static_cast<int>(Type::Mint)] = -10.0;
+deathMax[static_cast<int>(Type::Mint)] = 35.0;
+waterRequired[static_cast<int>(Type::Mint)] = 20.0;
+waterDeath[static_cast<int>(Type::Mint)] = 480.0;
+startingHarvestAmt[static_cast<int>(Type::Mint)] = 2;
+endingHarvestAmt[static_cast<int>(Type::Mint)] = 50;
+regrowthStart[static_cast<int>(Type::Mint)] = 300000.0 / 6.0;
+regrowthPeriod[static_cast<int>(Type::Mint)] = 15000.0;
+
+// Thyme
+fullyGrownAmt[static_>cast<int>(Type::Thyme)] = 250000.0;
+noGrowthMin[static_cast<int>(Type::Thyme)] = 5.0;
+noGrowthMax[static_cast<int>(Type::Thyme)] = 28.0;
+optimalMin[static_cast<int>(Type::Thyme)] = 11.0;
+optimalMax[static_cast<int>(Type::Thyme)] = 22.0;
+deathMin[static_cast<int>(Type::Thyme)] = -15.0;
+deathMax[static_cast<int>(Type::Thyme)] = 38.0;
+waterRequired[static_cast<int>(Type::Thyme)] = 8.0;
+waterDeath[static_cast<int>(Type::Thyme)] = 500.0;
+startingHarvestAmt[static_cast<int>(Type::Thyme)] = 1;
+endingHarvestAmt[static_cast<int>(Type::Thyme)] = 40;
+regrowthStart[static_cast<int>(Type::Thyme)] = 250000.0 / 6.0;
+regrowthPeriod[static_cast<int>(Type::Thyme)] = 12000.0;
+
+// Sage
+fullyGrownAmt[static_cast<>int>(Type::Sage)] = 400000.0;
+noGrowthMin[static_cast<int>(Type::Sage)] = 5.0;
+noGrowthMax[static_cast<int>(Type::Sage)] = 32.0;
+optimalMin[static_cast<int>(Type::Sage)] = 8.0;
+optimalMax[static_cast<int>(Type::Sage)] = 22.0;
+deathMin[static_cast<int>(Type::Sage)] = -15.0;
+deathMax[static_cast<int>(Type::Sage)] = 38.0;
+waterRequired[static_cast<int>(Type::Sage)] = 15.0;
+waterDeath[static_cast<int>(Type::Sage)] = 500.0;
+startingHarvestAmt[static_cast<int>(Type::Sage)] = 1;
+endingHarvestAmt[static_cast<int>(Type::Sage)] = 30;
+regrowthStart[static_cast<int>(Type::Sage)] = 400000.0 / 6.0;
+regrowthPeriod[static_cast<int>(Type::Sage)] = 18000.0;
+
+// Rhubarb
+fullyGrownAmt[static_cast<int>(Type::Rhubarb)] = 500000.0;
+noGrowthMin[static_cast<int>(Type::Rhubarb)] = 5.0;
+noGrowthMax[static_cast<int>(Type::Rhubarb)] = 30.0;
+optimalMin[static_cast<int>(Type::Rhubarb)] = 12.0;
+optimalMax[static_cast<int>(Type::Rhubarb)] = 22.0;
+deathMin[static_cast<int>(Type::Rhubarb)] = -20.0;
+deathMax[static_cast<int>(Type::Rhubarb)] = 35.0;
+waterRequired[static_cast<int>(Type::Rhubarb)] = 20.0;
+waterDeath[static_cast<int>(Type::Rhubarb)] = 400.0;
+startingHarvestAmt[static_cast<int>(Type::Rhubarb)] = 3;
+endingHarvestAmt[static_cast<int>(Type::Rhubarb)] = 100;
+regrowthStart[static_cast<int>(Type::Rhubarb)] = 500000.0 / 5.0;
+regrowthPeriod[static_cast<int>(Type::Rhubarb)] = 20000.0;
+
+// Hay
+fullyGrownAmt[static_cast<int>(Type::Hay)] = 350000.0;
+noGrowthMin[static_cast<int>(Type::Hay)] = 4.0;
+noGrowthMax[static_cast<int>(Type::Hay)] = 35.0;
+optimalMin[static_cast<int>(Type::Hay)] = 15.0;
+optimalMax[static_cast<int>(Type::Hay)] = 30.0;
+deathMin[static_cast<int>(Type::Hay)] = -15.0;
+deathMax[static_cast<int>(Type::Hay)] = 40.0;
+waterRequired[static_cast<int>(Type::Hay)] = 30.0;
+waterDeath[static_cast<int>(Type::Hay)] = 300.0;
+startingHarvestAmt[static_cast<int>(Type::Hay)] = 10;
+endingHarvestAmt[static_cast<int>(Type::Hay)] = 500;
+regrowthStart[static_cast<int>(Type::Hay)] = 350000.0 / 4.0;
+regrowthPeriod[static_cast<int>(Type::Hay)] = 25000.0;
+
+} // namespace regrowth
+
+#endif

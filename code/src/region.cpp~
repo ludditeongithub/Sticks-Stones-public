@@ -1,0 +1,338 @@
+#include "../include/region.hpp"
+
+void ChunkDatabase::loadChunk(uint16_t humidity, uint16_t temperature, Biome biome, int regionX, int regionY) {
+  
+}
+
+// TILES
+
+void recursiveLower() {
+    if (decreaseAmount < 0) {
+        return; // Stop recursion if altitude is not decreasing (coast of lake has been reached)
+    }
+
+    // Generate a random chance and decide whether to lower the decreaseAmount
+    if ((rand() / (float) RAND_MAX) > lakeTileChance) {
+        decreaseAmount -= 1;
+    }
+
+    // Lower the elevation by the decrease amount
+    int index = rTileIndex[{y,x}];
+    rTileAlt[index] -= decreaseAmount;
+
+    // Recursively lower neighboring cells
+    for (const auto& delta : std::vector<std::pair<int, int>>{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}) {
+        int nx = x + delta.first;
+        int ny = y + delta.second;
+        if (nx >= 0 && ny >= 0 && nx < WORLD_WIDTH && ny < WORLD_HEIGHT) {
+            recursiveLower(nx, ny, decreaseAmount);
+        }
+    }
+}
+
+
+void recursiveFill() {
+    int index = rTileIndex[{y,x}];
+    if (tileAlt[index] > altThreshold) {
+        return;
+    }
+    //fill with water
+    rTileType[index] = Tile::ShallowWater;
+    rTileWater[index] = true;
+
+    // Recursively lower neighboring cells
+    for (const auto& delta : std::vector<std::pair<int, int>>{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}) {
+        int nx = x + delta.first;
+        int ny = y + delta.second;
+        if (nx >= 0 && ny >= 0 && nx < WORLD_WIDTH && ny < WORLD_HEIGHT) {
+            recursiveLower(nx, ny, altThreshold);
+        }
+    }
+}
+
+
+
+// Function to find the next tile to flow to (either towards target (lake or river end) or lowest elevation)
+void TileDatabase::applyRiverTiles() {
+    int index = rTileIndex[{y,x}];
+    // base case: reached target
+    if (y == target.first && x == target.second) {
+        return;
+    }
+    // base case: reached lake or ocean tile
+    if (rTileType[index] == Tile::ShallowWater) {
+        return;
+    }
+    int minElevation = rTileAlt[index];
+    int currentElevation = minElevation;
+    int minDist = calculateDistance(y, x, target);
+    std::pair<int,int> nextTile = {y, x};
+
+    // Find the lowest elevation neighboring tile
+    std::vector<std::pair<int,int>> lowElevTiles;  // To store ties for lowest elevation
+    for (const auto& dir : directions) {
+        int nx = x + dir.second;
+        int ny = y + dir.first;
+
+            int distToTarget = calculateDistance(ny, nx, target);
+            int newIndex = rTileIndex[{ny,nx}];
+            if (tileAlt[newIndex] < minElevation) {
+                minElevation = tileAlt[newIndex];
+                minDist = distToTarget;
+                nextTile = {nx, ny};
+                lowElevTiles.clear();
+                lowElevTiles.push_back(nextTile);
+            }
+            else if (tileAlt[newIndex] == minElevation) {
+                lowElevTiles.push_back({nx, ny}); // Tie in elevation
+            }
+        }
+
+    //TODO: make sure this is deterministically random. If there are ties in the lowest elevation, randomly choose one of the tiles
+    if (lowElevTiles.size() > 1) {
+        nextTile = lowElevTiles[rand() % lowElevTiles.size()];
+    }
+
+    // If nearby elevation is equal to current tile's elevation, prioritize moving towards target
+    if (minElevation == currentElevation) {
+        // Check distance to target, if closer to the target, move that way
+        for (const auto& dir : directions) {
+            int nx = x + dir.second;
+            int ny = y + dir.first;
+
+                int distToTarget = calculateDistance(ny, nx, target);
+                if (distToTarget < minDist) {
+                    nextTile = {ny, nx};
+                    minDist = distToTarget;
+                }
+        }
+    }
+    int ty = nextTile.first; int tx = nextTile.second;
+    //apply nextTile as riverTile
+    int nextIndex = rTileIndex[{ty,tx}];
+    rTileType[nextIndex] = Tile::FlowingWater;
+    rTileAlt[nextIndex] -= 1;
+    applyRiverTiles(rTileAlt, rTileType, rTileIndex, ty, tx, target);
+}
+
+// TODO: make this generate determinsitically based on noise + biome + temp + humidity, which have already been generated detreminstically
+Tile generateTile(int biome, float chance) {
+    switch (biome) {
+        case 1: //desert
+            if (chance < 0.70) {
+                return Tile::Sand;
+            } else if (chance < 0.75) {
+                return Tile::SandySoil;
+            } else if (chance < 0.83) {
+                return Tile::AridSoil;
+            } else if (chance < 0.90) {
+                return Tile::Hardpan;
+            } else return Tile::Gravel;
+            break;
+        case 2: //Grasslands
+            if (chance < 0.80) {
+                return Tile::LoamSoil;
+            } else if (chance < 0.90) {
+            } else return Tile::Gravel;
+            break;
+        case 3: //Savanna
+            if (chance < 0.10) return Tile::AridSoil;
+            if (chance < 0.55) return Tile::SandySoil;
+            if (chance < 0.85) {
+                return Tile::LoamSoil;
+            } else {
+                return Tile::ClaySoil;
+            }
+            break;
+        case 4: //Wetlands
+            if (chance < 0.50) {
+                return Tile::PeatSoil;
+            }
+            if (chance < 0.70) {
+                return Tile::Gleysol;
+            }
+            if (chance < 0.85) {
+                return Tile::SiltySoil;
+            } else return Tile::ClaySoil;
+            break;
+        case 5: //Forest
+            if (chance < 0.05) return Tile::Podzol;
+            if (chance < 0.75)  {
+                return Tile::LoamSoil;
+            } if (chance < 0.90) {
+                return Tile::ClaySoil;
+            } else return Tile::SiltySoil;
+            break;
+        case 6: //Taiga
+            if (chance < 0.60) return Tile::Podzol;
+            if (chance < 0.65) {
+                return Tile::LoamSoil;
+            }
+            if (chance < 0.75) {
+                return Tile::Gleysol;
+            } else {
+                return Tile::PeatSoil;
+            }
+            break;
+        case 7: //Jungle
+            if (chance < 0.70) {
+                return Tile::Oxisol;
+            }
+            if (chance < 0.85) {
+                return Tile::LoamSoil;
+            } else return Tile::Gleysol;
+            break;
+        case 8: //Rocky
+            if (chance < 0.80) {
+                return Tile::Stone;
+            } else if (chance < 0.85) {
+                return Tile::RockySoil;
+            } else return Tile::Gravel;
+            break;
+        case 9: //tundra
+            if (chance < 0.85) {
+                return Tile::FrozenSoil;
+            } else if (chance < 0.96) {
+                return Tile::Ice;
+            } else return Tile::PeatSoil;
+            break;
+        case 10: //cold desert
+            if (chance < 0.75) {
+                return Tile::Sand;
+            } else if (chance < 0.80) {
+                return Tile::AridSoil;
+            } else if (chance < 0.95) {
+                return Tile::FrozenSoil;
+            } else return Tile::Gravel;
+            break;
+        default:
+            return Tile::DeepWater;
+    }
+    return Tile::DeepWater;
+}
+
+void RegionDatabase::createRegions() {
+  for (int index = 0; index < regions; index++) {
+     generateTile();
+  }
+}
+
+// generates starting tiles based on amount of cells fully generated (loaded into memory)
+void WorldSpawner::generateTileDatabase() {
+        //cout << "Tiles" << endl;
+//generate Voronoi Noise
+        FastNoiseLite noise;
+        noise.SetNoiseType(FastNoiseLite::NoiseType_Cellular);
+        noise.SetFrequency(0.02f);  // Adjust scale
+        noise.SetCellularJitter(1.0f);  // Controls cell shape variation
+        noise.SetCellularDistanceFunction(FastNoiseLite::CellularDistanceFunction_Euclidean);
+        noise.SetCellularReturnType(FastNoiseLite::CellularReturnType_CellValue);
+// secondary Noise for tile generation
+        FastNoiseLite pnoise;
+        pnoise.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
+        pnoise.SetFrequency(0.02f);
+
+// generate Voronoi sites
+        generateVoronoiSites();
+// Set up kd-tree to search for nearest site when creating new tiles
+        // Create a KD-tree index from the points
+        SeedCloud cloud;
+        //insert generated Voronoi seeds into cloud
+        cloud.seeds = voronoiSites;
+
+        using my_kd_tree_t = nanoflann::KDTreeSingleIndexAdaptor<
+            nanoflann::L2_Simple_Adaptor<float, SeedCloud>,
+            SeedCloud, /* Our dataset */
+            2 /* 2D space */
+            >;
+
+        my_kd_tree_t tree(2 /*dim*/, cloud, {10} /* max leaf size */);
+        tree.buildIndex();
+
+// CREATE ALL TILES FOR STARTING CELLS
+        int tiles = 0; // the number of tiles which have been generated
+// get random cell away from edges as starting point
+
+// zoom into tile
+        int cx = rint(WIDTH / 8, 7 * WIDTH / 8);
+        int cy = rint(HEIGHT / 8, 7 * HEIGHT / 8);
+// select cell as randomized spawn point
+        bool selected = false;
+        while (!selected){
+ ;           if (biomeMap[cy][cx] == 0) {
+                cx = rint(WIDTH / 7, 6 * WIDTH / 7);
+                cy = rint(HEIGHT / 7, 6 * HEIGHT / 7);
+            } else selected = true;
+        }
+
+        uint32_t seedIndex = cy * HEIGHT + cx;
+        std::pair<float,float> sVSeed = voronoiSites[seedIndex];
+
+//generate tiles near to randomized spawn point
+        currentXMin = sVSeed.second - STARTING_MAP_WIDTH / 2;
+        currentXMax = sVSeed.second + STARTING_MAP_WIDTH / 2;
+        currentYMin = sVSeed.first - STARTING_MAP_HEIGHT / 2;
+        currentYMax = sVSeed.first + STARTING_MAP_HEIGHT / 2;
+        cout << currentXMin << "," << currentXMax << "," << currentYMin << "," << currentYMax << endl;
+        int index = 0;
+        for (int y = currentYMin; y < currentYMax; y++) {
+            for (int x = currentXMin; x < currentXMax; x++) {
+                //store index of tile linked to coords for future linking
+                rTileIndex[{y,x}] = index++;
+                tileCoords[index] = {y,x};
+                std::vector<float> queryPoint = {(float)y, (float)x};
+                // Perform the nearest neighbor search, numResults is # of neighbors
+                const size_t numResults = 5;
+                uint32_t retIndex[numResults]; // nearest neighbor index
+                float outDistSqr[numResults]; //distance between nn and current
+
+                tree.knnSearch(&queryPoint[0], numResults, &retIndex[0], &outDistSqr[0]);
+// check if tile is still part of current cell
+                    int ti = rTileIndex[{y,x}];
+
+                    // calculate altitude based on weighted average
+                    float currentAlt = 0;
+                    float strengths[numResults];
+                    float denominator = 0.0000000001;
+                    for (int i = 0; i < numResults; i++) {
+                        int index = (int)retIndex[i];
+                        if (index >= 0 && index < rMapsLink.size()) {
+                            std::pair<float,float> select = rMapsLink[index];
+                        // get inversed distances for strengths
+                        strengths[i] = 1 / (outDistSqr[i] + CELL_SIZE / 2);
+                        float rTileAlt = altitudeMap[select.first][select.second];
+                        currentAlt += strengths[i] * rTileAlt;
+                        denominator += strengths[i];
+                        }
+                    }
+                    int calcAlt = (int) currentAlt / denominator;
+                    rTileAlt.push_back(calcAlt);
+
+                    std::pair<float,float> cell = rMapsLink[retIndex[0]];
+                    std::pair<float,float> secondCell = rMapsLink[retIndex[1]];
+                     // set tile's owner Cell index
+                    rTileCellIndex.push_back(retIndex[0]);
+                    cout << " Inserting Tile Cell: " << rTileCellIndex.back();
+                    cout << " Tile Cell Size: " << rTileCellIndex.size();
+                    cout << " Tile Index: " << index;
+                    // set rTileType based on chance from most common tiles of two closest seeds' biomes
+                    if (cell.first >= 0 && cell.first < HEIGHT && cell.second >= 0 && cell.second < WIDTH) {
+                        int biome = biomeMap[cell.first][cell.second];
+                         int secondBiome = biomeMap[secondCell.first][secondCell.second];
+                         //NOTE: this means that certain tiles might NEVER generate next to each other
+                    float chance = (pnoise.GetNoise((float)y,(float)x) + 1.0) * 0.5;
+                    if (rand() / (float)RAND_MAX < 0.8 || biome == 0) { // always water if ocean
+                         rTileType[ti] = getTile(biome, chance); //closest
+                    } else {
+                        rTileType[ti] = getTile(secondBiome,chance); //second closest
+                    }
+                    if (rTileType[ti] == Tile::ShallowWater || rTileType[ti] == Tile::SaltWater || rTileType[ti] == Tile::DeepWater || rTileType[yi] == Tile::RiverSource) {
+                        rTileWater[ti] = true;
+                        tileEmpty[ti] = true;
+                    }
+                    }
+                    }
+                }
+}
+
+

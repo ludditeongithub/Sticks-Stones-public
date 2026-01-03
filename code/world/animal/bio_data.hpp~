@@ -1,0 +1,45 @@
+#ifndef LIFESTATS_HPP
+#define LIFESTATS_HPP
+
+#include "enum.hpp"
+
+namespace animal {
+
+  inline constexpr std::array<float, static_cast<size_t>(Animal::MAX)> fertilityAge = [] {
+    std::array<float, static_cast<size_t>(Animal::MAX)> arr{};
+    
+    return arr;
+  }();
+
+  inline constexpr std::array<float, static_cast<size_t>(Animal::MAX)> estimatedLifespan = [] { 
+    std::array<float, static_cast<size_t>(Animal::MAX)> arr{};
+
+    return arr;
+  }();
+  
+
+  inline constexpr std::array<uint16_t, static_cast<int>(Animal::MAX)> sightRanges = [] {
+  std::array<uint16_t, static_cast<int>(Animal::MAX)> arr{};
+  
+  
+  return arr;
+ }();
+
+  inline constexpr std::array<uint16_t, static_cast<int>(Animal::MAX)> minSpeed = [] {
+  std::array<uint16_t, static_cast<int>(Animal::MAX)> arr{};
+  
+  
+  return arr;
+ }();
+
+  inline constexpr std::array<uint16_t, static_cast<int>(Animal::MAX)>
+      maxSpeed = [] {
+        std::array<uint16_t, static_cast<int>(Animal::MAX)> arr{};
+
+
+        return arr;
+      }();
+
+}
+
+#endif

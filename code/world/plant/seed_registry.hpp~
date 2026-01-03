@@ -1,0 +1,7 @@
+#ifndef SEED_REGISTRY_HPP
+#define SEED_REGISTRY_HPP
+
+#include "enum.hpp"
+
+
+#endif

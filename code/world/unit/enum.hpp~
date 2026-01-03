@@ -1,0 +1,10 @@
+>namespace unit {
+
+
+  enum class PlaceType {
+    Home,
+    Work,
+    Property
+}
+   
+ }

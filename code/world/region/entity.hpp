@@ -1,0 +1,4 @@
+struct Temperature {
+  float temperature;
+};
+

@@ -1,0 +1,21 @@
+#ifndef CROP_DATA_HPP
+#define CROP_DATA_HPP
+
+    //57000 fullyGrownAmt means one forty-day season to grow, at a 1.0 growth amount. Ths implies perfect growing conditions.
+      struct fullGrowth { float fullyGrownAmt; };
+    //temps in Celsius
+    float noGrowthMin = 4.0;
+    float noGrowthMax = 38.0;
+    float optimalMin = 14.0;
+    float optimalMax = 21.0;
+    float deathMin = 0.0;
+    float deathMax = 42.0;
+    float waterRequired = 25.0; //in mm
+    float waterDeath = 940.0;
+    //static constexpr int Produces = 1;
+    //static constexpr int ProducesIndex = BaseMaterials::WheatGrain;
+    int harvestAmount = 30;
+    bool requiresScythe = true;
+
+
+#endif

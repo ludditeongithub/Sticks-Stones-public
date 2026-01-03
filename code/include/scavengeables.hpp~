@@ -1,0 +1,18 @@
+#include "categories.hpp"
+#include <queue>
+#include <vector>
+#include <stack>
+
+class ScavengeableDatabase
+{
+private:
+  std::stack<uint32_t> nextIndex;
+  std::vector<Scavengeable> scavengeables;
+  std::vector<std::pair<int, int>> coords;
+  
+public:
+  ScavengeableDatabase() {};
+
+};
+
+

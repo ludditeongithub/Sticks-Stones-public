@@ -1,0 +1,125 @@
+#include <cstdint>
+#include <math.h>
+#include <vector>
+#include <core/math.hpp>
+#include <world/tile/data.hpp>
+
+// CONSTANTS
+constexpr int MAX_PATH_SIZE = 256; 
+constexpr uint16_t SENTINEL = 65535;
+constexpr uint32_t PATH_QUEUE_SIZE = 10000;
+
+// HOT
+struct Entity {
+  Coord c;
+  Direction d;
+};
+
+struct PathExecution {
+  uint16_t startIndex;
+  Coord start;
+  uint8_t length;
+};
+struct NodeData {
+    float gCost = FLT_MAX;
+    float fCost = FLT_MAX;
+    int cameFrom = -1;
+    bool closedFlag = false;
+};
+
+std::vector<NodeData> nodeData;
+std::vector<float> tileMoveCosts;
+
+int toIndex(int x, int y, int width) {
+    return y * width + x;
+}
+
+float heuristic(Coord a, Coord b) {
+    return abs(a.x - b.x) + abs(a.y - b.y);
+}
+
+std::vector<Coord> aStar(Coord start, Coord goal, int width, int height) {
+    int startIndex = toIndex(start.x, start.y, width);
+    int goalIndex = toIndex(goal.x, goal.y, width);
+    
+    nodeData[startIndex].gCost = 0;
+    nodeData[startIndex].fCost = heuristic(start, goal);
+
+    std::vector<int> openSet;  
+    openSet.push_back(startIndex);
+
+    while (!openSet.empty()) {
+        int currentIndex = openSet.front();
+        for (int i = 0; i < openSet.size(); ++i) {
+            if (nodeData[openSet[i]].fCost < nodeData[currentIndex].fCost) {
+                currentIndex = openSet[i];
+            }
+        }
+
+        if (currentIndex == goalIndex) {
+            return reconstructPath(startIndex, goalIndex);
+        }
+
+        openSet.erase(std::remove(openSet.begin(), openSet.end(), currentIndex), openSet.end());
+        nodeData[currentIndex].closedFlag = true;
+
+        std::vector<int> neighbors = {
+            currentIndex - width,
+            currentIndex + width,
+            currentIndex - 1,
+            currentIndex + 1
+        };
+
+        for (int neighbor : neighbors) {
+            if (neighbor < 0 || neighbor >= width * height) continue;
+            if (nodeData[neighbor].closedFlag) continue;
+
+            float tentativeGCost = nodeData[currentIndex].gCost + tileMoveCosts[neighbor];
+
+            if (tentativeGCost < nodeData[neighbor].gCost) {
+                nodeData[neighbor].cameFrom = currentIndex;
+                nodeData[neighbor].gCost = tentativeGCost;
+                nodeData[neighbor].fCost = tentativeGCost + heuristic(toCoord(neighbor), goal);
+
+                openSet.push_back(neighbor);  // Add to open set, no need for a separate openFlag
+            }
+        }
+    }
+
+    return {};
+}
+
+std::vector<Coord> reconstructPath(int startIndex, int goalIndex) {
+    std::vector<Coord> path;
+    int current = goalIndex;
+
+    while (current != startIndex) {
+        path.push_back(toCoord(current));
+        current = nodeData[current].cameFrom;
+    }
+
+    path.push_back(toCoord(startIndex));
+    std::reverse(path.begin(), path.end());
+
+    return path;
+}
+
+void updatePositions(pathData& rpd, Coord* positions, float* timers, Action* actions) {
+  for (int i = 0; i < rpd.size(); i++) {
+    if (timers[i] <= 0 && states == State::Move) {
+	 Coord c = rpd[i].pop();
+	 if (manhattanDist(c, positions[i]) > 1) throw outOfBoundsException;
+	 positions[i] = c;
+	 if (rpd[i].current >= rpd[i].size && actions[i]) {
+	   if (actions[i] == Action::Wander) actions[i] = Action:Assign;
+	   if (actionRequiresMovePaths(actions[i])) actions[i] = needMovePathVersion(actions[i]);
+	 }
+      } 
+  }
+}
+
+  };
+
+
+  
+}

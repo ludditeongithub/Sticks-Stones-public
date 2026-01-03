@@ -1,0 +1,122 @@
+#ifndef FOODHUNGER_HPP
+#define FOODHUNGER_HPP
+
+
+
+namespace animal {
+
+    //TODO: add exception checks to lookup tables!
+inline constexpr std::array<int, static_cast<int>(Fruit::MAX)> fruitHunger =
+    [] {
+      std::array<int, static_cast<size_t>(Fruit::MAX)> arr{};
+      arr[static_cast<int>(Fruit::Apple)] = 360;
+      arr[static_cast<int>(Fruit::Orange)] = 340;
+      arr[static_cast<int>(Fruit::Pear)] = 320;
+      arr[static_cast<int>(Fruit::Peach)] = 300;
+      arr[static_cast<int>(Fruit::Plum)] = 180;
+      arr[static_cast<int>(Fruit::Apricot)] = 160;
+      arr[static_cast<int>(Fruit::Cherry)] = 100;
+      arr[static_cast<int>(Fruit::Blueberry)] = 200;
+      arr[static_cast<int>(Fruit::Strawberry)] = 120;
+      arr[static_cast<int>(Fruit::Grape)] = 240;
+      arr[static_cast<int>(Fruit::Lemon)] = 20;
+      arr[static_cast<int>(Fruit::Lime)] = 20;			
+      return arr;
+    }();
+
+    //TODO: large corpses can be only partially eaten, and remain with the hunger points not consumed until they rot
+  inline constexpr std::array<int, static_cast<int>(Station::MAX)> corpseHunger = [] {
+    std::array<int, static_cast<int>(Station::MAX)> arr{};
+    arr[static_cast<int>(Station::PigCorpse)] = 19500;
+    arr[static_cast<int>(Station::CowCorpse)] = 40500;
+    arr[static_cast<int>(Station::ChickenCorpse)] = 800;
+    arr[static_cast<int>(Station::DuckCorpse)] = 1000;
+    arr[static_cast<int>(Station::SheepCorpse)] = 10000;
+    arr[static_cast<int>(Station::GoatCorpse)] = 8500;
+    arr[static_cast<int>(Station::OxCorpse)] = 700000;
+    arr[static_cast<int>(Station::HorseCorpse)] = 32500;
+    arr[static_cast<int>(Station::DonkeyCorpse)] = 9500;
+    arr[static_cast<int>(Station::CamelCorpse)] = 26500;
+    arr[static_cast<int>(Station::WaterBuffaloCorpse)] = 38000;
+    arr[static_cast<int>(Station::RabbitCorpse)] = 500;
+    arr[static_cast<int>(Station::AntelopeCorpse)] = 15000;
+    arr[static_cast<int>(Station::DeerCorpse)] = 16000;
+    arr[static_cast<int>(Station::MooseCorpse)] = 49000;
+    arr[static_cast<int>(Station::CapybaraCorpse)] = 6400;
+    arr[static_cast<int>(Station::ElephantCorpse)] = 650000;
+    arr[static_cast<int>(Station::BisonCorpse)] = 85000;
+    arr[static_cast<int>(Station::WolfCorpse)] = 5500;
+    arr[static_cast<int>(Station::BearCorpse)] = 65000;
+    arr[static_cast<int>(Station::CaribouCorpse)] = 22500;
+    return arr;
+ }();
+
+ inline constexpr std::array<int, static_cast<int>(Station::MAX)> meatAmount = [] {
+  std::array<int, static_cast<int>(Station::MAX)> arr{};
+  arr[static_cast<size_t>(Station::PigCorpse)] = 98;
+  arr[static_cast<size_t>(Station::CowCorpse)] = 98;
+  arr[static_cast<size_t>(Station::ChickenCorpse)] = 7;			
+  arr[static_cast<size_t>(Station::DuckCorpse)] = 5;			
+  arr[static_cast<size_t>(Station::SheepCorpse)] = 36;			
+  arr[static_cast<size_t>(Station::GoatCorpse)] = 32;			
+  arr[static_cast<size_t>(Station::OxCorpse)] = 312;			
+  arr[static_cast<size_t>(Station::HorseCorpse)] = 242;			
+  arr[static_cast<size_t>(Station::DonkeyCorpse)] = 162;			
+  arr[static_cast<size_t>(Station::CamelCorpse)] = 308;			
+  arr[static_cast<size_t>(Station::WaterBuffaloCorpse)] = 320;			
+  arr[static_cast<size_t>(Station::RabbitCorpse)] = 3;			
+  arr[static_cast<size_t>(Station::AntelopeCorpse)] = 43;			
+  arr[static_cast<size_t>(Station::DeerCorpse)] = 39;			
+  arr[static_cast<size_t>(Station::MooseCorpse)] = 412;			
+  arr[static_cast<size_t>(Station::CapybaraCorpse)] = 28;			
+  arr[static_cast<size_t>(Station::ElephantCorpse)] = 1280;			
+  arr[static_cast<size_t>(Station::BisonCorpse)] = 350;			
+  arr[static_cast<size_t>(Station::WolfCorpse)] = 12;			
+  arr[static_cast<size_t>(Station::BearCorpse)] = 580;			
+  arr[static_cast<size_t>(Station::CaribouCorpse)] = 65;	       			
+		       
+  return arr;
+ }();
+
+
+  
+inline constexpr std::array<uint16_t, static_cast<size_t>(Plant::MAX)> plantHunger = [] {
+  std::array<int, static_cast<int>(Station::MAX)> arr{};
+  arr[static_cast<size_t>(Plant::Fern)] = 0;
+  arr[static_cast<size_t>(Plant::Reed)] = 4;
+  arr[static_cast<size_t>(Plant::Oat)] = 5;
+  arr[static_cast<size_t>(Plant::Bush)] = 3;
+  arr[static_cast<size_t>(Plant::PioneerTree)] = 4;
+  arr[static_cast<size_t>(Plant::EvergreenTree)] = 5;
+  arr[static_cast<size_t>(Plant::OrangeTree)] = 6;
+  arr[static_cast<size_t>(Plant::LimeTree)] = 6;
+  arr[static_cast<size_t>(Plant::PlumTree)] = 6;
+  arr[static_cast<size_t>(Plant::ApricotTree)] = 6;
+  arr[static_cast<size_t>(Plant::AppleTree)] = 7;
+  arr[static_cast<size_t>(Plant::OliveTree)] = 5;
+  arr[static_cast<size_t>(Plant::StrawberryShrub)] = 4;
+  arr[static_cast<size_t>(Plant::Lettuce)] = 3;
+  arr[static_cast<size_t>(Plant::Corn)] = 6;
+  arr[static_cast<size_t>(Plant::Beets)] = 4;
+  arr[static_cast<size_t>(Plant::Onion)] = 3;
+  arr[static_cast<size_t>(Plant::Cabbage)] = 4;
+  arr[static_cast<size_t>(Plant::Tomato)] = 3;
+  arr[static_cast<size_t>(Plant::Pepper)] = 3;
+  arr[static_cast<size_t>(Plant::Beans)] = 4;
+  arr[static_cast<size_t>(Plant::Hemp)] = 2;
+  arr[static_cast<size_t>(Plant::Woad)] = 1 
+  arr[static_cast<size_t>(Plant::Indigo)] = 1;
+  arr[static_cast<size_t>(Plant::Mint)] = 4;
+  arr[static_cast<size_t>(Plant::Sage)] = 3;
+  arr[static_cast<size_t>(Plant::Poppy)] = 2;
+  arr[static_cast<size_t>(Plant::Senna]] = 1;  
+  arr[static_cast<size_t>(Plant::Saffron]] = 0;
+  
+return arr;
+}();
+
+  
+}
+
+
+#endif

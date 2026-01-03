@@ -1,0 +1,294 @@
+#pragma once
+#include "enum.hpp"
+#include <array>
+
+
+namespace plant {
+
+inline constexpr std::array<bool, static_cast<int>(Plant::MAX)> regrowthPlants =
+    [] {
+      std::array<bool, static_cast<int>(Plant::MAX)> arr{};
+      arr[static_cast<int>(Plant::Wheat)] = false;
+      arr[static_cast<int>(Plant::Oat)] = false;
+      arr[static_cast<int>(Plant::Corn)] = false;
+      arr[static_cast<int>(Plant::Rice)] = false;
+      arr[static_cast<int>(Plant::Tomato)] = false;
+      arr[static_cast<int>(Plant::Onion)] = false;
+      arr[static_cast<int>(Plant::Potato)] = false;
+      arr[static_cast<int>(Plant::Cabbage)] = false;
+      arr[static_cast<int>(Plant::Pepper)] = false;
+      arr[static_cast<int>(Plant::Carrot)] = false;
+      arr[static_cast<int>(Plant::Poppy)] = false;
+      arr[static_cast<int>(Plant::Senna)] = false;
+      arr[static_cast<int>(Plant::Cotton)] = false;
+      arr[static_cast<int>(Plant::Papyrus)] = false;
+      arr[static_cast<int>(Plant::Flax)] = false;
+      arr[static_cast<int>(Plant::Hemp)] = false;
+      arr[static_cast<int>(Plant::Lettuce)] = false;
+      return arr;
+    }();
+
+  
+constexpr int countFalse(const std::array<bool, static_cast<int>(Plant::MAX)>& arr) {
+    int count = 0;
+    for (bool b : arr) {
+        if (!b) ++count;
+    }
+    return count;
+}
+
+inline constexpr int plantNum = countFalse(regrowthPlants);
+inline constexpr int regrowthPlantNum = static_cast<int>(Plant::MAX) - plantNum;
+
+
+inline constexpr std::array<float, plantNum>
+    waterRequired = [] {
+      std::array<float,plantNum> arr{};
+    arr[static_cast<int>(Plant::Wheat)] = 25.0;
+    arr[static_cast<int>(Plant::Oat)] = 25.0;
+    arr[static_cast<int>(Plant::Corn)] = 30.0;
+    arr[static_cast<int>(Plant::Tomato)] = 25.0;
+    arr[static_cast<int>(Plant::Rice)] = 25.0;
+    arr[static_cast<int>(Plant::Onion)] = 20.0;
+    arr[static_cast<int>(Plant::Cabbage)] = 20.0;
+    arr[static_cast<int>(Plant::Pepper)] = 25.0;
+    arr[static_cast<int>(Plant::Potato)] = 26.0;
+    arr[static_cast<int>(Plant::Carrot)] = 20.0;
+    arr[static_cast<int>(Plant::Poppy)] = 20.0;
+    arr[static_cast<int>(Plant::Senna)] = 28.0;
+    arr[static_cast<int>(Plant::Cotton)] = 35.0;
+    arr[static_cast<int>(Plant::Papyrus)] = 35.0;
+    arr[static_cast<int>(Plant::Flax)] = 24.0;
+    arr[static_cast<int>(Plant::Hemp)] = 28.0;
+    arr[static_cast<int>(Plant::Lettuce)] = 20.0; 
+      return arr;
+    }();
+
+inline constexpr std::array<float, plantNum> deathMin = [] {
+    std::array<float, plantNum> arr{};
+  arr[static_cast<int>(Plant::Wheat)] = 0.0;
+  arr[static_cast<int>(Plant::Oat)] = 0.0;
+  arr[static_cast<int>(Plant::Corn)] = 0.0;
+  arr[static_cast<int>(Plant::Tomato)] = 0.0;
+  arr[static_cast<int>(Plant::Rice)] = 0.0;						     
+  arr[static_cast<int>(Plant::Onion)] = 0.0;
+  arr[static_cast<int>(Plant::Cabbage)] = 0.0;
+  arr[static_cast<int>(Plant::Pepper)] = 0.0;
+  arr[static_cast<int>(Plant::Potato)] = 0.0;
+  arr[static_cast<int>(Plant::Carrot)] = 0.0;
+  arr[static_cast<int>(Plant::Poppy)] = 0.0;
+  arr[static_cast<int>(Plant::Senna)] = 0.0;
+  arr[static_cast<int>(Plant::Cotton)] = 0.0;
+  arr[static_cast<int>(Plant::Papyrus)] = 0.0;
+  arr[static_cast<int>(Plant::Flax)] = 0.0;
+  arr[static_cast<int>(Plant::Hemp)] = 0.0;
+  arr[static_cast<int>(Plant::Lettuce)] = 0.0; 
+  return arr;
+ }();
+
+
+inline constexpr std::array<float, plantNum> deathMax = [] {
+  std::array<float, plantNum> arr{};
+  arr[static_cast<int>(Plant::Wheat)] =  42.0;
+  arr[static_cast<int>(Plant::Oat)] = 42.0;
+  arr[static_cast<int>(Plant::Corn)] = 45.0;
+  arr[static_cast<int>(Plant::Rice)] = 45.0;
+  arr[static_cast<int>(Plant::Tomato)] = 40.0;
+  arr[static_cast<int>(Plant::Onion)] = 40.0;
+  arr[static_cast<int>(Plant::Cabbage)] = 40.0;
+  arr[static_cast<int>(Plant::Pepper)] = 40.0;
+  arr[static_cast<int>(Plant::Potato)] = 40.0;
+  arr[static_cast<int>(Plant::Carrot)] = 40.0;
+  arr[static_cast<int>(Plant::Poppy)] = 40.0;
+  arr[static_cast<int>(Plant::Senna)] = 45.0;
+  arr[static_cast<int>(Plant::Cotton)] = 45.0;
+  arr[static_cast<int>(Plant::Papyrus)] = 45.0;
+  arr[static_cast<int>(Plant::Flax)] = 40.0;
+  arr[static_cast<int>(Plant::Hemp)] = 40.0;
+  arr[static_cast<int>(Plant::Lettuce)] = 32.0; 
+    return arr;
+ }();
+
+
+inline constexpr std::array<float, plantNum> optimalMin = [] {
+  std::array<float, plantNum> arr{};
+  arr[static_cast<int>(Plant::Oat)] = 14.0;
+  arr[static_cast<int>(Plant::Wheat)] =  14.0;
+  arr[static_cast<int>(Plant::Corn)] = 16.0;
+  arr[static_cast<int>(Plant::Tomato)] = 18.0;
+  arr[static_cast<int>(Plant::Onion)] = 12.0;
+  arr[static_cast<int>(Plant::Rice)] = 20.0;
+  arr[static_cast<int>(Plant::Cabbage)] = 15.0;
+  arr[static_cast<int>(Plant::Pepper)] = 18.0;
+  arr[static_cast<int>(Plant::Potato)] = 13.0;
+  arr[static_cast<int>(Plant::Carrot)] = 12.0;
+  arr[static_cast<int>(Plant::Poppy)] = 10.0;
+  arr[static_cast<int>(Plant::Senna)] = 15.0;
+  arr[static_cast<int>(Plant::Cotton)] = 18.0;
+  arr[static_cast<int>(Plant::Papyrus)] = 15.0;
+  arr[static_cast<int>(Plant::Flax)] = 10.0;
+  arr[static_cast<int>(Plant::Hemp)] = 15.0;
+  arr[static_cast<int>(Plant::Lettuce)] = 16.0; 
+  return arr;
+ }();
+
+inline constexpr std::array<float, plantNum> optimalMax = [] {
+  std::array<float, plantNum> arr{};
+  arr[static_cast<int>(Plant::Oat)] = 21.0;
+  arr[static_cast<int>(Plant::Wheat)] =  21.0;
+  arr[static_cast<int>(Plant::Corn)] = 28.0;
+  arr[static_cast<int>(Plant::Rice)] = 35.0;
+  arr[static_cast<int>(Plant::Tomato)] = 30.0;
+  arr[static_cast<int>(Plant::Onion)] = 25.0;
+  arr[static_cast<int>(Plant::Cabbage)] = 28.0;
+  arr[static_cast<int>(Plant::Pepper)] = 28.0;
+  arr[static_cast<int>(Plant::Potato)] = 27.0;
+  arr[static_cast<int>(Plant::Carrot)] = 25.0;
+  arr[static_cast<int>(Plant::Poppy)] = 25.0;
+  arr[static_cast<int>(Plant::Senna)] = 35.0;
+  arr[static_cast<int>(Plant::Cotton)] = 32.0;
+  arr[static_cast<int>(Plant::Papyrus)] = 32.0;
+  arr[static_cast<int>(Plant::Flax)] = 22.0;
+  arr[static_cast<int>(Plant::Hemp)] = 30.0;
+  arr[static_cast<int>(Plant::Lettuce)] = 21.0; 
+  return arr;
+ }();
+
+  
+inline constexpr std::array<float, plantNum> noGrowthMin = [] {
+  std::array<float, plantNum> arr{};
+  arr[static_cast<int>(Plant::Oat)] = 4.0; 
+  arr[static_cast<int>(Plant::Wheat)] =  4.0;
+  arr[static_cast<int>(Plant::Corn)] = 10.0;
+  arr[static_cast<int>(Plant::Tomato)] = 10.0;
+  arr[static_cast<int>(Plant::Rice)] = 15.0;
+  arr[static_cast<int>(Plant::Onion)] = 5.0;
+  arr[static_cast<int>(Plant::Cabbage)] = 5.0;
+  arr[static_cast<int>(Plant::Pepper)] = 10.0;
+  arr[static_cast<int>(Plant::Potato)] = 6.0;
+  arr[static_cast<int>(Plant::Carrot)] = 5.0;
+  arr[static_cast<int>(Plant::Poppy)] = 5.0;
+  arr[static_cast<int>(Plant::Senna)] = 5.0;
+  arr[static_cast<int>(Plant::Cotton)] = 10.0;
+  arr[static_cast<int>(Plant::Papyrus)] = 20.0;
+  arr[static_cast<int>(Plant::Flax)] = 4.0;
+  arr[static_cast<int>(Plant::Hemp)] = 10.0;
+  arr[static_cast<int>(Plant::Lettuce)] = 7.0; 
+  return arr;
+ }();
+
+
+
+inline constexpr std::array<float, plantNum> noGrowthMax = [] {
+  std::array<float, plantNum> arr{};
+  arr[static_cast<int>(Plant::Oat)] = 38.0;
+  arr[static_cast<int>(Plant::Wheat)] =  38.0;
+  arr[static_cast<int>(Plant::Corn)] = 40.0;
+  arr[static_cast<int>(Plant::Tomato)] = 35.0;
+  arr[static_cast<int>(Plant::Onion)] = 30.0;
+  arr[static_cast<int>(Plant::Rice)] = 40.0;
+  arr[static_cast<int>(Plant::Cabbage)] = 40.0;
+  arr[static_cast<int>(Plant::Pepper)] = 35.0;
+  arr[static_cast<int>(Plant::Potato)] = 32.0;
+  arr[static_cast<int>(Plant::Carrot)] = 30.0;
+  arr[static_cast<int>(Plant::Poppy)] = 30.0;
+  arr[static_cast<int>(Plant::Senna)] = 30.0;
+  arr[static_cast<int>(Plant::Cotton)] = 35.0;
+  arr[static_cast<int>(Plant::Papyrus)] = 35.0;
+  arr[static_cast<int>(Plant::Flax)] = 35.0;
+  arr[static_cast<int>(Plant::Hemp)] = 35.0;
+  arr[static_cast<int>(Plant::Lettuce)] = 24.0; 
+  return arr;
+ }();
+  
+inline constexpr std::array<float, plantNum> waterDeath = [] {
+  std::array<float, plantNum> arr{};
+  arr[static_cast<int>(Plant::Oat)] = 250.0;
+  arr[static_cast<int>(Plant::Wheat)] =  250.0;
+  arr[static_cast<int>(Plant::Corn)] = 250.0;
+  arr[static_cast<int>(Plant::Tomato)] = 180.0;
+  arr[static_cast<int>(Plant::Onion)] = 200.0;
+  arr[static_cast<int>(Plant::Rice)] = 200.0;
+  arr[static_cast<int>(Plant::Cabbage)] = 200.0;
+  arr[static_cast<int>(Plant::Pepper)] = 220.0;
+  arr[static_cast<int>(Plant::Potato)] = 220.0;
+  arr[static_cast<int>(Plant::Carrot)] = 180.0;
+  arr[static_cast<int>(Plant::Poppy)] = 200.0;
+  arr[static_cast<int>(Plant::Senna)] = 220.0;
+  arr[static_cast<int>(Plant::Cotton)] = 250.0;
+  arr[static_cast<int>(Plant::Papyrus)] = 260.0;
+  arr[static_cast<int>(Plant::Flax)] = 220.0;
+  arr[static_cast<int>(Plant::Hemp)] = 250.0;
+  arr[static_cast<int>(Plant::Lettuce)] = 150.0; 
+  return arr;
+ }();
+
+  
+inline constexpr std::array<float, plantNum> fullyGrownAmt = [] {
+  std::array<float, plantNum> arr{};
+  arr[static_cast<int>(Plant::Corn)] = 34125.0;
+  arr[static_cast<int>(Plant::Rice)] = 29250.0;
+  arr[static_cast<int>(Plant::Wheat)] =  29250.0;
+  arr[static_cast<int>(Plant::Tomato)] = 25312.5;
+  arr[static_cast<int>(Plant::Onion)] = 27787.5;
+  arr[static_cast<int>(Plant::Cabbage)] = 33750.0;
+  arr[static_cast<int>(Plant::Pepper)] = 28125.0;
+  arr[static_cast<int>(Plant::Potato)] = 24318.0;
+  arr[static_cast<int>(Plant::Carrot)] = 25312.5;
+  arr[static_cast<int>(Plant::Poppy)] = 25312.5;
+  arr[static_cast<int>(Plant::Senna)] = 29250.0;
+  arr[static_cast<int>(Plant::Cotton)] = 42187.0;
+  arr[static_cast<int>(Plant::Papyrus)] = 42187.0;
+  arr[static_cast<int>(Plant::Flax)] = 33750.0;
+  arr[static_cast<int>(Plant::Hemp)] = 36562.5;
+  arr[static_cast<int>(Plant::Lettuce)] = 25312.5; 
+  return arr;
+ }();
+
+  
+inline constexpr std::array<float, plantNum> harvestAmt = [] {
+  std::array<float, plantNum> arr{};
+  arr[static_cast<int>(Plant::Wheat)] = 30;
+      arr[static_cast<int>(Plant::Oat)] = 30;
+          arr[static_cast<int>(Plant::Corn)] = 30;
+	      arr[static_cast<int>(Plant::Rice)] = 30;
+	          arr[static_cast<int>(Plant::Tomato)] = 30;
+		      arr[static_cast<int>(Plant::Onion)] = 30;
+		          arr[static_cast<int>(Plant::Potato)] = 30;
+			  arr[static_cast<int>(Plant::Cabbage)] = 30;
+			  arr[static_cast<int>(Plant::Pepper)] = 30;
+			  arr[static_cast<int>(Plant::Carrot)] = 30;
+			  arr[static_cast<int>(Plant::Poppy)] = 30;
+			  arr[static_cast<int>(Plant::Senna)] = 30;
+			  arr[static_cast<int>(Plant::Cotton)] = 30;
+			  arr[static_cast<int>(Plant::Papyrus)] = 30;
+			  arr[static_cast<int>(Plant::Flax)] = 30;
+			  arr[static_cast<int>(Plant::Hemp)] = 30;
+			  arr[static_cast<int>(Plant::Lettuce)] = 30; 
+  return arr;
+ }();
+  
+inline constexpr std::array<float, plantNum> requiresScythe = [] {
+  std::array<float, plantNum> arr{};
+  arr[static_cast<int>(Plant::Wheat)] = true;
+      arr[static_cast<int>(Plant::Oat)] = true;
+          arr[static_cast<int>(Plant::Corn)] = true;
+	      arr[static_cast<int>(Plant::Rice)] = true;
+	          arr[static_cast<int>(Plant::Tomato)] = false;
+		      arr[static_cast<int>(Plant::Onion)] = false;
+		          arr[static_cast<int>(Plant::Potato)] = false;
+			  arr[static_cast<int>(Plant::Cabbage)] = true;
+			  arr[static_cast<int>(Plant::Pepper)] = true;
+			  arr[static_cast<int>(Plant::Carrot)] = true;
+			  arr[static_cast<int>(Plant::Poppy)] = true;
+			  arr[static_cast<int>(Plant::Senna)] = true;
+			  arr[static_cast<int>(Plant::Cotton)] = true;
+			  arr[static_cast<int>(Plant::Papyrus)] = true;
+			  arr[static_cast<int>(Plant::Flax)] = true;
+			  arr[static_cast<int>(Plant::Hemp)] = true;
+			  arr[static_cast<int>(Plant::Lettuce)] = false; 
+  return arr;
+ }();
+
+}
+

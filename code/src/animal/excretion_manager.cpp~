@@ -1,0 +1,3 @@
+void prepareSeedDropping(entt::entity &animal, plant::Type plant) {
+  
+}

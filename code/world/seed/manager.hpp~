@@ -1,0 +1,19 @@
+#ifndef SEED_MANAGER_HPP
+#define SEED_MANAGER_HPP
+
+class SeedManager
+{
+private:
+    std::vector<Plant> seeds;
+    std::vector<std::pair<int,int>> seedCoords;
+
+public:
+  SeedManager() {};
+  void excreteSeed(int animalIndex, Plant plant);
+  void plantSeed(int unitIndex, Plant plant);
+};
+
+
+
+
+#endif

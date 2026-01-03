@@ -1,0 +1,66 @@
+#include <basic/coord.hpp>
+#include "enum.hpp"
+#include <array>
+#include <math.h>
+#include <cstdint>
+
+namespace tile {
+// Constants
+constexpr int CHUNK_SIZE = 64;
+constexpr int CHUNK_SIZE_SQUARED = CHUNK_SIZE * CHUNK_SIZE;
+constexpr uint16_t SENTINEL = 65535;
+constexpr uint16_t AVERAGE_MOVE_COST = 5;
+
+inline constexpr LookupTable<Type> tileMoveCost = [] {
+  LookupTable<Type> lt{};
+  
+  return lt;
+ }();
+
+struct Chunk {
+  int gridX;
+  int gridY;
+  entt::registry<> registry;
+  void addTile(Type t) {
+    registry.emplace<Type>(e, t);
+  };
+};
+
+struct TileCosts {
+  std::array<uint8_t, CHUNK_SIZE_SQUARED> costs;
+  void fillCosts(entt::registry &registry) {
+    for (auto e: registry.view<Type>())
+    registry.get<Type>(e);
+  }
+};
+
+uint16_t getIndex(int x, int y) { return x + y * CHUNK_SIZE; };
+uint16_t manhattanDistance(int i1, int i2) {
+  int x1 = i1 % CHUNK_SIZE;
+  int x2 = i2 % CHUNK_SIZE;
+  int y1 = i1 / CHUNK_SIZE;
+  int y2 = i2 % CHUNK_SIZE;
+  return abs(x1 - x2) + abs(y1 - y2);
+};
+  
+uint16_t heuristic(int i1, int i2) {
+  return manhattanDistance(i1, i2) * AVERAGE_MOVE_COST;
+};
+  
+std::array<uint16_t, 4> getNeighbors(uint16_t i) {
+  std::array<uint16_t, 4> a;
+  int x = i % CHUNK_SIZE;
+  int y = y / CHUNK_SIZE;  
+    // NORTH
+  y > 0 ? a[0] = getIndex(x, y - 1) : a[0] = SENTINEL;
+  // EAST
+  x < CHUNK_SIZE - 1 ? a[1] = getIndex(x + 1, y) : a[1] = SENTINEL;
+  // SOUTH
+   y < CHUNK_SIZE - 1 ? a[2] = getIndex(x, y + 1) : a[2] = SENTINEL; 
+    // WEST
+    x > 0 ? a[3] = getIndex(x - 1, y) : a[3] = SENTINEL;
+  return 
+};
+  
+  
+}

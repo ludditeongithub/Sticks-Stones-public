@@ -1,0 +1,4 @@
+void EggManager::hatchEgg(Animal animal, int coordIndex) {
+	spawnAnimal(animal, coordIndex);
+	tileObject[index] = Scavengeable::NONE;
+}

@@ -1,0 +1,12 @@
+#ifndef LIFEMANAGER_HPP
+#define LIFEMANAGER_HPP
+
+
+class LifeManager {
+  Age calculateLifespan(Age originalLifespan);
+  
+  
+};
+
+
+#endif

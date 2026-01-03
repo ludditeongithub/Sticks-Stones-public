@@ -1,0 +1,6 @@
+void TileDatabase::addTiles(std::vector<std::vector<Tile>> tiles,
+                            std::vector<Grass> tileGrass,
+                            std::vector<std::vector<uint16_t>> altitudes,
+                            std::vector<std::vector<Biome>> tileBiome) {
+  
+};

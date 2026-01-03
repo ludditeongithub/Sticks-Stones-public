@@ -1,0 +1,21 @@
+#ifndef ENTITY_HPP
+#define ENTITY_HPP
+
+#include <basic.hpp>
+#include <cstdint>
+#include "enum.hpp"
+
+namespace animal {
+  
+  struct Position { uint16_t x,y; };
+  struct Facing { Direction direction; };
+  struct Sex { bool sex; };
+  struct Health { uint16_t health; };
+  struct Hunger { uint16_t hunger; };
+  struct Age { float age; };
+  struct Movement { MovingStatus movingStatus; };  
+  struct Mating { MatingStatus matingStatus; };
+
+}
+
+#endif
