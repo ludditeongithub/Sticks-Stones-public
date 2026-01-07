@@ -73,6 +73,7 @@ void updateTasks(std::priority_queue<std::pair<uint8_t, PlayerTaskJobData>> pq, 
 	  v = true;
 	  a -= getMinimumOutput[t];
 	  timers[i] = getTaskTimer(task, skills[i]);
+	  if (a <= 0) pq.pop();
 	  //TODO: set action
 	  break;	  	  
 	} 

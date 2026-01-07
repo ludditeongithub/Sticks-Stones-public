@@ -6,17 +6,17 @@
 #include <tuple>
 #include <vector>
 
+
 template <typename T>
 struct Arena {
     const uint32_t capacity;
     T* start;
-    const uint8_t stride = sizeof(T);
     uint32_t used;
 
-    Arena(uint32_t cap) 
-        : capacity(cap), 
-          start(new T[cap]), 
-          used(0) 
+    Arena(uint32_t cap)
+        : capacity(cap),
+          start(new T[cap]{}),
+          used(0)
     {}
 
     ~Arena() {
@@ -30,6 +30,30 @@ struct Arena {
         }
         return &start[used++];
     }
+
+    T& operator[](size_t index) {
+        if (index >= used) {
+            throw std::out_of_range("Arena index out of range");
+        }
+        return start[index];
+    }
+
+    const T& operator[](size_t index) const {
+        if (index >= used) {
+            throw std::out_of_range("Arena index out of range");
+        }
+        return start[index];
+    }
+
+
+    T* begin() { return start; }
+    T* end() { return start + used; }
+    const T* begin() const { return start; }
+    const T* end() const { return start + used; }
+
+    void reset() { used = 0; }
+    uint32_t size() const { return used; }
+    uint32_t remaining() const { return capacity - used; }
 };
 
 template <typename T>

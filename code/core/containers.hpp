@@ -2,6 +2,8 @@
 #include <array>
 #include <unordered_map>
 #include <bitset>
+#include "memory.hpp"
+
 
 template<typename Enum, typename T, std::size_t N = static_cast<std::size_t>(Enum::MAX)>
 struct LookupTable {
@@ -82,3 +84,27 @@ struct BitsetTable {
     constexpr iterator end()   const { return iterator(&b, N); }
 };
 
+template <typename T>
+struct PriorityQueue {
+  Arena<T> arena;
+  int current;
+  int next;  
+  
+
+  inline T top() {
+    return arena[current];
+  };
+  
+  inline void pop() {
+    if (current > arena.capacity) std::cerr << "Priority Queue is out of memory!" << std::endl;
+    current++;
+  };
+
+  inline T next() {
+    return arena[next++];
+  };
+
+  inline void resetNext() {
+    next = current;
+  };
+};
