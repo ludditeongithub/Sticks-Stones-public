@@ -57,6 +57,47 @@ struct Arena {
 };
 
 template <typename T>
+struct Arena2D {
+    Arena<T>& arena;
+    uint32_t rows;
+    uint32_t cols;
+
+    struct RowProxy {
+        T* row_start;
+        T& operator[](uint32_t col) {
+            return row_start[col];
+        }
+        const T& operator[](uint32_t col) const {
+            return row_start[col];
+        }
+    };
+
+    Arena2D(Arena<T>& a, uint32_t r, uint32_t c)
+        : arena(a), rows(r), cols(c) {
+        if (r * c > a.capacity) {
+            throw std::runtime_error("Arena too small for requested 2D view");
+        }
+    }
+
+  Arena2D(uint32_t r, uint32_t c) : rows(r), cols(c) {
+      arena = new Arena<T>(r * c);      
+    }
+      
+
+    RowProxy operator[](uint32_t row) {
+        if (row >= rows) throw std::out_of_range("Row out of range");
+        return RowProxy{arena.start + row * cols};
+    }
+
+    const RowProxy operator[](uint32_t row) const {
+        if (row >= rows) throw std::out_of_range("Row out of range");
+        return RowProxy{arena.start + row * cols};
+    }
+
+    uint32_t size() const { return rows * cols; }
+};
+
+template <typename T>
 struct Pool {
     T* data;
     uint32_t* freeList;
@@ -91,3 +132,24 @@ struct Pool {
         freeList[--freeHead] = index;
     }
 };
+
+template <typename T>
+struct Buffer {
+  T *data;
+  uint32_t size;
+
+   T& operator[](size_t index) {
+        if (index >= size) {
+            throw std::out_of_range("Arena index out of range");
+        }
+        return data[index];
+    }  
+
+     const T& operator[](size_t index) const {
+        if (index >= size) {
+            throw std::out_of_range("Arena index out of range");
+        }
+        return data[index];
+     }
+  
+};  

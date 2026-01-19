@@ -1,27 +1,24 @@
 #pragma once
 
 #include "enum.hpp"
+#include "world/plant/tables.hpp"
 #include <stdint.h>
+#include <cstddef>
+#include <systems/worldUpdates.hpp>
 
-namespace plant {
-  
-  struct Growth {
-    float growth;
-  };
-  struct YieldMisses {
-    uint16_t yieldMisses;
-  };
-  struct CollectedWater {
-    float collectedWater;
-  };
-  //TODO: check on this, perhaps combine with above into water data.
-  struct LastFullyWatered {
-    float lastFullyWatered;
-  };
-  
-  struct Position {
-    int x;
-    int y;
-  };
+struct PlantDatabase {
+Array<Plant> plantList;
+Array<float> nextGrowth;
+Array<Coord> coords;
+Array<float> tileWater;
+Array<float> lastFullyWatered;
+
+void destroyPlant(uint32_t i) {
+  plantList.remove(i);
+  nextGrowth.remove(i);
+  coords.remove(i);
+  tileWater.remove(i);
+  lastFullyWatered.remove(i);
+}
 
 };

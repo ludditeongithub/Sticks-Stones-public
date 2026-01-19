@@ -1,6 +1,8 @@
 #include "../include/worldSpawn.hpp"
 #include "../include/tile.hpp"
 #include "pathfinding.cpp"
+#include "world/world.hpp"
+#include <map>
 
 
 //TO-DO: refactor all code to use adjacent tiles based on nearest Voronoi seeds, not square cells
@@ -529,7 +531,7 @@ void WorldSpawner::generateHumidityMap() {
                 float createdHumidity = ((humidityMult * totalCreatedHumidity(landsMap, y, x)) * evap);
                 //potentialhumidity += fmax(3,((0.6 * (pow((temperatureMap[y][x] / 2.4), 1.5) - pow(landsMap[x][y],2.1))) - 30));
 
-                humidityMap[y][x] = fmax(1, fmin(120, createdHumidity - latEffect));
+                humidityMap[y][x] = fmax(1, fmin(MAX_HUMIDITY, createdHumidity - latEffect));
                 //potentialHumidityMap[y][x] = potentialhumidity;
                 //humidityMap[y][x] = fmax(1, fmin(100, fmin(createdhumidity, potentialhumidity)));
             }
@@ -558,7 +560,7 @@ void WorldSpawner::factorWetlandsJunglesAndForests() {
                     createdhumidity += ah;
                     float evap = ((pow(temperatureMap[y][x]/ 24, 1.8)) + (altitudeMap[y][x] / 12)) / 5;
                     humidityMap[y][x] += fmax(0,(humidityMult * createdhumidity * evap));
-                    if (humidityMap[y][x] > 120) humidityMap[y][x] = 120;
+                    if (humidityMap[y][x] > MAX_HUMIDITY) humidityMap[y][x] = MAX_HUMIDITY;
                 }
             }
         }
@@ -959,52 +961,6 @@ float rangePenalty(float originalValue, float minValue, float maxValue, float ad
     }
 
 
-    int main() {
-        FastNoiseLite noiseLayer;
-        noiseLayer.SetSeed(1434933);
-        noiseLayer.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
-        noiseLayer.SetFrequency(0.05f);
-        noiseLayer.SetFractalType(FastNoiseLite::FractalType_FBm);
-        noiseLayer.SetFractalLacunarity(1.8f); //chaos
-        noiseLayer.SetFractalOctaves(7); //more detail, extremes appear in cells
-
-        // MAPS
-        WorldSpawner world = new WorldSpawner();
-        world.generateAltitudeMap(noiseLayer);
-        world.generateOceansOnMaps(oceanMap, altitudeMap, landsMap, landThreshold);
-        world.cleanAltitudeMap();
-        world.generateLandsMap()
-        world.generateWaterMap();
-        world.generateWBDistances();
-        world.generateTemperatureMap();
-        world.generateHumidityMap();
-        world.generateBiomes();
-        world.getRiversFromGroundwater();
-        // cout << "Ocean" << endl;
-        //printMap(oceanMap);
-        cout << "Lands" << endl;
-        printMap();
-        cout << "Altitude" << endl;
-        printMap();
-        cout << "Water Bodies" << endl;
-        printMap();
-        cout << "Temperature" << endl;
-        printMap();
-        cout << "Humidity" << endl;
-        printMap();
-        cout << "Biomes" << endl;
-        printMap();
-        generateTiles();
-        spawnFirstPlants();
-        cout << "PLANTS SPAWNED" << endl;
-        spawnAnimals();
-        cout << "TILE AMOUNT:" << rTileIndex.size() << endl;
-        int cell = rTileCellIndex[5];
-        cout << " Cell: " << cell;
-        spawnScavengeables();
-        return 0;
-    }
-
 
 std::array<float, TILE_AMOUNT> generateTileChances() {
   std::array<float, TILE_AMOUNT> chances;
@@ -1233,13 +1189,83 @@ void generateTileTypes(std::array<float, TILE_AMOUNT> chances, const std::array<
 	}
 }
 
+void moveRegionsToChunks(std::vector< std::vector<uint16_t> > & temperatureMap, std::vector< std::vector<uint16_t >  > & humidityMap, Array2D& humidityTable, Array2D& minTemperatureTable) {
+  for (int i = 0; i < LENGTH_CHUNKS; i++) {
+    for (int j = 0; j < HEIGHT_CHUNKS; j++) {
+        // for each chunk, count tiles per region slot
+        std::unordered_map<uint16_t, uint16_t> regionCounts;
+	int totalCount = 0;
+      for (int k = 0; k < CHUNK_SIZE; k++) {
+        uint16_t region =
+            tileRegionSlot[(j * CHUNK_LENGTH) + (k / CHUNK_LENGTH)]
+	  [(i * CHUNK_LENGTH) + (k % CHUNK_LENGTH)];
+        regionCounts[region]++;
+	totalCount++;
+      }
+      // calculate values of each chunk based on region counts
+      for (const auto& pair : regionCounts) {
+	auto key = pair.first;
+        auto value = pair.second;
 
-void generateChunkTempeartureEquilibrium() {
+        humidityTable[i][j] += static_cast<float>(humidityMap[key / CHUNK_LENGTH][key % CHUNK_LENGTH] *
+            (value / totalCount));
+
+        temperatureTable[i][j] += static_cast<float>(
+            temperatureMap[key / CHUNK_LENGTH][key % CHUNK_LENGTH] *
+            (value / totalCount));	
+      }      	
+      }      
+    }
+}
+
+void calculateChunkPrecipitationEquilibriums() {
+
 
 }
 
-void updateChunkTemperature(std::array<float, CHUNK_AMOUNT> equilibriumTemps, float yearTime, float yearLength) {
-  for (int i = 0; i < CHUNK_AMOUNT; i++) {
-    
-  }
-}
+
+    int main() {
+        FastNoiseLite noiseLayer;
+        noiseLayer.SetSeed(1434933);
+        noiseLayer.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
+        noiseLayer.SetFrequency(0.05f);
+        noiseLayer.SetFractalType(FastNoiseLite::FractalType_FBm);
+        noiseLayer.SetFractalLacunarity(1.8f); //chaos
+        noiseLayer.SetFractalOctaves(7); //more detail, extremes appear in cells
+
+        // MAPS
+        WorldSpawner world = new WorldSpawner();
+        world.generateAltitudeMap(noiseLayer);
+        world.generateOceansOnMaps(oceanMap, altitudeMap, landsMap, landThreshold);
+        world.cleanAltitudeMap();
+        world.generateLandsMap()
+        world.generateWaterMap();
+        world.generateWBDistances();
+        world.generateTemperatureMap();
+        world.generateHumidityMap();
+        world.generateBiomes();
+        world.getRiversFromGroundwater();
+        // cout << "Ocean" << endl;
+        //printMap(oceanMap);
+        cout << "Lands" << endl;
+        printMap();
+        cout << "Altitude" << endl;
+        printMap();
+        cout << "Water Bodies" << endl;
+        printMap();
+        cout << "Temperature" << endl;
+        printMap();
+        cout << "Humidity" << endl;
+        printMap();
+        cout << "Biomes" << endl;
+        printMap();
+        generateTiles();
+        spawnFirstPlants();
+        cout << "PLANTS SPAWNED" << endl;
+        spawnAnimals();
+        cout << "TILE AMOUNT:" << rTileIndex.size() << endl;
+        int cell = rTileCellIndex[5];
+        cout << " Cell: " << cell;
+        spawnScavengeables();
+        return 0;
+    }

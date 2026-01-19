@@ -1,9 +1,8 @@
 #ifndef ENUMS_HPP
 #define ENUMS_HPP
 
-namespace animal {
 
-enum class Type {
+enum class Animal {
   NONE,
   Pig,
   Cow,
@@ -66,6 +65,6 @@ enum class MatingStatus {
 
 enum class Diet { Herbivore, Omnivore, Carnivore, Scavenger };
 
-}
+
 
 #endif

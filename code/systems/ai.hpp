@@ -10,7 +10,6 @@ void updateAttack(float* chances, Weapon* weapons, Stats* stats, Coord* position
 	if (hit(chances[i], weapons[i], stats[i], armors[ti], dodges[i], stats[ti])) 
       }
   }
-  
   int j = 0;
   for (int i = 0; i < ; i++) {
     if (timers[i] <= 0 && actions[i] == Action::Attack) {
@@ -37,7 +36,7 @@ void getNewAction(roleData& rd, Action* actions) {
 	  highest = t;
 	  ji = j;
 	}
-      }f
+      }
       actions[i] = roleToAction[rd[i][ji]];
     }
   }

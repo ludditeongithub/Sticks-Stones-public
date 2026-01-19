@@ -2,9 +2,7 @@
 #include <plant/enum.hpp>
 #include <animal/enum.hpp>
 
-namespace food {
-using enum plant::Type;
-using enum animal::Type;
+
   
 enum class Category {
   Leaves,
@@ -21,7 +19,7 @@ enum class Category {
 
 constexpr BitsetTable<Category> meatCategories = [] {
   BitsetTable<Category> s;
-  using enum Category;
+  using enum Category;  
   s.set(SmallMammals);
   s.set(MediumMammals);
   s.set(SmallReptiles);
@@ -31,8 +29,9 @@ constexpr BitsetTable<Category> meatCategories = [] {
 
 // TODO height of plant factored
   // TODO  'attraction factor' (some bitter or repulsive plants avoided)
-constexpr BitsetTable<plant::Type> leaves = [] {
-  BitsetTable<plant::Type> s;
+constexpr BitsetTable<Plant> leaves = [] {
+  BitsetTable<Plant> s;
+  using enum Plant;
   s.set(Fern);
   s.set(PioneerTree);
   s.set(DeciduousTree);
@@ -51,8 +50,9 @@ constexpr BitsetTable<plant::Type> leaves = [] {
 };
 
 
-constexpr BitsetTable<plant::Type> fruit = [] {
-  BitsetTable<plant::Type> s;
+constexpr BitsetTable<Plant> fruit = [] {
+  BitsetTable<Plant> s;
+  using enum Plant;
   s.set(Orange);
   s.set(Apple);
   s.set(Lemon);

@@ -1,29 +1,26 @@
 #ifndef DIETS_HPP
 #define DIETS_HPP
 
+#include <world/animal/enum.hpp>
+#include <world/plant/enum.hpp>
+#include <core/containers.hpp>
 #include "categories.hpp"
-#include <animal/enum.hpp>
-#include <plant/enum.hpp>
-#include <basic/structs.hpp>
 
 
-namespace food {
-  using enum Category;
-  using enum animal::Type;
-
-  constexpr BitsetTable<animal::Type> carnivores = [] {
-    BitsetTable<animal::Type> s;
-    s.set(Pig);
-    s.set(Wolf);
-    s.set(Bear);
+inline constexpr BitsetTable<Animal> carnivores = [] {
+  BitsetTable<Animal> s;
+  using enum Animal;
+    s[Pig] = true;
+    s[Wolf] = true;
+    s[Bear] = true;
     return s;
   };
-  
-  inline constexpr LookupTable2D<animal::Type, Category> dietCategories = [] {
-    LookupTable2D<animal::Type, Category> lt{};
 
+  inline constexpr LookupTable2D<Animal, Category> dietCategories = [] {
+    LookupTable2D<Animal, Category> lt{};
+    using enum Animal;
     lt[NONE] = {};
-    lt[Pig]	=            { Grass, Leaves, Fruit, Tuber, SmallMammals, SmallReptiles };
+    lt[Pig]	=           { Grass, Leaves, Fruit, Tuber, SmallMammals, SmallReptiles };
     lt[Cow]	=            { Grass, Leaves };
     lt[Chicken] =        { Leaves, Fruit, Reeds };
     lt[Duck]	=           { Leaves, Fruit, Fish, Reeds };
@@ -79,7 +76,7 @@ namespace food {
     }
   };
 
-  BitSetTable getHerbivoreDiet(animal::Type a) {
+  BitSetTable getHerbivoreDiet(Animal a) {
     std::array<Category, 5> &cats = dietCategories[a];
     BitSetTable b;
     for (auto x : cats) 
@@ -87,7 +84,7 @@ namespace food {
     return b;
   };
 
-  BitSetTable getCarnivoreDiet(animal::Type a) {
+  BitSetTable getCarnivoreDiet(Animal a) {
       std::array<Category, 5> &cats = dietCategories[a];
     BitSetTable b;
     for (auto x : cats) 
@@ -95,8 +92,8 @@ namespace food {
     return b;
   };
 
-  inline constexpr LookupTable<BitsetTable<animal::Type>> herbivoreDiets = [] {
-    LookupTable<BitsetTable<animal::Type>> lt{};    
+  inline constexpr LookupTable<BitsetTable<Animal>> herbivoreDiets = [] {
+    LookupTable<BitsetTable<Animal>> lt{};    
     lt[Pig]	=            getHerbivoreDiet(Pig);
     lt[Cow]	=            getHerbivoreDiet(Cow);
     lt[Chicken] =        getHerbivoreDiet(Chicken);
@@ -121,8 +118,8 @@ namespace food {
   }();
 
 
-  inline constexpr LookupTable<BitsetTable<animal::Type>> carnivoreDiets = [] {
-    LookupTable<BitsetTable<animal::Type>> lt{};
+  inline constexpr LookupTable<BitsetTable<Animal>> carnivoreDiets = [] {
+    LookupTable<BitsetTable<Animal>> lt{};
     
     lt[Pig]	=            getCarnivoreDiet(Pig);
     lt[Wolf] = getCarnivoreDiet(Wolf);    
@@ -131,6 +128,5 @@ namespace food {
   return lt;
   }();  
 
-};
 
 #endif

@@ -1,12 +1,14 @@
 #include <cstdint>
 #include <math.h>
+#include <stdexcept>
 #include <vector>
 #include <core/math.hpp>
 #include <world/tile/data.hpp>
+#include <core/containers.hpp>
 
 // CONSTANTS
-constexpr int MAX_PATH_SIZE = 256; 
-constexpr uint16_t SENTINEL = 65535;
+constexpr int MAX_PATH_SIZE = 45;
+constexpr int NEW_PATH_DIST = 3;
 constexpr uint32_t PATH_QUEUE_SIZE = 10000;
 
 // HOT
@@ -15,11 +17,27 @@ struct Entity {
   Direction d;
 };
 
+struct PathsData {  
+  uint16_t size;
+  Array<uint8_t> current;
+  Array<uint8_t> end;
+  Array<Coord> destination;
+  Array<Array<Coord>> data;
+
+  Coord pop(uint16_t i) {
+    int c = current[i];
+    current[i]++;
+    return data[i][c];
+  }    
+    
+};
+
 struct PathExecution {
   uint16_t startIndex;
   Coord start;
   uint8_t length;
 };
+
 struct NodeData {
     float gCost = FLT_MAX;
     float fCost = FLT_MAX;
@@ -35,7 +53,7 @@ int toIndex(int x, int y, int width) {
 }
 
 float heuristic(Coord a, Coord b) {
-    return abs(a.x - b.x) + abs(a.y - b.y);
+  return std::abs(a.x - b.x) + std::abs(a.y - b.y);
 }
 
 std::vector<Coord> aStar(Coord start, Coord goal, int width, int height) {
@@ -104,22 +122,25 @@ std::vector<Coord> reconstructPath(int startIndex, int goalIndex) {
     return path;
 }
 
-void updatePositions(pathData& rpd, Coord* positions, float* timers, Action* actions) {
-  for (int i = 0; i < rpd.size(); i++) {
-    if (timers[i] <= 0 && states == State::Move) {
-	 Coord c = rpd[i].pop();
-	 if (manhattanDist(c, positions[i]) > 1) throw outOfBoundsException;
-	 positions[i] = c;
-	 if (rpd[i].current >= rpd[i].size && actions[i]) {
-	   if (actions[i] == Action::Wander) actions[i] = Action:Assign;
-	   if (actionRequiresMovePaths(actions[i])) actions[i] = needMovePathVersion(actions[i]);
-	 }
+
+
+// sets start and end, inputted from all types of jobs
+void setPaths() {
+  
+}  
+
+void updatePositions(PathsData& rpd, Coord* positions, float* timers, Action* action) {
+  for (int i = 0; i < rpd.size; i++) {
+    if (timers[i] <= 0 && actions[i] != Action::Idle) {
+      // this could be pre-stored in a contiguous array
+	 Coord c = rpd.pop(i);
+         if (manhattanDist(c, positions[i]) > 1)
+           throw std::invalid_argument("Tile movement must be between tiles 1 distance away from each other.");
+	 Coord& p = positions[i];
+         p = c;
+	 // get new path if there are x or less tiles to go and destination farther than x tiles
+         if (rpd.current[i] >= rpd.end[i] - NEW_PATH_DIST) 
+	   manhattanDist(rpd.destination[i], p) >= NEW_PATH_DIST ? actions[i] = Action::NewPath : actions[i] = Action::Assign;  	 
       } 
   }
-}
-
-  };
-
-
-  
 }

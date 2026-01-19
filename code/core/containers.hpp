@@ -2,8 +2,32 @@
 #include <array>
 #include <unordered_map>
 #include <bitset>
+#include <cassert>
 #include "memory.hpp"
 
+template <typename T>
+struct Array {
+    Pool<T>& pool;
+
+    uint32_t* activeIndices;
+    uint32_t  activeCount;  
+    uint32_t  capacity;
+
+    T& operator[](uint32_t i) {
+        return pool[activeIndices[i]];
+    }
+
+    uint32_t size() const { return activeCount; }  
+
+    void push(uint32_t poolIndex) {
+        assert(activeCount < capacity);
+        activeIndices[activeCount++] = poolIndex;
+    }
+
+    void remove(uint32_t i) {
+        activeIndices[i] = activeIndices[--activeCount];
+    }
+};
 
 template<typename Enum, typename T, std::size_t N = static_cast<std::size_t>(Enum::MAX)>
 struct LookupTable {
@@ -56,6 +80,8 @@ struct BitsetTable {
         return *this;
     }
 
+  
+
       struct iterator {
         const std::bitset<N>* bits;
         std::size_t index;
@@ -86,10 +112,9 @@ struct BitsetTable {
 
 template <typename T>
 struct PriorityQueue {
-  Arena<T> arena;
+  Arena<T> arena; 
   int current;
-  int next;  
-  
+  int nx;
 
   inline T top() {
     return arena[current];
@@ -101,10 +126,10 @@ struct PriorityQueue {
   };
 
   inline T next() {
-    return arena[next++];
+    return arena[nx++];
   };
 
   inline void resetNext() {
-    next = current;
+    nx = current;
   };
 };

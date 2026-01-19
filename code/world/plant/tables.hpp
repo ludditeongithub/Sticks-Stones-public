@@ -1,106 +1,131 @@
 #pragma once
 #include "enum.hpp"
-#include <basic/structs.hpp>
+#include "world/world.hpp"
+#include <core/containers.hpp>
 #include <array>
-#include <region/entity.hpp>
 
 
-namespace plant {
+using enum Plant;
+
+  constexpr float UNOPTIMAL_TEMP_MULT = 0.65;
+  constexpr float LOW_WATER_MULT = 0.55;
+  
   //TODO: manage sunlight and sun values
   
   //TODO: change these all to uint16_ts
-  inline constexpr LookupTable<Type, float> waterDeathMin = [] {
-      LookupTable<Type, float> arr{};
-      arr[Wheat] = 8.0;
-      arr[Oat] = 8.0;
-      arr[Corn] = 12.0;
-      arr[Tomato] = 8.0;
-      arr[Rice] = 8.0;
-      arr[Onion] = 6.0;
-      arr[Cabbage] = 6.0;
-      arr[Pepper] = 8.0;
-      arr[Potato] = 9.0;
-      arr[Carrot] = 8.0;
-      arr[Poppy] = 8.0;
-      arr[Senna] = 8.5;
-      arr[Cotton] = 15.5;
-      arr[Papyrus] = 16.5;
-      arr[Flax] = 8.0;
-      arr[Hemp] = 9.5;
-      arr[Lettuce] = 6.5; 
+  inline constexpr LookupTable<Plant, float> waterDeathMin = [] {
+    LookupTable<Plant, float> arr{};
+    arr[Wheat] = 8.0;
+    arr[Oat] = 8.0;
+    arr[Corn] = 12.0;
+    arr[Tomato] = 8.0;
+    arr[Rice] = 8.0;
+    arr[Onion] = 6.0;
+    arr[Cabbage] = 6.0;
+    arr[Pepper] = 8.0;
+    arr[Potato] = 9.0;
+    arr[Carrot] = 8.0;
+    arr[Poppy] = 8.0;
+    arr[Senna] = 8.5;
+    arr[Cotton] = 15.5;
+    arr[Papyrus] = 16.5;
+    arr[Flax] = 8.0;
+    arr[Hemp] = 9.5;
+    arr[Lettuce] = 6.5;
+    return arr;
+  }();
+
+  inline constexpr LookupTable<Plant, float> waterDeath = [] {
+      LookupTable<Plant, float> arr{};
+      arr[Wheat] = HOUR_LENGTH * 70;
+      arr[Oat] = HOUR_LENGTH * 42;
+      arr[Corn] = HOUR_LENGTH * 36;
+      arr[Tomato] = HOUR_LENGTH * 20;
+      arr[Rice] = HOUR_LENGTH * 20;
+      arr[Onion] = HOUR_LENGTH * 36;
+      arr[Cabbage] = HOUR_LENGTH * 36;
+      arr[Pepper] = HOUR_LENGTH * 20;
+      arr[Potato] = HOUR_LENGTH * 28;
+      arr[Carrot] = HOUR_LENGTH * 30;
+      arr[Poppy] = HOUR_LENGTH * 29;
+      arr[Senna] = HOUR_LENGTH * 68;
+      arr[Cotton] = HOUR_LENGTH * 104;
+      arr[Papyrus] = HOUR_LENGTH * 1;
+      arr[Flax] = HOUR_LENGTH * 30;
+      arr[Hemp] = HOUR_LENGTH * 52;
+      arr[Lettuce] = HOUR_LENGTH * 20; 
       return arr;
-    }();
+    }();  
 
-  inline constexpr LookupTable<Type, float> waterDeathMax = [] {
-  LookupTable<Type, float> arr{};
-  arr[Oat] = 250.0;
-  arr[Wheat] =  250.0;
-  arr[Corn] = 250.0;
-  arr[Tomato] = 180.0;
-  arr[Onion] = 200.0;
-  arr[Rice] = 200.0;
-  arr[Cabbage] = 200.0;
-  arr[Pepper] = 220.0;
-  arr[Potato] = 220.0;
-  arr[Carrot] = 180.0;
-  arr[Poppy] = 200.0;
-  arr[Senna] = 220.0;
-  arr[Cotton] = 250.0;
-  arr[Papyrus] = 260.0;
-  arr[Flax] = 220.0;
-  arr[Hemp] = 250.0;
-  arr[Lettuce] = 150.0; 
+ //  inline constexpr LookupTable<Plant, float> waterDeathMax = [] {
+ //  LookupTable<Plant, float> arr{};
+ //  arr[Oat] = 250.0;
+ //  arr[Wheat] =  250.0;
+ //  arr[Corn] = 250.0;
+ //  arr[Tomato] = 180.0;
+ //  arr[Onion] = 200.0;
+ //  arr[Rice] = 200.0;
+ //  arr[Cabbage] = 200.0;
+ //  arr[Pepper] = 220.0;
+ //  arr[Potato] = 220.0;
+ //  arr[Carrot] = 180.0;
+ //  arr[Poppy] = 200.0;
+ //  arr[Senna] = 220.0;
+ //  arr[Cotton] = 250.0;
+ //  arr[Papyrus] = 260.0;
+ //  arr[Flax] = 220.0;
+ //  arr[Hemp] = 250.0;
+ //  arr[Lettuce] = 150.0; 
+ //  return arr;
+ // }();
+
+inline constexpr LookupTable<Plant, float> waterRequired = [] {
+  LookupTable<Plant, float> arr{};
+    arr[Wheat] = 750.0 / DAY_LENGTH;
+    arr[Oat] = 650.0 / DAY_LENGTH;
+    arr[Corn] = 1250.0 / DAY_LENGTH;
+    arr[Tomato] = 750.0 / DAY_LENGTH;
+    arr[Rice] = 1750.0 / DAY_LENGTH;
+    arr[Onion] = 450.0 / DAY_LENGTH;
+    arr[Cabbage] = 600.0 / DAY_LENGTH;
+    arr[Pepper] = 450.0 / DAY_LENGTH;
+    arr[Potato] = 750.0 / DAY_LENGTH;
+    arr[Carrot] = 600.0 / DAY_LENGTH;
+    arr[Poppy] = 450.0 / DAY_LENGTH;
+    arr[Senna] = 300.0 / DAY_LENGTH;
+    arr[Cotton] = 800.0 / DAY_LENGTH;
+    arr[Papyrus] = 1500.0 / DAY_LENGTH;
+    arr[Flax] = 600.0 / DAY_LENGTH;
+    arr[Hemp] = 750.0 / DAY_LENGTH;
+    arr[Lettuce] = 400.0 / DAY_LENGTH; 
   return arr;
- }();
+}();
 
-inline constexpr LookupTable<Type, float>
-    waterGrowthMin = [] {
-      float arr{};
-    arr[Wheat] = 25.0;
-    arr[Oat] = 25.0;
-    arr[Corn] = 30.0;
-    arr[Tomato] = 25.0;
-    arr[Rice] = 25.0;
-    arr[Onion] = 20.0;
-    arr[Cabbage] = 20.0;
-    arr[Pepper] = 25.0;
-    arr[Potato] = 26.0;
-    arr[Carrot] = 20.0;
-    arr[Poppy] = 20.0;
-    arr[Senna] = 28.0;
-    arr[Cotton] = 35.0;
-    arr[Papyrus] = 35.0;
-    arr[Flax] = 24.0;
-    arr[Hemp] = 28.0;
-    arr[Lettuce] = 20.0; 
-      return arr;
-    }();
-
-inline constexpr LookupTable<Temperature, MAX> tempDeathMin = [] {
-    LookupTable<Type, float> arr{};
-  arr[Wheat] = 0.0;
-  arr[Oat] = 0.0;
-  arr[Corn] = 0.0;
-  arr[Tomato] = 0.0;
-  arr[Rice] = 0.0;						     
-  arr[Onion] = 0.0;
-  arr[Cabbage] = 0.0;
-  arr[Pepper] = 0.0;
-  arr[Potato] = 0.0;
-  arr[Carrot] = 0.0;
-  arr[Poppy] = 0.0;
-  arr[Senna] = 0.0;
-  arr[Cotton] = 0.0;
-  arr[Papyrus] = 0.0;
-  arr[Flax] = 0.0;
-  arr[Hemp] = 0.0;
-  arr[Lettuce] = 0.0; 
-  return arr;
- }();
+inline constexpr LookupTable<Plant, float> tempDeathMin = [] {
+    LookupTable<Plant, float> arr{};
+    arr[Wheat] = -10.0;
+    arr[Oat] = -8.0;
+    arr[Corn] = 0.0;
+    arr[Tomato] = 0.0;
+    arr[Rice] = 6.0;
+    arr[Onion] = -5.0;
+    arr[Cabbage] = -5.0;
+    arr[Pepper] = 5.0;
+    arr[Potato] = -2.0;
+    arr[Carrot] = -6.0;
+    arr[Poppy] = -5.0;
+    arr[Senna] = 0.0;
+    arr[Cotton] = 0.0;
+    arr[Papyrus] = 0.0;
+    arr[Flax] = -5.0;
+    arr[Hemp] = -5.0;
+    arr[Lettuce] = 0.0; 
+    return arr;
+}();
 
   //TODO : change these to int16_ts?
-inline constexpr LookupTable<Temperature, MAX> tempDeathMax = [] {
-  LookupTable<Type, float> arr{};
+inline constexpr LookupTable<Plant, float> tempDeathMax = [] {
+  LookupTable<Plant, float> arr{};
   arr[Wheat] =  42.0;
   arr[Oat] = 42.0;
   arr[Corn] = 45.0;
@@ -122,8 +147,8 @@ inline constexpr LookupTable<Temperature, MAX> tempDeathMax = [] {
  }();
 
 
-inline constexpr LookupTable<Temperature, MAX> tempOptimalMin = [] {
-  LookupTable<Temperature, MAX> arr{};
+inline constexpr LookupTable<Plant, float> tempOptimalMin = [] {
+  LookupTable<Plant, float> arr{};
   arr[Oat] = 14.0;
   arr[Wheat] =  14.0;
   arr[Corn] = 16.0;
@@ -144,8 +169,8 @@ inline constexpr LookupTable<Temperature, MAX> tempOptimalMin = [] {
   return arr;
  }();
 
-inline constexpr LookupTable<Temperature, MAX> tempOptimalMax = [] {
-  LookupTable<Temperature, MAX> arr{};
+inline constexpr LookupTable<Plant, float> tempOptimalMax = [] {
+  LookupTable<Plant, float> arr{};
   arr[Oat] = 21.0;
   arr[Wheat] =  21.0;
   arr[Corn] = 28.0;
@@ -167,8 +192,8 @@ inline constexpr LookupTable<Temperature, MAX> tempOptimalMax = [] {
  }();
 
   
-inline constexpr LookupTable<Temperature, MAX> tempGrowthMin = [] {
-  LookupTable<Type, float> arr{};
+inline constexpr LookupTable<Plant, float> tempGrowthMin = [] {
+  LookupTable<Plant, float> arr{};
   arr[Oat] = 4.0; 
   arr[Wheat] =  4.0;
   arr[Corn] = 10.0;
@@ -190,8 +215,8 @@ inline constexpr LookupTable<Temperature, MAX> tempGrowthMin = [] {
  }();
 
 
-inline constexpr LookupTable<Temperature, MAX> tempGrowthMax = [] {
-  LookupTable<Type, float> arr{};
+inline constexpr LookupTable<Plant, float> tempGrowthMax = [] {
+  LookupTable<Plant, float> arr{};
   arr[Oat] = 38.0;
   arr[Wheat] =  38.0;
   arr[Corn] = 40.0;
@@ -213,8 +238,8 @@ inline constexpr LookupTable<Temperature, MAX> tempGrowthMax = [] {
  }();
   
   
-inline constexpr LookupTable<Type, float> fullyGrownAmt = [] {
-  LookupTable<Type, float> arr{};
+inline constexpr LookupTable<Plant, float> fullyGrownAmt = [] {
+  LookupTable<Plant, float> arr{};
   arr[Corn] = 34125.0;
   arr[Rice] = 29250.0;
   arr[Wheat] =  29250.0;
@@ -235,8 +260,8 @@ inline constexpr LookupTable<Type, float> fullyGrownAmt = [] {
  }();
 
 
-inline constexpr LookupTable<int, MAX> harvestAmt = [] {
-  LookupTable<int, MAX> arr{};
+inline constexpr LookupTable<Plant, int> harvestAmt = [] {
+  LookupTable<Plant, int> arr{};
   arr[Wheat] = 30;
   arr[Oat] = 30;
   arr[Corn] = 30;
@@ -257,8 +282,8 @@ inline constexpr LookupTable<int, MAX> harvestAmt = [] {
   return arr;
 }();
 
-inline constexpr LookupTable<bool, MAX> requiresScythe = [] {
-  LookupTable<bool, MAX> arr{};
+inline constexpr LookupTable<Plant, bool> requiresScythe = [] {
+  LookupTable<Plant, bool> arr{};
   arr[Wheat] = true;
   arr[Oat] = true;
   arr[Corn] = true;
@@ -279,8 +304,25 @@ inline constexpr LookupTable<bool, MAX> requiresScythe = [] {
   return arr;
 }();
 
- 
-  
-	
-}
-
+inline constexpr LookupTable<Plant,float> perfectSunlight = [] {
+  LookupTable<Plant,float> lt{};
+  using enum Plant;
+  lt[Wheat] = true;
+  lt[Oat] = true;
+  lt[Corn] = true;
+  lt[Rice] = true;
+  lt[Tomato] = false;
+  lt[Onion] = false;
+  lt[Potato] = false;
+  lt[Cabbage] = true;
+  lt[Pepper] = true;
+  lt[Carrot] = true;
+  lt[Poppy] = true;
+  lt[Senna] = true;
+  lt[Cotton] = true;
+  lt[Papyrus] = true;
+  lt[Flax] = true;
+  lt[Hemp] = true;
+  lt[Lettuce] = false;
+  return lt;
+ }();

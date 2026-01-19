@@ -1,8 +1,7 @@
 CompileFlags:
   Add:
-    - -std=c++23
-    - -Icode
-    - -Wall
-    - -Wextra
-    - -g
-    - -I/home/logan/hobbies/gameprogramming/code
+    - "-std=c++23"
+    - "-Wall"
+    - "-Wextra"
+    - "-g"
+    - "-I./home/logan/gameprogramming/code"

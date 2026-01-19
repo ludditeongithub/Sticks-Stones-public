@@ -4,14 +4,16 @@
 #include <math.h>
 #include <cstdint>
 
-namespace tile {
 // Constants
-constexpr uint16_t CHUNK_AMOUNT = 300;
+const uint16_t WIDTH_CHUNKS = 5000;
+const uint16_t HEIGHT_CHUNKS = 5000;
+const uint32_t CHUNK_AMOUNT = WIDTH_CHUNKS * HEIGHT_CHUNKS;
+
 constexpr int CHUNK_LENGTH = 64;
-  constexpr int CHUNK_SIZE = CHUNK_LENGTH * CHUNK_LENGTH;
+constexpr int CHUNK_SIZE = CHUNK_LENGTH * CHUNK_LENGTH;
 constexpr uint16_t SENTINEL = 65535;
 constexpr uint16_t AVERAGE_MOVE_COST = 5;
-  constexpr uint16_t TILE_AMOUNT = CHUNK_AMOUNT * CHUNK_SIZE;
+constexpr uint16_t TILE_AMOUNT = CHUNK_AMOUNT * CHUNK_SIZE;
 
 enum ChunkFlags : uint8_t {
   ACTIVE = 1 << 0,
@@ -52,4 +54,4 @@ struct Tiles {
     x > 0 ? a[3] = getIndex(x - 1, y) : a[3] = SENTINEL;
   return 
 };
-}
+

@@ -2,9 +2,7 @@
 #include <plant/enum.hpp>
 #include <animal/enum.hpp>
 
-namespace food {
-using enum plant::Type;
-using enum animal::Type;
+
   
 enum class Category {
   Leaves,
@@ -21,7 +19,7 @@ enum class Category {
 
 constexpr BitsetTable<Category> meatCategories = [] {
   BitsetTable<Category> s;
-  using enum Category;
+  using enum Category;  
   s.set(SmallMammals);
   s.set(MediumMammals);
   s.set(SmallReptiles);
@@ -31,8 +29,9 @@ constexpr BitsetTable<Category> meatCategories = [] {
 
 // TODO height of plant factored
   // TODO  'attraction factor' (some bitter or repulsive plants avoided)
-constexpr BitsetTable<plant::Type> leaves = [] {
-  BitsetTable<plant::Type> s;
+constexpr BitsetTable<Plant> leaves = [] {
+  BitsetTable<Plant> s;
+  using enum Plant;
   s.set(Fern);
   s.set(PioneerTree);
   s.set(DeciduousTree);
@@ -51,8 +50,9 @@ constexpr BitsetTable<plant::Type> leaves = [] {
 };
 
 
-constexpr BitsetTable<plant::Type> fruit = [] {
-  BitsetTable<plant::Type> s;
+constexpr BitsetTable<Plant> fruit = [] {
+  BitsetTable<Plant> s;
+  using enum Plant;
   s.set(Orange);
   s.set(Apple);
   s.set(Lemon);
@@ -71,8 +71,8 @@ constexpr BitsetTable<plant::Type> fruit = [] {
     return s;
 };
 
- constexpr BitsetTable<plant::Type> grains = [] {
-      BitsetTable<plant::Type> s;
+constexpr BitsetTable<Plant> grains = [] {
+  BitsetTable<Plant> s;  
       s.set(Wheat);
       s.set(Corn);
       s.set(Oat);
@@ -81,11 +81,11 @@ constexpr BitsetTable<plant::Type> fruit = [] {
  };
 
 
- constexpr BitsetTable<plant::Type> underground = [] {
-   BitsetTable<plant::Type> s;
+ constexpr BitsetTable<Plant> underground = [] {
+   BitsetTable<Plant> s;
    s.set(Potato);
    s.set(Carrot);
-kxo   s.set(Yam);
+   s.set(Yam);
    s.set(Onion);
    s.set(Garlic);
    s.set(Beets);
@@ -93,35 +93,35 @@ kxo   s.set(Yam);
    return s;
  };
 
-  constexpr BitsetTable<plant::Type> stems = [] {
-    BitsetTable<plant::Type> s;
+  constexpr BitsetTable<Plant> stems = [] {
+    BitsetTable<Plant> s;
     s.set(Papyrus);
     s.set(Reed);
     s.set(Sugarcane);
     return s;
   };
 
-  constexpr BitsetTable<animal::Type> birds = [] {
-    BitsetTable<animal::Type> s;
+  constexpr BitsetTable<Animal> birds = [] {
+    BitsetTable<Animal> s;
     s.set(Duck);
     s.set(Chicken);
     return s;
   };
 
-  constexpr BitsetTable<animal::Type> fish = [] {
-    BitsetTable<animal::Type> s;
+  constexpr BitsetTable<Animal> fish = [] {
+    BitsetTable<Animal> s;
     
     return s;
   };
 
-  constexpr BitsetTable<animal::Type> smallMammals = [] {
-    BitsetTable<animal::Type> s;
+  constexpr BitsetTable<Animal> smallMammals = [] {
+    BitsetTable<Animal> s;
     s.set(Rabbit);
     return s;
   };
 
-  constexpr BitsetTable<animal::Type> mediumMammals = [] {
-    BitsetTable<animal::Type> s;
+  constexpr BitsetTable<Animal> mediumMammals = [] {
+    BitsetTable<Animal> s;
     s.set(Pig);
     s.set(Sheep);
     s.set(Deer);
@@ -132,8 +132,8 @@ kxo   s.set(Yam);
     return s;
   };
 
-  constexpr BitsetTable<animal::Type> largeMammals = [] {
-    BitsetTable<animal::Type> s;
+  constexpr BitsetTable<Animal> largeMammals = [] {
+    BitsetTable<Animal> s;
     s.set(Cow);
     s.set(Ox);
     s.set(Moose);
@@ -145,14 +145,14 @@ kxo   s.set(Yam);
     return s;
   };
 
-  constexpr BitsetTable<animal::Type> smallReptiles = [] {
-    BitsetTable<animal::Type> s;
+  constexpr BitsetTable<Animal> smallReptiles = [] {
+    BitsetTable<Animal> s;
     s.set(Turtle);   
     return s;
   };
 
-  constexpr BitsetTable<animal::Type> largeReptiles = [] {
-    BitsetTable<animal::Type> s;
+  constexpr BitsetTable<Animal> largeReptiles = [] {
+    BitsetTable<Animal> s;
     
     return s;
   };

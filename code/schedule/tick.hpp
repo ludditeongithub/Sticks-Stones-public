@@ -2,6 +2,7 @@
 #include <systems/movement.hpp>
 
 
+
 void tick() {
   for (int i = 0; i < timers.size(); i++) timers[i]--;
 
@@ -10,7 +11,7 @@ void tick() {
   updateTasks(pq, timers, tasks, skills);
   updateAnimalTasks();
   updateAttack(chances, weapons, stats, positions, healths, targets, actions);
-  updatePlants();
+  updatePlants(nextGrowth, plantList, coords, chunkTemps, tileWater, lastFullyWatered, dailyInsolations, cloudCovers, dead);
 }
 
 void onPlayerOrder() {

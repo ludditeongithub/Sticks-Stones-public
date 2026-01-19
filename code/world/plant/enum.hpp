@@ -1,7 +1,5 @@
 #pragma once
 
-namespace plant {
-
 // enum class Type {
 // NONE, EDIBLE, WOOD, Fern, Moss, Reed, Wheat, Oat, Rice, Bush, Papyrus,
 // PioneerTree, DeciduousTree, EvergreenTree, TropicalTree, OrangeTree,
@@ -13,7 +11,7 @@ namespace plant {
 // Cocoa, Senna, Saffron, AloeVera, MAX,
 // };
 
-enum class Type {
+enum class Plant {
   NONE,
   Fern,
   Moss,
@@ -122,4 +120,3 @@ enum class Fruit {
 };
 
 
-};

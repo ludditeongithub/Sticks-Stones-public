@@ -7,7 +7,6 @@
 #include <plant/enum.hpp>
 
 
-namespace food {
 
   inline constexpr LookupTable<uint16_t, Fruit> fruitHunger = [] {
     LookupTable<uint16_t, Fruit> arr{};
@@ -82,8 +81,6 @@ inline constexpr LookupTable<uint16_t, plant::Type)> plantHunger = [] {
 // The `meatAmount` array defines how many "game pieces" the corpse can be divided into.
 // Each piece satisfies a fraction of the total `corpseHunger`.
 */
-
-}
 
 
 #endif
