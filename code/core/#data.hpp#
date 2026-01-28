@@ -1,0 +1,42 @@
+#pragma once
+#include <cstdint>
+#include <limits>
+#include <numeric>
+
+struct Coord {
+  uint32_t x;
+  uint32_t y;
+};
+
+enum class Direction { North, South, East, West };
+
+using Time = uint32_t;
+
+// geography
+using Hum = uint16_t;
+using Temp = uint16_t;
+
+// unit stats
+using Health = float;
+using Speed = float;
+using Hunger = uint16_t;
+
+
+enum class TargetType {
+  NONE,
+  Animal,
+  Plant,
+  Scavengeable,  
+  Unit,
+  Tile,
+  Structure,
+  Station
+};
+
+struct Target {
+  TargetType type;
+  uint32_t index;
+};
+
+
+

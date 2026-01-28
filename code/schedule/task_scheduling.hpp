@@ -1,4 +1,6 @@
 #include <core/memory.hpp>
+#include <world/unit/rolesAndActions.hpp>
+
 
 //all possible tasks
 AutoEnum<> Tasks; //this needs to be automatically filled, using Items + Variants other actions, probably think of other way to make variants optional because there are just too many
@@ -42,3 +44,31 @@ void updateTaskJobPriorities(HashMap<Task, TaskJobData>& hm, std::priority_queue
     pq.push(np, t);
   }
 }
+
+void dispatchHungryAnimals(Array<Animal>& animals,
+                                   Array<Coord>& positions,
+                                   Array<Coord>& destinations,
+                                   Array<Action>& actions) {
+  int count = 0;
+  for (int i = 0; i < actions; i++)
+    if (actions[i] == Action::AnimalFoodSearch)
+      count++;
+  Array<Animal> sAnimals(count);
+  Array<Coord> sPositions(count);
+  Array<Coord> sDestinations(count);
+  Array<Action> sActions(count);
+  int j = 0;
+  for (int i = 0; i < animals; i++) {
+    if (actions[i] == Action::AnimalFoodSearch) {
+      sAnimals[j++] = animals[i];
+      sPositions[j++] = positions[i];
+      sDestinations[j++] = destinations[i];
+      sActions[j++] = actions[i];
+    }
+  }
+  scanFood(sAnimals, sPositions, sDestinations, sActions);
+}
+
+
+
+

@@ -1,9 +1,12 @@
 #ifndef ITEMRECIPES_H_
 #define ITEMRECIPES_H_
-#include "basic.hpp"
-#include "categories.hpp"
 
-std::stack<uint16_t> nextItemIndex;
+#include <variant>
+#include <world/tile/enum.hpp>
+#include <world/plant/enum.hpp>
+#include <world/animal/enum.hpp>
+#include <world/scavengeables/enum.hpp>
+#include "enum.hpp"
 
 using SourceVariant = std::variant<Tile, Plant, Animal, Scavengeable>;
 

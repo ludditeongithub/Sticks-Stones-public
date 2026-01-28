@@ -1,0 +1,34 @@
+* Colors
+red-arts
+green-support
+orange-combat
+purple-resources
+blue-production
+yellow-leader 
+* Missing
+Poet, Factor, Teamster, Herder, StoneMiner, IronMiner, GoldMiner, SaltMiner, SilverMiner, Curaisser, Apothecary
+* Changes
+Gemstone Miner: change color of gem
+Livestock Farmer: add detail, color
+Papyrus Farmer, Wood farmer, olive farmer papyrus farmer: sort out if it should be a picture of them farming or the actual item
+
+** Producers
+Knapper: make it more obvious he has something in his left hand
+Carver: change to look WAY more primitive
+Hidecrafter: make way more primitive: should be just animal skin, not even leather. maybe blood?
+Canoe Carver: make it more obvious he is making rather than paddling canoe
+Basket Weaver: make it more clear it is a basket being made.
+Crafter: way more primitive-- making things out of simple sticks and twine and stone
+Shelter Builder: add that some shelther is already constructed, so he can be distinguihsed from the hauler a bit more, or he is placing things on teh ground.
+Mixer: he is mixing mud and dirt with sticks.
+Clay Worker: make it more clear it is clay, probably grey
+Butcher: too modern, dirty knife,
+Preserver: add preserve vegetable jar as well.
+Woodworker: making primitive planks, plank icon can also be considered
+Spinner: make anatomy more clear
+Mudbrick Maker: make them look a little more clean
+All Smelter: should be ingots
+All smiths: anvil should be present with material, silver and goldsmiths can be rings
+Oil maker: not that kind of oil
+Boat builder: fix his head
+Minter: just a coi8n

@@ -1,0 +1,168 @@
+#include "updates.hpp"
+#include "world/world.hpp"
+
+//TODO: have plant temp values be precalcuated so chunk temps is accessed faster
+void updatePlants(Arena<float>& nextGrowth, Array<Plant> &plantList, Array<Coord> &coords,
+                  Array<float> &chunkTemps, Array<float>& tileWater,
+                  Array<float>& lastFullyWatered,
+                  Arena2D<float> &dailyInsolations, Arena<float> &cloudCovers,
+                  Arena<bool>& dead) {
+  
+  //temp
+  for (uint32_t i = 0; i < plantList.size(); i++) {
+        Plant p = plantList[i];
+
+	if (plantList[i] == Plant::NONE) continue;
+	nextGrowth[i] = 1.0;
+	
+        float dmin = tempDeathMin[p];
+        float dmax = tempDeathMax[p];
+	float ngmin = tempGrowthMin[p];
+        float ngmax = tempGrowthMax[p];
+        float omin = tempOptimalMin[p];
+        float omax = tempOptimalMax[p];
+
+	// Temperature
+	Coord pos = coords[i];
+        uint16_t chunk = getChunkIndexFromTile(pos);
+	float temp = chunkTemps[chunk];        
+	if (temp < omax && temp > omin) {
+	  
+	} else if (temp > ngmin && temp < ngmax) {
+	  nextGrowth[i] = 0.0;
+	} else if (temp < dmin || temp > dmax) {
+	  dead[i] = true;
+	  continue;
+	} else {
+	  nextGrowth[i] *= UNOPTIMAL_TEMP_MULT;
+        }
+
+	// Water
+	// float wr = waterRequired[p];
+        // uint16_t wd = waterDeath[p];        
+	// if (tileWater[i] > wr) {
+	//   lastFullyWatered[i] = time;	  
+	// } else if (time - lastFullyWatered[i] > wd) {
+	//   dead[i] = true;
+	//   continue;
+	// } else nextGrowth[i] *= LOW_WATER_MULT;		
+
+	// Sunlight
+        uint16_t latitude = getChunkLatitude(chunk);
+	uint16_t timeZone = getChunkTimeZone(chunk);
+        float is = dailyInsolations[latitude][timeZone];
+        float psun = perfectSunlight[p];        
+	//sunlight (from 0.0 to 1.0)
+	if (is <= 0.0) {
+            nextGrowth[i] = 0.0;
+        } else {
+          // factor cloud cover
+          float ccf = cloudCovers[chunk] * MAX_CLOUD_FACTOR;
+          float sunlight = is / (1 + ccf);
+	  float sf = 1.0;
+	  if (sunlight < psun) sf = normalize(sunlight, 0, psun);
+          nextGrowth[i] *= sf;
+        }	
+   }
+}
+
+
+// TODO: make certain tasks pausable and resumable, change to iterating over
+// tasks per pawn rather than other way around (when pawns stats are
+// implemented)-- timers will skip most pawns repeatedly, maybe need bool for
+// whether job has just started
+// only send alive and timer up units
+void updateTasks(std::priority_queue<std::pair<uint8_t, PlayerTaskJobData>> &pq,
+                 Pool<float> &healths, Pool<uint16_t> &timers,
+                 Pool<Task> &tasks, Pool<Skills> &skills,
+                 Pool<Action> &actions) {  
+  int i = 0;
+  for (int i = 0; i < timers.size(); i++) {
+    if (timers[i] > 0)
+      continue;
+    if (healths[i] <= 0.0) {
+      actions[i] = Action::Dead;
+      continue;
+    }
+    if (actions[i] == Action::Assign) {
+      // get valid task for selected pawn
+      bool v = false;
+      PlayerTaskJobData td = pq.top();
+      while (v == false) {
+        Task t = td.task;
+        uint32_t& a = td.amount;
+        if (a <= 0)
+          continue;	
+        for (int j = 0; j < rd[i].size(); j++) {
+          // TODO: precompute all scores for all roles
+          uint8_t ts = getTaskScore(t, skills[i]); // returns 0 if invalid
+          if (ts > taskData[t].skillReq) {
+            tasks[i] = t;
+            v = true;
+            a -= getTaskMinimumOutput[t];
+            timers[i] = getTaskTimer(task, skills[i]);
+          }
+          // TODO: set action
+          break;
+        }
+        td = pq.next();
+      }
+    }
+    if (!v)
+      actions[i] = Action::Idle;
+  }
+}
+}
+
+// only for idle animals
+void updateAnimalTasks(Array<Animal>& animals, Array<Action>& actions, Array<Coord>& positions) {
+  using enum Action;
+  for (int i = 0; i < animals.size; i++) {
+    if (actions[i] == Action::Assign) {
+    Animal a = animals[i];
+    // assign hungry animals to hunt/search for food
+    if (hungers[i] <= hungerSearchThreshold[a]) {
+      carnivores[a] ? actions[i] = AnimalHunt : actions[i] = AnimalFoodSearch;
+      continue;;
+    }
+    // TODO: assign thirsty animals to drink
+    // assign animals that need to breed to find mate
+    uint16_t seasonTime = getSeasonTime(
+        time, getChunkIndexFromTile(positions[i]);
+        if (seasonTime <= breedingSeasonStart[a] &&
+            seasonTime >= breedingSeasonEnd[a]) {
+          actions[i] = AnimalBreedSearch;
+        }
+        // TODO: special actions (migrate, search for pack, build
+        // nests/structures, hoard)
+
+        // else wander/TODO: follow pack
+        actions[i] = Wander;
+     }        
+  } 
+}
+
+  //wander becomes idle at end
+
+void updatePositions(PathsData &rpd, Array<Coord>& positions,
+                     Array<float>& timers, Array<Action>& actions,
+                     Array<uint32_t>& requireNewPathIndices) {
+  int j = 0;
+  for (int i = 0; i < rpd.size; i++) {
+    if (timers[i] <= 0 && actions[i] != Action::Idle) {
+      // this could be pre-stored in a contiguous array
+	 Coord c = rpd.pop(i);
+         if (manhattanDist(c, positions[i]) > 1)
+           throw std::invalid_argument("Tile movement must be between tiles 1 distance away from each other.");
+	 Coord& p = positions[i];
+         p = c;
+	 // get new path if there are x or less tiles to go and destination farther than x tiles
+         if (rpd.current[i] >= rpd.end[i] - NEW_PATH_DIST) {
+           if (manhattanDist(rpd.destination[i], p) >= NEW_PATH_DIST) {
+             requireNewPathIndices[j++] = i;
+	     actions[i] = Action::NewPath;
+	   } else actions[i] = Action::Assign;
+	 }
+      } 
+  }
+}

@@ -961,8 +961,10 @@ Horse
 ** Pets
 Dog
 Cat
-* War
+* War/Military
 Regular Units can climb over regular walls, but not tall walls. Siege Towers and Siege Ladders allow units to climb over tall walls.
+** Player Control
+Player can either select units manually, and control them, or can get lieutenants to have 'active recruiting' of certain priorities, which means that units with military roles will automatic join up with their lieutenants
 * Command
 ** Nation and Provinces
 Overtime, provinces will start to develop. If a province has a governor, they can be given provincial decrees, which will give that province a boost of some kind. A similar national boost is available for the entire nation, which is determined by the Monarch at apporpriate times.

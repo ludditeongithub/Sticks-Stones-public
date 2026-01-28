@@ -1,43 +1,26 @@
+#pragma once
+#include <core/data.hpp>
 #include <core/math.hpp>
+#include <core/containers.hpp>
 #include "enum.hpp"
 #include <array>
 #include <math.h>
 #include <cstdint>
 
 // Constants
-const uint16_t WIDTH_CHUNKS = 5000;
-const uint16_t HEIGHT_CHUNKS = 5000;
-const uint32_t CHUNK_AMOUNT = WIDTH_CHUNKS * HEIGHT_CHUNKS;
-
-constexpr int CHUNK_LENGTH = 64;
-constexpr int CHUNK_SIZE = CHUNK_LENGTH * CHUNK_LENGTH;
-constexpr uint16_t SENTINEL = 65535;
 constexpr uint16_t AVERAGE_MOVE_COST = 5;
 constexpr uint16_t TILE_AMOUNT = CHUNK_AMOUNT * CHUNK_SIZE;
+constexpr uint16_t TILE_WIDTH = sqrt(TILE_AMOUNT);
 
-enum ChunkFlags : uint8_t {
-  ACTIVE = 1 << 0,
-  PLAYER = 1 << 1,
-  BUSY = 1 << 2, 
-};
+Coord getTileCoordFromIndex(uint32_t i) {
+  return {i % TILE_WIDTH, i / TILE_WIDTH};
+}
 
-struct Chunks {
-  std::array<uint16_t, CHUNK_AMOUNT> gridX;
-  std::array<uint16_t, CHUNK_AMOUNT> gridY;
-  std::array<ChunkFlags, CHUNK_AMOUNT> flags;
-};
-  
-
-
-inline constexpr LookupTable<Tile> tileMoveCost = [] {
-  LookupTable<Tile> lt{};
+inline constexpr LookupTable<Tile, time> tileMoveCost = [] {
+  LookupTable<Tile, time> lt{};
   
   return lt;
  }();
-
-struct Tiles {
-  std::array<Tile, TILE_AMOUNT> tiles;
-};
 
 
   std::array<uint16_t, 4> getNeighbors(uint16_t i) {

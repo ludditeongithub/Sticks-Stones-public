@@ -1,9 +1,9 @@
 #pragma once
 #include "enum.hpp"
-#include "world/world.hpp"
+#include <world/world.hpp>
 #include <core/containers.hpp>
 #include <array>
-
+#include <core/data.hpp>
 
 using enum Plant;
 
@@ -238,8 +238,8 @@ inline constexpr LookupTable<Plant, float> tempGrowthMax = [] {
  }();
   
   
-inline constexpr LookupTable<Plant, float> fullyGrownAmt = [] {
-  LookupTable<Plant, float> arr{};
+inline constexpr LookupTable<Plant, Time> fullyGrownAmt = [] {
+  LookupTable<Plant, Time> arr{};
   arr[Corn] = 34125.0;
   arr[Rice] = 29250.0;
   arr[Wheat] =  29250.0;
@@ -304,6 +304,7 @@ inline constexpr LookupTable<Plant, bool> requiresScythe = [] {
   return arr;
 }();
 
+// TODO
 inline constexpr LookupTable<Plant,float> perfectSunlight = [] {
   LookupTable<Plant,float> lt{};
   using enum Plant;

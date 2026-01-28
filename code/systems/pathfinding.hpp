@@ -5,6 +5,7 @@
 #include <core/math.hpp>
 #include <world/tile/data.hpp>
 #include <core/containers.hpp>
+#include <world/unit/rolesAndActions.hpp>
 
 // CONSTANTS
 constexpr int MAX_PATH_SIZE = 45;
@@ -123,13 +124,15 @@ std::vector<Coord> reconstructPath(int startIndex, int goalIndex) {
 }
 
 
-
 // sets start and end, inputted from all types of jobs
 void setPaths() {
   
-}  
+}
 
-void updatePositions(PathsData& rpd, Coord* positions, float* timers, Action* action) {
+void updatePositions(PathsData &rpd, Array<Coord> positions,
+                     Array<float> timers, Array<Action> actions,
+                     Array<uint32_t> requireNewPathIndices) {
+  int j = 0;
   for (int i = 0; i < rpd.size; i++) {
     if (timers[i] <= 0 && actions[i] != Action::Idle) {
       // this could be pre-stored in a contiguous array
@@ -139,8 +142,13 @@ void updatePositions(PathsData& rpd, Coord* positions, float* timers, Action* ac
 	 Coord& p = positions[i];
          p = c;
 	 // get new path if there are x or less tiles to go and destination farther than x tiles
-         if (rpd.current[i] >= rpd.end[i] - NEW_PATH_DIST) 
-	   manhattanDist(rpd.destination[i], p) >= NEW_PATH_DIST ? actions[i] = Action::NewPath : actions[i] = Action::Assign;  	 
+         if (rpd.current[i] >= rpd.end[i] - NEW_PATH_DIST) {
+           if (manhattanDist(rpd.destination[i], p) >= NEW_PATH_DIST) {
+	     requireNewPathIndices[j++] = i;
+	   }                
+              actions[i] = Action::Assign;
+	 }
       } 
   }
 }
+

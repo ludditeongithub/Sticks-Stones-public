@@ -183,37 +183,4 @@ std::pair<int,int> ObjectDatabase::findNearestLiquidContainer(int x, int y) {
     return closest;
 }
 
-//NOTE: maybe prowl version, too
-//TODO: needs work to ensure async functionality really works
-void ObjectDatabase::findNecessaryTools(Action action, int pawn) {
-    vector<int> foundToolReplaceables;
-    for (int i = 0; i < actionToTools[static_cast<size_t>(action)].size(); i++) {
-        //skip if pawn already has tool, replaceable equivalent has already been found, or tool is optional
-        for (int j = 0; j < foundToolReplaceables.size(); j++)   if (foundToolReplaceables[j] == actionToTools[static_cast<size_t>(action)][i]) continue;
-
-        for (int j = 0; j < tools[pawn].size(); j++)
-            if (tools[pawn][j] == actionToTools[static_cast<size_t>(action)][i]) { foundToolsReplaceables.push_back(actionToToolsReplaceables[static_cast<size_t>(action)][i]);
-                continue;
-            }
-
-        if (actionToTools[static_cast<size_t>(action)][i] < 0) continue;
-
-
-        std:pair<int,int> dest = findNearestObject(actionToTools[static_cast<size_t>(action)][i], coords[pawn].first, coords[pawn].second);
-        if (manDist(coords[pawn], dest) > midGatherRange) {
-            dests[pawn] = tileIndices[dest];
-            movingStatus[pawn] = MovingStatus::ApproachTool;
-            //NOTE:: async
-            findPromise[pawn] = std::promise<void>();
-            findFuture[pawn] = findPromise[pawn].get_future();
-        } else {
-            //TODO:: "search home function", which checks if a pawn's home contains the necessary tools, giving user warning if not
-            nextRole(pawn);
-        }
-    }
-}
-
-void ObjectDatabase::findNecessaryItems() {
-
-}
 

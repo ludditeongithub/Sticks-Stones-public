@@ -1,113 +1,73 @@
-#include <cstdlib>
-#include <array>
-#include <unordered_map>
-#include <bitset>
+#pragma once
 #include <cassert>
 #include "memory.hpp"
 
 template <typename T>
 struct Array {
-    Pool<T>& pool;
+    T* data = nullptr;
+    uint32_t count = 0;
+    uint32_t capacity = 0;
 
-    uint32_t* activeIndices;
-    uint32_t  activeCount;  
-    uint32_t  capacity;
+    Array(uint32_t capacity) {
+      this->capacity = capacity;
+    }
+
+    void reserve(uint32_t newCapacity) {
+        if (newCapacity <= capacity) return;
+
+        T* newData = static_cast<T*>(
+            operator new[](sizeof(T) * newCapacity)
+        );
+
+        for (uint32_t i = 0; i < count; ++i)
+            new (&newData[i]) T(std::move(data[i]));
+
+        for (uint32_t i = 0; i < count; ++i)
+            data[i].~T();
+
+        operator delete[](data);
+
+        data = newData;
+        capacity = newCapacity;
+    }
+
+    template <typename... Args>
+    T& emplace_back(Args&&... args) {
+        if (count == capacity) {
+            reserve(capacity ? capacity * 2 : 16);
+        }
+
+        T* obj = new (&data[count]) T(std::forward<Args>(args)...);
+        ++count;
+        return *obj;
+    }
+
+    void pop_back() {
+        data[--count].~T();
+    }
+
+    void clear() {
+        for (uint32_t i = 0; i < count; ++i)
+            data[i].~T();
+        count = 0;
+    }
 
     T& operator[](uint32_t i) {
-        return pool[activeIndices[i]];
+        return data[i];
     }
 
-    uint32_t size() const { return activeCount; }  
-
-    void push(uint32_t poolIndex) {
-        assert(activeCount < capacity);
-        activeIndices[activeCount++] = poolIndex;
+    const T& operator[](uint32_t i) const {
+        return data[i];
     }
 
-    void remove(uint32_t i) {
-        activeIndices[i] = activeIndices[--activeCount];
-    }
-};
-
-template<typename Enum, typename T, std::size_t N = static_cast<std::size_t>(Enum::MAX)>
-struct LookupTable {
-    std::array<T, N> data{};
-
-    constexpr T& operator[](Enum e) {
-        return data[static_cast<std::size_t>(e)];
+    uint32_t size() const {
+        return count;
     }
 
-    constexpr const T& operator[](Enum e) const {
-        return data[static_cast<std::size_t>(e)];
+    ~Array() {
+        clear();
+        operator delete[](data);
     }
-};
-
-template<typename T, std::size_t Cols>
-struct Row : std::array<T, Cols> {
-    constexpr Row& operator=(std::initializer_list<T> values) {
-        size_t i = 0;
-        for (auto v : values) {
-            if (i >= Cols) break;
-            (*this)[i++] = v;
-        }
-        return *this;
-    }
-};
-
-template<typename Enum, typename T, std::size_t Rows = static_cast<size_t>(Enum::MAX), std::size_t Cols = 5>
-struct LookupTable2D {
-    using RowType = Row<T,Cols>;
-    std::array<RowType, Rows> data{};
-
-    constexpr RowType& operator[](Enum e) { return data[static_cast<size_t>(e)]; }
-    constexpr const RowType& operator[](Enum e) const { return data[static_cast<size_t>(e)]; }
-};
-
-template <typename Enum, std::size_t N = static_cast<std::size_t>(Enum::MAX)>
-struct BitsetTable {
-    std::bitset<N> b{};
-
-    constexpr auto operator[](Enum e) {
-        return b[static_cast<std::size_t>(e)];
-    }
-
-    constexpr auto operator[](Enum e) const {
-        return b[static_cast<std::size_t>(e)];
-    }  
-
-    constexpr BitsetTable& operator|=(const BitsetTable& o) {
-        b |= o.b;
-        return *this;
-    }
-
-  
-
-      struct iterator {
-        const std::bitset<N>* bits;
-        std::size_t index;
-
-        constexpr iterator(const std::bitset<N>* b, std::size_t i)
-            : bits(b), index(i)
-        {
-            while (index < N && !bits->test(index)) ++index;
-        }
-
-        constexpr Enum operator*() const {
-            return static_cast<Enum>(index);
-        }
-
-        constexpr iterator& operator++() {
-            do { ++index; } while (index < N && !bits->test(index));
-            return *this;
-        }
-
-        constexpr bool operator==(const iterator& other) const {
-            return index == other.index;
-        }
-    };
-
-    constexpr iterator begin() const { return iterator(&b, 0); }
-    constexpr iterator end()   const { return iterator(&b, N); }
 };
 
 template <typename T>
@@ -133,3 +93,4 @@ struct PriorityQueue {
     nx = current;
   };
 };
+

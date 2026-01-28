@@ -1,0 +1,16 @@
+#ifndef ANIMAL_H_
+#define ANIMAL_H_
+
+#include "entity.hpp"
+#include "enum.hpp"
+#include "tables.hpp"
+#include <core/data.hpp>
+#include <core/packed_enum.hpp>
+#include <core/random.hpp>
+#include <world/unit/rolesAndActions.hpp>
+#include <stack>
+#include <limits>
+
+
+
+#endif // ANIMAL_H_

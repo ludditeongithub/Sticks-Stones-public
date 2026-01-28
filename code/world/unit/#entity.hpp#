@@ -1,11 +1,9 @@
-#pragma once
+ae#pragma once
 
 namespace Unit {
 
   #include <basic/coord.hpp>
-#include <basic/target.hpp>
- #include "stats.hpp"
-
+  #include <basic/target.hpp>
 
 struct ItemSlot {
   Item item;
@@ -31,6 +29,38 @@ struct Inventory {
     struct Containers {
       vector<Container> containers;
     };
+};
+
+struct Strength {
+  uint8_t strength = rint(STAT_MIN,STAT_MAX);;
+};
+  
+struct Athleticism {
+  uint8_t athleticism = rint(STAT_MIN,STAT_MAX);
+};
+
+struct Dexterity {
+  uintt8_t dexterity = rint(STAT_MIN,STAT_MAX);
+};
+
+struct Intellect {
+  uint8_t intellect = rint(STAT_MIN,STAT_MAX);
+};
+
+struct Perception {
+  uint8_t perception = rint(STAT_MIN, STAT_MAX);
+};
+
+struct Creativity {
+  uint8_t creativity = rint(STAT_MIN,STAT_MAX);
+};
+
+struct Charisma {
+  uint8_t charisma = rint(STAT_MIN,STAT_MAX);
+};
+
+struct Determination {
+  uint8_t determination = rint(STAT_MIN,STAT_MAX);
 };
 
 struct Stats {

@@ -1,0 +1,149 @@
+#pragma once
+#include <core/FastNoiseLite.h>
+#include <core/nanoflann.hpp>
+#include <core/memory.hpp>
+#include <world/tile/data.hpp>
+#include <world/chunk/data.hpp>
+#include <array>
+#include <cstdint>
+#include <queue>
+
+// Time Data
+uint16_t time;
+constexpr uint16_t HOUR_LENGTH = 300;
+constexpr uint16_t DAY_LENGTH = HOUR_LENGTH * 24;
+constexpr uint16_t SEASON_LENGTH = DAY_LENGTH * 7;
+constexpr uint16_t YEAR_LENGTH = SEASON_LENGTH * 4;
+
+const float EQUATOR = HEIGHT_CHUNKS / 2;
+constexpr int LATITUDE_MIN = -90;
+constexpr int LATITUDE_MAX = 90;
+constexpr float MAX_CLOUD_FACTOR = 3.2;
+
+
+Arena<int8_t> humidities(CHUNK_AMOUNT);
+Arena<int8_t> temperatures(CHUNK_AMOUNT);
+Arena<int8_t> altitudes(CHUNK_AMOUNT);
+
+Arena2D humidityTable(humidities, WIDTH_CHUNKS, HEIGHT_CHUNKS);
+Arena2D temperatureTable(temperatures, WIDTH_CHUNKS, HEIGHT_CHUNKS);
+Arena2D altitudeTable(altitudes, WIDTH_CHUNKS, HEIGHT_CHUNKS);
+
+
+// Terain and Climate
+constexpr uint8_t MAX_ALTITUDE = 120; //TODO: check
+constexpr uint8_t MAX_HUMIDITY = 120; //TODO: check
+constexpr uint8_t MAX_OCEAN_AFFECT_DIST = 4; //TODO: check
+
+constexpr float WINTER_SOLSTICE = SEASON_LENGTH / 2;
+constexpr float SPRING_EQUINOX = SEASON_LENGTH / 2 + SEASON_LENGTH;
+constexpr float SUMMER_SOLSTICE = SEASON_LENGTH / 2 + SEASON_LENGTH * 2;
+constexpr float FALL_EQUINOX = SEASON_LENGTH / 2 + SEASON_LENGTH * 3;
+
+constexpr float SPRING_MULT  = 1.10;
+constexpr float AUTUMN_MULT = 0.98;
+constexpr float SUMMER_MULT = 1.45;
+constexpr float WINTER_MULT = 0.74;
+
+// temp range between -70 C to 57 C, -70 = 0, 57 = 127
+constexpr float TEMP_OFFSET = 70;
+
+// diurnal temperature variation influenced mostly by aridity, then latitude, then proximity to large water bodies
+constexpr float MAX_DIURNAL_VAR = 20.2;
+
+// seasonal temperature variation influenced mostly by latitude, then proximity to large water bodies, then elevation
+constexpr float MAX_SEASONAL_VAR = 42.1;
+
+class WorldSpawner {
+private:
+  
+const float coastThreshold = -0.2f;
+const float landThreshold = -25.0f;
+const float lowlandsThreshold = 9.0f;
+const float midlandsThreshold = 14.0f;
+
+const int depressionThreshold = 15;
+const float lowlandsToHighlandsChance = 0.01f; // chance of const lowlands becoming highlands
+const float lowlandsToLakeChance = 0.04f; //additional threshold const to become lake
+const float highlandsChance = 0.20f;
+const float coastalRangeChance = 0.005f;
+const float riverFromMountainChance = 0.5f;
+const float riverFromHighlandChance = 0.2f;
+const float riverFromGroundwaterChance = 0.3f;
+const float riverEndChance = 0.50f;
+const float lakeFromRiverChance = 0.60f;
+const float lakeFromLowlandsChance = 0.05f;
+const float lakeFromMidlandsChance = 0.01f;
+const float lakeExpansionChance = 0.60f;
+const float riverFromLakeChance = 0.40f;
+const float groundWaterThreshold = 80.0f; // how high humidity needs to be for a chance of substantial groundwater to form
+const float humidityMult = 2.2f;
+const float lakeTileChance = 0.07f; //chance that lake tile does NOT happen (smaller sizes mean larger lakes)
+
+
+// BIOMES AMOUNT
+using alt = uint16_t;
+
+const int WIDTH_BIOMES;
+const int HEIGHT_BIOMES; 
+const int BORDER_WIDTH_BIOMES = 3; 
+const int BORDER_HEIGHT_BIOMES = 3; 
+const int REGION_SIZE = 100; // average WIDTH_BIOMES and HEIGHT_BIOMES of each region
+const int EQUATOR = HEIGHT_BIOMES / 2;
+// IN TILES
+const int WORLD_WIDTH_BIOMES = WIDTH_BIOMES * REGION_SIZE;
+const int WORLD_HEIGHT_BIOMES = HEIGHT_BIOMES * REGION_SIZE;
+const int STARTING_MAP_WIDTH_BIOMES = 300; //for starting player map
+const int STARTING_MAP_HEIGHT_BIOMES = 300;
+
+// New variables to store the size of the map with borders
+const int WIDTH_BIOMES_WITH_BORDER = WIDTH_BIOMES + BORDER_WIDTH_BIOMES * 2;
+const int HEIGHT_BIOMES_WITH_BORDER = HEIGHT_BIOMES + BORDER_HEIGHT_BIOMES * 2;
+
+  
+  std::vector<std::vector<uint16_t>> altitudeMap;
+  std::vector<std::vector<int16_t>> temperatureMap;
+  std::vector<std::vector<uint16_t>> humidityMap;
+  std::vector<std::vector<tile::Biome>> biomeMap;   
+  std::vector<std::vector<int>> oceanMap;
+  std::vector<std::vector<int>> landsMap;    
+  std::vector<std::vector<int>> waterMap;
+  std::vector<std::vector<int>> potentialHumidityMap;  
+  std::vector<std::vector<int>> createdHumidityMap;
+  std::vector<std::vector<bool>> instantiatedWaterMap; 
+  std::vector<std::vector<int>>  oceanDistance;
+
+public:
+  template <typename T>
+  void mapReserveRows(int width, int height, std::vector<std::vector<T>> &map) {
+    map.reserve(height);
+    for (int i = 0; i < width; i++) map[i].reserve(height);    
+  }
+  
+  WorldSpawner(int width, int height) : WIDTH_BIOMES(width), HEIGHT_BIOMES(height)  {
+    mapReserveRows(width, height, altitudeMap);
+    mapReserveRows(width, height, temperatureMap);
+    mapReserveRows(width, height, humidityMap);
+    mapReserveRows(width, height, biomeMap);
+    mapReserveRows(width, height, oceanMap);
+    mapReserveRows(width, height, landsMap);
+    mapReserveRows(width, height, waterMap);
+    mapReserveRows(width, height, potentialHumidityMap);
+    mapReserveRows(width, height, createdHumidityMap);
+    mapReserveRows(width, height, instantiatedWaterMap);
+    mapReserveRows(width, height, oceanDistance);
+  }
+  
+// Constants
+// IN CELLS
+int currentXMin = 0;
+int currentXMax = 0;
+int currentYMin = 0;
+int currentYMax = 0;
+
+};
+
+/*
+ * Need to ensure that if a block of tile generates, that some of those tiles aren't actually river tiles,  but haven't been generated as such because neighboring ungenerated tiles which should have river sources on them have not been generated. Thus, need to check if generated cells are river ends of any sort, or lakes, and then for each of those recursively check if there are river continues, following up the chain, until I find the original river sources/lakes, and then recursively generate rivers all the way down, even if those tiles haven't been generated.
+ *
+ */

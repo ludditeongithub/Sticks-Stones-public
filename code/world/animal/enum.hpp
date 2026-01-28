@@ -1,6 +1,37 @@
 #ifndef ENUMS_HPP
 #define ENUMS_HPP
 
+#include <core/packed_enum.hpp>
+#include <core/data.hpp>
+
+//HOT
+
+// Moving, Mating, Direction are packed
+
+enum class MovingStatus {
+Idle,
+Wander,
+Prowl, // looking for targets, but don't know where
+Flee,
+//PursuitX means sprinting to visible target
+Pursuit,
+Hunt,
+// ApproachX means walking to known/visible target
+ApproachForage,
+ReturnHome,
+};
+
+enum class MatingStatus {
+  Idle,
+  Searching,
+  Pregnant, // equivalent of fertilized for egg layers
+  Infertile
+};
+
+using AnimalStatus = PackedEnum3<Direction, 2, MovingStatus, 4, MatingStatus, 2>;
+
+// COLD
+
 
 enum class Animal {
   NONE,
@@ -43,28 +74,12 @@ enum class Animal {
   MAX,
 };
 
-enum class MovingStatus {
-Idle,
-Wander,
-Prowl, // looking for targets, but don't know where
-Flee,
-//PursuitX means sprinting to visible target
-Pursuit,
-Hunt,
-// ApproachX means walking to known/visible target
-ApproachForage,
-ReturnHome,
-};
-
-enum class MatingStatus {
-  Idle,
-  Searching,
-  Pregnant, // equivalent of fertilized for egg layers
-  Infertile
+enum class Sex {
+  Male,
+  Female
 };
 
 enum class Diet { Herbivore, Omnivore, Carnivore, Scavenger };
-
 
 
 #endif

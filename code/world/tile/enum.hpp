@@ -1,21 +1,7 @@
 #pragma once
 
 #include <stdint.h>
-
-namespace tile {
-  
-enum class Biome : uint8_t {
-    HotDesert,
-    Grassland,
-    Savanna,
-    Wetland,
-    Forest,
-    Taiga,
-    Jungle,
-    Rocky,
-    Tundra,
-    ColdDesert 
-  };
+#include <world/chunk/enum.hpp>
 
   enum class Tile : uint8_t {
     EMPTY,
@@ -75,10 +61,8 @@ enum class Biome : uint8_t {
 
   struct TileInfo {
     Tile tile;
-    bool visible;
     Grass grass;
     uint8_t altitude;
-    Biome biome;
   };
 
-}
+

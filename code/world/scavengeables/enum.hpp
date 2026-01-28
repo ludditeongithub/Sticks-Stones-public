@@ -1,5 +1,5 @@
-namespace scavengeable {
-enum class Type {
+
+enum class Scavengeable {
   NONE,
   Log,
   Pebble,
@@ -24,4 +24,4 @@ enum class Type {
   Meat,
   
 };
-}
+
