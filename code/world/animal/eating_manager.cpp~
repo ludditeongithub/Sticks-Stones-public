@@ -1,0 +1,149 @@
+#include "feeding_manager.hpp"
+
+inline bool FeedingManager::attemptEat() {
+}
+
+inline bool
+FeedingManager::eatCorpse(Array<Animal> &animals, Array<Hunger> &hungers,
+                          Array<Coord> &animalCoords, Array<Time> &timers,
+                          size_t animalIndex, Array<Hunger> &corpseHungers,
+                          Array<Time> &corpseTimes, Array<Coord> &corpseCoords,
+                          size_t corpseIndex) {
+  if (corpseTimes[corpseIndex] > CORPSE_ROT_TIME || !adjacentTiles(corpseCoords[corpseIndex], animalCoords[animalIndex]) {
+    return false;
+  } else {
+    Hunger& ch = corpseHungers[corpseIndex];
+    Hunger& h = hungers[animalIndex];
+    if (maxHungers[animals[animalIndex]] > ch + h) {
+        timers[animalIndex] = eatingTimer(ch, true);
+	h += ch;
+	ch = 0;
+      } else {
+	Hunger hd = maxHungers[animals[animalIndex]] - h;
+	ch -= hd;
+	h += hd;
+	timers[animalIndex] = eatingTimer(hd, true);
+      }        
+   }  
+  return true;
+}
+
+inline bool
+FeedingManager::eatPlant(Array<Animal> &animals, Array<Hunger> &hungers,
+                         Array<Time> &timers, Array<Coord> &animalCoords,
+                         size_t animalIndex, Array<Plant> &plants,
+                         Array<Health> &plantHealths, Array<Coord> &plantCoords,
+                         Array<size_t> &targets, size_t targetIndex) {
+  if (plantCoords[
+  Health& h = plantHealths[i];
+  Hunger mh = maxHungers[animals[animalIndex]];
+  Hunger& hv = hungers[animalIndex];
+  if (mh > hv + static_cast<Hunger>(h)) {
+    Hunger ah = mh - hv + static_cast<Hunger>(h);
+    h -= static_cast<Health>(hv);
+    hv += ah;
+  } else {
+    h = 0;
+    hv = mh;
+  }  
+}
+
+// TODO: events like these, what happesn to the grass tile is 
+inline bool FeedingManager::eatGrass(Array<Animal>& animals, Array<Hunger>& hungers, Array<Time>& timers, size_t animalIndex, Array<TileData>& tiles, size_t tileIndex) {    
+  TileData& tile = tiles[tileIndex];
+  if (tileGrass(tile)) {
+    Hunger mh = maxHungers[animals[animalIndex]];
+    Hunger& hv = hungers[animalIndex];
+    hv = min(mh, hv + GRASS_HUNGER_VALUE);    
+    tileDeGrass(tile);
+    timers[animalIndex] = GRASS_EATING_TIME;
+    actions[animalIndex] = ActionStatus::PerformAction;
+    return true;
+  }
+  return false;
+}
+
+  //TODO: perhaps have two levels of scanFood, one for within sight, first triggered, one for a search, like this
+void FeedingManager::scanFood(entt::registry& reg, entt::entity& e) {
+  const Type t = reg.get<Type>(e);
+  auto index = entt::to_entity(e);
+  uint16_t lowest = 0;
+  //TODO
+  auto rt = roamThreshold[t];
+  if (carnivores[t]) {
+    uint32_t preyIndex;
+    BitsetTable bt = food::carnivoreDiets[t];
+    for (Type prey : bt) {
+      // TODO
+      tpi = getNearest(e, prey);      
+      //possible improvement/alternate method: do not search for plants and animals in non-native biomes!
+      auto d = getDistance(index, tpi);
+      if (d < roamThreshold) {
+	setHuntTarget(reg, e, tpi);
+	return;
+      }
+      if (d < lowest) {
+        lowest = d;
+	preyIndex = tpi;
+      }
+      // END TODO
+    }
+  }
+
+  if (scavengers[i]) {
+    
+  }
+  
+  if (herbivores[t]) {
+    uint32_t forageIndex;
+    BitsetTable bt = food::getHerbivoreDiet(t);
+      for (Type fd : bt) {
+      // TODO
+      tpi = getNearest(e, fd);
+      auto d = getDistance(index, forageIndex);
+      if (d < roamThreshold) {
+        setForageTarget(reg, e, tfi);
+	
+	return;
+      }
+      if (d < lowest) {
+        lowest = d;
+	forageIndex = tfi;
+      }
+      // END TODO
+      }
+      if (carnivores[t]) {
+        setHuntTarget(reg, e, preyIndex);
+	return;
+      } setForageTarget(reg, e, forageIndex);
+  }
+}
+
+void setForageTarget() {
+  
+}
+
+void setHuntTarget() {
+
+}
+
+// in ticks
+int FeedingManager::calculateTimeTillFeed(int hungerAmount, Animal animal) {
+	float maxHunger;
+	float tickBurnRate;
+	int timeTillFeed;
+
+	int feedingThreshold = maxHunger / 2;
+	if (hungerAmount < feedingThreshold) return 0;
+	else return static_cast<int>((hungerAmount - feedingThreshold) / burnRate);
+}
+
+void FeedingManager::preparePreyFeed(int animalIndex) {
+	addEvent(calculateTimeTillFeed(hunger[animalIndex] + futureConsumption, feeder), EventType::PreyFeed, static_cast<int>(feeder), animalIndex);
+}
+
+//TODO: if outDistSqr not required, do not do it
+void FeedingManager::preparePredatorFeed(int animalIndex) {
+
+	addEvent(calculateTimeTillFeed(hunger[animalIndex] + futureConsumption, feeder), EventType::PredatorFeed, animalType, animalIndex);
+}

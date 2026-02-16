@@ -1,10 +1,10 @@
 #pragma once
 #include <cstdlib>
 #include <array>
-#include <unordered_map>
 #include <bitset>
 
-template<typename Enum, typename T, std::size_t N = static_cast<std::size_t>(Enum::MAX)>
+template <typename Enum, typename T,
+          std::size_t N = static_cast<std::size_t>(Enum::MAX)>
 struct LookupTable {
     std::array<T, N> data{};
 
@@ -55,6 +55,9 @@ struct BitsetTable {
         return *this;
     }
 
+    constexpr void set(Enum e) {
+      b[e] = true;
+    }      
   
 
       struct iterator {

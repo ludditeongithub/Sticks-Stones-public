@@ -54,6 +54,7 @@ constexpr float MAX_DIURNAL_VAR = 20.2;
 // seasonal temperature variation influenced mostly by latitude, then proximity to large water bodies, then elevation
 constexpr float MAX_SEASONAL_VAR = 42.1;
 
+constexpr Time CORPSE_ROT_TIME = DAY_LENGTH * 3;
 
 /*
  * Need to ensure that if a block of tile generates, that some of those tiles aren't actually river tiles,  but haven't been generated as such because neighboring ungenerated tiles which should have river sources on them have not been generated. Thus, need to check if generated cells are river ends of any sort, or lakes, and then for each of those recursively check if there are river continues, following up the chain, until I find the original river sources/lakes, and then recursively generate rivers all the way down, even if those tiles haven't been generated.

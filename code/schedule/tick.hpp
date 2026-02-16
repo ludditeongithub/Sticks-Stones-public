@@ -8,8 +8,11 @@ void tick() {
 
   //these are hot loops, fix if necessary
   updatePositions(rpd, positions, timers, actions);
-  updateTasks(pq, timers, tasks, skills);
-  updateAnimalTasks();
+  animalActions();
+  assignTasks(pq, timers, tasks, skills);
+  assignAnimalTasks(animals,
+                    actions,
+                    positions, hungers);
   updateAttack(chances, weapons, stats, positions, healths, targets, actions);
   updatePlants(nextGrowth, plantList, coords, chunkTemps, tileWater, lastFullyWatered, dailyInsolations, cloudCovers, dead);
 }

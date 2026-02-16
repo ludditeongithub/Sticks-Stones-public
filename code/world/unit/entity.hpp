@@ -63,7 +63,7 @@ struct Determination {
   uint8_t determination = rint(STAT_MIN,STAT_MAX);
 };
 
-struct Stats {
+struct Skills {
   Strength strength;
   Athleticism athleticism;
   Dexterity dexterity;

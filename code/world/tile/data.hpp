@@ -3,6 +3,7 @@
 #include <core/math.hpp>
 #include <core/containers.hpp>
 #include "enum.hpp"
+#include "world/world.hpp"
 #include <array>
 #include <math.h>
 #include <cstdint>
@@ -12,8 +13,20 @@ constexpr uint16_t AVERAGE_MOVE_COST = 5;
 constexpr uint16_t TILE_AMOUNT = CHUNK_AMOUNT * CHUNK_SIZE;
 constexpr uint16_t TILE_WIDTH = sqrt(TILE_AMOUNT);
 
-Coord getTileCoordFromIndex(uint32_t i) {
+size_t getTileIndexFromCoord(Coord c) {
+  return (c.y * CHUNK_LENGTH) + c.x;
+}
+
+Coord getTileCoordFromIndex(size_t i) {
   return {i % TILE_WIDTH, i / TILE_WIDTH};
+}
+
+size_t getTileIndexChunkRelative(size_t i) {
+  return {i % CHUNK_SIZE};
+}
+
+size_t getTileIndexChunkRelative(Coord c) {
+  return {getTileIndexFromCoord(c) % CHUNK_SIZE};
 }
 
 inline constexpr LookupTable<Tile, time> tileMoveCost = [] {

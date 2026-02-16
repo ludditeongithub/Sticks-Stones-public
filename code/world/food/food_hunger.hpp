@@ -4,29 +4,31 @@
 #include <cstdint>
 #include <array>
 #include <cstdlib>
-#include <plant/enum.hpp>
+#include <core/tables.hpp>
+#include <core/data.hpp>
+#include <world/plant/enum.hpp>
 
-
-
-  inline constexpr LookupTable<uint16_t, Fruit> fruitHunger = [] {
-    LookupTable<uint16_t, Fruit> arr{};
-    arr[Apple)] = 95;
-    arr[Orange)] = 62;
+inline constexpr LookupTable<Plant, Hunger> fruitHunger = [] {
+  LookupTable<Plant, Hunger> arr{};
+  using enum Plant;
+    arr[Apple] = 95;
+    arr[Orange] = 62;
     arr[Pear] = 100;
-    arr[Peach] = 60;
-    arr[Plum] = 40;
-    arr[Apricot] = 45;
-    arr[Cherry] = 5;
-    arr[Blueberry] = 1;
-    arr[Strawberry] = 4;
-    arr[Grape] = 3;
+    arr[Peach] = 65;
+    arr[Plum] = 58;
+    arr[Apricot] = 75;
+    arr[Cherry] = 14;
+    arr[Blueberry] = 4;
+    arr[Strawberry] = 15;
+    arr[Grape] = 6;
     arr[Lemon] = 20;
     arr[Lime] = 20;
     return arr;
 }();
 
-inline constexpr LookupTable<uint16_t, plant::Type)> plantHunger = [] {
-  LookupTable<uint16_t, plant::Type)> arr{};
+inline constexpr LookupTable<Plant, Hunger> plantHunger = [] {
+  LookupTable<Plant, Hunger> arr{};
+  using enum Plant;  
     arr[Fern] = 20;
     arr[Reed] = 40;
     arr[Oat] = 45;

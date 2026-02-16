@@ -9,8 +9,6 @@ enum class Scavengeable {
   LargeRock,
   Boulder,
   Flint,
-  Ore,
-  Corpse,
   Beehive,
   ArtificialBeehive,
   Stump,
@@ -18,10 +16,33 @@ enum class Scavengeable {
   DuckEgg,
   TurtleEgg,
   Truffle,
-  // Scavengeable Items
-  Fruit,
   Leafy,
-  Meat,
-  
+  // Variants
+  // fruits
+  // corpses
+  PigCorpse,
+  CowCorpse,
+  ChickenCorpse,
+  DuckCorpse,
+  SheepCorpse,
+  GoatCorpse,
+  HorseCorpse,
+  OxCorpse,
+  DonkeyCorpse,
+  CamelCorpse,
+  WaterBuffaloCorpse,
+  RabbitCorpse,
+  AntelopeCorpse,
+  DeerCorpse,
+  MooseCorpse,
+  CapybaraCorpse,
+  TurtleCorpse,
+  ElephantCorpse,
+  BisonCorpse,
+  WolfCorpse,
+  BearCorpse,
+  CaribouCorpse, 
+  // ores
+  Ore,
 };
 

@@ -1,6 +1,5 @@
 #ifndef EVENT_H_
 #define EVENT_H_
-#include "basic.hpp"
 #include "categories.hpp"
 #include "unit.hpp"
 #include "animal.hpp"

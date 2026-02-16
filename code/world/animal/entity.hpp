@@ -1,9 +1,11 @@
 #ifndef ENTITY_HPP
 #define ENTITY_HPP
 
+#include <cstddef>
 #include <cstdint>
 #include <stack>
 #include "enum.hpp"
+#include "tables.hpp"
 #include <core/data.hpp>
 #include <core/containers.hpp>
 #include <core/packed_enum.hpp>
@@ -24,8 +26,27 @@ struct AnimalDatabase {
   Array<AnimalStatus> animalStatuses;
   std::vector<bool> sexs;
   Array<Action> actions;
-  Array<uint32_t> targets;
-  Array<TargetType> targetTypes; //consider packing with animal statuses as this is related to movement.
+  Array<size_t> targets;
+  Array<TargetType> targetTypes; // consider packing with animal statuses as
+                                 // this is related to movement.
+  void reserve(size_t sz) {
+    //TODO
+  }
+
+  AnimalDatabase(size_t sz) {
+    for (size_t i = 0; i < sz; i++) freeSlots.push(i);   
+    alive = std::vector<bool>(sz);    
+    animals = Array<Animal>(sz);
+    coords = Array<Coord>(sz);
+    healths = Array<Health>(sz);
+    hungers = Array<Hunger>(sz);
+    ages = Array<Time>(sz);
+    animalStatuses = Array<AnimalStatus>(sz);
+    sexs = std::vector<bool>(sz);
+    actions = Array<Action>(sz);
+    targets = Array<uint32_t>(sz);
+    targetTypes = Array<TargetType>(sz);
+  }
 };
 
 inline void spawnAnimal(Animal animal, Coord coord, AnimalDatabase& ad, bool sex) {

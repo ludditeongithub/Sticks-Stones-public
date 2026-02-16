@@ -1,0 +1,20 @@
+#ifndef FEEDING_MANAGER_HPP
+#define FEEDING_MANAGER_HPP
+#include <cstdint>
+#include <core/containers.hpp>
+
+
+class FeedingManager {
+void setInitialFeedingTime(int animalIndex);
+void eatGrass(int index, int tileIndex, TileDatabase &tdb);
+void eatFruit(int index, int fruitTypeIndex, int tileIndex);
+void eatPlant(int index, int tileIndex);
+// todo: eatCorpse for scavengers  
+int calculateTimeTillFeed(int hungerAmount, Animal animal);
+void prepareFeed(int animalIndex);
+  void update(entt::registry& reg);
+};
+
+
+
+#endif

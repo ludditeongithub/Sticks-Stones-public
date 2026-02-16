@@ -6,6 +6,35 @@
 #include <core/data.hpp>
 #include <core/time.hpp>
 
+//in terms of hunger consumed per hour
+inline constexpr LookupTable<Animal,Hunger> eatingSpeeds = [] {
+  LookupTable<Animal,Hunger> lt{};
+    lt[Animal::Pig] = 2950;
+    lt[Animal::Cow] = 1200;
+    lt[Animal::Chicken] = 280;
+    lt[Animal::Duck] = 280;
+    lt[Animal::Sheep] = 1080;
+    lt[Animal::Goat] = 1400;
+    lt[Animal::Horse] = 1900;
+    lt[Animal::Ox] = 1600;
+    lt[Animal::Donkey] = 1550;
+    lt[Animal::Camel] = 1450;
+    lt[Animal::WaterBuffalo] = 1600;
+    lt[Animal::Rabbit] = 450;
+    lt[Animal::Antelope] = 890;
+    lt[Animal::Deer] = 890;
+    lt[Animal::Moose] = 3580;
+    lt[Animal::Capybara] = 640;
+    lt[Animal::Turtle] = 85;
+    lt[Animal::Elephant] = 10800;
+    lt[Animal::Bison] = 4300;
+    lt[Animal::Wolf] = 6800;
+    lt[Animal::Bear] = 13400;
+    lt[Animal::Caribou] = 2130;
+    lt[Animal::Fish] = 120;
+  return lt;
+ }();
+
 inline constexpr LookupTable<Animal, Time> fertilityAge = [] {
     LookupTable<Animal, Time> arr;
     arr[Animal::Pig] = static_cast<int>(0.5 * YEAR_LENGTH);

@@ -89,11 +89,9 @@ template <typename T> inline float diffMult(T value, T target, T bound) {
   return diff / range;
 }
 
-inline uint16_t coordToIndex(Coord c, int width) {
+inline size_t coordToIndex(Coord c, int width) {
   return c.y * width + c.x;
 };
-
-inline uint16_t getIndex(uint16_t x, uint16_t y) { return x * WIDTH_CHUNKS + y; };
 
 // Interpolations and Normalizations
 inline auto remap = [](float x, float a, float b, float c, float d) {

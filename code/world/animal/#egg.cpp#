@@ -1,0 +1,26 @@
+#include "core/data.hpp"
+
+void layEgg(Coord coords, int index, Animal animal, bool fertilized) {
+	switch (animal) {
+		case Animal::Duck:
+			Entity entity = Item::DuckEgg;
+			break;
+		case Animal::Chicken:
+			Entity entity = Item::ChickenEgg;
+			break;
+		case Animal::Turtle:
+                        Entity entity = Item::TurtleEgg;
+		  break;
+	}
+	insertEntity(entity, coords, index);
+	if (fertilized) {
+		if (nextEggIndex.size() != 0) {
+		int eggIndex = nextEggIndex.pop();
+		eggCoords[eggIndex] = getNearestEmptyTile(index);
+		} else {
+			eggCoords.push_back(getNearestEmptyTile(index));
+			int eggIndex = eggCoords.size();
+		}
+		addEvent(hatchTime[static_cast<int>(entity)], EventType::Hatch, eggIndex);
+	}
+}

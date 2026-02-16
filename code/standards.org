@@ -1,0 +1,2 @@
+- CAPS is reserved for constants, or pseudo-constants (values set per run of game).
+- 'tables.hpp' contains both lookup tables, constants, and pseudo constants.  

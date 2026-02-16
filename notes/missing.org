@@ -31,4 +31,12 @@ All Smelter: should be ingots
 All smiths: anvil should be present with material, silver and goldsmiths can be rings
 Oil maker: not that kind of oil
 Boat builder: fix his head
-Minter: just a coi8n
+Minter: just a coin
+Siege Engineer: use ancient siege weapon
+Steel smelter: steel ingot bar (make sure it is clear that it is different from silver
+Surgeon: less modern
+Mil leader: is a military leader
+caretaker: use not modern clothes
+hauler: don't do it, need to think
+tailor: not modern, modern top as icon, not too compressed
+

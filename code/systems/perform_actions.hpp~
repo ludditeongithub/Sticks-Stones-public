@@ -1,0 +1,48 @@
+#include <cstdint>
+#include <core/containers.hpp>
+#include <core/data.hpp>
+#include <world/plant/enum.hpp>
+#include <world/item/enum.hpp>
+#include <limits>
+
+//all functions that consume are unsafe. safety controlled by main eating function
+void animalsAct(Array<Hunger>& hungers, Array<Coord>& coords, Array<size_t>& targets, Array<TargetType>& targetTypes, Array<Plant>& plants, Array<Item>& items) {
+  for (size_t i = 0; i < hungers.size; i++) {
+    switch (targetTypes[i]) {
+    case TargetType::Plant:
+      Plant plant = plants[targets[i]];
+      if (checkPlantAdj(coords, plant))
+        eatPlant(i, hungers, targets[i]);
+      break;
+    case TargetType::Item: //fruit, eggs, human meals
+      Item item = items[targets[i]];
+      
+      break;
+    case TargetType::Animal:
+      
+      break;
+    default:
+      
+    }
+    // checks if plant is still there
+    if (!= std::numeric_limits<size_t>(max)) {
+      Plant plant = plants[plantIndex];
+      if (fruitBearing[plant]) eatFruit(index, hungers, plantToFruit[plant], getFruitIndex(coords[i]));  
+      else eatPlant(index, hungers, plant)
+    }
+    
+  
+  }
+}
+
+  inline void eatFruit(size_t index, Array<Hunger>& hungers, Item fruit, size_t fruitIndex, Array<Time>& timers) {
+   hungers[index] += fruitHungers[fruit];
+   killItem(fruitIndex);
+   timers[index] += 
+}
+
+// Plants that bear fruit contain fruit items on them. Their hunger value is different from the fruits', and some are inedible.
+ inline void eatPlant(size_t index, Array<Hunger>& hungers, Array<Plant>& plants, size_t plantIndex) {
+  hungers[index] += plantHungers[plants[plantIndex]];
+  bitePlant();
+}

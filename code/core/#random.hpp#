@@ -1,3 +1,4 @@
+#pragma once
 #include <random>
 #include <array>
 
@@ -60,10 +61,11 @@ void generateRandomBools() {
 
 float nextRandomPropFrac() {
   randomPropFracCurrent++;
-  if (randomPropFracCurrent > RANDOM_BATCH_SIZE) randomBoolCurrent = rint();
+  if (randomPropFracCurrent > RANDOM_BATCH_SIZE) randomBoolCurrent = 
 }
 
 void nextRandomInt();
+
 bool nextRandomBool() {
   
 }

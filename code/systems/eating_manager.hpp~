@@ -1,0 +1,32 @@
+#ifndef FEEDING_MANAGER_HPP
+#define FEEDING_MANAGER_HPP
+#include <cstdint>
+#include <core/containers.hpp>
+#include <world/animal/enum.hpp>
+#include <world/plant/enum.hpp>
+#include <world/tile/enum.hpp>
+
+class EatingManager {
+void setInitialFeedingTime(int animalIndex);
+inline bool attemptEat(Array<Animal> &animals, Array<Hunger> &hungers, Array<Coord> &animalCoords, Array<Time> &timers, size_t animalIndex);
+inline bool eatCorpse(Array<Animal> &animals, Array<Hunger> &hungers,
+                      Array<Coord> &animalCoords, Array<Time> &timers,
+                      size_t animalIndex, Array<Hunger> &corpseHungers,
+                      Array<Time> &corpseTimes, Array<Coord> &corpseCoords,
+                      size_t corpseIndex);
+inline bool eatPlant(
+    Array<Animal> &animals, Array<Hunger> &hungers, Array<Time> &timers,
+    Array<Coord> &animalCoords, size_t animalIndex, Array<Plant> &plants,
+    Array<Health> &plantHealths, Array<Coord> &plantCoords, size_t plantIndex);
+inline bool eatGrass(Array<Animal> &animals,
+                                     Array<Hunger> &hungers,
+                                     Array<Time> &timers, size_t animalIndex,
+                                     Array<TileData> &tiles, size_t tileIndex);
+int calculateTimeTillFeed(int hungerAmount, Animal animal);
+void prepareFeed(int animalIndex);
+  void update(entt::registry& reg);
+};
+
+
+
+#endif

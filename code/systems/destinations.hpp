@@ -1,11 +1,17 @@
 #include <core/data.hpp>
 #include <core/containers.hpp>
+#include <schedule/dispatch.hpp>
 #include <world/food/categories.hpp>
 #include <world/animal/enum.hpp>
+#include <world/animal/tables.hpp>
 
 //TODO: possible optimization: separate herbivores and carnivores into separate loops, to improve cache efficiency
-void scanFood(Array<Animal>& animals, Array<Coord>& positions,
-              Array<Coord>& destinations) {
+void setHungryDestinations(DispatchData<Animal> &dispatch) {
+  Array<Animal> &animals = dispatch.types;
+  Array<Coord> &positions = dispatch.positions;
+  Array<Coord> &destinations = dispatch.destinations;
+
+  
   enum class Type { Herbivore, Carnivore, Scavenger };
   for (int i = 0; i < animals.size; i++) {
     Animal a = animals[i];
@@ -70,3 +76,9 @@ void scanFood(Array<Animal>& animals, Array<Coord>& positions,
       }        
   }
 }
+
+
+void scanDrink(DispatchData dispatch);
+
+void scanMigration(DispatchData dispatch);
+

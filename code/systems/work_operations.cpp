@@ -1,10 +1,7 @@
 #ifndef INVENTORIESANDWORKQUEUES_H_
 #define INVENTORIESANDWORKQUEUES_H_
 #include "basic.hpp"
-#include "categories.hpp"
-#include "itemRecipes.hpp"
-#include "cropdata.hpp"
-#include "unit.hpp"
+
 
 //TILE DATA
 //variantIndex superfluous for non-variant items

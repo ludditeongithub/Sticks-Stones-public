@@ -8,17 +8,28 @@
 
 // Moving, Mating, Direction are packed
 
-enum class MovingStatus {
-Idle,
-Wander,
-Prowl, // looking for targets, but don't know where
-Flee,
-//PursuitX means sprinting to visible target
-Pursuit,
-Hunt,
-// ApproachX means walking to known/visible target
-ApproachForage,
-ReturnHome,
+enum class ActionStatus {
+  Idle,
+  NewPath,
+  Prowl, // looking for targets, but don't know where
+  Flee,
+  // PursuitX means sprinting to visible target
+  Pursuit,
+  // ApproachX means walking to known/visible target
+  Approach,
+  PerformAction,
+  ReturnHome,
+};
+
+//TODO: make pack animals work, will search for needs using pack logic
+enum class ActionDecisionStatus {
+  AnimalFoodSearch,
+  AnimalBreedSearch,
+  AnimalDrinkSearch,
+  AnimalRejoinPack, // wanders if animal is not a pack animal, possibly change
+                    // to wander
+  AnimalMigration,
+  Assign
 };
 
 enum class MatingStatus {

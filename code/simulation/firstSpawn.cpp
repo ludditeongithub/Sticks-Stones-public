@@ -24,7 +24,6 @@
 
 #include "firstSpawn.hpp"
 #include <core/random.hpp>
-
 #include "world/tile/data.hpp"
 #include "world/world.hpp"
 #include <world/tile/enum.hpp>

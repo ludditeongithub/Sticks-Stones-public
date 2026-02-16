@@ -1,9 +1,6 @@
 #ifndef TILE_H_
 #define TILE_H_
-#include "basic.hpp"
-#include "mapdimensions.hpp"
-#include "categories.hpp"
-#include "chunk.hpp"
+#include <vector>
 
 // DATA OF EVERY GENERATED TILES
 // TODO: make tile be found from chunk 
@@ -34,11 +31,11 @@ struct AdjacentTiles {
 	int right;
 };
 
-vector<AdjacentTiles> adjacentTilesIndices(STARTING_MAP_WIDTH * STARTING_MAP_HEIGHT);
+std::vector<AdjacentTiles> adjacentTilesIndices(STARTING_MAP_WIDTH * STARTING_MAP_HEIGHT);
 
 /* linked vectors which can be used to determine the variant when the tileObject is a variant and is moved or picked up */
 
-vector<bool> tileWater(STARTING_MAP_WIDTH * STARTING_MAP_HEIGHT); //whether a tile has water or not
+std::vector<bool> tileWater(STARTING_MAP_WIDTH * STARTING_MAP_HEIGHT); //whether a tile has water or not
 
 
 //FIND NEAR RESOURCES

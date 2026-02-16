@@ -7,95 +7,58 @@
 #include <vector>
 
 
-template <typename T>
 struct Arena {
-    const uint32_t capacity;
-    T* start;
-    uint32_t used;
+    char* start;
+    size_t capacity;
+    size_t used;
 
-    Arena(uint32_t cap)
-        : capacity(cap),
-          start(new T[cap]{}),
-          used(0)
-    {}
-
-    ~Arena() {
-        delete[] start;
+    Arena(size_t cap) : capacity(cap), used(0) {
+        start = static_cast<char*>(::operator new(cap));
     }
 
-    T* alloc() {
-        if (used >= capacity) {
-            std::cerr << "Arena is out of memory!" << std::endl;
-            return nullptr;
-        }
-        return &start[used++];
-    }
-
-    T& operator[](size_t index) {
-        if (index >= used) {
-            throw std::out_of_range("Arena index out of range");
-        }
-        return start[index];
-    }
-
-    const T& operator[](size_t index) const {
-        if (index >= used) {
-            throw std::out_of_range("Arena index out of range");
-        }
-        return start[index];
-    }
+    ~Arena() { ::operator delete(start); }
 
 
-    T* begin() { return start; }
-    T* end() { return start + used; }
-    const T* begin() const { return start; }
-    const T* end() const { return start + used; }
-
-    void reset() { used = 0; }
-    uint32_t size() const { return used; }
-    uint32_t remaining() const { return capacity - used; }
 };
 
-template <typename T>
-struct Arena2D {
-    Arena<T>& arena;
-    uint32_t rows;
-    uint32_t cols;
+void* arena_alloc(Arena* arena, size_t bytes) {
+    if (arena->used + bytes > arena->capacity) {
+        throw std::bad_alloc(); 
+    }
+    void* ptr = arena->start + arena->used;
+    arena->used += bytes;
+    return ptr;
+}
 
-    struct RowProxy {
-        T* row_start;
-        T& operator[](uint32_t col) {
-            return row_start[col];
-        }
-        const T& operator[](uint32_t col) const {
-            return row_start[col];
-        }
-    };
+void *arena_alloc_aligned(Arena *arena, size_t bytes, size_t alignment) {
+    uintptr_t current = reinterpret_cast<uintptr_t>(arena->start + arena->used);
+    uintptr_t aligned = (current + alignment - 1) & ~(alignment - 1);
+    size_t padding = aligned - current;
 
-    Arena2D(Arena<T>& a, uint32_t r, uint32_t c)
-        : arena(a), rows(r), cols(c) {
-        if (r * c > a.capacity) {
-            throw std::runtime_error("Arena too small for requested 2D view");
-        }
+    if (arena->used + padding + bytes > arena->capacity) {
+        throw std::bad_alloc();
     }
 
-  Arena2D(uint32_t r, uint32_t c) : rows(r), cols(c) {
-      arena = new Arena<T>(r * c);      
-    }
-      
+    arena->used += padding;
+    void* ptr = arena->start + arena->used;
+    arena->used += bytes;
+    return ptr;
+}
 
-    RowProxy operator[](uint32_t row) {
-        if (row >= rows) throw std::out_of_range("Row out of range");
-        return RowProxy{arena.start + row * cols};
-    }
+void *arena_dealloc_aligned(Arena *arena, size_t bytes, size_t alignment) {
+    uintptr_t current = reinterpret_cast<uintptr_t>(arena->start + arena->used);
+    uintptr_t aligned = (current + alignment - 1) & ~(alignment - 1);
+    size_t padding = aligned - current;
 
-    const RowProxy operator[](uint32_t row) const {
-        if (row >= rows) throw std::out_of_range("Row out of range");
-        return RowProxy{arena.start + row * cols};
-    }
+    if (arena->used < bytes + padding) {
+    throw std::bad_alloc(); 
+}
 
-    uint32_t size() const { return rows * cols; }
-};
+    arena->used -= padding;
+    arena->used -= bytes;
+    void* ptr = arena->start + arena->used;
+    return ptr;
+}
 
 template <typename T>
 struct Pool {

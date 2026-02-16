@@ -1,8 +1,21 @@
 * NOW
-** Bulk rng
+** Corpse rotting time updates, corpse updates, less if temp is low, corpse destruction if hunger == 0 or time is too long.
 ** Sprite loading
 ** Menus
+** Option to configure SDL screensize
+** Migration Logic
+** Bulk rng
+** get average plants, animals, units per chunk
+** Animation rendering
+* NOTES
+** Programming
+*** Scheduling and Simulation Precision
+- there are two main divisions: player - active chunks (the player's pawns frequent the area, and non - player - active chunks. PAC and NPAC entity data are stored in different databases, their may also be several different PAC and NPAC databases, with special cases of nearer NPAC databases which contain chunks closer to the player, which they are likely to discover soon.
+
+  All entities in NPACs are processed at a high frequency. There is lower batching, event driven. All entities in non-NPACs are processed at a low frequency. Higher batching, more concurrency of large tasks.
 * AFTER BETA
+** Branchless programming if further optimization required
+** Keep certain arrays sorted 
 ** Custom Temperature Spaces: fires, rooms (in chunk entities grid)
 ** Rainfall, weather, humidity effects
 *** tile switches to snow or different water types if more water added, mud if water added to soil
@@ -168,83 +181,3 @@ generated layer under tiles that is indexed-matched to tile above. replaces tile
 - coastal mountains, leeway affect on biome generation, and
 - logs collapse against trees if there are trees nearby upon another trees' death instead of finding nearest adjacentemptytile
 - new musical units unlock different soundtracks, or like my singing monsters
-* Notes
-1. Copper
-
-    Use: Early metal for tools, ornaments, and weapons (often alloyed with tin to create bronze).
-    Early Game:
-        Surface mining: Found in riverbeds and shallow deposits near the surface, in the form of nuggets or oxide ores.
-        Tools: Use copper nuggets or malachite (copper carbonate) in shallow areas.
-    Mid Game:
-        Copper ore in oxidized rock near surface veins or in copper-rich regions.
-        Can be found at shallow to moderate depths (around 10-100 meters).
-
-2. Tin
-
-    Use: Mixed with copper to create bronze (an alloy that revolutionized tools and weapons).
-    Early Game:
-        Surface mining: Found in alluvial deposits (rivers and stream beds), especially in wetlands.
-        Cassiterite (tin oxide) deposits near the surface.
-    Mid Game:
-        Tin veins in granite rock formations.
-        Can be found at moderate depths (around 30-100 meters).
-
-3. Gold
-
-    Use: Used for jewelry, coinage, and as a sign of wealth and status.
-    Early Game:
-        Panning in riverbeds: Placer gold is the primary form found in rivers and stream beds.
-        Gold nuggets can be found in shallow rivers and shallow surface deposits.
-    Mid Game:
-        Gold veins in quartz or bedrock at moderate depths (10-100 meters).
-        Can also be extracted from ancient surface deposits in mountains.
-
-4. Iron
-
-    Use: Widely used in tools, weapons, and construction (starting with early iron age civilizations).
-    Early Game:
-        Surface mining: Found in the form of iron-rich rocks like hematite, magnetite, and limonite.
-        Bog iron can be found in wetlands or rivers where iron deposits have been naturally concentrated.
-    Mid Game:
-        Iron veins in sedimentary rock layers, typically in mountainous or hilly areas.
-        Can be found at moderate to deep depths (50-200 meters), depending on the type of ore.
-
-5. Silver
-
-    Use: Used for coins, jewelry, and ornamentation.
-    Early Game:
-        Surface mining of silver-bearing ores like argentite in riverbeds.
-        Placer deposits where silver is found alongside gold.
-    Mid Game:
-        Silver veins in mountainous areas or mineralized regions with high metal content.
-        Can be found at mid depths (50-100 meters), often near lead or copper deposits.
-
-6. Lead
-
-    Use: Used for pipes, storage, and in alloys (e.g., bronze or glassmaking).
-    Early Game:
-        Surface mining: Found in riverbeds and shallow deposits of galena (lead sulfide).
-    Mid Game:
-        Lead veins in sedimentary rock or metamorphic rocks, often alongside silver or zinc.
-        Can be found at moderate depths (30-150 meters).
-
-7. Bronze (Alloy of Copper and Tin)
-
-    Use: Revolutionized tool and weapon making; stronger and more durable than pure copper.
-    Mid Game:
-        Tin and copper are collected separately and then alloyed to create bronze.
-        Copper is found at shallow to moderate depths, while tin is found at shallow depths in wetland deposits or surface mines.
-
-8. Zinc
-
-    Use: Used in the creation of brass (an alloy with copper) and for galvanizing.
-    Mid Game:
-        Zinc ores (e.g., sphalerite) are found in sedimentary rock.
-        Found in regions with other base metals like lead or copper, at moderate depths (100-300 meters).
-
-9. Arsenic
-
-    Use: Copper alloys, medicine, and poisoning (later in history).
-    Mid Game:
-        Found in mineralized veins in mountainous or volcanic areas, often alongside gold or silver ores.
-        Found at mid to deep depths (50-200 meters).

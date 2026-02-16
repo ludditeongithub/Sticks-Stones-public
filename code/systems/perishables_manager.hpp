@@ -1,0 +1,25 @@
+#ifndef PERISHABLES_MANAGER_HPP
+#define PERISHABLES_MANAGER_HPP
+
+#include <core/data.hpp>
+#include <core/tables.hpp>
+#include <core/containers.hpp>
+#include <world/item/enum.hpp>
+
+inline constexpr LookupTable<Item,Time> perishableDestructionTimes = [] {
+  LookupTable<Item,Time> lt{};
+  using enum Item;
+  
+  return lt;
+ }();
+
+void processPerishableRots(Array<Item> &perishables, Array<Time> &livingTimes, Time timePassed);
+
+inline bool checkRotten(Item perishable, Time livingTime);
+
+
+
+
+
+
+#endif

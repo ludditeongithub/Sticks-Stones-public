@@ -1,35 +1,45 @@
-#include <world/animal/enum.hpp>
-#include <core/containers.hpp>
+#pragma once
+#include <cstdint>
 #include <core/data.hpp>
-#include <world/unit/rolesAndActions.hpp>
+#include <core/containers.hpp>
+#include <world/animal/enum.hpp>
 
 
+struct DispatchData {
+    Array<size_t> indices;
+    Array<Animal> animals;
+    Array<Coord> positions;
+    Array<Coord> destinations;
 
-
-void dispatchHungryAnimals(Array<Animal>& animals,
-                                   Array<Coord>& positions,
-                                   Array<Coord>& destinations,
-                                   Array<Action>& actions) {
-  int count = 0;
-  for (int i = 0; i < actions; i++)
-    if (actions[i] == Action::AnimalFoodSearch)
-      count++;
-  Array<Animal> sAnimals(count);
-  Array<Coord> sPositions(count);
-  Array<Coord> sDestinations(count);
-  Array<Action> sActions(count);
-  int j = 0;
-  for (int i = 0; i < animals; i++) {
-    if (actions[i] == Action::AnimalFoodSearch) {
-      sAnimals[j++] = animals[i];
-      sPositions[j++] = positions[i];
-      sDestinations[j++] = destinations[i];
-      sActions[j++] = actions[i];
+    DispatchData(size_t count) {
+      indices = Array<size_t>(count);
+      animals = Array<Animal>(count);
+      positions = Array<Coord>(count);
+      destinations = Array<Coord>(count);
     }
-  }
-  scanFood(sAnimals, sPositions, sDestinations, sActions);
-}
 
+    inline void setData(size_t j, size_t i) {
+           indices[j] = i;
+      	   animals[j] = animals[i];
+	   positions[j] = positions[i];
+           destinations[j] = destinations[i];
+    }    
+  };
 
+  struct PathDispatchData {
+    Array<size_t> indices;
+    Array<Coord> positions;
+    Array<Coord> destinations;
 
+    PathDispatchData(size_t count) {
+      indices = Array<size_t>(count);
+      positions = Array<Coord>(count);
+      destinations = Array<Coord>(count);
+    }
 
+    inline void setData(size_t j, size_t i) {
+           indices[j] = i;
+	   positions[j] = positions[i];
+           destinations[j] = destinations[i];
+    }    
+  };
