@@ -5,7 +5,7 @@
 constexpr uint16_t LATITUDE_TOTAL = 180;
 const uint16_t LENGTH_CHUNKS = LATITUDE_TOTAL * 2;
 const uint16_t HEIGHT_CHUNKS = LATITUDE_TOTAL * 2;
-const uint16_t CHUNK_AMOUNT = LENGTH_CHUNKS * HEIGHT_CHUNKS;
+const uint16_t CHUNK_AMOUNT = static_cast<uint16_t>(LENGTH_CHUNKS * HEIGHT_CHUNKS);
 
 constexpr int CHUNK_LENGTH = 64;
 constexpr int CHUNK_SIZE = CHUNK_LENGTH * CHUNK_LENGTH;
@@ -41,8 +41,18 @@ inline int16_t getChunkLatitude(int i) {
   return (getChunkHeight(i) / CHUNK_LATITUDE_HEIGHT) - (LATITUDE_TOTAL / 2);
 }
 
-inline int16_t getChunkTimeZone(int i) {
-  return getChunkWidth(i) / TIME_ZONES;
+inline int16_t getChunkTimeZone(int i) { return getChunkWidth(i) / TIME_ZONES; }
+
+//TODO: unoptimal, pre-calculate size
+inline std::vector<uint16_t> getChunksFromArea(Coord origin, Coord dimensions) {
+	uint16_t chunkAmount = ((dimensions.x / CHUNK_LENGTH) + 1) * ((dimensions.y / CHUNK_LENGTH) + 1);
+	std::vector<uint16_t> r(chunkAmount);
+	for (uint16_t i = 0; i < (dimensions.x / CHUNK_LENGTH) + 1; i++) {
+		for (uint16_t j = 0; j < (dimensions.y / CHUNK_LENGTH) + 1; j++) {
+			
+		}
+	}
+
 }
 
 std::array<float, TIME_ZONES> hourAngles{

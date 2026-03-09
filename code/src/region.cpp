@@ -286,7 +286,7 @@ void WorldSpawner::generateTileDatabase() {
                 tileCoords[index] = {y,x};
                 std::vector<float> queryPoint = {(float)y, (float)x};
                 // Perform the nearest neighbor search, numResults is # of neighbors
-                const size_t numResults = 5;
+                const uint16_t numResults = 5;
                 uint32_t retIndex[numResults]; // nearest neighbor index
                 float outDistSqr[numResults]; //distance between nn and current
 

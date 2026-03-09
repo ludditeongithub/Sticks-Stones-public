@@ -32,7 +32,7 @@ struct Pathfinding {
 
   std::priority_queue<int> pq;
 
-void initializePathfindingData(size_t s) {
+void initializePathfindingData(uint16_t s) {
   gCost.resize(s);
   fCost.resize(s);
   parents.resize(s);

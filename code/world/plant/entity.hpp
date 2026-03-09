@@ -13,7 +13,7 @@ Array<Coord> coords;
 Array<float> tileWater;
 Array<float> lastFullyWatered;
 
-void destroyPlant(size__t i) {
+void destroyPlant(uint16_t i) {
   plantList.remove(i);
   nextGrowth.remove(i);
   coords.remove(i);
@@ -21,7 +21,7 @@ void destroyPlant(size__t i) {
   lastFullyWatered.remove(i);
 }
 
-  void bitePlant(size_t i, Animal animal) {
+  void bitePlant(uint16_t i, Animal animal) {
     animalBiteDamages[animal];
 }
 

@@ -16,7 +16,7 @@
 //all functions that consume are unsafe. safety controlled by main eating function
 void processEatingAnimals(Array<Animal> &animals,
                           Array<Hunger> &hungers, Array<Time> &timers,
-                          Array<Coord> &coords, Array<size_t> &targets,
+                          Array<Coord> &coords, Array<uint16_t> &targets,
                           Array<TargetType> &targetTypes,
                           // plant info
                           Array<Plant> &plants, Array<Health> &plantHealths,
@@ -28,7 +28,7 @@ void processEatingAnimals(Array<Animal> &animals,
 			  // tile info
 			  Array<TileData>& tiles
                           ) {
-  for (size_t i = 0; i < hungers.capacity; i++) {
+  for (uint16_t i = 0; i < hungers.capacity; i++) {
     bool ate = false;
         switch (targetTypes[i]) {
     case TargetType::Plant:
@@ -61,8 +61,8 @@ inline Time eatingTimer(Hunger eatingAmount, Animal eater) {
 
 inline bool eatPerishable(
     Array<Animal>& animals, Array<Hunger> &hungers, Array<Coord> &animalCoords,
-    Array<Time>& timers, size_t animalIndex, Array<Item> & perishables, Array<Hunger>& perishableHungers,
-    Array<Time>& perishableTimes, Array<Coord> &perishableCoords, size_t perishableIndex) {
+    Array<Time>& timers, uint16_t animalIndex, Array<Item> & perishables, Array<Hunger>& perishableHungers,
+    Array<Time>& perishableTimes, Array<Coord> &perishableCoords, uint16_t perishableIndex) {
   Animal a = animals[animalIndex];
   if (checkRotten(perishables[perishableIndex], perishableTimes[perishableIndex]) || !adjacentCoords(perishableCoords[perishableIndex], animalCoords[animalIndex])) {
     return false;
@@ -87,9 +87,9 @@ inline bool eatPerishable(
 inline bool
 eatPlant(Array<Animal> &animals, Array<Hunger> &hungers,
                             Array<Time> &timers, Array<Coord> &animalCoords,
-                         size_t animalIndex, 
+                         uint16_t animalIndex, 
                          Array<Health> &plantHealths, Array<Coord> &plantCoords,
-                         size_t plantIndex) {
+                         uint16_t plantIndex) {
   if (adjacentCoords(plantCoords[plantIndex], animalCoords[animalIndex]))
     return false;
   Animal a = animals[animalIndex];
@@ -114,9 +114,9 @@ eatPlant(Array<Animal> &animals, Array<Hunger> &hungers,
 inline bool eatGrass(Array<Animal> &animals,
                                     Array<Hunger> &hungers,
                                     Array<Coord> &coords, Array<Time> &timers,
-                                    size_t animalIndex,
+                                    uint16_t animalIndex,
                                     Array<TileData> &tiles) {
-  size_t ti = coordToIndex(coords[animalIndex], TILE_AMOUNT);
+  uint16_t ti = coordToIndex(coords[animalIndex], TILE_AMOUNT);
   TileData& tile = tiles[ti];
   if (tileGrass(tile)) {
     Animal a = animals[animalIndex];

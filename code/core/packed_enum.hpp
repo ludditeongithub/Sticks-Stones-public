@@ -289,3 +289,152 @@ public:
     constexpr E3 third()  const { return E3((raw & M3) >> S3); }
     constexpr E4 fourth() const { return E4(raw & M4); }
 };
+
+
+template <typename E1, unsigned B1,
+          typename E2, unsigned B2,
+          typename E3, unsigned B3,
+          typename E4, unsigned B4,
+          typename E5, unsigned B5,
+          typename E6, unsigned B6,
+          typename E7, unsigned B7>
+struct PackedEnum7_64 {
+    static_assert(B1 + B2 + B3 + B4 + B5 + B6 + B7 <= 64,
+                  "Total bit width exceeds 64 bits");
+
+    uint64_t raw{};
+
+private:
+    static constexpr unsigned S1 = B2 + B3 + B4 + B5 + B6 + B7;
+    static constexpr unsigned S2 = B3 + B4 + B5 + B6 + B7;
+    static constexpr unsigned S3 = B4 + B5 + B6 + B7;
+    static constexpr unsigned S4 = B5 + B6 + B7;
+    static constexpr unsigned S5 = B6 + B7;
+    static constexpr unsigned S6 = B7;
+    static constexpr unsigned S7 = 0;
+
+    static constexpr uint64_t M1 = ((uint64_t(1) << B1) - 1) << S1;
+    static constexpr uint64_t M2 = ((uint64_t(1) << B2) - 1) << S2;
+    static constexpr uint64_t M3 = ((uint64_t(1) << B3) - 1) << S3;
+    static constexpr uint64_t M4 = ((uint64_t(1) << B4) - 1) << S4;
+    static constexpr uint64_t M5 = ((uint64_t(1) << B5) - 1) << S5;
+    static constexpr uint64_t M6 = ((uint64_t(1) << B6) - 1) << S6;
+    static constexpr uint64_t M7 = ((uint64_t(1) << B7) - 1) << S7;
+
+public:
+    constexpr PackedEnum7_64() = default;
+
+    constexpr PackedEnum7_64(E1 e1, E2 e2, E3 e3,
+                             E4 e4, E5 e5, E6 e6,
+                             E7 e7)
+        : raw(
+            ((uint64_t(e1) << S1) & M1) |
+            ((uint64_t(e2) << S2) & M2) |
+            ((uint64_t(e3) << S3) & M3) |
+            ((uint64_t(e4) << S4) & M4) |
+            ((uint64_t(e5) << S5) & M5) |
+            ((uint64_t(e6) << S6) & M6) |
+            ((uint64_t(e7) << S7) & M7))
+    {}
+
+    struct FirstProxy {
+        PackedEnum7_64& p;
+        constexpr operator E1() const {
+            return E1((p.raw & M1) >> S1);
+        }
+        constexpr FirstProxy& operator=(E1 value) {
+            p.raw = (p.raw & ~M1)
+                  | ((uint64_t(value) << S1) & M1);
+            return *this;
+        }
+    };
+
+    struct SecondProxy {
+        PackedEnum7_64& p;
+        constexpr operator E2() const {
+            return E2((p.raw & M2) >> S2);
+        }
+        constexpr SecondProxy& operator=(E2 value) {
+            p.raw = (p.raw & ~M2)
+                  | ((uint64_t(value) << S2) & M2);
+            return *this;
+        }
+    };
+
+    struct ThirdProxy {
+        PackedEnum7_64& p;
+        constexpr operator E3() const {
+            return E3((p.raw & M3) >> S3);
+        }
+        constexpr ThirdProxy& operator=(E3 value) {
+            p.raw = (p.raw & ~M3)
+                  | ((uint64_t(value) << S3) & M3);
+            return *this;
+        }
+    };
+
+    struct FourthProxy {
+        PackedEnum7_64& p;
+        constexpr operator E4() const {
+            return E4((p.raw & M4) >> S4);
+        }
+        constexpr FourthProxy& operator=(E4 value) {
+            p.raw = (p.raw & ~M4)
+                  | ((uint64_t(value) << S4) & M4);
+            return *this;
+        }
+    };
+
+    struct FifthProxy {
+        PackedEnum7_64& p;
+        constexpr operator E5() const {
+            return E5((p.raw & M5) >> S5);
+        }
+        constexpr FifthProxy& operator=(E5 value) {
+            p.raw = (p.raw & ~M5)
+                  | ((uint64_t(value) << S5) & M5);
+            return *this;
+        }
+    };
+
+    struct SixthProxy {
+        PackedEnum7_64& p;
+        constexpr operator E6() const {
+            return E6((p.raw & M6) >> S6);
+        }
+        constexpr SixthProxy& operator=(E6 value) {
+            p.raw = (p.raw & ~M6)
+                  | ((uint64_t(value) << S6) & M6);
+            return *this;
+        }
+    };
+
+    struct SeventhProxy {
+        PackedEnum7_64& p;
+        constexpr operator E7() const {
+            return E7((p.raw & M7) >> S7);
+        }
+        constexpr SeventhProxy& operator=(E7 value) {
+            p.raw = (p.raw & ~M7)
+                  | ((uint64_t(value) << S7) & M7);
+            return *this;
+        }
+    };
+
+
+    constexpr FirstProxy   first()   { return {*this}; }
+    constexpr SecondProxy  second()  { return {*this}; }
+    constexpr ThirdProxy   third()   { return {*this}; }
+    constexpr FourthProxy  fourth()  { return {*this}; }
+    constexpr FifthProxy   fifth()   { return {*this}; }
+    constexpr SixthProxy   sixth()   { return {*this}; }
+    constexpr SeventhProxy seventh() { return {*this}; }
+
+    constexpr E1 first()   const { return E1((raw & M1) >> S1); }
+    constexpr E2 second()  const { return E2((raw & M2) >> S2); }
+    constexpr E3 third()   const { return E3((raw & M3) >> S3); }
+    constexpr E4 fourth()  const { return E4((raw & M4) >> S4); }
+    constexpr E5 fifth()   const { return E5((raw & M5) >> S5); }
+    constexpr E6 sixth()   const { return E6((raw & M6) >> S6); }
+    constexpr E7 seventh() const { return E7((raw & M7) >> S7); }
+};

@@ -1,24 +1,51 @@
+#include "world/tile/data.hpp"
+#include <limits>
 #include <random>
 #include <array>
+#include <type_traits>
 
-    static std::random_device rd;
-    static std::mt19937 gen(rd());
+constexpr uint16_t PREGENERATED_RANDOM_SIZE = 15000;
+static std::random_device rd;
+static std::mt19937 gen(rd());
 
+template <typename T>
+struct RandomMachine {
+  std::array<T, PREGENERATED_RANDOM_SIZE> randoms;
+	uint16_t current = 0;
+	RandomMachine(T min, T max) {
+          std::uniform_real_distribution<T> dis(min, max);
+	  for (size_t i = 0; i < PREGENERATED_RANDOM_SIZE; i++) randoms[i] = dis(gen);
+        }
 
-inline int rbin() {
+        RandomMachine() {
+		std::uniform_real_distribution<T> dis(std::numeric_limits<T>::min(), std::numeric_limits<T>::max());
+	  for (size_t i = 0; i < PREGENERATED_RANDOM_SIZE; i++) randoms[i] = dis(gen);
+        }
 
-    return dist(gen);
-}
+        T next() {
+		return randoms[current++];
+	}
+};
 
-inline bool rbool() {
-    if (rbin() == 0) return false;
-    return true;
-}
+template <typename E> struct RandomEnumMachine {
+	using EU = std::underlying_type<E>;
+	 std::array<EU, PREGENERATED_RANDOM_SIZE> randoms;
+	uint16_t current = 0;
+	RandomEnumMachine(E min, E max) {
+          std::uniform_real_distribution<EU> dis(
+              std::underlying_type<EU>(min), std::underlying_type<EU>(max));
+	  for (size_t i = 0; i < PREGENERATED_RANDOM_SIZE; i++) randoms[i] = dis(gen);
+        }
 
-inline bool rchance(double chance) {
-    std::bernoulli_distribution dist(chance);
-    return dist(gen);
-}
+        RandomEnumMachine() {
+		std::uniform_real_distribution<EU> dis(static_cast<EU>(E::NONE), static_cast<EU>(E::MAX) );
+	  for (size_t i = 0; i < PREGENERATED_RANDOM_SIZE; i++) randoms[i] = dis(gen);
+	}
+};
+
+struct RandomChanceMachine {
+	
+};
 
 inline double rnormal() {
     double u, v, s;
@@ -31,40 +58,10 @@ inline double rnormal() {
 }
 
 
-template<typename E>
-E random_enum()
-{
-    using U = std::underlying_type_t<E>;
-    std::uniform_int_distribution<U> dist(
-        static_cast<U>(E::NONE) + 1,
-        static_cast<U>(E::MAX) - 1
-    );
-    return static_cast<E>(dist(gen));
-}
-
-int randomBoolCurrent = 0;
-int randomPropFracCurrent = 0;
-
-constexpr int RANDOM_BATCH_SIZE = 5000;
-std::vector<bool> randomBools(RANDOM_BATCH_SIZE);
-std::array<float, RANDOM_BATCH_SIZE> randomPropFracs;
-
-void generateRandomBools() {
-  static std::uniform_int_distribution<int> dist(0, 1);
-  for (auto i = 0; i < RANDOM_BATCH_SIZE; i++) {
-    int r = dist(gen);
-    if (r) randomBools[i] = true;
-    else randomBools[i] = false;
-  }
-}
-
-float nextRandomPropFrac() {
-  randomPropFracCurrent++;
-  if (randomPropFracCurrent > RANDOM_BATCH_SIZE) randomBoolCurrent = 
-}
-
-void nextRandomInt();
-
-bool nextRandomBool() {
-  
+template <typename E> E random_enum() {
+	
+//     = static_cast<U>(E::NONE) + 1;
+    // TODO: error if enums does not have min/max
+    
+    return static_cast<E>();
 }

@@ -8,8 +8,8 @@
 //TODO: make separate LinkedArray which is really ArrayChunk, 
 template <typename T>
 struct Array {
-    size_t count;
-    size_t capacity;
+    uint16_t count;
+    uint16_t capacity;
     Array* next = nullptr;
 
     // Returns pointer to the data buffer after the chunk metadata
@@ -30,17 +30,17 @@ struct Array {
         return true;
     }
    
-    size_t size() { //in bytes 
+    uint16_t size() { //in bytes 
       return sizeof(Array<T>) + sizeof(T) * capacity;
     }    
   
-    T& operator[](size_t index) {
+    T& operator[](uint16_t index) {
         if (index >= count)
             throw std::out_of_range("Tried to access index outside of current Array size");
         return data()[index];
     }
 
-    const T& operator[](size_t index) const {
+    const T& operator[](uint16_t index) const {
         if (index >= count)
             throw std::out_of_range("Tried to access index outside of current Array size");
         return data()[index];
@@ -48,8 +48,8 @@ struct Array {
 };
 
 template <typename T>
-Array<T>* arena_make_array(Arena* arena, size_t capacity) {
-    size_t bytes = sizeof(Array<T>) + sizeof(T) * capacity;
+Array<T>* arena_make_array(Arena* arena, uint16_t capacity) {
+    uint16_t bytes = sizeof(Array<T>) + sizeof(T) * capacity;
 
     void* mem = arena_alloc_aligned(
         arena,
@@ -67,11 +67,11 @@ Array<T>* arena_make_array(Arena* arena, size_t capacity) {
 
 // pq capacity remains the same size, since as current moves away from start, if the end of the memory of this structure is full, then new values are pushed onto the front of the memory of this structure, where their actual position is the relative wraparound positon from cur
 template <typename T> struct Queue {
-  size_t start;   //where the memory starts
-  size_t current; // where the current queue starts/top
-  size_t nx;
-  size_t end; //last filled value of the current queue
-  size_t capacity;
+  uint16_t start;   //where the memory starts
+  uint16_t current; // where the current queue starts/top
+  uint16_t nx;
+  uint16_t end; //last filled value of the current queue
+  uint16_t capacity;
 
       // Returns pointer to the data buffer after the chunk metadata
     T* data() { return reinterpret_cast<T*>(this + 1); }

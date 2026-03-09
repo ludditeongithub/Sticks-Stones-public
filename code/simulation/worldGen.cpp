@@ -1,5 +1,6 @@
 #include "worldGen.hpp"
 
+
 //TO-DO: refactor all code to use adjacent tiles based on nearest Voronoi seeds, not square cells
 
 // 1. Generate Ocean on altitude, land, and ocean maps
@@ -29,6 +30,7 @@ void WorldSpawner::markCoasts() {
             }
         }
     }
+
 }
 
 
@@ -694,10 +696,10 @@ struct SeedCloud {
     std::vector<std::std::pair<float, float>> seeds; // Using std::std::pair<float, float>
 
     // Must return the dimensionality of points (2D case: x, y)
-    inline size_t kdtree_get_point_count() const { return seeds.size(); }
+    inline uint16_t kdtree_get_point_count() const { return seeds.size(); }
 
     // Return the dimension (0 = x, 1 = y) of a given index
-    inline float kdtree_get_pt(const size_t idx, const size_t dim) const {
+    inline float kdtree_get_pt(const uint16_t idx, const uint16_t dim) const {
         return (dim == 0) ? seeds[idx].first : seeds[idx].second;
     }
 
@@ -826,7 +828,7 @@ void WorldSpawner::recursiveFill() {
         //             // goal: put sources close to mountian tiles
         //             // 1. get closest adj mountain tile
 
-        //             const size_t numResults = 5;
+        //             const uint16_t numResults = 5;
         //             std::vector<float> queryPoint = {seed.first, seed.second};
         //             uint32_t retIndex[numResults]; // nearest neighbor index
         //             float outDistSqr[numResults]; //distance between nn and current
@@ -918,7 +920,7 @@ void WorldSpawner::recursiveFill() {
         //         //get seed of cell
         //         std::std::pair<float,float> source = riverSources[i];
         //          std::vector<float> queryPoint = {source.first, source.second};
-        //         const size_t numResults = 1;
+        //         const uint16_t numResults = 1;
         //         uint32_t retIndex[numResults]; // nearest neighbor index
         //         float outDistSqr[numResults]; //distance between nn and current
         //         riverEndsTree.knnSearch(&queryPoint[0], numResults, &retIndex[0], &outDistSqr[0]);
@@ -1138,7 +1140,7 @@ void generateTileTypes(std::array<float, TILE_AMOUNT> chances, const std::array<
                 tileCoords[index] = {y,x};
                 std::vector<float> queryPoint = {(float)y, (float)x};
                 // Perform the nearest neighbor search, numResults is # of neighbors
-                const size_t numResults = 5;
+                const uint16_t numResults = 5;
                 uint32_t retIndex[numResults]; // nearest neighbor index
                 float outDistSqr[numResults]; //distance between nn and current
 

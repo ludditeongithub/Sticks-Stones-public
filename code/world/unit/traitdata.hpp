@@ -6,9 +6,9 @@ struct UnitData {
     std::vector<std::vector<int>> amounts;
     std::vector<int> workLeft;
 
-    size_t size() const { return workLeft.size(); }
+    uint16_t size() const { return workLeft.size(); }
 
-    void resize(size_t n) {
+    void resize(uint16_t n) {
         inventories.resize(n);
         amounts.resize(n);
         workLeft.resize(n, 0);
@@ -17,13 +17,13 @@ struct UnitData {
 
 
 void produceItems(std::vector<Item>& queue, std::vector<int>& amount, UnitData& units) {
-    for (size_t q = 0; q < queue.size(); ++q) {
+    for (uint16_t q = 0; q < queue.size(); ++q) {
         Item item = queue[q];
         if (item == Item::EMPTY || amount[q] == 0) continue;
 
         Recipe recipe = products[static_cast<int>(item)];
 
-        for (size_t i = 0; i < units.size(); ++i) {
+        for (uint16_t i = 0; i < units.size(); ++i) {
             if (units.workLeft[i] != 0) continue;
 
             auto& inventory = units.inventories[i];
@@ -32,7 +32,7 @@ void produceItems(std::vector<Item>& queue, std::vector<int>& amount, UnitData& 
             std::vector<std::pair<int, int>> productIngredients(recipe.ingredients.size(), {-1, 0});
             bool missingIngredients = false;
 
-            for (size_t j = 0; j < recipe.ingredients.size(); ++j) {
+            for (uint16_t j = 0; j < recipe.ingredients.size(); ++j) {
                 Item ingredient = recipe.ingredients[j];
                 if (ingredient == Item::EMPTY) continue;
 
@@ -42,7 +42,7 @@ void produceItems(std::vector<Item>& queue, std::vector<int>& amount, UnitData& 
                 bool found = false;
 
                 if (slotType != 0) { // not optional
-                    for (size_t k = 0; k < inventory.size(); ++k) {
+                    for (uint16_t k = 0; k < inventory.size(); ++k) {
                         if (inventory[k] == ingredient && invAmounts[k] >= requiredAmount) {
                             productIngredients[j] = {static_cast<int>(k), requiredAmount};
                             found = true;

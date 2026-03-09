@@ -12,12 +12,12 @@
 struct AnimalDispatcher {
 
   struct BucketCounts {
-    size_t newPathCount;
-    size_t hungryCount;
-    size_t thirstyCount;
-    size_t breedingCount;
-    size_t rejoinPackCount;
-    size_t migrationCount;    
+    uint16_t newPathCount;
+    uint16_t hungryCount;
+    uint16_t thirstyCount;
+    uint16_t breedingCount;
+    uint16_t rejoinPackCount;
+    uint16_t migrationCount;    
   };
 
   BucketCounts getBucketCounts(Array<ActionDecisionStatus> &actions) {
@@ -59,13 +59,13 @@ DispatchCollection getDispatchCollection(Array<Animal> &animals, Array<Coord> &p
     dc.rejoinPackDispatch = DispatchData(bc.rejoinPackCount);
     dc.migrationDispatch = DispatchData(bc.migrationCount);
     
-    size_t newPathCount;
-    size_t hungryCount;
-    size_t thirstyCount;
-    size_t breedingCount;
-    size_t rejoinPackCount;
-    size_t migrationCount; 
-    for (size_t i = 0; i < animals.size; i++) {      
+    uint16_t newPathCount;
+    uint16_t hungryCount;
+    uint16_t thirstyCount;
+    uint16_t breedingCount;
+    uint16_t rejoinPackCount;
+    uint16_t migrationCount; 
+    for (uint16_t i = 0; i < animals.size; i++) {      
       switch (actions[i]) {
       case ActionDecisionStatus::NewPath:
 	dc.newPathDispatch.setData(newPathCount,i);
@@ -100,7 +100,7 @@ DispatchCollection getDispatchCollection(Array<Animal> &animals, Array<Coord> &p
     DispatchCollection dc =
         getDispatchCollection(animals, positions, destinations, actions);    
     
-    setNewAnimalPaths(dc.newPathDispatch);        
+    setNewPaths(dc.newPathDispatch);        
     setHungryDestinations(dc.hungryDispatch);
     setThirstyDestinations(dc.thirstyDispatch);    
     setMigrationDestinations(dc.migrationDispatch);

@@ -1,26 +1,34 @@
 #ifndef INVENTORIESANDWORKQUEUES_H_
 #define INVENTORIESANDWORKQUEUES_H_
-#include "basic.hpp"
 
+#include <world/unit/rolesAndActions.hpp>
+#include <world/tile/enum.hpp>
+#include <world/scavengeables/enum.hpp>
+#include <world/item/enum.hpp>
+#include <world/item/item_recipes.hpp>
+
+void fun() {
+
+}
 
 //TILE DATA
 //variantIndex superfluous for non-variant items
 void collectResourceAction(int pawn, Item item, int sourceIndex, int variantIndex) {
-    Resource resource = resources[item];
-    Actions action = resource.action[sourceVariantIndex];
+    Item resource = resources[item];
+    Action action = resource.action[sourceVariantIndex];
     SourceVariant source = resource.source[sourceIndex];
     //see if Object should be removed from tile
     bool removeObject = true;
-    if (action == Actions::Collect) {
+    if (action == Action::Collect) {
         if (source == Tile::ShallowWater || source == Tile::FlowingWater || source == Tile::DeepWater || source == Tile::ShallowSaltWater || source == Tile::Sand || source == Scavengeable::Beehive || source == Scavengeable::ArtificialBeehive) {
             removeObject = false;
         }
     }
     if (removeObject) {
-    if (action == Actions::Milk) removeObject = false;
-    else if (action == Actions::GoatMilk) removeObject = false;
-    else if (action == Actions::Fish) removeObject = false;
-    else if (action == Actions::Shear) removeObject = false;
+    if (action == Action::Milk) removeObject = false;
+    else if (action == Action::GoatMilk) removeObject = false;
+    else if (action == Action::Fish) removeObject = false;
+    else if (action == Action::Shear) removeObject = false;
     else for (int i = 0; i < regrowthCrops.size(); i++) {
         if (item == regrowthCrops[i]) {
             removeObject = false;
@@ -82,8 +90,9 @@ void collectResource(Item item) {
 //NOTE: this seems a little shifty, tools part
 bool checkActionRequisites(Resource resource, int pawn) {
     for (int i = 0; i < resource.action.size(); i++) {
-        Actions action = recipe.action;
-        if (action == Actions::NONE) continue;
+      Actions action = recipe.action;
+      
+        if (action == Action::NONE) continue;
          bool foundRole = false;
          for (int j = 0; j < actionToRoles[static_cast<int>(action)].size(); j++) {
              for (int k = 0; k < roles[pawn].size; k++) {
@@ -113,7 +122,7 @@ bool checkActionRequisites(Resource resource, int pawn) {
 }
 
 bool checkActionRequisites(Recipe recipe, int pawn) {
-    if !(recipe.action == Actions::NONE) {
+    if !(recipe.action == Action::NONE) {
         //confirm pawn can perform action necessary to produce product
         Actions action = recipe.action;
          bool foundRole = false;
@@ -146,7 +155,7 @@ bool checkActionRequisites(Recipe recipe, int pawn) {
 bool checkActionRequisites(Resource resource, int pawn) {
     bool foundRole = false;
     for (int i = 0; i = resource.actions.size(); i++) {
-        if !(resource.action == Actions::NONE) {
+        if !(resource.action == Action::NONE) {
         //confirm pawn can perform action
         Actions action = resource.actions[i];
          for (int j = 0; j < actionToRoles[static_cast<int>(action)].size(); j++) {
@@ -182,6 +191,7 @@ bool checkActionRequisites(Resource resource, int pawn) {
     return false;
 }
 
+
 //TODO: check if item or fruit object is removed, if amt 0, remove from objectLocation
 
 //RESOURCE PAWN MANAGEMENT
@@ -209,22 +219,29 @@ void attemptProduction(int pawn, ProductVariant product) {
     movingStatus[pawn] = MovingStatus::Production;
     bool attemptAlternateRecipe = false;
     for (int i = 0; i < 2; i++) {
-    if (itemType == ItemType::Item) {
-        attemptAltenateRecipe ? return : Recipe recipe = products[static_cast<int>(product)] ;
-    } else if (itemType == ItemType::Vehicle) {
-        attemptAltenateRecipe ? return : VehicleRecipe recipe = vehicles[static_cast<int>(product)] ;
-    } else if (itemType == ItemType::Buildable) {
-        attemptAlternateRecipe ? BuildableRecipe recipe = buildablesAlternateInterpreter(product) : BuildableRecipe recipe = buildables[static_cast<int>(product)];
-    } else if (itemType == ItemType::Tool) {
+      switch (itemType) {
+      case ItemType::Item:
+	attemptAltenateRecipe ? return : Recipe recipe = products[static_cast<int>(product)] ;
+	break;
+      case ItemType::Buildable:
+	attemptAlternateRecipe ? BuildableRecipe recipe = buildablesAlternateInterpreter(product) : BuildableRecipe recipe = buildables[static_cast<int>(product)];
+	break;
+      case ItemType::Tool:
         attemptAlternateRecipe ? return : ToolRecipe recipe = tools[static_cast<int>(product)];
-    } else if (itemType == ItemType::Container) {
-        attemptAlternateRecipe ? return : ContainerRecipe recipe = containers[static_cast<int>(product)];
-    }
+	break;
+      case ItemType::Vehicle:
+	attemptAltenateRecipe ? return : VehicleRecipe recipe = vehicles[static_cast<int>(product)] ;
+        break;      
+      case ItemType::Container:
+	attemptAlternateRecipe ? return : ContainerRecipe recipe = containers[static_cast<int>(product)];
+	break;
+      default:
+	attemptAltenateRecipe ? return : Recipe recipe = products[static_cast<int>(product)];
+      }
 
-    if (checkActionRequisites(recipe, pawn)) {
-        findNecessaryTools(recipe.action, pawn);
-    }
-        vector<std::pair<int, int>> ingredientsFound;
+    if (checkActionRequisites(recipe, pawn)) findNecessaryTools(recipe.action, pawn);        
+    
+    vector<std::pair<int, int>> ingredientsFound;
     vector<std::pair<int, int>> variantIngredientsFound;
 
     //FOR LIQUIDS
@@ -232,8 +249,7 @@ void attemptProduction(int pawn, ProductVariant product) {
         //TODO: find nearest unprocessing liquid vessel, or get from inventory if none
         bool found = false;
         while (!found) {
-            if (filledLiquidContainers.find(findNearestLiquidContainer(coords[pawn].first, coords[pawn]second)) != filledLiquidContainers.end())
-
+	  if (filledLiquidContainers.find(findNearestLiquidContainer(coords[pawn].first, coords[pawn]second)) != filledLiquidContainers.end())
         }
         int maxAmount = 99999;
         for (int i = 0; i < recipe.ingredients.size(); i++) {

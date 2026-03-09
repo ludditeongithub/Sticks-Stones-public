@@ -1,0 +1,12 @@
+0. for size, use the human (and tree) as comparison (but if it is close enough, let it be.). (most seem fine, rabbit too big maybe elephant can be bigger.)
+0.1. get me to review all the size changes you have made before proceeding to fix the files where you have made size changes.(only make 'down' and 'left').
+
+1. Remove the first column. 
+2. Make sure right vs left, up vs down is consistent: 1: down, 2: left, 3: right, 4: up
+3. make sure that for the adult sizing is consitent across all columns.
+4. make sure that the sprites are consitent in the amount of space they are taking up, and the body is centered across the tile it occupies, and legs are not going over the tiles it should occupy.
+5. only one dead sprite for each Male, female, child, all facing left. 
+6. delete lone baby and dead files.
+
+
+

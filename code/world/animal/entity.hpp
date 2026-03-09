@@ -15,26 +15,34 @@
 struct AnimalDatabase {
   uint16_t size = 0;
   bool active; //active animalDatabases are ones in player territory; these are processed much more frequently.
-  std::stack<size_t> freeSlots;
+  std::stack<uint16_t> freeSlots;
   std::vector<bool> alive;
 
-  Array<Animal> animals;
+  // HOT: processing identical to humans
   Array<Coord> coords;
+  Array<Direction> directions;
   Array<Health> healths;
   Array<Hunger> hungers;
   Array<Time> ages;
+  Array<Frame> frames;
+
+  // WARM:processing identical to humans
   Array<AnimalStatus> animalStatuses;
-  std::vector<bool> sexs;
+  std::vector<Sex> sexs;
   Array<Action> actions;
-  Array<size_t> targets;
+  Array<uint16_t> targets;
   Array<TargetType> targetTypes; // consider packing with animal statuses as
                                  // this is related to movement.
-  void reserve(size_t sz) {
+
+  // processing unique to animals
+  Array<Animal> animals;	
+	
+  void reserve(uint16_t sz) {
     //TODO
   }
 
-  AnimalDatabase(size_t sz) {
-    for (size_t i = 0; i < sz; i++) freeSlots.push(i);   
+  AnimalDatabase(uint16_t sz) {
+    for (uint16_t i = 0; i < sz; i++) freeSlots.push(i);   
     alive = std::vector<bool>(sz);    
     animals = Array<Animal>(sz);
     coords = Array<Coord>(sz);
@@ -44,8 +52,9 @@ struct AnimalDatabase {
     animalStatuses = Array<AnimalStatus>(sz);
     sexs = std::vector<bool>(sz);
     actions = Array<Action>(sz);
-    targets = Array<uint32_t>(sz);
+    targets = Array<uint16_t>(sz);
     targetTypes = Array<TargetType>(sz);
+    frames = Array<Frame>(sz);
   }
 };
 
@@ -81,10 +90,11 @@ inline void birthAnimal(Animal animal, Coord coord, AnimalDatabase& ad, bool sex
 inline void killAnimal(uint16_t index, AnimalDatabase& ad) {
   ad.alive[index] = false;
   ad.freeSlots.push(index);
+  makeCorpse(ad.animals[index], ad.coords[index]);
 }
 
 // move animal from passively processed list into player bounds.
-inline void transferAnimal(size_t i, AnimalDatabase& oldDB, AnimalDatabase& newDB) {
+inline void transferAnimal(uint16_t i, AnimalDatabase& oldDB, AnimalDatabase& newDB) {
   if (newDB.freeSlots.empty()) {
   newDB.animals.emplace_back(oldDB.animals[i]);
   newDB.coords.emplace_back(oldDB.coords[i]);
@@ -100,7 +110,7 @@ inline void transferAnimal(size_t i, AnimalDatabase& oldDB, AnimalDatabase& newD
   oldDB.freeSlots.push(i);
   newDB.alive[newDB.size++] = true; 
   } else {
-    size_t n = newDB.freeSlots.top();
+    uint16_t n = newDB.freeSlots.top();
     newDB.freeSlots.pop();
   newDB.animals[n] = oldDB.animals[i];
   newDB.coords[n] = oldDB.coords[i];

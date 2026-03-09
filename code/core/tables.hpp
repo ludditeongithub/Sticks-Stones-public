@@ -4,23 +4,23 @@
 #include <bitset>
 
 template <typename Enum, typename T,
-          std::size_t N = static_cast<std::size_t>(Enum::MAX)>
+          uint16_t N = static_cast<uint16_t>(Enum::MAX)>
 struct LookupTable {
     std::array<T, N> data{};
 
     constexpr T& operator[](Enum e) {
-        return data[static_cast<std::size_t>(e)];
+        return data[static_cast<uint16_t>(e)];
     }
 
     constexpr const T& operator[](Enum e) const {
-        return data[static_cast<std::size_t>(e)];
+        return data[static_cast<uint16_t>(e)];
     }
 };
 
-template<typename T, std::size_t Cols>
+template<typename T, uint16_t Cols>
 struct Row : std::array<T, Cols> {
     constexpr Row& operator=(std::initializer_list<T> values) {
-        size_t i = 0;
+        uint16_t i = 0;
         for (auto v : values) {
             if (i >= Cols) break;
             (*this)[i++] = v;
@@ -29,25 +29,25 @@ struct Row : std::array<T, Cols> {
     }
 };
 
-template<typename Enum, typename T, std::size_t Rows = static_cast<size_t>(Enum::MAX), std::size_t Cols = 5>
+template<typename Enum, typename T, uint16_t Rows = static_cast<uint16_t>(Enum::MAX), uint16_t Cols = 5>
 struct LookupTable2D {
     using RowType = Row<T,Cols>;
     std::array<RowType, Rows> data{};
 
-    constexpr RowType& operator[](Enum e) { return data[static_cast<size_t>(e)]; }
-    constexpr const RowType& operator[](Enum e) const { return data[static_cast<size_t>(e)]; }
+    constexpr RowType& operator[](Enum e) { return data[static_cast<uint16_t>(e)]; }
+    constexpr const RowType& operator[](Enum e) const { return data[static_cast<uint16_t>(e)]; }
 };
 
-template <typename Enum, std::size_t N = static_cast<std::size_t>(Enum::MAX)>
+template <typename Enum, uint16_t N = static_cast<uint16_t>(Enum::MAX)>
 struct BitsetTable {
     std::bitset<N> b{};
 
     constexpr auto operator[](Enum e) {
-        return b[static_cast<std::size_t>(e)];
+        return b[static_cast<uint16_t>(e)];
     }
 
     constexpr auto operator[](Enum e) const {
-        return b[static_cast<std::size_t>(e)];
+        return b[static_cast<uint16_t>(e)];
     }  
 
     constexpr BitsetTable& operator|=(const BitsetTable& o) {
@@ -62,9 +62,9 @@ struct BitsetTable {
 
       struct iterator {
         const std::bitset<N>* bits;
-        std::size_t index;
+        uint16_t index;
 
-        constexpr iterator(const std::bitset<N>* b, std::size_t i)
+        constexpr iterator(const std::bitset<N>* b, uint16_t i)
             : bits(b), index(i)
         {
             while (index < N && !bits->test(index)) ++index;

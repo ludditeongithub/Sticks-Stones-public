@@ -452,23 +452,23 @@ enum class ToolsState {
 
  void ensureNecessaryTools(Action action, miniAction& miniAction, Array<Item>& items, dest) {  
     vector<int> foundToolReplaceables;
-    for (int i = 0; i < actionToTools[static_cast<size_t>(action)].size(); i++) {
+    for (int i = 0; i < actionToTools[static_cast<uint16_t>(action)].size(); i++) {
         //skip if replaceable equivalent has already been found, 
-        for (int j = 0; j < foundToolReplaceables.size(); j++)   if (foundToolReplaceables[j] == actionToTools[static_cast<size_t>(action)][i]) continue;
+        for (int j = 0; j < foundToolReplaceables.size(); j++)   if (foundToolReplaceables[j] == actionToTools[static_cast<uint16_t>(action)][i]) continue;
 
 	//skip if pawn already has tool
         for (int j = 0; j < items.size(); j++)
 	  //TODO: perhaps change this from lookup table to tag
 	  if (!tool[items[j]]) continue;
-            if (items[j] == actionToTools[static_cast<size_t>(action)][i]) { foundToolsReplaceables.push_back(actionToToolsReplaceables[static_cast<size_t>(action)][i]);
+            if (items[j] == actionToTools[static_cast<uint16_t>(action)][i]) { foundToolsReplaceables.push_back(actionToToolsReplaceables[static_cast<uint16_t>(action)][i]);
                 continue;
             }
 
 	//skip if tool is optional
-        if (actionToTools[static_cast<size_t>(action)][i] < 0) continue;
+        if (actionToTools[static_cast<uint16_t>(action)][i] < 0) continue;
 
 	//set destination, set mini action to pickup tool 
-        Coord newDest = findNearestObject(actionToTools[static_cast<size_t>(action)][i], coords[pawn].first, coords[pawn].second);
+        Coord newDest = findNearestObject(actionToTools[static_cast<uint16_t>(action)][i], coords[pawn].first, coords[pawn].second);
         if (manDist(coords[pawn], newDest) > midGatherRange) {
             dest = newDest;
             miniActions[pawn] = MiniAction::PickupTool;

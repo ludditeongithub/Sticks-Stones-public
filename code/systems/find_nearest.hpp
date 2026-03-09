@@ -18,12 +18,19 @@
  struct GridInfo {
     uint16_t index;
     uint16_t distance;
- };
-
+ }; 
+ 
  // certain biomes may need larger search grids
 // SearchGrid itself should be an indexed data structure 
  struct SearchGrid {
    constexpr SearchGrid() {};
+
+   enum class Types {
+     Plant,
+     Animal,
+     Unit,
+     Item
+   };
    
    constexpr NATURAL_CHUNK_SEARCH_SIZE = (AVERAGE_CHUNK_PLANTS_SIZE +
                                          AVERAGE_CHUNK_ANIMALS_SIZE +
@@ -41,18 +48,18 @@
 
    Array<ChunkBucket *> chunkBuckets;
    Array<ChunkBucket *> activeChunkBuckets;
-   std::stack<size_t> freeIndices;
-   Array<size_t> activeChunks;
-   Array<std::vector<bool> *> occupiedTiles;   
+   std::unordered_map<uint16_t, uint16_t> chunkToActiveChunks;
+   std::stack<uint16_t> freeIndices;
+   std::vector<bool> activeChunks;
+   uint32_t activeCount;
+  Array<std::vector<bool> *> occupiedTiles;   
 
    // to begin with, all chunks are given the default amount of memory. active chunks and super-active chunks are upgraded to higher amounts of memory
-   SearchGrid(size_t chunkAmount);
+   SearchGrid(uint16_t chunkAmount);
 
-   size_t estimatedActiveChunkAmount(size_t chunkAmount) {
-     return chunkAmount * 0.01;
-   }
+   uint16_t getActiveChunkIndex(uint16_t index);
 
-   void addActiveChunk(size_t index);   
+   void addActiveChunk(uint16_t index);   
 
    inline GridInfo getNthNearestChunk(Coord c, uint16_t n);
 
@@ -61,10 +68,15 @@
   inline void insertEntity(Coord tileCoord, Entity type,
                            EntitySearchData data);
 
-   inline bool checkCollision(Coord tileCoord);
+  inline bool checkCollision(Coord tileCoord);
 
+  inline EntitySearchData getNearest(Entity e, Coord c);
+
+  inline Array<EntitySearchData> getAllOFTypeInRange(Entity e, Coord o, Coord d);
+   
+  inline EntityRenderData getAllInRange(Coord o, Coord d);
   // inline void setOldEntity(Coord tileCoord, uint16_t index) {
-  //   size_t gc = getChunkIndexFromTile(tileCoord);
+  //   uint16_t gc = getChunkIndexFromTile(tileCoord);
     
   //   fchunkBuckets[gc].size(); i++) if (indices[i] == index) old[i] = 1;
   // }  

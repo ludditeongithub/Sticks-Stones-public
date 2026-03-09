@@ -39,7 +39,7 @@ enum class MatingStatus {
   Infertile
 };
 
-using AnimalStatus = PackedEnum3<Direction, 2, MovingStatus, 4, MatingStatus, 2>;
+using AnimalStatus = PackedEnum3<Direction, 2, ActionStatus, 4, MatingStatus, 2>;
 
 // COLD
 
@@ -83,11 +83,6 @@ enum class Animal {
   // hippo
   // giraffe
   MAX,
-};
-
-enum class Sex {
-  Male,
-  Female
 };
 
 enum class Diet { Herbivore, Omnivore, Carnivore, Scavenger };

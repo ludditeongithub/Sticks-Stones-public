@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/packed_enum.hpp"
+#include <core/packed_enum.hpp>
 #include <stdint.h>
 #include <world/chunk/enum.hpp>
 
@@ -57,7 +57,8 @@ enum class Grass : uint8_t {
   NONE,
   Grass,
   SavannahGrass,
-  DryGrass,    
+  DryGrass,
+  MAX
   };
 
 using TileData = PackedEnum2<Tile, 5, Grass, 3>;   

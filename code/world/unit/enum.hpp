@@ -1,6 +1,12 @@
 #include "core/packed_enum.hpp"
 #include <cstdint>
 
+enum class Unit : uint8_t {
+  Child,
+  Adult,
+  Elder  
+};
+
   enum class PlaceType {
     Home,
     Work,
@@ -407,12 +413,11 @@ enum class Action : uint8_t {
   MAX
 };
 
-
-
 enum class ActState  : uint8_t {
   Walk,
   Run,
   Act,
   NewPath,
 };
+
 

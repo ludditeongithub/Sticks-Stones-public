@@ -95,28 +95,5 @@ enum class PlantCategory {
   MAX
 };
 
-enum class Fruit {
-  NONE,
-  // also doubles for juice
-  Orange,
-  Apple,
-  Lemon,
-  Pear,
-  Peach,
-  Cherry,
-  Apricot,
-  Plum,
-  Lime,
-  // Non-fall fruits
-  Blueberry,
-  Strawberry,
-  Grape,
-  // FRUIT VEGGIES
-  Cucumber,
-  Pepper,
-  Tomato,
-  MAX
-  
-};
 
 

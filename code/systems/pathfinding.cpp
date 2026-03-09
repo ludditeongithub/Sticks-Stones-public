@@ -5,7 +5,7 @@ PathData aStar(Coord start, Coord goal, int width, int height) {
     int startIndex = toIndex(start.x, start.y, width);
     int goalIndex = toIndex(goal.x, goal.y, width);
 
-    size_t estimate = getPathLengthEstimate(start, goal);
+    uint16_t estimate = getPathLengthEstimate(start, goal);
     
     nodeData[startIndex].gCost = 0;
     nodeData[startIndex].fCost = heuristic(start, goal);
@@ -72,9 +72,9 @@ PathData reconstructPath(int startIndex, int goalIndex) {
 
 
 // sets start and end, inputted from all types of jobs
-PathsBuffer setAnimalNewPaths(PathDispatchData& pdd) {
+PathsBuffer setNewPaths(PathDispatchData& pdd) {
   PathsBuffer pb = PathsBuffer(pdd.positions.size);
-  for (size_t i = 0; i < pdd.positions.size; i++) {
+  for (uint16_t i = 0; i < pdd.positions.size; i++) {
     Array<Array<Coord>> data(pdd.positions.size);
      PathData pd;
      pd = aStar(pdd.positions[i], pdd.destinations[i], WIDTH, HEIGHT);

@@ -1,0 +1,8 @@
+#include "memory.hpp"
+
+// dynamic sized pools are divided into chunked databases, which are initialized as being a finite size, and linked together.
+constexpr uint16_t ANIMAL_POOL_CAP = 500;
+constexpr uint16_t UNIT_POOL_CAP = 50; //should be relatively small, as each faction may have their own.
+constexpr uint16_t PLANT_POOL_CAP = 4000; // attempt to allocate all that a world needs.
+
+void 

@@ -9,9 +9,8 @@ using enum Plant;
 
   constexpr float UNOPTIMAL_TEMP_MULT = 0.65;
   constexpr float LOW_WATER_MULT = 0.55;
-  
-  //TODO: manage sunlight and sun values
-  
+
+  // TODO: manage sunlight and sun values
   //TODO: change these all to uint16_ts
   inline constexpr LookupTable<Plant, float> waterDeathMin = [] {
     LookupTable<Plant, float> arr{};

@@ -1,5 +1,4 @@
 * NOW
-** Corpse rotting time updates, corpse updates, less if temp is low, corpse destruction if hunger == 0 or time is too long.
 ** Sprite loading
 ** Menus
 ** Option to configure SDL screensize
@@ -7,6 +6,8 @@
 ** Bulk rng
 ** get average plants, animals, units per chunk
 ** Animation rendering
+** Writing to data to file
+** ERROR HANDLING: separate 'verify data' static assert functions, that only then pass to the actual functions! (at dispatch level
 * NOTES
 ** Programming
 *** Scheduling and Simulation Precision
@@ -14,6 +15,8 @@
 
   All entities in NPACs are processed at a high frequency. There is lower batching, event driven. All entities in non-NPACs are processed at a low frequency. Higher batching, more concurrency of large tasks.
 * AFTER BETA
+** A creature turning takes a second
+** family trees and different appearances, social institutions
 ** Branchless programming if further optimization required
 ** Keep certain arrays sorted 
 ** Custom Temperature Spaces: fires, rooms (in chunk entities grid)

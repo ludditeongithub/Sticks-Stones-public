@@ -14,6 +14,7 @@ bool adjacentCoords(Coord first, Coord second) {
 enum class Direction { North, South, East, West };
 
 using Time = uint32_t;
+using Frame = uint8_t;
 
 // geography
 using Hum = uint16_t;
@@ -23,6 +24,7 @@ using Temp = uint16_t;
 using Health = float;
 using Speed = float;
 using Hunger = uint16_t;
+using Sex = bool;
 
 enum class TargetType : uint8_t {
   NONE,

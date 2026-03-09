@@ -1,5 +1,6 @@
+#include <cstdint>
 // TODO: move all tool head to variant items, then also figure out how ore and metal work
-enum class Item {
+enum class Item : uint8_t {
 NONE,
 //VARIANT ITEMS
 Log,
@@ -18,13 +19,6 @@ TannedHide,
 RawMeat,
 CookedMeat,
 CandiedFruit,
-Gambeson,
-Breastplate,
-Helmet,
-Bracers,
-Guards,
-Gloves,
-VARIANTSMAX,
 //RESOURCES
 Saltwater,
 Rock,
@@ -67,13 +61,11 @@ Truffle,
 Wheat, Oat, Corn, Rice, Tomato, Onion, Potato, Cabbage, Pumpkin, Pepper, Carrot, Poppy, Cannabis, Senna, Cotton, Papyrus, Flax, Hemp, Lettuce, Cocoa, Cucumber, Kale, Beets, Madder, Indigo, Saffron, Ginseng, Garlic, Sage,
 //TODO: add to resources
 Mint,	Thyme, Syrup, Lavender, TreeResin, Rhubarb,
-RESOURCESMAX,
 //RESOURCES/PRODUCTS BEGIN HERE
 SaltWater,
 Water,
 Sand,
 Clay,
-RESOURCESPRODUCTSMAX,
 //PRODUCTS BEGIN HERE
 //paleo:
 PitFire,
@@ -424,31 +416,64 @@ enum class Buildable {
 MAX
 };
 
-enum class Vehicle {
-NONE,
-WheeledCart,
-WheeledWagon,
-WheeledChariot,
-Canoe,
-Sailboat,
-LargeSailboat,
-Longboat,
-LightWarship,
-HeavyWarship,
-Cog,
-Freighter,
-
-BatteringLog,
-BatteringRam,
-Trebuchet,
-Ballista,
-Catapult,
-SiegeLadder,
-SiegeTower,
-MAX
+enum class Wearable : uint8_t {
+  NONE,
+  Gambeson,
+  Breastplate,
+  Helmet,
+  Bracers,
+  Guards,
+  Gloves,
+  MAX
 };
 
-enum class Container {
+enum class Vehicle : uint8_t {
+  NONE,
+  WheeledCart,
+  WheeledWagon,
+  WheeledChariot,
+  Canoe,
+  Sailboat,
+  LargeSailboat,
+  Longboat,
+  LightWarship,
+  HeavyWarship,
+  Cog,
+  Freighter,
+  BatteringLog,
+  BatteringRam,
+  Trebuchet,
+  Ballista,
+  Catapult,
+  SiegeLadder,
+  SiegeTower,
+  MAX
+};
+
+// TODO: add recipe instructions for this
+  // NONE,
+  // // also doubles for juice
+  // Orange,
+  // Apple,
+  // Lemon,
+  // Pear,
+  // Peach,
+  // Cherry,
+  // Apricot,
+  // Plum,
+  // Lime,
+  // // Non-fall fruits
+  // Blueberry,
+  // Strawberry,
+  // Grape,
+  // // FRUIT VEGGIES
+  // Cucumber,
+  // Pepper,
+  // Tomato,
+  // MAX
+
+
+enum class Container : uint8_t {
 NONE,
 Bucket,
 Pot,

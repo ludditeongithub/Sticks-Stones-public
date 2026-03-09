@@ -1,6 +1,15 @@
 #include "find_nearest.hpp"
+#include "core/entity.hpp"
+#include <cstdint>
+#include <variant>
+#include <core/limits.hpp>
+#include <core/math.hpp>
+#include <world/unit/enum.hpp>
+#include <world/chunk/data.hpp>
+#include "world/animal/enum.hpp"
+#include "world/tile/data.hpp"
 
-SearchGrid::SearchGrid(size_t chunkAmount) {
+SearchGrid::SearchGrid(uint16_t chunkAmount) {
      chunkBucketArena = new Arena(
          (chunkAmount * NATURAL_CHUNK_SEARCH_SIZE));
 
@@ -8,12 +17,12 @@ SearchGrid::SearchGrid(size_t chunkAmount) {
          (chunkAmount * NATURAL_CHUNK_SEARCH_SIZE) +
          (estimatedActiveChunkAmount(chunkAmount) * ACTIVE_CHUNK_SEARCH_SIZE));
      
-     for (size_t i = 0; i < chunkAmount; i++) {
+     for (uint16_t i = 0; i < chunkAmount; i++) {
        chunkBuckets[i] =
-	 arena_make_array<ChunkBucket>(chunkBucketArena, NATURAL_CHUNK_SEARCH_SIZE);
+	 arena_make_array<ChunkBucket*>(chunkBucketArena, NATURAL_CHUNK_SEARCH_SIZE);
        activeChunks[i] = false;
        occupiedTiles[i]->reserve(CHUNK_SIZE);
-       for (size_t j = 0; j < CHUNK_SIZE; j++) occupiedTiles[i][j].emplace_back(false);
+       for (uint16_t j = 0; j < CHUNK_SIZE; j++) occupiedTiles[i][j].emplace_back(false);
      }
 }
 
@@ -63,24 +72,25 @@ inline GridInfo SearchGrid::getNthNearestChunk(Coord c, uint16_t n) {
                    : center;
     result.distance = neighbors[idx].dist;
 
-    return result;  
+    return result;
 }
 
- void SearchGrid::addActiveChunk(size_t index) {
-     activeChunks[index] = true;
-     size_t activeIndex;
-     if (freeIndices.empty()) activeIndex = activeChunks.count;
+ void SearchGrid::addActiveChunk(uint16_t index) {
+     activeChunks[index] = true;     
+     uint16_t activeIndex;
+     if (freeIndices.empty()) activeIndex = activeCount;
      else {
        activeIndex = freeIndices.top();
        freeIndices.pop();
-     }       
+     }
      activeChunkBuckets[activeIndex] = chunkBuckets[index];
+     chunkToActiveChunks[index] = activeIndex;
  }
 
  inline void SearchGrid::insertEntity(Coord tileCoord, Entity type,
                            EntitySearchData data) {
-    size_t gc = getChunkIndexFromTile(tileCoord);
-    size_t i = getTileIndexChunkRelative(tileCoord);    
+    uint16_t gc = getChunkIndexFromTile(tileCoord);
+    uint16_t i = getTileIndexChunkRelative(tileCoord);    
     if (!(*occupiedTiles[gc])[i]) {    
       if (activeChunks[gc]) {
 	activeChunkBuckets[gc].at(type).push_back(data);
@@ -91,11 +101,60 @@ inline GridInfo SearchGrid::getNthNearestChunk(Coord c, uint16_t n) {
   }
 
  inline bool SearchGrid::checkCollision(Coord tileCoord) {
-    size_t gc = getChunkIndexFromTile(tileCoord);
-    size_t i = getTileIndexChunkRelative(tileCoord);    
-    return occupiedTiles[gc][i];	   
-  }
+    uint16_t gc = getChunkIndexFromTile(tileCoord);
+    uint16_t i = getTileIndexChunkRelative(tileCoord);    
+    return occupiedTiles[gc][i];
+ }
+ 
+ inline EntitySearchData SearchGrid::getNearest(Entity e, Coord c) {
+   // search per chunk, starting with nearest
+   uint16_t ci = getChunkIndexFromTile(c);
+   Array<SearchGrid::ChunkBucket*>& cb = activeChunks[ci] ? activeChunkBuckets : chunkBuckets;     
+   uint16_t cbi = activeChunks[ci] ? chunkToActiveChunks[ci] : ci; 
+    std::vector<EntitySearchData> &es = cb[cbi].find(e);
 
-//inline void SearchGrid
+    if (es != cb.end()) {
+	    Coord nc;
+      uint16_t si = SIZE_MAX;
+      uint16_t ld = UINT16_MAX;
+      for (uint16_t i = 0; i < es.size(); i++) {
+        Coord tc = es[i].position;
+	uint32_t td = manhattanDist(c, tc);
+        if (td < ld) {
+          ld = td;
+	  si = i;
+	}
+      }
+      return es[si];
+    } else {      
+      return ENTITY_SEARCH_MAX;
+    }
+ }
 
-
+ EntityRenderBuffer SearchGrid::getAllInRange(Coord origin, Coord dimensions) {
+   EntityRenderBuffer erd;
+   std::vector<uint16_t> getChunksFromArea(origin, dimensions);
+   uint16_t ci = getChunkIndexFromTile(origin);
+   
+   Array<SearchGrid::ChunkBucket *>& cb = activeChunks[ci] ? activeChunkBuckets : chunkBuckets;
+   uint16_t cbi = activeChunks[ci] ? chunkToActiveChunks[ci] : ci;
+   // iterate through unordered map, get all entities
+   for (auto x : cb[cbi]) {
+     switch (x.first) {
+     case std::holds_alternative<Plant>(x.first):
+       erd.plants[erd.plantAmount++] = x;
+       break;
+     case std::holds_alternative<Animal>(x.first):
+       erd.animals[erd.animalAmount++] = x;
+       break;
+     case std::holds_alternative<Item>(x.first):
+       erd.items[erd.itemAmount++] = x;
+       break;
+     case std::holds_alternative<Unit>(x.first):
+       erd.units[erd.unitAmount++] = x;
+       break;
+     }       
+   }  
+   // put into right array
+  
+ }

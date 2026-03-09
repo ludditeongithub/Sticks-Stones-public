@@ -29,16 +29,12 @@ struct Entity {
 	 Array<Array<Coord>> datas;
 
 	 Coord pop(uint16_t i) {
-	   int c = current[i];
-	   current[i]++;
-	   return data[i][c];
+	   int c = currents[i];
+	   currents[i]++;
+	   return datas[i][c];
 	 }
 
-         PathsBuffer(uint16_t size) {
-	   current = Array<uint8_t>(size);
-	   end = Array<uint8_t>(size);
-	   destination = Array<Coord>(size);
-	   data = Array<Array<Coord>>(size);
+         PathsBuffer(uint16_t size) : currents(size), ends(size), destinations(size), datas(size) {
 	 }
        };
 

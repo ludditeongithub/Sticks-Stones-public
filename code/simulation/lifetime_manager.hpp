@@ -7,10 +7,10 @@ class LifetimeManager
 {
 private:
   std::vector<bool> alives;
-  size_t size;
+  uint16_t size;
 public:
   LifetimeManager() {};
-  void markDestroyed(size_t index) {
+  void markDestroyed(uint16_t index) {
     if (index > size) {
       throw std::out_of_range("Tried to mark for destruction larger than size.");
     } else {

@@ -26,9 +26,9 @@ struct No_ext {
 
 /** The integral type used for bit/limb indices and sizes.
  *
- * Here we just use the native size_t.
+ * Here we just use the native uint16_t.
  */
-using Size = size_t;
+using Size = uint16_t;
 
 namespace internal {
     /** Utility for checking if the container is `No_ext`.
@@ -621,10 +621,10 @@ public:
      * To be consistent with the equality comparison, here, two bit sets will
      * hash differently if they are constructed to have different sizes.
      */
-    size_t hash() const noexcept
+    uint16_t hash() const noexcept
     {
-        return Base::exec_limbs(this, [this](const auto& limbs) -> size_t {
-            size_t curr = this->size();
+        return Base::exec_limbs(this, [this](const auto& limbs) -> uint16_t {
+            uint16_t curr = this->size();
             std::hash<Limb> hasher{};
             for (auto i : limbs) {
                 // The algorithm is adapted from the boost hash library.
@@ -856,7 +856,7 @@ namespace std {
  */
 template <fbitset::Size N, typename L, typename E>
 struct hash<fbitset::Fbitset<N, L, E>> {
-    size_t operator()(const fbitset::Fbitset<N, L, E>& o) const
+    uint16_t operator()(const fbitset::Fbitset<N, L, E>& o) const
     {
         return o.hash();
     }

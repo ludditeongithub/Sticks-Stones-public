@@ -1,0 +1,57 @@
+#include "core/data.hpp"
+#include "ui.hpp"
+#include <render/texture.hpp>
+
+SDL_Rect bricks = {};
+Coord bricksLC = {0,305};
+
+void renderBottom() {
+  gSpriteSheetTexture.render(bricksLC.x, bricksLC.y, &bricks);
+
+
+  // UNIT
+}
+
+
+void renderBottomUnit(bool alt) {
+  // render status bars
+  
+  // render nametag
+  
+  
+  // render unit display
+  Coord ublc = {57, 313};
+  SDL_Rect ubs = {};
+  gSpriteSheetTexture.render(ublc.x + ubs.w,
+                                   ublc.y + ubs.h, &ubs);
+  
+  // render equipment buttons / display
+  Coord eblc = {96, 314};
+  SDL_Rect ebs = {};
+  SDL_Rect ebsAlt = {};
+  uint32_t ebhg = 3;
+  uint32_t ebwg = 3;
+  for (uint16_t j = 0; j < 2; j++) {
+    for (uint16_t i = 0; i < 4; i++) {
+      if (alt)
+        gSpriteSheetTexture.render(eblc.x + (j * (ebs.w + ebwg)),
+                                   eblc.y + (i * (ebs.h + ebhg)), &ebsAlt);
+      else gSpriteSheetTexture.render(eblc.x + (j * (ebs.w + ebwg)),
+								   eblc.y + (i * (ebs.h + ebhg)), &ebs);				   
+      }
+  }
+  
+  // render text buttons
+  Coord tblc = {190, 314};
+  SDL_Rect tbs = {};
+  uint32_t tbhg = 2;
+  uint32_t tbwg = 4;
+  for (uint16_t j = 0; j < 2; j++) {
+      for (uint16_t i = 0; i < 4; i++) {
+	gSpriteSheetTexture.render(tblc.x + (j * tbs.w + tbwg), tblc.y + (i * (tbs.h + tbhg)), &tbs);
+      }
+  }
+
+  // render inventory button	
+  
+}

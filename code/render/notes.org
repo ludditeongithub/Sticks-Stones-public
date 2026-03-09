@@ -1,0 +1,1 @@
+Must render everything, then upscale, then add text, otw text will be too small!
