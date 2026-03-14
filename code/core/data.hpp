@@ -7,6 +7,11 @@ struct Coord {
   uint32_t y;
 };
 
+struct SCoord {
+  int x;
+  int y;
+};
+
 bool adjacentCoords(Coord first, Coord second) {
   return (std::abs(static_cast<int>(first.x - second.x)) <= 1 && std::abs(static_cast<int>(first.y - second.y)) <= 1);
 }
@@ -19,6 +24,7 @@ using Frame = uint8_t;
 // geography
 using Hum = uint16_t;
 using Temp = uint16_t;
+using Alt = uint8_t;
 
 // unit stats
 using Health = float;

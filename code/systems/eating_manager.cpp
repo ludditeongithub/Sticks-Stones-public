@@ -130,6 +130,7 @@ inline bool eatGrass(Array<Animal> &animals,
   return false;
 }
 
+// for both Hunters and Herbivores
   //TODO: perhaps have two levels of scanFood, one for within sight, first triggered, one for a search, like this
 void scanFood(entt::registry& reg, entt::entity& e) {
   const Type t = reg.get<Type>(e);

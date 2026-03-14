@@ -1,6 +1,6 @@
 #include <cstdint>
 // TODO: move all tool head to variant items, then also figure out how ore and metal work
-enum class Item : uint8_t {
+enum class Item : uint16_t {
 NONE,
 //VARIANT ITEMS
 Log,
@@ -216,7 +216,7 @@ CornOil,
 CookingOil,
 OliveOil,
 BlueCheese,
-Porridge,
+ Porridge,
 //bronze:
 Blowpipe,
 StoneArtifact,

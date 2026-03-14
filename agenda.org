@@ -1,9 +1,9 @@
 * NOW
+** Finish world generation
 ** Sprite loading
 ** Menus
 ** Option to configure SDL screensize
 ** Migration Logic
-** Bulk rng
 ** get average plants, animals, units per chunk
 ** Animation rendering
 ** Writing to data to file

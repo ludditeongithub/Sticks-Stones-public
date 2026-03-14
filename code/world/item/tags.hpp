@@ -6,20 +6,22 @@
 //TODO:: sieve, which can separte sand and clay in, liquids and soil, etc
 enum class itemTags : uint16_t {
   NONE = 0,
-  Alternate = 1 << 1,
-  Liquid = 1 << 2,
-  VariableAmountProduced = 1 << 3,
-  VariableAmountsRequired = 1 << 4,
-  FromCorpse = 1 << 5,
-  RequiresUniqueVariant = 1 << 6,
-  OptionalIngredient = 1 << 7,
-  Mould = 1 << 8,
-  Container = 1 << 9,
+  Resource = 1 << 0,
+  Variant = 1 << 1,
+  AlternateRecipes = 1 << 2,
+  Liquid = 1 << 3,
+  VariableAmountProduced = 1 << 4,
+  VariableAmountsRequired = 1 << 5,
+  FromCorpse = 1 << 6,
+  RequiresUniqueVariant = 1 << 7,
+  OptionalIngredient = 1 << 8,
+  Mould = 1 << 9,
+  Container = 1 << 10,
   // TODO: add flammable tags
-  NonFlammable = 1 << 10,
-  Wearable = 1 << 11,
-  Perishable = 1 << 12,
-  WaterDamage = 1 << 13,
+  NonFlammable = 1 << 11,
+  Wearable = 1 << 12,
+  Perishable = 1 << 13,
+  WaterDamage = 1 << 14,
 };
 
 inline itemTags operator|(itemTags a, itemTags b) {
@@ -44,6 +46,5 @@ inline itemTags operator&(itemTags a, itemTags b) {
 inline bool hasTag(itemTags value, itemTags tag) {
     return static_cast<std::underlying_type_t<itemTags>>(value & tag) != 0;
 }
-
 
 #endif

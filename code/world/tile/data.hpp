@@ -8,6 +8,7 @@
 #include <math.h>
 #include <cstdint>
 
+
 // Constants
 constexpr uint16_t AVERAGE_MOVE_COST = 5;
 constexpr uint16_t TILE_AMOUNT = CHUNK_AMOUNT * CHUNK_SIZE;

@@ -1,0 +1,27 @@
+void PlantDatabase::releasePlantSource(std::vector<Object>& rTileObject, std::vector<std::pair<int, int>>& rTileCoords, int tileIndex) {
+    if (isPlant(rTileObject[tileIndex])) { 
+        //TODO: place seed in adjacent tile nearby, instead of on the same tile
+Plant plant = std::get<Plant>(rTileObject[tileIndex]);
+std::pair<int,int> empty = getNearestEmptyTile(tileIndex);
+seedCoords.push_back(empty);
+seeds.push_back(plant);
+setGerminationTime();
+//TODO: show on ground if it is tuber, bulb, cone, or other visible seed, and eventually bury over time (other seeds can be searched for, but are invisible in grass)
+    }
+}
+
+void PlantDatabase::destroyPlant(uint16_t i) {
+  plantList.remove(i);
+  nextGrowth.remove(i);
+  coords.remove(i);
+  tileWater.remove(i);
+  lastFullyWatered.remove(i);
+}
+
+
+void PlantDatabase::setGerminationTime(int seedIndex) {
+  Plant plant = seeds[seedIndex];
+   //randomize time based on duration of germination period
+   int time = (int) (germinationPeriod[static_cast<int>(plant)] * rfloat(0.01,1.0));
+   addEvent(time, EventType::PlantGermination, (int)plant, seedIndex);
+}

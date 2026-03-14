@@ -1,0 +1,49 @@
+#include <core/data.hpp>
+#include <SDL2/SDL_rect.h>
+
+enum class ButtonState {
+  Unpressed,
+  Hover,
+  Pressed  
+};
+
+struct Button : UIElement {
+public:
+  const SCoor 
+  const SCoord dimensions;
+  const SCoord unpressed;
+  const SCoord hover;
+  const SCoord pressed;
+  ButtonState state;
+
+  void render(ButtonState bs, SDL_Rect *viewport) {
+	  SDL_Rect r;
+        switch (bs) {
+	case ButtonState::Unpressed:
+		r = {unpressed.x, unpressed.y, dimensions.x, dimensions.y};
+		  break;
+	case ButtonState::Pressed:
+		r = {pressed.x, pressed.y, dimensions.x, dimensions.y};
+		  break;
+	case ButtonState::Hover:
+		r = {hover.x, hover.y, dimensions.x, dimensions.y};
+		  break;
+	  default:
+	  }
+
+	gSpriteSheetTexture.render(, &r , &viewport);
+  }
+  
+  //Handles mouse event
+  void handleEvent( SDL_Event* e );
+};
+
+struct TextButton : Button  {
+  std::string text;  
+};
+
+//TODO: add functionality to right click, and view how many there are, or be linked to that item's page even
+
+struct ItemButton : Button { 
+    Item item;
+};

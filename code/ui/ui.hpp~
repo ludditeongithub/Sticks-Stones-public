@@ -1,174 +1,60 @@
 #ifndef UI_HPP
 #define UI_HPP
 
+#include "render/animation.hpp"
 #include <SDL2/SDL_main.h>
 #include <SDL2/SDL_rect.h>
-#include <SDL2_image/SDL_image.h>
+#include <SDL2/SDL_events.h>
 #include <SDL2_ttf/SDL_ttf.h>
 #include <SDL2/SDL_stdinc.h>
+#include <core/data.hpp>
 #include <string>
-#include <variant>
 #include <optional>
-#include "categories.hpp"
+#include <render/sprite.hpp>
+#include <world/animal/enum.hpp>
+#include <world/plant/enum.hpp>
 
-/* Constants */
-constexpr int rawScreenWidth = 480;
-constexpr int rawScreenHeight = 270;
-
-constexpr SDL_Color textButtonBackground = ;
-
-/* Class Prototypes */
-
-class Texture {
-    public:
-          //Initializes texture variables
-    Texture();
-
-    //Cleans up texture variables
-    ~Texture();
-
-    //Remove copy constructor
-    Texture( const Texture& ) = delete;
-
-    //Remove copy assignment
-    Texture& operator=( const Texture& ) = delete;
-
-    //Remove move constructor
-    Texture( Texture&& ) = delete;
-
-    //Remove move assignment
-    Texture& operator=( Texture&& ) = delete;
-
-    bool loadFromFile( std::string path);
-
-      #if defined(SDL_TTF_MAJOR_VERSION)
-    //Creates texture from text
-    bool loadFromRenderedText( std::string textureText, SDL_Color textColor );
-    #endif
-
-    //Cleans up texture
-    void destroy();
-
-    //Sets color modulation
-    void setColor( Uint8 r, Uint8 g, Uint8 b);
-
-    //Sets opacity
-    void setAlpha( Uint8 alpha );
-
-    //Sets blend mode
-    void setBlending( SDL_BlendMode blendMode );
-
-    //Draws texture
-    void render( float x, float y, SDL_FRect* clip = nullptr, float width = 0.0, float height = 0.0, double degrees = 0.0, SDL_FPoint* center = nullptr, SDL_FlipMode flipMode = SDL_FLIP_NONE );
-
-    //Gets texture attributes
-    int getWidth();
-    int getHeight();
-    bool isLoaded();
-
-    private:
-    SDL_Texture* texture;
-
-    int width;
-    int height;
+struct UIElement {
+  SCoord position; // left corner
+  SDL_Rect *src;
 };
 
-class ButtonUI {
-    public:
-    //Initializes texture variables
-    ButtonUI();
-    ButtonUI(SDL_FPoint position, int n);
+//TODO
+struct StatusBar {
+  const int max;
+  int current;
+  const SDL_Rect *fullBar;
+  const SDL_Rect *emptyBar;
+  const SCoord position; // left corner
 
-    //Cleans up texture variables
-    ~ButtonUI();
+	StatusBar(int max, SCoord position, const SDL_Rect* fullBar, const SDL_Rect* emptyBar) : max(max), fullBar(fullBar), emptyBar(emptyBar), position(position) {
+	  
+  }
 
-    //Remove copy constructor
-    ButtonUI( const ButtonUI& ) = delete;
-
-    //Remove copy assignment
-    ButtonUI& operator=( const ButtonUI& ) = delete;
-
-    //Remove move constructor
-    ButtonUI( ButtonUI&& ) = delete;
-
-    //Remove move assignment
-    ButtonUI& operator=( ButtonUI&& ) = delete;
-
-   //Loads texture from disk
-    bool loadFromFile( std::string path );
-
-    //Cleans up texture
-    void destroy();
-
-    //Handles mouse event
-    void handleEvent( SDL_Event* e );
-
-    //Shows button sprite
-    void render();
-
-    //Gets texture attributes
-    int getWidth();
-    int getHeight();
-    bool isLoaded();
-
-    void setPosition(SDL_FPoint position);
-    void setButtonUINumber(int n);
-
-protected:
-    enum class buttonSprite
-        {
-            Unpressed = 0,
-            Hover = 1,
-            Pressed = 2
-        };
-
-    SDL_Texture* bTexture;
-
-    //Texture dimensions
-    int width = -1;
-    int height = -1;
-
-    int buttonNumber;
-    SDL_FPoint position;
-    buttonSprite currentSprite;
+  void render(SDL_Rect viewport) {
+	  //TODO: error
+    float portion = current / max;
+    int fullLength = fullBar->w;
+    int h = fullBar->h;
+    int filledLength = portion * fullLength;
+    int unfilledLength = fullLength - filledLength;
+    SDL_Rect unfilledClip = { emptyBar->x, emptyBar->y,unfilledLength, h};
+    SDL_Rect filledClip = {fullBar->x, fullBar->y,filledLength, h};
+    gSpriteSheetTexture.render(position.x, position.y, &unfilledClip, &viewport);
+    gSpriteSheetTexture.render(position.x + unfilledLength, position.y, &filledClip, &viewport);
+  }
 };
 
-class TextButtonUI: public ButtonUI {
-    private:
-        std::string text;
-        SDL_Color defaultColor;
-        SDL_Color hoverColor;
-        SDL_Color pressedColor;
-        SDL_Color textColor;
-        SDL_Color textHoverColor;
-        SDL_FPoint position;
-        int width;
-        int height;
-        Texture renderedText;
-    public:
-        typedef ButtonUI super;
-        TextButtonUI(std::string textureText, SDL_FPoint position, SDL_Color defaultColor, SDL_Color hoverColor, SDL_Color pressedColor, SDL_Color textColor, SDL_Color textHoverColor);
-        std::string getText() { return text; }
-        SDL_FPoint getPosition() { return position; }
-        SDL_Color getDefaultColor() { return defaultColor; }
-        SDL_Color getHoverColor() { return hoverColor; }
-        SDL_Color getPressedColor() { return pressedColor; }
-        void setText(std::string text);
-        void setTextPallette(SDL_Color defaultC, SDL_Color hoverC, SDL_Color pressedC);
-        void setPosition(SDL_FPoint position);
-        void setSize(int width, int height);
-        void render();
+
+enum class ButtonState {
+  Unpressed,
+  Hover,
+  Pressed  
 };
 
-//TODO: add functionality to right click, and view how many there are, or be linked to that item's page even
 
-struct ItemTextBox {
-    std::string text;
-    Item item;
-};
 
-struct RoleTextBox {
-    std::string text;
+struct Role {
     Role role;
 };
 
@@ -206,7 +92,7 @@ class TextMenu:Menu {
         Plant = 3
         };
         Category type;
-        vector<TextButtonUI> buttonUIs;
+        std::vector<TextButtonUI> buttonUIs;
         int longestText = 0;
         int fontSize;
     public:
@@ -214,7 +100,7 @@ class TextMenu:Menu {
         };
         //TODO: consider sorting algorithm to sort by age, alphabetically, etc
         void addItem(std::string text, SDL_FPoint position, SDL_Color defaultColor, SDL_Color hoverColor, SDL_Color pressedColor, SDL_Color textColor, SDL_Color textHoverColor);
-        void
+        
         void open();
 };
 
@@ -283,17 +169,6 @@ class InfoBox {
         void addIconFunc(IconFunc& iconFunc);
         void render();
 };
-
-class ArmorInfoBox:InfoBox {
-    private:
-    public:
-        ArmorInfoBox(IconUI& icon, IconFunc& iconFunc);
-        void render();
-};
-
-constexpr float iconWidth = 0.0;
-constexpr float iconHeight = 0.0;
-
 
 
 /* Global Variables */

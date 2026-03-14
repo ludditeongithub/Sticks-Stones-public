@@ -11,6 +11,7 @@
 #include "texture.hpp"
 #include <systems/find_nearest.hpp>
 #include "viewport.hpp"
+//TODO: sex offsets!
 //TODO: perhaps walking frames last for twice as long as running frames
 
 template <typename T>

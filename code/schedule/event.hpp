@@ -1,9 +1,10 @@
 #ifndef EVENT_H_
 #define EVENT_H_
-#include "basic.hpp"
-#include "categories.hpp"
-#include "unit.hpp"
-#include "animal.hpp"
+#include <vector>
+
+#include <core/data.hpp>
+#include <systems/work_operations.hpp>
+
 
 enum class EventType {
         PawnMoveTile,
@@ -11,10 +12,6 @@ enum class EventType {
 	ProductComplete,
 	ResourceComplete,
 	WakeUp,
-	CheckIfAdjacentPawns,
-	CheckIfAdjacentAnimals,
-	CheckIfAdjacentPawnToAnimal,
-	CheckIfAdjacentAnimalToPawn,
 	PreyFeed,
 	HerbivoreFeed,
 	PredatorFeed,
@@ -46,7 +43,7 @@ Breed,
 };
 
 struct Event {
-	uint64_t time;
+	Time time;
 	EventType eventType;
 	int typeIndex; //index which converts to the enum class that is the main object in the event in question
 	int entitiesIndex; //index of the vector that stores the entities of the type in question
@@ -55,25 +52,14 @@ struct Event {
 
 std::vector<Event> upcomingEvents;
 
-void addEvent(uint64_t time, EventType type, int typeIndex, int entitiesIndex) {
+void addEvent(Time time, EventType type, int typeIndex, int entitiesIndex) {
 	upcomingEvents.push_back({time, type, typeIndex, entitiesIndex});
 }
 
-void addEvent(uint64_t time, EventType type, int typeIndex, int entitiesIndex, int secondaryIndex) {
+void addEvent(Time time, EventType type, int typeIndex, int entitiesIndex, int secondaryIndex) {
 	upcomingEvents.push_back({time, type, typeIndex, entitiesIndex, secondaryIndex});
 }
 
-void meetEventInterpreter(int event, int finderIndex, int targetIndex, bool finderAnimal, bool targetAnimal) {
-	MeetEvent me = static_cast<MeetEvent>(event);
-	switch (me) {
-		case MeetEvent::Breeding:
-			//TODO: breeding animation, pregnancy chance based on age instead of guranteed
-			pregnancy(targetIndex);
-		case MeetEvent::Hunting:
-		case MeetEvent::Combat:
-			attack(killerIndex, targetIndex, finderAnimal, targetAnimal);
-	}
-}
 
 //TODO: if things begin to lag, optimize this to O log n or O1 using jump table
 void eventInterpreter(Event event) {
@@ -93,16 +79,6 @@ void eventInterpreter(Event event) {
 			} else inventories[event.entitiesIndex].items.push_back(product);
 	//TODO: add case for tools
 			break;
-	case EventType::AnimalBreeding:
-		//TODO: maybe change this to type index
-		breed(event.entitiesIndex, event.secondaryIndex);
-		break;
-	case EventType::PreyFeed:
-		preyFeed(event.entitiesIndex);
-		break;
-	case EventType::PredatorFeed:
-		predatorFeed(event.entitiesIndex);
-		break;
 	case EventType::Birth:
 		birth(event.entitiesIndex);
 		break;
@@ -113,29 +89,6 @@ void eventInterpreter(Event event) {
 		treeDeath(event.entitiesIndex);
 		break;
 		//TODO: before this, check to see that the parameters are right
-	case EventType::CheckIfAdjacentAnimals
-		if (adjCheckObject(event.entitiesIndex, event.secondaryIndex, true, true)) {
-			meetEventInterpreter(event.typeIndex);
-		} else meet(event.entitiesIndex, event.secondaryIndex, true, true, static_cast<DelayedEvent>(event.typeIndex));
-		break;
-	case EventType::CheckIfAdjacentAnimalToPawn:
-		if (adjCheckObject(event.entitiesIndex, event.secondaryIndex, true, false)) {
-			meetEventInterpreter(event.typeIndex);
-		} else meet(event.entitiesIndex, event.secondaryIndex, true, false, static_cast<DelayedEvent>(event.typeIndex));
-		break;
-	case EventType::CheckIfAdjacentPawnToAnimal:
-		if (adjCheckObject(event.entitiesIndex, event.secondaryIndex, false, true)) {
-			meetEventInterpreter(event.typeIndex);
-		} else meet(event.entitiesIndex, event.secondaryIndex, false, true, static_cast<DelayedEvent>(event.typeIndex));
-		break;
-	case EventType::CheckIfAdjacentPawns:
-		if (adjCheckObject(event.entitiesIndex, event.secondaryIndex, false, false)) {
-			meetEventInterpreter(event.typeIndex);
-		} else meet(event.entitiesIndex, event.secondaryIndex, false, false, static_cast<DelayedEvent>(event.typeIndex));
-		break;
-	case EventType::MoveStart:
-		setMovingStatus(event.entitiesIndex);
-		break;
 	case EventType::ProductComplete:
 		productFinish(event.typeIndex, event.entitiesIndex, event.secondaryIndex);
 		decidePawnTask(event.entitiesIndex);

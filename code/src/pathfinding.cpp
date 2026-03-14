@@ -29,7 +29,7 @@ bool isInPath(const T& map, std::pair<int,int> start, std::pair<int,int> end, co
 
         if (x == end.second && y == end.first) {
             break; // Reached the end tile
-        }
+       }
 
         int e2 = 2 * err;
         if (e2 > -dy) {

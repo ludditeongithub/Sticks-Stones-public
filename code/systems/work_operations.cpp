@@ -1,20 +1,11 @@
 #ifndef INVENTORIESANDWORKQUEUES_H_
 #define INVENTORIESANDWORKQUEUES_H_
 
-#include <world/unit/rolesAndActions.hpp>
-#include <world/tile/enum.hpp>
-#include <world/scavengeables/enum.hpp>
-#include <world/item/enum.hpp>
-#include <world/item/item_recipes.hpp>
-
-void fun() {
-
-}
+#include "work_operations.hpp"
 
 //TILE DATA
 //variantIndex superfluous for non-variant items
 void collectResourceAction(int pawn, Item item, int sourceIndex, int variantIndex) {
-    Item resource = resources[item];
     Action action = resource.action[sourceVariantIndex];
     SourceVariant source = resource.source[sourceIndex];
     //see if Object should be removed from tile
@@ -56,7 +47,7 @@ void collectResourceAction(int pawn, Item item, int sourceIndex, int variantInde
 
 // gets resource at certain tile, when pawn is adjacent to it, by confirming action.
 void collectResource(Item item) {
-    if (item < Item::RESOURCEMAX) return;
+    if (item > Item::RESOURCEMAX) return;
     Source resource = resources[item];
     //find available pawns who can perform actions (On^3)
     bool foundPawn = false;
@@ -85,40 +76,6 @@ void collectResource(Item item) {
     //SHORTEST PATH ALGORITHM
 
     }
-}
-
-//NOTE: this seems a little shifty, tools part
-bool checkActionRequisites(Resource resource, int pawn) {
-    for (int i = 0; i < resource.action.size(); i++) {
-      Actions action = recipe.action;
-      
-        if (action == Action::NONE) continue;
-         bool foundRole = false;
-         for (int j = 0; j < actionToRoles[static_cast<int>(action)].size(); j++) {
-             for (int k = 0; k < roles[pawn].size; k++) {
-                 if (actionToRoles[action][j] == roles[pawn][k]) {
-                     foundRole = true;
-                     break;
-                 }
-             }
-             if (foundRole) break;
-         }
-         if (!foundRole) continue;
-         int toolReplaceableList = actionToToolsReplaceables[static_cast<int>(action)];
-         for (int j = 0; j < actionToTools[static_cast<int>(action)].size(); j++) {
-             bool foundTool = false;
-             if (toolReplaceableList[j] < 0) continue; //optional tools
-             for (int k = 0; k < tools[pawn].size; k++) {
-                 if (actionToTools[action][j] == tools[pawn][k]) {
-                     while (toolReplaceableList[j] == toolReplaceableList[j+1]) j++;
-                     foundTool = true;
-                 }
-             }
-             if (!foundTool) continue;
-         }
-         if (foundTool && foundRole) return true;
-    }
-    return false;
 }
 
 bool checkActionRequisites(Recipe recipe, int pawn) {
@@ -152,7 +109,7 @@ bool checkActionRequisites(Recipe recipe, int pawn) {
          return true;
 }
 
-bool checkActionRequisites(Resource resource, int pawn) {
+bool checkActionRequisites(Item resource, int pawn) {
     bool foundRole = false;
     for (int i = 0; i = resource.actions.size(); i++) {
         if !(resource.action == Action::NONE) {
@@ -352,10 +309,7 @@ void attemptProduction(int pawn, ProductVariant product) {
     }
     }
 }
-
-
-
-
+ 
 
 // when production of item is finished, place if buildable or vehicle or go to inventory if item, variant optional
 void productFinish(ProductVariant product, int pawn, uint16_t variant) {
@@ -441,11 +395,6 @@ void attemptSupport(int pawn, Role role) {
             }
         break;
     }
-
-
-void variantItemInterpreter() {
-
-}
 
 
 //NOTE: bad

@@ -23,6 +23,7 @@ struct RandomMachine {
         }
 
         T next() {
+		if (current >= PREGENERATED_RANDOM_SIZE) current = 0;
 		return randoms[current++];
 	}
 };
@@ -44,7 +45,12 @@ template <typename E> struct RandomEnumMachine {
 };
 
 struct RandomChanceMachine {
-	
+	RandomMachine<float> mac = RandomMachine<float>(0.0,1.0);
+        RandomChanceMachine() {}
+
+        float next() {
+		return mac.next();
+	}
 };
 
 inline double rnormal() {
@@ -57,11 +63,3 @@ inline double rnormal() {
     return u * sqrt(-2.0 * log(s) / s);
 }
 
-
-template <typename E> E random_enum() {
-	
-//     = static_cast<U>(E::NONE) + 1;
-    // TODO: error if enums does not have min/max
-    
-    return static_cast<E>();
-}
