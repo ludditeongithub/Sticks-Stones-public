@@ -17,9 +17,8 @@ struct Arena {
     }
 
     ~Arena() { ::operator delete(start); }
-
-
 };
+
 
 void* arena_alloc(Arena* arena, uint16_t bytes) {
     if (arena->used + bytes > arena->capacity) {

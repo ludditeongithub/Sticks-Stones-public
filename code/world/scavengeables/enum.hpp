@@ -1,5 +1,6 @@
+#include <cstdint>
 
-enum class Scavengeable {
+enum class Scavengeable : uint8_t {
   NONE,
   Log,
   Pebble,

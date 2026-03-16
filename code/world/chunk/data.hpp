@@ -2,15 +2,8 @@
 #include <cstdint>
 #include <array>
 
-constexpr uint16_t LATITUDE_TOTAL = 180;
-const uint16_t LENGTH_CHUNKS = LATITUDE_TOTAL * 2;
-const uint16_t HEIGHT_CHUNKS = LATITUDE_TOTAL * 2;
-const uint16_t CHUNK_AMOUNT = static_cast<uint16_t>(LENGTH_CHUNKS * HEIGHT_CHUNKS);
-
 constexpr int CHUNK_LENGTH = 64;
 constexpr int CHUNK_SIZE = CHUNK_LENGTH * CHUNK_LENGTH;
-const uint16_t CHUNK_LATITUDE_HEIGHT =
-    HEIGHT_CHUNKS / LATITUDE_TOTAL; // amount of chunks per latitude
 
 // time zones are in LST
 const uint16_t TIME_ZONES = 24;

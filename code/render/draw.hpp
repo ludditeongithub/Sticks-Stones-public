@@ -17,6 +17,8 @@
 #include <world/animal/enum.hpp>
 #include <systems/find_nearest.hpp>
 
+//TODO: standardize to utilize main screen
+
 using Sprite = std::variant<Item, Wearable, Vehicle, Container, Animal, Plant, Unit>;
     /*    item 9
         wearable 3
@@ -118,6 +120,25 @@ SDL_Rect getSDLRect(const Sprite& sprite) {
   }
 }
 
+inline void drawTiles(Array<TileData>& tiles) {
+	for (uint16_t i = 0; i < SCREEN_TILE_HEIGHT; i++) {
+    for (uint16_t j = 0; j < SCREEN_TILE_WIDTH; j++) {
+      uint16_t ti = getTileIndexFromCoord({i, j});
+      // draw tiles      
+      Tile t = tiles[ti].first();
+      Coord c = tileSpriteLocations[t];
+      SDL_Rect sd = {static_cast<int>(c.x), static_cast<int>(c.y), 1, 1};
+      gSpriteSheetTexture.render(j * TILE_LENGTH, i * TILE_LENGTH, &sd, &mainScreenViewport);
+      
+      // draw grass
+      Grass g = tiles[ti].second();
+      c = grassSpriteLocations[g];
+      sd =  {static_cast<int>(c.x), static_cast<int>(c.y), 1, 1};
+      gSpriteSheetTexture.render(i * TILE_LENGTH, j * TILE_LENGTH, &sd, &mainScreenViewport);
+    }
+  }
+}
+
 void drawPlants(EntityRenderBuffer& erd) {
    for (uint16_t i = 0; i < erd.plantAmount; i++) {
     EntitySearchData esd = erd.plants[i];
@@ -141,36 +162,18 @@ void drawEntities(Coord leftCorner, Array<TileData>& tiles, Array<Time>& animalA
   //Clear screen
   SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
   SDL_RenderClear(gRenderer);
-  
-  for (uint16_t i = leftCorner.y; i < leftCorner.y + SCREEN_TILE_HEIGHT; i++) {
-    for (uint16_t j = leftCorner.x; j < leftCorner.x + SCREEN_TILE_WIDTH; j++) {
-      uint16_t ti = getTileIndexFromCoord({i, j});
-      // draw tiles      
-      Tile t = tiles[ti].first();
-      Coord c = tileSpriteLocations[t];
-      SDL_Rect sd = {static_cast<int>(c.x), static_cast<int>(c.y), 1, 1};
-      gSpriteSheetTexture.render(j * TILE_LENGTH, i * TILE_LENGTH, &sd, &mainScreenViewport);
-      
-      // draw grass
-      Grass g = tiles[ti].second();
-      c = grassSpriteLocations[g];
-      sd =  {static_cast<int>(c.x), static_cast<int>(c.y), 1, 1};
-      gSpriteSheetTexture.render(i * TILE_LENGTH, j * TILE_LENGTH, &sd, &mainScreenViewport);
-    }
-  }
-  EntityRenderBuffer erd =
-      sg.getAllInRange(leftCorner, {SCREEN_TILE_WIDTH, SCREEN_TILE_HEIGHT});
 
-  // draw plants
+  drawTiles(tiles);
+  
+  EntityRenderBuffer erd =
+	  sg.getAllInRange(leftCorner, {SCREEN_TILE_WIDTH, SCREEN_TILE_HEIGHT});
+
   drawPlants(erd);
 
-  // draw items
   drawItems(erd);
   
-  // draw animals
   updateAnimalAnimations(leftCorner, erd, animalFrames, animalAges, animalStates);
 
-  // draw units
   updateUnitAnimations(leftCorner, erd, unitFrames, unitAges, unitStates);
 			 
   // draw equippables

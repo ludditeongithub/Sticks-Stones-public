@@ -5,5 +5,4 @@
 struct ScavengeableDatabase {
   Array<Scavengeable> types;
   Array<Coord> coords;  
-}
- 
+} 

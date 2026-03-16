@@ -6,8 +6,10 @@
 #include <stack>
 #include "enum.hpp"
 #include "tables.hpp"
+#include "world/world.hpp"
 #include <core/data.hpp>
 #include <core/containers.hpp>
+#include <core/random.hpp>
 #include <core/packed_enum.hpp>
 #include <world/unit/rolesAndActions.hpp>
 
@@ -18,9 +20,9 @@ struct AnimalDatabase {
   std::stack<uint16_t> freeSlots;
   std::vector<bool> alive;
 
+
   // HOT: processing identical to humans
   Array<Coord> coords;
-  Array<Direction> directions;
   Array<Health> healths;
   Array<Hunger> hungers;
   Array<Time> ages;
@@ -41,8 +43,7 @@ struct AnimalDatabase {
     //TODO
   }
 
-  AnimalDatabase(uint16_t sz) {
-    for (uint16_t i = 0; i < sz; i++) freeSlots.push(i);   
+  AnimalDatabase(uint16_t sz) {	   
     alive = std::vector<bool>(sz);    
     animals = Array<Animal>(sz);
     coords = Array<Coord>(sz);
@@ -56,38 +57,44 @@ struct AnimalDatabase {
     targetTypes = Array<TargetType>(sz);
     frames = Array<Frame>(sz);
   }
-};
 
-inline void spawnAnimal(Animal animal, Coord coord, AnimalDatabase& ad, bool sex) {
-  ad.animals.emplace_back(animal);
-  ad.coords.emplace_back(coord);
-  ad.healths.emplace_back(maxHealths[animal]);
-  ad.hungers.emplace_back(maxHungers[animal] * nextRandomPropFrac());  
-  ad.ages.emplace_back(maxAges[animal] * nextRandomPropFrac());
-  ad.animalStatuses.emplace_back(PackedEnum3<Direction, 2, MovingStatus, 4, MatingStatus, 2>(Direction::North,
-											     MovingStatus::Idle, MatingStatus::Idle));
-  ad.sexs.emplace_back(sex);
-  ad.actions.emplace_back(Action::Assign);
-  ad.targets.emplace_back(std::numeric_limits<uint32_t>::max);
-  ad.targetTypes.emplace_back(TargetType::NONE);
-}
 
-inline void birthAnimal(Animal animal, Coord coord, AnimalDatabase& ad, bool sex) {
-  ad.animals.emplace_back(animal);
-  ad.coords.emplace_back(coord);
-  ad.healths.emplace_back(maxHealths[animal]);
-  ad.hungers.emplace_back(maxHungers[animal] * nextRandomPropFrac());  
-  ad.ages.emplace_back(0);
-  ad.animalStatuses.emplace_back(PackedEnum3(Direction::North,
- MovingStatus::Idle, MatingStatus::Idle));
+inline void birthAnimal(Animal animal, Coord coord, AnimalDatabase &ad,
+                        bool sex) {
+  if (freeSlots.empty()) {
+  ad.animals.push(animal);
+  ad.coords.push(coord);
+  ad.healths.push(maxHealths[animal]);
+  ad.hungers.push(maxHungers[animal] * chance.next());  
+  ad.ages.push(maxAges[animal] * chance.next());
+  ad.animalStatuses.push(PackedEnum3<Direction, 2, ActionStatus, 4, MatingStatus, 2>(Direction::North,
+											     ActionStatus::Idle,MatingStatus::Idle));
   ad.sexs.emplace_back(sex);
-  ad.actions.emplace_back(Action::Assign);
-  ad.targets.emplace_back(std::numeric_limits<uint32_t>::max);
-  ad.targetTypes.emplace_back(TargetType::NONE);  
+  ad.actions.push(Action::Assign);
+  ad.targets.push(std::numeric_limits<uint16_t>::max());
+  ad.targetTypes.push(TargetType::NONE);
   ad.alive[ad.size++] = true;
+  } else {
+	  
+    uint16_t i = freeSlots.top();
+    freeSlots.pop();
+    
+  ad.animals[i] = animal;
+  ad.coords[i] = coord;
+  ad.healths[i] = maxHealths[animal];
+  ad.hungers[i] = maxHungers[animal] * chance.next();  
+  ad.ages[i] = maxAges[animal] * chance.next();
+  ad.animalStatuses[i] = PackedEnum3<Direction, 2, ActionStatus, 4, MatingStatus, 2>(Direction::North,
+											     ActionStatus::Idle,MatingStatus::Idle);
+  ad.sexs[i] = sex;
+  ad.actions[i] = Action::Assign;
+  ad.targets[i] = std::numeric_limits<uint16_t>::max();
+  ad.targetTypes[i] = TargetType::NONE;  
+  ad.alive[i] = true;
+  }
 }
 
-inline void killAnimal(uint16_t index, AnimalDatabase& ad) {
+	inline void killAnimal(uint16_t index, AnimalDatabase& ad) {
   ad.alive[index] = false;
   ad.freeSlots.push(index);
   makeCorpse(ad.animals[index], ad.coords[index]);
@@ -96,16 +103,16 @@ inline void killAnimal(uint16_t index, AnimalDatabase& ad) {
 // move animal from passively processed list into player bounds.
 inline void transferAnimal(uint16_t i, AnimalDatabase& oldDB, AnimalDatabase& newDB) {
   if (newDB.freeSlots.empty()) {
-  newDB.animals.emplace_back(oldDB.animals[i]);
-  newDB.coords.emplace_back(oldDB.coords[i]);
-  newDB.healths.emplace_back(oldDB.healths[i]);
-  newDB.hungers.emplace_back(oldDB.hungers[i]);
-  newDB.ages.emplace_back(oldDB.ages[i]);
-  newDB.animalStatuses.emplace_back(oldDB.animalStatuses[i]);
+  newDB.animals.push(oldDB.animals[i]);
+  newDB.coords.push(oldDB.coords[i]);
+  newDB.healths.push(oldDB.healths[i]);
+  newDB.hungers.push(oldDB.hungers[i]);
+  newDB.ages.push(oldDB.ages[i]);
+  newDB.animalStatuses.push(oldDB.animalStatuses[i]);
   newDB.sexs.emplace_back(oldDB.sexs[i]);
-  newDB.actions.emplace_back(oldDB.actions[i]);
-  newDB.targets.emplace_back(oldDB.targets[i]);
-  newDB.targetTypes.emplace_back(oldDB.targetTypes[i]);
+  newDB.actions.push(oldDB.actions[i]);
+  newDB.targets.push(oldDB.targets[i]);
+  newDB.targetTypes.push(oldDB.targetTypes[i]);
   oldDB.alive[i] = false;
   oldDB.freeSlots.push(i);
   newDB.alive[newDB.size++] = true; 
@@ -125,7 +132,9 @@ inline void transferAnimal(uint16_t i, AnimalDatabase& oldDB, AnimalDatabase& ne
   oldDB.alive[i] = false;
   oldDB.freeSlots.push(i);
   newDB.alive[n] = true;   
-  } 
+  }
 }
+
+};
 
 #endif

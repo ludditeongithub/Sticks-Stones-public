@@ -18,16 +18,15 @@ struct Array {
 
     bool is_full() const { return count == capacity; }
 
-    bool push(const T& value) {
-        if (is_full()) return false;
+    void push(const T& value) {
+//        if (is_full()) //TODO: error
         data()[count++] = value;
-        return true;
     }
 
-    bool push(T&& value) {
-        if (is_full()) return false;
+    void push(T&& value) {
+//        if (is_full()) //TODO: error
         data()[count++] = std::move(value);
-        return true;
+//        return true;
     }
    
     uint16_t size() { //in bytes 
@@ -44,6 +43,14 @@ struct Array {
         if (index >= count)
             throw std::out_of_range("Tried to access index outside of current Array size");
         return data()[index];
+    }
+
+
+    void operator=(uint16_t index) const {
+	    if (index >= count)
+              throw std::out_of_range(
+                  "Tried to access index outside of current Array size");
+	    else data()[index] = 
     }
 };
 

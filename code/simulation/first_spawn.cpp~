@@ -22,7 +22,7 @@
 // humidity
 // neighboring plants
 
-#include "firstSpawn.hpp"
+#include "first_spawn.hpp"
 #include <core/random.hpp>
 #include "world/tile/data.hpp"
 #include "world/world.hpp"
@@ -1053,6 +1053,7 @@ oreChance = veryrare;
 beehiveChance = legendary;
 stickChance = rare;
 }
+
 float random = rand() / (float) RAND_MAX;
 if (random < currentChance + logChance) {
     scavengeable = Scavengeable::Log;

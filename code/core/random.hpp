@@ -53,6 +53,8 @@ struct RandomChanceMachine {
 	}
 };
 
+RandomChanceMachine* chance = new RandomChanceMachine();
+
 inline double rnormal() {
     double u, v, s;
     do {

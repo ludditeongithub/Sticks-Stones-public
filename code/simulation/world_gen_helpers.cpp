@@ -1,5 +1,7 @@
 #include "world/tile/data.hpp"
-Tile getTileType(int biome, float chance) {
+
+
+inline Tile getTileType(int biome, float chance) {
     switch (biome) {
         case 1: //desert
             if (chance < 0.70) {
@@ -94,7 +96,7 @@ Tile getTileType(int biome, float chance) {
     return Tile::DeepWater;
 }
 
-std::vector<float> generateTileChances() {
+std::vector<float> WorldSpawner::generateTileChances() {
 	std::vector<float> chances = std::vector<float>(TILE_AMOUNT);
 //generate Voronoi Noise
         FastNoiseLite noise;

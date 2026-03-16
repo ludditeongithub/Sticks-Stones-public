@@ -2,15 +2,21 @@
 #include <vector>
 #include <core/random.hpp>
 #include <world/chunk/data.hpp>
+#include <world/plant/enum.hpp>
+#include <world/tile/enum.hpp>
 
-float rangePenalty(float originalValue, float minValue, float maxValue, float adjustedValue);
+float rangePenalty(float originalValue, float minValue, float maxValue,
+                   float adjustedValue);
 
 class WorldSpawner {
-private:
+public:
 RandomMachine<int> r1To5 = RandomMachine<int>(1, 5);
 RandomMachine<int> r1To2 = RandomMachine<int>(1, 2);
 RandomMachine<int> r1To4 = RandomMachine<int>(1, 4);
 RandomMachine<int> r1To3 = RandomMachine<int>(1, 4);
+RandomMachine<int> rcx = RandomMachine<int>(WIDTH / 8, 7 * WIDTH / 8);
+RandomMachine<int> rcy = RandomMachine<int>(HEIGHT / 8, 7 * HEIGHT / 8);
+	
 RandomChanceMachine rchance;
 	
 const float coastThreshold = -0.2f;
@@ -41,8 +47,8 @@ const float lakeTileChance = 0.07f; //chance that lake tile does NOT happen (sma
 using alt = uint16_t;
 
   // in biomes
-const int WIDTH = 200;
-const int HEIGHT = 200;
+const int WIDTH;
+const int HEIGHT;
 const int BORDER_WIDTH = 3;
 const int BORDER_HEIGHT = 3;
 const int AMOUNT = WIDTH * HEIGHT;
@@ -51,8 +57,6 @@ const int EQUATOR = HEIGHT / 2;
 // IN TILES
 const int WORLD_WIDTH = WIDTH * REGION_SIZE;
 const int WORLD_HEIGHT = HEIGHT * REGION_SIZE;
-const int STARTING_MAP_WIDTH = 20; //for starting player map
-const int STARTING_MAP_HEIGHT = 20;
 
 // New variables to store the size of the map with borders
 const int WIDTH_WITH_BORDER = WIDTH + BORDER_WIDTH * 2;
@@ -87,8 +91,11 @@ struct SeedCloud {
   std::vector<std::vector<bool>> instantiatedWaterMap;
   std::vector<std::vector<int>> oceanDistance;
 
-std::vector<std::vector<bool>> rVisited; //holds visited rivers
-public:
+  std::vector<std::vector<bool>> rVisited; // holds visited rivers
+  std::vector<Grass> tileGrass;
+  std::vector<Plant> plants;
+  std::vector<Coord> plantCoords;
+	
   template <typename T>
   void mapReserveRows(int width, int height, std::vector<std::vector<T>> &map) {
     map.reserve(height);
@@ -108,7 +115,11 @@ public:
     mapReserveRows(width, height, instantiatedWaterMap);
     mapReserveRows(width, height, oceanDistance);
     mapReserveRows(width, height, rVisited);
-  }	
+
+    tileGrass.reserve(WORLD_TILE_AMOUNT);
+    plants.reserve(WORLD_TILE_AMOUNT);
+    plantCoords.reserve(WORLD_TILE_AMOUNT);
+  }
 
 void generateOceansOnMaps();
 void markCoasts();
@@ -131,8 +142,18 @@ void recursiveFill();
 void printMap();
 std::vector<std::vector<int>> calculateOceanDistance(std::vector<std::vector<int>>& waterMap, bool lake, bool river);
 std::vector<Coord> generateVoronoiSites();
-void generateTileDatabase();  
-  
+void generateTileDatabase();
+void generateTileTypes(std::vector<float> &chances,
+                       std::vector<Coord> &voronoiSites, std::vector<Tile> &rTiles,
+                       Array<Alt> &rAltitudes);
+
+std::vector<float> generateTileChances();
+void spawnGrassAndFirstPlants();
+	
+        void generateWorld();
+
+	
+	
 // Constants
 // IN CELLS
 int currentXMin = 0;

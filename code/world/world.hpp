@@ -1,33 +1,53 @@
 #pragma once
+
+#include "core/containers.hpp"
+#include <cstdint>
+
+
 #include <core/FastNoiseLite.h>
 #include <core/nanoflann.hpp>
 #include <core/memory.hpp>
+#include <simulation/world_gen.hpp>
 #include <world/tile/data.hpp>
 #include <world/chunk/data.hpp>
-#include <array>
-#include <cstdint>
-#include <queue>
+
 
 // Time Data
-uint16_t time;
 constexpr uint16_t HOUR_LENGTH = 300;
 constexpr uint16_t DAY_LENGTH = HOUR_LENGTH * 24;
 constexpr uint16_t SEASON_LENGTH = DAY_LENGTH * 7;
 constexpr uint16_t YEAR_LENGTH = SEASON_LENGTH * 4;
 
-const float EQUATOR = HEIGHT_CHUNKS / 2;
+constexpr uint16_t LATITUDE_TOTAL = 180;
 constexpr int LATITUDE_MIN = -90;
 constexpr int LATITUDE_MAX = 90;
 constexpr float MAX_CLOUD_FACTOR = 3.2;
 
 
-Arena<int8_t> humidities(CHUNK_AMOUNT);
-Arena<int8_t> temperatures(CHUNK_AMOUNT);
-Arena<int8_t> altitudes(CHUNK_AMOUNT);
+struct World {
+const uint16_t LENGTH_CHUNKS;
+const uint16_t HEIGHT_CHUNKS;
+const uint16_t CHUNK_AMOUNT = static_cast<uint16_t>(LENGTH_CHUNKS * HEIGHT_CHUNKS);
+const uint16_t CHUNK_LATITUDE_HEIGHT =
+    HEIGHT_CHUNKS / LATITUDE_TOTAL; // amount of chunks per latitude
 
-Arena2D humidityTable(humidities, WIDTH_CHUNKS, HEIGHT_CHUNKS);
-Arena2D temperatureTable(temperatures, WIDTH_CHUNKS, HEIGHT_CHUNKS);
-Arena2D altitudeTable(altitudes, WIDTH_CHUNKS, HEIGHT_CHUNKS);
+const int WORLD_TILE_AMOUNT = WORLD_WIDTH * WORLD_HEIGHT;
+
+Array<uint8_t> humidities;
+Array<int8_t> temperatures;
+Array<uint8_t> altitudes;
+
+	World(Arena* arena, int width, int height) : LENGTH_CHUNKS(width), HEIGHT_CHUNKS(height) {
+          humidities = arena_make_array<uint8_t>(&arena, width * height);
+	  temperatures = arena_make_array<int8_t>(&arena, width * height);
+	  altitudes = arena_make_array<int8_t>(&arena, width * height);
+	}
+
+void loadChunkData(WorldSpawner& ws) {
+	ws.moveRegionsToChunks(humidities, temperatures, altitudes);
+}
+	
+};
 
 
 // Terain and Climate
