@@ -2,116 +2,128 @@
 #include <cstdint>
 #include <iostream>
 #include <new>
-#include <type_traits>
 #include <tuple>
+#include <type_traits>
 #include <vector>
 
+struct Arena
+{
+	char *start;
+	uint16_t capacity;
+	uint16_t used;
 
-struct Arena {
-    char* start;
-    uint16_t capacity;
-    uint16_t used;
+	Arena(uint16_t cap) : capacity(cap), used(0)
+	{
+		start = static_cast<char *>(::operator new(cap));
+	}
 
-    Arena(uint16_t cap) : capacity(cap), used(0) {
-        start = static_cast<char*>(::operator new(cap));
-    }
-
-    ~Arena() { ::operator delete(start); }
+	~Arena() { ::operator delete(start); }
 };
 
-
-void* arena_alloc(Arena* arena, uint16_t bytes) {
-    if (arena->used + bytes > arena->capacity) {
-        throw std::bad_alloc(); 
-    }
-    void* ptr = arena->start + arena->used;
-    arena->used += bytes;
-    return ptr;
+void *arena_alloc(Arena *arena, uint16_t bytes)
+{
+	if (arena->used + bytes > arena->capacity)
+	{
+		throw std::bad_alloc();
+	}
+	void *ptr = arena->start + arena->used;
+	arena->used += bytes;
+	return ptr;
 }
 
-void *arena_alloc_aligned(Arena *arena, uint16_t bytes, uint16_t alignment) {
-    uintptr_t current = reinterpret_cast<uintptr_t>(arena->start + arena->used);
-    uintptr_t aligned = (current + alignment - 1) & ~(alignment - 1);
-    uint16_t padding = aligned - current;
+void *arena_alloc_aligned(Arena *arena, uint16_t bytes, uint16_t alignment)
+{
+	uintptr_t current = reinterpret_cast<uintptr_t>(arena->start + arena->used);
+	uintptr_t aligned = (current + alignment - 1) & ~(alignment - 1);
+	uint16_t padding = aligned - current;
 
-    if (arena->used + padding + bytes > arena->capacity) {
-        throw std::bad_alloc();
-    }
+	if (arena->used + padding + bytes > arena->capacity)
+	{
+		throw std::bad_alloc();
+	}
 
-    arena->used += padding;
-    void* ptr = arena->start + arena->used;
-    arena->used += bytes;
-    return ptr;
+	arena->used += padding;
+	void *ptr = arena->start + arena->used;
+	arena->used += bytes;
+	return ptr;
 }
 
-void *arena_dealloc_aligned(Arena *arena, uint16_t bytes, uint16_t alignment) {
-    uintptr_t current = reinterpret_cast<uintptr_t>(arena->start + arena->used);
-    uintptr_t aligned = (current + alignment - 1) & ~(alignment - 1);
-    uint16_t padding = aligned - current;
+void *arena_dealloc_aligned(Arena *arena, uint16_t bytes, uint16_t alignment)
+{
+	uintptr_t current = reinterpret_cast<uintptr_t>(arena->start + arena->used);
+	uintptr_t aligned = (current + alignment - 1) & ~(alignment - 1);
+	uint16_t padding = aligned - current;
 
-    if (arena->used < bytes + padding) {
-    throw std::bad_alloc(); 
+	if (arena->used < bytes + padding)
+	{
+		throw std::bad_alloc();
+	}
+
+	arena->used -= padding;
+	arena->used -= bytes;
+	void *ptr = arena->start + arena->used;
+	return ptr;
 }
 
-    arena->used -= padding;
-    arena->used -= bytes;
-    void* ptr = arena->start + arena->used;
-    return ptr;
-}
+template <typename T> struct Pool
+{
+	T *data;
+	uint32_t *freeList;
+	uint32_t capacity;
+	uint32_t freeHead;
 
-template <typename T>
-struct Pool {
-    T* data;
-    uint32_t* freeList;
-    uint32_t capacity;
-    uint32_t freeHead;
+	Pool(uint32_t cap) : capacity(cap), freeHead(0)
+	{
+		data = static_cast<T *>(operator new[](sizeof(T) * capacity));
+		freeList = new uint32_t[capacity];
+		for (uint32_t i = 0; i < capacity; ++i)
+			freeList[i] = i;
+	}
 
-    Pool(uint32_t cap)
-        : capacity(cap), freeHead(0)
-    {
-        data = static_cast<T*>(operator new[](sizeof(T) * capacity));
-        freeList = new uint32_t[capacity];
-        for (uint32_t i = 0; i < capacity; ++i)
-            freeList[i] = i;
-    }
+	~Pool()
+	{
+		operator delete[](data);
+		delete[] freeList;
+	}
 
-    ~Pool() {
-        operator delete[](data);
-        delete[] freeList;
-    }
+	T *alloc()
+	{
+		if (freeHead >= capacity)
+			return nullptr;
+		uint32_t index = freeList[freeHead++];
+		return new (&data[index]) T();
+	}
 
-    T* alloc() {
-        if (freeHead >= capacity)
-            return nullptr;
-        uint32_t index = freeList[freeHead++];
-        return new (&data[index]) T();
-    }
-
-    void dealloc(T* obj) {
-        if (!obj) return;
-        uint32_t index = static_cast<uint32_t>(obj - data);
-        obj->~T();
-        freeList[--freeHead] = index;
-    }
+	void dealloc(T *obj)
+	{
+		if (!obj)
+			return;
+		uint32_t index = static_cast<uint32_t>(obj - data);
+		obj->~T();
+		freeList[--freeHead] = index;
+	}
 };
 
-template <typename T>
-struct Buffer {
-  T *data;
-  uint32_t size;
+template <typename T> struct Buffer
+{
+	T *data;
+	uint32_t size;
 
-   T& operator[](uint16_t index) {
-        if (index >= size) {
-            throw std::out_of_range("Arena index out of range");
-        }
-        return data[index];
-    }  
+	T &operator[](uint16_t index)
+	{
+		if (index >= size)
+		{
+			throw std::out_of_range("Arena index out of range");
+		}
+		return data[index];
+	}
 
-     const T& operator[](uint16_t index) const {
-        if (index >= size) {
-            throw std::out_of_range("Arena index out of range");
-        }
-        return data[index];
-     }
-  
-};  
+	const T &operator[](uint16_t index) const
+	{
+		if (index >= size)
+		{
+			throw std::out_of_range("Arena index out of range");
+		}
+		return data[index];
+	}
+};

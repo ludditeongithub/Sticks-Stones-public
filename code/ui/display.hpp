@@ -1,3 +1,3 @@
-struct Display {
-	
+struct Display
+{
 };

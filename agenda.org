@@ -7,7 +7,6 @@
 ** get average plants, animals, units per chunk
 ** Animation rendering
 ** Writing to data to file
-** ERROR HANDLING: separate 'verify data' static assert functions, that only then pass to the actual functions! (at dispatch level
 * NOTES
 ** Programming
 *** Scheduling and Simulation Precision
@@ -15,6 +14,12 @@
 
   All entities in NPACs are processed at a high frequency. There is lower batching, event driven. All entities in non-NPACs are processed at a low frequency. Higher batching, more concurrency of large tasks.
 * AFTER BETA
+** larger simulations
+*** actually manage Separate database for active chunks
+*** better arena management, ALLOC_FACTOR calculations
+*** faux time simulations
+** ERROR HANDLING: separate 'verify data' static assert functions, that only then pass to the actual functions! (at dispatch level
+** Role inventory policies: player can control how much a pawn of a certain role should keep on them at all times (or under certain circumstances), as unit's contents are invisible to all other units (unless asked for) (perhaps shipping roles can have this off)
 ** A creature turning takes a second
 ** family trees and different appearances, social institutions
 ** Branchless programming if further optimization required

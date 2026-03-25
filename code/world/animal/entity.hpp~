@@ -1,21 +1,71 @@
-#ifndef ENTITY_HPP
-#define ENTITY_HPP
-
-#include <basic.hpp>
+#pragma once
 #include <cstdint>
+#include <stack>
 #include "enum.hpp"
+#include <world/world.hpp>
+#include <core/data.hpp>
+#include <core/entity.hpp>
+#include <core/containers.hpp>
+#include <core/random.hpp>
+#include <core/packed_enum.hpp>
+#include <systems/find_nearest.hpp>
+#include <simulation/first_spawn.hpp>
+#include <world/unit/rolesAndActions.hpp>
 
-namespace animal {
-  
-  struct Position { uint16_t x,y; };
-  struct Facing { Direction direction; };
-  struct Sex { bool sex; };
-  struct Health { uint16_t health; };
-  struct Hunger { uint16_t hunger; };
-  struct Age { float age; };
-  struct Movement { MovingStatus movingStatus; };  
-  struct Mating { MatingStatus matingStatus; };
+// referenced arrays are stored with units to iterate together.
+struct AnimalDatabase {
+  static constexpr uint32_t ENTITY_SIZE = sizeof(Coord) + sizeof(Health) +
+                                          sizeof(Hunger) + sizeof(Time) +
+	  sizeof(Frame) + sizeof(AnimalStatus) + sizeof(Action) + sizeof(uint16_t) + sizeof(TargetType) + sizeof(Animal);
+	
+  uint16_t size = 0;
+  bool active; // active animalDatabases are ones in player territory; these are
+               // processed much more frequently.
+  SearchGrid *search;
+  std::stack<uint16_t> freeSlots;
+  std::vector<bool> alive;
 
-}
+  // HOT: processing identical to humans
+  Array<Coord> coords;
+  Array<Health> healths;
+  Array<Hunger> hungers;
+  Array<Time> ages;
+  Array<Frame> frames;
 
-#endif
+  // WARM:processing isomorphic to humans
+  Array<AnimalStatus> statuses;
+  Array<Action> actions;
+  Array<uint16_t> targets;
+  Array<TargetType> targetTypes; // consider packing with animal statuses as
+                                 // this is related to movement.
+  // COLD
+  std::vector<Sex> sexs;  
+  // processing unique to animals
+  Array<Animal> animals;	
+	
+  void reserve(uint16_t sz) {
+    //TODO
+  }
+
+  AnimalDatabase(uint16_t sz, SearchGrid *sg) {
+    search = sg;
+    alive = std::vector<bool>(sz);    
+    animals = Array<Animal>(sz);
+    coords = Array<Coord>(sz);
+    healths = Array<Health>(sz);
+    hungers = Array<Hunger>(sz);
+    ages = Array<Time>(sz);
+    statuses = Array<AnimalStatus>(sz);
+    sexs = std::vector<bool>(sz);
+    actions = Array<Action>(sz);
+    targets = Array<uint16_t>(sz);
+    targetTypes = Array<TargetType>(sz);
+    frames = Array<Frame>(sz);
+  }
+
+inline void birthAnimal(Animal animal, int animalIndex);
+inline void killAnimal(uint16_t index);
+inline void addAnimals(AnimalSpawnBuffer asb);
+
+};
+

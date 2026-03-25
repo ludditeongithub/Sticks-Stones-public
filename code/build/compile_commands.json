@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -std=c++23 -o CMakeFiles/main_exe.dir/main.cpp.o -c /home/logan/gameprogramming/code/main.cpp",
+  "file": "/home/logan/gameprogramming/code/main.cpp",
+  "output": "CMakeFiles/main_exe.dir/main.cpp.o"
+}
+]

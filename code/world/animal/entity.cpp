@@ -1,0 +1,92 @@
+#include "entity.hpp"
+
+inline void AnimalDatabase::birthAnimal(Animal animal, Coord coord, bool sex)
+{
+	if (freeSlots.empty())
+	{
+		animals.push(animal);
+		coords.push(coord);
+		healths.push(maxHealths[animal]);
+		hungers.push(maxHungers[animal] * chance.next());
+		ages.push(maxAges[animal] * chance.next());
+		animalStatuses.push(PackedEnum3<Direction, 2, ActionStatus, 4, MatingStatus, 2>(
+		    Direction::North, ActionStatus::Idle, MatingStatus::Idle));
+		sexs.emplace_back(sex);
+		actions.push(Action::Assign);
+		targets.push(std::numeric_limits<uint16_t>::max());
+		targetTypes.push(TargetType::NONE);
+		alive[size++] = true;
+	}
+	else
+	{
+		uint16_t i = freeSlots.top();
+		freeSlots.pop();
+
+		animals[i] = animal;
+		coords[i] = coord;
+		healths[i] = maxHealths[animal];
+		hungers[i] = maxHungers[animal] * chance.next();
+		ages[i] = maxAges[animal] * chance.next();
+		animalStatuses[i] = PackedEnum3<Direction, 2, ActionStatus, 4, MatingStatus, 2>(
+		    Direction::North, ActionStatus::Idle, MatingStatus::Idle);
+		sexs[i] = sex;
+		actions[i] = Action::Assign;
+		targets[i] = std::numeric_limits<uint16_t>::max();
+		targetTypes[i] = TargetType::NONE;
+		alive[i] = true;
+	}
+
+	search->insertEntity(coord, animal, EntitySearchData data)
+}
+
+inline void AnimalDatabase::killAnimal(uint16_t index)
+{
+	alive[index] = false;
+	freeSlots.push(index);
+	makeCorpse(animals[index], coords[index]);
+}
+
+inline void AnimalDatabase::addAnimals(AnimalSpawnBuffer asb)
+{
+	for (size_t i = 0; i < asb.size; i++)
+		birthAnimal(asb.types[i], asb.coords[i], rbool.next());
+}
+
+// move animal from passively processed list into player bounds.
+inline void transferAnimal(uint16_t i, AnimalDatabase &oldDB, AnimalDatabase &newDB)
+{
+	if (newDB.freeSlots.empty())
+	{
+		newDB.animals.push(oldDB.animals[i]);
+		newDB.coords.push(oldDB.coords[i]);
+		newDB.healths.push(oldDB.healths[i]);
+		newDB.hungers.push(oldDB.hungers[i]);
+		newDB.ages.push(oldDB.ages[i]);
+		newDB.animalStatuses.push(oldDB.animalStatuses[i]);
+		newDB.sexs.emplace_back(oldDB.sexs[i]);
+		newDB.actions.push(oldDB.actions[i]);
+		newDB.targets.push(oldDB.targets[i]);
+		newDB.targetTypes.push(oldDB.targetTypes[i]);
+		oldDB.alive[i] = false;
+		oldDB.freeSlots.push(i);
+		newDB.alive[newDB.size++] = true;
+	}
+	else
+	{
+		uint16_t n = newDB.freeSlots.top();
+		newDB.freeSlots.pop();
+		newDB.animals[n] = oldDB.animals[i];
+		newDB.coords[n] = oldDB.coords[i];
+		newDB.healths[n] = oldDB.healths[i];
+		newDB.hungers[n] = oldDB.hungers[i];
+		newDB.ages[n] = oldDB.ages[i];
+		newDB.animalStatuses[n] = oldDB.animalStatuses[i];
+		newDB.sexs[n] = oldDB.sexs[i];
+		newDB.actions[n] = oldDB.actions[i];
+		newDB.targets[n] = oldDB.targets[i];
+		newDB.targetTypes[n] = oldDB.targetTypes[i];
+		oldDB.alive[i] = false;
+		oldDB.freeSlots.push(i);
+		newDB.alive[n] = true;
+	}
+}

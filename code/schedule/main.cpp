@@ -1,10 +1,5 @@
 #include "task_scheduling.hpp"
 
-void game() {
-  
-}
+void game() {}
 
-
-int main() {
-
-}
+int main() {}

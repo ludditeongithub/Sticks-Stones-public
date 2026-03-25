@@ -1,4 +1,1 @@
-void calculateAndAssignMemory() {
-
-}
-
+void calculateAndAssignMemory() {}

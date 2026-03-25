@@ -9,26 +9,28 @@ constexpr float FRIDGE_TIME_MULT = 0.08;
 constexpr float STANDARD_TIME_MULT = 1.00;
 constexpr float HOT_TIME_MULT = 1.85;
 
-inline constexpr LookupTable<Item, Temp> frozenTemps = [] {
-  LookupTable<Item,Temp> lt{};
-  using enum Item;
-  
-  return lt;
+inline constexpr LookupTable<Item, Temp> frozenTemps = []
+{
+	LookupTable<Item, Temp> lt{};
+	using enum Item;
+
+	return lt;
 }();
 
-inline constexpr LookupTable<Item, Temp> fridgeTemps = [] {
-  LookupTable<Item,Temp> lt{};
-  using enum Item;
-  
-  return lt;
+inline constexpr LookupTable<Item, Temp> fridgeTemps = []
+{
+	LookupTable<Item, Temp> lt{};
+	using enum Item;
+
+	return lt;
 }();
 
-inline constexpr LookupTable<Item, Temp> standardTemps = [] {
-  LookupTable<Item,Temp> lt{};
-  using enum Item;
-  
-  return lt;
-}();
+inline constexpr LookupTable<Item, Temp> standardTemps = []
+{
+	LookupTable<Item, Temp> lt{};
+	using enum Item;
 
+	return lt;
+}();
 
 #endif

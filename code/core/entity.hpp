@@ -1,8 +1,6 @@
 #pragma once
 #include <cstdint>
 #include "data.hpp"
-#include <core/packed_enum.hpp>
-#include <core/containers.hpp>
 #include <variant>
 #include <world/chunk/data.hpp>
 #include <world/animal/enum.hpp>
@@ -14,12 +12,13 @@
 
 // using Entity = PackedEnum4_32<Role, 8, Animal, 6, Plant, 6, Item, 10>;
 
-using Entity = std::variant<Role, Animal, Plant, Item>;
+using Entity = std::variant<Role, Animal, Plant, Item, Tool>;
 
 struct EntitySearchData {
    uint16_t index;
    Coord position;
 };
+
 
 struct AnimalRenderData {
   uint16_t index;
@@ -39,6 +38,12 @@ struct ItemRenderData {
 	Item item;
 };
 
+struct ToolRenderData {
+	uint16_t index;
+	Coord position;
+	Tool tool;
+};
+
 struct UnitRenderData {
   uint16_t index;
   Coord position;
@@ -54,5 +59,7 @@ struct UnitRenderData {
     std::array<UnitRenderData, CHUNK_SIZE> units;
     uint16_t itemAmount;
     std::array<ItemRenderData, CHUNK_SIZE> items;
+    uint16_t toolAmount;
+    std::array<ToolRenderData, CHUNK_SIZE> tools;
   };
 

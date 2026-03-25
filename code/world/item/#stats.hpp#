@@ -9,9 +9,21 @@ enum class BulkLevel {
 Liquid, Fine, SemiFine, Loose, Soft, Solid, Single
 };
 
-enum class ContainerType {
-    NONE, Pot, Kettle, Basket, Jar, Keg, Bottle, Waterskin, Satchel, LargeSatchel, Bucket,
-};
+float currentMaxBulk(BulkStatus bs, Strength str) {
+    switch(bs) {
+        case BulkStatus::Fine:
+            return FINE_BULK_MAX * str;
+        case BulkStatus::Mid:
+            return MID_BULK_MAX * str;
+        case BulkStatus::Single:
+            return SINGLE_BULK_MAX * str;
+    }
+    return 0.0;
+}
+
+float maxWeight(Strength str) {
+  return str / STAT_MAX * MAX_CARRY;
+}
 
 ContainerType itemToContainer(Item c) {
     switch (c) {
@@ -67,17 +79,6 @@ float getContainerCapacity(ContainerType c) {
             return capacity;
     }
 }
-
-struct Container {
-    ContainerType containerType;
-    float currentBulk = 0;
-    float currentWeight = 0;
-    bool liquidMode;
-    vector<std::pair<Item, uint16_t>> items; //contains all non-variant items
-    vector<std::pair<Item, uint16_t>> variantItems; //contains all variant items
-    vector<int> variantItemTypes; //the enum relevant number for the enum class
-    vector<std::pair<Tool,Material>> tools; //lists tool variants as int
-};
 
 SizeData bulkAndWeights[Item::MAX + Container::MAX];
 

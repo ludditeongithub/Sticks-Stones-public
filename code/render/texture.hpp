@@ -1,44 +1,42 @@
-//Load and manage textures (spritesheets / atlases), GPU handles, UVs
-
-#include <string>
-#include <SDL2/SDL_render.h>
+// Load and manage textures (spritesheets / atlases), GPU handles, UVs
+#pragma once
 #include <SDL2/SDL_image.h>
-#include <stdio.h>
+#include <SDL2/SDL_render.h>
 #include <string>
 
-//Loads individual image as texture
-SDL_Texture* loadTexture( std::string path );
+// Loads individual image as texture
+SDL_Texture *loadTexture(std::string path);
 
-//Texture wrapper class
+// Texture wrapper class
 class LTexture
 {
-	public:
-		//Initializes variables
-		LTexture();
+      public:
+	// Initializes variables
+	LTexture();
 
-		//Deallocates memory
-		~LTexture();
+	// Deallocates memory
+	~LTexture();
 
-		//Loads image at specified path
-		bool loadFromFile( std::string path );
+	// Loads image at specified path
+	bool loadFromFile(std::string path);
 
-		//Deallocates texture
-		void free();
+	// Deallocates texture
+	void free();
 
-		//Renders texture at given point
-                void render( int x, int y, SDL_Rect* clip, SDL_Rect* viewport);
+	// Renders texture at given point
+	void render(int x, int y, SDL_Rect *clip, SDL_Rect *viewport);
 
-		//Gets image dimensions
-		int getWidth();
-		int getHeight();
+	// Gets image dimensions
+	int getWidth();
+	int getHeight();
 
-	private:
-		//The actual hardware texture
-		SDL_Texture* mTexture;
+      private:
+	// The actual hardware texture
+	SDL_Texture *mTexture;
 
-		//Image dimensions
-		int mWidth;
-		int mHeight;
+	// Image dimensions
+	int mWidth;
+	int mHeight;
 };
 
 LTexture gSpriteSheetTexture;

@@ -1,54 +1,29 @@
 #pragma once
-#include <core/data.hpp>
-#include <core/math.hpp>
-#include <core/containers.hpp>
 #include "enum.hpp"
-#include "world/world.hpp"
-#include <array>
-#include <math.h>
+#include <world/world.hpp>
 #include <cstdint>
+#include <math.h>
+#include <core/containers.hpp>
+#include <core/tables.hpp>
+#include <core/data.hpp>
 
-
-// Constants
 constexpr uint16_t AVERAGE_MOVE_COST = 5;
-constexpr uint16_t TILE_AMOUNT = CHUNK_AMOUNT * CHUNK_SIZE;
-constexpr uint16_t TILE_WIDTH = sqrt(TILE_AMOUNT);
 
-uint16_t getTileIndexFromCoord(Coord c) {
-  return (c.y * CHUNK_LENGTH) + c.x;
+inline uint32_t World::getTileIndexFromCoord(Coord c) { return (c.y * WORLD_TILE_LENGTH) + c.x; }
+
+inline Coord World::getTileCoordFromIndex(uint32_t i) {
+	return {i % WORLD_TILE_LENGTH, i / WORLD_TILE_LENGTH};
 }
 
-Coord getTileCoordFromIndex(uint16_t i) {
-  return {i % TILE_WIDTH, i / TILE_WIDTH};
+inline uint32_t World::getTileIndexChunkRelative(uint32_t i) { return {i % CHUNK_SIZE}; }
+
+inline uint32_t World::getTileIndexChunkRelative(Coord c) {
+	return {getTileIndexFromCoord(c) % CHUNK_SIZE};
 }
 
-uint16_t getTileIndexChunkRelative(uint16_t i) {
-  return {i % CHUNK_SIZE};
-}
+inline constexpr LookupTable<Tile, Frame> tileMoveCost = []
+{
+	LookupTable<Tile, Frame> lt{};
 
-uint16_t getTileIndexChunkRelative(Coord c) {
-  return {getTileIndexFromCoord(c) % CHUNK_SIZE};
-}
-
-inline constexpr LookupTable<Tile, time> tileMoveCost = [] {
-  LookupTable<Tile, time> lt{};
-  
-  return lt;
- }();
-
-
-  std::array<uint16_t, 4> getNeighbors(uint16_t i) {
-  std::array<uint16_t, 4> a;
-  int x = i % CHUNK_SIZE;
-  int y = y / CHUNK_SIZE;  
-    // NORTH
-  y > 0 ? a[0] = getIndex(x, y - 1) : a[0] = SENTINEL;
-  // EAST
-  x < CHUNK_SIZE - 1 ? a[1] = getIndex(x + 1, y) : a[1] = SENTINEL;
-  // SOUTH
-   y < CHUNK_SIZE - 1 ? a[2] = getIndex(x, y + 1) : a[2] = SENTINEL; 
-    // WEST
-    x > 0 ? a[3] = getIndex(x - 1, y) : a[3] = SENTINEL;
-  return 
-};
-
+	return lt;
+}();

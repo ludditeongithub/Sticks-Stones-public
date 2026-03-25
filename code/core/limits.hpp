@@ -12,6 +12,6 @@ constexpr float FLOAT_MAX = std::numeric_limits<float>::max();
 constexpr float FLOAT_MIN = std::numeric_limits<float>::min();
 constexpr Coord COORD_MAX = {UINT32_MAX, UINT32_MAX};
 
-constexpr EntitySearchData ENTITY_SEARCH_MAX = {SIZE_MAX, COORD_MAX}; 
+constexpr EntitySearchData ENTITY_SEARCH_MAX = {SIZE_MAX, COORD_MAX};
 
 #endif

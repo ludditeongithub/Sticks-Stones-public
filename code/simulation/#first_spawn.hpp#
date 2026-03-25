@@ -2,10 +2,13 @@
 #include <core/data.hpp>
 #include <world/plant/enum.hpp>
 #include <world/animal/enum.hpp>
-#include "worldGen.hpp"
+#include "world_gen.hpp"
 
-using PlantTable = LookupTable<Plant, float>;
-using SpawnTable = LookupTable<Animal, float>;
+struct AnimalSpawnBuffer {
+	uint16_t size = 0;
+  std::vector<Animal> types;
+  std::vector<Coord> coords;
+};
 
 inline constexpr LookupTable<Animal,float> hotDesertSpawnChances = [] {
   LookupTable<Animal,float> lt{};
@@ -535,3 +538,7 @@ inline constexpr LookupTable<Biome,float> grassCoverages = [] {
   ColdDesert = 0.04;
   return lt;
  }();
+
+
+
+

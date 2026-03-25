@@ -2,10 +2,8 @@
 #define MOVEMENT_MANAGER_HPP
 #include <basic/target.hpp>
 
-
-class MovementManager {
-
+class MovementManager
+{
 };
-
 
 #endif

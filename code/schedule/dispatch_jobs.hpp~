@@ -1,0 +1,57 @@
+#include <core/memory.hpp>
+#include <world/unit/rolesAndActions.hpp>
+
+// all possible tasks
+AutoEnum<>
+    Tasks; // this needs to be automatically filled, using Items + Variants other actions, probably
+	   // think of other way to make variants optional because there are just too many
+
+struct PlayerTaskJobOrder
+{
+	Action action;
+	int32_t amount;
+};
+
+struct TaskJobData
+{
+	uint32_t amount;
+	uint8_t skillReq;
+};
+
+
+// binary tree by Task ID, to ensure that if player changes amount or priority a new Task Job isn't
+// created. Check if easier to remake pq every time
+void updateTaskJobPriorities(std::unordered_map<Task, TaskJobData> &hm,
+			     std::priority_queue<std::pair<uint8_t, Task>>& pq,
+			     PlayerTaskJobOrder pt)
+{
+
+	for (int i = 0; i < pt.size(); i++)
+	{
+		Task t = pt[i].data.task;
+		// check validity
+		uint8_t np = pt[i].second().priority;
+		uint8_t na = pt[i].second().amount;
+		if (hm[t] != hm.end())
+		{
+			uint8_t &p = hm[task].second().priority;
+			if (np != p)
+			{
+				// TODO: check if you are able to get a specific priority from a pq
+				pq[p].set(np);
+				p = np;
+			}
+
+			uint8_t &a = hm[task].second().amount;
+			if (na != a)
+				a = na;
+
+			hm[t] = {np, na};
+		}
+	}
+	else
+	{
+		hm[task] = {np, na};
+		pq.push(np, t);
+	}
+}

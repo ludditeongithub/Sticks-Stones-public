@@ -1,0 +1,22 @@
+#include <core/data.hpp>
+
+class Camera
+{
+      public:
+	Coord leftCorner;
+	static Camera &instance()
+	{
+		if (!instance_)
+		{
+			instance_ = new Camera();
+		}
+		return *instance_;
+	}
+
+      private:
+	Camera() = default;
+
+	static Camera *instance_;
+};
+
+Camera *Camera::instance_ = nullptr;

@@ -6,11 +6,9 @@
 #include <world/animal/entity.hpp>
 #include <world/unit/entity.hpp>
 
-struct ChaserDispatch {
-  void dispatchAnimalHunters(DispatchData<Animal> &dd) {}
+struct ChaserDispatch
+{
+	void dispatchAnimalHunters(DispatchData<Animal> &dd) {}
 
-  void dispatchUnitChasers(DispatchData<>) {
-    
-  }
-  
+	void dispatchUnitChasers(DispatchData<>) {}
 };

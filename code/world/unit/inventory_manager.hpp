@@ -2,17 +2,11 @@
 #define MANAGEINVENTORY_H_
 #include <unit/enum.hpp>
 
-
 class InventoryManager
 {
-private:
-public:
-  InventoryManager() {};
-  
+      private:
+      public:
+	InventoryManager() {};
 };
-
-
-
-
 
 #endif // MANAGEINVENTORY_H_

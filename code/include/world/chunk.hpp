@@ -9,46 +9,49 @@
 
  At the tile level
 
- TODO possibly have another database which controls things at the region level, for alternate divison of parallelized tasks
+ TODO possibly have another database which controls things at the region level, for alternate
+ divison of parallelized tasks
 */
 
+#include "../include/FastNoiseLite.h"
 #include "../include/basic.hpp"
 #include "../include/categories.hpp"
 #include "../include/plant.hpp"
 #include "../include/scavengeables.hpp"
 #include "../include/tile.hpp"
-#include "../include/FastNoiseLite.h"
 
-
-//This is a singleton which holds all chunks. There is a tileDatabase for each chunk, and this database can manage them as an aggregate.
-// Temperature and humidity are calculated at a region level. Indoor rooms created by the player and tribes are stored as separate objects, with their own temperature and humidity calculations.
+// This is a singleton which holds all chunks. There is a tileDatabase for each chunk, and this
+// database can manage them as an aggregate.
+//  Temperature and humidity are calculated at a region level. Indoor rooms created by the player
+//  and tribes are stored as separate objects, with their own temperature and humidity calculations.
 class ChunkDatabase
 {
-private:
-  constexpr uint16_t chunkWidth = 100;
-  constexpr uint16_t chunkHeight = 100;
-  FastNoiseLite noise;
-  struct Chunk {
-    static coord topLeftCorner; 
-    bool active;
-    //active tiles 
-    TileDatabase tileDB;
-    PlantDatabase plantDB;
-    ScavengeableDatabase scavengeableDB;
-  };
+      private:
+	constexpr uint16_t chunkWidth = 100;
+	constexpr uint16_t chunkHeight = 100;
+	FastNoiseLite noise;
+	struct Chunk
+	{
+		static coord topLeftCorner;
+		bool active;
+		// active tiles
+		TileDatabase tileDB;
+		PlantDatabase plantDB;
+		ScavengeableDatabase scavengeableDB;
+	};
 
-std::vector<std::vector<Chunk>> chunks;
- 
-public:
-  ChunkDatabase() {};
-  
-  void createChunk(int regionX, int regionY);
-  void activateChunk(int regionX, int regionY);
-  void deactivateChunk(int regionX, int regionY);
-  void applyRiverTiles();
-  void recursiveLower();
-  void recursiveFill();
-  void loadTile();
-  void updateChunks();
-  void updateChunk(int regionX, int regionY);
+	std::vector<std::vector<Chunk>> chunks;
+
+      public:
+	ChunkDatabase() {};
+
+	void createChunk(int regionX, int regionY);
+	void activateChunk(int regionX, int regionY);
+	void deactivateChunk(int regionX, int regionY);
+	void applyRiverTiles();
+	void recursiveLower();
+	void recursiveFill();
+	void loadTile();
+	void updateChunks();
+	void updateChunk(int regionX, int regionY);
 };

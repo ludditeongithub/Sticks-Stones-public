@@ -3,33 +3,36 @@
 #include <variant>
 
 #include <world/animal/enum.hpp>
-#include <world/plant/enum.hpp>
 #include <world/item/enum.hpp>
+#include <world/plant/enum.hpp>
 #include <world/unit/enum.hpp>
 
 #include "ui.hpp"
 
-struct TextBox : UIElement {
-  std::string text;
+struct TextBox : UIElement
+{
+	std::string text;
 
-  void render(SDL_Rect viewport) {
-	  UIElement::render(viewport);
-  }
+	void render(SDL_Rect viewport) { UIElement::render(viewport); }
 };
 
-struct ItemTextBox : TextBox {
+struct ItemTextBox : TextBox
+{
 	Item item;
 };
 
-struct AnimalTextBox : TextBox {
-    Animal animal;
+struct AnimalTextBox : TextBox
+{
+	Animal animal;
 };
 
-struct PlantTextBox : TextBox {
-    Plant plant;
+struct PlantTextBox : TextBox
+{
+	Plant plant;
 };
 
-struct RoleTextBox : TextBox {
+struct RoleTextBox : TextBox
+{
 	Role role;
 };
 

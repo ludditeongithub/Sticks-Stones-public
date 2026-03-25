@@ -3,10 +3,10 @@
 
 #include "entity.hpp"
 
-class LifeManager {
-  Age calculateLifespan(Age originalLifespan);
-  void planDeathTime() {}; // sends death event to event manager  
+class LifeManager
+{
+	Age calculateLifespan(Age originalLifespan);
+	void planDeathTime() {}; // sends death event to event manager
 };
-
 
 #endif

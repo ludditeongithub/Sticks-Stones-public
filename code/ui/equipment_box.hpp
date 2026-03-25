@@ -1,3 +1,3 @@
-struct EquipmentBox {
-	
+struct EquipmentBox
+{
 };

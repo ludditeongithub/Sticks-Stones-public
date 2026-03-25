@@ -5,19 +5,23 @@
 
 class LifetimeManager
 {
-private:
-  std::vector<bool> alives;
-  uint16_t size;
-public:
-  LifetimeManager() {};
-  void markDestroyed(uint16_t index) {
-    if (index > size) {
-      throw std::out_of_range("Tried to mark for destruction larger than size.");
-    } else {
-      alives[index] = false;
-    }      
-  }
-};
+      private:
+	std::vector<bool> alives;
+	uint16_t size;
 
+      public:
+	LifetimeManager() {};
+	void markDestroyed(uint16_t index)
+	{
+		if (index > size)
+		{
+			throw std::out_of_range("Tried to mark for destruction larger than size.");
+		}
+		else
+		{
+			alives[index] = false;
+		}
+	}
+};
 
 #endif

@@ -1,104 +1,108 @@
 #pragma once
+#include <stack>
 #include <unordered_map>
 #include <vector>
-#include <stack>
 
+#include <core/containers.hpp>
 #include <core/data.hpp>
 #include <core/entity.hpp>
 #include <core/memory.hpp>
-#include <core/containers.hpp>
 
-#include <world/tile/data.hpp>
-#include <world/chunk/data.hpp>
-#include <world/unit/enum.hpp>
 #include <world/animal/enum.hpp>
-#include <world/plant/enum.hpp>
+#include <world/chunk/data.hpp>
 #include <world/item/enum.hpp>
+#include <world/plant/enum.hpp>
+#include <world/tile/data.hpp>
+#include <world/unit/enum.hpp>
+#include <world/world.hpp>
 
- struct GridInfo {
-    uint16_t index;
-    uint16_t distance;
- }; 
- 
- // certain biomes may need larger search grids
-// SearchGrid itself should be an indexed data structure 
- struct SearchGrid {
-   constexpr SearchGrid() {};
+struct GridInfo
+{
+	uint16_t index;
+	uint16_t distance;
+};
 
-   enum class Types {
-     Plant,
-     Animal,
-     Unit,
-     Item
-   };
-   
-   constexpr NATURAL_CHUNK_SEARCH_SIZE = (AVERAGE_CHUNK_PLANTS_SIZE +
-                                         AVERAGE_CHUNK_ANIMALS_SIZE +
-					  AVERAGE_CHUNK_ITEM_SIZE) * 1.25;
-   constexpr ACTIVE_CHUNK_SEARCH_SIZE = (AVERAGE_CHUNK_PLANTS_SIZE +
-                                         AVERAGE_CHUNK_ANIMALS_SIZE +
-     AVERAGE_CHUNK_CIVILIZATION_ITEM_SIZE + AVERAGE_CHUNK_UNIT_SIZE) * 1.25;
+constexpr uint16_t AVERAGE_CHUNK_PLANTS_SIZE = CHUNK_SIZE / 2.5;
+constexpr uint16_t AVERAGE_CHUNK_ANIMALS_SIZE = CHUNK_SIZE / 15;
+constexpr uint16_t AVERAGE_CHUNK_SCAVENGEABLE_SIZE = CHUNK_SIZE / 12;
+constexpr uint16_t AVERAGE_CHUNK_CIVILIZATION_ITEM_SIZE = CHUNK_SIZE / 10;
+constexpr uint16_t AVERAGE_CHUNK_UNIT_SIZE = CHUNK_SIZE / 25;
 
-   using ChunkBucket = std::unordered_map<Entity, std::vector<EntitySearchData>>;
+constexpr uint16_t NATURAL_CHUNK_SEARCH_SIZE =
+    (AVERAGE_CHUNK_PLANTS_SIZE + AVERAGE_CHUNK_ANIMALS_SIZE + AVERAGE_CHUNK_SCAVENGEABLE_SIZE) *
+    1.25;
 
-   // stores unitIndex, if unit is to be wiped later due to not actually being
-   // in bucket anymore
-   Arena *chunkBucketArena;
-   Arena *activeBucketArena;
+constexpr uint16_t ACTIVE_CHUNK_SEARCH_SIZE =
+    (AVERAGE_CHUNK_PLANTS_SIZE + AVERAGE_CHUNK_ANIMALS_SIZE + AVERAGE_CHUNK_SCAVENGEABLE_SIZE +
+     AVERAGE_CHUNK_CIVILIZATION_ITEM_SIZE + AVERAGE_CHUNK_UNIT_SIZE) *
+    1.30;
 
-   Array<ChunkBucket *> chunkBuckets;
-   Array<ChunkBucket *> activeChunkBuckets;
-   std::unordered_map<uint16_t, uint16_t> chunkToActiveChunks;
-   std::stack<uint16_t> freeIndices;
-   std::vector<bool> activeChunks;
-   uint32_t activeCount;
-  Array<std::vector<bool> *> occupiedTiles;   
+// certain biomes may need larger search grids
+// SearchGrid itself should be an indexed data structure
+struct SearchGrid
+{
+	World& world;
 
-   // to begin with, all chunks are given the default amount of memory. active chunks and super-active chunks are upgraded to higher amounts of memory
-   SearchGrid(uint16_t chunkAmount);
+	SearchGrid(World& world);
 
-   uint16_t getActiveChunkIndex(uint16_t index);
+	using ChunkBucket = std::unordered_map<Entity, std::vector<EntitySearchData>>;
 
-   void addActiveChunk(uint16_t index);   
+	// stores unitIndex, if unit is to be wiped later due to not actually being
+	// in bucket anymore
+	Arena *chunkBucketArena;
+	Arena *activeBucketArena;
 
-   inline GridInfo getNthNearestChunk(Coord c, uint16_t n);
+	Array<ChunkBucket *> chunkBuckets;
+	Array<ChunkBucket *> activeChunkBuckets;
+	std::unordered_map<uint16_t, uint16_t> chunkToActiveChunks;
+	std::stack<uint16_t> freeIndices;
+	std::vector<bool> activeChunks;
+	uint32_t activeCount;
+	Array<std::vector<bool> *> occupiedTiles;
 
-   void reset(); 
+	// to begin with, all chunks are given the default amount of memory. active chunks and
+	// super-active chunks are upgraded to higher amounts of memory
 
-  inline void insertEntity(Coord tileCoord, Entity type,
-                           EntitySearchData data);
+	uint16_t getActiveChunkIndex(uint16_t index);
 
-  inline bool checkCollision(Coord tileCoord);
+	void addActiveChunk(uint16_t index);
 
-  inline EntitySearchData getNearest(Entity e, Coord c);
+	inline GridInfo getNthNearestChunk(Coord c, uint16_t n);
 
-  inline Array<EntitySearchData> getAllOFTypeInRange(Entity e, Coord o, Coord d);
-   
-  inline EntityRenderData getAllInRange(Coord o, Coord d);
-  // inline void setOldEntity(Coord tileCoord, uint16_t index) {
-  //   uint16_t gc = getChunkIndexFromTile(tileCoord);
-    
-  //   fchunkBuckets[gc].size(); i++) if (indices[i] == index) old[i] = 1;
-  // }  
+	void reset();
 
-  // inline void removeOldEntities() {
-  //   for (int i = 0; i < chunkBuckets.size(); i++) {
-  //     auto* old = chunkBuckets[i].column<1>();
-  //     auto* indices = chunkBuckets[i].column<0>();
+	inline void insertEntity(Coord tileCoord, Entity type, EntitySearchData data);
 
-  //     std::vector<uint16_t> a(chunkBuckets[i].size());
-  //     int k = -1;
-  //     for (int j = 0; j < chunkBuckets[i].size(); j++) {
-  //       if (old[j] == 0) a[k++] = indices[j];
-  //     }
-  //     chunkBuckets[i].clear();
-  //     chunkBuckets[i].reserve(k);
-  //     old = chunkBuckets[i].column<1>();
-  //     indices = chunkBuckets[i].column<0>();      
-  //     for (int j = 0; j < k; j++) {
-  // 	chunkBuckets[i].emplace_back(a[j], false);
-  //     }
-  //   }
-  // }
+	inline bool checkCollision(Coord tileCoord);
 
- };
+	inline EntitySearchData getNearest(Entity e, Coord c);
+
+	inline Array<EntitySearchData> getAllOFTypeInRange(Entity e, Coord o, Coord d);
+
+	inline EntityRenderBuffer getAllInRange(Coord o, Coord d);
+	// inline void setOldEntity(Coord tileCoord, uint16_t index) {
+	//   uint16_t gc = getChunkIndexFromTile(tileCoord);
+
+	//   fchunkBuckets[gc].size(); i++) if (indices[i] == index) old[i] = 1;
+	// }
+
+	// inline void removeOldEntities() {
+	//   for (int i = 0; i < chunkBuckets.size(); i++) {
+	//     auto* old = chunkBuckets[i].column<1>();
+	//     auto* indices = chunkBuckets[i].column<0>();
+
+	//     std::vector<uint16_t> a(chunkBuckets[i].size());
+	//     int k = -1;
+	//     for (int j = 0; j < chunkBuckets[i].size(); j++) {
+	//       if (old[j] == 0) a[k++] = indices[j];
+	//     }
+	//     chunkBuckets[i].clear();
+	//     chunkBuckets[i].reserve(k);
+	//     old = chunkBuckets[i].column<1>();
+	//     indices = chunkBuckets[i].column<0>();
+	//     for (int j = 0; j < k; j++) {
+	// 	chunkBuckets[i].emplace_back(a[j], false);
+	//     }
+	//   }
+	// }
+};

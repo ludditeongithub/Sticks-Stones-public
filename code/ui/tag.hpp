@@ -1,3 +1,3 @@
-struct NameTag {
-	
+struct NameTag
+{
 };

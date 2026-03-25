@@ -3,26 +3,30 @@
 
 #include <plant/enum.hpp>
 
-namespace seed {
+namespace seed
+{
 
-struct Type {
-  Plant type;
+struct Type
+{
+	Plant type;
 };
 
-   struct Position {
-    int x;
-    int y;
-   };
-  
-    struct Lifespan {
-      uint16_t lifespan;
-    };
-  
-    struct GrowthMisses {
-      uint16_t growthMisses;
-    };
+struct Position
+{
+	int x;
+	int y;
+};
 
-}
+struct Lifespan
+{
+	uint16_t lifespan;
+};
 
+struct GrowthMisses
+{
+	uint16_t growthMisses;
+};
+
+} // namespace seed
 
 #endif

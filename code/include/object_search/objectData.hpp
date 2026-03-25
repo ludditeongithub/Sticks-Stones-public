@@ -7,21 +7,17 @@
 #include <flat_map>
 #include <flat_set>
 
-
 class ObjectDatabase
 {
-private:
-std::flat_map<std::pair<int,int>, std::pair<bool, Item>> filledLiquidContainers(); //bool is whether still processing or not. only counts ones filled with actual liquid
-std::vector<
-    std::vector<std::flat_map<Object, std::flat_set<std::pair<int, int>>>>>
-    globalMap;
+      private:
+	std::flat_map<std::pair<int, int>, std::pair<bool, Item>>
+	filledLiquidContainers(); // bool is whether still processing or not. only counts ones
+				  // filled with actual liquid
+	std::vector<std::vector<std::flat_map<Object, std::flat_set<std::pair<int, int>>>>>
+	    globalMap;
 
-
-public:
-  ObjectDatabase() {};
-  
+      public:
+	ObjectDatabase() {};
 };
-
-
 
 #endif // OBJECTDATA_H_
