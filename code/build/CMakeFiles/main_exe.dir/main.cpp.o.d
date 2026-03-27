@@ -444,7 +444,8 @@ CMakeFiles/main_exe.dir/main.cpp.o: \
  /home/logan/gameprogramming/code/render/screen.hpp \
  /home/logan/gameprogramming/code/systems/perishables_manager.hpp \
  /home/logan/gameprogramming/code/world/item/entity.hpp \
- /home/logan/gameprogramming/code/world/item/enum.hpp \
+ /home/logan/gameprogramming/code/world/item/tags.hpp \
+ /home/logan/gameprogramming/code/core/fbitset.hpp \
  /home/logan/gameprogramming/code/core/hash.hpp \
  /home/logan/gameprogramming/code/simulation/first_spawn.hpp \
  /home/logan/gameprogramming/code/ui/state.hpp \

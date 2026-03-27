@@ -81,10 +81,6 @@ struct World
 	inline Coord getTileCoordFromIndex(uint32_t i);
 	inline uint32_t getTileIndexChunkRelative(uint32_t i);
 	inline uint32_t getTileIndexChunkRelative(Coord c);
-	Coord getRandomPlayerStart()
-	{
-		
-	}
 
 	void loadChunkData(WorldSpawner &ws)
 	{

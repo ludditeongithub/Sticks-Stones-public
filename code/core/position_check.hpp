@@ -1,8 +1,8 @@
-#include "../include/animal.hpp"
-#include "../include/basic.hpp"
-#include "../include/categories.hpp"
-#include "../include/tile.hpp"
-#include "../include/unit.hpp"
+#include <pair>
+#include <vector>
+#include <cmath>
+#include <optional>
+#include "data.cpp"
 
 float maxAltChange = 2.0;
 
@@ -51,8 +51,8 @@ bool isInPath(const T &map, std::pair<int, int> start, std::pair<int, int> end, 
 
 bool coordsInPath(std::pair<int, int> start, std::pair<int, int> end, std::pair<int, int> between)
 {
-	int dx = abs(end.second - start.second);
-	int dy = abs(end.first - start.first);
+	int dx = std::abs(end.second - start.second);
+	int dy = std::abs(end.first - start.first);
 	int sx = start.second < end.second ? 1 : -1;
 	int sy = start.first < end.first ? 1 : -1;
 	int err = dx - dy;
@@ -89,7 +89,7 @@ bool coordsInPath(std::pair<int, int> start, std::pair<int, int> end, std::pair<
 }
 
 /* HELPER FUNCTIONS */
-bool adjCheck(vector<vector<int>> map, int y, int x, int check, int range)
+bool adjCheck(const std::vector<std::vector<int>>& map, int y, int x, int check, int range)
 {
 	int rows = map.size();	  // height
 	int cols = map[0].size(); // width
@@ -147,36 +147,38 @@ bool adjCheck(L &referenceMap, M &map, int y, int x, T check, int range)
 	return false;
 }
 
-bool adjCheckObject(int firstIndex, int secondIndex, bool firstAnimal, bool secondAnimal)
+bool adjCheckObject(int firstIndex, int secondIndex, bool firstAnimal, bool secondAnimal, std::vector<std::pair<int,int>>& animalCoords, std::vector<std::pair<int, int>>& currentCoords)
 {
+	std::pair<int, int> fc, sc;
 	if (firstAnimal)
-		std::pair<int, int> fc = animalCoords[firstIndex];
+		fc = animalCoords[firstIndex];
 	else
-		std::pair<int, int> fc = currentCoords[firstIndex];
+		fc = currentCoords[firstIndex];
 	if (secondAnimal)
-		std::pair<int, int> sc = animalCoords[secondIndex];
+		sc = animalCoords[secondIndex];
 	else
-		std::pair<int, int> fc = currentCoords[firstIndex];
+		sc = currentCoords[firstIndex];
+	
 	if ((abs(fc.first - sc.first) == 1 || abs(fc.first - sc.first) == 0) &&
 	    (abs(fc.second - sc.second) == 0 || abs(fc.second - sc.second) == 1))
 		return true;
 	return false;
 }
 
-// TODO: check to see if this makes sense returns None if not adjacent
-Direction adjCheckTile(std::pair<int, int> subject, std::pair<int, int> target)
+// TODO: check to see if this makes sense returns nullptr if not adjacent
+std::optional<Direction> adjCheckTile(std::pair<int, int> subject, std::pair<int, int> target)
 {
 	if (manDist(subject, target) > 1)
-		return Direction::NONE;
+		return std::nullopt;
 	if (subject.first - target.first == 1)
-		return Direction::East;
+		return std::make_optional<Direction>(Direction::East);
 	if (subject.first - target.first == -1)
-		return Direction::West;
+		return std::make_optional<Direction>(Direction::West);
 	if (subject.second - target.second == 1)
-		return Direction::North;
-	if (subject.second - target.second == 1)
-		return Direction::South;
-	return Direction::NONE;
+		return std::make_optional<Direction>(Direction::North);
+	if (subject.second - target.second == -1)
+		return std::make_optional<Direction>(Direction::South);
+	return std::nullopt;
 }
 
 template <typename L, typename M, typename Container>
@@ -296,7 +298,7 @@ std::pair<int, int> adjGetTileOfType(vector<T> &tileVector, int tileIndex, C typ
 	return adj;
 }
 
-int adjRange(std::vector<std::vector<int>> &map, int y, int x, int check)
+int adjRange(const std::vector<std::vector<int>> &map, int y, int x, int check)
 {
 	int rows = map.size(), cols = map[0].size();
 	std::vector<std::pair<int, int>> directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};

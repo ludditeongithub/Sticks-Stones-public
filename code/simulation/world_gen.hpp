@@ -162,8 +162,7 @@ class WorldSpawner
 	void markCoasts();
 	void applyExtraHighlandsAndMountains();
 	void generateLandsMap();
-	void extendRiversFromSource(uint16_t riverLength, int x, int y,
-				    std::vector<bool> &rVisited);
+	void extendRiversFromSource(uint16_t riverLength, int x, int y);
 	void markRiverEnds();
 	void generateWaterMap();
 	void generateTemperatureMap();
@@ -172,7 +171,9 @@ class WorldSpawner
 	void generateBiomes();
 	void generateAltitudeMap();
 	void getRiversFromGroundwater();
-	void cleanAltitudeMap();
+	void cleanAltitudeMap();	
+std::vector<std::tuple<float, bool, bool>>
+humidityAndRainShadowEffects(int y, int x, int water, bool biomes);
 	void addDepressions();
 	void applyRiverTiles();
 	void recursiveLower();
@@ -188,6 +189,7 @@ class WorldSpawner
 	void generateWorld();
 	void moveRegionsToChunks(Array<uint8_t> humidities, Array<int8_t> temperatures,
 				 Array<uint8_t> altitudes);
+	void printInfo();
 
 	// Constants
 	// IN CELLS

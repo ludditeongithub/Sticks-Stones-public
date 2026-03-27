@@ -1,4 +1,5 @@
 #include "world_gen.hpp"
+#include <queue>
 #include <core/position_check.hpp>
 
 // TO-DO: refactor all code to use adjacent tiles based on nearest Voronoi
@@ -214,7 +215,7 @@ void WorldSpawner::applyExtraHighlandsAndMountains()
 
 void WorldSpawner::generateLandsMap()
 {
-	markCoasts(landsMap, oceanMap);
+	markCoasts();
 	for (int x = 0; x < WIDTH; ++x)
 	{
 		for (int y = 0; y < HEIGHT; ++y)
@@ -236,7 +237,7 @@ void WorldSpawner::generateLandsMap()
 			}
 		}
 	}
-	applyExtraHighlandsAndMountains(landsMap, oceanMap);
+	applyExtraHighlandsAndMountains();
 }
 
 // TODO: make river
@@ -245,7 +246,7 @@ void WorldSpawner::extendRiversFromSource(uint16_t riverLength, int x, int y)
 	// Base case 1: Hits the edge of the map
 	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
 	{
-		return; // Stop recursion if out of bounds
+		return;
 	}
 
 	// Base case 2: Tile is rVisited
@@ -266,7 +267,7 @@ void WorldSpawner::extendRiversFromSource(uint16_t riverLength, int x, int y)
 	// Base case 4: Chance of stopping if lake condition is met
 	if (getLowestAdjValue(altitudeMap, y, x) > altitudeMap[y][x])
 	{
-		waterMap[y][x] = 5; // Mark as Lake
+		waterMap[y][x] = 5;
 		float random = rand() % 100;
 		// 60% chance of stopping when adjacent tiles are not lower, and 20% of no
 		// lake
@@ -310,7 +311,7 @@ void WorldSpawner::extendRiversFromSource(uint16_t riverLength, int x, int y)
 					}
 				}
 			}
-			extendRiversFromSource(riverLength, ny, nx, rVisited);
+			extendRiversFromSource(riverLength, nx, ny);
 		}
 	}
 }
@@ -403,8 +404,7 @@ void WorldSpawner::generateWaterMap()
 			std::fill(rVisited.begin(), rVisited.end(),
 				  std::vector<bool>(HEIGHT + 1, false));
 			if (waterMap[y][x] == 2)
-				extendRiversFromSource(waterMap, landsMap, altitudeMap, y, x,
-						       rVisited);
+				extendRiversFromSource(y, x, 0);
 		}
 	}
 
@@ -416,8 +416,7 @@ void WorldSpawner::generateWaterMap()
 			std::fill(rVisited.begin(), rVisited.end(),
 				  std::vector<bool>(HEIGHT + 1, false));
 			if (waterMap[y][x] == 5 && rand() / (float)RAND_MAX < riverFromLakeChance)
-				extendRiversFromSource(waterMap, landsMap, altitudeMap, y, x,
-						       rVisited);
+				extendRiversFromSource(y, x, 0);
 		}
 	}
 }
@@ -877,7 +876,7 @@ void WorldSpawner::getRiversFromGroundwater()
 					waterMap[y][x] = 6; // river source from groundwater
 					std::fill(rVisited.begin(), rVisited.end(),
 						  std::vector<bool>(HEIGHT + 1, false));
-					extendRiversFromSource(waterMap, landsMap, altitudeMap, y,
+					extendRiversFromSource(y,
 							       x);
 				}
 			}
@@ -1403,18 +1402,19 @@ void WorldSpawner::moveRegionsToChunks(Array<uint8_t> &humidityTable,
 	WorldSpawner::printInfo()
 	{
 		cout << "Ocean" << endl;
-		printMap();
+		printMap(oceanMap);
 		cout << "Lands" << endl;
-		printMap();
+		printMap(landsMap);
 		cout << "Altitude" << endl;
-		printMap();
+		printMap(altitudeMap);
 		cout << "Water Bodies" << endl;
-		printMap();
+		printMap(waterMap);
 		cout << "Temperature" << endl;
-		printMap();
+		printMap(temperatureMap);
 		cout << "Humidity" << endl;
-		printMap();
+		printMap(humidityMap);
 		cout << "Biomes" << endl;
+		printMap(biomeMap);
 	}
 
 	WorldSpawner::generateWorld()
@@ -1440,11 +1440,11 @@ void WorldSpawner::moveRegionsToChunks(Array<uint8_t> &humidityTable,
 		std::vector<float> gtc = ws.generateTileChances();
 		std::vector<Coord> gvs = ws.generateVoronoiSites();
 		generateTilesTypes(gtc, gvs);
-		spawnFirstPlants();
-		cout << "PLANTS SPAWNED" << endl;
-		spawnFirstAnimals();
-		cout << "TILE AMOUNT:" << rTileIndex.size() << endl;
-		int cell = rTileCellIndex[5];
-		cout << " Cell: " << cell;
-		spawnScavengeables();
+		// spawnFirstPlants();
+		// cout << "PLANTS SPAWNED" << endl;
+		// spawnFirstAnimals();
+		// cout << "TILE AMOUNT:" << rTileIndex.size() << endl;
+		// int cell = rTileCellIndex[5];
+		// cout << " Cell: " << cell;
+		// spawnScavengeables();
 	}

@@ -15,7 +15,10 @@ struct ItemSlot
 	Item item; // HOLDING for hands if hands are holding multiple items instead of using item
 	uint16_t amount; // doubles as index for container
 
-	ItemSlot(Item item, uint16_t amount) : item(item), amount(amount) {}
+	ItemSlot(Item item, uint16_t amount) : item(item), amount(amount)
+	{
+		assert(!hasTag(itemTags::Variant | itemTags::Tool | itemTags::Art, itemTags[item]));
+	}
 
 	inline bool isEmpty()
 	{
@@ -38,6 +41,7 @@ struct VariantItemSlot
 	VariantItemSlot(Item item, uint16_t amount, uint8_t variant)
 	    : item(item), amount(amount), variant(variant)
 	{
+		assert(hasTag(itemTags::Variant, itemTags[item]));
 	}
 
 	inline bool isEmpty()
@@ -59,8 +63,7 @@ struct ToolSlot
 
 	ToolSlot(Item item, SpecialItemData specialData) : item(item), specialData(specialData)
 	{
-		if (!hasTag(itemTags::Art, itemTags[item]))
-			std::cerr << "Tried to pass non-tool item to tool slot." << std::endl;
+		assert(hasTag(itemTags::Tool, itemTags[item]));
 	}
 
 	inline bool isEmpty()
@@ -78,8 +81,7 @@ struct ArtSlot {
 
 	ArtSlot(Item item, SpecialItemData specialData) : item(item), specialData(specialData)
 	{
-		if (!hasTag(itemTags::Art, itemTags[item]))
-			std::cerr << "Tried to pass non-art item to art slot." << std::endl;
+		assert(hasTag(itemTags::Art, itemTags[item]));
 	}
 
 	inline bool isEmpty()
@@ -88,7 +90,7 @@ struct ArtSlot {
 			return true;
 		return false;
 	}	
-	inline Item getType() { return item; }	
+	inline Item getType() { return item; }
 };
 
 using HoldableSlot = std::variant<ItemSlot, VariantItemSlot, ToolSlot, ArtSlot>;
@@ -131,7 +133,7 @@ inline bool hasTag(ContainerFullTags value, ContainerFullTags tag)
 
 struct Container
 {
-	ContainerType type;
+	Item type;
 	ContainerFullTags tags;
 	float bulk = 0;
 	float weight = 0;
@@ -141,6 +143,11 @@ struct Container
 	//  std::array<ItemSlot, 3> items;
 	//  VariantItemSlot variantItem;
 	//  std::array<ToolSlot, 2> tools;
+
+	Container(Item type, ContainerFullTags tags, float bulk, float weight) : type(type), tags(tags), bulk(bulk), weight(weight)
+	{
+		assert(hasTag(itemTags::Container, itemTags[type]));
+	}		
 };
 
 struct ContainerStorageData

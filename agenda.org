@@ -1,3 +1,5 @@
+* REMEMBER
+** boost.preprocessor enum to string
 * NOW
 ** Finish world generation
 ** Sprite loading

@@ -21,12 +21,11 @@ enum class itemTags : uint16_t
 	Tool = 1 << 9,
 	Container = 1 << 10,
 	// TODO: add flammable tags
-	NonFlammable = 1 << 11,
+	Mould = 1 << 11,
 	Wearable = 1 << 12,
 	Perishable = 1 << 13,
 	WaterDamage = 1 << 14,
-	Art = 1 << 15
-	
+	Art = 1 << 15,
 };
 
 inline itemTags operator|(itemTags a, itemTags b)

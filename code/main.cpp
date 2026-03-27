@@ -17,7 +17,7 @@
 #include <world/unit/entity.hpp>
 #include <world/world.hpp>
 
-int main()
+int startGame()
 {
 	initWindow() ?: printf("Init failed.");
 
@@ -78,4 +78,11 @@ int main()
 	drawEntities(world, leftCornerTile, tileDatabase.tiles, animalDatabase.ages,
 		     animalDatabase.frames, animalDatabase.statuses, unitDatabase.frames,
 		     unitDatabase.ages, unitDatabase.frameDatas, search);
+}	
+
+int main()
+{
+		WorldSpawner ws(200, 200);
+		ws.generateWorld();
+		ws.printInfo();	
 }

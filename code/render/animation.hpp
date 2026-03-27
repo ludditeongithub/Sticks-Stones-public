@@ -60,12 +60,13 @@ inline uint16_t getActionSpriteOffset(SpriteInfo &ai, ActionStatus as)
 		return ai.WALKING_SPRITE_LENGTH;
 		break;
 	default:
+		break;
 	}
 	// TODO: PerformAction, set of actions, be sure to update child sprite offset!
 }
 
 inline uint16_t getActionSpriteOffset(SpriteInfo &info, ActState state) {
-	switch (as)
+	switch (state)
 	{
 		// WALK
 	case ActState::Walk:
@@ -77,8 +78,10 @@ inline uint16_t getActionSpriteOffset(SpriteInfo &info, ActState state) {
 		return info.WALKING_SPRITE_LENGTH;
 		break;
         case ActState::Act:
-		return info.WALKING_SPRITE_LENGTH + RUNNING_SPRITE_LENGTH;
+		return info.WALKING_SPRITE_LENGTH + info.RUNNING_SPRITE_LENGTH;
+		break;
 	default:
+		break;
 	}
 }
 
