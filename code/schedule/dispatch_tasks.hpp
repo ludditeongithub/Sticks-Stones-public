@@ -1,5 +1,10 @@
 #include <core/containers.hpp>
 #include <core/data.hpp>
+#include <world/item/enum.hpp>
+#include <world/unit/roles_and_actions.hpp>
+#include <world/progression/enum.hpp>
+#include <variant>
+#include <array>
 #include <queue>
 
 enum class ProductionSubTasks
@@ -8,11 +13,15 @@ enum class ProductionSubTasks
 	StartProduction
 };
 
+struct RolePriorityList
+{
+	
+};	
+
 struct Task
 {
-	std::variant<Item, Order, Knowledge> 
-	std::array<Role, MAX_ROLES_PER_TASK> roles;
-	std::array<uint16_t, MAX_ROLES_PER_TASK> priorityPerRole;
+	
+	std::array<std::pair<Role, Priority>, MAX_ROLES_PER_TASK> roles;
 //in terms of items for items, # of units for support/research/military	
 };
 
@@ -28,6 +37,7 @@ void createTaskPriorityBoard(Array<Coord> destinations, Array<Task> tasks, Array
 		}
 	}
 }
+
 
 // RESOURCES PAWN MANAGEMENT
 //  change to assumming that the pawn is valid --> invalid pawns should never have been given this
@@ -73,3 +83,4 @@ void collectResource(Item item)
 		// SHORTEST PATH ALGORITHM
 	}
 }
+

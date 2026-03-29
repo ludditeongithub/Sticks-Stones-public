@@ -20,7 +20,6 @@ struct JobData
 
 void addPlayerOrder();
 
-void 
 
 
 // binary tree by Task ID, to ensure that if player changes amount or priority a new Task Job isn't

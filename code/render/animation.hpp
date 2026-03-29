@@ -224,7 +224,7 @@ SDL_Rect getAnimalRect(Animal a, AnimalStatus as, Time age, Frame frame, SpriteI
 {
 	bool child = age < maturityAges[a];
 	int x = asi.leftCorner.x;
-	ActState ac = as.second();
+	ActionStatus ac = as.second();
 	if (child)
 		x += getChildSpriteOffset(asi);
 	x += getActionSpriteOffset(asi, ac);
@@ -237,23 +237,23 @@ SDL_Rect getAnimalRect(Animal a, AnimalStatus as, Time age, Frame frame, SpriteI
 	return {x, y, static_cast<int>(c.x), static_cast<int>(c.y)};
 }
 
-inline Frame getNextUnitFrame(Animal a, ActState as, Frame frame, SpriteInfo& asi)
+inline Frame getNextAnimalFrame(Animal a, ActionStatus as, Frame frame, SpriteInfo& asi)
 {
 	switch (as)
 	{
 		// WALK
-	case ActState::Walk:
+	case ActionStatus::Approach:
 		// TODO: sometimes idle moves, sometimes it does not
+	case ActionStatus::Idle:
+	case ActionStatus::ReturnHome:
+	case ActionStatus::Prowl:
 		if (frame++ > asi.WALK_SPRITE_FRAME_LENGTH)
 			frame = 0;
 		break;
 		// TODO: RUN
-	case ActState::Run:
+	case ActionStatus::Pursuit:
+	case ActionStatus::Flee:
 		if (frame++ > asi.RUN_SPRITE_FRAME_LENGTH)
-			frame = 0;
-		break;
-        case ActState::Act:
-		if (frame++ > asi.ACT_SPRITE_FRAME_LENGTH)
 			frame = 0;
 		break;
 	default:
@@ -270,7 +270,7 @@ void updateAnimalAnimations(Coord leftCorner, EntityRenderBuffer &erd, Array<Fra
 		uint16_t ai = ard.index;
 		Frame &f = frames[ai];
 		AnimalStatus &s = states[ai];
-		SpriteInfo asi = animalSpriteInfos[a];
+		SpriteInfo asi = animalSpriteInfos[ard.animal];
 		SDL_Rect r = getAnimalRect(ard.animal, s, ages[ai], f, asi);
 
 		// TODO: position must be relative to screen
@@ -284,10 +284,10 @@ inline Frame getNextUnitFrame(Unit u, ActState as, Frame frame, SpriteInfo& asi)
 {
 	switch (as)
 	{
-	case ActState::Act:
-	// TODO: change this to play animations for specific actions (maybe a
+		// TODO: change this to play animations for specific actions (maybe a
 		// few animations per item, like 'throw', 'hammer', 'hammer against
 		// object', 'train', etc)
+        case ActState::Act:
 	case ActState::NewPath:
 		frame = 0;
 		break;
@@ -301,26 +301,27 @@ inline Frame getNextUnitFrame(Unit u, ActState as, Frame frame, SpriteInfo& asi)
 		if (frame++ > asi.RUN_SPRITE_FRAME_LENGTH)
 			frame = 0;
 		break;
-        case ActState::Act:
-		if (frame++ > asi.ACT_SPRITE_FRAME_LENGTH) 
-			frame = 0;
-		break;
+        // TODO: implement		
+        // case ActState::Act:
+	// 	if (frame++ > asi.ACT_SPRITE_FRAME_LENGTH) 
+	// 		frame = 0;
+	// 	break;
 	default:
 	}
 	return frame;
 }
 
-inline SDL_Rect getUnitRect(Unit unit, ActionState state, Direction direction, Frame frame, Age age, SpriteInfo& usi) {
-	bool child = age < maturityAge;
+inline SDL_Rect getUnitRect(Unit unit, ActState state, Direction direction, Frame frame, Time age, SpriteInfo& usi) {
+	bool child = age < MATURITY_AGE;
 	int x = usi.leftCorner.x;
 
 	if (child)
         x += getChildSpriteOffset(usi);
 	x += getActionSpriteOffset(usi, state);
-	x += getDirectionSpriteOffset(usi, d, child);
+	x += getDirectionSpriteOffset(usi, direction, child);
 
-	Coord c = getSpriteDimensions(usi, d, child);
-	int y = usi.leftCorner.y + getFrameSpriteOffset(usi, ac, frame, c.y);
+	Coord c = getSpriteDimensions(usi, direction, child);
+	int y = usi.leftCorner.y + getFrameSpriteOffset(usi, state, frame, c.y);
 
 	return {x, y, static_cast<int>(c.x), static_cast<int>(c.y)};
 }
@@ -332,14 +333,14 @@ void updateUnitAnimations(Coord leftCorner, EntityRenderBuffer &erd,
 	{
 		UnitRenderData ard = erd.units[i];
 		uint16_t ai = ard.index;
-		ActionState state = frameDatas[ai].first();
+		ActState state = frameDatas[ai].first();
 		Direction direction = frameDatas[ai].second();
-		Frame frame = frameDatas[ai].third();
+		Frame&& frame = frameDatas[ai].third();
 		SpriteInfo usi = unitSpriteInfos[ard.unit];
 		SDL_Rect r = getUnitRect(ard.unit, state, direction, frame, ages[ai], usi);
 		// TODO: position must be relative to screen
 		gSpriteSheetTexture.render(ard.position.x, ard.position.y, &r, &mainScreenViewport);
-		f = getNextUnitFrame(ard.unit, state, frame, usi);
+		frame = getNextUnitFrame(ard.unit, state, frame, usi);		
 	}
 }
 

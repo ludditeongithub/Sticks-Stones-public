@@ -15,6 +15,7 @@ struct AnimalDispatcher
 
 	struct BucketCounts
 	{
+		uint16_t assignCount;
 		uint16_t newPathCount;
 		uint16_t hungryCount;
 		uint16_t thirstyCount;
@@ -26,7 +27,7 @@ struct AnimalDispatcher
 	BucketCounts getBucketCounts(Array<ActionDecisionStatus> &actions)
 	{
 		BucketCounts bc;
-		for (auto i = 0; i < actions.size; i++)
+		for (auto i = 0; i < actions.size(); i++)
 		{
 			switch (actions[i])
 			{
@@ -49,7 +50,7 @@ struct AnimalDispatcher
 	struct DispatchCollection
 	{
 		PathDispatchData newPathDispatch;
-
+		DispatchData assignDispatch;
 		DispatchData hungryDispatch;
 		DispatchData thirstyDispatch;
 		DispatchData breedingDispatch;
@@ -63,7 +64,7 @@ struct AnimalDispatcher
 	{
 		BucketCounts bc = getBucketCounts(actions);
 		DispatchCollection dc;
-		dc.newPathDispatch = DispatchData(bc.newPathCount);
+		dc.newPathDispatch = PathDispatchData(bc.newPathCount);
 		dc.assignDispatch = DispatchData(bc.assignCount);
 		dc.hungryDispatch = DispatchData(bc.hungryCount);
 		dc.thirstyDispatch = DispatchData(bc.thirstyCount);
@@ -72,20 +73,18 @@ struct AnimalDispatcher
 		dc.migrationDispatch = DispatchData(bc.migrationCount);
 
 		uint16_t newPathCount;
+		uint16_t assignCount;
 		uint16_t hungryCount;
 		uint16_t thirstyCount;
 		uint16_t breedingCount;
 		uint16_t rejoinPackCount;
 		uint16_t migrationCount;
-		for (uint16_t i = 0; i < animals.size; i++)
+		for (uint16_t i = 0; i < animals.size(); i++)
 		{
 			switch (actions[i])
 			{
-			case ActionDecisionStatus::NewPath:
-				dc.newPathDispatch.setData(newPathCount, i);
-				break;
 			case ActionDecisionStatus::Assign:
-
+				dc.assignDispatch.setData(assignCount, i);
 				break;
 			case ActionDecisionStatus::AnimalFoodSearch:
 				dc.hungryDispatch.setData(hungryCount, i);
@@ -121,3 +120,4 @@ struct AnimalDispatcher
 		setMigrationDestinations(dc.migrationDispatch);
 	}
 }
+

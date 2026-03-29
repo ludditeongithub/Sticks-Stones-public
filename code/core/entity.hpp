@@ -19,7 +19,6 @@ struct EntitySearchData {
    Coord position;
 };
 
-
 struct AnimalRenderData {
   uint16_t index;
   Coord position;
@@ -49,6 +48,8 @@ struct UnitRenderData {
   Coord position;
 	Unit unit;
 };
+
+using EntityRenderData = std::variant<PlantRenderData, AnimalRenderData, UnitRenderData, ToolRenderData, ItemRenderData>;
 
   struct EntityRenderBuffer {
     uint16_t plantAmount;

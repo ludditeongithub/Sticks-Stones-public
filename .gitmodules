@@ -1,0 +1,3 @@
+[submodule "extern/fixed-containers"]
+	path = extern/fixed-containers
+	url = https://github.com/teslamotors/fixed-containers.git

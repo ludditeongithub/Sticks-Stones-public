@@ -1,0 +1,56 @@
+#include "core/tables.hpp"
+#include "world/unit/enum.hpp"
+#include <variant>
+#include <vector>
+#include <world/item/enum.hpp>
+#include <world/progression/enum.hpp>
+#include <core/combo_enum.hpp>
+
+using Commodity = ConcatEnum<Item, Buildable, Knowledge, Order, Ritual>;
+
+template<typename... Cs>
+constexpr auto mkv(Cs... cs) -> std::array<Commodity::underlying, sizeof...(Cs)> {
+    return { Commodity::cast(cs)... };
+}
+
+
+inline constexpr RaggedLookupTable<Role, Commodity::underlying, 50000, Commodity::MAX>
+    rolesToCommodities = []
+{
+	using u = Commodity::underlying;
+	using enum Role;
+
+	RaggedLookupTable<Role, u, 50000, Commodity::MAX> lt{};
+
+	lt.set(Performer, mkv(Ritual::Song));
+	lt.set(Bard, mkv(Ritual::Song, Ritual::InstrumentalSong));
+	lt.set(Sculptor,
+	       mkv(Item::SmallSculpture, Buildable::MediumSculpture, Buildable::LargeSculpture));
+	lt.set(Goldsmith, mkv(Item::Ring, Item::Earring, Item::Necklace, Item::Bracelet));
+	lt.set(Poet, mkv(Ritual::Poem));
+	lt.set(StoneCarver, mkv(Item::SmallCarving, Buildable::LargeCarving));
+	lt.set(Actor, mkv(Ritual::Play));
+	lt.set(Playwright, mkv(Item::PlayScript));
+	lt.set(Musician, mkv(Ritual::InstrumentalSong));
+	lt.set(Decorator, mkv(Item::SmallPaintedCarving, Item::SmallPaintedSculpture,
+			      Buildable::MediumPaintedSculpture, Buildable::LargePaintedCarving));
+	lt.set(Painter, mkv(Item::PaperPainting, Item::CanvasPainting));
+	lt.set(WoodCarver, mkv(Item::SmallCarving, Buildable::LargeCarving, Buildable::WallCarving));
+	lt.set(Storyteller, mkv(Ritual::Story));
+	lt.set(GemCarver, mkv(Item::CutGem, Item::CutGreaterGem, Item::GemSeal));
+	lt.set(Potter, mkv(Item::Pot));
+	lt.set(GlassArtist, mkv(Item::PaintedGlass));
+	lt.set(Writer, mkv(Item::Novel, Item::ShortStory, Item::Pamphlet));
+
+	return lt;
+}();
+
+
+inline constexpr LookupTable<enum,type> name = [] {
+	LookupTable<enum,type> lt{};
+	using enum enum;
+	
+	return lt;
+}();    
+
+

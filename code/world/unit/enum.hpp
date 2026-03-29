@@ -22,6 +22,7 @@ enum class PlaceType
 	Tend
 };
 
+//TODO: calligrapher, calligraphy art
 enum class Role : uint8_t
 {
 	NONE,
@@ -41,6 +42,7 @@ enum class Role : uint8_t
 	Playwright,
 	Painter,
 	Writer,
+	Storyteller,
 	// SUPPORT
 	// paleo
 	// meso

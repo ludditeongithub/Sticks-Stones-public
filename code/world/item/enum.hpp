@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <core/packed_enum.hpp>
-// TODO: move all tool head to variant items, then also figure out how ore and metal work
+// TODO: move all tool heads, and moulds, to variant items, then also figure out how ore and metal work (roles to commodities will also need to be fixed)
 enum class Item : uint16_t
 {
 	NONE,
@@ -137,6 +137,7 @@ enum class Item : uint16_t
 	SmoothedPebbles,
 	Earring,
 	Ring,
+	Bracelet,
 	Necklace,
 	WoodCrown,
 	Sling,
@@ -219,7 +220,7 @@ enum class Item : uint16_t
 	Bowl,
 	OilLamp,
 	Incense,
-	BrickMold,
+	BrickMould,
 	Rivet,
 	Socket,
 	Wedge,
@@ -405,7 +406,25 @@ enum class Item : uint16_t
 	Helmet,
 	Bracers,
 	Guards,
-	Gloves,	
+	Gloves,
+
+
+	//TODO: fill out data for these items!
+	SmallSculpture,
+	SmallPaintedSculpture,
+	SmallCarving,
+	SmallPaintedCarving,
+	PlayScript,
+	PaperPainting,
+	CanvasPainting,
+	GemSeal,
+	CutGem,
+	CutGreaterGem,
+	PaintedGlass,
+	Pamphlet,
+	ShortStory,
+	Novel,
+	Decree,
 	MAX
 };
 
@@ -425,6 +444,8 @@ enum class Buildable : uint16_t
 	WattleRoof,
 	RoofBeams,
 	Roof,
+	Window,
+	PaintedWindow,
 
 	Foundation,
 	Floor,
@@ -457,6 +478,17 @@ enum class Buildable : uint16_t
 	Bellows,
 	DoubleBellows,
 	WaterPoweredBellows,
+
+	//TODO: fill out data for these items!
+	MediumSculpture,
+	LargeSculpture,
+	MediumPaintedSculpture,
+	LargePaintedSculpture,
+	LargeCarving,
+	LargePaintedCarving,
+	WallCarving,
+	LargeWallCarving,
+	PaintedGlass, 
 	MAX
 };
 

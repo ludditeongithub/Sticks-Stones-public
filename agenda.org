@@ -1,14 +1,20 @@
 * REMEMBER
 ** boost.preprocessor enum to string
 * NOW
-** Finish world generation
-** Sprite loading
 ** Menus
-** Option to configure SDL screensize
-** Migration Logic
-** get average plants, animals, units per chunk
-** Animation rendering
+*** wait for sprites to be done
+** Inventory and unit tasks
+On event of player affecting tasks:
+*** structures :FILL:
+each role has a priority list, max size is the number of products (material or non material) that role can possibly make. 
+
+struct that holds priority list. each role also has its minimum priority, and the index to that product.
+*** Event: player affecting tasks directly affects certain roles' priority queues 
+all units currently performing a non-material role, have their min priorities compared against the new order's priority, and switch to that if applicable.
+*** Event: Unit finishes task
+unit checks all its roles, and then selects the task with the lowest priority.
 ** Writing to data to file
+** option to configure screen size
 * NOTES
 ** Programming
 *** Scheduling and Simulation Precision
@@ -16,6 +22,7 @@
 
   All entities in NPACs are processed at a high frequency. There is lower batching, event driven. All entities in non-NPACs are processed at a low frequency. Higher batching, more concurrency of large tasks.
 * AFTER BETA
+** Migration Logic
 ** larger simulations
 *** actually manage Separate database for active chunks
 *** better arena management, ALLOC_FACTOR calculations

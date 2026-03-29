@@ -41,6 +41,7 @@ using Health = float;
 using Speed = float;
 using Hunger = uint16_t;
 using Sex = bool;
+using Priority = uint8_t;
 
 enum class TargetType : uint8_t
 {
