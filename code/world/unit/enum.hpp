@@ -456,6 +456,7 @@ enum class Action : uint8_t
 	Idle,
 	Assign,
 	Wander,
+	PickupTool,
 	MAIN_MAX,
 	MAX
 };

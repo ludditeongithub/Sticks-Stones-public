@@ -1,7 +1,348 @@
 #ifndef INVENTORIESANDWORKQUEUES_H_
 #define INVENTORIESANDWORKQUEUES_H_
 
-// TILE DATA
+#include "work_queue.hpp"
+#include <limits>
+#include "inventory_manager.hpp"
+
+void setUnitJob(UnitDatabase &database, CommodityDispatcher& dispatcher, uint16_t unitIndex) {
+	Commodity::underlying commodity = getUnitNextCommodity(database, dispatcher, unitIndex);
+	auto type = Commodity::cast(commodity, [](auto e)){ 
+		if constexpr (std::is_same_v<e, Item>)
+		{
+			hasTag(itemTags[e], itemTags::Resource ? attemptResource(database, unitIndex) : attemptProduction(database, unitIndex); 
+		} else if constexpr (std::is_same_v<e, Buildable>)
+			{
+				attemptBuild(database, unitIndex);
+			} else if constexpr (std::is_same_v<e, Knowledge>)
+			{
+				//TODO
+				
+			} else if constexpr (std::is_same_v<e, Order>)
+			{
+				
+			} else if constexpr (std::is_same_v<e, Ritual>)
+			{
+				
+			}
+	});	
+}
+
+Commodity::underlying getUnitNextCommodity(UnitDatabase &database, CommodityDispatcher& dispatcher, uint16_t unitIndex)
+{
+	assert(unitIndex < database.size);
+	int highest = std::numeric_limits<int>::min();
+	int roleIndex = std::numeric_limits<int>::max();
+	int commodityIndex =  std::numeric_limits<int>::max();
+	
+
+	for (size_t i = 0; i < database.roles[unitIndex].size(); i++) {
+		Role role = database.roles[unitIndex][i];
+		auto range = CommodityDispatcher::getPriorityRange(role);
+
+		for (int j = 0; j < range.second(); j++) {
+			if (dispatcher.priorities[j] > highest) 
+			{
+				highest = dispatcher.priorities[j];
+				roleIndex = i;
+				commodityIndex = j;
+			}
+		}
+	}
+	return rolesToCommodities.get(static_cast<Role>(roleIndex), commodityIndex);
+}	
+
+bool continueFindToolsOrQuit(OverflowHashMap &overflows,
+					  OverflowContainerMap &overflowContainers, Action& action, Inventory& inventory, TargetType& targetType, uint32_t& targetIndex, Coord coord)
+{
+	NecessaryToolsBuffer buffer = ensureNecessaryTools(overflows, overflowContainers, action, inventory, unitIndex, coord);
+	switch (buffer.state) {
+	case ToolsState::FoundAll:
+		return true;
+		break;
+	case ToolsState::Finding:
+		action = Action::PickupTool;
+		targetIndex = buffer.targetIndex;
+		targetType = buffer.targetType;
+		return false;
+		break;
+	case ToolsState::CannotFind:
+		action = Action::Assign;
+		return false;
+		break;
+	default:	
+	}
+}
+
+
+// TODO: processes basic productions that do not include liquids, buildables,
+// variant items
+bool attemptProduction(int pawn)
+{
+	// TODO: get type of product variant to deterine itemType
+	bool attemptAlternateRecipe = false;
+	for (int i = 0; i < 2; i++)
+	{
+		if (itemType == ItemType::Item)
+		{
+			attemptAltenateRecipe ? return
+					      : Recipe recipe = products[static_cast<int>(product)];
+		}
+		else if (itemType == ItemType::Tool)
+		{
+			attemptAlternateRecipe
+			    ? return
+			    : ToolRecipe recipe = tools[static_cast<int>(product)];
+		}
+		else if (itemType == ItemType::Buildable)
+		{
+			attemptAlternateRecipe
+			    ? BuildableRecipe recipe = buildablesAlternateInterpreter(product)
+			    : BuildableRecipe recipe = buildables[static_cast<int>(product)];
+		}
+		else if (itemType == ItemType::Container)
+		{
+			attemptAlternateRecipe
+			    ? return
+			    : ContainerRecipe recipe = containers[static_cast<int>(product)];
+		}
+		else if (itemType == ItemType::Vehicle)
+		{
+			attemptAltenateRecipe
+			    ? return
+			    : VehicleRecipe recipe = vehicles[static_cast<int>(product)];
+		}
+		
+		bool toolsFound = false;
+		while (!toolsFound) {
+		NecessaryToolsBuffer buffer = ensureNecessaryTools(pawn, action, miniActions, items, dests);
+
+		switch (buffer.state) {
+		case ToolsState::FoundAll:			
+			toolsFound = true;
+			break;
+		case ToolsState::Finding:
+			
+			break;
+		case case-2:
+			
+			break;
+		default:
+			
+		}
+		}
+
+		vector<std::pair<int, int>> ingredientsFound;
+		vector<std::pair<int, int>> variantIngredientsFound;
+
+		// FOR LIQUIDS
+		if (recipe.itemTags.hasTag(itemTags::Liquid))
+		{
+			// TODO: find nearest unprocessing liquid vessel, or get from inventory if
+			// none
+			bool found = false;
+			while (!found)
+			{
+				if (filledLiquidContainers.find(findNearestLiquidContainer(
+					coords[pawn].first, coords[pawn] second)) !=
+				    filledLiquidContainers.end())
+			}
+			int maxAmount = 99999;
+			for (int i = 0; i < recipe.ingredients.size(); i++)
+			{
+				// TODO: get amount of liquid in found vessel
+				for (int j = 0; j < inventories[pawn].items.size(); j++)
+				{
+					if (inventories[pawn].items[i].first ==
+						recipe.ingredients[i] &&
+					    inventories[pawn].items[j].second >= recipe.amounts[i])
+					{
+						// find which recipe item is the bottleneck for
+						// mixing the liquid, or if the amount of water in
+						// container is the factor
+						if (maxAmount >
+						    (int)(inventories[pawn] recipe.amounts[j] /
+							  recipe.ingredients[i]))
+							maxAmount = (int)(inventories[pawn] recipe
+									      .amounts[j] /
+									  recipe.ingredients[i]);
+
+						// add the right amount of the type of item in
+						// inventory
+						ingredientsFound.push_back({i, recipe.amounts[i]});
+						foundIngredient = true;
+						while (recipe.replaceables[i] ==
+						       recipe.replaceables[i + 1])
+							i++;
+						break;
+					}
+				}
+				for (int j = 0; j < inventories[pawn].variantItems.size(); j++)
+				{
+					if (inventories[pawn].variantItems[j].first ==
+						recipe.ingredients[i] &&
+					    inventories[pawn].variantItems[j].second >=
+						recipe.amounts[i])
+					{
+						// find which recipe item is the bottleneck for
+						// mixing the liquid, or if the amount of water in
+						// container is the factor
+						if (maxAmount >
+						    (int)(inventories[pawn] recipe.amounts[j] /
+							  recipe.ingredients[i]))
+							maxAmount = (int)(inventories[pawn] recipe
+									      .amounts[j] /
+									  recipe.ingredients[i]);
+
+						// add the right amount of the type of item in
+						// inventory
+						variantIngredientsFound.push_back(
+						    {i, recipe.amounts[i]});
+						foundIngredient = true;
+						break;
+					}
+				}
+				if (!foundIngredient)
+				{
+					if (!attemptAlternateRecipe)
+					{
+						attemptAlternateRecipe = true;
+					}
+					else
+						return false; // item not craftable
+				}
+				else
+				{
+					// START CRAFTING
+					//  if product time is variable or not applicable
+					uint16_t time = 0;
+					if (products[static_cast<int>(product)].time == 0)
+					{
+						time = getVariableProductTime(pawn, product);
+					}
+					else
+						time = products[static_cast<int>(product)].time;
+					addEvent(time, EventType::ProductComplete, product, pawn,
+						 static_cast<Actions>(recipe.action));
+					for (int i = 0; i < ingredientsFound.size(); i++)
+					{
+						removeItem(pawn, ingredientsFound.first,
+							   ingredientsFound.second);
+					}
+					for (int i = 0; i < variantIngredientsFound.size(); i++)
+					{
+						removeItem(pawn, variantIngredientsFound.first,
+							   variantIngredientsFound.second);
+					}
+					return true;
+				}
+			}
+		}
+
+		// CORPSE
+		else if (recipe.itemTags.hasTag(itemTags::Corpse))
+		{
+			// TODO: determine how pawn focuses on station, on when it lets go, go
+			// find corpse if needed
+		}
+		// NORMAL ITEMS
+		else
+		{
+			for (int i = 0; i < recipe.ingredients.size(); i++)
+			{
+				if (recipe.replaceables[i] == 0)
+				{ // optional ingredient
+				  // TODO: optional ingredient interpreter
+				}
+				if (recipe.ingredients[i] == Item::EMPTY)
+					continue;
+				bool foundIngredient = false;
+				// loop through non-variant items
+				for (int j = 0; j < inventories[pawn].items.size(); j++)
+				{
+					if (inventories[pawn].items[i].first ==
+						recipe.ingredients[i] &&
+					    inventories[pawn].items[j].second >= recipe.amounts[i])
+					{
+						// add the right amount of the type of item in
+						// inventory
+						ingredientsFound.push_back({i, recipe.amounts[i]});
+						foundIngredient = true;
+						while (recipe.replaceables[i] ==
+						       recipe.replaceables[i + 1])
+							i++;
+					}
+					if (foundIngredient)
+						break;
+				}
+				// loop through variant items
+				for (int j = 0; j < inventories[pawn].variantItems.size(); j++)
+				{
+					if (inventories[pawn].variantItems[j].first ==
+						recipe.ingredients[i] &&
+					    inventories[pawn].variantItems[j].second >=
+						recipe.amounts[i])
+					{
+						// add the right amount of the type of item in
+						// inventory
+						variantIngredientsFound.push_back(
+						    {i, recipe.amounts[i]});
+						foundIngredient = true;
+					}
+					if (foundIngredient)
+						break;
+				}
+				if (!foundIngredient)
+				{
+					if (!attemptAlternateRecipe)
+					{
+						attemptAlternateRecipe = true;
+					}
+					else
+					{
+						// try to find nearest ingredient
+						// TODO: create nearest with lower man dist, also do
+						// for non-alternate recipe
+						std::pair<int, int> itemCoord = findNearestObject(
+						    recipe.ingredients[i], coords[pawn].first,
+						    coords[pawn] second);
+						if (itemCoord != {-1, -1} &&
+						    manDist(coords[pawn], itemCoord) <
+							nearGatherRange)
+						{
+							dests[pawn] = tileIndices[itemCoord];
+							movingStatus[pawn] =
+							    MovingStatus::ApproachItem;
+							// NOTE: async logic here?
+							findPromise[pawn] = std::promise<void>();
+							findFuture[pawn] =
+							    findPromise[pawn].get_future();
+						}
+					}
+				}
+			}
+		}
+		else
+		{
+			// make pawn perform task, and add event to complete
+			// TODO: Possible error here, if cast to product variant is not cast to
+			// underlying type
+			addEvent(products[static_cast<int>(product)].time,
+				 EventType::ProductComplete, static_cast<int>(product), pawn,
+				 static_cast<int>());
+			for (int i = 0; i < ingredientsFound.size(); i++)
+			{
+				removeItem(pawn, ingredientsFound.first, ingredientsFound.second);
+			}
+			for (int i = 0; i < variantIngredientsFound.size(); i++)
+			{
+				removeItem(pawn, variantIngredientsFound.first,
+					   variantIngredientsFound.second);
+			}
+		}
+	}
+}
+
 // variantIndex superfluous for non-variant items
 void getResourceAction(int pawn, Item item, int sourceIndex, int variantIndex)
 {
@@ -277,257 +618,6 @@ void setTargetResource(int pawn, Role role)
 
 void processResources() {}
 
-// TODO: processes basic productions that do not include liquids, buildables,
-// variant items
-bool attemptProduction(int pawn, )
-{
-	// TODO: get type of product variant to deterine itemType
-	bool attemptAlternateRecipe = false;
-	for (int i = 0; i < 2; i++)
-	{
-		if (itemType == ItemType::Item)
-		{
-			attemptAltenateRecipe ? return
-					      : Recipe recipe = products[static_cast<int>(product)];
-		}
-		else if (itemType == ItemType::Tool)
-		{
-			attemptAlternateRecipe
-			    ? return
-			    : ToolRecipe recipe = tools[static_cast<int>(product)];
-		}
-		else if (itemType == ItemType::Buildable)
-		{
-			attemptAlternateRecipe
-			    ? BuildableRecipe recipe = buildablesAlternateInterpreter(product)
-			    : BuildableRecipe recipe = buildables[static_cast<int>(product)];
-		}
-		else if (itemType == ItemType::Container)
-		{
-			attemptAlternateRecipe
-			    ? return
-			    : ContainerRecipe recipe = containers[static_cast<int>(product)];
-		}
-		else if (itemType == ItemType::Vehicle)
-		{
-			attemptAltenateRecipe
-			    ? return
-			    : VehicleRecipe recipe = vehicles[static_cast<int>(product)];
-		}
-
-		if (checkActionRequisites(recipe, pawn))
-			ensureNecessaryTools(pawn, action, miniActions, items, dests);
-
-		vector<std::pair<int, int>> ingredientsFound;
-		vector<std::pair<int, int>> variantIngredientsFound;
-
-		// FOR LIQUIDS
-		if (recipe.itemTags.hasTag(itemTags::Liquid))
-		{
-			// TODO: find nearest unprocessing liquid vessel, or get from inventory if
-			// none
-			bool found = false;
-			while (!found)
-			{
-				if (filledLiquidContainers.find(findNearestLiquidContainer(
-					coords[pawn].first, coords[pawn] second)) !=
-				    filledLiquidContainers.end())
-			}
-			int maxAmount = 99999;
-			for (int i = 0; i < recipe.ingredients.size(); i++)
-			{
-				// TODO: get amount of liquid in found vessel
-				for (int j = 0; j < inventories[pawn].items.size(); j++)
-				{
-					if (inventories[pawn].items[i].first ==
-						recipe.ingredients[i] &&
-					    inventories[pawn].items[j].second >= recipe.amounts[i])
-					{
-						// find which recipe item is the bottleneck for
-						// mixing the liquid, or if the amount of water in
-						// container is the factor
-						if (maxAmount >
-						    (int)(inventories[pawn] recipe.amounts[j] /
-							  recipe.ingredients[i]))
-							maxAmount = (int)(inventories[pawn] recipe
-									      .amounts[j] /
-									  recipe.ingredients[i]);
-
-						// add the right amount of the type of item in
-						// inventory
-						ingredientsFound.push_back({i, recipe.amounts[i]});
-						foundIngredient = true;
-						while (recipe.replaceables[i] ==
-						       recipe.replaceables[i + 1])
-							i++;
-						break;
-					}
-				}
-				for (int j = 0; j < inventories[pawn].variantItems.size(); j++)
-				{
-					if (inventories[pawn].variantItems[j].first ==
-						recipe.ingredients[i] &&
-					    inventories[pawn].variantItems[j].second >=
-						recipe.amounts[i])
-					{
-						// find which recipe item is the bottleneck for
-						// mixing the liquid, or if the amount of water in
-						// container is the factor
-						if (maxAmount >
-						    (int)(inventories[pawn] recipe.amounts[j] /
-							  recipe.ingredients[i]))
-							maxAmount = (int)(inventories[pawn] recipe
-									      .amounts[j] /
-									  recipe.ingredients[i]);
-
-						// add the right amount of the type of item in
-						// inventory
-						variantIngredientsFound.push_back(
-						    {i, recipe.amounts[i]});
-						foundIngredient = true;
-						break;
-					}
-				}
-				if (!foundIngredient)
-				{
-					if (!attemptAlternateRecipe)
-					{
-						attemptAlternateRecipe = true;
-					}
-					else
-						return false; // item not craftable
-				}
-				else
-				{
-					// START CRAFTING
-					//  if product time is variable or not applicable
-					uint16_t time = 0;
-					if (products[static_cast<int>(product)].time == 0)
-					{
-						time = getVariableProductTime(pawn, product);
-					}
-					else
-						time = products[static_cast<int>(product)].time;
-					addEvent(time, EventType::ProductComplete, product, pawn,
-						 static_cast<Actions>(recipe.action));
-					for (int i = 0; i < ingredientsFound.size(); i++)
-					{
-						removeItem(pawn, ingredientsFound.first,
-							   ingredientsFound.second);
-					}
-					for (int i = 0; i < variantIngredientsFound.size(); i++)
-					{
-						removeItem(pawn, variantIngredientsFound.first,
-							   variantIngredientsFound.second);
-					}
-					return true;
-				}
-			}
-		}
-
-		// CORPSE
-		else if (recipe.itemTags.hasTag(itemTags::Corpse))
-		{
-			// TODO: determine how pawn focuses on station, on when it lets go, go
-			// find corpse if needed
-		}
-		// NORMAL ITEMS
-		else
-		{
-			for (int i = 0; i < recipe.ingredients.size(); i++)
-			{
-				if (recipe.replaceables[i] == 0)
-				{ // optional ingredient
-				  // TODO: optional ingredient interpreter
-				}
-				if (recipe.ingredients[i] == Item::EMPTY)
-					continue;
-				bool foundIngredient = false;
-				// loop through non-variant items
-				for (int j = 0; j < inventories[pawn].items.size(); j++)
-				{
-					if (inventories[pawn].items[i].first ==
-						recipe.ingredients[i] &&
-					    inventories[pawn].items[j].second >= recipe.amounts[i])
-					{
-						// add the right amount of the type of item in
-						// inventory
-						ingredientsFound.push_back({i, recipe.amounts[i]});
-						foundIngredient = true;
-						while (recipe.replaceables[i] ==
-						       recipe.replaceables[i + 1])
-							i++;
-					}
-					if (foundIngredient)
-						break;
-				}
-				// loop through variant items
-				for (int j = 0; j < inventories[pawn].variantItems.size(); j++)
-				{
-					if (inventories[pawn].variantItems[j].first ==
-						recipe.ingredients[i] &&
-					    inventories[pawn].variantItems[j].second >=
-						recipe.amounts[i])
-					{
-						// add the right amount of the type of item in
-						// inventory
-						variantIngredientsFound.push_back(
-						    {i, recipe.amounts[i]});
-						foundIngredient = true;
-					}
-					if (foundIngredient)
-						break;
-				}
-				if (!foundIngredient)
-				{
-					if (!attemptAlternateRecipe)
-					{
-						attemptAlternateRecipe = true;
-					}
-					else
-					{
-						// try to find nearest ingredient
-						// TODO: create nearest with lower man dist, also do
-						// for non-alternate recipe
-						std::pair<int, int> itemCoord = findNearestObject(
-						    recipe.ingredients[i], coords[pawn].first,
-						    coords[pawn] second);
-						if (itemCoord != {-1, -1} &&
-						    manDist(coords[pawn], itemCoord) <
-							nearGatherRange)
-						{
-							dests[pawn] = tileIndices[itemCoord];
-							movingStatus[pawn] =
-							    MovingStatus::ApproachItem;
-							// NOTE: async logic here?
-							findPromise[pawn] = std::promise<void>();
-							findFuture[pawn] =
-							    findPromise[pawn].get_future();
-						}
-					}
-				}
-			}
-		}
-		else
-		{
-			// make pawn perform task, and add event to complete
-			// TODO: Possible error here, if cast to product variant is not cast to
-			// underlying type
-			addEvent(products[static_cast<int>(product)].time,
-				 EventType::ProductComplete, static_cast<int>(product), pawn,
-				 static_cast<int>());
-			for (int i = 0; i < ingredientsFound.size(); i++)
-			{
-				removeItem(pawn, ingredientsFound.first, ingredientsFound.second);
-			}
-			for (int i = 0; i < variantIngredientsFound.size(); i++)
-			{
-				removeItem(pawn, variantIngredientsFound.first,
-					   variantIngredientsFound.second);
-			}
-		}
-	}
-}
 
 // when production of item is finished, wear tools that were used, place if
 // buildable or vehicle or go to inventory if item, variant optional
@@ -671,63 +761,7 @@ void attemptSupport(int pawn, Role role)
 	// // TODO
 	// void processCustomProductions() {}
 
-	enum class ToolsState
-	{
-		FoundAll = 0,
-		Finding = 1,
-		CannotFind = 2
-	};
 
-	void ensureNecessaryTools(Action action, miniAction & miniAction, Array<Item> & items, dest)
-	{
-		vector<int> foundToolReplaceables;
-		for (int i = 0; i < actionToTools[static_cast<uint16_t>(action)].size(); i++)
-		{
-			// skip if replaceable equivalent has already been found,
-			for (int j = 0; j < foundToolReplaceables.size(); j++)
-				if (foundToolReplaceables[j] ==
-				    actionToTools[static_cast<uint16_t>(action)][i])
-					continue;
-
-			// skip if pawn already has tool
-			for (int j = 0; j < items.size(); j++)
-				// TODO: perhaps change this from lookup table to tag
-				if (!tool[items[j]])
-					continue;
-			if (items[j] == actionToTools[static_cast<uint16_t>(action)][i])
-			{
-				foundToolsReplaceables.push_back(
-				    actionToToolsReplaceables[static_cast<uint16_t>(action)][i]);
-				continue;
-			}
-
-			// skip if tool is optional
-			if (actionToTools[static_cast<uint16_t>(action)][i] < 0)
-				continue;
-
-			// set destination, set mini action to pickup tool
-			Coord newDest =
-			    findNearestObject(actionToTools[static_cast<uint16_t>(action)][i],
-					      coords[pawn].first, coords[pawn].second);
-			if (manDist(coords[pawn], newDest) > midGatherRange)
-			{
-				dest = newDest;
-				miniActions[pawn] = MiniAction::PickupTool;
-				return ToolsState::Finding;
-			}
-			else
-				return ToolsState::CannotFind;
-			// TODO:: "search home function", which checks if a pawn's home/workplace
-			// contains the necessary tools, giving user warning if not
-		}
-		return ToolsState::FoundAll;
-	}
-
-	// //PRODUCTS PAWN MANAGEMENT
-	// // TODO: have pawns search nearby surroundings for items if not found, if
-	// on
-	// // Check inventory to produce new items
-	// bool attemptProductions(int pawn, ProductVariant product) {
 
 	// }
 

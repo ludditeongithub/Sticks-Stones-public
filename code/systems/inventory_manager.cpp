@@ -93,13 +93,17 @@ void addItem(OverflowHashMap &overflows, std::vector<HoldableSlot> &holdables,
 	     InventoryAddBuffer &buffer, std::optional<uint8_t> amount = std::nullopt)
 {
 	Item itemToAdd = buffer.holdable;
-	itemTags tags = itemTags[itemToAdd];
 
 	bool found = false;
-	if (hasTag(itemTags::Tool, tags))
+	if (hasTag(itemTags::Tool, itemTags[itemToAdd]))
 	{
 			for (size_t i = 0; i < holdables.size(); i++)
 			{
+				if (holdables[i] == nullptr) {
+					holdables[i] = ToolSlot(itemToAdd,
+								       buffer.specialData);
+					return;
+				}
 				if (auto* content = std::get_if<ToolSlot>(&holdables[i]))
 				{
 				if (content->isEmpty())
@@ -114,13 +118,17 @@ void addItem(OverflowHashMap &overflows, std::vector<HoldableSlot> &holdables,
 	}
 	else 
 	{
-		if (hasTag(itemTags::Variant, tags))
+		if (hasTag(itemTags::Variant, itemTags[itemToAdd]))
 		{
 			for (size_t i = 0; i < holdables.size(); i++)
 			{
 				if (found)
 					break;
-
+				if (holdables[i] == nullptr) {
+					holdables[i] = VariantItemSlot(itemToAdd, amount.value(), buffer.variant));
+					return;
+				}
+				
 				if (auto* content = std::get_if<VariantItemSlot>(&holdables[i]))
 				{
 				if (content->isEmpty())
@@ -147,6 +155,10 @@ void addItem(OverflowHashMap &overflows, std::vector<HoldableSlot> &holdables,
 			{
 				if (found)
 					break;
+				if (holdables[i] == nullptr) {
+					holdables[i] = ItemSlot(itemToAdd, amount.value());
+					return;
+				}
 
 				if (auto* content = std::get_if<ItemSlot>(&holdables[i]))
 				{
@@ -339,7 +351,9 @@ uint16_t attemptAddItems(OverflowHashMap &overflows, OverflowContainerMap &overf
 return addedAmount;
 }
 
-inline bool removeArtOrTool(Inventory& inventory, Item item, SpecialItemData specialData)
+//right now does NOT check for material match
+inline bool removeArtOrTool(Inventory& inventory, Item item, //std::optional<SpecialItemData> specialData, 
+bool check = false)
 {
 	for (size_t i = 0; i < inventory.containers.size(); i++)
 		{
@@ -350,10 +364,9 @@ inline bool removeArtOrTool(Inventory& inventory, Item item, SpecialItemData spe
 					Item item;
 					std::visit([&](auto &obj) { item = obj.getType(); },
 						   content);
-					if (tool == contentTool &&
-					    specialData == content.specialData)
+					if (item == content)
 					{
-						content = nullptr;
+						if (!check) content = nullptr;
 						return true;
 					}
 				}
@@ -362,7 +375,7 @@ inline bool removeArtOrTool(Inventory& inventory, Item item, SpecialItemData spe
 	return false;
 }
 
-inline void removeItem(Inventory& inventory, Item item, uint16_t amount, std::optional<uint8_t> variant = std::nullopt)
+inline uint16_t removeItem(Inventory& inventory, Item item, uint16_t amount, std::optional<uint8_t> variant = std::nullopt, bool check = false)
 {
 	uint16_t removedAmount = 0;
 	for (size_t i = 0; i < inventory.containers.size(); i++)
@@ -378,7 +391,7 @@ inline void removeItem(Inventory& inventory, Item item, uint16_t amount, std::op
 					if (item == contentItem)
 					{
 						removedAmount = min(amount, content.amount);
-						content.amount -= removedAmount;
+						if (!check) content.amount -= removedAmount;
 					}
 					}
 				}
@@ -391,7 +404,7 @@ inline void removeItem(Inventory& inventory, Item item, uint16_t amount, std::op
 					if (item == contentItem && content.variant = variant)
 					{
 						removedAmount = min(amount, content.amount);
-						content.amount -= removedAmount;
+						if (!check) content.amount -= removedAmount;
 					}
 					}
 				}
@@ -400,21 +413,80 @@ inline void removeItem(Inventory& inventory, Item item, uint16_t amount, std::op
 	return removedAmount;
 }
 
+// check means won' actually remove, just see amount
 //returns amount removed
-uint16_t &removeItem(OverflowHashMap &overflows,
+uint16_t removeItem(OverflowHashMap &overflows,
 					  OverflowContainerMap &overflowContainers,
 					  Inventory &inventory, uint16_t unitIndex,
-					  Item holdable,
-				      std::variant<uint16_t, Material> itemAmountOrMaterial, std::optional<uint8_t> variant = std::nullopt)
+					  Item item,
+				      std::optional<uint16_t> itemAmountOrMaterial = std::nullopt, std::optional<uint8_t> variant = std::nullopt, bool check = false)
 {
-	if (hasTags(itemTags::Tool, itemTags[holdable]))
+	if !(hasTags(itemTags::Tool, itemTags[item]))
 	{
 	if (variant == std::nullopt) {
-		return removeItem(inventory, item, std::get<uint16_t>(amount));
-	} else removeItem(inventory, item, std::get<uint16_t>(amount), variant);
-	} else ()
-	{
-		removeTool(inventory, tool, std::get<Material>(itemAmountOrMaterial)) ? return 1 : return 0;
+		return removeItem(inventory, item, std::get<uint16_t>(itemAmountOrMaterial), check);
+	} else removeItem(inventory, item, std::get<uint16_t>(itemAmountOrMaterial), variant, check);
+	} else {
+		removeArtOrTool(inventory, tool, //std::get<Material>(itemAmountOrMaterial), 
+check) ? return 1 : return 0;
 	}
-}
+}	
 
+NecessaryToolsBuffer ensureNecessaryTools(OverflowHashMap &overflows,
+					  OverflowContainerMap &overflowContainers, Action action, Inventory& inventory, uint16_t unitIndex, Coord coord)
+{
+	NecessaryToolsBuffer buffer;
+	
+		constexpr int toolAmount= actionToTools[static_cast<uint16_t>(action)].size();
+		std::array<int, toolAmount> foundToolReplaceables;
+		int foundTools = 0;
+		int currentlySearched = 0;
+
+			for (int i = 0; i < toolAmount; i++)
+		{
+			Item tool = actionToTools[action][i].tool;
+			// skip if replaceable equivalent has already been found,
+			for (int j = 0; j < currentlySearched; j++)
+				if (foundToolReplaceables[j] ==
+				    actionToTools[action][i].replaceable)
+					continue;
+				
+			// skip if tool is optional
+			    if (actionToTools[action][i].replaceable < 0) continue;
+
+			    found = removeItem(overflows,
+					  overflowContainers,
+					  inventory, unitIndex,
+					  tool, true);
+				
+			
+if (found) {
+				    foundToolsReplaceables[foundTools++] = actionToTools[action]
+					[i].replaceable;
+				    found = true;
+				    break;
+				    } 
+
+			    if (!found) {
+			    Coord newDest =
+				findNearestObject(actionToTools[static_cast<uint16_t>(action)][i],
+						  coord.first, coord.second);
+			    if (manDist(coord, newDest) > MID_GATHER_RANGE) {
+				    buffer.state = ToolsState::Finding;
+				    buffer.destination.value() = NewDest;
+				    return buffer;
+			}
+			else
+			{
+				buffer.state = ToolsState::CannotFind;
+				return buffer;
+			}
+			    }				
+				
+			// TODO:: "search home function", which checks if a pawn's home/workplace
+			// contains the necessary tools, giving user warning if not
+			    currentlySearched++;
+		}
+		buffer.state = ToolsState::FoundAll;
+		return buffer;
+	}

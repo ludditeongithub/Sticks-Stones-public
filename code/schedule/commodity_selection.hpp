@@ -1,4 +1,5 @@
 #include <array>
+#include <vector>
 #include <cstdint>
 #include <limits>
 #include <world/unit/roles_commodities.hpp>
@@ -19,5 +20,11 @@ void setPriority(Role role, Commodity::underlying commodity, uint8_t priority)
 	}
 	priorities[roleOffset + commodityOffset] = priority;
 }
+
+static std::pair<Commodity::underlying, Commodity::underlying> getPriorityRange(Role role)
+{
+	//TODO: error for range issues
+	return {rolesToCommodities.offsets[static_cast<uint32_t>(role)], rolesToCommodities.offsets[static_cast<uint32_t>(role) + 1]};
+}	
  	
 };

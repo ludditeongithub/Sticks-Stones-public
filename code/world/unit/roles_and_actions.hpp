@@ -4,6 +4,8 @@
 #include <core/data.hpp>
 #include <cstdint>
 #include <vector>
+#include <world/item/enum.hpp>
+#include <core/tables.hpp>
 
 constexpr uint16_t MAX_ROLES_PER_TASK = 6;
 
@@ -20,6 +22,7 @@ struct RoleData
 
 RoleData roleDatas[static_cast<int>(Role::MAX)];
 
+//TODO: make both of these lookup tables more efficient, (make them ragged tables)
 struct ToolArray
 {
 	ToolOrStation tool[9];
@@ -28,7 +31,7 @@ struct ToolArray
 ToolArray actionToTools[static_cast<uint16_t>(Action::ACTION_MAX)];
 struct ToolsReplaceablesArray
 {
-	int replaceables[8];
+	uint8_t replaceables[8];
 };
 ToolsReplaceablesArray actionToToolsReplaceables[static_cast<uint16_t>(Action::ACTION_MAX)];
 
@@ -39,38 +42,45 @@ struct RoleArray
 
 RoleArray actionToRoles[static_cast<uint16_t>(Action::ACTION_MAX)];
 
+inline constexpr LookupTable<Action, Item> actiontoTools = []
+{
+	LookupTable<Action,Item> lt{};
+	using enum Action;
+	actionToTools[Action::Hunt] = {Tool::PrimitiveSpear, Tool::Spear,   Tool::Pike,
+				       Tool::Greatsword,     Tool::Halberd, Station::Animal}; //TODO: station
+	actionToTools[Action::Mine] = {Tool::Pickaxe};
+	actionToTools[Action::Cut] = {Tool::Knife, Tool::Machete, Tool::Sword}; 
+	actionToTools[Action::Chop] = {Tool::Axe, Tool::Greataxe, Station::Tree};  //TODO: station
+	actionToTools[Action::FineChop] = {Tool::Knife, Tool::Cleaver, Tool::Machete};
+	actionToTools[Action::Dig] = {Tool::Shovel, Tool::Trowel, Tool::DiggingStick};
+	actionToTools[Action::Light] = {Tool::Torch, Tool::Candle, Tool::Flint};
+	actionToTools[Action::Butcher] = {Tool::Cleaver, Tool::Knife, Tool::Machete,Station::Corpse}; //TODO: station
+	actionToTools[Action::Paint] = {Tool::Brush};
+	actionToTools[Action::Sculpt] = {Tool::Scraper, Tool::Stylus, Tool::MeasuringTools};
+	actionToTools[Action::Chisel] = {Tool::Chisel};
+	
+	
+	
+	
+	return lt;	
+}();
+
+
 void initializeActionToTools()
 {
-	actionToTools[(uint16_t)Action::Hunt] = {Tool::PrimitiveSpear, Tool::Spear,
-						 Tool::Pike,	       Tool::Greatsword,
-						 Tool::Halberd,	       Station::Animal};
 	actionToRoles[(uint16_t)Action::Melee] = {Role::MeleeSoldier, Role::SpearHunter};
-	actionToTools[(uint16_t)Action::Mine] = {Tool::Pickaxe};
 	actionToRoles[(uint16_t)Action::Mine] = {Role::StoneMiner,  Role::CopperMiner,
 						 Role::IronMiner,   Role::GoldMiner,
 						 Role::SilverMiner, Role::SaltMiner};
-	actionToTools[(uint16_t)Action::Cut] = {Tool::Knife, Tool::Machete, Tool::Sword};
 	actionToRoles[(uint16_t)Action::Cut] = {Role::Apothecary, Role::Planter};
-	actionToTools[(uint16_t)Action::Chop] = {Tool::Axe, Tool::Greataxe, Station::Tree};
 	actionToRoles[(uint16_t)Action::Chop] = {Role::Woodcutter};
-	actionToTools[(uint16_t)Action::FineChop] =
-	    {Tool::Knife, Tool::Cleaver,
-	     Tool::Machete} actionToRoles[(uint16_t)Action::FineChop] = {Role::Cook, Role::Chef,
+	actionToRoles[(uint16_t)Action::FineChop] = {Role::Cook, Role::Chef,
 									 Role::Apothecary};
-	actionToTools[(uint16_t)Action::Dig] = {Tool::Shovel, Tool::Trowel, Tool::DiggingStick};
 	actionToRoles[(uint16_t)Action::Dig] = {Role::Planter, Role::Structures};
-	actionToTools[(uint16_t)Action::Light] = {Tool::Torch, Tool::Candle, Tool::Flint};
 	actionToRoles[(uint16_t)Action::Light] = {Role::NONE};
-	actionToTools[(uint16_t)Action::Butcher] = {Tool::Cleaver, Tool::Knife, Tool::Machete,
-						    Station::Corpse};
 	actionToRoles[(uint16_t)Action::Butcher] = {Role::Butcher};
-	actionToTools[(uint16_t)Action::Paint] = {Tool::Brush};
 	actionToRoles[(uint16_t)Action::Paint] = {Role::Painter};
-	actionToTools[(uint16_t)Action::Sculpt] = {Tool::Scraper, Tool::Stylus,
-						   Tool::MeasuringTools};
 	actionToRoles[(uint16_t)Action::Sculpt] = {Role::Sculptor, Role::ClayWorker, Role::Potter};
-	actionToToolsReplaceables[(uint16_t)Action::Sculpt] = {0, 1, -1};
-	actionToTools[(uint16_t)Action::Chisel] = {Tool::Chisel};
 	actionToRoles[(uint16_t)Action::Chisel] = {Role::Stoneworker};
 	actionToTools[(uint16_t)Action::Write] = {Tool::Pen};
 	actionToRoles[(uint16_t)Action::Write] = {
@@ -286,5 +296,5 @@ void initializeActionToTools()
 	actionToRoles[(uint16_t)Action::Tame] = {Role::HorseBreeder, Role::Shepherd, Role::Herder};
 	actionToRoles[(uint16_t)Action::Command] = {Role::MilLeader, Role::Monarch,
 						    Role::Landowner};
-
+	actionToToolsReplaceables[Action::Sculpt] = {0, 1, -1};
 #endif // ROLES_H_

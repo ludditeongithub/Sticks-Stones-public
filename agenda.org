@@ -4,6 +4,7 @@
 ** Menus
 *** wait for sprites to be done
 ** Inventory and unit tasks
+*** TODO add .replaceable and .tool to actionToTools (also make proper lookup table)
 On event of player affecting tasks:
 *** structures :FILL:
 each role has a priority list, max size is the number of products (material or non material) that role can possibly make. 

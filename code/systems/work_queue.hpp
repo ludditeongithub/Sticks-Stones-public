@@ -1,12 +1,17 @@
 // TODO: organize from the outside-in: from work queue functions that will be called by larger
 // dispatch functions outside of work queue functions, down to small helpers and checks.
 
+#pragma once
 #include <cstdint>
-#include <world/unit/enum.hpp>
+#include <schedule/commodity_selection.hpp>
 #include <world/item/enum.hpp>
+#include <world/unit/enum.hpp>
+#include <world/unit/entity.hpp>
 #include <world/unit/roles_commodities.hpp>>
 
-Commodity::underlying getUnitNextCommodity(uint16_t unitIndex);
+void setUnitJob(UnitDatabase& database, CommodityDispatcher& dispatcher, uint16_t unitIndex);
+Commodity::underlying getUnitNextCommodity(UnitDatabase& database, CommodityDispatcher& dispatcher, uint16_t unitIndex);
+
 
 
 void getResourceAction(int pawn, Item item, int sourceIndex, int variantIndex);
@@ -30,5 +35,8 @@ void attemptSupport(int pawn, Role role);
 void variantItemInterpreter();
 // void ();
 // void ();
-void ensureNecessaryTools(Action action, miniAction & miniAction, Array<Item> & items, dest);
+
+
+// true if all tools have been found
+bool continueFindToolsOrQuit(Action action, Inventory& inventory, Coord coord);
 // bool ();

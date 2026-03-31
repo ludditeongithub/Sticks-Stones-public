@@ -1,3 +1,4 @@
+#pragma once
 #include "core/tables.hpp"
 #include "world/unit/enum.hpp"
 #include <variant>
@@ -8,6 +9,8 @@
 
 using Commodity = ConcatEnum<Item, Buildable, Knowledge, Order, Ritual>;
 
+constexpr uint16_t ROLE_COMMODITY_JOB_AMOUNT = 4000;
+
 template<typename... Cs>
 constexpr auto mkv(Cs... cs) -> std::array<Commodity::underlying, sizeof...(Cs)> {
     return { Commodity::cast(cs)... };
@@ -15,13 +18,13 @@ constexpr auto mkv(Cs... cs) -> std::array<Commodity::underlying, sizeof...(Cs)>
 
 
 // important: must be initialized in enum order!
-inline constexpr RaggedLookupTable<Role, Commodity::underlying, 50000, Commodity::MAX>
+inline constexpr RaggedLookupTable<Role, Commodity::underlying, ROLE_COMMODITY_JOB_AMOUNT, Commodity::MAX>
     rolesToCommodities = []
 {
 	using u = Commodity::underlying;
 	using enum Role;
 
-	RaggedLookupTable<Role, u, 50000, Commodity::MAX> lt{};
+	RaggedLookupTable<Role, u, ROLE_COMMODITY_JOB_AMOUNT, Commodity::MAX> lt{};
 
 	lt.set(Performer, mkv(Ritual::Song));
 	lt.set(Bard, mkv(Ritual::Song, Ritual::InstrumentalSong));
