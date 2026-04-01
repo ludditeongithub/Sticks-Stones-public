@@ -16,3 +16,13 @@ inline constexpr LookupTable<ContainerType, float> containerBulkCapacities = []
 
 	return lt;
 }();
+
+inline constexpr RaggedLookupTable<Commodity::underlying, Action, COMMODITY_ACTIONS>
+commodity = []
+	{
+		using enum Commodity::underlying;
+
+		RaggedLookupTable<Commodity::underlying, Action, COMMODITY_ACTIONS, > lt{};
+
+		return lt;
+	}
