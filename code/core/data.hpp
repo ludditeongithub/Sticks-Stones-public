@@ -51,8 +51,7 @@ enum class TargetType : uint8_t
 	Item,
 	Unit,
 	Tile,
-	Structure,
-	Station
+	Buildable
 };
 
 struct Target

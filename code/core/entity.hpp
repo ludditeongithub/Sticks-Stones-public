@@ -7,13 +7,15 @@
 #include <world/unit/enum.hpp>
 #include <world/plant/enum.hpp>
 #include <world/item/enum.hpp>
+#include <world/buildable/enum.hpp>
 #include <world/unit/enum.hpp>
 
 
 // using Entity = PackedEnum4_32<Role, 8, Animal, 6, Plant, 6, Item, 10>;
 
-using Entity = std::variant<Role, Animal, Plant, Item, Tool>;
+using Entity = std::variant<Role, Animal, Plant, Item, Buildable>;
 
+//TODO: make it possible for these to be variant or null
 struct EntitySearchData {
    uint16_t index;
    Coord position;
@@ -34,13 +36,13 @@ struct PlantRenderData {
 struct ItemRenderData {
   uint16_t index;
   Coord position;
-	Item item;
+  Item item;
 };
 
-struct ToolRenderData {
+struct BuildableRenderData {
 	uint16_t index;
 	Coord position;
-	Tool tool;
+	Buildable buildable;
 };
 
 struct UnitRenderData {
@@ -49,7 +51,7 @@ struct UnitRenderData {
 	Unit unit;
 };
 
-using EntityRenderData = std::variant<PlantRenderData, AnimalRenderData, UnitRenderData, ToolRenderData, ItemRenderData>;
+using EntityRenderData = std::variant<PlantRenderData, AnimalRenderData, UnitRenderData, BuildableRenderData, ItemRenderData>;
 
   struct EntityRenderBuffer {
     uint16_t plantAmount;
@@ -60,7 +62,7 @@ using EntityRenderData = std::variant<PlantRenderData, AnimalRenderData, UnitRen
     std::array<UnitRenderData, CHUNK_SIZE> units;
     uint16_t itemAmount;
     std::array<ItemRenderData, CHUNK_SIZE> items;
-    uint16_t toolAmount;
-    std::array<ToolRenderData, CHUNK_SIZE> tools;
+    uint16_t buildableAmount;
+    std::array<BuildableRenderData, CHUNK_SIZE> buildables;
   };
 

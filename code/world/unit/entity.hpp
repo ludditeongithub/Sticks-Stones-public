@@ -129,9 +129,7 @@ struct UnitDatabase
 	Array<Hunger> hungers;
 	Array<Time> ages;
 	Array<Action> actions;
-	Array<uint32_t> targets;
-	Array<TargetType> targetTypes; // consider packing with animal statuses as
-				       // this is related to movement.
+	Array<Target> targets;
 	Array<Frame> frames;
 	// processing unique to units
 	Array<Inventory> inventories;

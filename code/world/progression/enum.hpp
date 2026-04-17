@@ -1,8 +1,10 @@
 enum class Order
 {
-	Agriculture,
 	Administrative,
-	
+	Legal,
+	Cultural,
+	Satisfaction,
+	Force,
 	MAX
 };
 
@@ -10,6 +12,9 @@ enum class Knowledge
 {
 	Technology,
 	Academic,
+	Exploration,
+	Units,
+	Foreign,
 	MAX
 };
 
@@ -20,16 +25,29 @@ enum class Ritual
 	Poem,
 	Play,
 	Story,
+
+
 	LeaderSpeech,
 	Debate,
 	PublicTeaching,
+
 	KnowledgeBoost,
-	Decree,
-	AgricultureDecree,
+
 	MinterBoost,
 	BuilderBoost,
+	MinerBoost,
+	
+
+	Decree,
+	AgricultureDecree,
+
 	BlueprintOrder,
 	MonumentBlueprintOrder,
+	FriendlyLetter,
+	RequestAid,
+	TradeOffer,	
+	PeaceTreaty,
+	WarDeclaration,
 	MAX
 };
 

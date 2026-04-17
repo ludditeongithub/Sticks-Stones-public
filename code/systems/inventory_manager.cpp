@@ -95,7 +95,7 @@ void addItem(OverflowHashMap &overflows, std::vector<HoldableSlot> &holdables,
 	Item itemToAdd = buffer.holdable;
 
 	bool found = false;
-	if (hasTag(itemTags::Tool, itemTags[itemToAdd]))
+	if (hasTag(ItemTags::Tool, itemTags[itemToAdd]))
 	{
 			for (size_t i = 0; i < holdables.size(); i++)
 			{
@@ -118,7 +118,7 @@ void addItem(OverflowHashMap &overflows, std::vector<HoldableSlot> &holdables,
 	}
 	else 
 	{
-		if (hasTag(itemTags::Variant, itemTags[itemToAdd]))
+		if (hasTag(ItemTags::Variant, itemTags[itemToAdd]))
 		{
 			for (size_t i = 0; i < holdables.size(); i++)
 			{
@@ -186,7 +186,7 @@ void addItemsToInventory(OverflowHashMap &holdableOverflows,
 			 Inventory &inventory, InventoryAddBuffer &buffer)
 {
 
-	bool isTool = hasTags(itemTags::Tool, itemTags[buffer.holdable]);
+	bool isTool = hasTags(ItemTags::Tool, itemTags[buffer.holdable]);
 
 	for (size_t i = 0; i < buffer.containerAmount; i++)
 	{
@@ -421,7 +421,7 @@ uint16_t removeItem(OverflowHashMap &overflows,
 					  Item item,
 				      std::optional<uint16_t> itemAmountOrMaterial = std::nullopt, std::optional<uint8_t> variant = std::nullopt, bool check = false)
 {
-	if !(hasTags(itemTags::Tool, itemTags[item]))
+	if !(hasTags(ItemTags::Tool, itemTags[item]))
 	{
 	if (variant == std::nullopt) {
 		return removeItem(inventory, item, std::get<uint16_t>(itemAmountOrMaterial), check);
@@ -432,8 +432,7 @@ check) ? return 1 : return 0;
 	}
 }	
 
-NecessaryToolsBuffer ensureNecessaryTools(OverflowHashMap &overflows,
-					  OverflowContainerMap &overflowContainers, Action action, Inventory& inventory, uint16_t unitIndex, Coord coord)
+NecessaryToolsBuffer ensureNecessaryTools(OverflowHashMap &overflows, OverflowContainerMap &overflowContainers, SearchGrid& search, Action action, Inventory& inventory, uint16_t unitIndex, Coord coord)
 {
 	NecessaryToolsBuffer buffer;
 	
@@ -445,14 +444,15 @@ NecessaryToolsBuffer ensureNecessaryTools(OverflowHashMap &overflows,
 			for (int i = 0; i < toolAmount; i++)
 		{
 			Item tool = actionToTools[action][i].tool;
+			int requirementSlot = actionToTools[action]
+					[i].second();
 			// skip if replaceable equivalent has already been found,
 			for (int j = 0; j < currentlySearched; j++)
-				if (foundToolReplaceables[j] ==
-				    actionToTools[action][i].replaceable)
+				if (foundToolReplaceables[j] == requirementSlot)
 					continue;
 				
 			// skip if tool is optional
-			    if (actionToTools[action][i].replaceable < 0) continue;
+			    if (requirementSlot < 0) continue;
 
 			    found = removeItem(overflows,
 					  overflowContainers,
@@ -461,19 +461,16 @@ NecessaryToolsBuffer ensureNecessaryTools(OverflowHashMap &overflows,
 				
 			
 if (found) {
-				    foundToolsReplaceables[foundTools++] = actionToTools[action]
-					[i].replaceable;
+				    foundToolsReplaceables[foundTools++] = requirementSlot;
 				    found = true;
 				    break;
 				    } 
 
 			    if (!found) {
-			    Coord newDest =
-				findNearestObject(actionToTools[static_cast<uint16_t>(action)][i],
-						  coord.first, coord.second);
+			    data = search.getNearest(tool, coord.first, coord.second);
 			    if (manDist(coord, newDest) > MID_GATHER_RANGE) {
 				    buffer.state = ToolsState::Finding;
-				    buffer.destination.value() = NewDest;
+				    buffer.destination.value() = NewDest;				    // buffer.missingToolType.value() = tool;
 				    return buffer;
 			}
 			else

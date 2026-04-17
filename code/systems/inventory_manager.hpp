@@ -10,10 +10,10 @@ enum class ToolsState
 	};
 
 struct NecessaryToolsBuffer
-{	
+{
 	ToolsState state;
 	std::optional<Coord> destination;
-	std::optional<uint32_t> target;
+	std::optional<uint32_t> missingToolIndex;
 };
 
 

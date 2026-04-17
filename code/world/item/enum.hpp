@@ -18,6 +18,7 @@ enum class Item : uint16_t
 	Gem,
 	GreaterGem,
 	Ore,
+	Ingot,
 	CuredHide,
 	TannedHide,
 	RawMeat,
@@ -105,12 +106,14 @@ enum class Item : uint16_t
 	Clay,
 	// PRODUCTS BEGIN HERE
 	// paleo:
-	PitFire,
 	Tribalwear,
+	PrimitiveString,
+	PrimitiveNeedle,
 	Torch,
 	HandAxe,
 	StickSpear,
 	Hammerstone,
+	SharpStone,
 	HandKnife,
 	HandDrill,
 	HandChisel,
@@ -129,6 +132,8 @@ enum class Item : uint16_t
 	DrinkingWater,
 	AnimalFat,
 	// meso:
+	PrimitiveRope,
+	PrimitiveSack,
 	PrimitiveChair,
 	PrimitiveStool,
 	LargeSatchel,
@@ -137,12 +142,12 @@ enum class Item : uint16_t
 	SmoothedPebbles,
 	Earring,
 	Ring,
+	EngravedRing,
 	Bracelet,
+	EngravedBracelet,
 	Necklace,
 	WoodCrown,
 	Sling,
-	PrimitiveRope,
-	PrimitiveString,
 	LargeHandle,
 	SmallHandle,
 	BoneArtifact,
@@ -151,7 +156,6 @@ enum class Item : uint16_t
 	PrimitiveSpear,
 	PrimitiveSpearHead,
 	DiggingStick,
-	Thread,
 	Arrowhead,
 	SolidWheel,
 	Strap,
@@ -160,7 +164,12 @@ enum class Item : uint16_t
 	PrimitiveBow,
 	Basket,
 	Waterskin,
+	SaltedRawMeat,
+	SaltedCookedMeat,
+	SaltedVegetable,
 	// neo:
+	Thread,
+	Yarn,
 	String,
 	BackstrapLoom,
 	ClayJar,
@@ -173,6 +182,7 @@ enum class Item : uint16_t
 	Daub,
 	WheatGrain,
 	Cloth,
+	DecorativeCloth,
 	Silk,
 	Linen,
 	Charcoal,
@@ -235,6 +245,7 @@ enum class Item : uint16_t
 	Plaster,
 	SugarJuice,
 	Mead,
+	Cider,
 	FruitWine,
 	Wine,
 	Beer,
@@ -255,6 +266,9 @@ enum class Item : uint16_t
 	OliveOil,
 	BlueCheese,
 	Porridge,
+	PickledFruit,
+	PickledVegetable,
+	Parchment,
 	// bronze:
 	Blowpipe,
 	StoneArtifact,
@@ -276,6 +290,12 @@ enum class Item : uint16_t
 	FancyClothes,
 	FormalClothes,
 	Sword,
+	ToolHeadPlaceholder,
+	ToolHeadMouldPlaceholder,
+	ToolPlaceholder,
+	WeaponHeadPlaceholder,
+	WeaponHeadMouldPlaceholder,
+	WeaponPlaceholder,
 	PermanentSpearHeadMould,
 	SpearHeadMould,
 	PermanentPickaxeHeadMould,
@@ -325,7 +345,6 @@ enum class Item : uint16_t
 	MedicinalSoap,
 	GileadBalm,
 	Theriac,
-	MetalArrowhead,
 	Tube,
 	Sail,
 	Wheel,
@@ -379,8 +398,6 @@ enum class Item : uint16_t
 	CoinMould,
 	Wire,
 	// mediev
-	Pulley,
-	Waterwheel,
 	Candle,
 	Chainmail,
 	EmperorsStaff,
@@ -402,18 +419,21 @@ enum class Item : uint16_t
 	PermanentGreatswordHeadMould,
 	GreatswordHeadMould,
 	Gambeson,
+	Coat,
 	Breastplate,
 	Helmet,
 	Bracers,
+	Boots,
 	Guards,
 	Gloves,
 
 
-	//TODO: fill out data for these items!
+	// TODO: fill out data for these items!
 	SmallSculpture,
 	SmallPaintedSculpture,
 	SmallCarving,
 	SmallPaintedCarving,
+	Vase, 
 	PlayScript,
 	PaperPainting,
 	CanvasPainting,
@@ -428,123 +448,20 @@ enum class Item : uint16_t
 	MAX
 };
 
-enum class Buildable : uint16_t
-{
-	NONE,
-	TentSticks,
-	WattleWall,
-	Wall, // variants
-	WallPanel,
-	Fence,
-	Gate,
-	Pillar,
-	CityGate,
-
-	TentCover,
-	WattleRoof,
-	RoofBeams,
-	Roof,
-	Window,
-	PaintedWindow,
-
-	Foundation,
-	Floor,
-	Carpet,
-	PlowedDirt,
-	Path,
-	StoneRoad,
-	BrickRoad,
-	ConcreteRoad,
-
-	DugCanal,
-	Canal,
-	Well,
-	Siphon,
-	BucketPump,
-	SuctionPump,
-	HydraulicPump,
-	Aqueduct,
-
-	VerticalLoom,
-	FloorLoom,
-	PottersWheel,
-	Anvil,
-	PitKiln,
-	EarthMoundKiln, // small, medium, large variants
-	PitFurnace,
-	AdvancedPitFurnace,
-	BloomeryFurnace,
-	Forge,
-	Bellows,
-	DoubleBellows,
-	WaterPoweredBellows,
-
-	//TODO: fill out data for these items!
-	MediumSculpture,
-	LargeSculpture,
-	MediumPaintedSculpture,
-	LargePaintedSculpture,
-	LargeCarving,
-	LargePaintedCarving,
-	WallCarving,
-	LargeWallCarving,
-	PaintedGlass, 
-	MAX
-};
-
-enum class Vehicle : uint8_t
-{
-	NONE,
-	WheeledCart,
-	WheeledWagon,
-	WheeledChariot,
-	Canoe,
-	Sailboat,
-	LargeSailboat,
-	Longboat,
-	LightWarship,
-	HeavyWarship,
-	Cog,
-	Freighter,
-	BatteringLog,
-	BatteringRam,
-	Trebuchet,
-	Ballista,
-	Catapult,
-	SiegeLadder,
-	SiegeTower,
-	MAX
-};
-
-// TODO: add recipe instructions for this
-// NONE,
-// // also doubles for juice
-// Orange,
-// Apple,
-// Lemon,
-// Pear,
-// Peach,
-// Cherry,
-// Apricot,
-// Plum,
-// Lime,
-// // Non-fall fruits
-// Blueberry,
-// Strawberry,
-// Grape,
-// // FRUIT VEGGIES
-// Cucumber,
-// Pepper,
-// Tomato,
-// MAX
-
 enum class Material : uint8_t
 {
 	Wood,
 	Iron,
 	Steel,
 	Leather,
-	Stone	
+	Stone,
+	Bone,
+	Sinew,
+	Cotton,
+	Linen,
+	Glass,
+	Wool,
+	Silk
 };
 
 enum class Quality : uint8_t
@@ -558,11 +475,6 @@ enum class Quality : uint8_t
 	Legendary	
 };
 
-enum class Tool
-{
-
-};
-
 enum class ContainerType : uint8_t
 {
 	NONE,
@@ -574,6 +486,7 @@ enum class ContainerType : uint8_t
 	Jar,
 	Keg,
 	Basket,
+	LargeBasket,
 	MashTun,
 	Crucible,
 	// ITEMS TO ADD

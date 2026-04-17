@@ -1409,7 +1409,7 @@ Recipe alternateInterpreter(Item product)
 			Actions action;
 			uint16_t time;
 			Item ingredients[7];
-			uint8_tslots[7];
+			uint8_t slots[7];
 		};
 
 		ToolRecipe tools[Tool::MAX];
@@ -1421,11 +1421,11 @@ Recipe alternateInterpreter(Item product)
 			    Actions::Carve, 1300, {Item::Stick, Item::LargeStick}};
 			tools[static_cast<int>(Tools::StickSpear)] = {
 			    Actions::Carve, 900, {Item::LargeStick}};
+			tools[static_cast<int>(Tools::SharpStick)] = {Actions::Carve, 300, {Item::SmallStick}};				
 			tools[static_cast<int>(Tools::PrimitiveSpear)] = {
 			    Actions::Craft,
 			    500,
-			    {Item::Stick, Item::LargeHandle, Item::PrimitiveString,
-			     Item::PrimitiveSpearHead}};
+			    {Item::Stick, Item::LargeHandle, Item::PrimitiveString, Item::PrimitiveSpearHead}};
 			tools[static_cast<int>(Tools::PrimitiveAxe)] = {
 			    Actions::Craft,
 			    500,
@@ -1500,9 +1500,9 @@ Recipe alternateInterpreter(Item product)
 			tools[static_cast<int>(Tools::HandDrill)] = {
 			    {Actions::Craft},
 			    280,
-			    {Item::Stick, Item::Beam, Item::SmallHandle, Item::Peg, Item::String},
+			    {Item::Stick, Item::Beam, Item::SmallHandle, Item::Peg, Item::String, Item::PrimitiveString},
 			    {1, 1, 1},
-			    {1, 1, 2, 3, 3}};
+			    {1, 1, 2, 3, 3, 3}};
 		case Item::ArdHead:
 			return {Actions::Smith, 3200, {Item::Metal}, {7}};
 			tools[static_cast<int>(Tools::Graver)] = {

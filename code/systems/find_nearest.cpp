@@ -138,7 +138,7 @@ inline EntitySearchData SearchGrid::getNearest(Entity e, Coord c)
 	}
 	else
 	{
-		return ENTITY_SEARCH_MAX;
+		return {nullptr, {nullptr, nullptr}};
 	}
 }
 

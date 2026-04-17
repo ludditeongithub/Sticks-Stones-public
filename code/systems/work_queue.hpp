@@ -7,12 +7,10 @@
 #include <world/item/enum.hpp>
 #include <world/unit/enum.hpp>
 #include <world/unit/entity.hpp>
-#include <world/unit/roles_commodities.hpp>>
+#include <world/unit/roles_commodities.hpp>
 
 void setUnitJob(UnitDatabase& database, CommodityDispatcher& dispatcher, uint16_t unitIndex);
 Commodity::underlying getUnitNextCommodity(UnitDatabase& database, CommodityDispatcher& dispatcher, uint16_t unitIndex);
-
-
 
 void getResourceAction(int pawn, Item item, int sourceIndex, int variantIndex);
 // Get amount of item to put into inventory ();

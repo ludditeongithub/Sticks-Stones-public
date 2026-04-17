@@ -7,12 +7,24 @@
 #include <tuple>
 #include <utility>
 
+#include <tuple>
+#include <array>
+#include <stdexcept>
+#include <cstdint>
+#include <utility>
+
+#include <tuple>
+#include <array>
+#include <variant>
+#include <stdexcept>
+#include <cstdint>
+#include <utility>
+
 template<typename... Enums>
 struct ConcatEnum {
     using underlying = uint32_t;
     static constexpr std::size_t count = sizeof...(Enums);
 
-    // sizes of each enum
     static constexpr std::array<underlying, count> sizes = { static_cast<underlying>(Enums::MAX)... };
 
     static constexpr std::array<underlying, count> offsets = [] {
@@ -31,30 +43,26 @@ struct ConcatEnum {
         return total;
     }();
 
-    // map a single enum to underlying index
     template<typename E>
     static constexpr underlying cast(E e) {
         constexpr std::size_t i = index_of<E>();
         return offsets[i] + static_cast<underlying>(e);
     }
 
-    template<typename F, std::size_t I = 0>
-    static constexpr void cast_impl(underlying idx, F&& f) {
+    using Variant = std::variant<Enums...>;
+
+    template<std::size_t I = 0>
+    static constexpr Variant cast(underlying idx) {
         if constexpr (I < count) {
             if (idx < offsets[I] + sizes[I]) {
                 using E = std::tuple_element_t<I, std::tuple<Enums...>>;
-                f(static_cast<E>(idx - offsets[I])); 
+                return Variant{static_cast<E>(idx - offsets[I])};
             } else {
-                cast_impl<I + 1>(idx, std::forward<F>(f));
+                return cast<I + 1>(idx);
             }
         } else {
-            throw std::out_of_range("Index out of bounds in ConcatEnum::cast_impl");
+            throw std::out_of_range("Index out of bounds in ConcatEnum::cast");
         }
-    }
-
-    template<typename F>
-    static constexpr void cast(underlying idx, F&& f) {
-        cast_impl(idx, std::forward<F>(f));
     }
 
 private:

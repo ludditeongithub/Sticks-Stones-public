@@ -1,11 +1,8 @@
 #ifndef FOODHUNGER_HPP
 #define FOODHUNGER_HPP
 
-#include <array>
 #include <core/data.hpp>
 #include <core/tables.hpp>
-#include <cstdint>
-#include <cstdlib>
 #include <world/plant/enum.hpp>
 
 inline constexpr LookupTable<Plant, Hunger> fruitHunger = []
@@ -37,13 +34,13 @@ inline constexpr LookupTable<Plant, Hunger> plantHunger = []
 	arr[Bush] = 30;
 	arr[PioneerTree] = 20;
 	arr[EvergreenTree] = 25;
-	arr[OrangeTree] = 60;
-	arr[LimeTree] = 20;
-	arr[PlumTree] = 40;
-	arr[ApricotTree] = 45;
-	arr[AppleTree] = 95;
-	arr[OliveTree] = 25;
-	arr[StrawberryShrub] = 10;
+	arr[Orange] = 60;
+	arr[Lime] = 20;
+	arr[Plum] = 40;
+	arr[Apricot] = 45;
+	arr[Apple] = 95;
+	arr[Olive] = 25;
+	arr[Strawberry] = 10;
 	arr[Lettuce] = 15;
 	arr[Corn] = 80;
 	arr[Beets] = 40;
@@ -51,7 +48,6 @@ inline constexpr LookupTable<Plant, Hunger> plantHunger = []
 	arr[Cabbage] = 25;
 	arr[Tomato] = 20;
 	arr[Pepper] = 15;
-	arr[Beans] = 40;
 	arr[Hemp] = 20;
 	arr[Woad] = 5;
 	arr[Indigo] = 5;

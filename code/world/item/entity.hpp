@@ -1,4 +1,4 @@
-#include "core/packed_enum.hpp"
+#include <core/packed_enum.hpp>
 #include "enum.hpp"
 #include "tags.hpp"
 #include <array>
@@ -6,7 +6,9 @@
 #include <unordered_map>
 #include <variant>
 #include <vector>
-#include <iostream>
+#include <world/item/enum.hpp>
+#include <core/data.hpp>
+#include <core/containers.hpp>
 
 constexpr uint16_t HOLDABLE_UNDERFLOW_LIMIT = 6;
 
@@ -17,7 +19,7 @@ struct ItemSlot
 
 	ItemSlot(Item item, uint16_t amount) : item(item), amount(amount)
 	{
-		assert(!hasTag(itemTags::Variant | itemTags::Tool | itemTags::Art, itemTags[item]));
+		assert(!hasTag(ItemTags::Variant | ItemTags::Tool | ItemTags::Art, itemTags[item]));
 	}
 
 	inline bool isEmpty()
@@ -41,7 +43,7 @@ struct VariantItemSlot
 	VariantItemSlot(Item item, uint16_t amount, uint8_t variant)
 	    : item(item), amount(amount), variant(variant)
 	{
-		assert(hasTag(itemTags::Variant, itemTags[item]));
+		assert(hasTag(ItemTags::Variant, itemTags[item]));
 	}
 
 	inline bool isEmpty()
@@ -63,7 +65,7 @@ struct ToolSlot
 
 	ToolSlot(Item item, SpecialItemData specialData) : item(item), specialData(specialData)
 	{
-		assert(hasTag(itemTags::Tool, itemTags[item]));
+		assert(hasTag(ItemTags::Tool, itemTags[item]));
 	}
 
 	inline bool isEmpty()
@@ -81,7 +83,7 @@ struct ArtSlot {
 
 	ArtSlot(Item item, SpecialItemData specialData) : item(item), specialData(specialData)
 	{
-		assert(hasTag(itemTags::Art, itemTags[item]));
+		assert(hasTag(ItemTags::Art, itemTags[item]));
 	}
 
 	inline bool isEmpty()
@@ -93,43 +95,24 @@ struct ArtSlot {
 	inline Item getType() { return item; }
 };
 
-using HoldableSlot = std::variant<ItemSlot, VariantItemSlot, ToolSlot, ArtSlot>;
+struct MealSlot {
+	uint16_t mealIndex;
+	Quality quality;
+};
+
+using HoldableSlot = std::variant<ItemSlot, VariantItemSlot, ToolSlot, ArtSlot, MealSlot>;
 
 enum class ContainerFullTags : uint8_t
 {
-	Empty,
-	HandsOnly,
-	InventoryContainersFull,
-	NextContainer, // if there is a next container
-	ItemOverflow,
-	VariantItemOverflow,
-	ToolOverflow
+	NONE = 0,
+	Empty = 1 << 1,
+	HandsOnly = 1 << 2,
+	InventoryContainersFull = 1 << 3,
+	NextContainer = 1 << 4, // if there is a next container
+	ItemOverflow = 1 << 5,
+	VariantItemOverflow = 1 << 6,
+	ToolOverflow = 1 << 7
 };
-
-inline ContainerFullTags operator|(ContainerFullTags a, ContainerFullTags b)
-{
-	return static_cast<ContainerFullTags>(
-	    static_cast<std::underlying_type_t<ContainerFullTags>>(a) |
-	    static_cast<std::underlying_type_t<ContainerFullTags>>(b));
-}
-
-inline ContainerFullTags &operator|=(ContainerFullTags &a, ContainerFullTags b)
-{
-	a = a | b;
-	return a;
-}
-
-inline ContainerFullTags operator&(ContainerFullTags a, ContainerFullTags b)
-{
-	return static_cast<ContainerFullTags>(
-	    static_cast<std::underlying_type_t<ContainerFullTags>>(a) &
-	    static_cast<std::underlying_type_t<ContainerFullTags>>(b));
-}
-
-inline bool hasTag(ContainerFullTags value, ContainerFullTags tag)
-{
-	return static_cast<std::underlying_type_t<ContainerFullTags>>(value & tag) != 0;
-}
 
 struct Container
 {
@@ -146,8 +129,20 @@ struct Container
 
 	Container(Item type, ContainerFullTags tags, float bulk, float weight) : type(type), tags(tags), bulk(bulk), weight(weight)
 	{
-		assert(hasTag(itemTags::Container, itemTags[type]));
-	}		
+		assert(hasTag(ItemTags::Container, itemTags[type]));
+	}
+};
+
+// for items in the world.
+struct ItemDatabase
+{
+	Array<Item> types;
+	Array<Coord> coords;
+};
+
+struct VariantItemDatabase {
+	Array<Item> types;
+	Array<uint8_t> variant;
 };
 
 struct ContainerStorageData
@@ -164,3 +159,4 @@ inline uint32_t overflow_hash(uint16_t unitIndex, uint16_t containerIndex)
 {
 	return hash_pair(unitIndex, containerIndex);
 }
+

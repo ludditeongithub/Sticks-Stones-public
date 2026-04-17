@@ -16,6 +16,7 @@ all units currently performing a non-material role, have their min priorities co
 unit checks all its roles, and then selects the task with the lowest priority.
 ** Writing to data to file
 ** option to configure screen size
+** get rid of all vectors, standardize overflow/imps
 * NOTES
 ** Programming
 *** Scheduling and Simulation Precision

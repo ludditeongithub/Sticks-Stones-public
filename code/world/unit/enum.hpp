@@ -105,6 +105,7 @@ enum class Role : uint8_t
 	IronMiner,
 	OliveGrower,
 	VineyardWorker,
+	Vinter,
 	// classical
 	GoldMiner,
 	SaltMiner,
@@ -157,6 +158,7 @@ enum class Role : uint8_t
 	GoldSmelter,
 	Silversmith,
 	Goldsmith,
+	ParchmentMaker,
 	GemCarver,
 	Potter,
 	Engineer,
@@ -177,7 +179,10 @@ enum class Role : uint8_t
 	PaperMaker,
 	Apothecary,
 	Glassworker,
-	// classical, no cartwright, no cheesmaker, shipwright = naval engineer, no
+	LoomWeaver,
+	// classical,
+	Cartwright,
+	Cheesemaker, 
 	// chef, no philosopher
 	Glassblower,
 	Engraver,
@@ -194,6 +199,9 @@ enum class Role : uint8_t
 	Caretaker,
 	Hauler,
 	Dyer,
+	Blacksmith,
+	Toolsmith,
+	Weaponsmith,
 	Chandler,
 	Ropemaker,
 	Tailor,
@@ -231,7 +239,6 @@ enum class Role : uint8_t
 	Aristocrat,
 	MiningEngineer,
 	WagonMaster,
-	Baron,
 	MAX
 };
 

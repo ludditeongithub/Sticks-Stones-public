@@ -1,5 +1,0 @@
-#include "../include/categories.hpp"
-
-Resource itemToResource(Item item) {
-	 
-}

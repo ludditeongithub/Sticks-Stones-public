@@ -4,9 +4,10 @@
 #include <core/tables.hpp>
 #include <core/fbitset.hpp>
 #include <cstdint>
+#include <core/tags.hpp>
 
 // TODO:: sieve, which can separte sand and clay in, liquids and soil, etc
-enum class itemTags : uint16_t
+enum class ItemTags : uint16_t
 {
 	NONE = 0,
 	Resource = 1 << 0,
@@ -28,200 +29,177 @@ enum class itemTags : uint16_t
 	Art = 1 << 15,
 };
 
-inline itemTags operator|(itemTags a, itemTags b)
-{
-	return static_cast<itemTags>(static_cast<std::underlying_type_t<itemTags>>(a) |
-				     static_cast<std::underlying_type_t<itemTags>>(b));
-}
 
-inline itemTags &operator|=(itemTags &a, itemTags b)
-{
-	a = a | b;
-	return a;
-}
-
-inline itemTags operator&(itemTags a, itemTags b)
-{
-	return static_cast<itemTags>(static_cast<std::underlying_type_t<itemTags>>(a) &
-				     static_cast<std::underlying_type_t<itemTags>>(b));
-}
-
-inline bool hasTag(itemTags value, itemTags tag)
-{
-	return static_cast<std::underlying_type_t<itemTags>>(value & tag) != 0;
-}
-
-
-inline constexpr LookupTable<Item, itemTags> itemTags = []
+inline constexpr LookupTable<Item, ItemTags> itemTags = []
 {	
-	LookupTable<Item,itemTags> lt{};
+	LookupTable<Item,ItemTags> lt{};
 	using enum Item;
-	lt[Item::Salt] = itemTags::Liquid;
-	lt[Item::Flour] = itemTags::Perishable | itemTags::WaterDamage;
-	lt[Item::MilledRice] = itemTags::Perishable;
-	lt[Item::Bread] = itemTags::Perishable | itemTags::WaterDamage;
+	lt[Item::Salt] = ItemTags::Liquid;
+	lt[Item::Flour] = ItemTags::Perishable | ItemTags::WaterDamage;
+	lt[Item::MilledRice] = ItemTags::Perishable;
+	lt[Item::Bread] = ItemTags::Perishable | ItemTags::WaterDamage;
 	lt[Item::Pastry] =
-	    itemTags::OptionalIngredient | itemTags::Perishable | itemTags::WaterDamage;
-	lt[Item::Pie] = itemTags::OptionalIngredient | itemTags::Perishable | itemTags::WaterDamage;
+	    ItemTags::OptionalIngredient | ItemTags::Perishable | ItemTags::WaterDamage;
+	lt[Item::Pie] = ItemTags::OptionalIngredient | ItemTags::Perishable | ItemTags::WaterDamage;
 	lt[Item::Porridge] =
-	    itemTags::OptionalIngredient | itemTags ::Perishable | itemTags::WaterDamage;
-	lt[Item::RawMeat] = itemTags::Perishable;
-	lt[Item::CookedMeat] = itemTags::Perishable;
-	lt[Item::AnimalFat] = itemTags::Perishable;
-	lt[Item::Cheese] = itemTags::Perishable;
-	lt[Item::GoatCheese] = itemTags::Perishable;
-	lt[Item::BlueCheese] = itemTags::Perishable;
-	lt[Item::Beer] = itemTags::Liquid | itemTags::Perishable;
-	lt[Item::Wine] = itemTags::Liquid | itemTags::RequiresUniqueVariant | itemTags::Perishable;
-	lt[Item::FruitWine] = itemTags::Liquid | itemTags::Variant | itemTags::Perishable;
-	lt[Item::Mead] = itemTags::Liquid | itemTags::Perishable;
-	lt[Item::Vinegar] = itemTags::Liquid | itemTags::Perishable;
-	lt[Item::Butter] = itemTags::Liquid | itemTags::Perishable;
-	lt[Item::OliveOil] = itemTags::Liquid | itemTags::Perishable;
+	    ItemTags::OptionalIngredient | ItemTags ::Perishable | ItemTags::WaterDamage;
+	lt[Item::RawMeat] = ItemTags::Perishable;
+	lt[Item::CookedMeat] = ItemTags::Perishable;
+	lt[Item::AnimalFat] = ItemTags::Perishable;
+	lt[Item::Cheese] = ItemTags::Perishable;
+	lt[Item::GoatCheese] = ItemTags::Perishable;
+	lt[Item::BlueCheese] = ItemTags::Perishable;
+	lt[Item::Beer] = ItemTags::Liquid | ItemTags::Perishable;
+	lt[Item::Wine] = ItemTags::Liquid | ItemTags::RequiresUniqueVariant | ItemTags::Perishable;
+	lt[Item::FruitWine] = ItemTags::Liquid | ItemTags::Variant | ItemTags::Perishable;
+	lt[Item::Mead] = ItemTags::Liquid | ItemTags::Perishable;
+	lt[Item::Vinegar] = ItemTags::Liquid | ItemTags::Perishable;
+	lt[Item::Butter] = ItemTags::Liquid | ItemTags::Perishable;
+	lt[Item::OliveOil] = ItemTags::Liquid | ItemTags::Perishable;
 	lt[Item::CookingOil] =
-	    itemTags::Liquid | itemTags::VariableAmountProduced | itemTags::Perishable;
-	lt[Item::DrinkingWater] = itemTags::Liquid;
-	lt[Item::Juice] = itemTags::Liquid | itemTags::Perishable;
-	lt[Item::CandiedFruit] = itemTags::Perishable;
-	lt[Item::AgedAlcoholicDrink] = itemTags::Perishable;
-	lt[Item::SugarJuice] = itemTags::Liquid | itemTags::Perishable;
-	lt[Item::Sugar] = itemTags::Perishable;
-	lt[Item::GroundBlackPepper] = itemTags::Perishable;
-	lt[Item::ChiliPowder] = itemTags::Perishable;
-	lt[Item::Metal] = itemTags::VariableAmountsRequired | itemTags::VariableAmountProduced;
-	lt[Item::Timber] = itemTags::VariableAmountProduced;
-	lt[Item::Daub] = itemTags::VariableAmountProduced;
-	lt[Item::Cob] = itemTags::VariableAmountProduced;
-	lt[Item::PackedEarth] = itemTags::Alternate;
-	lt[Item::Lime] = itemTags::RequiresUniqueVariant;
-	lt[Item::Plaster] = itemTags::Liquid;
+	    ItemTags::Liquid | ItemTags::VariableAmountProduced | ItemTags::Perishable;
+	lt[Item::DrinkingWater] = ItemTags::Liquid;
+	lt[Item::Juice] = ItemTags::Liquid | ItemTags::Perishable;
+	lt[Item::CandiedFruit] = ItemTags::Perishable;
+	lt[Item::AgedAlcoholicDrink] = ItemTags::Perishable;
+	lt[Item::SugarJuice] = ItemTags::Liquid | ItemTags::Perishable;
+	lt[Item::Sugar] = ItemTags::Perishable;
+	lt[Item::GroundBlackPepper] = ItemTags::Perishable;
+	lt[Item::ChiliPowder] = ItemTags::Perishable;
+	lt[Item::Metal] = ItemTags::VariableAmountsRequired | ItemTags::VariableAmountProduced;
+	lt[Item::Timber] = ItemTags::VariableAmountProduced;
+	lt[Item::Daub] = ItemTags::VariableAmountProduced;
+	lt[Item::Cob] = ItemTags::VariableAmountProduced;
+	lt[Item::PackedEarth] = ItemTags::Alternate;
+	lt[Item::Lime] = ItemTags::RequiresUniqueVariant;
+	lt[Item::Plaster] = ItemTags::Liquid;
 	lt[Item::CrushedStone] =
-	    itemTags::VariableAmountsRequired | itemTags::VariableAmountProduced;
-	lt[Item::Concrete] = itemTags::VariableAmountProduced | itemTags::Liquid;
-	lt[Item::Mortar] = itemTags::Liquid;
-	lt[Item::Glass] = itemTags::VariableAmountProduced | itemTags::VariableAmountsRequired;
-	lt[Item::Glass] = itemTags::VariableAmountsRequired;
-	lt[Item::Pane] = itemTags::VariableAmountProduced | itemTags::VariableAmountsRequired;
-	lt[Item::FiredClay] = itemTags::Liquid | itemTags::VariableAmountProduced;
-	lt[Item::Charcoal] = itemTags::VariableAmountProduced | itemTags::VariableAmountsRequired;
-	lt[Item::Bone] = itemTags::FromCorpse;
+	    ItemTags::VariableAmountsRequired | ItemTags::VariableAmountProduced;
+	lt[Item::Concrete] = ItemTags::VariableAmountProduced | ItemTags::Liquid;
+	lt[Item::Mortar] = ItemTags::Liquid;
+	lt[Item::Glass] = ItemTags::VariableAmountProduced | ItemTags::VariableAmountsRequired;
+	lt[Item::Glass] = ItemTags::VariableAmountsRequired;
+	lt[Item::Pane] = ItemTags::VariableAmountProduced | ItemTags::VariableAmountsRequired;
+	lt[Item::FiredClay] = ItemTags::Liquid | ItemTags::VariableAmountProduced;
+	lt[Item::Charcoal] = ItemTags::VariableAmountProduced | ItemTags::VariableAmountsRequired;
+	lt[Item::Bone] = ItemTags::FromCorpse;
 	lt[Item::AnimalHair] =
-	    itemTags::FromCorpse | itemTags::VariableAmountProduced | itemTags::Perishable;
-	lt[Item::AnimalHides] = itemTags::FromCorpse | itemTags::VariableAmountProduced;
-	lt[Item::Soot] = itemTags::VariableAmountsRequired |
-			 // itemTags::VariableAmountProduced;
+	    ItemTags::FromCorpse | ItemTags::VariableAmountProduced | ItemTags::Perishable;
+	lt[Item::AnimalHides] = ItemTags::FromCorpse | ItemTags::VariableAmountProduced;
+	lt[Item::Soot] = ItemTags::VariableAmountsRequired |
+			 // ItemTags::VariableAmountProduced;
 			 lt[Item::TanningAgent] =
-			     itemTags::VariableAmountProduced | itemTags::Perishable;
-	lt[Item::Nail] = itemTags::OptionalIngredient | itemTags::VariableAmountProduced;
-	lt[Item::NailHeader] = itemTags::Mould;
-	lt[Item::Glue] = itemTags::WaterDamage;
-	lt[Item::String] = itemTags::VariableAmountProduced | itemTags::VariableAmountsRequired;
-	lt[Item::Axle] = itemTags::Alternate;
-	lt[Item::Gear] = itemTags::Alternate;
-	lt[Item::SolidWheel] = itemTags::Alternate;
-	lt[Item::Tube] = itemTags::Alternate;
-	lt[Item::Peg] = itemTags::Alternate;
-	lt[Item::Wedge] = itemTags::VariableAmountProduced;
-	lt[Item::SmallHandle] = itemTags::VariableAmountProduced | itemTags::Alternate;
-	lt[Item::LargeHandle] = itemTags::Alternate;
-	lt[Item::BrickMold] = itemTags::Mould;
-	lt[Item::MetalArrowhead] = itemTags::Alternate;
-	lt[Item::ArrowShaft] = itemTags::Alternate;
-	lt[Item::Trigger] = itemTags::VariableAmountsRequired;
-	lt[Item::PrimitiveString] = itemTags::WaterDamage;
-	lt[Item::RedDye] = itemTags::Alternate | itemTags::Liquid;
-	lt[Item::YellowDye] = itemTags::Alternate | itemTags::Liquid;
-	lt[Item::BlueDye] = itemTags::Alternate | itemTags::Liquid;
-	lt[Item::Bleach] = itemTags::Liquid;
-	lt[Item::Ink] = itemTags::Liquid;
-	lt[Item::Incense] = itemTags::Perishable;
-	lt[Item::Paper] = itemTags::WaterDamage;
-	lt[Item::Laxative] = itemTags::Alternate;
-	lt[Item::Tonic] = itemTags::Alternate | itemTags::Liquid;
-	lt[Item::BoneMeal] = itemTags::Perishable;
-	lt[Item::FishMeal] = itemTags::Perishable;
-	lt[Item::Fertilizer] = itemTags::Perishable;
-	lt[Item::CoinMould] = itemTags::Alternate;
-	lt[Item::PrimitiveSpearHead] = itemTags::Alternate;
-	lt[Item::KnifeHead] = itemTags::Alternate;
-	lt[Item::SickleHead] = itemTags::Alternate;
-	lt[Item::AwlHead] = itemTags::Alternate;
-	lt[Item::AdzeHead] = itemTags::Alternate;
-	lt[Item::MalletHead] = itemTags::Alternate;
-	lt[Item::ScalpelHead] = itemTags::Alternate;
-	lt[Item::HammerHead] = itemTags::Alternate;
-	lt[Item::ChiselHead] = itemTags::Alternate;
-	lt[Item::TrowelHead] = itemTags::Alternate;
-	lt[Item::CleaverHead] = itemTags::Alternate;
-	lt[Item::MacheteHead] = itemTags::Alternate;
-	lt[Item::SwordHead] = itemTags::Alternate;
-	lt[Item::HandaxeHead] = itemTags::Alternate;
-	lt[Item::PermanentKnifeHeadMould] = itemTags::Alternate | itemTags::Mould;
-	lt[Item::PermanentSickleHeadMould] = itemTags::Alternate | itemTags::Mould;
-	lt[Item::PermanentAwlHeadMould] = itemTags::Alternate | itemTags::Mould;
-	lt[Item::PermanentAdzeHeadMould] = itemTags::Alternate | itemTags::Mould;
-	lt[Item::PermanentMalletHeadMould] = itemTags::Alternate | itemTags::Mould;
-	lt[Item::PermanentScalpelHeadMould] = itemTags::Alternate | itemTags::Mould;
-	lt[Item::PermanentHammerHeadMould] = itemTags::Alternate | itemTags::Mould;
-	lt[Item::PermanentChiselHeadMould] = itemTags::Alternate | itemTags::Mould;
-	lt[Item::PermanentTrowelHeadMould] = itemTags::Alternate | itemTags::Mould;
-	lt[Item::PermanentCleaverHeadMould] = itemTags::Alternate | itemTags::Mould;
-	lt[Item::PermanentMacheteHeadMould] = itemTags::Alternate | itemTags::Mould;
-	lt[Item::PermanentSwordHeadMould] = itemTags::Alternate | itemTags::Mould;
-	lt[Item::PermanentHandaxeHeadMould] = itemTags::Alternate | itemTags::Mould;
-	lt[Item::PrimitiveSpearHead] = itemTags::Alternate;
-	lt[Item::ScytheHead] = itemTags::Alternate;
-	lt[Item::PermanentScytheHeadMould] = itemTags::Alternate | itemTags::Mould;
-	lt[Item::ArdHead] = itemTags::Alternate;
-	lt[Item::PermanentArdHeadMould] = itemTags::Alternate | itemTags::Mould;
-	lt[Item::HeavySawHead] = itemTags::Alternate;
-	lt[Item::PermanentHeavySawHeadMould] = itemTags::Alternate | itemTags::Mould;
-	lt[Item::SawHead] = itemTags::Alternate;
-	lt[Item::PermanentSawHeadMould] = itemTags::Alternate | itemTags::Mould;
-	lt[Item::ShovelHead] = itemTags::Alternate;
-	lt[Item::PermanentShovelHeadMould] = itemTags::Alternate | itemTags::Mould;
-	lt[Item::AxeHead] = itemTags::Alternate;
-	lt[Item::PermanentAxeHeadMould] = itemTags::Alternate | itemTags::Mould;
-	lt[Item::PickaxeHead] = itemTags::Alternate;
-	lt[Item::PermanentPickaxeHeadMould] = itemTags::Alternate | itemTags::Mould;
-	lt[Item::GreatswordHead] = itemTags::Alternate;
-	lt[Item::PermanentGreatswordHeadMould] = itemTags::Alternate | itemTags::Mould;
-	lt[Item::GreataxeHead] = itemTags::Alternate;
-	lt[Item::PermanentGreataxeHeadMould] = itemTags::Alternate | itemTags::Mould;
-	lt[Item::HalberdHead] = itemTags::Alternate;
-	lt[Item::PermanentHalberdHeadMould] = itemTags::Alternate | itemTags::Mould;
-	lt[Item::PikeHead] = itemTags::Alternate;
-	lt[Item::PermanentPikeHeadMould] = itemTags::Alternate | itemTags::Mould;
-	lt[Item::SpearHead] = itemTags::Alternate;
-	lt[Item::PermanentSpearHeadMould] = itemTags::Alternate | itemTags::Mould;
-	lt[Item::Cloth] = itemTags::WaterDamage;
-	lt[Item::DyedCloth] = itemTags::WaterDamage;
-	lt[Item::Tribalwear] = itemTags::Wearable;
-	lt[Item::BasicClothes] = itemTags::Wearable;
-	lt[Item::FormalClothes] = itemTags::VariableAmountRequired | itemTags::Wearable;
-	lt[Item::FancyClothes] = itemTags::VariableAmountRequired | itemTags::Wearable;
-	lt[Item::GoldCrown] = itemTags::Wearable;
-	lt[Item::RoyalCrown] = itemTags::Wearable;
-	lt[Item::Necklace] = itemTags::Wearable;
-	lt[Item::Ring] = itemTags::Alternate | itemTags::Wearable;
-	lt[Item::Earring] = itemTags::Alternate | itemTags::Wearable;
-	lt[Item::Gambeson] = itemTags::Wearable;
-	lt[Item::DrawPlate] = itemTags::Mould;
-	lt[Item::Chainmail] = itemTags::Wearable;
-	lt[Item::Helmet] = itemTags::Alternate | itemTags::Wearable;
-	lt[Item::Breastplate] = itemTags::Alternate | itemTags::Wearable;
-	lt[Item::Guards] = itemTags::Alternate | itemTags::Wearable;
-	lt[Item::Bracers] = itemTags::Alternate | itemTags::Wearable;
-	lt[Item::Gloves] = itemTags::Wearable;
-	lt[Item::Apron] = itemTags::Wearable;
-	lt[Item::Sandals] = itemTags::Wearable;
-	lt[Item::Boots] = itemTags::Wearable;
-	lt[Item::Cape] = itemTags::Wearable;
-	lt[Item::Javelin] = itemTags::Alternate;
-	lt[Item::PitFire] = itemTags::VariableAmountRequired | itemTags::WaterDamage;
-	lt[Item::Torch] = itemTags::WaterDamage;
-	lt[Item::CandleMould] = itemTags::Alternate;
-	lt[Item::Candle] = itemTags::Alternate | itemTags::Wearable | itemTags::WaterDamage;
-	lt[Item::OilLamp] = itemTags::Alternate | itemTags::WaterDamage;
+			     ItemTags::VariableAmountProduced | ItemTags::Perishable;
+	lt[Item::Nail] = ItemTags::OptionalIngredient | ItemTags::VariableAmountProduced;
+	lt[Item::NailHeader] = ItemTags::Mould;
+	lt[Item::Glue] = ItemTags::WaterDamage;
+	lt[Item::String] = ItemTags::VariableAmountProduced | ItemTags::VariableAmountsRequired;
+	lt[Item::Axle] = ItemTags::Alternate;
+	lt[Item::Gear] = ItemTags::Alternate;
+	lt[Item::SolidWheel] = ItemTags::Alternate;
+	lt[Item::Tube] = ItemTags::Alternate;
+	lt[Item::Peg] = ItemTags::Alternate;
+	lt[Item::Wedge] = ItemTags::VariableAmountProduced;
+	lt[Item::SmallHandle] = ItemTags::VariableAmountProduced | ItemTags::Alternate;
+	lt[Item::LargeHandle] = ItemTags::Alternate;
+	lt[Item::BrickMold] = ItemTags::Mould;
+	lt[Item::MetalArrowhead] = ItemTags::Alternate;
+	lt[Item::ArrowShaft] = ItemTags::Alternate;
+	lt[Item::Trigger] = ItemTags::VariableAmountsRequired;
+	lt[Item::PrimitiveString] = ItemTags::WaterDamage;
+	lt[Item::RedDye] = ItemTags::Alternate | ItemTags::Liquid;
+	lt[Item::YellowDye] = ItemTags::Alternate | ItemTags::Liquid;
+	lt[Item::BlueDye] = ItemTags::Alternate | ItemTags::Liquid;
+	lt[Item::Bleach] = ItemTags::Liquid;
+	lt[Item::Ink] = ItemTags::Liquid;
+	lt[Item::Incense] = ItemTags::Perishable;
+	lt[Item::Paper] = ItemTags::WaterDamage;
+	lt[Item::Laxative] = ItemTags::Alternate;
+	lt[Item::Tonic] = ItemTags::Alternate | ItemTags::Liquid;
+	lt[Item::BoneMeal] = ItemTags::Perishable;
+	lt[Item::FishMeal] = ItemTags::Perishable;
+	lt[Item::Fertilizer] = ItemTags::Perishable;
+	lt[Item::CoinMould] = ItemTags::Alternate;
+	lt[Item::PrimitiveSpearHead] = ItemTags::Alternate;
+	lt[Item::KnifeHead] = ItemTags::Alternate;
+	lt[Item::SickleHead] = ItemTags::Alternate;
+	lt[Item::AwlHead] = ItemTags::Alternate;
+	lt[Item::AdzeHead] = ItemTags::Alternate;
+	lt[Item::MalletHead] = ItemTags::Alternate;
+	lt[Item::ScalpelHead] = ItemTags::Alternate;
+	lt[Item::HammerHead] = ItemTags::Alternate;
+	lt[Item::ChiselHead] = ItemTags::Alternate;
+	lt[Item::TrowelHead] = ItemTags::Alternate;
+	lt[Item::CleaverHead] = ItemTags::Alternate;
+	lt[Item::MacheteHead] = ItemTags::Alternate;
+	lt[Item::SwordHead] = ItemTags::Alternate;
+	lt[Item::HandaxeHead] = ItemTags::Alternate;
+	lt[Item::PermanentKnifeHeadMould] = ItemTags::Alternate | ItemTags::Mould;
+	lt[Item::PermanentSickleHeadMould] = ItemTags::Alternate | ItemTags::Mould;
+	lt[Item::PermanentAwlHeadMould] = ItemTags::Alternate | ItemTags::Mould;
+	lt[Item::PermanentAdzeHeadMould] = ItemTags::Alternate | ItemTags::Mould;
+	lt[Item::PermanentMalletHeadMould] = ItemTags::Alternate | ItemTags::Mould;
+	lt[Item::PermanentScalpelHeadMould] = ItemTags::Alternate | ItemTags::Mould;
+	lt[Item::PermanentHammerHeadMould] = ItemTags::Alternate | ItemTags::Mould;
+	lt[Item::PermanentChiselHeadMould] = ItemTags::Alternate | ItemTags::Mould;
+	lt[Item::PermanentTrowelHeadMould] = ItemTags::Alternate | ItemTags::Mould;
+	lt[Item::PermanentCleaverHeadMould] = ItemTags::Alternate | ItemTags::Mould;
+	lt[Item::PermanentMacheteHeadMould] = ItemTags::Alternate | ItemTags::Mould;
+	lt[Item::PermanentSwordHeadMould] = ItemTags::Alternate | ItemTags::Mould;
+	lt[Item::PermanentHandaxeHeadMould] = ItemTags::Alternate | ItemTags::Mould;
+	lt[Item::PrimitiveSpearHead] = ItemTags::Alternate;
+	lt[Item::ScytheHead] = ItemTags::Alternate;
+	lt[Item::PermanentScytheHeadMould] = ItemTags::Alternate | ItemTags::Mould;
+	lt[Item::ArdHead] = ItemTags::Alternate;
+	lt[Item::PermanentArdHeadMould] = ItemTags::Alternate | ItemTags::Mould;
+	lt[Item::HeavySawHead] = ItemTags::Alternate;
+	lt[Item::PermanentHeavySawHeadMould] = ItemTags::Alternate | ItemTags::Mould;
+	lt[Item::SawHead] = ItemTags::Alternate;
+	lt[Item::PermanentSawHeadMould] = ItemTags::Alternate | ItemTags::Mould;
+	lt[Item::ShovelHead] = ItemTags::Alternate;
+	lt[Item::PermanentShovelHeadMould] = ItemTags::Alternate | ItemTags::Mould;
+	lt[Item::AxeHead] = ItemTags::Alternate;
+	lt[Item::PermanentAxeHeadMould] = ItemTags::Alternate | ItemTags::Mould;
+	lt[Item::PickaxeHead] = ItemTags::Alternate;
+	lt[Item::PermanentPickaxeHeadMould] = ItemTags::Alternate | ItemTags::Mould;
+	lt[Item::GreatswordHead] = ItemTags::Alternate;
+	lt[Item::PermanentGreatswordHeadMould] = ItemTags::Alternate | ItemTags::Mould;
+	lt[Item::GreataxeHead] = ItemTags::Alternate;
+	lt[Item::PermanentGreataxeHeadMould] = ItemTags::Alternate | ItemTags::Mould;
+	lt[Item::HalberdHead] = ItemTags::Alternate;
+	lt[Item::PermanentHalberdHeadMould] = ItemTags::Alternate | ItemTags::Mould;
+	lt[Item::PikeHead] = ItemTags::Alternate;
+	lt[Item::PermanentPikeHeadMould] = ItemTags::Alternate | ItemTags::Mould;
+	lt[Item::SpearHead] = ItemTags::Alternate;
+	lt[Item::PermanentSpearHeadMould] = ItemTags::Alternate | ItemTags::Mould;
+	lt[Item::Cloth] = ItemTags::WaterDamage;
+	lt[Item::DyedCloth] = ItemTags::WaterDamage;
+	lt[Item::Tribalwear] = ItemTags::Wearable;
+	lt[Item::BasicClothes] = ItemTags::Wearable;
+	lt[Item::FormalClothes] = ItemTags::VariableAmountRequired | ItemTags::Wearable;
+	lt[Item::FancyClothes] = ItemTags::VariableAmountRequired | ItemTags::Wearable;
+	lt[Item::GoldCrown] = ItemTags::Wearable;
+	lt[Item::RoyalCrown] = ItemTags::Wearable;
+	lt[Item::Necklace] = ItemTags::Wearable;
+	lt[Item::Ring] = ItemTags::Alternate | ItemTags::Wearable;
+	lt[Item::Earring] = ItemTags::Alternate | ItemTags::Wearable;
+	lt[Item::Gambeson] = ItemTags::Wearable;
+	lt[Item::DrawPlate] = ItemTags::Mould;
+	lt[Item::Chainmail] = ItemTags::Wearable;
+	lt[Item::Helmet] = ItemTags::Alternate | ItemTags::Wearable;
+	lt[Item::Breastplate] = ItemTags::Alternate | ItemTags::Wearable;
+	lt[Item::Guards] = ItemTags::Alternate | ItemTags::Wearable;
+	lt[Item::Bracers] = ItemTags::Alternate | ItemTags::Wearable;
+	lt[Item::Gloves] = ItemTags::Wearable;
+	lt[Item::Apron] = ItemTags::Wearable;
+	lt[Item::Sandals] = ItemTags::Wearable;
+	lt[Item::Boots] = ItemTags::Wearable;
+	lt[Item::Cape] = ItemTags::Wearable;
+	lt[Item::Javelin] = ItemTags::Alternate;
+	lt[Item::PitFire] = ItemTags::VariableAmountRequired | ItemTags::WaterDamage;
+	lt[Item::Torch] = ItemTags::WaterDamage;
+	lt[Item::CandleMould] = ItemTags::Alternate;
+	lt[Item::Candle] = ItemTags::Alternate | ItemTags::Wearable | ItemTags::WaterDamage;
+	lt[Item::OilLamp] = ItemTags::Alternate | ItemTags::WaterDamage;
 }();
 #endif

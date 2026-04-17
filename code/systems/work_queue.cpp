@@ -3,32 +3,30 @@
 
 #include "work_queue.hpp"
 #include <limits>
+#include <variant>
 #include "inventory_manager.hpp"
 
 void setUnitJob(UnitDatabase &database, CommodityDispatcher& dispatcher, uint16_t unitIndex) {
 	Commodity::underlying commodity = getUnitNextCommodity(database, dispatcher, unitIndex);
-	auto type = Commodity::cast(commodity, [](auto e)){ 
-		if constexpr (std::is_same_v<e, Item>)
-		{
-			hasTag(itemTags[e], itemTags::Resource ? attemptResource(database, unitIndex) : attemptProduction(database, unitIndex); 
-		} else if constexpr (std::is_same_v<e, Buildable>)
-			{
-				attemptBuild(database, unitIndex);
-			} else if constexpr (std::is_same_v<e, Knowledge>)
-			{
-				//TODO
-				
-			} else if constexpr (std::is_same_v<e, Order>)
-			{
-				
-			} else if constexpr (std::is_same_v<e, Ritual>)
-			{
-				
-			}
-	});	
+	auto commodityVariant = Commodity::cast(commodity);
+	if (auto ptr = std::get_if<Item>( &commodityVariant )) {
+		attemptProduction(unitIndex);
+	}
+	else if (auto ptr = std::get_if<Buildable>( &commodityVariant )) {
+		
+	}
+	else if (auto ptr = std::get_if<Order>( &commodityVariant )) {
+
+	}
+	else if (auto ptr = std::get_if<Knowledge>( &commodityVariant )) {
+
+	}
+	else if (auto ptr = std::get_if<Ritual>( &commodityVariant )) {
+	}
 }
 
-Commodity::underlying getUnitNextCommodity(UnitDatabase &database, CommodityDispatcher& dispatcher, uint16_t unitIndex)
+
+Commodity::underlying getUnitNextCommodity(UnitDatabase& database, CommodityDispatcher& dispatcher, uint16_t unitIndex)
 {
 	assert(unitIndex < database.size);
 	int highest = std::numeric_limits<int>::min();
@@ -52,18 +50,17 @@ Commodity::underlying getUnitNextCommodity(UnitDatabase &database, CommodityDisp
 	return rolesToCommodities.get(static_cast<Role>(roleIndex), commodityIndex);
 }	
 
-bool continueFindToolsOrQuit(OverflowHashMap &overflows,
-					  OverflowContainerMap &overflowContainers, Action& action, Inventory& inventory, TargetType& targetType, uint32_t& targetIndex, Coord coord)
+bool continueOrFindToolsOrQuit(OverflowHashMap &overflows,
+					  OverflowContainerMap &overflowContainers, Action& action, Target& target, Inventory& inventory, NecessaryToolsBuffer& buffer, Coord coord, uint16_t unitIndex)
 {
-	NecessaryToolsBuffer buffer = ensureNecessaryTools(overflows, overflowContainers, action, inventory, unitIndex, coord);
+	buffer = ensureNecessaryTools(overflows, overflowContainers, action, inventory, unitIndex, coord);
 	switch (buffer.state) {
 	case ToolsState::FoundAll:
 		return true;
 		break;
 	case ToolsState::Finding:
 		action = Action::PickupTool;
-		targetIndex = buffer.targetIndex;
-		targetType = buffer.targetType;
+		target = {};
 		return false;
 		break;
 	case ToolsState::CannotFind:
@@ -75,7 +72,11 @@ bool continueFindToolsOrQuit(OverflowHashMap &overflows,
 }
 
 
-// TODO: processes basic productions that do not include liquids, buildables,
+bool attemptRecipe(bool alternate) {
+
+}
+
+// TODO: processes basic productions that do not include liquids, buildables. Break this function down into an 'attemptRecipe' function, which all attempt work fucntions that consume inputs can use.
 // variant items
 bool attemptProduction(int pawn)
 {
