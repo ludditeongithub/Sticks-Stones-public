@@ -96,9 +96,9 @@ inline constexpr RaggedLookupTable<Role, Commodity::underlying, ROLE_COMMODITY_J
 	Butcher, Item::Bone, Item::Sinew, Item::AnimalHair, Item::AnimalFat, Item::AnimalHides, Item::RawMeat;
 	Preserver, Item::Salt, Item::Vinegar, Item::PickledFruit, Item::PickledVegetable,
 	    Item::SaltedCookedMeat, Item::SaltedRawMeat, Item::SaltedVegetable;
-	StoneWorker, Item::Stone, Item::CrushedStone, Item::CurvedStone, Item::CutStone, Item::CutStoneSheet, Item::StoneTablet, Item::ToolHeadPlaceholder;
+	StoneWorker, Item::Stone, Item::CrushedStone, Item::StoneTablet, Item::ToolHeadPlaceholder, Item::SolidWheel;
 	Weaver, Item::Cloth, Item::DyedCloth, Item::DecorativeCloth;
-	Woodworker, Item::Wood, Item::Plank, Item::JoinedPlank, Item::Peg, Item::LogBeam, Item::Beam, Item::Timber;
+	Woodworker, Item::Wood, Item::Plank, Item::LogBeam, Item::Beam;
 	Spinner, Item::Thread, Item::Yarn, Item::String;
 	BasketWeaver, Item::Basket, Item::LargeBasket;
 	CanoeCarver, Buildable::Canoe;
@@ -114,7 +114,8 @@ inline constexpr RaggedLookupTable<Role, Commodity::underlying, ROLE_COMMODITY_J
 	SteelSmelter, Item::Ingot;
 	Toolsmith, Item::ToolHeadPlaceholder, Item::ToolPlaceholder;
 	Weaponsmith, Item::WeaponHeadPlaceholder, Item::WeaponPlaceholder;
-	Chandler, Item::Candle;
+	CandleMaker, Item::Wick, Item::Candle;
+	Chandler, Item::Wick, Item::Candle;
 	Glassblower, Item::Glass;
 	IronSmelter, Item::Ingot;
 	LoomWeaver, Item::Cloth, Item::DyedCloth, Item::DecorativeCloth;
@@ -125,7 +126,10 @@ inline constexpr RaggedLookupTable<Role, Commodity::underlying, ROLE_COMMODITY_J
 	BoatBuilder, Buildable::Canoe, Buildable::Sailboat, Buildable::LargeSailboat;
 	Bowyer, Item::Bow, Item::Crossbow, Item::Longbow;
 	Brewer, Item::Beer, Item::Vinegar, Item::Mead, Item::SugarJuice, Item::Cider;
-	Coppersmith, Item::Ingot;
+	Coppersmith, Item::Helmet, Item::Breastplate, Item::Boots, Item::Bracers, Item::Bracelet,
+	    Item::Guards,  Item::ToolHeadPlaceholder, Item::WeaponHeadPlaceholder, Item::Nail, Item::NailHeader,
+	    Item::Peg, Item::Horseshoes, Item::Ring, Item::Rivet, Item::Axle, Item::LargeAxle,
+	    Item::Jar, Item::Arrowhead;
 	Fletcher, Item::Arrow, Item::ArrowShaft, Item::Arrowhead; //TODO: only bone variants for arrowhead
 	Leathercrafter, Item::Satchel, Item::LargeSatchel, Item::Gambeson, Item::Coat, Item::Gloves, Item::Boots, Item::Bracers;
 	MudbrickMaker, Item::Cob;
@@ -136,6 +140,60 @@ inline constexpr RaggedLookupTable<Role, Commodity::underlying, ROLE_COMMODITY_J
 	Engraver, Item::Die, Item::EngravedRing, Item::EngravedBracelet;
 	Glassblower, Item::Bottle, Item::Jar, Item::Earring, Item::Ring, Item::Bracelet, Item::Tube, Item::Pane, Item::Vase;
 	Minter, Item::Coins;
-	
+	Baker, Item::Bread, Item::Pastry, Item::Pie;
+	BrickMaker, Item::Bricks;
+	BronzeSmelter, Item::Ingot;
+	Builder, Buildable::BrickRoad, Buildable::TentSticks, Buildable::WattleWall,
+	    Buildable::CobRoof, Buildable::CobWall, Buildable::Wall, Buildable::TallWall,
+	    Buildable::CityWall, Buildable::WallPanel, Buildable::Fence, Buildable::Gate,
+	    Buildable::CityGate, Buildable::Arch, Buildable::Aqueduct, Buildable::WoodBridge,
+	    Buildable::BrickBridge, Buildable::StoneBridge, Buildable::Dam, Buildable::LargeCanal,
+	    Buildable::MiniGate, Buildable::LargeDoor, Buildable::Pillar, Buildable::Watchtower,
+	    Buildable::PitFire, Buildable::TentCover, Buildable::WattleRoof, Buildable::RoofBeams,
+	    Buildable::Roof, Buildable::Window, Buildable::PaintedWindow, Buildable::Foundation,
+	    Buildable::Floor, Buildable::Carpet, Buildable::PlowedDirt, Buildable::Path,
+	    Buildable::StoneRoad, Buildable::BrickRoad, Buildable::ConcreteRoad,
+	    Buildable::DugCanal, Buildable::Canal, Buildable::Well;
+	Carpenter, Item::Wood, Item::Plank, Item::JoinedPlank, Item::Peg, Item::LogBeam, Item::Beam,
+	    Item::Timber;
+	CharcoalMaker, Item::Charcoal, Item::Ash;
+	Cook, Item::DrinkingWater; // TODO: consumables
+	Cuirassier, Item::Satchel, Item::LargeSatchel, Item::Gambeson, Item::Coat, Item::Gloves, Item::Boots, Item::HorseSaddle, Item::OxSaddle, Item::Bracers; // TODO: more leather items, differentiate with leather crafter
+	Provisioner, Item::Salt, Item::Vinegar, Item::PickledFruit, Item::PickledVegetable,
+	    Item::SaltedCookedMeat, Item::SaltedRawMeat, Item::SaltedVegetable;
+	Stonemason, Item::CurvedStone, Item::ToolHeadPlaceholder, Item::Stone, Item::CrushedStone,
+	    Item::CurvedStone, Item::CutStone, Item::CutStoneSheet, Item::StoneTablet,
+	    Item::ToolHeadPlaceholder, Item::SolidWheel;
+	Wickerworker, Item::Basket, Item::LargeBasket;
+	Bronzesmith, Item::Helmet, Item::Breastplate, Item::Boots, Item::Bracers, Item::Bracelet,
+	    Item::Guards, Item::Gloves, Item::ToolHeadPlaceholder, Item::WeaponHeadPlaceholder,
+	    Item::Nail, Item::NailHeader, Item::Peg, Item::Horseshoes, Item::Ring, Item::Rivet,
+	    Item::Axle, Item::LargeAxle, Item::Jar, Item::Arrowhead;
+	Chronicler, Item::Scroll, Item::Book, Order::Cultural, Knowledge::Academic;
+	Scholar, Item::Scroll, Item::Book;
+	Apothecary, Item::MedicinalSoap, Item::BlueDye, Item::RedDye, Item::YellowDye, Item::Poison,
+	    Item::Cyanide, Item::Arsenic, Item::Hemlock, Item::Bandage, Item::Laxative,
+	    Item::MedicinalSoap, Item::GileadBalm, Item::Theriac;
+	Historian, Item::Scroll, Item::Book, Order::Cultural, Knowledge::Academic;
+	Mathematician, Item::Scroll, Item::Book,
+	    Knowledge::Academic; // TODO: perhaps divide up academics
+	SiegeEngineer, Buildable::BatteringLog, Buildable::BatteringRam, Buildable::Trebuchet, Buildable::Ballista, Buildable::Catapult, Buildable::SiegeLadder, Buildable::SiegeTower;
+	NavalEngineer, Buildable::Canoe, Buildable::Sailboat, Buildable::LargeSailboat,
+	    Buildable::Longboat, Buildable::LightWarship, Buildable::Cog, Buildable::HeavyWarship,
+	    Buildable::Freighter;
+	Priest, Item::Incense, Order::Cultural;
+	Librarian, Item::Book, Item::Scroll, Knowledge::Academic, Knowledge::Exploration, Knowledge::Foreign, Knowledge::Units, Knowledge::Technology;
+	Scribe, Item::Scroll, Item::Book, Order::Legal, Knowledge::Academic;
+	MasterWeaver, 
 	return lt;
 }();
+
+inline constexpr RaggedLookupTable<Role, Material, total-element-size, max-enum-size>
+roleToVariants = []
+	{
+		using enum Role;
+
+		RaggedLookupTable<Role, Material, total-element-size, max-enum-size> lt{};
+
+		return lt;
+	}

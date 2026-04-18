@@ -163,6 +163,7 @@ enum class Item : uint16_t
 	PrimitiveArrow,
 	PrimitiveBow,
 	Basket,
+	LargeBasket,
 	Waterskin,
 	SaltedRawMeat,
 	SaltedCookedMeat,

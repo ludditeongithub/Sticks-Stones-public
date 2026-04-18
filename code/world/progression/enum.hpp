@@ -36,7 +36,17 @@ enum class Ritual
 	MinterBoost,
 	BuilderBoost,
 	MinerBoost,
-	
+	BrewerBoost,
+	BakerBoost,
+	CharcoalMakerBoost,
+	BowyerBoost,
+	ButcherBoost,
+	CarpenterBoost,
+	CraftsmanBoost,
+	CuraisserBoost,
+	FletcherBoost,
+	MasonBoost,
+	CookBoost,
 
 	Decree,
 	AgricultureDecree,
