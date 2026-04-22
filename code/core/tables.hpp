@@ -42,54 +42,52 @@ struct LookupTable2D
 	constexpr const RowType &operator[](Enum e) const { return data[static_cast<uint16_t>(e)]; }
 };
 
-template <typename Enum, uint16_t N = static_cast<uint16_t>(Enum::MAX)> struct BitsetTable
+template <typename Enum, uint16_t N = static_cast<uint16_t>(Enum::MAX)>
+struct BitsetTable
 {
-	std::bitset<N> b{};
+	std::bitset<N> bitset{};
 
-	constexpr auto operator[](Enum e) { return b[static_cast<uint16_t>(e)]; }
-
-	constexpr auto operator[](Enum e) const { return b[static_cast<uint16_t>(e)]; }
-
-	constexpr BitsetTable &operator|=(const BitsetTable &o)
+	constexpr bool operator[](Enum e) const
 	{
-		b |= o.b;
+		return bitset.test(static_cast<uint16_t>(e));
+	}
+
+	constexpr void set(Enum e, bool value = true)
+	{
+		bitset.set(static_cast<uint16_t>(e), value);
+	}
+
+	constexpr void reset(Enum e)
+	{
+		bitset.reset(static_cast<uint16_t>(e));
+	}
+
+	constexpr BitsetTable& operator|=(const BitsetTable& o)
+	{
+		bitset |= o.bitset;
 		return *this;
 	}
 
-	constexpr void set(Enum e) { b[e] = true; }
-
-	struct iterator
+	constexpr BitsetTable& operator&=(const BitsetTable& o)
 	{
-		const std::bitset<N> *bits;
-		uint16_t index;
+		bitset &= o.bitset;
+		return *this;
+	}
 
-		constexpr iterator(const std::bitset<N> *b, uint16_t i) : bits(b), index(i)
-		{
-			while (index < N && !bits->test(index))
-				++index;
-		}
+	constexpr BitsetTable operator|(const BitsetTable& o) const
+	{
+		BitsetTable tmp = *this;
+		tmp |= o;
+		return tmp;
+	}
 
-		constexpr Enum operator*() const { return static_cast<Enum>(index); }
-
-		constexpr iterator &operator++()
-		{
-			do
-			{
-				++index;
-			} while (index < N && !bits->test(index));
-			return *this;
-		}
-
-		constexpr bool operator==(const iterator &other) const
-		{
-			return index == other.index;
-		}
-	};
-
-	constexpr iterator begin() const { return iterator(&b, 0); }
-	constexpr iterator end() const { return iterator(&b, N); }
+	constexpr BitsetTable operator&(const BitsetTable& o) const
+	{
+		BitsetTable tmp = *this;
+		tmp &= o;
+		return tmp;
+	}
 };
-
 
 template <typename Enum, typename T, uint32_t N, uint32_t MAX = Enum::MAX>
 struct RaggedLookupTable {

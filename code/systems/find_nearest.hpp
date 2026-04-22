@@ -1,4 +1,5 @@
 #pragma once
+#include "world/tile/database.hpp"
 #include <stack>
 #include <unordered_map>
 #include <vector>
@@ -58,7 +59,7 @@ struct SearchGrid
 	std::stack<uint16_t> freeIndices;
 	std::vector<bool> activeChunks;
 	uint32_t activeCount;
-	Array<std::vector<bool> *> occupiedTiles;
+	TileDatabase& tiles;
 
 	// to begin with, all chunks are given the default amount of memory. active chunks and
 	// super-active chunks are upgraded to higher amounts of memory
@@ -71,11 +72,12 @@ struct SearchGrid
 
 	void reset();
 
-	inline void insertEntity(Coord tileCoord, Entity type, EntitySearchData data);
+	inline void insertEntity(Entity type, EntitySearchData data);
 
 	inline bool checkCollision(Coord tileCoord);
 
 	inline EntitySearchData getNearest(Entity e, Coord c);
+	inline EntitySearchData getNearestWithinRange(Entity e, Coord c, uint16_t maxRange);
 
 	inline Array<EntitySearchData> getAllOFTypeInRange(Entity e, Coord o, Coord d);
 

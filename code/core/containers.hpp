@@ -73,6 +73,38 @@ template <typename T> Array<T> &arena_make_array(Arena *arena, uint16_t capacity
 	return arr;
 }
 
+template <typename T>
+struct Array2D
+{
+    T* data;
+    uint16_t width;
+    uint16_t height;
+
+    T& operator()(uint16_t x, uint16_t y)
+    {
+        if (x >= width || y >= height)
+            throw std::out_of_range("2D index out of bounds");
+        return data[y * width + x];
+    }
+
+    const T& operator()(uint16_t x, uint16_t y) const
+    {
+        if (x >= width || y >= height)
+            throw std::out_of_range("2D index out of bounds");
+        return data[y * width + x];
+    }
+};
+
+template <typename T>
+Array2D<T> make_2d_view(Array<T>& arr, uint16_t width, uint16_t height)
+{
+    if (width * height > arr.count)
+        throw std::runtime_error("2D view exceeds array size");
+
+    return { arr.data(), width, height };
+}
+
+
 // pq capacity remains the same size, since as current moves away from start, if the end of the
 // memory of this structure is full, then new values are pushed onto the front of the memory of this
 // structure, where their actual position is the relative wraparound positon from cur

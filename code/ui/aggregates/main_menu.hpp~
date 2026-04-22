@@ -1,0 +1,9 @@
+#include <core/data.hpp>
+#include <ui/components/button.hpp>
+
+void loadMainMenu(SCoord dimensions) {
+	OOGButton newGame(dimensions.x / 2, dimensions.y / 6, );
+	OOGButton continueGame(dimensions.x / 2, dimensions.y / 5, );
+	ButtonUI options(dimensions.x / 2, dimensions.y / 4, );
+	ButtonUI about(dimensions.x / 2, dimensions.y / 3, );
+}

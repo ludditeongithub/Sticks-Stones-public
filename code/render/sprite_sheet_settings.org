@@ -1,0 +1,17 @@
+#+startup: content indent
+#+property: header-args :tangle "sprite_sheet_settings.hpp"
+#+begin_src cpp
+namespace SpriteSheet {
+#+end_src
+* UI
+#+begin_src cpp
+
+#+end_src
+* Animal
+* Plant
+* Tile
+* Unit
+* End
+#+begin_src cpp
+}
+#+end_src

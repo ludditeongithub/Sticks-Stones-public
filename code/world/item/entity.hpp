@@ -1,6 +1,9 @@
+#include <stack>
 #include <core/packed_enum.hpp>
 #include "enum.hpp"
+#include "systems/find_nearest.hpp"
 #include "tags.hpp"
+#include "world/tile/database.hpp"
 #include <array>
 #include <core/hash.hpp>
 #include <unordered_map>
@@ -133,11 +136,18 @@ struct Container
 	}
 };
 
-// for items in the world.
+// for items in the world, not in inventory
 struct ItemDatabase
 {
 	Array<Item> types;
 	Array<Coord> coords;
+	std::stack<uint16_t> nextIndex;
+	TileDatabase *tiles;
+	World *world;
+	SearchGrid *search;
+
+	inline void addItem(Item item, Coord coord);
+	inline void dropFruit();
 };
 
 struct VariantItemDatabase {
@@ -150,10 +160,6 @@ struct ContainerStorageData
 	float remainingWeight = 0;
 	float remainingBulk = 0;
 };
-
-using OverflowHashMap = std::unordered_map<uint32_t, std::vector<HoldableSlot>>;
-
-using OverflowContainerMap = std::unordered_map<uint16_t, std::vector<Container>>;
 
 inline uint32_t overflow_hash(uint16_t unitIndex, uint16_t containerIndex)
 {

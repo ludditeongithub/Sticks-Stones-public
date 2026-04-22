@@ -398,6 +398,8 @@ enum class Item : uint16_t
 	Lens,
 	CoinMould,
 	Wire,
+	SpinningWheel,
+	Whorl,
 	// mediev
 	Candle,
 	Chainmail,
@@ -428,13 +430,12 @@ enum class Item : uint16_t
 	Guards,
 	Gloves,
 
-
 	// TODO: fill out data for these items!
 	SmallSculpture,
 	SmallPaintedSculpture,
 	SmallCarving,
 	SmallPaintedCarving,
-	Vase, 
+	Vase,
 	PlayScript,
 	PaperPainting,
 	CanvasPainting,
@@ -442,6 +443,7 @@ enum class Item : uint16_t
 	CutGem,
 	CutGreaterGem,
 	PaintedGlass,
+	Map,
 	Pamphlet,
 	ShortStory,
 	Novel,

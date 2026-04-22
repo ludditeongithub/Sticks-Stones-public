@@ -419,14 +419,16 @@ inline constexpr LookupTable<Animal, Time> maxAges = []
 	return lt;
 }();
 
-inline constexpr BitsetTable<Animal> isEggLayer = []
+inline constexpr const BitsetTable<Animal> isEggLayer = []
 {
-	BitsetTable<Animal> b;
-	b.set(Animal::Chicken);
-	b.set(Animal::Duck);
-	b.set(Animal::Turtle);
-	b.set(Animal::Fish);
-	return b;
+	BitsetTable<Animal> t;
+	auto add = [&](Animal a) { t.bitset.set(static_cast<uint16_t>(a)); };
+	
+	add(Animal::Chicken);
+	add(Animal::Duck);
+	add(Animal::Turtle);
+	add(Animal::Fish);
+	return t;
 }();
 
 #endif

@@ -1,6 +1,9 @@
-#include "ui.hpp"
+#include "element.hpp"
 #include <SDL2/SDL_rect.h>
+#include <SDL2/SDL_events.h>
+#include <string>
 #include <core/data.hpp>
+#include <core/mouse.hpp>
 
 enum class ButtonState
 {
@@ -9,14 +12,21 @@ enum class ButtonState
 	Pressed
 };
 
-struct Button : UIElement
+struct ButtonUI
 {
       public:
+	const SCoord topLeftCorner;
 	const SCoord dimensions;
 	const SCoord unpressed;
 	const SCoord hover;
 	const SCoord pressed;
-	ButtonState state;
+	ButtonState state = ButtonState::Unpressed;	
+
+	ButtonUI(const SCoord topLeftCorner, const SCoord dimensions, const SCoord unpressed,
+	       const SCoord hover, const SCoord pressed)
+	:  topLeftCorner(topLeftCorner),   dimensions(dimensions),   unpressed(unpressed), hover(hover),   pressed(pressed)  {
+		
+	}
 
 	void render(ButtonState bs, SDL_Rect *viewport)
 	{
@@ -34,22 +44,53 @@ struct Button : UIElement
 			break;
 		default:
 		}
-		gSpriteSheetTexture.render(position.x, position.y, &r, viewport);
+		gSpriteSheetTexture.render(topLeftCorner.x, topLeftCorner.y, &r, viewport);
 	}
 
-	// Handles mouse event
-	void handleEvent(SDL_Event *e);
+	void handleEvent(SDL_Event *e)
+	{
+		if( e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP )
+	{
+		//Get mouse position
+		int x, y;
+		SDL_GetMouseState( &x, &y );
+
+		bool inside = mouseInside({x,y}, topLeftCorner, dimensions);
+
+		//Mouse is outside button
+		if( !inside )
+		{
+			state = ButtonState::Unpressed;
+		}
+		//Mouse is inside button
+		else
+		{
+			//Set mouse over sprite
+			switch( e->type )
+			{
+				case SDL_MOUSEMOTION:
+					state = ButtonState::Hover;
+				break;
+
+			case SDL_MOUSEBUTTONDOWN:
+			case SDL_MOUSEBUTTONUP:
+				state = ButtonState::Pressed;
+				break;
+			}
+		}
+	}
+	}
 };
 
-struct TextButton : Button
+struct TextButtonUI : ButtonUI
 {
-	std::string text;
+	std::string text;	
 };
 
 // TODO: add functionality to right click, and view how many there are, or be linked to that item's
 // page even
 
-struct ItemButton : Button
+struct ItemButtonUI : ButtonUI
 {
 	Item item;
 };

@@ -5,6 +5,7 @@
 #include <core/limits.hpp>
 #include <core/math.hpp>
 #include <cstdint>
+#include <limits>
 #include <variant>
 #include <world/unit/enum.hpp>
 #include <world/world.hpp>
@@ -87,46 +88,44 @@ void SearchGrid::addActiveChunk(uint16_t index)
 	chunkToActiveChunks[index] = activeIndex;
 }
 
-inline void SearchGrid::insertEntity(Coord tileCoord, Entity type, EntitySearchData data)
+inline void SearchGrid::insertEntity(Entity type, EntitySearchData data)
 {
-	uint16_t gc = getChunkIndexFromTile(tileCoord);
-	uint16_t i = getTileIndexChunkRelative(tileCoord);
+	uint16_t gc = getChunkIndexFromTile(data.position);
+	uint16_t i = getTileIndexChunkRelative(data.position);
 	if (!(*occupiedTiles[gc])[i])
 	{
 		if (activeChunks[gc])
 		{
-			activeChunkBuckets[gc].at(type).push_back(data);
+			activeChunkBuckets[gc]->at(type).push_back(data);
 		}
 		else
 		{
-			chunkBuckets[gc].at(type).push_back(data);
+			chunkBuckets[gc]->at(type).push_back(data);
 		}
 	}
 }
 
 inline bool SearchGrid::checkCollision(Coord tileCoord)
-{
-	uint16_t gc = getChunkIndexFromTile(tileCoord);
-	uint16_t i = getTileIndexChunkRelative(tileCoord);
-	return occupiedTiles[gc][i];
+{	
+	return tiles->occupieds[world.getTileIndexFromCoord(tileCoord)];
 }
 
 inline EntitySearchData SearchGrid::getNearest(Entity e, Coord c)
 {
 	// search per chunk, starting with nearest
 	uint16_t ci = getChunkIndexFromTile(c);
-	Array<SearchGrid::ChunkBucket *> &cb = activeChunks[ci] ? activeChunkBuckets : chunkBuckets;
+	Array<SearchGrid::ChunkBucket *> &buckets = activeChunks[ci] ? activeChunkBuckets : chunkBuckets;
 	uint16_t cbi = activeChunks[ci] ? chunkToActiveChunks[ci] : ci;
-	std::vector<EntitySearchData> &es = cb[cbi].find(e);
+	auto &&es = buckets[cbi]->find(e);
 
-	if (es != cb.end())
+	if (es != buckets[cbi]->end())
 	{
 		Coord nc;
 		uint16_t si = SIZE_MAX;
 		uint16_t ld = UINT16_MAX;
-		for (uint16_t i = 0; i < es.size(); i++)
+		for (uint16_t i = 0; i < es->second.size(); i++)
 		{
-			Coord tc = es[i].position;
+			Coord tc = es->second[i].position;
 			uint32_t td = manhattanDist(c, tc);
 			if (td < ld)
 			{
@@ -134,11 +133,11 @@ inline EntitySearchData SearchGrid::getNearest(Entity e, Coord c)
 				si = i;
 			}
 		}
-		return es[si];
+		return es->second[si];
 	}
 	else
 	{
-		return {nullptr, {nullptr, nullptr}};
+		return {std::numeric_limits<uint16_t>::max(), {std::numeric_limits<uint16_t>::max(), std::numeric_limits<uint16_t>::max()}};
 	}
 }
 

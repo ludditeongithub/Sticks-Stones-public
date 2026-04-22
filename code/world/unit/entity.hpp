@@ -13,6 +13,10 @@
 #include <world/tile/data.hpp>
 #include <world/world.hpp>
 
+using OverflowHashMap = std::unordered_map<uint32_t, std::vector<HoldableSlot>>;
+
+using OverflowContainerMap = std::unordered_map<uint16_t, std::vector<Container>>;
+
 constexpr uint16_t UNIT_CAP = 1000;
 
 // the total volume of each bulk category hands can maximally carry.
@@ -155,8 +159,7 @@ struct UnitDatabase
 		hungers = Array<Hunger>(s);
 		ages = Array<Time>(s);
 		actions = Array<Action>(s);
-		targets = Array<uint16_t>(s);
-		targetTypes = Array<TargetType>(s);
+		targets = Array<Target>(s);
 		frames = Array<Frame>(s);
 		inventories = Array<Inventory>(s);
 		sexs = std::vector<Sex>(s);
@@ -166,6 +169,7 @@ struct UnitDatabase
 		places = Array<Places>(s);
 	}
 
+	//TODO: make similar birth and kills for other databases (size conscious), make impDatabases if over size, or other management strategy.
 	bool birthUnit(Coord c)
 	{
 		if (size + 1 > cap)
@@ -180,8 +184,7 @@ struct UnitDatabase
 			hungers.push(INFANT_HUNGER_MAX);
 			ages.push(0);
 			actions.push(Action::NONE);
-			targets.push(std::numeric_limits<uint16_t>::max());
-			targetTypes.push(TargetType::NONE);
+			targets.push({TargetType::NONE, std::numeric_limits<uint16_t>::max()});
 			frameDatas.push({ActState::NewPath, random_direction->next(), 0});
 			inventories.push(Inventory());
 			sexs.emplace_back(random_bool->next());
@@ -202,8 +205,7 @@ struct UnitDatabase
 			hungers[i] = INFANT_HUNGER_MAX;
 			ages[i] = 0;
 			actions[i] = Action::NONE;
-			targets[i] = std::numeric_limits<uint16_t>::max();
-			targetTypes[i] = TargetType::NONE;
+			targets[i] = {TargetType::NONE, std::numeric_limits<uint16_t>::max()};
 			inventories[i] = Inventory();
 			sexs[i] = random_bool->next();
 			roles[i] = {};

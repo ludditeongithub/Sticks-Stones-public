@@ -1,4 +1,5 @@
 #pragma once
+#include "core/random.hpp"
 #include <cstdint>
 
 #include <core/FastNoiseLite.h>
@@ -75,12 +76,21 @@ struct World
 
 	inline uint16_t getChunkWidth(int i) { return i % HEIGHT_CHUNKS; }
 
-	inline int16_t getChunkLatitude(int i) { return (getChunkHeight(i) / CHUNK_LATITUDE_HEIGHT) - (LATITUDE_TOTAL / 2); }
+	inline int16_t getChunkLatitude(int i)
+	{
+		return (getChunkHeight(i) / CHUNK_LATITUDE_HEIGHT) - (LATITUDE_TOTAL / 2);
+	}
+
+	inline uint16_t getChunkTimeZone(uint32_t chunkIndex);
 
 	inline uint32_t getTileIndexFromCoord(Coord c);
 	inline Coord getTileCoordFromIndex(uint32_t i);
 	inline uint32_t getTileIndexChunkRelative(uint32_t i);
 	inline uint32_t getTileIndexChunkRelative(Coord c);
+
+	Coord getRandomPlayerStart()
+	{	return{ static_cast<uint16_t>(random_chance->next() * LENGTH_CHUNKS) , static_cast<uint16_t>(random_chance->next() * HEIGHT_CHUNKS)};
+	}		
 
 	void loadChunkData(WorldSpawner &ws)
 	{

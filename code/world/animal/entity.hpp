@@ -12,6 +12,7 @@
 // referenced arrays are stored with units to iterate together.
 struct AnimalDatabase
 {
+	public:
 	static constexpr uint32_t ENTITY_SIZE =
 	    sizeof(Coord) + sizeof(Health) + sizeof(Hunger) + sizeof(Time) + sizeof(Frame) +
 	    sizeof(AnimalStatus) + sizeof(Action) + sizeof(uint16_t) + sizeof(TargetType) +

@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 #include "data.hpp"
+#include <optional>
 #include <variant>
 #include <world/chunk/data.hpp>
 #include <world/animal/enum.hpp>
@@ -14,6 +15,12 @@
 // using Entity = PackedEnum4_32<Role, 8, Animal, 6, Plant, 6, Item, 10>;
 
 using Entity = std::variant<Role, Animal, Plant, Item, Buildable>;
+
+struct OptionalEntitySearchData
+{
+	std::optional<uint16_t> index;
+	Coord position;
+};	
 
 //TODO: make it possible for these to be variant or null
 struct EntitySearchData {

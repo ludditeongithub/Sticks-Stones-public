@@ -1,6 +1,9 @@
 * REMEMBER
 ** boost.preprocessor enum to string
 * NOW
+** Main Menu startup
+** New game generation
+** UI in game
 ** Menus
 *** wait for sprites to be done
 ** Inventory and unit tasks
@@ -25,6 +28,7 @@ unit checks all its roles, and then selects the task with the lowest priority.
   All entities in NPACs are processed at a high frequency. There is lower batching, event driven. All entities in non-NPACs are processed at a low frequency. Higher batching, more concurrency of large tasks.
 * AFTER BETA
 ** Migration Logic
+** bureaucrat can produce reports-- tell player they need more of a certain role, based on automatic analysis 
 ** larger simulations
 *** actually manage Separate database for active chunks
 *** better arena management, ALLOC_FACTOR calculations
@@ -186,10 +190,12 @@ generated layer under tiles that is indexed-matched to tile above. replaces tile
 ** transcendental function SIMD
 ** first function loops through and gets entities with timers[0], puts their data into new active buffer, update functions only iterate on that (the same for any entity where most are not timers[0]
 ** More accurate precipitation prediction per biome/zone
+** Engineers automatically build valid aqueducts (automatically track path of descent), when tasked to build between two points by player.
 ** Fully simulate atmospheric latitude effects
 - Ferrel Cells and Hadley Cells, trade winds, etc
 - Affects both generation and diurnal and seasonal temp variance
 ** Tile drops display if altitude variation is too high to prevent building contiguously
+** Artificial Selection-- plants and animals can get 'better'
 * Hot and Cold Algorithms
 Estimates are based on:
 - chunk size 32x32
@@ -219,6 +225,8 @@ only ~ second, but for >100 chunks
 [this should really be wrapped up in contiguous event processing], however ~1.5k units could be initiating/ending jobs that take ~5-10 secs per job
   - job scheduling identity tag per unit, so that if the job was paused, the job over event taken off the stack must match the right unit and its current scheduling identity tag, which changes whenever the job is paused and is started again (a new event with a new identity tag is calculated whenever the job is (re)started
 ** Coldest 1 per frame
+* Job Management
+Player assigns resources and products to be produced. Player 
 * New Core Implementation
 ** Bounding Box Chunks, Enemy Detection for Factions
 Each unit (including animals) belong to a faction. Tiles belong to bounding box. Unit is inside a bounding box, bounding box loses 'ownership' of unit when unit leaves and another bounding box gained it. Each faction has a vector which shows identity of all bounding boxes it has currently detected, which means one or more units in that faction can see that box. Whenever a unit enters a new box, it is checked to see if any enemy factions can see that box. If an enemy faction can see the box, algorithm is triggered to manually detect all members of that faction that can see the box (and therefore the enemy unit which has entered it)-- this may be (often is) none. (or perhaps the detecting units are put on a 'high alert state', which can transition into a enemy detected state' where that can choose how to react (kill enemy, alert other units)). Counter-detection options may also be given to the unit that was detected entering the box. This minimizes checking for detection for every move, when the player and enemies are likely at peace, and also allows for better single unit detection and targeting later.

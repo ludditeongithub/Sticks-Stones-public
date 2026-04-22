@@ -26,6 +26,8 @@ enum class PlaceType
 enum class Role : uint8_t
 {
 	NONE,
+	Apprentice,
+	Student,
 	// MELEE
 	// RANGED
 	// ARTIST
@@ -45,6 +47,7 @@ enum class Role : uint8_t
 	Storyteller,
 	// SUPPORT
 	// paleo
+	Shaman,
 	// meso
 	// neo
 	Plower,
@@ -67,6 +70,7 @@ enum class Role : uint8_t
 	Gladiator,
 	// classical
 	Factor,
+	Administrator,
 	FieldSurgeon,
 	Judge,
 	Lawyer,
@@ -77,6 +81,11 @@ enum class Role : uint8_t
 	Senator,
 	Mariner,
 	Curer,
+	Banker,
+	// medieval
+	HeavyPlower,
+	Tutor,
+	HighPriest,
 	SUPPORTMAX,
 	// RESOURCE
 	// paleo
@@ -86,22 +95,27 @@ enum class Role : uint8_t
 	Woodcutter,
 	Gatherer,
 	// neo
+	Farmer,
 	Herder,
 	Shepherd,
 	StoneMiner,
 	Herbalist,
 	Planter, // farmer is combination of planter and plower
+	Harvester,
 	// copper negotiator put here instead of neo
 	CopperMiner,
 	Fisherman,
 	Beekeeper,
 	CerealFarmer,
+	FlaxFarmer,
 	HerbFarmer,
 	Horticulturalist,
 	TextileFarmer,
-	Negotiater,
+	Negotiator,
+	HorseBreeder,
 	// iron, no fishmonger, no rancher, no vineyard worker,
 	PapyrusHarvester,
+	Rancher,
 	IronMiner,
 	OliveGrower,
 	VineyardWorker,
@@ -112,11 +126,12 @@ enum class Role : uint8_t
 	SilverMiner,
 	LivestockFarmer,
 	DairyFarmer,
+	MasterFisher,
 	// medieval
 	CottonFarmer,
 	GemstoneMiner,
 	OrchardFarmer,
-	HorseBreeder,
+	HorseMaster,
 	WoodFarmer,
 	RESOURCEMAX,
 	// PRODUCER
@@ -177,6 +192,7 @@ enum class Role : uint8_t
 	Wickerworker,
 	Scribe,
 	// iron: no loom weaver,
+	Matron,
 	CandleMaker,
 	IronSmelter,
 	Ironsmith,
@@ -189,6 +205,7 @@ enum class Role : uint8_t
 	// classical,
 	Cartwright,
 	Cheesemaker,
+	Teacher,
 	// chef, no philosopher
 	Glassblower,
 	Engraver,
@@ -205,9 +222,11 @@ enum class Role : uint8_t
 	MasterBuilder,
 	MasterButcher,
 	MasterCarpenter,
+	MasterCraftsman,
 	MasterCuirassier,
 	MasterFletcher,
 	MasterMason,
+	MasterSpinner,
 	Chef,
 	// Medieval Monarch,
 	MilLeader,
@@ -223,10 +242,12 @@ enum class Role : uint8_t
 	Ropemaker,
 	Tailor,
 	Armorer,
-	MasterWeaver,	
+	MasterWeaver,
 	PRODUCTSMAX,
 	// SUPPORTPRODUCER
 	// RESEARCHER
+	Elder,
+	Scout,
 	Philosopher,
 	Envoy,
 	Explorer,
@@ -239,6 +260,7 @@ enum class Role : uint8_t
 	Cartographer,
 	Diplomat,
 	Librarian,
+	Surveyor,
 	// LEADER
 	AdvisorFarming,
 	AdvisorForeign,
