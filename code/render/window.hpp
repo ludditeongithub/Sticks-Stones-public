@@ -11,8 +11,8 @@ SDL_Renderer *gRenderer = NULL;
 SDL_Texture *gTexture = NULL;
 
 // Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+const int RAW_SCREEN_WIDTH = 480;
+const int RAW_SCREEN_HEIGHT = 270;
 
 // Starts up SDL and creates window
 bool initWindow();

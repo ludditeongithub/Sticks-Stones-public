@@ -4,6 +4,7 @@
 ** Main Menu startup
 ** New game generation
 ** UI in game
+** upscaling to screen size
 ** Menus
 *** wait for sprites to be done
 ** Inventory and unit tasks
@@ -20,6 +21,7 @@ unit checks all its roles, and then selects the task with the lowest priority.
 ** Writing to data to file
 ** option to configure screen size
 ** get rid of all vectors, standardize overflow/imps
+** chunked rendering
 * NOTES
 ** Programming
 *** Scheduling and Simulation Precision

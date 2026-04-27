@@ -1,47 +1,99 @@
 #include "core/mouse.hpp"
+#include "render/screen.hpp"
 #include <SDL2/SDL_events.h>
 #include <core/data.hpp>
 #include <ui/components/button.hpp>
 #include <render/sprite_sheet_settings.hpp>
+#include <simulation/game.cpp>
 
 //TODO: loadGameButton
 
-struct MainMenu {
-	SCoord newLeftCorner;
-	SCoord continueLeftCorner;
-	SCoord optionsLeftCorner;
-	SCoord aboutLeftCorner;
-	ButtonUI newGame;
-	ButtonUI continueGame;
-	ButtonUI about;
-	ButtonUI options;
-	SCoord buttonDimensions;
-	
-	MainMenu(SCoord screenDimensions)
-	{
-		newLeftCorner = {screenDimensions.x / 2, screenDimensions.y / 6};
-		continueLeftCorner = {screenDimensions.x / 2, screenDimensions.y / 5};
-		optionsLeftCorner = {screenDimensions.x / 2, screenDimensions.y / 4};
-		aboutLeftCorner = {screenDimensions.x / 2, screenDimensions.y / 3};
-		
-		buttonDimensions = {screenDimensions.x / 8, screenDimensions.y / 7};
-		
-	newGame = ButtonUI(newLeftCorner, buttonDimensions, SpriteSheet::MainButtonUnpressed, SpriteSheet::MainButtonHover, SpriteSheet::MainButtonPressed);
-	continueGame = ButtonUI(continueLeftCorner, buttonDimensions, SpriteSheet::MainButtonUnpressed, SpriteSheet::MainButtonHover, SpriteSheet::MainButtonPressed);
-	options = ButtonUI(optionsLeftCorner, buttonDimensions, SpriteSheet::MainButtonUnpressed, SpriteSheet::MainButtonHover, SpriteSheet::MainButtonPressed);
-	about = ButtonUI(aboutLeftCorner, buttonDimensions, SpriteSheet::MainButtonUnpressed, SpriteSheet::MainButtonHover, SpriteSheet::MainButtonPressed);
-	}
+struct MainMenu
+{
+	SCoord background = {};
+	const int buttonLeftAlignment = SCREEN_WIDTH / 2 - (SpriteSheet::buttonSprites[static_cast<int>(Button::MainButton)].dimensions.x / 2);
+	SCoord newLeftCorner = {buttonLeftAlignment, 2 * SCREEN_HEIGHT / 6};
+	SCoord continueLeftCorner = {buttonLeftAlignment / 2, 3 * SCREEN_HEIGHT / 6};
+	SCoord optionsLeftCorner = {buttonLeftAlignment / 2, 4 * SCREEN_HEIGHT / 6};
+	SCoord aboutLeftCorner = {buttonLeftAlignment / 2, 5 * SCREEN_HEIGHT / 6};
+	SCoord Unpressed = SpriteSheet::buttonSprites[static_cast<int>(Button::MainButton)].position;
+	SCoord Hover = SpriteSheet::buttonSprites[static_cast<int>(Button::MainButtonHover)].position;
+	SCoord Pressed = SpriteSheet::buttonSprites[static_cast<int>(Button::MainButtonPressed)].position;
+	SCoord buttonDimensions = SpriteSheet::buttonSprites[static_cast<int>(Button::MainButton)].dimensions;
+	ButtonUI newGameButton = ButtonUI(newLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
+	ButtonUI continueGameButton = ButtonUI(continueLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
+	ButtonUI aboutButton = ButtonUI(aboutLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
+	ButtonUI optionsButton =
+	    ButtonUI(optionsLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
 
+	SCoord videoLeftCorner = {buttonLeftAlignment, 2 * SCREEN_HEIGHT / 6};
+	SCoord audioLeftCorner = {buttonLeftAlignment / 2, 3 * SCREEN_HEIGHT / 6};
+	SCoord keybindingsLeftCorner = {buttonLeftAlignment / 2, 4 * SCREEN_HEIGHT / 6};
+
+	ButtonUI videoButton =
+	    ButtonUI(videoLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
+	ButtonUI audioButton =
+	    ButtonUI(audioLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
+	ButtonUI keybindingsButton =
+	    ButtonUI(keybindingsLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
+
+	enum class Mode
+	{
+		Main,
+		Options,
+		Video,
+		Audio		
+	};
+	Mode mode;
+
+	void render() {}	
+	
 	void handleEvent(SDL_Event *e)
 	{
 		SCoord mousePosition;
 		SDL_GetMouseState(&mousePosition.x, &mousePosition.y);
-		if (e->type == SDL_MOUSEBUTTONUP) {
-		if (mouseInside(mousePosition, newLeftCorner, buttonDimensions)) newGame();
-		else if (mouseInside(mousePosition, continueLeftCorner, buttonDimensions)) continueGame();
-		else if (mouseInside(mousePosition, optionsLeftCorner, buttonDimensions)) options();
-		else if (mouseInside(mousePosition, aboutLeftCorner, buttonDimensions)) about();
+		switch (mode)
+		{
+		case Mode::Main:
+			mainHandle(e, mousePosition);
+			break;
+		case Mode::Options:
+			optionsHandle(e, mousePosition);
+			break;
+		case Mode::Video:
+			videoHandle(e, mousePosition);
+			break;
+		case Mode::Audio:
+			audioHandle(e, mousePosition);
+			break;
 		}
-	}		
-}
+	}
 
+	void mainHandle(SDL_Event *e, SCoord mousePosition)
+	{
+		if (e->type == SDL_MOUSEBUTTONUP) {
+			if (mouseInside(mousePosition, newLeftCorner, buttonDimensions)) {
+				Game game;
+				game.initWorld();
+				game.newGame();
+			}
+			else if (mouseInside(mousePosition, continueLeftCorner, buttonDimensions))
+			{
+				Game game;
+				//game.load();
+}				
+		else if (mouseInside(mousePosition, optionsLeftCorner, buttonDimensions)) mode = Mode::Options;
+		}
+	}
+
+	void optionsHandle(SDL_Event *e, SCoord mousePosition)
+	{
+		if (e->type == SDL_MOUSEBUTTONUP) {
+			if (mouseInside(mousePosition, audioLeftCorner, buttonDimensions)) mode = Mode::Options;			
+			else if (mouseInside(mousePosition, continueLeftCorner, buttonDimensions)) mode = 	
+		else if (mouseInside(mousePosition, optionsLeftCorner, buttonDimensions)) mode = Mode::Options;
+		}
+	}
+	void audioHandle(SDL_Event *e, SCoord mousePosition) {}
+	void videoHandle(SDL_Event *e, SCoord mousePosition) {} 
+}	

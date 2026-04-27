@@ -5,6 +5,14 @@
 #include <core/data.hpp>
 #include <core/mouse.hpp>
 
+enum class Button : uint8_t
+{
+	MainButton,
+	MainButtonHover,
+	MainButtonPressed,
+	MAX
+};
+
 enum class ButtonState
 {
 	Unpressed,
@@ -20,11 +28,12 @@ struct ButtonUI
 	const SCoord unpressed;
 	const SCoord hover;
 	const SCoord pressed;
+	const Sound pressedSound;
 	ButtonState state = ButtonState::Unpressed;	
 
 	ButtonUI(const SCoord topLeftCorner, const SCoord dimensions, const SCoord unpressed,
-	       const SCoord hover, const SCoord pressed)
-	:  topLeftCorner(topLeftCorner),   dimensions(dimensions),   unpressed(unpressed), hover(hover),   pressed(pressed)  {
+	       const SCoord hover, const SCoord pressed, const Sound pressedSound)
+	:  topLeftCorner(topLeftCorner),   dimensions(dimensions),   unpressed(unpressed), hover(hover),   pressed(pressed), pressedSound(pressedSound)  {
 		
 	}
 
@@ -75,6 +84,7 @@ struct ButtonUI
 			case SDL_MOUSEBUTTONDOWN:
 			case SDL_MOUSEBUTTONUP:
 				state = ButtonState::Pressed;
+				playSound(sound);
 				break;
 			}
 		}
