@@ -15,6 +15,16 @@
 #include <render/camera.hpp>
 #include <render/draw.hpp>
 
+void startGame()
+{
+	
+}
+
+void startGame()
+{
+
+}	
+
 struct Game
 {
 Time absoluteTime;

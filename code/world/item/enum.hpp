@@ -456,6 +456,8 @@ enum class Material : uint8_t
 	Wood,
 	Iron,
 	Steel,
+	Copper,
+	Bronze,
 	Leather,
 	Stone,
 	Bone,
