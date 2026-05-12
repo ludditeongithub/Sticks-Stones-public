@@ -80,30 +80,44 @@ struct Array2D
     uint16_t width;
     uint16_t height;
 
-    T& operator()(uint16_t x, uint16_t y)
+    struct Row
     {
-        if (x >= width || y >= height)
-            throw std::out_of_range("2D index out of bounds");
-        return data[y * width + x];
+        T* row_data;
+        uint16_t width;
+
+        T& operator[](uint16_t x)
+        {
+            if (x >= width)
+                throw std::out_of_range("Column index out of bounds");
+
+            return row_data[x];
+        }
+
+        const T& operator[](uint16_t x) const
+        {
+            if (x >= width)
+                throw std::out_of_range("Column index out of bounds");
+
+            return row_data[x];
+        }
+    };
+
+    Row operator[](uint16_t y)
+    {
+        if (y >= height)
+            throw std::out_of_range("Row index out of bounds");
+
+        return Row{ data + y * width, width };
     }
 
-    const T& operator()(uint16_t x, uint16_t y) const
+    const Row operator[](uint16_t y) const
     {
-        if (x >= width || y >= height)
-            throw std::out_of_range("2D index out of bounds");
-        return data[y * width + x];
+        if (y >= height)
+            throw std::out_of_range("Row index out of bounds");
+
+        return Row{ data + y * width, width };
     }
 };
-
-template <typename T>
-Array2D<T> make_2d_view(Array<T>& arr, uint16_t width, uint16_t height)
-{
-    if (width * height > arr.count)
-        throw std::runtime_error("2D view exceeds array size");
-
-    return { arr.data(), width, height };
-}
-
 
 // pq capacity remains the same size, since as current moves away from start, if the end of the
 // memory of this structure is full, then new values are pushed onto the front of the memory of this

@@ -1,4 +1,5 @@
 #pragma once
+#include "core/data.hpp"
 #include "core/random.hpp"
 #include <cstdint>
 
@@ -53,23 +54,45 @@ struct World
 	static const uint16_t ENTITY_SIZE = sizeof(uint8_t) * 3;
 	const uint16_t LENGTH_CHUNKS;
 	const uint16_t HEIGHT_CHUNKS;
+	const uint16_t EQUATOR;
 	const uint16_t CHUNK_AMOUNT;
-	const uint16_t CHUNK_LATITUDE_HEIGHT =
-	    HEIGHT_CHUNKS / LATITUDE_TOTAL; // amount of chunks per latitude
+	const uint16_t CHUNK_LATITUDE_HEIGHT = HEIGHT_CHUNKS / LATITUDE_TOTAL; // amount of chunks per latitude
 
 	const uint32_t WORLD_TILE_AMOUNT = CHUNK_AMOUNT * CHUNK_SIZE;
 	const uint32_t WORLD_TILE_LENGTH = sqrt(WORLD_TILE_AMOUNT);
 
-	Array<uint8_t> humidities;
-	Array<int8_t> temperatures;
-	Array<uint8_t> altitudes;
+	Array<Hum> humidities;
+	Array<Temp> temperatures;
+	Array<Alt> altitudes;
+	
+	Array2D<float> dailyInsolations;
+	Array<float> seasonalInsolations;
+	Array<float> cloudCovers;
+
+	struct ChunkTempData
+	{	
+	std::vector<float> minTemps;
+	std::vector<float> diurnalTempVariances;
+	std::vector<float> seasonalTempVariances;
+	ChunkTempData(World* world)
+	{
+		minTemps.reserve(world->CHUNK_AMOUNT);
+		diurnalTempVariances.reserve(world->CHUNK_AMOUNT);
+		seasonalTempVariances.reserve(world->CHUNK_AMOUNT);	
+	}
+	};
+	ChunkTempData chunkTempData;
 
 	World(Arena *arena, int width, int height)
-	    : LENGTH_CHUNKS(width), HEIGHT_CHUNKS(height), CHUNK_AMOUNT(width * height)
+	    : LENGTH_CHUNKS(width), HEIGHT_CHUNKS(height), CHUNK_AMOUNT(width * height), EQUATOR(height / 2)
 	{
-		humidities = arena_make_array<uint8_t>(arena, width * height);
-		temperatures = arena_make_array<int8_t>(arena, width * height);
-		altitudes = arena_make_array<uint8_t>(arena, width * height);
+		humidities = arena_make_array<Hum>(arena, width * height);
+		temperatures = arena_make_array<Temp>(arena, width * height);
+		altitudes = arena_make_array<Alt>(arena, width * height);
+		dailyInsolations = arena_make_array<float>(arena, width * height);
+		seasonalInsolations = arena_make_array<float>(arena, width * height);
+		cloudCovers = arena_make_array<float>(arena, width * height);
+		chunkTempData = ChunkTempData(this);
 	}
 
 	inline uint16_t getChunkHeight(int i) { return i / HEIGHT_CHUNKS; }
@@ -96,6 +119,12 @@ struct World
 	{
 		ws.moveRegionsToChunks(humidities, temperatures, altitudes);
 	}
+
+	void updateDailyInsolations(uint16_t day365);
+
+	void calculateChunkTemperatureInputs(Array<int8_t> &waterBodiesDists);
+
+	void updateChunkTemperature();
 };
 
 /*

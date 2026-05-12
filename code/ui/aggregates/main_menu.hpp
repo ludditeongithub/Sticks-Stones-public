@@ -1,10 +1,11 @@
+#pragma once
 #include "core/mouse.hpp"
 #include "render/screen.hpp"
 #include <SDL2/SDL_events.h>
 #include <core/data.hpp>
 #include <ui/components/button.hpp>
 #include <render/sprite_sheet_settings.hpp>
-#include <simulation/game.cpp>
+#include <simulation/launch_game.hpp>
 
 //TODO: loadGameButton
 
@@ -23,9 +24,7 @@ struct MainMenu
 	ButtonUI newGameButton = ButtonUI(newLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
 	ButtonUI loadGameButton = ButtonUI(loadLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
 	ButtonUI aboutButton = ButtonUI(aboutLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
-	ButtonUI optionsButton =
-	    ButtonUI(optionsLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
-
+	ButtonUI optionsButton = ButtonUI(optionsLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
 	SCoord videoLeftCorner = {buttonLeftAlignment, 2 * SCREEN_HEIGHT / 6};
 	SCoord audioLeftCorner = {buttonLeftAlignment / 2, 3 * SCREEN_HEIGHT / 6};
 	SCoord keybindingsLeftCorner = {buttonLeftAlignment / 2, 4 * SCREEN_HEIGHT / 6};
@@ -90,6 +89,6 @@ struct MainMenu
 			else if (mouseInside(mousePosition, videoLeftCorner, buttonDimensions)) mode = Mode::Video;
 		}
 	}
-	void audioHandle(SDL_Event *e, SCoord mousePosition) {}
-	void videoHandle(SDL_Event *e, SCoord mousePosition) {} 
-}	
+	void audioHandle(SDL_Event *e, SCoord mousePosition);
+	void videoHandle(SDL_Event *e, SCoord mousePosition);
+};	

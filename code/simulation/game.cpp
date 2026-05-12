@@ -1,45 +1,6 @@
-#include <core/data.hpp>
-#include <core/memory_control.hpp>
-#include <simulation/first_spawn.hpp>
-#include <simulation/world_gen.hpp>
-#include <systems/find_nearest.hpp>
-#include <ui/state.hpp>
-#include <world/animal/entity.hpp>
-#include <world/plant/entity.hpp>
-#include <world/tile/data.hpp>
-#include <world/tile/database.hpp>
-#include <world/unit/entity.hpp>
-#include <world/world.hpp>
-#include <render/texture.hpp>
-#include <render/window.hpp>
-#include <render/camera.hpp>
-#include <render/draw.hpp>
+#include "game.hpp"
 
-void startGame()
-{
-	
-}
-
-void startGame()
-{
-
-}	
-
-struct Game
-{
-Time absoluteTime;
-World world;
-SearchGrid search;
-Arena tileArena;
-TileDatabase tileDatabase;
-std::vector<Arena> plantArenas;
-std::vector<PlantDatabase> plantDatabases;
-std::vector<Arena> animalArenas;
-std::vector<AnimalDatabase> animalDatabases;
-std::vector<Arena> unitArenas;
-std::vector<UnitDatabase> unitDatabases; 
-
-void initWorld()
+void Game::initWorld()
 {
 	absoluteTime = 0;
 	WorldSpawner *ws = new WorldSpawner(50 / 2, 50 / 2);
@@ -69,7 +30,7 @@ void initWorld()
 	unitDatabases.push_back(UNIT_CAP);
 }
 
-void deinitWorld()
+void Game::deinitWorld()
 {
 	absoluteTime = 0;
 	WorldSpawner *ws = new WorldSpawner(50 / 2, 50 / 2);
@@ -99,7 +60,7 @@ void deinitWorld()
 	unitDatabases.push_back(UNIT_CAP);
 }	
 
-void newGame()
+void Game::newGame()
 {
 	//	GameOptions go = selectGameOptions();
 
@@ -127,16 +88,25 @@ void newGame()
 	}
 }
 
-void gameLoop()
+void Game::handleEvent(SDL_Event *e)
 {
+	for (size_t i = 0; i < ui.buttons.size(); i++) ui.buttons[i].handleEvent(e);
+}
 
-	
-	drawEntities(world, leftCornerTile, tileDatabase.tiles, animalDatabases[0].ages,
-		     animalDatabases[0].frames, animalDatabases[0].statuses, unitDatabases[0].frames,
-		     unitDatabases[0].ages, unitDatabases[0].frameDatas, search);
+void Game::gameLoop()
+{
+	bool quit = false;
+	SDL_Event e;
+	while( !quit )
+	{				
+		while( SDL_PollEvent( &e ) != 0 )
+		{
+			handleEvent(&e);
+		}
+		processWorld(world);
+		drawEntities(world, {0, 0}, tileDatabase.tiles, animalDatabases[0].ages, animalDatabases[0].frames, animalDatabases[0].statuses, unitDatabases[0].frames, unitDatabases[0].ages, unitDatabases[0].frameDatas, search);
+	}
 }	
-
-};
 
 
 	

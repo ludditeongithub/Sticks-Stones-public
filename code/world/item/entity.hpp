@@ -147,7 +147,7 @@ struct ItemDatabase
 	SearchGrid *search;
 
 	inline void addItem(Item item, Coord coord);
-	inline void dropFruit();
+	inline void dropFruit(Plant plant, Coord coord, uint16_t amount);
 };
 
 struct VariantItemDatabase {

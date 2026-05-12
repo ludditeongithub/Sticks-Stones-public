@@ -78,9 +78,7 @@ void evalSunlight(World& world, int chunkIndex, float& nextGrowth, Array2D<float
 
 // OPTI: have plant temp values be precalcuated so chunk temps is accessed
 // faster
-void updatePlants(World& world, Array<Time>& ages, Array<uint16_t> &growths, Array<Plant> &plantList, Array<Coord> &coords,
-		  Array<float> &chunkTemps, Array<float> &tileWater, Array<float> &lastFullyWatered,
-		  Array2D<float> &dailyInsolations, Array<float> &cloudCovers, std::vector<bool>& alives, Time timePassed)
+void PlantDatabase::updatePlants(World& world, Array2D<float> &dailyInsolations, Array<float> &cloudCovers, Time timePassed)
 {
 	for (uint32_t i = 0; i < plantList.size(); i++)
 	{
@@ -91,20 +89,15 @@ void updatePlants(World& world, Array<Time>& ages, Array<uint16_t> &growths, Arr
 		float nextGrowth = 1.0;
 		const Coord pos = coords[i];
 		uint32_t chunkIndex = getChunkIndexFromTile(pos);
-		bool &&alive = alives[i];
-		evalSunlight(world, chunkIndex, nextGrowth, dailyInsolations, cloudCovers, p);
-		if (!alives[i])
-			continue;
-
-		evalTemperature(world, chunkIndex, p, nextGrowth, alives[i]);
-		if (!alives[i])
-			continue;		
+		evalSunlight(world, chunkIndex, nextGrowth, world.dailyInsolations, world.cloudCovers, p);
+		evalTemperature(world, chunkIndex, p, nextGrowth, alive[i]);
+		if (!alive[i]) continue;		
 
 		growths[i] += nextGrowth * timePassed;
 	}
 }
 
-void RegrowthPlantDatabase::updateRegrowthPlants(ItemDatabase& itemDatabase, World& world, Array<float> &tileWater, Array<float> &lastFullyWatered, Array2D<float> &dailyInsolations, Array<float> &cloudCovers, Time timePassed)
+void RegrowthPlantDatabase::updateRegrowthPlants(ItemDatabase& itemDatabase, World& world, Array<float> &tileWater, Time timePassed)
 {
 	Array<Plant> &plantList = plantDatabase.plantList;
 	
@@ -117,7 +110,7 @@ void RegrowthPlantDatabase::updateRegrowthPlants(ItemDatabase& itemDatabase, Wor
 		const Coord pos = plantDatabase.coords[i];
 		uint32_t chunkIndex = getChunkIndexFromTile(pos);
 
-		evalSunlight(world, chunkIndex, nextGrowth, dailyInsolations, cloudCovers, p);
+		evalSunlight(world, chunkIndex, nextGrowth, world.dailyInsolations, world.cloudCovers, p);
 		// sunlight must come before temp, because temp sets nextGrowth to negative
 		// sometimes for regrowth
 		evalTemperature(world, chunkIndex, p, nextGrowth, plantDatabase.alive[i], true);
@@ -135,7 +128,7 @@ void RegrowthPlantDatabase::updateRegrowthPlants(ItemDatabase& itemDatabase, Wor
 		if (produceTarget < currentProduce)
 		{
 			if (fruitsFall[p])
-				itemDatabase.dropFruit(i, currentProduce - produceTarget);
+				itemDatabase.dropFruit(p, pos, currentProduce - produceTarget);
 			regrowths[i] -= regrowths[i] *  static_cast<float>(static_cast<int>(produces[i] - produceTarget) / produceTarget);
 		}		
 		produces[i] = produceTarget;
@@ -152,8 +145,7 @@ void updateAlivePlants(PlantDatabase& database)
 
 // wander becomes idle at end
 // also automatically sets
-void updateAnimalPositions(PathfindingManager::PathsBuffer &rpd, Array<Coord> positions,
-			   Array<float> timers, Array<ActionDecisionStatus> actions)
+void updateAnimalPositions(PathfindingManager::PathsBuffer &rpd, Array<Coord> positions, Array<float> timers, Array<ActionDecisionStatus> actions)
 {
 	int j = 0;
 	for (int i = 0; i < rpd.size; i++)

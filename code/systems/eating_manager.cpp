@@ -93,12 +93,9 @@ inline bool eatPerishable(Array<Animal> &animals, Array<Hunger> &hungers,
 }
 
 // lacks verification if animal can eat current plant
-inline bool eatPlant(Array<Animal> &animals, Array<Hunger> &hungers, Array<Time> &timers,
-		     Array<Coord> &animalCoords, uint16_t animalIndex, Array<Health> &plantHealths,
-		     Array<Coord> &plantCoords, uint16_t plantIndex)
+inline bool eatPlant(Array<Animal> &animals, Array<Hunger> &hungers, Array<Time> &timers, Array<Coord> &animalCoords, uint16_t animalIndex, Array<Health> &plantHealths, Array<Coord> &plantCoords, uint16_t plantIndex)
 {
-	if (adjacentCoords(plantCoords[plantIndex], animalCoords[animalIndex]))
-		return false;
+	if (adjacentCoords(plantCoords[plantIndex], animalCoords[animalIndex])) return false;
 	Animal a = animals[animalIndex];
 	Health &h = plantHealths[plantIndex];
 	Hunger mh = maxHungers[a];

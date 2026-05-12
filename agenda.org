@@ -1,7 +1,10 @@
 * REMEMBER
 ** boost.preprocessor enum to string
 * NOW
-** Main Menu startup
+** gameLoop
+*** handleEvent
+*** processWorld
+*** cloud covers
 ** New game generation
 ** UI in game
 ** upscaling to screen size

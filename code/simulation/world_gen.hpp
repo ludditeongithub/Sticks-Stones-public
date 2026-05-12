@@ -187,8 +187,8 @@ humidityAndRainShadowEffects(int y, int x, int water, bool biomes);
 	std::vector<float> generateTileChances();
 	void spawnGrassAndFirstPlants();
 	void generateWorld();
-	void moveRegionsToChunks(Array<uint8_t> humidities, Array<int8_t> temperatures,
-				 Array<uint8_t> altitudes);
+	void moveRegionsToChunks(Array<Hum> humidities, Array<Temp> temperatures,
+				 Array<Alt> altitudes);
 	void printInfo();
 
 	// Constants

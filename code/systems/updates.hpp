@@ -1,15 +1,10 @@
 // #include <sleef.h>
+#include <world/plant/entity.hpp>
 #include <world/plant/tables.hpp>
 #include <world/world.hpp>
 
-struct Animal
-{
-};
-
 // every 15 frames
-void updatePlants(Arena<float> &nextGrowth, Array<Plant> &plantList, Array<Coord> &coords,
-		  Array<float> &chunkTemps, Array<float> &tileWater, Array<float> &lastFullyWatered,
-		  Arena2D<float> &dailyInsolations, Arena<float> &cloudCovers, Arena<bool> &dead);
+void PlantDatabase::updatePlants(Array<Temp> &chunkTemps, Array2D<float> &dailyInsolations, Array<float> &cloudCovers);
 
 // every tick, possibly change to just dispatching (no time check, no health check)
 void updatePositions(PathsData &rpd, Array<Coord> &positions, Array<float> &timers,

@@ -20,9 +20,9 @@ struct PlantDatabase
 	Array<Plant> plantList;
 	Array<Time> growths; //also substitutes for age, as non-regrowth plants just die, regardless of age.
 	Array<Coord> coords;
-	Array<float> tileWater;
+	Array<uint16_t> tileWaters;
 	Array<Time> lastFullyWatered;
-	std::vector<bool> alive;
+	Array<bool> alive;
 
 	// Seed Data
 	Array<Plant> seeds;
@@ -30,11 +30,11 @@ struct PlantDatabase
 
 	PlantDatabase(Arena* arena, SearchGrid& sg, uint32_t size) : search(sg) {
 		plantList = arena_make_array<Plant>(arena, size);
-		growthAmt = arena_make_array<Time>(arena, size);
+		growths = arena_make_array<Time>(arena, size);
 		coords = arena_make_array<Coord>(arena, size);
-		tileWater = arena_make_array<float>(arena, size);
+		tileWaters = arena_make_array<uint16_t>(arena, size);
 		lastFullyWatered = arena_make_array<Time>(arena, size);
-		alive.reserve(size);
+		alive = arena_make_array<bool>(arena, size);
 	}
 
 	inline void destroyPlant(uint16_t i);
@@ -48,7 +48,9 @@ struct PlantDatabase
 	inline void excreteSeed(AnimalDatabase& database, int animalIndex, Plant plant);
 	inline void plant(int unitIndex, Plant plant);
 	inline void killTree(int plantIndex);
-	inline void killPlant(int plantIndex);	
+	inline void killPlant(int plantIndex);
+
+	void updatePlants(World& world, Time timePassed);
 };
 
 struct RegrowthPlantDatabase
