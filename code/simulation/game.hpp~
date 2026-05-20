@@ -43,6 +43,8 @@ void saveGame();
 
 void handleEvent(SDL_Event *e);
 
+void processWorld();
+
 void gameLoop();
 
 };

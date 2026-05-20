@@ -11,6 +11,7 @@
 #include <world/animal/enum.hpp>
 #include <world/tile/enum.hpp>
 #include <world/unit/enum.hpp>
+#include "sprite.hpp"
 // TODO: sex offsets!
 // TODO: perhaps walking frames last for twice as long as running frames
 
@@ -23,24 +24,6 @@ const Frame RUN_ANIMATION_SPRITE_LENGTH = 8;
 // TODO: right now this is only fitted for walk animations. need to make sure
 // all the LOGIC is only fitted for walk animations, for now.
 
-struct SpriteInfo
-{
-	const Coord leftCorner;
-	// in tiles
-	const uint8_t SIDE_LENGTH;
-	const uint8_t SIDE_HEIGHT;
-	const uint8_t FRONT_LENGTH;
-	const uint8_t FRONT_HEIGHT;
-	const uint8_t CHILD_SIDE_LENGTH;
-	const uint8_t CHILD_SIDE_HEIGHT;
-	const uint8_t CHILD_FRONT_LENGTH;
-	const uint8_t CHILD_FRONT_HEIGHT;
-	const uint8_t WALKING_SPRITE_LENGTH = SIDE_LENGTH * FRONT_LENGTH * 2;
-	const uint8_t RUNNING_SPRITE_LENGTH = SIDE_LENGTH * FRONT_LENGTH * 4;
-	const Frame WALK_SPRITE_FRAME_LENGTH;
-	const Frame RUN_SPRITE_FRAME_LENGTH;
-	const Frame ACT_SPRITE_FRAME_LENGTH;
-};
 
 inline uint16_t getActionSpriteOffset(SpriteInfo &ai, ActionStatus as)
 {
@@ -132,8 +115,7 @@ inline uint16_t getDirectionSpriteOffset(SpriteInfo &asi, Direction d, bool chil
 	return dOffset;
 }
 
-inline uint16_t getFrameSpriteOffset(SpriteInfo &asi, ActionStatus as, uint16_t frame,
-				     uint16_t spriteHeight)
+inline uint16_t getFrameSpriteOffset(SpriteInfo &asi, ActionStatus as, uint16_t frame, uint16_t spriteHeight)
 {
 	switch (as)
 	{
@@ -149,9 +131,8 @@ inline uint16_t getFrameSpriteOffset(SpriteInfo &asi, ActionStatus as, uint16_t 
 	case ActionStatus::Pursuit:
 	case ActionStatus::Flee:
 		return spriteHeight * (frame / asi.RUN_SPRITE_FRAME_LENGTH);
-		break;
-	default:
-	}
+		break;	
+	}	
 }
 
 inline uint16_t getFrameSpriteOffset(SpriteInfo &asi, ActState as, uint16_t frame,
@@ -175,6 +156,7 @@ inline uint16_t getFrameSpriteOffset(SpriteInfo &asi, ActState as, uint16_t fram
 		return 0;
 		break;
 	default:
+		break;
 	}
 }
 
@@ -198,6 +180,7 @@ inline Coord getSpriteDimensions(SpriteInfo &asi, Direction d, bool child)
 			h = asi.CHILD_SIDE_HEIGHT;
 			break;
 		default:
+			break;
 		}
 	}
 	else
@@ -215,6 +198,7 @@ inline Coord getSpriteDimensions(SpriteInfo &asi, Direction d, bool child)
 			h = asi.SIDE_HEIGHT;
 			break;
 		default:
+			break;
 		}
 	}
 	return {w, h};
@@ -257,6 +241,7 @@ inline Frame getNextAnimalFrame(Animal a, ActionStatus as, Frame frame, SpriteIn
 			frame = 0;
 		break;
 	default:
+		break;
 	}
 	return frame;
 }

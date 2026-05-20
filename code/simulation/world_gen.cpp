@@ -1440,6 +1440,8 @@ void WorldSpawner::moveRegionsToChunks(Array<uint8_t> &humidityTable,
 		std::vector<float> gtc = ws.generateTileChances();
 		std::vector<Coord> gvs = ws.generateVoronoiSites();
 		generateTilesTypes(gtc, gvs);
+		world.calculateChunkTemperatureInputs();
+		world.calculateChunkPrecipitationEquilibrium();
 		// spawnFirstPlants();
 		// cout << "PLANTS SPAWNED" << endl;
 		// spawnFirstAnimals();

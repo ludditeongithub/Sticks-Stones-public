@@ -11,7 +11,7 @@ static std::mt19937 gen(rd());
 
 template <typename T> struct RandomMachine
 {
-	static constexpr uint16_t PREGENERATED_RANDOM_SIZE = 15000;
+	static constexpr uint16_t PREGENERATED_RANDOM_SIZE = 15650;
 	std::array<T, PREGENERATED_RANDOM_SIZE> randoms;
 	uint16_t current = 0;
 	std::mt19937 gen{std::random_device{}()};

@@ -80,7 +80,9 @@ The user can choose certain colours, and certain simple shapes (consider picking
 ** Mesolithic
 ~ Goal of how long the age takes in real time at 2x average speed: 7-12 hours
 - Starting pawns: All paleolitic (though a few that do not tree to elder may not be discovered)
-
+* Nature
+** Precipitation
+Corn plant needs roughly 0.1mm of water a day. 7.62mm of water per hour is considered a heavy rain. Rainforest with water body nearby has 
 * Units
 - By default, newly discovered units are intermediary units or viable evolutions who are taught by the researcher who discovered the new technology. The amount of teaching time depends on the new technology.
 ** Professional Mana

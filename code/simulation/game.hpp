@@ -5,7 +5,6 @@
 #include <simulation/first_spawn.hpp>
 #include <simulation/world_gen.hpp>
 #include <systems/find_nearest.hpp>
-#include <ui/state.hpp>
 #include <world/animal/entity.hpp>
 #include <world/plant/entity.hpp>
 #include <world/tile/data.hpp>
@@ -25,12 +24,16 @@ World world;
 SearchGrid search;
 Arena tileArena;
 TileDatabase tileDatabase;
-std::vector<Arena> plantArenas;
-std::vector<PlantDatabase> plantDatabases;
-std::vector<Arena> animalArenas;
-std::vector<AnimalDatabase> animalDatabases;
-std::vector<Arena> unitArenas;
-std::vector<UnitDatabase> unitDatabases;
+Arena plantArena;
+PlantDatabase plantDatabase;
+Arena regrowthPlantArena;
+RegrowthPlantDatabase regrowthPlantDatabases;
+Arena animalArena;
+AnimalDatabase animalDatabase;
+Arena unitArena;
+UnitDatabase unitDatabase;
+Arena itemArena;
+ItemDatabase itemDatabase;
 GameUI ui;
 
 void initWorld();
@@ -46,6 +49,8 @@ void handleEvent(SDL_Event *e);
 void processWorld();
 
 void gameLoop();
+
+uint16_t getDay();
 
 };
 

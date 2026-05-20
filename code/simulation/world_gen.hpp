@@ -49,6 +49,8 @@ class WorldSpawner
 
 	RandomChanceMachine rchance;
 
+	const Hum MAX_HUMIDITY = 500;
+	
 	const float coastThreshold = -0.2f;
 	const float landThreshold = -25.0f;
 	const float lowlandsThreshold = 9.0f;
@@ -111,9 +113,9 @@ class WorldSpawner
 		template <class BBOX> bool kdtree_get_bbox(BBOX & /*bb*/) const { return false; }
 	};
 
-	std::vector<std::vector<uint16_t>> altitudeMap;
-	std::vector<std::vector<int16_t>> temperatureMap;
-	std::vector<std::vector<uint16_t>> humidityMap;
+	std::vector<std::vector<Alt>> altitudeMap;
+	std::vector<std::vector<Temp>> temperatureMap;
+	std::vector<std::vector<Hum>> humidityMap;
 	std::vector<std::vector<Biome>> biomeMap;
 	std::vector<std::vector<int>> oceanMap;
 	std::vector<std::vector<int>> landsMap;

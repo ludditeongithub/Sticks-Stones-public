@@ -8,7 +8,21 @@
 #include <core/memory.hpp>
 #include <core/nanoflann.hpp>
 #include <simulation/world_gen.hpp>
-#include <world/tile/data.hpp>
+
+#include <world/tile/database.hpp>
+
+// Weather
+
+enum class Weather : uint8_t
+{
+	Clear,
+	LightClouds,
+	HeavyClouds,
+	LightPrecipitation,
+	MediumPrecipitation,
+	HeavyPrecipitation,
+	Heatwave,
+};
 
 // Time Data
 constexpr uint16_t HOUR_LENGTH = 300;
@@ -61,39 +75,58 @@ struct World
 	const uint32_t WORLD_TILE_AMOUNT = CHUNK_AMOUNT * CHUNK_SIZE;
 	const uint32_t WORLD_TILE_LENGTH = sqrt(WORLD_TILE_AMOUNT);
 
+	const CloudKey MIN_LIGHT_CLOUDS = 50;
+	const CloudKey MIN_HEAVY_CLOUDS = 150;
+	const PrecipitationKey PRECIPITATION_MIN = 160;
+	const float PRECIPITATION_VARIANCE_FACTOR = 0.45;
+	const float HEAVY_PRECIPITATION_FACTOR = 1.85;
+	const float MM_PER_PRECIPITATION = 8;
+
 	Array<Hum> humidities;
 	Array<Temp> temperatures;
 	Array<Alt> altitudes;
+
+	Array<CloudKey> cloudValues;
+	Array<PrecipitationKey> precipitationValues;
+	Array<Precipitation> precipitationCores; //base amount of precipitation that chunk produces, based on biome, water bodies, etc
+	RandomMachine<int8_t> nextCloudChanges = RandomMachine<int8_t>(-5, 5);
+	RandomMachine<int8_t> nextPrecipitationChanges = RandomMachine<int8_t>(-5, 5);
+	RandomChanceMachine precipitationVariance = RandomChanceMachine();
 	
 	Array2D<float> dailyInsolations;
 	Array<float> seasonalInsolations;
 	Array<float> cloudCovers;
 
 	struct ChunkTempData
-	{	
-	std::vector<float> minTemps;
-	std::vector<float> diurnalTempVariances;
-	std::vector<float> seasonalTempVariances;
-	ChunkTempData(World* world)
-	{
-		minTemps.reserve(world->CHUNK_AMOUNT);
-		diurnalTempVariances.reserve(world->CHUNK_AMOUNT);
-		seasonalTempVariances.reserve(world->CHUNK_AMOUNT);	
-	}
-	};
+{
+    std::vector<float> minTemps;
+    std::vector<float> diurnalTempVariances;
+    std::vector<float> seasonalTempVariances;
+
+    ChunkTempData(World* world)
+    {
+        minTemps.reserve(world->CHUNK_AMOUNT);
+        diurnalTempVariances.reserve(world->CHUNK_AMOUNT);
+        seasonalTempVariances.reserve(world->CHUNK_AMOUNT);
+    }
+};
+
 	ChunkTempData chunkTempData;
 
-	World(Arena *arena, int width, int height)
-	    : LENGTH_CHUNKS(width), HEIGHT_CHUNKS(height), CHUNK_AMOUNT(width * height), EQUATOR(height / 2)
-	{
-		humidities = arena_make_array<Hum>(arena, width * height);
-		temperatures = arena_make_array<Temp>(arena, width * height);
-		altitudes = arena_make_array<Alt>(arena, width * height);
-		dailyInsolations = arena_make_array<float>(arena, width * height);
-		seasonalInsolations = arena_make_array<float>(arena, width * height);
-		cloudCovers = arena_make_array<float>(arena, width * height);
-		chunkTempData = ChunkTempData(this);
-	}
+World(Arena *arena, int width, int height)
+    : LENGTH_CHUNKS(width),
+      HEIGHT_CHUNKS(height),
+      CHUNK_AMOUNT(width * height),
+      EQUATOR(height / 2),
+      chunkTempData(this) 
+{
+    humidities = arena_make_array<Hum>(arena, width * height);
+    temperatures = arena_make_array<Temp>(arena, width * height);
+    altitudes = arena_make_array<Alt>(arena, width * height);
+    dailyInsolations = arena_make_2d_array<float>(arena, width, height);
+    seasonalInsolations = arena_make_array<float>(arena, width * height);
+    cloudCovers = arena_make_array<float>(arena, width * height);
+}
 
 	inline uint16_t getChunkHeight(int i) { return i / HEIGHT_CHUNKS; }
 
@@ -125,6 +158,13 @@ struct World
 	void calculateChunkTemperatureInputs(Array<int8_t> &waterBodiesDists);
 
 	void updateChunkTemperature();
+
+	void updateWeather();
+
+	void applyWeather(TileDatabase* tileDB);
+
+	void applyPrecipitation(TileDatabase *tileDB, uint16_t chunk, bool heavy);
+	
 };
 
 /*

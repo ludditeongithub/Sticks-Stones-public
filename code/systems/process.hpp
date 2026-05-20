@@ -9,7 +9,7 @@ void Game::processWorldDaily() { updateDailyInsolations(getDay()); }
 void Game::processWorldHourly(World* world)
 {
 	world->updateChunkTemperature();
-	world->updateChunkWeather();
+	//world->updateChunkWeather();
 }	
 
 //every tick
@@ -17,12 +17,8 @@ void Game::processWorld(World* world)
 {
 	
 	Array<float> cloudCovers; //TODO
-	for (size_t i = 0; i < plantDatabases.size(); i++) {		
-		updatePlants(world->temperatures, world->dailyInsolations, cloudCovers, 1);
-	}
+	plantDatabase->updatePlants(world->temperatures, world->dailyInsolations, cloudCovers, 1);
 
-	for (size_t i = 0; i < regrowthPlantDatabases.size(); i++) {
-		updateRegrowthPlants(itemDatabase, world, 1);
-	}
+	regrowthPlantDatabases->updateRegrowthPlants(itemDatabase, world, tileDatabase.tileWaters, 1);
 
 }	

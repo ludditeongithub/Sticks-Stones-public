@@ -16,8 +16,7 @@ void World::calculateChunkTemperatureInputs(ChunkTempData &cd, Array<Hum> &humid
 		float altitudeFactor =
 		    std::fmin(1.0, 1.0 - ((MAX_ALTITUDE - altitudes[i]) / MAX_ALTITUDE));
 		float waterBodiesProximityFactor =
-		    std::fmin(1.0, 1.0 - (MAX_OCEAN_AFFECT_DIST -
-					  waterBodiesDists[i] / MAX_OCEAN_AFFECT_DIST));
+		    std::fmin(1.0, 1.0 - (MAX_OCEAN_AFFECT_DIST - waterBodiesDists[i] / MAX_OCEAN_AFFECT_DIST));
 
 		float df = std::lerp(humidityFactor, latitudeFactor, 0.4f);
 		float ds = std::lerp(df, altitudeFactor, 0.3f);
@@ -121,4 +120,9 @@ void calculateChunkPrecipationEquilibrium() {}
 void updateChunkPrecipitation() {}
 
 // TODO: updatePrecipitationAmount
-void updateChunkWeather() {}
+void World::updateChunkWeather()
+{
+	for (size_t i = 0; i < CHUNK_AMOUNT; i++) {
+		//TODO: make weather types.
+	}
+}

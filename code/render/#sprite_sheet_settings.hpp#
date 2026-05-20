@@ -1,0 +1,80 @@
+#pragma once
+
+#include "sprite_names.hpp"
+#include <core/json.hpp>
+#include <fstream>
+#include <SDL2/SDL_rect.h>
+#include "sprite.hpp"
+#include "world/animal/enum.hpp"
+#include <world/item/enum.hpp>
+#include <world/plant/enum.hpp>
+#include <world/buildable/enum.hpp>
+#include <world/tile/enum.hpp>
+#include <ui/components/button.hpp>
+
+namespace SpriteSheet {
+using json = nlohmann::json;
+
+std::array<SDL_Rect, static_cast<size_t>(Animal::MAX)> animalSprites;
+std::array<SDL_Rect, static_cast<size_t>(Buildable::MAX)> buildableSprites;
+std::array<SDL_Rect, static_cast<size_t>(Plant::MAX)> plantSprites;
+std::array<SDL_Rect, static_cast<size_t>(Item::MAX)> itemSprites;
+std::array<SDL_Rect, static_cast<size_t>(Tile::MAX)> tileSprites;
+std::array<SDL_Rect, static_cast<size_t>(Grass::MAX)> grassSprites;
+std::array<SDL_Rect, static_cast<size_t>(Button::MAX)> buttonSprites;
+
+inline void saveSprite(int index, Sprite sprite, SCoord position, SCoord dimension)
+{
+	if (std::holds_alternative<Animal>(sprite)) {
+		animalSprites[index] = SDL_Rect{position.x, position.y, dimension.x, dimension.y};
+	    } else if (std::holds_alternative<Buildable>(sprite)) {
+		buildableSprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
+		  } else if (std::holds_alternative<Plant>(sprite)) {
+		plantSprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
+			} else if (std::holds_alternative<Item>(sprite)) {
+		itemSprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
+			      } else if (std::holds_alternative<Tile>(sprite)) {
+		tileSprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
+		} else if (std::holds_alternative<Grass>(sprite)) {
+		grassSprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
+		} else if (std::holds_alternative<Button>(sprite)) {
+		buttonSprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
+		}		
+}
+
+template <typename Enum>
+void loadOneTypeSprites(const json& sheet) {
+    for (size_t i = 0; i < static_cast<size_t>(Enum::MAX); i++) {
+        Enum sprite = static_cast<Enum>(i);
+
+        Coord positions{}, dimensions{};
+
+        for (const auto& item : sheet) {
+            if (item.contains("filename") &&
+                item["filename"] == getSpriteName(sprite)) {
+
+                positions = {item["frame"]["x"], item["frame"]["y"]};
+                dimensions = {item["frame"]["w"], item["frame"]["h"]};
+            }
+        }
+
+        saveSprite(i, sprite, positions, dimensions);
+    }
+}
+
+template <typename ... Enums>
+void loadTypeSprites() {
+	std::ifstream file("../sprites/game.json");
+
+	json sheet;
+	file >> sheet;
+	(loadOneTypeSprites<Enums>(sheet), ...);
+}
+
+void loadSprites()
+{
+	loadTypeSprites<Animal, Plant, Item>();
+}	
+
+};
+

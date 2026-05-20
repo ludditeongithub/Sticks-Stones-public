@@ -5,7 +5,6 @@
 #include <SDL2/SDL_main.h>
 #include <SDL2/SDL_rect.h>
 #include <SDL2/SDL_stdinc.h>
-#include <SDL2_ttf/SDL_ttf.h>
 #include <core/data.hpp>
 #include <render/animation.hpp>
 #include <render/sprite.hpp>

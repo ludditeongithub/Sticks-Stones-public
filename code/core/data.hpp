@@ -35,6 +35,8 @@ using Frame = uint8_t;
 using Hum = uint16_t;
 using Temp = uint16_t;
 using Alt = uint8_t;
+using Liquid = uint16_t;
+using WeatherValue = uint8_t;
 
 // unit stats
 using Health = float;
@@ -42,6 +44,10 @@ using Speed = float;
 using Hunger = uint16_t;
 using Sex = bool;
 using Priority = uint8_t;
+
+using CloudKey = uint8_t;
+using PrecipitationKey = uint8_t;
+using Precipitation = float;
 
 enum class TargetType : uint8_t
 {

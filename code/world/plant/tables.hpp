@@ -1,6 +1,5 @@
 #pragma once
 #include "enum.hpp"
-#include "world/plant/helpers.hpp"
 #include <array>
 #include <core/containers.hpp>
 #include <core/data.hpp>

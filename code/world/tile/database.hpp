@@ -15,7 +15,7 @@ class TileDatabase
 	static constexpr uint32_t ENTITY_SIZE = sizeof(TileData) + sizeof(Alt);
 	Array<TileData> tiles;
 	Array<Alt> altitudes;
-	Array<uint16_t> tileWaters;
+	Array<Liquid> waters;
 	std::vector<bool> occupieds;
 	World *world;
 

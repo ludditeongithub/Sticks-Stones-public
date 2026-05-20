@@ -119,6 +119,37 @@ struct Array2D
     }
 };
 
+template <typename T>
+Array2D<T>& arena_make_2d_array(Arena* arena,
+                                uint16_t width,
+                                uint16_t height)
+{
+    size_t total_elements = static_cast<size_t>(width) * height;
+
+    size_t bytes =
+        sizeof(Array2D<T>) +
+        sizeof(T) * total_elements;
+
+    void* mem =
+        arena_alloc_aligned(arena,
+                            bytes,
+                            alignof(Array2D<T>));
+
+    // Construct header
+    Array2D<T>* arr = new (mem) Array2D<T>();
+
+    // Data lives immediately after header
+    T* data = reinterpret_cast<T*>(
+        reinterpret_cast<uint8_t*>(mem) + sizeof(Array2D<T>)
+    );
+
+    arr->data = data;
+    arr->width = width;
+    arr->height = height;
+
+    return *arr;
+}
+
 // pq capacity remains the same size, since as current moves away from start, if the end of the
 // memory of this structure is full, then new values are pushed onto the front of the memory of this
 // structure, where their actual position is the relative wraparound positon from cur

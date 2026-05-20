@@ -1,5 +1,4 @@
-#ifndef SPRITE_HPP
-#define SPRITE_HPP
+#pragma once
 #include "animation.hpp"
 #include "core/data.hpp"
 #include "screen.hpp"

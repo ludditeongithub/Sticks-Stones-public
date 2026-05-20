@@ -10,10 +10,9 @@
 #include <world/unit/enum.hpp>
 #include <world/world.hpp>
 
-SearchGrid::SearchGrid(World& world)
-{
-	this.world = world;
-	uint16_t chunkAmount = world->CHUNK_AMOUNT;
+SearchGrid::SearchGrid(World& world) :  world(world)
+{	
+	uint16_t chunkAmount = world.CHUNK_AMOUNT;
 	chunkBucketArena = new Arena((chunkAmount * NATURAL_CHUNK_SEARCH_SIZE));
 
 	activeBucketArena =

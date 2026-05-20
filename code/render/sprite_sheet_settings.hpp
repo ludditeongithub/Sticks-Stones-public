@@ -25,9 +25,9 @@ std::array<SDL_Rect, static_cast<size_t>(Button::MAX)> buttonSprites;
 
 inline void saveSprite(int index, Sprite sprite, SCoord position, SCoord dimension)
 {
-
 	if (std::holds_alternative<Animal>(sprite)) {
-		animalSprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
+		animalSprites[index] = SDL_Rect{position.x, position.y, dimension.x, dimension.y};
+		
 	    } else if (std::holds_alternative<Buildable>(sprite)) {
 		buildableSprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
 		  } else if (std::holds_alternative<Plant>(sprite)) {
@@ -71,6 +71,11 @@ void loadTypeSprites() {
 	file >> sheet;
 	(loadOneTypeSprites<Enums>(sheet), ...);
 }
+
+void loadSprites()
+{
+	loadTypeSprites<Animal, Plant, Item>();
+}	
 
 };
 
