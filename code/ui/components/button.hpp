@@ -33,14 +33,13 @@ struct ButtonUI
 
 	ButtonUI(const SCoord topLeftCorner, const SCoord dimensions, const SCoord unpressed,
 	       const SCoord hover, const SCoord pressed, const Sound pressedSound)
-	:  topLeftCorner(topLeftCorner),   dimensions(dimensions),   unpressed(unpressed), hover(hover),   pressed(pressed), pressedSound(pressedSound)  {
-		
+	:  topLeftCorner(topLeftCorner), dimensions(dimensions), unpressed(unpressed), hover(hover),   pressed(pressed), pressedSound(pressedSound)  {
 	}
 
-	void render(ButtonState bs, SDL_Rect *viewport)
+	void render(SDL_Rect *viewport)
 	{
 		SDL_Rect r;
-		switch (bs)
+		switch (state)
 		{
 		case ButtonState::Unpressed:
 			r = {unpressed.x, unpressed.y, dimensions.x, dimensions.y};

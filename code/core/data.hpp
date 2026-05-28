@@ -6,12 +6,22 @@ struct Coord
 {
 	uint32_t x;
 	uint32_t y;
+
+	Coord operator*=(uint32_t s)
+	{
+		return Coord(this->x * s, this->y * s);
+	}		
 };
 
 struct SCoord
 {
 	int x;
 	int y;
+
+	SCoord operator*=(uint32_t s)
+	{
+		return SCoord(this->x * s, this->y * s);
+	}
 };
 
 bool adjacentCoords(Coord first, Coord second)

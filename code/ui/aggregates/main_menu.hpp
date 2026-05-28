@@ -1,6 +1,7 @@
 #pragma once
 #include "core/mouse.hpp"
 #include "render/screen.hpp"
+#include "ui/system.hpp"
 #include <SDL2/SDL_events.h>
 #include <core/data.hpp>
 #include <ui/components/button.hpp>
@@ -11,30 +12,40 @@
 
 struct MainMenu
 {
-	SCoord background = {};
-	const int buttonLeftAlignment = SCREEN_WIDTH / 2 - (SpriteSheet::buttonSprites[static_cast<int>(Button::MainButton)].dimensions.x / 2);
+	UISystem* uiSystem;
+	uint16_t userScreenWidth;
+	uint16_t userScreenHeight;
+	uint8_t rawToUserScalar;
+	// Button Positions
+	SCoord background = {}; //TODO
+	int buttonLeftAlignment = SCREEN_WIDTH / 2 -
+	    (SpriteSheet::buttonSprites[static_cast<int>(Button::MainButton)].w / 2);
+	
 	SCoord newLeftCorner = {buttonLeftAlignment, 2 * SCREEN_HEIGHT / 6};
 	SCoord loadLeftCorner = {buttonLeftAlignment / 2, 3 * SCREEN_HEIGHT / 6};
 	SCoord optionsLeftCorner = {buttonLeftAlignment / 2, 4 * SCREEN_HEIGHT / 6};
 	SCoord aboutLeftCorner = {buttonLeftAlignment / 2, 5 * SCREEN_HEIGHT / 6};
-	SCoord Unpressed = SpriteSheet::buttonSprites[static_cast<int>(Button::MainButton)].position;
-	SCoord Hover = SpriteSheet::buttonSprites[static_cast<int>(Button::MainButtonHover)].position;
-	SCoord Pressed = SpriteSheet::buttonSprites[static_cast<int>(Button::MainButtonPressed)].position;
-	SCoord buttonDimensions = SpriteSheet::buttonSprites[static_cast<int>(Button::MainButton)].dimensions;
-	ButtonUI newGameButton = ButtonUI(newLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
-	ButtonUI loadGameButton = ButtonUI(loadLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
-	ButtonUI aboutButton = ButtonUI(aboutLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
-	ButtonUI optionsButton = ButtonUI(optionsLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
-	SCoord videoLeftCorner = {buttonLeftAlignment, 2 * SCREEN_HEIGHT / 6};
-	SCoord audioLeftCorner = {buttonLeftAlignment / 2, 3 * SCREEN_HEIGHT / 6};
-	SCoord keybindingsLeftCorner = {buttonLeftAlignment / 2, 4 * SCREEN_HEIGHT / 6};
+	// Button Sprite Sheet positions
+	SCoord Unpressed = {SpriteSheet::buttonSprites[static_cast<int>(Button::MainButton)].x, SpriteSheet::buttonSprites[static_cast<int>(Button::MainButton)].y};
+	SCoord Hover = {SpriteSheet::buttonSprites[static_cast<int>(Button::MainButtonHover)].x, SpriteSheet::buttonSprites[static_cast<int>(Button::MainButtonHover)].y};
+	SCoord Pressed = {SpriteSheet::buttonSprites[static_cast<int>(Button::MainButtonPressed)].x, SpriteSheet::buttonSprites[static_cast<int>(Button::MainButtonPressed)].y};
+	SCoord buttonDimensions = {
+	    SpriteSheet::buttonSprites[static_cast<int>(Button::MainButton)].x,
+	    SpriteSheet::buttonSprites[static_cast<int>(Button::MainButton)].y};
+	
+	ButtonUI newGameButton;
+	ButtonUI loadGameButton;
+	ButtonUI aboutButton;
+	ButtonUI optionsButton;
+	
+	SCoord videoLeftCorner;	
+	SCoord audioLeftCorner;
+	SCoord keybindingsLeftCorner;
 
-	ButtonUI videoButton =
-	    ButtonUI(videoLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
-	ButtonUI audioButton =
-	    ButtonUI(audioLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
-	ButtonUI keybindingsButton =
-	    ButtonUI(keybindingsLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
+	ButtonUI videoButton;
+	ButtonUI audioButton;
+	ButtonUI keybindingsButton;
+	SDL_Rect mainMenuViewport;
 
 	enum class Mode
 	{
@@ -42,11 +53,38 @@ struct MainMenu
 		Options,
 		Load,
 		Video,
-		Audio		
+		Audio
 	};
+	
 	Mode mode;
 
-	void render() {}	
+	MainMenu(UISystem* uiSystem) : uiSystem(uiSystem)
+	{		
+		newGameButton = ButtonUI(newLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
+		loadGameButton = ButtonUI(loadLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
+		aboutButton = ButtonUI(aboutLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
+		optionsButton =
+		    ButtonUI(optionsLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
+
+		videoLeftCorner = {buttonLeftAlignment, 2 * SCREEN_HEIGHT / 6};
+		audioLeftCorner = {buttonLeftAlignment / 2, 3 * SCREEN_HEIGHT / 6};
+		keybindingsLeftCorner = {buttonLeftAlignment / 2, 4 * SCREEN_HEIGHT / 6};
+
+	 videoButton = ButtonUI(videoLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
+	 audioButton = ButtonUI(audioLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
+	 keybindingsButton = ButtonUI(keybindingsLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
+	}
+
+	void render()
+	{
+        newGameButton.render();
+	loadGameButton.render();
+	aboutButton.render();
+	optionsButton.render();
+	videoButton.render();
+	audioButton.render();
+	keybindingsButton.render();
+	}	
 	
 	void handleEvent(SDL_Event *e)
 	{

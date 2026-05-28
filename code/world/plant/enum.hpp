@@ -71,8 +71,7 @@ enum class Plant
 	Lime,
 	// Non-fall fruits
 	Blueberry,
-	Strawberry,
-	Grape,
+	Strawberry,	
 
 	// TODO: add data for olive!
 	Olive,

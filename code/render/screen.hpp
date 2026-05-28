@@ -14,7 +14,7 @@ SDL_Renderer *gRenderer = NULL;
 // Current displayed texture
 SDL_Texture *gTexture = NULL;
 
-// Screen dimension constants
+// Game Simulation screen dimensions, before upscale to user screen
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 

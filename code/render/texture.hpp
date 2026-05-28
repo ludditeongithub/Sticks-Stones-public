@@ -39,4 +39,4 @@ class LTexture
 	int mHeight;
 };
 
-LTexture gSpriteSheetTexture;
+LTexture spriteSheetTexture;

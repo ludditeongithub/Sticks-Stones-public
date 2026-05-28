@@ -6,6 +6,7 @@
 #include <render/camera.hpp>
 #include <render/draw.hpp>
 #include <ui/aggregates/main_menu.hpp>
+#include <ui/system.hpp>
 
 int main()
 {
@@ -15,12 +16,14 @@ int main()
 
 	SDL_SetWindowFullscreen(gWindow, 0);
 
-	int screenWidth, screenHeight;
+	int userScreenWidth, userScreenHeight;
 
-	SDL_GetRendererOutputSize(gWindow, screenWidth, screenHeight);
-	int factor = std::min((int)(screenWidth/RAW_SCREEN_WIDTH), (int)(screenHeight/RAW_SCREEN_HEIGHT));
+	SDL_GetRendererOutputSize(gWindow, userScreenWidth, userScreenHeight);
+	int factor = std::min((int)(userScreenWidth/SCREEN_WIDTH), (int)(userScreenHeight/SCREEN_HEIGHT));
 
 	SDL_RenderSetScale(gRenderer, factor);
 
-	MainMenu* mainMenu = new MainMenu({screenWidth, screenHeight});
+	UISystem* UISystem = new UISystem(userScreenWidth, userScreenHeight);
+
+	MainMenu* mainMenu = new MainMenu(userScreenWidth, userScreenHeight);
 }

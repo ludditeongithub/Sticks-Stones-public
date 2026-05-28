@@ -8,7 +8,7 @@ enum class Item : uint16_t
 	HOLDING,
 	// VARIANT ITEMS
 	Log,
-	Fruit,
+	Fruit, //TODO: replace 'Fruit' with 'RawProduce'
 	Seed,
 	Juice,
 	AlcoholicDrink,
@@ -106,6 +106,7 @@ enum class Item : uint16_t
 	Clay,
 	// PRODUCTS BEGIN HERE
 	// paleo:
+	BasicTribalwear,
 	Tribalwear,
 	PrimitiveString,
 	PrimitiveNeedle,
@@ -136,6 +137,7 @@ enum class Item : uint16_t
 	PrimitiveSack,
 	PrimitiveChair,
 	PrimitiveStool,
+	Headdress,
 	LargeSatchel,
 	Satchel,
 	Javelin,
