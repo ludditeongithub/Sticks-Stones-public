@@ -796,6 +796,12 @@ uint16_t manDist(std::pair<int, int> x, std::pair<int, int> y)
 	return std::abs(x.first - y.first) + std::abs(x.second - y.second);
 }
 
+inline bool within(Coord subject, Coord borderTopLeftCorner, Coord borderDimensions)
+{
+	if (subject.x <= borderTopLeftCorner.x + borderDimensions.x && subject.y <= borderTopLeftCorner.y + borderDimensions.y && subject.x > borderTopLeftCorner.x && subject.y > borderTopLeftCorner.y) return true;
+	return false;
+}	
+
 // returns pair of index, cost to new path vector
 // std::vector<std::pair<int, int>> greedyPath(int startIndex, int endIndex) {
 //     int startX = tileCoords[startIndex].first;

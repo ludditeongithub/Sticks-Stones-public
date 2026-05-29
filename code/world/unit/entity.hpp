@@ -75,7 +75,7 @@ struct Skills
 
 	uint8_t getRandomStartingSkill()
 	{
-		return static_cast<uint8_t>(STARTING_SKILL_MAX * random_chance());
+		return static_cast<uint8_t>(STARTING_SKILL_MAX * random_chance->next());
 	}
 
 	Skills()

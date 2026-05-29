@@ -95,6 +95,9 @@ struct MainMenu
 		case Mode::Main:
 			mainHandle(e, mousePosition);
 			break;
+		case Mode::Load:
+			loadHandle(e, mousePosition);
+			break;
 		case Mode::Options:
 			optionsHandle(e, mousePosition);
 			break;
@@ -119,6 +122,20 @@ struct MainMenu
 			} else if (mouseInside(mousePosition, optionsLeftCorner, buttonDimensions)) mode = Mode::Options;
 		}
 	}
+
+	void loadHandle(SDL_Event *e, SCoord mousePosition)
+	{
+		//TODO: finish UI element ScrollableList. saves are ScrollableList.
+		if (e->type == SDL_MOUSEBUTTONUP) {
+			if (mouseInside(mousePosition, newLeftCorner, buttonDimensions)) {
+				startGame();
+			}
+			else if (mouseInside(mousePosition, loadLeftCorner, buttonDimensions))
+			{
+				mode = Mode::Load;
+			} else if (mouseInside(mousePosition, optionsLeftCorner, buttonDimensions)) mode = Mode::Options;
+		}
+	}		
 
 	void optionsHandle(SDL_Event *e, SCoord mousePosition)
 	{

@@ -1,50 +1,16 @@
+#include "world/unit/entity.hpp"
 #include <basic/random.hpp>
 #include <cstdint>
+#include <array>
 
 constexpr uint8_t STAT_MIN = 0;
 constexpr uint8_t STAT_MAX = 100;
 constexpr uint8_t INITIAL_STAT_MAX = 60;
 
 // TODO: normal about a mean random
-struct Strength
-{
-	uint8_t strength = rint(STAT_MIN, STAT_MAX) * rnormal();
-};
-
-struct Athleticism
-{
-	uint8_t athleticism = rint(STAT_MIN, STAT_MAX) * rnormal();
-};
-
-struct Dexterity
-{
-	uint8_t dexterity = rint(STAT_MIN, STAT_MAX) * rnormal();
-};
-
-struct Intellect
-{
-	uint8_t intellect = rint(STAT_MIN, STAT_MAX) * rnormal();
-};
-
-struct Perception
-{
-	uint8_t perception = rint(STAT_MIN, STAT_MAX) * rnormal();
-};
-
-struct Creativity
-{
-	uint8_t creativity = rint(STAT_MIN, STAT_MAX) * rnormal();
-};
-
-struct Charisma
-{
-	uint8_t charisma = rint(STAT_MIN, STAT_MAX) * rnormal();
-};
-
-struct Determination
-{
-	uint8_t determination = rint(STAT_MIN, STAT_MAX);
-};
+using Strength = uint8_t;
+using Dexterity = uint8_t;
+using Perception = uint8_t;
 
 // the total volume of each bulk category hands can maximally carry.
 // where 0.1 is 100mL
@@ -89,3 +55,11 @@ float currentMaxBulk(BulkStatus bs, Strength str)
 }
 
 float maxWeight(Strength str) { return str / STAT_MAX * MAX_CARRY; }
+
+std::array<uint16_t, 10> sightRanges; // based on perception
+
+inline uint16_t getSightRange(Perception perception) {
+	return 10 + (perception / 3);
+}
+
+

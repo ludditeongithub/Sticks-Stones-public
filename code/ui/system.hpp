@@ -31,6 +31,7 @@ struct UISystem
 	UISystem(SDL_Window* window, uint16_t userScreenWidth, uint16_t userScreenHeight) : window(window), userScreenWidth(userScreenWidth), userScreenHeight(userScreenHeight)
 	{
 		initWindow();
+		SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0"); //use nearest-neighbor
 		mainMenu = new MainMenu();
 	}
 
@@ -46,6 +47,7 @@ struct UISystem
 		rawToUserScalar =
 		    static_cast<uint16_t>(std::min(actualWidthRatio, actualHeightRatio));
 		SDL_SetWindowSize(window, userScreenWidth, userScreenHeight);
+		SDL_RenderSetIntegerScale(renderer, SDL_TRUE);
 		
 		if (fullscreen) {
                 // calculate black bars
@@ -142,9 +144,9 @@ bool loadSpriteSheet()
 {
 	// Loading success flag
 	bool success = true;
-
+	std::string path = "sprite_sheet.png";
 	// Load sprite sheet texture
-	if (!spriteSheetTexture.loadFromFile("sprite_sheet.png"))
+	if (!spriteSheetTexture.loadFromFile(path))
 	{
 		printf("Failed to load sprite sheet texture!\n");
 		success = false;

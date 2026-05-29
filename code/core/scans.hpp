@@ -1,6 +1,7 @@
 #include "../include/basic.hpp"
 #include "../include/categories.hpp"
 #include "../include/unit.hpp"
+#include "core/data.hpp"
 
 // NOTE: may not work
 Direction checkIfAdjTarget(int pawn)
@@ -155,39 +156,37 @@ std::vector<std::pair<int, int>> getDiamond(int cx, int cy, int radius)
 	return result;
 }
 
-std::vector<std::pair<int, int>> getNewDiamondEdge(int cx, int cy, int radius, Direction direction)
+//returns size of edgeBuffer
+inline int getNewDiamondEdge(const Array<Coord>& edgeBuffer, uint32_t cx, uint32_t cy, int radius, Direction direction)
 {
-	std::vector<std::pair<int, int>> edge;
-
 	// LAYER 1 to LAYER 2
 	for (int l = 0; l < 2; l++)
 	{
 		for (int i = -radius; i <= radius; ++i)
 		{
-			if (direction == Direction::Right)
-			{
-				int x = cx + radius - std::abs(i - l);
-				int y = cy + i;
-				edge.emplace_back(x, y);
+			int x,y;
+			switch (direction) {
+			case Direction::Right:
+				x = cx + radius - std::abs(i - l);
+				y = cy + i;
+				break;
+			case Direction::Left:
+				x = cx - radius + std::abs(i - l);
+				y = cy + i;
+				break;
+			case Direction::Down:
+				y = cy + radius - std::abs(i - l);
+				x = cx + i;
+				break;
+			case Direction::Up:
+				y = cy - radius + std::abs(i - l);
+				x = cx + i;
+				break;
+			default:
+				break;
 			}
-			else if (direction == Direction::Left)
-			{
-				int x = cx - radius + std::abs(i - l);
-				int y = cy + i;
-				edge.emplace_back(x, y);
-			}
-			else if (direction == Direction::Up)
-			{
-				int y = cy + radius - std::abs(i - l);
-				int x = cx + i;
-				edge.emplace_back(x, y);
-			}
-			else if (direction == Direction::Down)
-			{
-				int y = cy - radius + std::abs(i - l);
-				int x = cx + i;
-				edge.emplace_back(x, y);
-			}
+			edgeBuffer[i] = {x, y};
+			edge++;
 		}
 	}
 	return edge;

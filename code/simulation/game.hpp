@@ -34,7 +34,6 @@ Arena unitArena;
 UnitDatabase unitDatabase;
 Arena itemArena;
 ItemDatabase itemDatabase;
-GameUI ui;
 
 void initWorld();
 

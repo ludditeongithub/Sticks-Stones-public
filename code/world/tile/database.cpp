@@ -4,6 +4,7 @@
 	TileDatabase::TileDatabase(Arena *arena, TileSpawnBuffer &tsb, World *world)
 	{
 		this->world = world;
+		size = WORLD_TILE_AMOUNT;
 		tiles = arena_make_array<TileData>(arena, world->WORLD_TILE_AMOUNT);
 		altitudes = arena_make_array<Alt>(arena, world->WORLD_TILE_AMOUNT);
 		occupieds = std::vector<bool>(world->WORLD_TILE_AMOUNT);

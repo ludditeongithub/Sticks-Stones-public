@@ -32,6 +32,7 @@ unit checks all its roles, and then selects the task with the lowest priority.
 
   All entities in NPACs are processed at a high frequency. There is lower batching, event driven. All entities in non-NPACs are processed at a low frequency. Higher batching, more concurrency of large tasks.
 * AFTER BETA
+** change globals to fit some convention, maybe namespaces
 ** Migration Logic
 ** bureaucrat can produce reports-- tell player they need more of a certain role, based on automatic analysis 
 ** larger simulations
