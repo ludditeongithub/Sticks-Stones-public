@@ -1,15 +1,18 @@
 #pragma once
 #include "memory.hpp"
+#include "nameof.hpp"
 #include <cassert>
+#include <cereal/archives/binary.hpp>
 #include <stdexcept>
 
 // right now is really ArrayChunk,which points to next ArrayChunk if applicable
 // TODO: make separate LinkedArray which is really ArrayChunk,
 template <typename T> struct Array
 {
+	Arena* arena;
 	uint16_t count;
 	uint16_t capacity;
-	Array *next = nullptr;
+//	Array *next = nullptr;
 
 	// Returns pointer to the data buffer after the chunk metadata
 	T *data() { return reinterpret_cast<T *>(this + 1); }
@@ -57,6 +60,17 @@ template <typename T> struct Array
 	//               "Tried to access index outside of current Array size");
 	// 	    else data()[index] =
 	// }
+
+	template <class Archive> void save(Archive &archive, std::string name)
+	{
+	archive(cereal::binary_data(arena, capacity, count, data()));
+	}
+
+template <class Archive> void load(Arena* arena, Archive &archive)
+{
+	archive(cereal::binary_data(arena, capacity, count, data()));
+	arena_load_array<T>(arena, capacity, count, data());
+}	
 };
 
 template <typename T> Array<T> &arena_make_array(Arena *arena, uint16_t capacity)
@@ -68,7 +82,25 @@ template <typename T> Array<T> &arena_make_array(Arena *arena, uint16_t capacity
 	Array<T> &arr = new (mem) Array<T>();
 	arr->count = 0;
 	arr->capacity = capacity;
-	arr->next = nullptr;
+//	arr->next = nullptr;
+
+	return arr;
+}
+
+template <typename T> Array<T> &arena_load_array(Arena *arena, uint16_t capacity, uint16_t count, T* data)
+{
+	uint16_t bytes = sizeof(Array<T>) + sizeof(T) * capacity;
+
+	void *mem = arena_alloc_aligned(arena, bytes, alignof(Array<T>));
+
+	Array<T> &arr = new (mem) Array<T>();
+	arr->count = 0;
+	arr->capacity = capacity;
+
+	arr[0] = data();
+	for (size_t i = 1; i < count; i++) {
+		arr.data() = data[i];
+	}
 
 	return arr;
 }

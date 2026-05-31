@@ -1,9 +1,9 @@
 #pragma once
+#include <core/enum.h>
 #include <cstdint>
 #include <core/packed_enum.hpp>
 // TODO: move all tool heads, and moulds, to variant items, then also figure out how ore and metal work (roles to commodities will also need to be fixed)
-enum class Item : uint16_t
-{
+BETTER_ENUM(Item, uint16_t,
 	NONE,
 	HOLDING,
 	// VARIANT ITEMS
@@ -451,7 +451,7 @@ enum class Item : uint16_t
 	Novel,
 	Decree,
 	MAX
-};
+)
 
 enum class Material : uint8_t
 {

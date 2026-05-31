@@ -4,13 +4,20 @@
 #include <string>
 #include <core/data.hpp>
 #include <core/mouse.hpp>
+#include "button_functionality.hpp"
 
-enum class Button : uint8_t
+enum class ButtonSprite : uint8_t
 {
 	MainButton,
-	MainButtonHover,
-	MainButtonPressed,
+	FirstLaunchButton,
 	MAX
+};
+
+struct ButtonSpriteData {
+	SCoord dimensions;
+	SCoord unpressed;
+	SCoord hover;
+	SCoord pressed;
 };
 
 enum class ButtonState
@@ -23,16 +30,16 @@ enum class ButtonState
 struct ButtonUI
 {
       public:
-	const SCoord topLeftCorner;
-	const SCoord dimensions;
-	const SCoord unpressed;
-	const SCoord hover;
-	const SCoord pressed;
-	const Sound pressedSound;
-	ButtonState state = ButtonState::Unpressed;	
+	SCoord topLeftCorner;
+	SCoord dimensions;
+	SCoord unpressed;
+	SCoord hover;
+	SCoord pressed;
+	Sound pressedSound = NULL;
+	ButtonState state = ButtonState::Unpressed;
+	ButtonFunctionality function = NULL;
 
-	ButtonUI(const SCoord topLeftCorner, const SCoord dimensions, const SCoord unpressed,
-	       const SCoord hover, const SCoord pressed, const Sound pressedSound)
+	ButtonUI(SCoord topLeftCorner, SCoord dimensions, SCoord unpressed, SCoord hover, SCoord pressed, Sound pressedSound)
 	:  topLeftCorner(topLeftCorner), dimensions(dimensions), unpressed(unpressed), hover(hover),   pressed(pressed), pressedSound(pressedSound)  {
 	}
 
@@ -52,7 +59,7 @@ struct ButtonUI
 			break;
 		default:
 		}
-		gSpriteSheetTexture.render(topLeftCorner.x, topLeftCorner.y, &r, viewport);
+		spriteSheetTexture.render(topLeftCorner.x, topLeftCorner.y, &r, viewport);
 	}
 
 	void handleEvent(SDL_Event *e)
@@ -83,7 +90,8 @@ struct ButtonUI
 			case SDL_MOUSEBUTTONDOWN:
 			case SDL_MOUSEBUTTONUP:
 				state = ButtonState::Pressed;
-				playSound(sound);
+				function->trigger();
+				if (pressedSound != NULL) playSound(pressedSound);
 				break;
 			}
 		}
@@ -93,7 +101,39 @@ struct ButtonUI
 
 struct TextButtonUI : ButtonUI
 {
-	std::string text;	
+    std::string text;
+
+    TextButtonUI(
+        std::string& text,
+        SCoord topLeftCorner,
+        SCoord dimensions,
+        SCoord unpressed,
+        SCoord hover,
+        SCoord pressed,
+        Sound pressedSound = NULL)
+        : ButtonUI(
+            topLeftCorner,
+            dimensions,
+            unpressed,
+            hover,
+            pressed,
+            pressedSound),
+          text(text)
+    {
+    }
+
+    void render(SDL_Rect* viewport)
+    {
+        ButtonUI::render(viewport);
+
+        // Draw text here
+        // renderText(text, topLeftCorner.x, topLeftCorner.y);
+    }
+
+    void handleEvent(SDL_Event* e)
+    {
+	    ButtonUI::handleEvent(e);
+    }	    
 };
 
 // TODO: add functionality to right click, and view how many there are, or be linked to that item's

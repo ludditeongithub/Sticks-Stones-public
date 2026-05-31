@@ -4,7 +4,7 @@
 	TileDatabase::TileDatabase(Arena *arena, TileSpawnBuffer &tsb, World *world)
 	{
 		this->world = world;
-		size = WORLD_TILE_AMOUNT;
+		size = world->WORLD_TILE_AMOUNT;
 		tiles = arena_make_array<TileData>(arena, world->WORLD_TILE_AMOUNT);
 		altitudes = arena_make_array<Alt>(arena, world->WORLD_TILE_AMOUNT);
 		occupieds = std::vector<bool>(world->WORLD_TILE_AMOUNT);
@@ -32,9 +32,7 @@
 			Coord target = queue.front();
 			queue.pop();
 			for (size_t i = 0; i < 4; i++) {
-				Coord candidate = {
-				    std::min(world->WORLD_TILE_LENGTH, target.x + vectors[i].x),
-				    std::min(world->WORLD_TILE_LENGTH, target.y + vectors[i].y)};
+				Coord candidate = {std::min(world->WORLD_TILE_LENGTH, target.x + vectors[i].x), std::min(world->WORLD_TILE_LENGTH, target.y + vectors[i].y)};
 				if (occupieds[getChunkIndexFromTile(candidate)])
 					return candidate;
 				else queue.push(candidate);

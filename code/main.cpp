@@ -1,4 +1,5 @@
 #include <SDL2/SDL_video.h>
+#include <cereal/archives/binary.hpp>
 #include <core/memory.hpp>
 #include <core/memory_control.hpp>
 #include <render/texture.hpp>
@@ -6,24 +7,53 @@
 #include <render/camera.hpp>
 #include <render/draw.hpp>
 #include <ui/aggregates/main_menu.hpp>
+#include <cereal/archives/json.hpp>
 #include <ui/system.hpp>
+#include <fstream>
+
+struct FirstLaunchBuffer
+{
+	bool firstLaunch = true;
+	Coord userScreenResolution;
+	bool fullscreen = false;
+
+	template <typename Archive> void serialize(Archive &a) { a(firstLaunch, 1); }
+
+	void launchFirstMenu()
+	{
+		SDL_CreateWindow("first_launch_window", , int y, int w, int h, Uint32 flags)
+	}		
+};
+
+FirstLaunchBuffer flb;
+
+void handleLaunch()
+{
+
+	std::basic_istream is();
+	cereal::BinaryInputArchive firstLaunchArchive(is)
+	{
+		try
+		{
+			firstLaunchArchive(flb);
+		}
+		catch
+		{
+			flb = FirstLaunchBuffer();
+		}
+	}
+	if (flb.firstLaunch) flb.launchFirstLaunchMenu();
+			
+}	
 
 int main()
 {
-	initWindow() ?: printf("Init failed.");
+	// SDL_GetRendererOutputSize(window, userScreenWidth, userScreenHeight);
+	// int factor = std::min((int)(userScreenWidth/SCREEN_WIDTH), (int)(userScreenHeight/SCREEN_HEIGHT));
 
-	loadMedia();
-
-	SDL_SetWindowFullscreen(gWindow, 0);
-
-	int userScreenWidth, userScreenHeight;
-
-	SDL_GetRendererOutputSize(gWindow, userScreenWidth, userScreenHeight);
-	int factor = std::min((int)(userScreenWidth/SCREEN_WIDTH), (int)(userScreenHeight/SCREEN_HEIGHT));
-
-	SDL_RenderSetScale(gRenderer, factor);
-
-	UISystem* UISystem = new UISystem(userScreenWidth, userScreenHeight);
-
-	MainMenu* mainMenu = new MainMenu(userScreenWidth, userScreenHeight);
+	// SDL_RenderSetScale(gRenderer, factor);
+	handleLaunch();
+	
+	UISystem UISystem = new UISystem(flb.userScreenData.x, flb.userScreenData.y, flb.fullscreen);
+	
 }

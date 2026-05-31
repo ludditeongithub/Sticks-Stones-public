@@ -43,6 +43,7 @@ inline void saveSprite(int index, Sprite sprite, SCoord position, SCoord dimensi
 		}		
 }
 
+// TODO: fix using BetterEnum
 template <typename Enum>
 void loadOneTypeSprites(const json& sheet) {
     for (size_t i = 0; i < static_cast<size_t>(Enum::MAX); i++) {
@@ -52,7 +53,7 @@ void loadOneTypeSprites(const json& sheet) {
 
         for (const auto& item : sheet) {
             if (item.contains("filename") &&
-                item["filename"] == getSpriteName(sprite)) {
+                item["filename"] == getSpriteName(sprite)) { //TODO: use  https://aantron.github.io/better-enums/tutorial/HelloWorld.html
 
                 positions = {item["frame"]["x"], item["frame"]["y"]};
                 dimensions = {item["frame"]["w"], item["frame"]["h"]};
@@ -65,7 +66,7 @@ void loadOneTypeSprites(const json& sheet) {
 
 template <typename ... Enums>
 void loadTypeSprites() {
-	std::ifstream file("../sprites/game.json");
+	std::ifstream file("../../sprites/game.json");
 
 	json sheet;
 	file >> sheet;
@@ -74,7 +75,7 @@ void loadTypeSprites() {
 
 void loadSprites()
 {
-	loadTypeSprites<Animal, Plant, Item>();
+	loadTypeSprites<Animal, Plant, Item, Tile, Grass, Button>();
 }	
 
 };

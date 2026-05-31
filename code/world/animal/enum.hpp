@@ -2,6 +2,8 @@
 
 #include <core/data.hpp>
 #include <core/packed_enum.hpp>
+#include <core/enum.h>
+#include <cstdint>
 
 // HOT
 
@@ -46,9 +48,7 @@ using AnimalStatus = PackedEnum3<Direction, 2, ActionStatus, 4, MatingStatus, 2>
 
 // COLD
 
-enum class Animal
-{
-	NONE,
+BETTER_ENUM(Animal, uint8_t, NONE,
 	Pig,
 	Cow,
 	Chicken,
@@ -85,8 +85,8 @@ enum class Animal
 	// rhino
 	// hippo
 	// giraffe
-	MAX,
-};
+	MAX
+)
 
 enum class Diet
 {

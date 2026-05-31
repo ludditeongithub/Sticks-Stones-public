@@ -5,7 +5,6 @@
 #include <cstdint>
 #include <SDL2/SDL_video.h>
 
-
 struct UISystem
 {
 	SDL_Window *window = NULL;
@@ -28,9 +27,10 @@ struct UISystem
 	Coord blackBarSize; //of single side
 	MainMenu* mainMenu;
 
-	UISystem(SDL_Window* window, uint16_t userScreenWidth, uint16_t userScreenHeight) : window(window), userScreenWidth(userScreenWidth), userScreenHeight(userScreenHeight)
+	UISystem(uint16_t userScreenWidth, uint16_t userScreenHeight, bool fullscreen) : userScreenWidth(userScreenWidth), userScreenHeight(userScreenHeight)
 	{
 		initWindow();
+		setDisplaySettings(userScreenWidth, userScreenHeight);
 		SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0"); //use nearest-neighbor
 		mainMenu = new MainMenu();
 	}
@@ -81,8 +81,8 @@ struct UISystem
 		else
 		{
 			wholeDisplayViewport = {0,0, userScreenWidth, userScreenHeight};
-		}			
-	}
+		}
+	}		
 
 	//TODO: initializable as fullscreen
 	bool initWindow()
@@ -156,7 +156,7 @@ bool loadSpriteSheet()
 void closeWindow()
 {
 	// Free loaded images
-	gSpriteSheetTexture.free();
+	spriteSheetTexture.free();
 
 	// Destroy window
 	SDL_DestroyRenderer(renderer);
@@ -167,6 +167,6 @@ void closeWindow()
 	// Quit SDL subsystems
 	SDL_Quit();
 }
-
-	
 };
+
+UISystem* UISystem;

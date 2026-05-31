@@ -1,5 +1,6 @@
 #pragma once
-
+#include <core/enum.h>
+#include <cstdint>
 // enum class Type {
 // NONE, EDIBLE, WOOD, Fern, Moss, Reed, Wheat, Oat, Rice, Bush, Papyrus,
 // PioneerTree, DeciduousTree, EvergreenTree, TropicalTree, OrangeTree,
@@ -11,8 +12,7 @@
 // Cocoa, Senna, Saffron, AloeVera, MAX,
 // };
 
-enum class Plant
-{
+BETTER_ENUM(Plant, uint16_t,
 	NONE,
 	Fern,
 	Moss,
@@ -76,7 +76,7 @@ enum class Plant
 	// TODO: add data for olive!
 	Olive,
 	MAX
-};
+)
 // TODO: let leaf types have heights-- tall animals, animals that climb can eat trees
 enum class PlantCategory
 {

@@ -6,13 +6,13 @@
 #include <SDL2/SDL.h>
 
 // The window we'll be rendering to
-SDL_Window *gWindow = NULL;
+SDL_Window *window = NULL;
 
 // The window renderer
-SDL_Renderer *gRenderer = NULL;
+SDL_Renderer *renderer = NULL;
 
-// Current displayed texture
-SDL_Texture *gTexture = NULL;
+const int FIRST_LAUNCH_WINDOW_WIDTH = 200;
+const int FIRST_LAUNCH_WINDOW_HEIGHT = 500;
 
 // Game Simulation screen dimensions, before upscale to user screen
 const int SCREEN_WIDTH = 640;
