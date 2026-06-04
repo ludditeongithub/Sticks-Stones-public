@@ -3,10 +3,10 @@
 #include "core/random.hpp"
 #include <cstdint>
 
-#include <core/FastNoiseLite.h>
+#include <extern/FastNoiseLite.h>
 #include <core/containers.hpp>
 #include <core/memory.hpp>
-#include <core/nanoflann.hpp>
+#include <extern/nanoflann.hpp>
 #include <simulation/world_gen.hpp>
 
 #include <world/tile/database.hpp>

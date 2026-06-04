@@ -1,5 +1,6 @@
 // Stores hot arrays of sprite data (positions, sizes, colors, texture IDs), handles batching logic
 #pragma once
+#include "ui/components/element.hpp"
 #include <world/item/enum.hpp>
 #include <world/buildable/enum.hpp>
 #include <world/animal/enum.hpp>
@@ -220,45 +221,5 @@ inline constexpr LookupTable<Plant, std::array<StageInfo, MAX_STAGES>> plantSpri
 	lt[Olive] = {{ StageInfo({1,2},1), StageInfo({2,4},1)}};
 	lt[Blueberry] = {{ StageInfo({1,1},4), StageInfo({2,2},2), StageInfo({2,3},1)}}; //TODO: fruited stages
 	lt[Strawberry] = {{ StageInfo({1,1},4), StageInfo({2,2},2), StageInfo({2,3},1)}};
-	return lt;
-}();
-
-inline constexpr LookupTable<Item, uint8_t> itemSpriteVariants = []
-{
-	LookupTable<Item,uint8_t> lt{};
-	using enum Item;
-	lt[String] = 2;
-	lt[Hay] = 1;
-	return lt;
-}();
-
-inline constexpr BitsetTable<Item> itemAscendingVersions = []
-	{
-		BitsetTable<Item> t{};
-		
-		return t;
-	}();
-
-inline constexpr LookupTable<Item,uint8_t> itemPixelTranslations = [] {
-	LookupTable<Item,uint8_t> lt{};
-	using enum Item;
-	
-	return lt;
-}();
-
-//items which can be stacked. need multiple layered versions.
-inline constexpr LookupTable<Item, Coord> itemSpriteDimensions = [] {
-	LookupTable<Item, Coord> lt{};
-
-
-	for (size_t i = 0; i < static_cast<uint16_t>(Item::MAX); i++) {
-		lt[static_cast<Item>(i) ] = {1,1};
-	}
-
-	using enum Item;
-
-	lt[Log] = {2,2};
-	lt[Headdress] = {2,2};
-
 	return lt;
 }();

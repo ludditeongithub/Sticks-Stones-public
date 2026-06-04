@@ -1,3 +1,4 @@
+#include <SDL2/SDL.h>
 #include <SDL2/SDL_video.h>
 #include <cereal/archives/binary.hpp>
 #include <core/memory.hpp>
@@ -9,45 +10,16 @@
 #include <ui/aggregates/main_menu.hpp>
 #include <cereal/archives/json.hpp>
 #include <ui/system.hpp>
-#include <fstream>
-
-struct FirstLaunchBuffer
-{
-	bool firstLaunch = true;
-	Coord userScreenResolution;
-	bool fullscreen = false;
-
-	template <typename Archive> void serialize(Archive &a) { a(firstLaunch, 1); }
-
-	void launchFirstMenu()
-	{
-		SDL_CreateWindow("first_launch_window", , int y, int w, int h, Uint32 flags)
-	}		
-};
-
-FirstLaunchBuffer flb;
-
-void handleLaunch()
-{
-
-	std::basic_istream is();
-	cereal::BinaryInputArchive firstLaunchArchive(is)
-	{
-		try
-		{
-			firstLaunchArchive(flb);
-		}
-		catch
-		{
-			flb = FirstLaunchBuffer();
-		}
-	}
-	if (flb.firstLaunch) flb.launchFirstLaunchMenu();
-			
-}	
+#include <fstream>	
 
 int main()
 {
+	SDL_Init();
+	if (TTF_Init() == -1)
+	{
+		printf("TTF_Init failed: %s\n", TTF_GetError());
+	}
+	
 	// SDL_GetRendererOutputSize(window, userScreenWidth, userScreenHeight);
 	// int factor = std::min((int)(userScreenWidth/SCREEN_WIDTH), (int)(userScreenHeight/SCREEN_HEIGHT));
 

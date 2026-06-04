@@ -62,4 +62,38 @@ struct AnimalDatabase
 	inline void birthAnimal(Animal animal, int animalIndex);
 	inline void killAnimal(uint16_t index);
 	inline void addAnimals(AnimalSpawnBuffer asb);
+
+	template<typename Archive>
+	inline void save(Archive &archive)
+	{
+		alive.save(archive);
+		animals.save(archive);
+		coords.save(archive);
+		healths.save(archive);
+		hungers.save(archive);
+		ages.save(archive);
+		statuses.save(archive);
+		sexs.save(archive);
+		actions.save(archive);
+		targets.save(archive);
+		targetTypes.save(archive);
+		frames.save(archive);
+	}
+
+	template<typename Archive>
+	inline void load(Archive &archive)
+	{
+		alive.load(archive);
+		animals.load(archive);
+		coords.load(archive);
+		healths.load(archive);
+		hungers.load(archive);
+		ages.load(archive);
+		statuses.load(archive);
+		sexs.load(archive);
+		actions.load(archive);
+		targets.load(archive);
+		targetTypes.load(archive);
+		frames.load(archive);
+	}
 };

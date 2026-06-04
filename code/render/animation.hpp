@@ -259,7 +259,7 @@ void updateAnimalAnimations(Coord leftCorner, EntityRenderBuffer &erd, Array<Fra
 		SDL_Rect r = getAnimalRect(ard.animal, s, ages[ai], f, asi);
 
 		// TODO: position must be relative to screen
-		gSpriteSheetTexture.render(ard.position.x, ard.position.y, &r, &mainScreenViewport);
+		spriteSheetTexture.render(ard.position.x, ard.position.y, &r, &mainScreenViewport);
 		
 		f = getNextAnimalFrame(ard.animal, s.second(), f, asi);
 	}
@@ -324,7 +324,7 @@ void updateUnitAnimations(Coord leftCorner, EntityRenderBuffer &erd,
 		SpriteInfo usi = unitSpriteInfos[ard.unit];
 		SDL_Rect r = getUnitRect(ard.unit, state, direction, frame, ages[ai], usi);
 		// TODO: position must be relative to screen
-		gSpriteSheetTexture.render(ard.position.x, ard.position.y, &r, &mainScreenViewport);
+		spriteSheetTexture.render(ard.position.x, ard.position.y, &r, &mainScreenViewport);
 		frame = getNextUnitFrame(ard.unit, state, frame, usi);		
 	}
 }

@@ -7,10 +7,10 @@ constexpr uint16_t RENDER_CHUNK_HEIGHT = 4;
 SDL_Texture& renderChunkTexture(Coord leftCorner)
 {
 	SDL_Texture *chunkTexture =
-	    SDL_CreateTexture(gRenderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
+	    SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
 			      RENDER_CHUNK_WIDTH, RENDER_CHUNK_HEIGHT);
 	
-	SDL_SetRenderTarget(gRenderer, chunkTexture);
+	SDL_SetRenderTarget(renderer, chunkTexture);
 	
 	
 }	

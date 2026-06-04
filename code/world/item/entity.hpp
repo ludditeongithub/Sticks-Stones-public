@@ -1,14 +1,12 @@
 #include <stack>
 #include <core/packed_enum.hpp>
-#include "enum.hpp"
 #include "systems/find_nearest.hpp"
 #include "tags.hpp"
 #include "world/tile/database.hpp"
 #include <array>
 #include <core/hash.hpp>
-#include <unordered_map>
 #include <variant>
-#include <vector>
+#include <extern/cereal/binary_archive.hpp>
 #include <world/item/enum.hpp>
 #include <core/data.hpp>
 #include <core/containers.hpp>
@@ -138,9 +136,10 @@ struct Container
 
 // for items in the world, not in inventory
 struct ItemDatabase
-{
+{	
 	Array<Item> types;
 	Array<Coord> coords;
+	
 	std::stack<uint16_t> nextIndex;
 	TileDatabase *tiles;
 	World *world;
@@ -148,12 +147,24 @@ struct ItemDatabase
 
 	inline void addItem(Item item, Coord coord);
 	inline void dropFruit(Plant plant, Coord coord, uint16_t amount);
+
+	template <typename Archive> inline void save(Archive &archive)
+	{
+		types.save(archive);
+		coords.save(archive);
+		archive(cereal::binary_data(nextIndex, tiles, world, search));
+	}
+
+	template <typename Archive> inline void load(Arena* arena, Archive &archive)
+	{
+		types.load(arena, archive);
+		coords.load(arena, archive);
+		archive(cereal::binary_data(arena, 
+		nextIndex, tiles, world, search));
+	}
 };
 
-struct VariantItemDatabase {
-	Array<Item> types;
-	Array<uint8_t> variant;
-};
+Array<uint8_t> variants;
 
 struct ContainerStorageData
 {

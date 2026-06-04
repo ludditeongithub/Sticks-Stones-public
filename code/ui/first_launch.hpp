@@ -1,15 +1,19 @@
 #pragma once
 #include "render/sprite.hpp"
 #include "render/sprite_sheet_settings.hpp"
+#include "ui/components/button_functionality.hpp"
 #include "ui/components/drop_down_menu.hpp"
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_render.h>
+#include <extern/SDL_FontCache.h>
+#include <core/SDL_FontCache.h>
 #include <render/screen.hpp>
 #include <string>
+#include <ui/components/text.hpp>
 #include <ui/components/button.hpp>
 #include <ui/components/drop_down_menu.hpp>
+#include <istream>
+#include "fonts.hpp"
 
-	bool initFirstLaunchWindow()
+bool initFirstLaunchWindow()
 	{
 		// Initialization flag
 	bool success = true;
@@ -29,8 +33,7 @@
 		}
 
 		// Create window
-		window = SDL_CreateWindow("First Launch", SDL_WINDOWPOS_UNDEFINED,
-					   SDL_WINDOWPOS_UNDEFINED, FIRST_LAUNCH_WINDOW_WIDTH, FIRST_LAUNCH_WINDOW_HEIGHT,SDL_WINDOW_SHOWN);
+		window = SDL_CreateWindow("First Launch", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, FIRST_LAUNCH_WINDOW_WIDTH, FIRST_LAUNCH_WINDOW_HEIGHT,SDL_WINDOW_SHOWN);
 		if (window == NULL)
 		{
 			printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
@@ -60,13 +63,59 @@
 	return success;
 	}
 
-	void displayFirstLaunch()
+struct FirstLaunchBuffer
+{
+	bool firstLaunch = true;
+	Coord userScreenResolution;
+	bool fullscreen = false;
+
+	template <typename Archive> void serialize(Archive &a) { a(firstLaunch, 1); }
+};
+
+	void launchFirstLauncher(FirstLaunchBuffer flb)
 	{
 		ButtonSpriteData bsd = SpriteSheet::buttonSprites[FirstLaunchButton];
 
-		TextButtonUI headerButton = TextButtonUI("Select Screen Dimensions", {30, 30}, {20, 180}, bsd.dimensions, bsd.unpressed, bsd.hover, bsd.pressed);
+		PositionedText fullscreen = {amble20, "Fullscreen: ", {30, 30}};
+		int textWidth = FC_GetWidth(amble20, fullscreen.text);
+		CheckboxUI cb = CheckboxUI({textWidth + 8,30}, {30,30}, SpriteSheet::buttonSprites[Checkbox].unpressed, SpriteSheet::buttonSprites[Checkbox].pressed);
+
+		TextButtonUI headerButton = TextButtonUI(NullBF(), {amble20, "Click to Select Window Dimensions"}, {30, fullscreen.position.y + 50}, {20, 180}, bsd.dimensions, bsd.unpressed, bsd.hover, bsd.pressed);
+
 		DropdownMenu ddm = DropdownMenu(headerButton, screen_dimensions.size());
+
+		int accum = headerButton.topLeftCorner.y + headerButton.dimensions.y;
 		for (auto y: screen_dimensions) {
-			ddm.addItem(TextButtonUI(std::to_string(screen_dimensions.x) + " x " + std::to_string(screen_dimensions.y)));
+			ddm.addItem(
+				TextButtonUI(std::to_string(screen_dimensions.x) + " x " + std::to_string(screen_dimensions.y), ChangeScreenDimensionsBF(screen_dimensions), {headerButton.topLeftCorner.x, accum}, bsd.dimensions, bsd.unpressed, bsd.hover));
 		}
-	}		
+	}
+
+
+void handleLaunch()
+{
+	FirstLaunchBuffer flb;
+	std::basic_istream<char> istream is();
+	cereal::BinaryInputArchive firstLaunchArchive(is)
+	{
+		try
+		{
+			firstLaunchArchive(flb);
+		}
+		catch
+		{
+			flb = FirstLaunchBuffer();
+		}
+	}
+	if (flb.firstLaunch)
+	{
+		initFirstLaunchWindow();
+		launchFirstLauncher(flb);
+	}
+}
+
+
+void firstLaunch()
+{
+	
+}		

@@ -1,19 +1,21 @@
 #pragma once
-
-#include "sprite_names.hpp"
-#include <core/json.hpp>
+#include <extern/json.hpp>
 #include <fstream>
-#include <SDL2/SDL_rect.h>
 #include "sprite.hpp"
-#include "world/animal/enum.hpp"
+#include "sprite_names.hpp"
+#include <SDL2/SDL_rect.h>
+#include <world/animal/enum.hpp>
 #include <world/item/enum.hpp>
 #include <world/plant/enum.hpp>
 #include <world/buildable/enum.hpp>
 #include <world/tile/enum.hpp>
 #include <ui/components/button.hpp>
+#include <variant>
 
-namespace SpriteSheet {
+namespace SpriteSheet
+{
 using json = nlohmann::json;
+// using Sprite = std::variant<Item, Plant, Tile, Grass, Animal, Unit, Buildable, ButtonSprite, UISprite>;
 
 std::array<SDL_Rect, static_cast<size_t>(Animal::MAX)> animalSprites;
 std::array<SDL_Rect, static_cast<size_t>(Buildable::MAX)> buildableSprites;
@@ -21,26 +23,29 @@ std::array<SDL_Rect, static_cast<size_t>(Plant::MAX)> plantSprites;
 std::array<SDL_Rect, static_cast<size_t>(Item::MAX)> itemSprites;
 std::array<SDL_Rect, static_cast<size_t>(Tile::MAX)> tileSprites;
 std::array<SDL_Rect, static_cast<size_t>(Grass::MAX)> grassSprites;
-std::array<SDL_Rect, static_cast<size_t>(Button::MAX)> buttonSprites;
+std::array<SDL_Rect, static_cast<size_t>(ButtonSprite::MAX)> buttonSprites;
+std::array<SDL_Rect, static_cast<size_t>(UISprite::MAX)> UISprites;
 
+template<typename Sprite>
 inline void saveSprite(int index, Sprite sprite, SCoord position, SCoord dimension)
 {
-	if (std::holds_alternative<Animal>(sprite)) {
-		animalSprites[index] = SDL_Rect{position.x, position.y, dimension.x, dimension.y};
-		
-	    } else if (std::holds_alternative<Buildable>(sprite)) {
+	if (std::is_same<Animal, Sprite>::value) {
+		animalSprites[index] = SDL_Rect{position.x, position.y, dimension.x, dimension.y};	
+	    } else if (std::is_same<Buildable, Sprite>::value) {
 		buildableSprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
-		  } else if (std::holds_alternative<Plant>(sprite)) {
+	} else if (std::is_same<Plant, Sprite>::value) {
 		plantSprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
-			} else if (std::holds_alternative<Item>(sprite)) {
+	} else if (std::is_same<Item, Sprite>::value) {
 		itemSprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
-			      } else if (std::holds_alternative<Tile>(sprite)) {
+	} else if (std::is_same<Tile, Sprite>::value) {
 		tileSprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
-		} else if (std::holds_alternative<Grass>(sprite)) {
+	} else if (std::is_same<Grass, Sprite>::value) {
 		grassSprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
-		} else if (std::holds_alternative<Button>(sprite)) {
+	} else if (std::is_same<ButtonUI, Sprite>::value) {
 		buttonSprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
-		}		
+	} else if (std::is_same<UISprite, Sprite>::value ) {
+		UISprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
+	} 
 }
 
 // TODO: fix using BetterEnum
@@ -49,11 +54,11 @@ void loadOneTypeSprites(const json& sheet) {
     for (size_t i = 0; i < static_cast<size_t>(Enum::MAX); i++) {
         Enum sprite = static_cast<Enum>(i);
 
-        Coord positions{}, dimensions{};
+        SCoord positions{}, dimensions{};
 
         for (const auto& item : sheet) {
             if (item.contains("filename") &&
-                item["filename"] == getSpriteName(sprite)) { //TODO: use  https://aantron.github.io/better-enums/tutorial/HelloWorld.html
+                item["filename"] == getSpriteName(sprite)) { 
 
                 positions = {item["frame"]["x"], item["frame"]["y"]};
                 dimensions = {item["frame"]["w"], item["frame"]["h"]};
@@ -75,7 +80,7 @@ void loadTypeSprites() {
 
 void loadSprites()
 {
-	loadTypeSprites<Animal, Plant, Item, Tile, Grass, Button>();
+	loadTypeSprites<Animal, Plant, Item, Tile, Grass, Buildable,  ButtonSprite, UISprite>();
 }	
 
 };

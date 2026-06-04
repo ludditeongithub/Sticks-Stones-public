@@ -31,7 +31,7 @@ void renderSubjectDisplay(Time age, EntityRenderData renderData)
 	{
 		subject = getUnitRect(unitData->unit, ActionStatus::Idle, Direction::South, 0, age, unitSpriteInfos[unitData->unit]);
 	}
-	gSpriteSheetTexture.render(display.x, display.y, subject, &bottomBarViewport);
+	spriteSheetTexture.render(display.x, display.y, subject, &bottomBarViewport);
 }
 
 enum class UnitStatusBars

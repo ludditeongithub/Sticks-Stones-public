@@ -8,6 +8,7 @@
 #include <world/plant/tables.hpp>
 #include <world/animal/entity.hpp>
 #include <simulation/world_gen.hpp>
+#include <core/>
 
 struct PlantDatabase
 {
@@ -36,6 +37,16 @@ struct PlantDatabase
 		lastFullyWatered = arena_make_array<Time>(arena, size);
 		alive = arena_make_array<bool>(arena, size);
 	}
+
+	void load(Arena* arena)
+	{
+		plantList = arena_make_array<Plant>(arena, size);
+		growths = arena_make_array<Time>(arena, size);
+		coords = arena_make_array<Coord>(arena, size);
+		tileWaters = arena_make_array<uint16_t>(arena, size);
+		lastFullyWatered = arena_make_array<Time>(arena, size);
+		alive = arena_make_array<bool>(arena, size);
+	}		
 
 	inline void destroyPlant(uint16_t i);
 	inline uint32_t getPlantIndex();

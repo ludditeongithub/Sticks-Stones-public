@@ -1,4 +1,5 @@
 #pragma once
+#include <core/enum.h>
 #include <core/packed_enum.hpp>
 #include <cstdint>
 #include <world/chunk/enum.hpp>
@@ -49,8 +50,8 @@ enum class Tile : uint8_t
 	Carpet,
 	StoneFloor,
 	BrickFloor,
-	MAX,
-};
+	MAX
+};	    
 
 enum class Grass : uint8_t
 {

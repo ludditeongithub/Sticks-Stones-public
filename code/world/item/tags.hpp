@@ -2,7 +2,6 @@
 #define TAGS_HPP
 #include "enum.hpp"
 #include <core/tables.hpp>
-#include <core/fbitset.hpp>
 #include <cstdint>
 #include <core/tags.hpp>
 

@@ -37,7 +37,7 @@ inline void copyTiles(SDL_Texture* chunkTexture, World& world, Array<TileData> &
 			// draw tiles
 			Tile t = tiles[ti].first();
 			SDL_Rect sd = SpriteSheet::tileSprites[static_cast<int>(t)];
-			gSpriteSheetTexture.render(j * TILE_LENGTH, i * TILE_LENGTH, &sd,
+			spriteSheetTexture.render(j * TILE_LENGTH, i * TILE_LENGTH, &sd,
 						   &mainScreenViewport);
 
 			// draw grass
@@ -45,7 +45,7 @@ inline void copyTiles(SDL_Texture* chunkTexture, World& world, Array<TileData> &
 			if (g != Grass::NONE)
 			{
 				sd = SpriteSheet::grassSprites[static_cast<int>(g)];
-				gSpriteSheetTexture.render(i * TILE_LENGTH, j * TILE_LENGTH, &sd, &mainScreenViewport);
+				spriteSheetTexture.render(i * TILE_LENGTH, j * TILE_LENGTH, &sd, &mainScreenViewport);
 		}
 	}
 	}
@@ -57,10 +57,10 @@ void copyPlants(EntityRenderBuffer &erd)
 	{
 		EntitySearchData esd = {erd.plants[i].index, erd.plants[i].position};
 		
-		SDL_Rect sr = ;
+		SDL_Rect sr = plantSpriteDimensions[erd.plants[i].plant];
 		Coord lc = getLeftCornerTile(
 		    esd.position, {static_cast<uint32_t>(sr.w), static_cast<uint32_t>(sr.y)});
-		gSpriteSheetTexture.render(lc.x, lc.y, &sr, &mainScreenViewport);
+		spriteSheetTexture.render(lc.x, lc.y, &sr, &mainScreenViewport);
 	}
 }
 
@@ -72,7 +72,7 @@ void copyItems(EntityRenderBuffer &erd)
 		SDL_Rect sr = itemSpriteDimensions[erd.items[i].item];
 		Coord lc = getLeftCornerTile(
 		    esd.position, {static_cast<uint32_t>(sr.w), static_cast<uint32_t>(sr.y)});
-		gSpriteSheetTexture.render(lc.x, lc.y, &sr, &mainScreenViewport);
+		spriteSheetTexture.render(lc.x, lc.y, &sr, &mainScreenViewport);
 	}
 }
 
@@ -82,8 +82,8 @@ void renderMovingEntities(World& world, Coord leftCorner, Array<TileData> &tiles
 		  Array<FrameData>& unitFrameData, Array<Time> &unitAges,
 		  SearchGrid &sg, EntityRenderBuffer& entityRenderBuffer)
 {
-	SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-	SDL_RenderClear(gRenderer);
+	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+	SDL_RenderClear(renderer);
 
 	updateAnimalAnimations(leftCorner, entityRenderBuffer, animalFrames, animalAges, animalStates);
 
@@ -96,17 +96,18 @@ void renderMovingEntities(World& world, Coord leftCorner, Array<TileData> &tiles
 	//TODO: upscale
 
 	// update screen
-	SDL_RenderPresent(gRenderer);
+	SDL_RenderPresent(renderer);
 }
   
-SDL_Texture& renderChunkTexture(Coord leftCorner, EntityRenderBuffer& entityRenderBuffer)
+SDL_Texture& renderChunkTexture(World& world, Array<TileData>& tiles, Coord leftCorner, EntityRenderBuffer& entityRenderBuffer)
 {
 	SDL_Texture *chunkTexture =
-	    SDL_CreateTexture(gRenderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
+	    SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
 			      RENDER_CHUNK_WIDTH, RENDER_CHUNK_HEIGHT);
 	
-	SDL_SetRenderTarget(gRenderer, chunkTexture);
+	SDL_SetRenderTarget(renderer, chunkTexture);
 
+	copyTiles(chunkTexture, world, tiles);
 	copyItems(entityRenderBuffer);
 	copyPlants(entityRenderBuffer);
 }	

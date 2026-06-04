@@ -43,9 +43,9 @@ struct StatusBar
 			SDL_Rect unfilledClip = {emptyBar->x, emptyBar->y, filledLength, unfixed};
 			SDL_Rect filledClip = {fullBar->x, fullBar->y, filledLength, unfixed};
 
-			gSpriteSheetTexture.render(position.x, position.y, &unfilledClip,
+			spriteSheetTexture.render(position.x, position.y, &unfilledClip,
 						   &viewport);
-			gSpriteSheetTexture.render(position.x + unfilledLength, position.y,
+			spriteSheetTexture.render(position.x + unfilledLength, position.y,
 						   &filledClip, &viewport);
 		}
 		else
@@ -53,9 +53,9 @@ struct StatusBar
 			SDL_Rect unfilledClip = {emptyBar->x, emptyBar->y, unfixed, filledLength};
 			SDL_Rect filledClip = {fullBar->x, fullBar->y, unfixed, filledLength};
 
-			gSpriteSheetTexture.render(position.x, position.y, &unfilledClip,
+			spriteSheetTexture.render(position.x, position.y, &unfilledClip,
 						   &viewport);
-			gSpriteSheetTexture.render(position.x, position.y + unfilledLength,
+			spriteSheetTexture.render(position.x, position.y + unfilledLength,
 						   &filledClip, &viewport);
 		}
 	}

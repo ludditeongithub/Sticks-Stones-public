@@ -1,0 +1,97 @@
+// Initialization
+if (TTF_Init() == -1)
+{
+    printf("TTF_Init failed: %s\n", TTF_GetError());
+}
+
+// Load font
+TTF_Font* font = TTF_OpenFont("assets/font.ttf", 24);
+
+if (!font)
+{
+    printf("TTF_OpenFont failed: %s\n", TTF_GetError());
+}
+
+// Text color
+SDL_Color white = {255, 255, 255, 255};
+
+// Measure text size (pixels)
+int textW, textH;
+TTF_SizeUTF8(font, "Hello World", &textW, &textH);
+
+// Create surface
+SDL_Surface* textSurface =
+    TTF_RenderUTF8_Blended(
+        font,
+        "Hello World",
+        white);
+
+if (!textSurface)
+{
+    printf("Render failed: %s\n", TTF_GetError());
+}
+
+// Create texture
+SDL_Texture* textTexture =
+    SDL_CreateTextureFromSurface(
+        renderer,
+        textSurface);
+
+// Texture size
+SDL_QueryTexture(
+    textTexture,
+    nullptr,
+    nullptr,
+    &textW,
+    &textH);
+
+// Position text
+SDL_Rect dst =
+{
+    100,    // x
+    50,     // y
+    textW,  // width
+    textH   // height
+};
+
+// Render text
+SDL_RenderCopy(
+    renderer,
+    textTexture,
+    nullptr,
+    &dst);
+
+// Center text in a button
+int buttonX = 100;
+int buttonY = 100;
+int buttonW = 200;
+int buttonH = 50;
+
+int centeredX =
+    buttonX + (buttonW - textW) / 2;
+
+int centeredY =
+    buttonY + (buttonH - textH) / 2;
+
+SDL_Rect centeredDst =
+{
+    centeredX,
+    centeredY,
+    textW,
+    textH
+};
+
+SDL_RenderCopy(
+    renderer,
+    textTexture,
+    nullptr,
+    &centeredDst);
+
+// Cleanup text
+SDL_DestroyTexture(textTexture);
+SDL_FreeSurface(textSurface);
+
+// Shutdown
+TTF_CloseFont(font);
+TTF_Quit();
+

@@ -1,8 +1,8 @@
 #pragma once
 #include "memory.hpp"
-#include "nameof.hpp"
+#include <extern/nameof.hpp>
 #include <cassert>
-#include <cereal/archives/binary.hpp>
+#include <extern/cereal/archives/binary.hpp>
 #include <stdexcept>
 
 // right now is really ArrayChunk,which points to next ArrayChunk if applicable

@@ -2,6 +2,7 @@
 ** boost.preprocessor enum to string
 * NOW
 ** make archives of larger containers that create arrays-- these do not store the arrays themselves, but metadata about them, to call the load functions of the arrays themselves!
+** aseprites for first launch
 ** audio functionality
 ** gameLoop
 *** handleEvent

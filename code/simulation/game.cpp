@@ -24,7 +24,7 @@ void Game::initWorld()
 	animalDatabase = new AnimalDatabase(&animalArena, ws->asb.size * ANIMAL_ALLOC_FACTOR, search);
 	animalDatabase->addAnimals(ws->asb);
 
-	gSpriteSheetTexture.loadFromFile("sprite_sheet.png");
+	spriteSheetTexture.loadFromFile("sprite_sheet.png");
 
 	unitArena = Arena(UnitDatabase::ENTITY_SIZE * UNIT_CAP);
 	unitDatabase = new UnitDatabase(UNIT_CAP);

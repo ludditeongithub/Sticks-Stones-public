@@ -1,5 +1,6 @@
 #pragma once
 #include "enum.hpp"
+#include "data.hpp"
 #include "world/chunk/data.hpp"
 #include "world/tile/data.hpp"
 #include <core/containers.hpp>
@@ -31,5 +32,7 @@ class TileDatabase
 
 	TileDatabase(Arena *arena, TileSpawnBuffer &tsb, World *world);
 
-	Coord getNearestEmptyTile(Coord coord);	
+	Coord getNearestEmptyTile(Coord coord);
+
+	
 };

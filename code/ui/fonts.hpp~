@@ -1,0 +1,19 @@
+#pragma once
+#include <SDL2/SDL_ttf.h>
+TTF_Font *amble20 = TTF_OpenFont("../fonts/Amble-Regular.ttf", 20);
+
+struct FontData
+{
+	
+};	
+
+//TODO: calculate these automatically once, print, then hardcode. 
+struct RawFontData {
+	
+};
+
+// create font atlas for different screen sizes (or at least current screen size)
+void createFontAtlas()
+{
+	
+}	

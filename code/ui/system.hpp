@@ -27,7 +27,7 @@ struct UISystem
 	Coord blackBarSize; //of single side
 	MainMenu* mainMenu;
 
-	UISystem(uint16_t userScreenWidth, uint16_t userScreenHeight, bool fullscreen) : userScreenWidth(userScreenWidth), userScreenHeight(userScreenHeight)
+	UISystem(uint16_t userScreenWidth, uint16_t userScreenHeight, bool fullscreen) : userScreenWidth(userScreenWidth), userScreenHeight(userScreenHeight), fullscreen(fullscreen)
 	{
 		initWindow();
 		setDisplaySettings(userScreenWidth, userScreenHeight);
