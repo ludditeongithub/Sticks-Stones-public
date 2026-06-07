@@ -1,3 +1,4 @@
+#include "world/buildable/entity.hpp"
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_mouse.h>
 #include <core/data.hpp>
@@ -18,7 +19,9 @@
 
 struct Game
 {
-std::string fileName;	
+  bool firstSave = false;
+  bool unsavedChanges = true;
+  
 Time absoluteTime;
 World world;
 SearchGrid search;
@@ -27,21 +30,25 @@ TileDatabase tileDatabase;
 Arena plantArena;
 PlantDatabase plantDatabase;
 Arena regrowthPlantArena;
-RegrowthPlantDatabase regrowthPlantDatabases;
+RegrowthPlantDatabase regrowthPlantDatabase;
 Arena animalArena;
 AnimalDatabase animalDatabase;
 Arena unitArena;
 UnitDatabase unitDatabase;
 Arena itemArena;
 ItemDatabase itemDatabase;
+BuildableDatabase buildableDatabase;
+Arena buildableArena;
 
 void initWorld();
 
-void deinitWorld();	
+void deinitWorld();
+
+void saveGame(std::string name, bool newSave);
 
 void newGame();
 
-void saveGame();
+void quit();
 
 void handleEvent(SDL_Event *e);
 

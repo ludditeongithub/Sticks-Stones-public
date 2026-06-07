@@ -4,6 +4,8 @@
 #include <string>
 #include <core/data.hpp>
 #include <core/mouse.hpp>
+#include <chrono>
+#include <format>
 #include "button_functionality.hpp"
 #include "text.hpp"
 enum class ButtonSprite : uint8_t
@@ -29,6 +31,11 @@ enum class ButtonState
 	Pressed
 };
 
+struct Sound //placeholder
+{
+
+};	
+
 struct ButtonUI
 {
       public:
@@ -38,7 +45,7 @@ struct ButtonUI
 	SCoord unpressed;
 	SCoord hover;
 	SCoord pressed;
-	Sound pressedSound = NULL;
+	Sound pressedSound;
 	ButtonState state = ButtonState::Unpressed;
 
 	ButtonUI(ButtonFunctionality function, SCoord topLeftCorner, SCoord dimensions, SCoord unpressed, SCoord hover, SCoord pressed, Sound pressedSound)
@@ -92,7 +99,7 @@ struct ButtonUI
 			case SDL_MOUSEBUTTONDOWN:
 			case SDL_MOUSEBUTTONUP:
 				state = ButtonState::Pressed;
-				function->trigger();
+				function.trigger();
 				if (pressedSound != NULL) playSound(pressedSound);
 				break;
 			}
@@ -105,15 +112,14 @@ struct TextButtonUI : ButtonUI
 {
     Text text;	
 
-    TextButtonUI(ButtonFunctionality function,
-        Text text,
+    TextButtonUI(Text text, ButtonFunctionality function,      
         SCoord topLeftCorner,
         SCoord dimensions,
         SCoord unpressed,
         SCoord hover,
         SCoord pressed,
-        Sound pressedSound = NULL)
-        : ButtonUI(text, function,
+        Sound pressedSound)
+        : ButtonUI(function,
             topLeftCorner,
             dimensions,
             unpressed,
@@ -126,9 +132,9 @@ struct TextButtonUI : ButtonUI
 
     inline void render(SDL_Rect* viewport)
     {
-        ButtonUI::render(viewport);
-	SDL_Surface* surfaceMessage =
-TTF_RenderText_Solid(text.font, text.text, text.color); 
+      ButtonUI::render(viewport);
+      SDL_RenderSetViewport(renderer, viewport);
+	FC_DrawColor(text.font, renderer, topLeftCorner.x, topLeftCorner.y, text.color, text.text); 
     }
 
     void handleEvent(SDL_Event *e) { ButtonUI::handleEvent(e); }
@@ -151,7 +157,7 @@ struct CheckboxUI
     SCoord uncheckedSprite;
     SCoord checkedSprite;
 
-    Sound clickSound = nullptr;
+    Sound clickSound;
 
     bool checked = false;
     bool hovered = false;
@@ -222,10 +228,10 @@ struct CheckboxUI
         {
             checked = !checked;
 
-            if (clickSound)
-            {
-                playSound(clickSound);
-            }
+            // if (clickSound)
+            // {
+            //     playSound(clickSound);
+            // }
 
             return true;
         }
@@ -233,3 +239,25 @@ struct CheckboxUI
         return false;
     }
 };
+
+class SaveButtonUI
+{
+private:
+public:
+  SaveButtonUI() {};
+  std::chrono::system_clock::time_point lastSaved;
+  std::string name;
+  inline static int maxSaveNameSize = 24;
+  inline static int saveButtonSize = 8;
+  void render() {}
+
+  void changeName(std::string newName)
+  {
+	  if (newName > maxSaveNameSize)
+	    {
+	      userError("Name too long! Keep it 24 or less characters.");
+	    }
+  }	  
+};
+
+

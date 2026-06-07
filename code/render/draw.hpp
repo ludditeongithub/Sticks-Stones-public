@@ -6,6 +6,8 @@
 #include "texture.hpp"
 #include "viewport.hpp"
 #include "sprite_sheet_settings.hpp"
+#include <SDL2/SDL_render.h>
+#include <core/containers.hpp>
 #include <core/entity.hpp>
 #include <core/packed_enum.hpp>
 #include <core/tables.hpp>
@@ -110,5 +112,58 @@ SDL_Texture& renderChunkTexture(World& world, Array<TileData>& tiles, Coord left
 	copyTiles(chunkTexture, world, tiles);
 	copyItems(entityRenderBuffer);
 	copyPlants(entityRenderBuffer);
+}
+
+enum class Renderable
+{
+	Tile,
+	Grass,
+	Animal,
+	Plant,
+	Unit,
+	Buildable
+};
+
+enum class RenderChange
+{
+	Replacement,
+	MovementUp,
+	MovementDown,
+	MovementLeft,
+	MovementRight
+};
+
+struct RenderingEvent
+{
+	Renderable renderable;
+	uint32_t index;
+	
+};
+
+struct RenderingEventsBuffer { //events that have taken place since last render, which will require certain chunks to be re-rendered
+	
+};
+
+struct RenderManager
+{
+	bool firstRender = false;
+	
+	void render(World& world, Array<TileData>& tiles, RenderingEventsBuffer& renderingEventsBuffer)
+	{
+		EntityRenderBuffer entityRenderBuffer;
+		if (firstRender)
+		{
+	// render rendering-chunks
+	for (size_t i = 0; i < world.WORLD_TILE_LENGTH; i+=RENDER_CHUNK_WIDTH) {
+		for (size_t j = 0; j < world.WORLD_TILE_LENGTH; j+=RENDER_CHUNK_HEIGHT) {
+			renderChunkTexture(world, tiles, {i,j} , entityRenderBuffer);
+		}
+	}
+		} else {			
+		  
+	}
+	
 }	
+
+};
 

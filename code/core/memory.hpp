@@ -5,64 +5,71 @@
 #include <tuple>
 #include <type_traits>
 #include <vector>
+#include <cstdint>
+#include <new>
+#include <stdexcept>
 
 struct Arena
 {
-	char *start;
-	uint16_t capacity;
-	uint16_t used;
+    char* start;
+    uint16_t capacity;
+    uint16_t used;
 
-	Arena(uint16_t cap) : capacity(cap), used(0)
-	{
-		start = static_cast<char *>(::operator new(cap));
-	}
+    explicit Arena(uint16_t cap)
+        : capacity(cap), used(0)
+    {
+        start = static_cast<char*>(::operator new(cap));
+    }
 
-	~Arena() { ::operator delete(start); }
+    ~Arena()
+    {
+        ::operator delete(start);
+    }
+
+    void reset()
+    {
+        used = 0;
+    }
 };
 
-void *arena_alloc(Arena *arena, uint16_t bytes)
+void* arena_alloc(Arena* arena, uint16_t bytes)
 {
-	if (arena->used + bytes > arena->capacity)
-	{
-		throw std::bad_alloc();
-	}
-	void *ptr = arena->start + arena->used;
-	arena->used += bytes;
-	return ptr;
+    if (arena->used + bytes > arena->capacity)
+    {
+        throw std::bad_alloc();
+    }
+
+    void* ptr = arena->start + arena->used;
+    arena->used += bytes;
+    return ptr;
 }
 
-void *arena_alloc_aligned(Arena *arena, uint16_t bytes, uint16_t alignment)
+void* arena_alloc_aligned(
+    Arena* arena,
+    uint16_t bytes,
+    uint16_t alignment)
 {
-	uintptr_t current = reinterpret_cast<uintptr_t>(arena->start + arena->used);
-	uintptr_t aligned = (current + alignment - 1) & ~(alignment - 1);
-	uint16_t padding = aligned - current;
+    uintptr_t current =
+        reinterpret_cast<uintptr_t>(arena->start + arena->used);
 
-	if (arena->used + padding + bytes > arena->capacity)
-	{
-		throw std::bad_alloc();
-	}
+    uintptr_t aligned =
+        (current + alignment - 1) & ~(uintptr_t(alignment - 1));
 
-	arena->used += padding;
-	void *ptr = arena->start + arena->used;
-	arena->used += bytes;
-	return ptr;
-}
+    uint16_t padding =
+        static_cast<uint16_t>(aligned - current);
 
-void *arena_dealloc_aligned(Arena *arena, uint16_t bytes, uint16_t alignment)
-{
-	uintptr_t current = reinterpret_cast<uintptr_t>(arena->start + arena->used);
-	uintptr_t aligned = (current + alignment - 1) & ~(alignment - 1);
-	uint16_t padding = aligned - current;
+    if (arena->used + padding + bytes > arena->capacity)
+    {
+        throw std::bad_alloc();
+    }
 
-	if (arena->used < bytes + padding)
-	{
-		throw std::bad_alloc();
-	}
+    arena->used += padding;
 
-	arena->used -= padding;
-	arena->used -= bytes;
-	void *ptr = arena->start + arena->used;
-	return ptr;
+    void* ptr = arena->start + arena->used;
+
+    arena->used += bytes;
+
+    return ptr;
 }
 
 template <typename T> struct Pool

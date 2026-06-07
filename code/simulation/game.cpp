@@ -1,4 +1,5 @@
 #include "game.hpp"
+#include "simulation/saveGame.hpp"
 
 void Game::initWorld()
 {
@@ -28,6 +29,16 @@ void Game::initWorld()
 
 	unitArena = Arena(UnitDatabase::ENTITY_SIZE * UNIT_CAP);
 	unitDatabase = new UnitDatabase(UNIT_CAP);
+}
+
+GameSave& Game::saveGame(std::string name, bool newSave)
+{
+  if (newSave) {
+  }
+  else
+  {
+    save(this);
+  }
 }
 
 void Game::deinitWorld()

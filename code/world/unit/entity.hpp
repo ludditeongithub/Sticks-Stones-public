@@ -5,6 +5,8 @@
 #include <core/hash.hpp>
 #include <core/math.hpp>
 #include <core/random.hpp>
+
+#include <extern/cereal/archives/binary.hpp>
 #include <cstdint>
 #include <stack>
 #include <world/item/entity.hpp>
@@ -141,33 +143,45 @@ struct UnitDatabase
 	// overflows are all seperate, so that
 	OverflowHashMap overflows; // index is hashed
 	OverflowContainerMap overflowContainers;
-
+ 
 	std::vector<Sex> sexs;
 	Array<Roles> roles;
 	Array<RoleMana> roleManas;
 	Array<Skills> skills;
 	Array<Places> places;
 
-	UnitDatabase(uint16_t s)
+  UnitDatabase(uint16_t s, Arena* arena)
 	{
 		size = 0;
 		cap = s;
 		alive = std::vector<bool>(s);
-		coords = Array<Coord>(s);
-		frameDatas = Array<FrameData>(s);
-		healths = Array<Health>(s);
-		hungers = Array<Hunger>(s);
-		ages = Array<Time>(s);
-		actions = Array<Action>(s);
-		targets = Array<Target>(s);
-		frames = Array<Frame>(s);
-		inventories = Array<Inventory>(s);
+		coords = arena_make_array<Coord>(arena, s);
+		frameDatas = arena_make_array<FrameData>(arena, s);
+		healths = arena_make_array<Health>(arena, s);
+		hungers = arena_make_array<Hunger>(arena, s);
+		ages = arena_make_array<Time>(arena, s);
+		actions = arena_make_array<Action>(arena, s);
+		targets = arena_make_array<Target>(arena, s);
+		frames = arena_make_array<Frame>(arena, s);
+		inventories = arena_make_array<Inventory>(arena, s);
 		sexs = std::vector<Sex>(s);
-		roles = Array<Roles>(s);
-		roleManas = Array<RoleMana>(s);
-		skills = Array<Skills>(s);
-		places = Array<Places>(s);
+		roles = arena_make_array<Roles>(arena, s);
+		roleManas = arena_make_array<RoleMana>(arena, s);
+		skills = arena_make_array<Skills>(arena, s);
+		places = arena_make_array<Places>(arena, s);
 	}
+
+        template <class Archive>
+        UnitDatabase(Arena* arena, Archive& archive)
+	{
+		archive(cereal::binary_data(arena));
+	}
+
+  template <class Archive> void load(Arena* arena, Archive& archive) {
+    archive(cereal::binary_data(arena)));
+  }
+
+        
 
 	//TODO: make similar birth and kills for other databases (size conscious), make impDatabases if over size, or other management strategy.
 	bool birthUnit(Coord c)

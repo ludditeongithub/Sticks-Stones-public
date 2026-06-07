@@ -12,14 +12,12 @@
 
 struct MainMenu
 {
-	UISystem* uiSystem;
 	uint16_t userScreenWidth;
 	uint16_t userScreenHeight;
 	uint8_t rawToUserScalar;
 	// Button Positions
 	SCoord background = {}; //TODO
-	int buttonLeftAlignment = SCREEN_WIDTH / 2 -
-	    (SpriteSheet::buttonSprites[static_cast<int>(Button::MainButton)].w / 2);
+	int buttonLeftAlignment = SCREEN_WIDTH / 2 - (SpriteSheet::buttonSprites[static_cast<int>(Button::MainButton)].w / 2);
 	
 	SCoord newLeftCorner = {buttonLeftAlignment, 2 * SCREEN_HEIGHT / 6};
 	SCoord loadLeftCorner = {buttonLeftAlignment / 2, 3 * SCREEN_HEIGHT / 6};
@@ -29,9 +27,7 @@ struct MainMenu
 	SCoord Unpressed = {SpriteSheet::buttonSprites[static_cast<int>(Button::MainButton)].x, SpriteSheet::buttonSprites[static_cast<int>(Button::MainButton)].y};
 	SCoord Hover = {SpriteSheet::buttonSprites[static_cast<int>(Button::MainButtonHover)].x, SpriteSheet::buttonSprites[static_cast<int>(Button::MainButtonHover)].y};
 	SCoord Pressed = {SpriteSheet::buttonSprites[static_cast<int>(Button::MainButtonPressed)].x, SpriteSheet::buttonSprites[static_cast<int>(Button::MainButtonPressed)].y};
-	SCoord buttonDimensions = {
-	    SpriteSheet::buttonSprites[static_cast<int>(Button::MainButton)].x,
-	    SpriteSheet::buttonSprites[static_cast<int>(Button::MainButton)].y};
+	SCoord buttonDimensions = {SpriteSheet::buttonSprites[static_cast<int>(Button::MainButton)].x, SpriteSheet::buttonSprites[static_cast<int>(Button::MainButton)].y};
 	
 	ButtonUI newGameButton;
 	ButtonUI loadGameButton;
@@ -58,7 +54,7 @@ struct MainMenu
 	
 	Mode mode;
 
-	MainMenu(UISystem* uiSystem) : uiSystem(uiSystem)
+	MainMenu() 
 	{		
 		newGameButton = ButtonUI(newLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
 		loadGameButton = ButtonUI(loadLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);

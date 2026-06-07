@@ -63,7 +63,7 @@ template <typename T> struct Array
 
 	template <class Archive> void save(Archive &archive, std::string name)
 	{
-	archive(cereal::binary_data(arena, capacity, count, data()));
+		archive(cereal::binary_data(arena, capacity, count, data()));		
 	}
 
 template <class Archive> void load(Arena* arena, Archive &archive)

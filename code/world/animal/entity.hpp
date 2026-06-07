@@ -77,7 +77,7 @@ struct AnimalDatabase
 		actions.save(archive);
 		targets.save(archive);
 		targetTypes.save(archive);
-		frames.save(archive);
+		frames.save(archive);		
 	}
 
 	template<typename Archive>

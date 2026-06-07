@@ -5,6 +5,8 @@
 #include <cstdint>
 #include <SDL2/SDL_video.h>
 
+Coord currentScreenDimensions = {SCREEN_WIDTH, SCREEN_HEIGHT};
+
 struct UISystem
 {
 	SDL_Window *window = NULL;
@@ -69,8 +71,7 @@ struct UISystem
 		{
 			blackBars = BlackBarStatus::Both;
 			blackBarSize = {
-			    uint32_t(userScreenWidth - (SCREEN_WIDTH * actualWidthRatio)),
-			    uint32_t(userScreenHeight - (SCREEN_HEIGHT * actualHeightRatio))};
+			    uint32_t(userScreenWidth - (SCREEN_WIDTH * actualWidthRatio)), uint32_t(userScreenHeight - (SCREEN_HEIGHT * actualHeightRatio))};
 			wholeDisplayViewport = {(int)blackBarSize.x / 2, (int)blackBarSize.y / 2, SCREEN_WIDTH * actualWidthRatio, SCREEN_HEIGHT * actualHeightRatio};
 		}
 		else {

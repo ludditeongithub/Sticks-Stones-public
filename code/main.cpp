@@ -19,6 +19,8 @@ int main()
 	{
 		printf("TTF_Init failed: %s\n", TTF_GetError());
 	}
+
+	UISystem = new UISystem();
 	
 	// SDL_GetRendererOutputSize(window, userScreenWidth, userScreenHeight);
 	// int factor = std::min((int)(userScreenWidth/SCREEN_WIDTH), (int)(userScreenHeight/SCREEN_HEIGHT));

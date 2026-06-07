@@ -16,6 +16,8 @@
 
 using Entity = std::variant<Role, Animal, Plant, Item, Buildable>;
 
+
+
 struct OptionalEntitySearchData
 {
 	std::optional<uint16_t> index;

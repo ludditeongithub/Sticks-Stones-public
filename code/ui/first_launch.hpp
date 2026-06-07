@@ -3,6 +3,7 @@
 #include "render/sprite_sheet_settings.hpp"
 #include "ui/components/button_functionality.hpp"
 #include "ui/components/drop_down_menu.hpp"
+#include <cereal/details/helpers.hpp>
 #include <extern/SDL_FontCache.h>
 #include <core/SDL_FontCache.h>
 #include <render/screen.hpp>
@@ -10,7 +11,7 @@
 #include <ui/components/text.hpp>
 #include <ui/components/button.hpp>
 #include <ui/components/drop_down_menu.hpp>
-#include <istream>
+#include <fstream>
 #include "fonts.hpp"
 
 bool initFirstLaunchWindow()
@@ -61,7 +62,7 @@ bool initFirstLaunchWindow()
 		}
 	}
 	return success;
-	}
+}
 
 struct FirstLaunchBuffer
 {
@@ -74,48 +75,45 @@ struct FirstLaunchBuffer
 
 	void launchFirstLauncher(FirstLaunchBuffer flb)
 	{
-		ButtonSpriteData bsd = SpriteSheet::buttonSprites[FirstLaunchButton];
+		ButtonSpriteData bsd = SpriteSheet::buttonSprites[ButtonSprite::FirstLaunchButton];
 
 		PositionedText fullscreen = {amble20, "Fullscreen: ", {30, 30}};
 		int textWidth = FC_GetWidth(amble20, fullscreen.text);
-		CheckboxUI cb = CheckboxUI({textWidth + 8,30}, {30,30}, SpriteSheet::buttonSprites[Checkbox].unpressed, SpriteSheet::buttonSprites[Checkbox].pressed);
+		CheckboxUI cb = CheckboxUI({textWidth + 8,30}, {30,30}, SpriteSheet::buttonSprites[ButtonSprite::Checkbox].unpressed, SpriteSheet::buttonSprites[ButtonSprite::Checkbox].pressed);
 
 		TextButtonUI headerButton = TextButtonUI(NullBF(), {amble20, "Click to Select Window Dimensions"}, {30, fullscreen.position.y + 50}, {20, 180}, bsd.dimensions, bsd.unpressed, bsd.hover, bsd.pressed);
 
 		DropdownMenu ddm = DropdownMenu(headerButton, screen_dimensions.size());
 
 		int accum = headerButton.topLeftCorner.y + headerButton.dimensions.y;
-		for (auto y: screen_dimensions) {
-			ddm.addItem(
-				TextButtonUI(std::to_string(screen_dimensions.x) + " x " + std::to_string(screen_dimensions.y), ChangeScreenDimensionsBF(screen_dimensions), {headerButton.topLeftCorner.x, accum}, bsd.dimensions, bsd.unpressed, bsd.hover));
+		for (auto sd: screen_dimensions) {
+			ddm.addItem(TextButtonUI(
+			    std::to_string(sd.x) + " x " + std::to_string(sd.y),
+			    ChangeScreenDimensionsBF(sd), {headerButton.topLeftCorner.x, accum}, bsd.dimensions, bsd.unpressed, bsd.hover));
 		}
+
+		TextButtonUI launchButton = TextButtonUI({amble20, "Launch"}, LaunchBF(Launches::GameWindow), {180, fullscreen.position.y + 150}, {20, 100}, bsd.dimensions, bsd.unpressed, bsd.hover, bsd.pressed);
 	}
 
 
 void handleLaunch()
 {
-	FirstLaunchBuffer flb;
-	std::basic_istream<char> istream is();
-	cereal::BinaryInputArchive firstLaunchArchive(is)
-	{
-		try
-		{
-			firstLaunchArchive(flb);
-		}
-		catch
-		{
-			flb = FirstLaunchBuffer();
-		}
-	}
-	if (flb.firstLaunch)
-	{
-		initFirstLaunchWindow();
-		launchFirstLauncher(flb);
-	}
+FirstLaunchBuffer flb;
+std::string file = "file.bin";
+std::ifstream is(file, std::ios_base::binary);
+
+try
+{
+    cereal::BinaryInputArchive firstLaunchArchive = cereal::BinaryInputArchive(is);
+    flb.serialize(firstLaunchArchive);
+  
+}
+catch (...)
+{
+  flb = FirstLaunchBuffer{};
+  launchFirstLauncher(flb);
+}
 }
 
 
-void firstLaunch()
-{
 	
-}		
