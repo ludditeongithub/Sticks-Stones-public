@@ -1,5 +1,4 @@
-#ifndef TAGS_HPP
-#define TAGS_HPP
+#pragma once
 #include "enum.hpp"
 #include <core/tables.hpp>
 #include <cstdint>

@@ -34,12 +34,12 @@ public:
     std::ifstream ifs(name, std::ios::binary);
     cereal::BinaryInputArchive archive(ifs);
     // NOTE: the order of this is VERY important!
-    game.tileDatabase.load();
-    game.plantDatabase.load();
-    game.animalDatabase.load();
-    game.unitDatabase.load();
-    game.itemDatabase.load();
-    game.buildableDatabase.load();
+    game.tileDatabase.load(game.tileArena, archive);
+    game.plantDatabase.load(game.plantArena, archive);
+    game.animalDatabase.load(game.animalArena, archive);
+    game.unitDatabase.load(game.unitArena, archive);
+    game.itemDatabase.load(game.itemArena, archive);
+    game.buildableDatabase.load(game.buildableArena, archive);
   }  
 };
 

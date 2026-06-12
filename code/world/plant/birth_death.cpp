@@ -3,13 +3,6 @@
 #include "entity.hpp"
 #include "tables.hpp"
 
-
-inline void PlantDatabase::destroyPlant(uint16_t i)
-{
-	alive[i] = false;
-	nextPlantIndex.push(i);
-}
-
 inline void PlantDatabase::setGerminationTime(int seedIndex)
 {
 	Plant plant = seeds[seedIndex];
@@ -45,8 +38,7 @@ inline void PlantDatabase::germinate(int seedIndex, bool randomGrowth, SearchGri
 
 inline void RegrowthPlantDatabase::germinate(int seedIndex, bool randomGrowth, SearchGrid& searchGrid)
 {
-	plantDatabase.germinate(seedIndex, randomGrowth, searchGrid);
-	
+	plantDatabase.germinate(seedIndex, randomGrowth, searchGrid);	
 }		
 
 // TODO: consider making this array, so that animals can eat and poop many

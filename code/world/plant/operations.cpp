@@ -1,4 +1,5 @@
 #include "entity.hpp"
+#include "world/plant/tables.hpp"
 #include <core/position_check.hpp>
 
 // Plants are those farmable by player, but do not regrow over multiple seasons
@@ -11,18 +12,14 @@ uint32_t PlantDatabase::getPlantIndex()
 
 bool PlantDatabase::viableHarvest(int plantIndex)
 {
-	if (growthAmt[plantIndex] < maturityThreshold[static_cast<int>(plants[plantIndex])])
-		return true;
+		Plant plant = plants[plantIndex];
+		if (growths[plantIndex] < fullMaturityAges[plant] * maxAges[plant])
+				return true;
+		return false;
 }
 
-void PlantDatabase::excreteSeed(AnimalDatabase& database, TileDatabase& tiles, int animalIndex, Plant plant)
+void PlantDatabase::excreteSeed(AnimalDatabase& database, int animalIndex, TileDatabase& tiles, Plant plant)
 {
 	Coord coords = database.coords[animalIndex];
 	spawnSeed(plant, tiles.getNearestEmptyTile(coords));
-}
-
-void PlantDatabase::plant(int unitIndex, Plant plant)
-{
-	std::pair<int, int> coords = currentCoords[animalIndex];
-	addPlant(plant, findNearestAdjacentEmptyTile(coords));
 }

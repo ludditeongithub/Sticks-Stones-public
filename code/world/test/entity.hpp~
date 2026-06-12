@@ -1,0 +1,21 @@
+#pragma once
+
+#include "macros/database.h"
+#include <core/data.hpp>
+#include <core/containers.hpp>
+#include <macros/database.hpp>
+#include <macros/serialization.hpp>
+
+
+struct ButtDatabase {
+#define BUTT_INDEPENDENT_MEMBERS (int, butt)
+
+#define BUTT_STD_CONTAINERS
+
+#define BUTT_RUNTIME_ARRAYS (int, face, 0)
+
+		DEFAULT_DATABASE_DECLARATION(BUTT);
+};
+
+
+

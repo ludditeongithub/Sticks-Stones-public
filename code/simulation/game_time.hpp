@@ -3,4 +3,9 @@
 #include "game.hpp"
 #include "world/world.hpp"
 
-uint16_t Game::getDay() { return (absoluteTime % YEAR_LENGTH) / DAY_LENGTH; }
+namespace game {
+
+  inline uint16_t getDay() { return (absoluteTime % YEAR_LENGTH) / DAY_LENGTH; }
+  inline Time currentTimeAdjYear() { return absoluteTime % YEAR_lENGTH; }
+
+}

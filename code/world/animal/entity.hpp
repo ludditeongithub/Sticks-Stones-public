@@ -1,99 +1,51 @@
 #pragma once
 #include "enum.hpp"
+#include "defaults.hpp"
+#include "macros/database.hpp"
 #include <core/containers.hpp>
 #include <core/data.hpp>
 #include <core/random.hpp>
 #include <cstdint>
 #include <systems/find_nearest.hpp>
 #include <world/world.hpp>
-#include <stack>
-#include <vector>
+#include <cereal/types/vector.hpp>
+#include <cereal/archives/binary.hpp>
+#include <cereal/types/stack.hpp>
+#include <macros/constructors.h>
 
-// referenced arrays are stored with units to iterate together.
 struct AnimalDatabase
 {
-	public:
+public:
 	static constexpr uint32_t ENTITY_SIZE =
-	    sizeof(Coord) + sizeof(Health) + sizeof(Hunger) + sizeof(Time) + sizeof(Frame) +
-	    sizeof(AnimalStatus) + sizeof(Action) + sizeof(uint16_t) + sizeof(TargetType) +
+	    sizeof(Coord) +
+	    sizeof(Health) +
+	    sizeof(Hunger) +
+	    sizeof(Time) +
+	    sizeof(Frame) +
+	    sizeof(AnimalStatus) +
+	    sizeof(Action) +
+	    sizeof(uint16_t) +
+	    sizeof(TargetType) +
 	    sizeof(Animal);
 
-	uint16_t size = 0;
-	bool active; // active animalDatabases are ones in player territory; these are
-		     // processed much more frequently.
-	SearchGrid& search;
-	std::stack<uint16_t> freeSlots;
-	std::vector<bool> alive;
+#define ANIMAL_INDEPENDENT_MEMBERS(X) \
 
-	// HOT: processing identical to humans
-	Array<Coord> coords;
-	Array<Health> healths;
-	Array<Hunger> hungers;
-	Array<Time> ages;
-	Array<Frame> frames;
+#define ANIMAL_RUNTIME_ARRAYS(X) \
+  X(Coord, coords, coord, coord)		 \
+  X(Health, healths, maxHealths[animal] * INFANT_HEALTH_MODIFIER, maxHealths[animal])			 \
+  X(Hunger, hungers, maxHungers[animal] * INFANT_HUNGER_MODIFIER, maxHungers[animal])				\
+  X(Time, ages, 0, randomAge(animal))							\
+  X(Frame, frames, 0, 0)						\
+  X(AnimalStatus, animalStatuses, DEFAULT_ANIMAL_STATUS, DEFAULT_ANIMAL_STATUS)		\
+  X(Action, actions, Action::Assign, Action::Assign)			\
+  X(uint16_t, targets, std::numeric_limits<uint16_t>::max(), std::numeric_limits<uint16_t>::max())	\
+  X(TargetType, targetTypes, TargetType::NONE, TargetType::NONE)			\
+  X(Animal, animals, animal, animal)
 
-	// WARM:processing isomorphic to humans
-	Array<AnimalStatus> statuses;
-	Array<Action> actions;
-	Array<uint16_t> targets;
-	Array<TargetType> targetTypes; // consider packing with animal statuses as
-				       // this is related to movement.
-	// COLD
-	std::vector<Sex> sexs;
-	// processing unique to animals
-	Array<Animal> animals;
+#define ANIMAL_STD_CONTAINERS(X) \
+  X(std::vector<Sex>, sexes)
 
-	AnimalDatabase(Arena* arena, uint16_t sz, SearchGrid& sg)
-		: search(sg) {
-		alive = std::vector<bool>(sz);
-		animals = arena_make_array<Animal>(arena, sz);
-		coords = arena_make_array<Coord>(arena, sz);
-		healths = arena_make_array<Health>(arena, sz);
-		hungers = arena_make_array<Hunger>(arena, sz);
-		ages = arena_make_array<Time>(arena, sz);
-		statuses = arena_make_array<AnimalStatus>(arena, sz);
-		sexs = std::vector<bool>(sz);
-		actions = arena_make_array<Action>(arena, sz);
-		targets = arena_make_array<uint16_t>(arena, sz);
-		targetTypes = arena_make_array<TargetType>(arena, sz);
-		frames = arena_make_array<Frame>(arena, sz);
-	}
-
-	inline void birthAnimal(Animal animal, int animalIndex);
-	inline void killAnimal(uint16_t index);
+    DEFAULT_DATABASE_CREATION(Animal, animal, ANIMAL);
+		
 	inline void addAnimals(AnimalSpawnBuffer asb);
-
-	template<typename Archive>
-	inline void save(Archive &archive)
-	{
-		alive.save(archive);
-		animals.save(archive);
-		coords.save(archive);
-		healths.save(archive);
-		hungers.save(archive);
-		ages.save(archive);
-		statuses.save(archive);
-		sexs.save(archive);
-		actions.save(archive);
-		targets.save(archive);
-		targetTypes.save(archive);
-		frames.save(archive);		
-	}
-
-	template<typename Archive>
-	inline void load(Archive &archive)
-	{
-		alive.load(archive);
-		animals.load(archive);
-		coords.load(archive);
-		healths.load(archive);
-		hungers.load(archive);
-		ages.load(archive);
-		statuses.load(archive);
-		sexs.load(archive);
-		actions.load(archive);
-		targets.load(archive);
-		targetTypes.load(archive);
-		frames.load(archive);
-	}
 };

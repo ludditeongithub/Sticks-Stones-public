@@ -4,106 +4,99 @@
 #include <cassert>
 #include <extern/cereal/archives/binary.hpp>
 #include <stdexcept>
+#include <typeinfo>
 
 // right now is really ArrayChunk,which points to next ArrayChunk if applicable
 // TODO: make separate LinkedArray which is really ArrayChunk,
-template <typename T> struct Array
+
+template <typename T>
+struct Array
 {
-	Arena* arena;
-	uint16_t count;
-	uint16_t capacity;
-//	Array *next = nullptr;
+    Arena* arena;
+    size_t count;    
+    size_t capacity;
 
-	// Returns pointer to the data buffer after the chunk metadata
-	T *data() { return reinterpret_cast<T *>(this + 1); }
-	const T *data() const { return reinterpret_cast<const T *>(this + 1); }
+    T* data;
 
-	bool is_full() const { return count == capacity; }
+    T& operator[](size_t index)
+    {
+        if (index >= capacity)
+            throw std::out_of_range("capacity overflow");
 
-	void push(const T &value)
-	{
-		//        if (is_full()) //TODO: error
-		data()[count++] = value;
-	}
+        if (index >= count)
+            count = index + 1;
 
-	void push(T &&value)
-	{
-		//        if (is_full()) //TODO: error
-		data()[count++] = std::move(value);
-		//        return true;
-	}
+        return data[index];
+    }
 
-	uint16_t size()
-	{ // in bytes
-		return sizeof(Array<T>) + sizeof(T) * capacity;
-	}
+    const T& operator[](size_t index) const
+    {
+        if (index >= count)
+            throw std::out_of_range("reading uninitialized element");
 
-	T &operator[](uint16_t index)
-	{
-		if (index >= count)
-			throw std::out_of_range(
-			    "Tried to access index outside of current Array size");
-		return data()[index];
-	}
+        return data[index];
+    }
 
-	const T &operator[](uint16_t index) const
-	{
-		if (index >= count)
-			throw std::out_of_range(
-			    "Tried to access index outside of current Array size");
-		return data()[index];
-	}
+    bool is_full() const
+    {
+        return count == capacity;
+    }
 
-	// void operator=(uint16_t index) const {
-	// 	    if (index >= count)
-	//           throw std::out_of_range(
-	//               "Tried to access index outside of current Array size");
-	// 	    else data()[index] =
-	// }
+    uint16_t size_bytes() const
+    {
+        return sizeof(Array<T>) + sizeof(T) * capacity;
+    }
 
-	template <class Archive> void save(Archive &archive, std::string name)
-	{
-		archive(cereal::binary_data(arena, capacity, count, data()));		
-	}
+    const std::type_info& type() const
+    {
+        return typeid(T);
+    }
 
-template <class Archive> void load(Arena* arena, Archive &archive)
-{
-	archive(cereal::binary_data(arena, capacity, count, data()));
-	arena_load_array<T>(arena, capacity, count, data());
-}	
+    template<class Archive>
+    void save(Archive& ar) const
+    {
+        ar(capacity, count);
+
+        for (uint16_t i = 0; i < count; i++)
+            ar(data[i]);
+    }
+
+    template<class Archive>
+    void load(Archive& ar)
+    {
+        ar(capacity, count);
+
+        data = static_cast<T*>(
+            arena_alloc(arena, sizeof(T) * capacity)
+        );
+
+        for (uint16_t i = 0; i < count; i++)
+            ar(data[i]);
+    }
 };
 
-template <typename T> Array<T> &arena_make_array(Arena *arena, uint16_t capacity)
+template <typename T>
+Array<T>& arena_make_array(Arena* arena, size_t capacity)
 {
-	uint16_t bytes = sizeof(Array<T>) + sizeof(T) * capacity;
+    void* mem = arena_alloc_aligned(
+        arena,
+        sizeof(Array<T>),
+        alignof(Array<T>)
+    );
 
-	void *mem = arena_alloc_aligned(arena, bytes, alignof(Array<T>));
+    Array<T>* arr = new (mem) Array<T>();
 
-	Array<T> &arr = new (mem) Array<T>();
-	arr->count = 0;
-	arr->capacity = capacity;
-//	arr->next = nullptr;
+    arr->arena = arena;
+    arr->capacity = capacity;
+    arr->count = 0;
 
-	return arr;
+    arr->data = static_cast<T*>(
+        arena_alloc(arena, sizeof(T) * capacity)
+    );
+
+    return *arr;
 }
 
-template <typename T> Array<T> &arena_load_array(Arena *arena, uint16_t capacity, uint16_t count, T* data)
-{
-	uint16_t bytes = sizeof(Array<T>) + sizeof(T) * capacity;
-
-	void *mem = arena_alloc_aligned(arena, bytes, alignof(Array<T>));
-
-	Array<T> &arr = new (mem) Array<T>();
-	arr->count = 0;
-	arr->capacity = capacity;
-
-	arr[0] = data();
-	for (size_t i = 1; i < count; i++) {
-		arr.data() = data[i];
-	}
-
-	return arr;
-}
 
 template <typename T>
 struct Array2D
@@ -223,3 +216,66 @@ template <typename T> struct Queue
 
 	inline void resetNext() { nx = current; };
 };
+
+template<typename T>
+struct Stack
+{
+    Array<T>* array;
+
+    bool empty() const
+    {
+        return array->count == 0;
+    }
+
+    uint16_t size() const
+    {
+        return array->count;
+    }
+
+    void push(const T& value)
+    {
+        if (array->count >= array->capacity)
+            throw std::out_of_range("stack overflow");
+
+        array->data[array->count++] = value;
+    }
+
+    void pop()
+    {
+        if (array->count == 0)
+            throw std::out_of_range("stack underflow");
+
+        --array->count;
+    }
+
+    T& top()
+    {
+        if (array->count == 0)
+            throw std::out_of_range("empty stack");
+
+        return array->data[array->count - 1];
+    }
+
+    const T& top() const
+    {
+        if (array->count == 0)
+            throw std::out_of_range("empty stack");
+
+        return array->data[array->count - 1];
+    }
+
+    void clear()
+    {
+        array->count = 0;
+    }
+};
+
+template<typename T>
+Stack<T> arena_make_stack(Arena* arena, uint16_t capacity)
+{
+    Stack<T> stack;
+
+    stack.array = &arena_make_array<T>(arena, capacity);
+
+    return stack;
+}

@@ -29,10 +29,10 @@ class TileDatabase
 	Arena* edgeBufferArena = new Arena(1500 * sizeof(Coord));
 	Array<Coord> edgeBuffer = arena_make_array<Coord>(edgeBufferArena, 1500);
 
+		TileDatabase(Arena *arena, TileSpawnBuffer &tsb, World *world);
 
-	TileDatabase(Arena *arena, TileSpawnBuffer &tsb, World *world);
-
+	
+		
 	Coord getNearestEmptyTile(Coord coord);
-
 	
 };

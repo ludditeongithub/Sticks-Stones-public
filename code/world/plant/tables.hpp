@@ -966,7 +966,7 @@ inline constexpr LookupTable<Plant, Time> germinationPeriod = []
 }();
 
 
-inline constexpr LookupTable<Plant, Time> maxAge = []
+inline constexpr LookupTable<Plant, Time> maxAges = []
 {
 	LookupTable<Plant, Time> lt{};
 	using enum Plant;
@@ -1054,7 +1054,7 @@ inline constexpr LookupTable<Plant, Time> maxAge = []
 	return lt;
 }();
 
-inline constexpr LookupTable<Plant, float> fullMaturityAge = []
+inline constexpr LookupTable<Plant, float> fullMaturityAges = []
 {
 	LookupTable<Plant, float> lt{};
 	using enum Plant;
@@ -1360,7 +1360,7 @@ inline constexpr LookupTable<Plant, int> maxProduce = []
 
 inline uint16_t getProduceCurrentTarget(Plant plant, const Time currentRegrowth, const Time currentAge)
 {
-	Time fma = fullMaturityAge[plant] * maxAge[plant];
+	Time fma = fullMaturityAges[plant] * maxAge[plant];
 	float maturity = std::min(currentAge, fma)  / fma;
 	float producePortion = std::min(currentRegrowth, regrowthMax[plant]) / regrowthMax[plant];
 	return maxProduce[plant] * maturity * producePortion;	

@@ -1,29 +1,25 @@
 #pragma once
 #include <cstdint>
-#include <iostream>
-#include <new>
-#include <tuple>
-#include <type_traits>
-#include <vector>
-#include <cstdint>
 #include <new>
 #include <stdexcept>
 
 struct Arena
 {
     char* start;
-    uint16_t capacity;
-    uint16_t used;
+    size_t capacity;
+    size_t used;
 
-    explicit Arena(uint16_t cap)
+    explicit Arena(size_t cap)
         : capacity(cap), used(0)
     {
-        start = static_cast<char*>(::operator new(cap));
+        start = static_cast<char*>(
+            ::operator new(cap, std::align_val_t(64))
+        );
     }
 
     ~Arena()
     {
-        ::operator delete(start);
+        ::operator delete(start, std::align_val_t(64));
     }
 
     void reset()
@@ -32,41 +28,32 @@ struct Arena
     }
 };
 
-void* arena_alloc(Arena* arena, uint16_t bytes)
+void* arena_alloc(Arena* arena, size_t bytes)
 {
     if (arena->used + bytes > arena->capacity)
-    {
         throw std::bad_alloc();
-    }
 
     void* ptr = arena->start + arena->used;
     arena->used += bytes;
     return ptr;
 }
 
-void* arena_alloc_aligned(
-    Arena* arena,
-    uint16_t bytes,
-    uint16_t alignment)
+void* arena_alloc_aligned(Arena* arena, size_t bytes, size_t alignment)
 {
     uintptr_t current =
         reinterpret_cast<uintptr_t>(arena->start + arena->used);
 
     uintptr_t aligned =
-        (current + alignment - 1) & ~(uintptr_t(alignment - 1));
+        (current + alignment - 1) & ~(alignment - 1);
 
-    uint16_t padding =
-        static_cast<uint16_t>(aligned - current);
+    size_t padding = aligned - current;
 
     if (arena->used + padding + bytes > arena->capacity)
-    {
         throw std::bad_alloc();
-    }
 
     arena->used += padding;
 
     void* ptr = arena->start + arena->used;
-
     arena->used += bytes;
 
     return ptr;

@@ -1,5 +1,7 @@
 #include "game.hpp"
+#include "core/saves.hpp"
 #include "simulation/saveGame.hpp"
+#include <optional>
 
 void Game::initWorld()
 {
@@ -10,35 +12,47 @@ void Game::initWorld()
 	Arena* chunkArena =
 	    new Arena(World::ENTITY_SIZE * (ws->WIDTH_WITH_BORDER + ws->HEIGHT_WITH_BORDER) *
 		      CHUNKS_PER_REGION);
-	world = new World(chunkArena, 50, 50);
+	world = World(chunkArena, 50, 50);
 	world.loadChunkData(*ws);
 
-	Arena* tileArena = new Arena(TileDatabase::ENTITY_SIZE * world.WORLD_TILE_AMOUNT);
-	tileDatabase = new TileDatabase(tileArena, ws->tsb, world);
+	Arena* tileArena = Arena(TileDatabase::ENTITY_SIZE * world.WORLD_TILE_AMOUNT);
+	tileDatabase = TileDatabase(tileArena, ws->tsb, world);
 
 	SearchGrid search(world);
-
+	
 	plantArena = Arena(PlantDatabase::ENTITY_SIZE * ws->psb.size * PLANT_ALLOC_FACTOR);
-	plantDatabase = new PlantDatabase(&plantArena, search, ws->psb.size * PLANT_ALLOC_FACTOR);
+	plantDatabase = PlantDatabase(&plantArena, search, ws->psb.size * PLANT_ALLOC_FACTOR);
 
 	animalArena = Arena(AnimalDatabase::ENTITY_SIZE * ws->asb.size * ANIMAL_ALLOC_FACTOR);
-	animalDatabase = new AnimalDatabase(&animalArena, ws->asb.size * ANIMAL_ALLOC_FACTOR, search);
+	animalDatabase = AnimalDatabase(&animalArena, ws->asb.size * ANIMAL_ALLOC_FACTOR, search);
 	animalDatabase->addAnimals(ws->asb);
 
 	spriteSheetTexture.loadFromFile("sprite_sheet.png");
 
 	unitArena = Arena(UnitDatabase::ENTITY_SIZE * UNIT_CAP);
-	unitDatabase = new UnitDatabase(UNIT_CAP);
+	unitDatabase = UnitDatabase(unitArena, UNIT_CAP);
 }
 
-GameSave& Game::saveGame(std::string name, bool newSave)
+GameSave& Game::saveGame(std::string name, GameSave* save)
 {
-  if (newSave) {
+		bool successful = false;
+  if (save == nullptr)
+  {
+		  save = new GameSave(name);
+		  successful = true;
+		  
   }
   else
-  {
-    save(this);
+  {		  
+		  successful = ; // TODO: print urgent box "Overwrite"
   }
+  if (successful) save->save(*this);
+}
+
+void Game::loadGame(GameSave& save)
+{
+		initWorld();
+		save.load(*this);		
 }
 
 void Game::deinitWorld()

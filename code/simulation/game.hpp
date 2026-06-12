@@ -38,13 +38,15 @@ UnitDatabase unitDatabase;
 Arena itemArena;
 ItemDatabase itemDatabase;
 BuildableDatabase buildableDatabase;
-Arena buildableArena;
+Arena buildableArena;  
 
 void initWorld();
 
 void deinitWorld();
 
-void saveGame(std::string name, bool newSave);
+GameSave &saveGame(std::string name, GameSave *save);
+
+void loadGame(GameSave& save);  
 
 void newGame();
 

@@ -7,15 +7,15 @@ inline void AnimalDatabase::birthAnimal(Animal animal, Coord coord, bool sex)
 		animals.push(animal);
 		coords.push(coord);
 		healths.push(maxHealths[animal]);
-		hungers.push(maxHungers[animal] * chance.next());
-		ages.push(maxAges[animal] * chance.next());
+		hungers.push(maxHungers[animal] * random_chance->next());
+		ages.push(maxAges[animal] * random_chance->next());
 		animalStatuses.push(PackedEnum3<Direction, 2, ActionStatus, 4, MatingStatus, 2>(
 		    Direction::North, ActionStatus::Idle, MatingStatus::Idle));
 		sexs.emplace_back(sex);
-		actions.push(Action::Assign);
-		targets.push(std::numeric_limits<uint16_t>::max());
+		actions->push(Action::Assign);
+		targets->push(std::numeric_limits<uint16_t>::max());
 		targetTypes.push(TargetType::NONE);
-		alive[size++] = true;
+		alive[currentSize++] = true;
 	}
 	else
 	{
@@ -25,8 +25,8 @@ inline void AnimalDatabase::birthAnimal(Animal animal, Coord coord, bool sex)
 		animals[i] = animal;
 		coords[i] = coord;
 		healths[i] = maxHealths[animal];
-		hungers[i] = maxHungers[animal] * chance.next();
-		ages[i] = maxAges[animal] * chance.next();
+		hungers[i] = maxHungers[animal] * random_chance->next();
+		ages[i] = maxAges[animal] * random_chance->next();
 		animalStatuses[i] = PackedEnum3<Direction, 2, ActionStatus, 4, MatingStatus, 2>(
 		    Direction::North, ActionStatus::Idle, MatingStatus::Idle);
 		sexs[i] = sex;

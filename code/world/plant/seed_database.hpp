@@ -1,15 +1,18 @@
 #pragma once
-#include <stack>
-#include <cstdint>
 #include <core/containers.hpp>
 #include "enum.hpp"
+#include "macros/database.hpp"
 #include <core/data.hpp>
 
 struct SeedDatabase {
-	std::stack<uint16_t> nextSeedIndex;
-	int seedSize = 0;
-	Array<Plant> seeds;
-	Array<Coord> seedCoords;
+#define SEED_INDEPENDENT_MEMBERS(X)
 
-	SeedDatabase
+#define SEED_STD_CONTAINERS(X)
+		
+#define SEED_RUNTIME_ARRAYS(X) \
+X(Plant, seeds, plant, plant) \
+X(Coord, coords, coord, coord) \
+X(Time, ages)
+
+DEFAULT_DATABASE_CREATION(Seed, seed, SEED);	
 };

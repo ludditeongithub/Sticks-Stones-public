@@ -1,5 +1,4 @@
 #pragma once
-#include <core/better_enum.hpp>
 #include <cstdint>
 #include <core/packed_enum.hpp>
 // TODO: move all tool heads, and moulds, to variant items, then also figure out how ore and metal work (roles to commodities will also need to be fixed)

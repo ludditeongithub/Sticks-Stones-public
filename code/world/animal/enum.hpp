@@ -2,7 +2,6 @@
 
 #include <core/data.hpp>
 #include <core/packed_enum.hpp>
-#include <extern/better_enum.hpp>
 #include <cstdint>
 
 // HOT
