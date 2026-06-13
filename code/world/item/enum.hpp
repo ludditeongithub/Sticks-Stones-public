@@ -502,4 +502,4 @@ enum class ContainerType : uint8_t
 	MAX
 };
 
-using SpecialItemData = PackedEnum2<Material, 5, Quality, 3>;
+using SpecialItemData = PackedEnum<EnumField<Material, 5>, EnumField<Quality, 3>>;

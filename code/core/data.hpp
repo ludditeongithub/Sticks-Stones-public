@@ -38,6 +38,30 @@ enum class Direction : uint8_t
 	West = 3
 };
 
+//TODO: consider stride
+inline Coord getPos(Direction direction, Coord coord, uint8_t stride = 1)
+{
+  Coord newPos;
+  switch (direction) {
+  case Direction::North:
+    newPos = {coord.x, coord.y - stride};
+    break;
+  case Direction::South:
+    newPos = {coord.x, coord.y + stride};
+    break;
+  case Direction::East:
+    newPos = {coord.x + stride, coord.y};
+    break;
+  case Direction::West:
+    newPos = {coord.x - stride, coord.y};
+    break;
+  default:
+  // TODO: error
+    break;
+  }
+  return newPos;
+}
+
 using Time = uint32_t;
 using Frame = uint8_t;
 

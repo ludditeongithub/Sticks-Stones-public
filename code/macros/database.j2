@@ -1,0 +1,193 @@
+#pragma once
+#include "constructors.hpp"
+
+struct {{ entity_name }}Database {
+
+    // =========================
+    // BASE DATABASE MEMBERS
+    // =========================
+
+    size_t capacity;
+{% if not immortal in traits %}
+    size_t size;
+    Stack<size_t> freeSlots;
+    Array<bool> alives;
+{% endfor %}    
+
+{% if movable or searchable in traits %}
+  SearchGrid& search;
+{% endfor %}
+
+{% if positional or movable in traits %}
+  Array<Coord> coords;
+{% endfor %}
+
+{% if movable in traits %}
+  Array<Direction> directions;
+{% endfor %}
+
+    // =========================
+    // ENTITY-SPECIFIC MEMBERS
+    // =========================
+
+{% for m in independent_members %}
+    {{ m.type }} {{ m.name }};
+{% endfor %}
+
+{% for c in std_containers %}
+    {{ c.type }} {{ c.name }};
+{% endfor %}
+
+{% for r in runtime_arrays %}
+    {{ r.type }} {{ r.name }};
+{% endfor %}
+
+    // =========================
+    // SPAWN
+    // =========================
+
+{% if not immortal in traits %}
+  bool spawn({{ entity_name }} entity, bool newborn)
+    {
+        if (size + 1 > capacity)
+            return false;
+
+        size_t i;
+
+        if (freeSlots.empty())
+        {
+            i = size;
+            size++;
+        }
+        else
+        {
+            i = freeSlots.top();
+            freeSlots.pop();
+        }
+
+        alives[i] = true;
+
+{% if positional or movable in traits %}
+        coords[i] = coord;
+{% endif %}
+
+        if (newborn)
+        {
+{% for r in runtime_arrays %}
+            {{ r.name }}[i] = {{ r.newborn }};
+{% endfor %}
+        }
+        else
+        {
+{% for r in runtime_arrays %}
+            {{ r.name }}[i] = {{ r.adult }};
+{% endfor %}
+        }
+{% if searchable in traits %}
+  
+{% endfor %}
+
+        return true;
+    }
+{% endfor %}
+
+    // =========================
+    // REMOVE
+    // =========================
+
+{% if not immortal in traits %}
+  bool remove(size_t i)
+    {
+        if (!alives[i])
+            return false;
+
+        freeSlots.push(i);
+        alives[i] = false;
+
+        search.deleteEntity;
+
+        return true;
+    }
+{% endfor %}    
+
+    // =========================
+    // MOVE
+    // =========================
+
+    {% if movable in traits %}
+    inline bool attemptMoveEntity(size_t index)
+    {
+        Coord& pos = coords[index];
+        Coord newPos = getPos(directions[index], pos);
+        size_t ti = world.getTileIndexFromCoord(newPos);
+
+        if (search->tiles->occupieds[ti] == false)
+        {
+            pos = newPos;
+            return true;
+        }
+
+        return false;
+    }
+    {% endif %}
+      
+    // =========================
+    // SERIALIZATION
+    // =========================
+
+    template <class Archive>
+    void save(Archive &archive) const
+    {
+    archive(capacity);
+{% if not immortal in traits %}
+        archive(size);
+        archive(freeSlots);
+        archive(alives);
+{% endfor %}
+    
+{% for m in independent_members %}
+        archive({{ m.name }});
+{% endfor %}
+
+{% for c in std_containers %}
+        archive({{ c.name }});
+{% endfor %}
+
+{% for r in runtime_arrays %}
+        {{ r.name }}.save(archive);
+{% endfor %}
+    }
+
+    template <class Archive>
+    void load(Archive &archive)
+    {
+        archive(capacity);
+{% if not immortal in traits %}
+        archive(size);
+        archive(freeSlots);
+        archive(alives);
+{% endfor %}
+        
+{% for m in independent_members %}
+        archive({{ m.name }});
+{% endfor %}
+
+{% for c in std_containers %}
+        archive({{ c.name }});
+{% endfor %}
+
+{% for r in runtime_arrays %}
+        {{ r.name }}.load(archive);
+{% endfor %}
+    }
+
+    // =========================
+    // CONSTRUCTOR
+    // =========================
+
+    {{ entity_name }}Database(Arena *arena, size_t capacity)
+    {
+        this->capacity = capacity;
+        this->size = 0;
+    }
+};

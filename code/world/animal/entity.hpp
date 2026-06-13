@@ -29,23 +29,25 @@ public:
 	    sizeof(Animal);
 
 #define ANIMAL_INDEPENDENT_MEMBERS(X) \
+X(SearchGrid& search)
+  
+#define ANIMAL_RUNTIME_ARRAYS(X)                                          \
+	X(Health, healths, maxHealths[animal] * INFANT_HEALTH_MODIFIER, maxHealths[animal])        \
+	X(Hunger, hungers, maxHungers[animal] * INFANT_HUNGER_MODIFIER, maxHungers[animal])        \
+	X(Time, ages, 0, randomAge(animal))                                                        \
+	X(Frame, frames, 0, 0)                                                                     \
+	X(AnimalStatus, animalStatuses, DEFAULT_ANIMAL_STATUS, DEFAULT_ANIMAL_STATUS)              \
+	X(Action, actions, Action::Assign, Action::Assign)                                         \
+	X(uint16_t, targets, std::numeric_limits<uint16_t>::max(),                                 \
+	  std::numeric_limits<uint16_t>::max())                                                    \
+	X(TargetType, targetTypes, TargetType::NONE, TargetType::NONE)                             \
+  X(Animal, animals, animal, animal)                                                         \
+  X(Sex, sexes, random_bool->next(), random_bool->next())
 
-#define ANIMAL_RUNTIME_ARRAYS(X) \
-  X(Coord, coords, coord, coord)		 \
-  X(Health, healths, maxHealths[animal] * INFANT_HEALTH_MODIFIER, maxHealths[animal])			 \
-  X(Hunger, hungers, maxHungers[animal] * INFANT_HUNGER_MODIFIER, maxHungers[animal])				\
-  X(Time, ages, 0, randomAge(animal))							\
-  X(Frame, frames, 0, 0)						\
-  X(AnimalStatus, animalStatuses, DEFAULT_ANIMAL_STATUS, DEFAULT_ANIMAL_STATUS)		\
-  X(Action, actions, Action::Assign, Action::Assign)			\
-  X(uint16_t, targets, std::numeric_limits<uint16_t>::max(), std::numeric_limits<uint16_t>::max())	\
-  X(TargetType, targetTypes, TargetType::NONE, TargetType::NONE)			\
-  X(Animal, animals, animal, animal)
-
-#define ANIMAL_STD_CONTAINERS(X) \
-  X(std::vector<Sex>, sexes)
+#define ANIMAL_STD_CONTAINERS(X)
 
     DEFAULT_DATABASE_CREATION(Animal, animal, ANIMAL);
-		
-	inline void addAnimals(AnimalSpawnBuffer asb);
+
+  inline void addAnimals(AnimalSpawnBuffer asb);
+  inline void move(size_t i);
 };

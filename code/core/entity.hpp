@@ -16,46 +16,44 @@
 
 using Entity = std::variant<Role, Animal, Plant, Item, Buildable>;
 
-
-
 struct OptionalEntitySearchData
 {
-	std::optional<uint16_t> index;
+	std::optional<size_t> index;
 	Coord position;
 };	
 
 //TODO: make it possible for these to be variant or null
 struct EntitySearchData {
-   uint16_t index;
+   size_t index;
    Coord position;
 };
 
 struct AnimalRenderData {
-  uint16_t index;
+  size_t index;
   Coord position;
   Animal animal;
 };
 
 struct PlantRenderData {
-  uint16_t index;
+  size_t index;
   Coord position;
 	Plant plant;
 };
 
 struct ItemRenderData {
-  uint16_t index;
+  size_t index;
   Coord position;
   Item item;
 };
 
 struct BuildableRenderData {
-	uint16_t index;
+	size_t index;
 	Coord position;
 	Buildable buildable;
 };
 
 struct UnitRenderData {
-  uint16_t index;
+  size_t index;
   Coord position;
 	Unit unit;
 };
@@ -63,15 +61,15 @@ struct UnitRenderData {
 using EntityRenderData = std::variant<PlantRenderData, AnimalRenderData, UnitRenderData, BuildableRenderData, ItemRenderData>;
 
   struct EntityRenderBuffer {
-    uint16_t plantAmount;
+    size_t plantAmount;
     std::array<PlantRenderData, CHUNK_SIZE> plants;
-    uint16_t animalAmount;
+    size_t animalAmount;
     std::array<AnimalRenderData, CHUNK_SIZE> animals;
-    uint16_t unitAmount;
+    size_t unitAmount;
     std::array<UnitRenderData, CHUNK_SIZE> units;
-    uint16_t itemAmount;
+    size_t itemAmount;
     std::array<ItemRenderData, CHUNK_SIZE> items;
-    uint16_t buildableAmount;
+    size_t buildableAmount;
     std::array<BuildableRenderData, CHUNK_SIZE> buildables;
   };
 

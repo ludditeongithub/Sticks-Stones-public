@@ -1,391 +1,180 @@
 #pragma once
+
 #include <cstdint>
-//TODO: make proxy interfaces nameable , perhaps automatically nameable based on type
-template <typename E1, unsigned B1, typename E2, unsigned B2> struct PackedEnum2
+#include <tuple>
+#include <type_traits>
+
+template<typename Enum, unsigned Bits>
+struct EnumField
 {
-	static_assert(B1 + B2 <= 8);
+    using enum_type = Enum;
+    static constexpr unsigned bits = Bits;
 
-	uint8_t raw{};
-
-	constexpr PackedEnum2(E1 e1, E2 e2) : raw((uint8_t(e1) << B2) | uint8_t(e2)) {}
-
-      private:
-	static constexpr uint8_t mask2 = (1u << B2) - 1;
-	static constexpr uint8_t mask1 = ((1u << B1) - 1) << B2;
-
-      public:
-	struct FirstProxy
-	{
-		PackedEnum2 &parent;
-
-		constexpr operator E1() const { return E1(parent.raw >> B2); }
-
-		constexpr FirstProxy &operator=(E1 value)
-		{
-			parent.raw = (parent.raw & ~mask1) | (uint8_t(value) << B2);
-			return *this;
-		}
-	};
-
-	struct SecondProxy
-	{
-		PackedEnum2 &parent;
-
-		constexpr operator E2() const { return E2(parent.raw & mask2); }
-
-		constexpr SecondProxy &operator=(E2 value)
-		{
-			parent.raw = (parent.raw & ~mask2) | uint8_t(value);
-			return *this;
-		}
-	};
-
-	constexpr FirstProxy first() { return FirstProxy{*this}; }
-	constexpr SecondProxy second() { return SecondProxy{*this}; }
-
-	constexpr E1 first() const { return E1(raw >> B2); }
-
-	constexpr E2 second() const { return E2(raw & mask2); }
+    static_assert(std::is_enum_v<Enum>);
 };
 
-template <typename E1, unsigned B1, typename E2, unsigned B2, typename E3, unsigned B3>
-struct PackedEnum3
+template<typename T>
+constexpr T bitmask(unsigned bits)
 {
-	static_assert(B1 + B2 + B3 <= 8);
+    constexpr unsigned width = sizeof(T) * 8;
 
-	uint8_t raw{};
+    if (bits >= width)
+        return ~T{0};
 
-	constexpr PackedEnum3(E1 e1, E2 e2, E3 e3)
-	    : raw((uint8_t(e1) << (B2 + B3)) | (uint8_t(e2) << B3) | uint8_t(e3))
-	{
-	}
+    return (T{1} << bits) - 1;
+}
 
-      private:
-	static constexpr uint8_t mask1 = ((1u << B1) - 1) << (B2 + B3);
-	static constexpr uint8_t mask2 = ((1u << B2) - 1) << B3;
-	static constexpr uint8_t mask3 = (1u << B3) - 1;
+template<unsigned Bits>
+using smallest_uint_t =
+    std::conditional_t<
+        Bits <= 8,
+        uint8_t,
+        std::conditional_t<
+            Bits <= 16,
+            uint16_t,
+            std::conditional_t<
+                Bits <= 32,
+                uint32_t,
+                uint64_t>>>;
 
-      public:
-	struct FirstProxy
-	{
-		PackedEnum3 &p;
-
-		constexpr operator E1() const { return E1((p.raw & mask1) >> (B2 + B3)); }
-
-		constexpr FirstProxy &operator=(E1 value)
-		{
-			p.raw = (p.raw & ~mask1) | ((uint8_t(value) << (B2 + B3)) & mask1);
-			return *this;
-		}
-	};
-
-	struct SecondProxy
-	{
-		PackedEnum3 &p;
-
-		constexpr operator E2() const { return E2((p.raw & mask2) >> B3); }
-
-		constexpr SecondProxy &operator=(E2 value)
-		{
-			p.raw = (p.raw & ~mask2) | ((uint8_t(value) << B3) & mask2);
-			return *this;
-		}
-	};
-
-	struct ThirdProxy
-	{
-		PackedEnum3 &p;
-
-		constexpr operator E3() const { return E3(p.raw & mask3); }
-
-		constexpr ThirdProxy &operator=(E3 value)
-		{
-			p.raw = (p.raw & ~mask3) | (uint8_t(value) & mask3);
-			return *this;
-		}
-	};
-
-	constexpr FirstProxy first() { return {*this}; }
-	constexpr SecondProxy second() { return {*this}; }
-	constexpr ThirdProxy third() { return {*this}; }
-
-	constexpr E1 first() const { return E1((raw & mask1) >> (B2 + B3)); }
-	constexpr E2 second() const { return E2((raw & mask2) >> B3); }
-	constexpr E3 third() const { return E3(raw & mask3); }
-};
-
-template <typename E1, unsigned B1, typename E2, unsigned B2, typename E3, unsigned B3>
-struct PackedEnum3_16
+template<typename... Fs>
+class PackedEnum
 {
-	static_assert(B1 + B2 + B3 <= 16);
+private:
+    static constexpr unsigned total_bits = (Fs::bits + ... + 0);
 
-	uint16_t raw{};
+    static_assert(total_bits <= 64);
 
-	constexpr PackedEnum3_16(E1 e1, E2 e2, E3 e3)
-	    : raw((uint16_t(e1) << (B2 + B3)) | (uint16_t(e2) << B3) | uint16_t(e3))
-	{
-	}
+public:
+    using Storage = smallest_uint_t<total_bits>;
 
-      private:
-	static constexpr uint16_t mask1 = ((uint16_t(1) << B1) - 1) << (B2 + B3);
-	static constexpr uint16_t mask2 = ((uint16_t(1) << B2) - 1) << B3;
-	static constexpr uint16_t mask3 = (uint16_t(1) << B3) - 1;
+    Storage raw{};
 
-      public:
-	struct FirstProxy
-	{
-		PackedEnum3_16 &p;
+private:
+    template<typename Enum>
+    static consteval unsigned bits_of()
+    {
+        unsigned result = 0;
+        bool found = false;
 
-		constexpr operator E1() const { return E1((p.raw & mask1) >> (B2 + B3)); }
+        (
+            [&]
+            {
+                if constexpr (std::is_same_v<Enum, typename Fs::enum_type>)
+                {
+                    result = Fs::bits;
+                    found = true;
+                }
+            }(),
+            ...
+        );
 
-		constexpr FirstProxy &operator=(E1 value)
-		{
-			p.raw = (p.raw & ~mask1) | ((uint16_t(value) << (B2 + B3)) & mask1);
-			return *this;
-		}
-	};
+        //static_assert(found, "Enum not present in PackedEnum");
 
-	struct SecondProxy
-	{
-		PackedEnum3_16 &p;
+        return result;
+    }
 
-		constexpr operator E2() const { return E2((p.raw & mask2) >> B3); }
+    template<typename Enum>
+    static consteval unsigned offset_of()
+    {
+        constexpr auto fields = std::tuple<Fs...>{};
 
-		constexpr SecondProxy &operator=(E2 value)
-		{
-			p.raw = (p.raw & ~mask2) | ((uint16_t(value) << B3) & mask2);
-			return *this;
-		}
-	};
+        unsigned offset = 0;
+        bool found = false;
 
-	struct ThirdProxy
-	{
-		PackedEnum3_16 &p;
+        [&]<std::size_t... I>(std::index_sequence<I...>)
+        {
+            (
+                [&]
+                {
+                    using F = std::tuple_element_t<I, decltype(fields)>;
 
-		constexpr operator E3() const { return E3(p.raw & mask3); }
+                    if constexpr (std::is_same_v<Enum, typename F::enum_type>)
+                    {
+                        for (std::size_t j = I + 1; j < sizeof...(Fs); ++j)
+                        {
+                            offset += []<std::size_t K>()
+                            {
+                                using G = std::tuple_element_t<K, decltype(fields)>;
+                                return G::bits;
+                            }.template operator()<j>();
+                        }
 
-		constexpr ThirdProxy &operator=(E3 value)
-		{
-			p.raw = (p.raw & ~mask3) | (uint16_t(value) & mask3);
-			return *this;
-		}
-	};
+                        found = true;
+                    }
+                }(),
+                ...
+            );
+        }(std::make_index_sequence<sizeof...(Fs)>{});
 
-	constexpr FirstProxy first() { return {*this}; }
-	constexpr SecondProxy second() { return {*this}; }
-	constexpr ThirdProxy third() { return {*this}; }
+        // static_assert(found, "Enum not present in PackedEnum");
 
-	constexpr E1 first() const { return E1((raw & mask1) >> (B2 + B3)); }
-	constexpr E2 second() const { return E2((raw & mask2) >> B3); }
-	constexpr E3 third() const { return E3(raw & mask3); }
-};
+        return offset;
+    }
 
-template <typename E1, unsigned B1, typename E2, unsigned B2, typename E3, unsigned B3, typename E4,
-	  unsigned B4>
-struct PackedEnum4_32
-{
-	static_assert(B1 + B2 + B3 + B4 <= 32);
+    template<typename Enum>
+    static constexpr unsigned field_bits = bits_of<Enum>();
 
-	uint32_t raw{};
+    template<typename Enum>
+    static constexpr unsigned field_offset = []{
+        unsigned result = 0;
+        bool found = false;
 
-	constexpr PackedEnum4_32(E1 e1, E2 e2, E3 e3, E4 e4)
-	    : raw((uint32_t(e1) << (B2 + B3 + B4)) | (uint32_t(e2) << (B3 + B4)) |
-		  (uint32_t(e3) << B4) | uint32_t(e4))
-	{
-	}
+        auto process = [&]<typename F>()
+        {
+            if (!found)
+            {
+                if constexpr (std::is_same_v<Enum, typename F::enum_type>)
+                {
+                    found = true;
+                }
+                else
+                {
+                    result += F::bits;
+                }
+            }
+        };
 
-      private:
-	static constexpr unsigned S1 = B2 + B3 + B4;
-	static constexpr unsigned S2 = B3 + B4;
-	static constexpr unsigned S3 = B4;
+        (process.template operator()<Fs>(), ...);
 
-	static constexpr uint32_t M1 = ((uint32_t(1) << B1) - 1) << S1;
-	static constexpr uint32_t M2 = ((uint32_t(1) << B2) - 1) << S2;
-	static constexpr uint32_t M3 = ((uint32_t(1) << B3) - 1) << S3;
-	static constexpr uint32_t M4 = (uint32_t(1) << B4) - 1;
+        return total_bits - result - field_bits<Enum>;
+    }();
 
-      public:
-	struct FirstProxy
-	{
-		PackedEnum4_32 &p;
-		constexpr operator E1() const { return E1((p.raw & M1) >> S1); }
-		constexpr FirstProxy &operator=(E1 value)
-		{
-			p.raw = (p.raw & ~M1) | ((uint32_t(value) << S1) & M1);
-			return *this;
-		}
-	};
+    template<typename Enum>
+    static constexpr Storage field_mask =
+        bitmask<Storage>(field_bits<Enum>)
+        << field_offset<Enum>;
 
-	struct SecondProxy
-	{
-		PackedEnum4_32 &p;
-		constexpr operator E2() const { return E2((p.raw & M2) >> S2); }
-		constexpr SecondProxy &operator=(E2 value)
-		{
-			p.raw = (p.raw & ~M2) | ((uint32_t(value) << S2) & M2);
-			return *this;
-		}
-	};
+public:
+    constexpr PackedEnum() = default;
 
-	struct ThirdProxy
-	{
-		PackedEnum4_32 &p;
-		constexpr operator E3() const { return E3((p.raw & M3) >> S3); }
-		constexpr ThirdProxy &operator=(E3 value)
-		{
-			p.raw = (p.raw & ~M3) | ((uint32_t(value) << S3) & M3);
-			return *this;
-		}
-	};
+    constexpr PackedEnum(typename Fs::enum_type... values)
+    {
+        (set<typename Fs::enum_type>(values), ...);
+    }
 
-	struct FourthProxy
-	{
-		PackedEnum4_32 &p;
-		constexpr operator E4() const { return E4(p.raw & M4); }
-		constexpr FourthProxy &operator=(E4 value)
-		{
-			p.raw = (p.raw & ~M4) | (uint32_t(value) & M4);
-			return *this;
-		}
-	};
+    template<typename Enum>
+    constexpr Enum get() const
+    {
+        using U = std::underlying_type_t<Enum>;
 
-	constexpr FirstProxy first() { return {*this}; }
-	constexpr SecondProxy second() { return {*this}; }
-	constexpr ThirdProxy third() { return {*this}; }
-	constexpr FourthProxy fourth() { return {*this}; }
+        return static_cast<Enum>(
+            static_cast<U>(
+                (raw & field_mask<Enum>) >>
+                field_offset<Enum>));
+    }
 
-	constexpr E1 first() const { return E1((raw & M1) >> S1); }
-	constexpr E2 second() const { return E2((raw & M2) >> S2); }
-	constexpr E3 third() const { return E3((raw & M3) >> S3); }
-	constexpr E4 fourth() const { return E4(raw & M4); }
-};
+    template<typename Enum>
+    constexpr void set(Enum value)
+    {
+        using U = std::underlying_type_t<Enum>;
 
-template <typename E1, unsigned B1, typename E2, unsigned B2, typename E3, unsigned B3, typename E4,
-	  unsigned B4, typename E5, unsigned B5, typename E6, unsigned B6, typename E7, unsigned B7>
-struct PackedEnum7_64
-{
-	static_assert(B1 + B2 + B3 + B4 + B5 + B6 + B7 <= 64, "Total bit width exceeds 64 bits");
+        Storage v = static_cast<Storage>(
+            static_cast<U>(value));
 
-	uint64_t raw{};
-
-      private:
-	static constexpr unsigned S1 = B2 + B3 + B4 + B5 + B6 + B7;
-	static constexpr unsigned S2 = B3 + B4 + B5 + B6 + B7;
-	static constexpr unsigned S3 = B4 + B5 + B6 + B7;
-	static constexpr unsigned S4 = B5 + B6 + B7;
-	static constexpr unsigned S5 = B6 + B7;
-	static constexpr unsigned S6 = B7;
-	static constexpr unsigned S7 = 0;
-
-	static constexpr uint64_t M1 = ((uint64_t(1) << B1) - 1) << S1;
-	static constexpr uint64_t M2 = ((uint64_t(1) << B2) - 1) << S2;
-	static constexpr uint64_t M3 = ((uint64_t(1) << B3) - 1) << S3;
-	static constexpr uint64_t M4 = ((uint64_t(1) << B4) - 1) << S4;
-	static constexpr uint64_t M5 = ((uint64_t(1) << B5) - 1) << S5;
-	static constexpr uint64_t M6 = ((uint64_t(1) << B6) - 1) << S6;
-	static constexpr uint64_t M7 = ((uint64_t(1) << B7) - 1) << S7;
-
-      public:
-	constexpr PackedEnum7_64() = default;
-
-	constexpr PackedEnum7_64(E1 e1, E2 e2, E3 e3, E4 e4, E5 e5, E6 e6, E7 e7)
-	    : raw(((uint64_t(e1) << S1) & M1) | ((uint64_t(e2) << S2) & M2) |
-		  ((uint64_t(e3) << S3) & M3) | ((uint64_t(e4) << S4) & M4) |
-		  ((uint64_t(e5) << S5) & M5) | ((uint64_t(e6) << S6) & M6) |
-		  ((uint64_t(e7) << S7) & M7))
-	{
-	}
-
-	struct FirstProxy
-	{
-		PackedEnum7_64 &p;
-		constexpr operator E1() const { return E1((p.raw & M1) >> S1); }
-		constexpr FirstProxy &operator=(E1 value)
-		{
-			p.raw = (p.raw & ~M1) | ((uint64_t(value) << S1) & M1);
-			return *this;
-		}
-	};
-
-	struct SecondProxy
-	{
-		PackedEnum7_64 &p;
-		constexpr operator E2() const { return E2((p.raw & M2) >> S2); }
-		constexpr SecondProxy &operator=(E2 value)
-		{
-			p.raw = (p.raw & ~M2) | ((uint64_t(value) << S2) & M2);
-			return *this;
-		}
-	};
-
-	struct ThirdProxy
-	{
-		PackedEnum7_64 &p;
-		constexpr operator E3() const { return E3((p.raw & M3) >> S3); }
-		constexpr ThirdProxy &operator=(E3 value)
-		{
-			p.raw = (p.raw & ~M3) | ((uint64_t(value) << S3) & M3);
-			return *this;
-		}
-	};
-
-	struct FourthProxy
-	{
-		PackedEnum7_64 &p;
-		constexpr operator E4() const { return E4((p.raw & M4) >> S4); }
-		constexpr FourthProxy &operator=(E4 value)
-		{
-			p.raw = (p.raw & ~M4) | ((uint64_t(value) << S4) & M4);
-			return *this;
-		}
-	};
-
-	struct FifthProxy
-	{
-		PackedEnum7_64 &p;
-		constexpr operator E5() const { return E5((p.raw & M5) >> S5); }
-		constexpr FifthProxy &operator=(E5 value)
-		{
-			p.raw = (p.raw & ~M5) | ((uint64_t(value) << S5) & M5);
-			return *this;
-		}
-	};
-
-	struct SixthProxy
-	{
-		PackedEnum7_64 &p;
-		constexpr operator E6() const { return E6((p.raw & M6) >> S6); }
-		constexpr SixthProxy &operator=(E6 value)
-		{
-			p.raw = (p.raw & ~M6) | ((uint64_t(value) << S6) & M6);
-			return *this;
-		}
-	};
-
-	struct SeventhProxy
-	{
-		PackedEnum7_64 &p;
-		constexpr operator E7() const { return E7((p.raw & M7) >> S7); }
-		constexpr SeventhProxy &operator=(E7 value)
-		{
-			p.raw = (p.raw & ~M7) | ((uint64_t(value) << S7) & M7);
-			return *this;
-		}
-	};
-
-	constexpr FirstProxy first() { return {*this}; }
-	constexpr SecondProxy second() { return {*this}; }
-	constexpr ThirdProxy third() { return {*this}; }
-	constexpr FourthProxy fourth() { return {*this}; }
-	constexpr FifthProxy fifth() { return {*this}; }
-	constexpr SixthProxy sixth() { return {*this}; }
-	constexpr SeventhProxy seventh() { return {*this}; }
-
-	constexpr E1 first() const { return E1((raw & M1) >> S1); }
-	constexpr E2 second() const { return E2((raw & M2) >> S2); }
-	constexpr E3 third() const { return E3((raw & M3) >> S3); }
-	constexpr E4 fourth() const { return E4((raw & M4) >> S4); }
-	constexpr E5 fifth() const { return E5((raw & M5) >> S5); }
-	constexpr E6 sixth() const { return E6((raw & M6) >> S6); }
-	constexpr E7 seventh() const { return E7((raw & M7) >> S7); }
+        raw =
+            (raw & ~field_mask<Enum>) |
+            ((v << field_offset<Enum>) &
+             field_mask<Enum>);
+    }
 };

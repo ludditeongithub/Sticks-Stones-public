@@ -43,7 +43,7 @@ enum class MatingStatus
 	Infertile
 };
 
-using AnimalStatus = PackedEnum3<Direction, 2, ActionStatus, 4, MatingStatus, 2>;
+using AnimalStatus = PackedEnum<EnumField<Direction, 2>, EnumField<ActionStatus, 4>, EnumField<MatingStatus, 2>>;
 
 // COLD
 

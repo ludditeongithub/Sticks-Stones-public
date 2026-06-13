@@ -7,14 +7,6 @@
 #include <core/tables.hpp>
 #include <core/data.hpp>
 
-enum class VisionStatus
-{
-	Hidden,
-	Revealed,
-	Explored,
-	Claimed
-};
-
 constexpr uint16_t AVERAGE_MOVE_COST = 5;
 
 inline uint32_t World::getTileIndexFromCoord(Coord c) { return (c.y * WORLD_TILE_LENGTH) + c.x; }

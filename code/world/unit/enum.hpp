@@ -520,4 +520,4 @@ enum class ActState : uint8_t
 };
 
 //TODO: ensure Frame can be properly packed
-using FrameData = PackedEnum3<ActState, 2, Direction, 2, Frame, 4>;
+using FrameData = PackedEnum<EnumField<ActState, 2>, EnumField<Direction, 2>, EnumField<Frame, 4>>;

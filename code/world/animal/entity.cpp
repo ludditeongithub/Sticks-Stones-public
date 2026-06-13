@@ -1,55 +1,28 @@
 #include "entity.hpp"
 
-inline void AnimalDatabase::birthAnimal(Animal animal, Coord coord, bool sex)
+inline void AnimalDatabase::killAnimal(size_t index)
 {
-	if (freeSlots.empty())
-	{
-		animals.push(animal);
-		coords.push(coord);
-		healths.push(maxHealths[animal]);
-		hungers.push(maxHungers[animal] * random_chance->next());
-		ages.push(maxAges[animal] * random_chance->next());
-		animalStatuses.push(PackedEnum3<Direction, 2, ActionStatus, 4, MatingStatus, 2>(
-		    Direction::North, ActionStatus::Idle, MatingStatus::Idle));
-		sexs.emplace_back(sex);
-		actions->push(Action::Assign);
-		targets->push(std::numeric_limits<uint16_t>::max());
-		targetTypes.push(TargetType::NONE);
-		alive[currentSize++] = true;
-	}
+	if (remove(index))
+	  makeCorpse(animals[index], coords[index]);
 	else
-	{
-		uint16_t i = freeSlots.top();
-		freeSlots.pop();
-
-		animals[i] = animal;
-		coords[i] = coord;
-		healths[i] = maxHealths[animal];
-		hungers[i] = maxHungers[animal] * random_chance->next();
-		ages[i] = maxAges[animal] * random_chance->next();
-		animalStatuses[i] = PackedEnum3<Direction, 2, ActionStatus, 4, MatingStatus, 2>(
-		    Direction::North, ActionStatus::Idle, MatingStatus::Idle);
-		sexs[i] = sex;
-		actions[i] = Action::Assign;
-		targets[i] = std::numeric_limits<uint16_t>::max();
-		targetTypes[i] = TargetType::NONE;
-		alive[i] = true;
-	}
-
-	search->insertEntity(coord, animal, EntitySearchData data)
-}
-
-inline void AnimalDatabase::killAnimal(uint16_t index)
-{
-	alive[index] = false;
-	freeSlots.push(index);
-	makeCorpse(animals[index], coords[index]);
+	  {
+	    //TODO: error
+	  }
 }
 
 inline void AnimalDatabase::addAnimals(AnimalSpawnBuffer asb)
 {
 	for (size_t i = 0; i < asb.size; i++)
-		birthAnimal(asb.types[i], asb.coords[i], rbool.next());
+	  if (spawn(asb.types[i], asb.coords[i], false)) {}
+	  else
+	    {
+	      //TODO: error
+	    }
+}
+
+inline void AnimalDatabase::birthAnimal()
+{
+  
 }
 
 // move animal from passively processed list into player bounds.

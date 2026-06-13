@@ -2,6 +2,7 @@
 #include "core/entity.hpp"
 #include "world/animal/enum.hpp"
 #include "world/tile/data.hpp"
+#include "world/tile/database.hpp"
 #include <core/limits.hpp>
 #include <core/math.hpp>
 #include <cstdint>
@@ -10,7 +11,7 @@
 #include <world/unit/enum.hpp>
 #include <world/world.hpp>
 
-SearchGrid::SearchGrid(World& world) :  world(world)
+SearchGrid::SearchGrid(World& world, TileDatabase& tiles) :  world(world), tiles(tiles)
 {	
 	uint16_t chunkAmount = world.CHUNK_AMOUNT;
 	chunkBucketArena = new Arena((chunkAmount * NATURAL_CHUNK_SEARCH_SIZE));
@@ -22,17 +23,15 @@ SearchGrid::SearchGrid(World& world) :  world(world)
 	for (uint16_t i = 0; i < chunkAmount; i++)
 	{
 		chunkBuckets[i] =
-		    arena_make_array<ChunkBucket *>(chunkBucketArena, NATURAL_CHUNK_SEARCH_SIZE);
+		   arena_make_array<ChunkBucket *>(chunkBucketArena, NATURAL_CHUNK_SEARCH_SIZE);
 		activeChunks[i] = false;
-		occupiedTiles[i]->reserve(CHUNK_SIZE);
-		for (uint16_t j = 0; j < CHUNK_SIZE; j++)
-			occupiedTiles[i][j].emplace_back(false);
 	}
+    
 }
 
 inline GridInfo SearchGrid::getNthNearestChunk(Coord c, uint16_t n)
 {
-	const uint16_t center = getChunkFromTile(c);
+		const uint16_t center = getChunkIndexFromTile(c);
 	const int ha = c.x % CHUNK_SIZE;
 	const int va = c.y % CHUNK_SIZE;
 	const int distN = va;
@@ -46,7 +45,7 @@ inline GridInfo SearchGrid::getNthNearestChunk(Coord c, uint16_t n)
 		int16_t offset;
 	};
 
-	const int row = world->LENGTH_CHUNKS;
+	const int row = world.LENGTH_CHUNKS;
 
 	Entry neighbors[8] = {{static_cast<uint16_t>(distN), -row},
 			      {static_cast<uint16_t>(distS), row},
@@ -91,18 +90,24 @@ inline void SearchGrid::insertEntity(Entity type, EntitySearchData data)
 {
 	uint16_t gc = getChunkIndexFromTile(data.position);
 	uint16_t i = getTileIndexChunkRelative(data.position);
-	if (!(*occupiedTiles[gc])[i])
+	if (!(tiles->occupiedTiles[gc])[i])
 	{
 		if (activeChunks[gc])
-		{
-			activeChunkBuckets[gc]->at(type).push_back(data);
+		{			activeChunkBuckets[gc]->at(type).push_back(data);
 		}
 		else
 		{
 			chunkBuckets[gc]->at(type).push_back(data);
 		}
-	}
+	} // TODO: error
 }
+
+inline void SearchGrid::removeEntity(Entity type, EntitySearchData data)
+{
+		
+}
+
+inline void SearchGrid::
 
 inline bool SearchGrid::checkCollision(Coord tileCoord)
 {	

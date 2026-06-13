@@ -19,17 +19,16 @@ class TileDatabase
 	Array<TileData> tiles;
 	Array<Alt> altitudes;
 	Array<Liquid> waters;
-	std::vector<bool> occupieds;
-	Array<VisionStatus> visionStatuses;
+        Array<TileStatus> tileStatuses;
 
-	World *world;
+	World& world;
 
 	Coord totalRevealedBoxTopLeftCorner;
 	Coord totalRevealedBoxDimensions;
 	Arena* edgeBufferArena = new Arena(1500 * sizeof(Coord));
 	Array<Coord> edgeBuffer = arena_make_array<Coord>(edgeBufferArena, 1500);
 
-		TileDatabase(Arena *arena, TileSpawnBuffer &tsb, World *world);
+	TileDatabase(Arena *arena, TileSpawnBuffer &tsb, World *world);
 
 	
 		

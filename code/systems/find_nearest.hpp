@@ -1,5 +1,6 @@
 #pragma once
 #include "world/tile/database.hpp"
+#include <cstdint>
 #include <stack>
 #include <unordered_map>
 #include <vector>
@@ -72,7 +73,10 @@ struct SearchGrid
 
 	void reset();
 
-	inline void insertEntity(Entity type, EntitySearchData data);
+  //OPTI: only have buckets be per chunk, moving entities only move when moving between chunks 
+        inline void insertEntity(Entity type, EntitySearchData data);
+        inline void removeEntity(Entity type, EntitySearchData data);
+        inline void moveEntity(Entity type, EntitySearchData data);
 
 	inline bool checkCollision(Coord tileCoord);
 

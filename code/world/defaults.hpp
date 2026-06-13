@@ -3,6 +3,7 @@
 #include <core/data.hpp>
 #include <core/random.hpp>
 
+
 namespace defaults
 {
 
@@ -12,7 +13,6 @@ constexpr Target TARGET = Target{TargetType::NONE, std::numeric_limits<uint16_t>
 
 inline FrameData FRAME_DATA() { return FrameData{ActState::NewPath, random_direction->next(), 0}; }
 
-constexpr Hunger ANIMAL_INFANT_MAX = maxHungers[animal] * random_chance->next();		
 
 // UNIT UNIQUES
 

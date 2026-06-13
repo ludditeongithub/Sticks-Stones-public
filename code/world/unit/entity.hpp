@@ -133,6 +133,7 @@ struct UnitDatabase
 
 		// DEFAULT_DATABASE_DECLARATION(UNIT);
 
+  
 		// UnitDatabase(Arena *arena, size_t capacity) { UNIT_RUNTIME_ARRAYS(INIT_ARRAY); }
 
 		// DECLARE_STRUCT_SERIALIZATION(UNIT);

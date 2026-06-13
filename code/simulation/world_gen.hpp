@@ -34,7 +34,7 @@ struct PlantSpawnBuffer
 struct AnimalSpawnBuffer {
 	std::vector<Animal> types;
 	std::vector<Coord> coords;
-	uint16_t size;
+	size_t size;
 };
 
 class WorldSpawner

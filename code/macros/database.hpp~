@@ -2,16 +2,16 @@
 
 #include "constructors.hpp"
 
-//NOTE: the default database contains automatic indexing, fixed capacity and size of up to uint32_t, and graveyard tracking. 
+//NOTE: the default database contains automatic indexing, fixed capacity and size of up to uint32_t, and graveyard tracking.
 
 #define DEFAULT_DATABASE_INDEPENDENT_MEMBERS(X)                                                    \
 	X(uint32_t, capacity)                                                                      \
 	X(uint32_t, size)                                                                          \
-X(Stack<size_t>, freeSlots)
+X(Stack<size_t>, freeSlots)                                                                
 
-#define DEFAULT_DATABASE_RUNTIME_ARRAYS(X)                                                      \
-	X(bool, alives, false)                                                                     
-
+#define DEFAULT_DATABASE_RUNTIME_ARRAYS(X)                                                         \
+	X(bool, alives, false)                                                                     \
+ 
 #define DEFAULT_DATABASE_DECLARATION(ENTITY_NAME)                                                  \
 	DEFAULT_DATABASE_INDEPENDENT_MEMBERS(DECLARE_MEMBER)                                       \
 	DEFAULT_DATABASE_RUNTIME_ARRAYS(DECLARE_ARRAY)                                             \
@@ -49,12 +49,48 @@ ENTITY_NAME##_RUNTIME_ARRAYS(DECLARE_ARRAY)
                                                                                                    \
 		if (newborn)                                                                       \
 		{                                                                                  \
-RUNTIME_ARRAYS(NEWBORN_ENTITY_SPAWN_SETTINGS)                              \
-		} \
-else { RUNTIME_ARRAYS(ADULT_ENTITY_SPAWN_SETTINGS) }\
- \
-    return true; \
-}
+			RUNTIME_ARRAYS(NEWBORN_ENTITY_SPAWN_SETTINGS)                              \
+		}                                                                                  \
+		else                                                                               \
+		{                                                                                  \
+			RUNTIME_ARRAYS(ADULT_ENTITY_SPAWN_SETTINGS)                                \
+		}                                                                                  \
+                                                                                                   \
+		return true;                                                                       \
+  }
+
+#define POSITIONLESS_ENTITY_SPAWN(Entity_name, entity_name, RUNTIME_ARRAYS) \ 
+bool spawn(Entity_name entity_name, bool newborn)                             \
+	{                                                                                          \
+		if (size + 1 > capacity)                                                           \
+			return false;                                                              \
+                                                                                                   \
+		size_t i;                                                                          \
+                                                                                                   \
+		if (freeSlots.empty())                                                             \
+		{                                                                                  \
+			i = size;                                                                  \
+			size++;                                                                    \
+		}                                                                                  \
+		else                                                                               \
+		{                                                                                  \
+			i = freeSlots.top();                                                       \
+			freeSlots.pop();                                                           \
+		}                                                                                  \
+                                                                                                   \
+		alives[i] = true;                                                                  \
+                                                                                                   \
+		if (newborn)                                                                       \
+		{                                                                                  \
+			RUNTIME_ARRAYS(NEWBORN_ENTITY_SPAWN_SETTINGS)                              \
+		}                                                                                  \
+		else                                                                               \
+		{                                                                                  \
+			RUNTIME_ARRAYS(ADULT_ENTITY_SPAWN_SETTINGS)                                \
+		}                                                                                  \
+                                                                                                   \
+		return true;                                                                       \
+  }
 
 #define DEFAULT_ENTITY_DELETE()                                                                    \
 	bool remove(size_t i)                                                                      \
@@ -111,4 +147,9 @@ DEFAULT_STRUCT_SERIALIZATION(ENTITY_NAME) \
 DEFAULT_ENTITY_SPAWN(Entity_name, entity_name, ENTITY_NAME##_RUNTIME_ARRAYS) \
 DEFAULT_ENTITY_DELETE()
 
-
+#define POSITIONLESS_DATABASE_CREATION(Entity_name, entity_name, ENTITY_NAME) \
+DEFAULT_DATABASE_DECLARATION(ENTITY_NAME)                                                  \
+DEFAULT_DATABASE_CONSTRUCTOR(Entity_name, ENTITY_NAME) \
+DEFAULT_STRUCT_SERIALIZATION(ENTITY_NAME) \
+POSITIONLESS_ENTITY_SPAWN(Entity_name, entity_name, ENTITY_NAME##_RUNTIME_ARRAYS) \
+DEFAULT_ENTITY_DELETE()

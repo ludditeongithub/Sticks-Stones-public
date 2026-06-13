@@ -1,0 +1,172 @@
+#pragma once
+
+#include "constructors.hpp"
+
+// NOTE: default database contains automatic indexing, fixed capacity, size, and graveyard tracking.
+
+struct {{ entity_name }}Database {
+
+    // =========================
+    // BASE DATABASE MEMBERS
+    // =========================
+
+    uint32_t capacity;
+    uint32_t size;
+    Stack<size_t> freeSlots;
+
+    Array<bool> alives;
+
+    // =========================
+    // ENTITY-SPECIFIC MEMBERS
+    // =========================
+
+{% for m in independent_members %}
+    {{ m.type }} {{ m.name }};
+{% endfor %}
+
+{% for c in std_containers %}
+    {{ c.type }} {{ c.name }};
+{% endfor %}
+
+{% for r in runtime_arrays %}
+    {{ r.type }} {{ r.name }};
+{% endfor %}
+
+    // =========================
+    // SPAWN
+    // =========================
+
+    bool spawn({{ entity_name }} entity, bool newborn)
+    {
+        if (size + 1 > capacity)
+            return false;
+
+        size_t i;
+
+        if (freeSlots.empty())
+        {
+            i = size;
+            size++;
+        }
+        else
+        {
+            i = freeSlots.top();
+            freeSlots.pop();
+        }
+
+        alives[i] = true;
+
+{% for r in positional_runtime_arrays %}
+        coords[i] = coord;
+{% endfor %}
+
+        if (newborn)
+        {
+{% for r in runtime_arrays %}
+            {{ r.name }}[i] = {{ r.newborn }};
+{% endfor %}
+        }
+        else
+        {
+{% for r in runtime_arrays %}
+            {{ r.name }}[i] = {{ r.adult }};
+{% endfor %}
+        }
+
+        return true;
+    }
+
+    // =========================
+    // REMOVE
+    // =========================
+
+    bool remove(size_t i)
+    {
+        if (!alives[i])
+            return false;
+
+        freeSlots.push(i);
+        alives[i] = false;
+
+        search.deleteEntity;
+
+        return true;
+    }
+
+    // =========================
+    // MOVE
+    // =========================
+
+    inline bool attemptMoveEntity(size_t index)
+    {
+        Coord& pos = coords[index];
+        Coord newPos = getPos(directions[index], pos);
+        size_t ti = world.getTileIndexFromCoord(newPos);
+
+        if (search->tiles->occupieds[ti] == false)
+        {
+            pos = newPos;
+            return true;
+        }
+
+        return false;
+    }
+
+    // =========================
+    // SERIALIZATION
+    // =========================
+
+    template <class Archive>
+    void save(Archive &archive) const
+    {
+        archive(capacity);
+        archive(size);
+        archive(freeSlots);
+
+        archive(alives);
+
+{% for m in independent_members %}
+        archive({{ m.name }});
+{% endfor %}
+
+{% for c in std_containers %}
+        archive({{ c.name }});
+{% endfor %}
+
+{% for r in runtime_arrays %}
+        {{ r.name }}.save(archive);
+{% endfor %}
+    }
+
+    template <class Archive>
+    void load(Archive &archive)
+    {
+        archive(capacity);
+        archive(size);
+        archive(freeSlots);
+
+        archive(alives);
+
+{% for m in independent_members %}
+        archive({{ m.name }});
+{% endfor %}
+
+{% for c in std_containers %}
+        archive({{ c.name }});
+{% endfor %}
+
+{% for r in runtime_arrays %}
+        {{ r.name }}.load(archive);
+{% endfor %}
+    }
+
+    // =========================
+    // CONSTRUCTOR
+    // =========================
+
+    {{ entity_name }}Database(Arena *arena, size_t capacity)
+    {
+        this->capacity = capacity;
+        this->size = 0;
+    }
+};
