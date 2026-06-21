@@ -1,5 +1,4 @@
 #pragma once
-#include <core/enum.h>
 #include <core/packed_enum.hpp>
 #include <cstdint>
 #include <world/chunk/enum.hpp>

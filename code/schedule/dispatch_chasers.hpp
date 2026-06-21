@@ -3,8 +3,8 @@
 // TODO: make chaser give up if it knows target type is much faster
 
 #include "schedule/dispatch.hpp"
-#include <world/animal/entity.hpp>
-#include <world/unit/entity.hpp>
+#include <world/animal/database.hpp>
+#include <world/unit/database.hpp>
 
 struct ChaserDispatch
 {

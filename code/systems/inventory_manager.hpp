@@ -1,6 +1,6 @@
 #include <optional>
-#include <world/item/entity.hpp>
-#include <world/unit/entity.hpp>
+#include <world/item/database.hpp>
+#include <world/unit/database.hpp>
 
 enum class ToolsState
 	{

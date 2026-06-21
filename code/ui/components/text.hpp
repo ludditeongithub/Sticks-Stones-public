@@ -9,12 +9,10 @@ struct PositionedText
 {
 	FC_Font* font;
 	const char* text;
-	SDL_Color color;
 	Coord position;
 };
 
 struct Text {
 	FC_Font* font;
 	const char* text;
-	SDL_Color color;
 };

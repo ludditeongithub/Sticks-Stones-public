@@ -1,7 +1,7 @@
 #ifndef EGG_H_
 #define EGG_H_
 
-#include "entity.hpp"
+#include "database.hpp"
 #include "enum.hpp"
 #include <basic/coord.hpp>
 #include <basic/random.hpp>

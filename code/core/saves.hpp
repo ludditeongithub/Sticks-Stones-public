@@ -4,7 +4,7 @@
 #include <simulation/game.hpp>
 #include <cereal/archives/binary.hpp>
 
-class GameSave
+struct GameSave
 {
 private:
 public:
@@ -40,7 +40,12 @@ public:
     game.unitDatabase.load(game.unitArena, archive);
     game.itemDatabase.load(game.itemArena, archive);
     game.buildableDatabase.load(game.buildableArena, archive);
-  }  
+  }
+
+  bool confirmSave()
+  {
+    
+  }
 };
 
 std::vector<GameSave> saves;

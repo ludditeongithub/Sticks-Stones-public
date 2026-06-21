@@ -1431,7 +1431,8 @@ void WorldSpawner::moveRegionsToChunks(Array<uint8_t> &humidityTable,
 		world.generateAltitudeMap(noiseLayer);
 		world.generateOceansOnMaps(oceanMap, altitudeMap, landsMap, landThreshold);
 		world.cleanAltitudeMap();
-		world.generateLandsMap() world.generateWaterMap();
+		world.generateLandsMap()
+                world.generateWaterMap();
 		world.generateWBDistances();
 		world.generateTemperatureMap();
 		world.generateHumidityMap();
@@ -1442,11 +1443,11 @@ void WorldSpawner::moveRegionsToChunks(Array<uint8_t> &humidityTable,
 		generateTilesTypes(gtc, gvs);
 		world.calculateChunkTemperatureInputs();
 		world.calculateChunkPrecipitationEquilibrium();
-		// spawnFirstPlants();
-		// cout << "PLANTS SPAWNED" << endl;
-		// spawnFirstAnimals();
-		// cout << "TILE AMOUNT:" << rTileIndex.size() << endl;
-		// int cell = rTileCellIndex[5];
-		// cout << " Cell: " << cell;
-		// spawnScavengeables();
+		spawnGrassAndFirstPlants();
+		cout << "PLANTS SPAWNED" << endl;
+		spawnFirstAnimals();
+		cout << "TILE AMOUNT:" << rTileIndex.size() << endl;
+		int cell = rTileCellIndex[5];
+		cout << " Cell: " << cell;
+		spawnScavengeables();
 	}

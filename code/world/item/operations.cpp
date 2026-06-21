@@ -1,4 +1,4 @@
-#include "entity.hpp"
+#include "database.hpp"
 #include "systems/find_nearest.hpp"
 
 inline void ItemDatabase::addItem(Item item, Coord coord, uint16_t amount = 1)

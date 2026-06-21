@@ -28,10 +28,72 @@ class TileDatabase
 	Arena* edgeBufferArena = new Arena(1500 * sizeof(Coord));
 	Array<Coord> edgeBuffer = arena_make_array<Coord>(edgeBufferArena, 1500);
 
-	TileDatabase(Arena *arena, TileSpawnBuffer &tsb, World *world);
+  
+  	// @codegen:begin database_generation
+    // =========================
+    // BASE DATABASE MEMBERS
+    // =========================
 
+constexpr static uint16_t ENTITY_SIZE = sizeof(bool)
+
+;
+
+size_t capacity;
+Array<Tile> tiles;
+
+
+
+
+    // =========================
+    // ENTITY-SPECIFIC MEMBERS
+    // =========================
+    
+
+    
+
+    
+
+
+      
+    // =========================
+    // SERIALIZATION
+    // =========================
+
+    template <class Archive>
+    void save(Archive &archive) const
+    {
+    archive(capacity);
+   
+
+
+    }
+
+    template <class Archive>
+    void load(Archive &archive)
+    {
+        archive(capacity);
+
+        
+
+    }
+
+    // =========================
+    // CONSTRUCTOR
+    // =========================
+
+TileDatabase(Arena *arena, size_t capacity
+
+  , World& world
+
+
+)
+    {
+this->capacity = capacity;
+        
+    }
+
+// @codegen:end database_generation
 	
-		
 	Coord getNearestEmptyTile(Coord coord);
 	
 };

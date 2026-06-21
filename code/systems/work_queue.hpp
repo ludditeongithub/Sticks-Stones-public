@@ -6,7 +6,7 @@
 #include <schedule/commodity_selection.hpp>
 #include <world/item/enum.hpp>
 #include <world/unit/enum.hpp>
-#include <world/unit/entity.hpp>
+#include <world/unit/database.hpp>
 #include <world/unit/roles_commodities.hpp>
 
 void setUnitJob(UnitDatabase& database, CommodityDispatcher& dispatcher, uint16_t unitIndex);

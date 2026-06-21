@@ -1,4 +1,4 @@
-#include "world/buildable/entity.hpp"
+#include "world/buildable/database.hpp"
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_mouse.h>
 #include <core/data.hpp>
@@ -6,26 +6,29 @@
 #include <simulation/first_spawn.hpp>
 #include <simulation/world_gen.hpp>
 #include <systems/find_nearest.hpp>
-#include <world/animal/entity.hpp>
-#include <world/plant/entity.hpp>
+#include <world/animal/database.hpp>
+#include <world/plant/database.hpp>
 #include <world/tile/data.hpp>
 #include <world/tile/database.hpp>
-#include <world/unit/entity.hpp>
+#include <world/unit/database.hpp>
 #include <world/world.hpp>
 #include <render/texture.hpp>
 #include <render/window.hpp>
 #include <render/camera.hpp>
 #include <render/draw.hpp>
+#include <string>
 
 struct Game
 {
   bool firstSave = false;
   bool unsavedChanges = true;
+
+  Time absoluteTime;
+  Arena chunkArena;
+  World world;
+  SearchGrid search;
   
-Time absoluteTime;
-World world;
-SearchGrid search;
-Arena tileArena;
+  Arena tileArena;
 TileDatabase tileDatabase;
 Arena plantArena;
 PlantDatabase plantDatabase;
@@ -40,11 +43,11 @@ ItemDatabase itemDatabase;
 BuildableDatabase buildableDatabase;
 Arena buildableArena;  
 
-void initWorld();
+void initNewWorld();
 
 void deinitWorld();
 
-GameSave &saveGame(std::string name, GameSave *save);
+GameSave& saveGame(std::string name, GameSave *save);
 
 void loadGame(GameSave& save);  
 
@@ -61,6 +64,5 @@ void gameLoop();
 uint16_t getDay();
 
 };
-
 
 	

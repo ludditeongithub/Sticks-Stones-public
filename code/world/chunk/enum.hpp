@@ -1,3 +1,4 @@
+#pragma once
 #include <cstdint>
 
 enum class Biome : uint8_t
@@ -11,5 +12,6 @@ enum class Biome : uint8_t
 	Jungle,
 	Rocky,
 	Tundra,
-	ColdDesert
+	ColdDesert,
+        MAX
 };

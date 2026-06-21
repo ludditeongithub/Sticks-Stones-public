@@ -1,3 +1,4 @@
+#pragma once
 #include "element.hpp"
 #include <SDL2/SDL_rect.h>
 #include <SDL2/SDL_events.h>
@@ -149,6 +150,7 @@ struct ItemButtonUI : ButtonUI
 	Item item;
 };
 
+//TODO: make a wrapper with it next to text, as well as the functionality.
 struct CheckboxUI
 {
     SCoord topLeftCorner;

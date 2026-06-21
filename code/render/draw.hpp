@@ -8,14 +8,14 @@
 #include "sprite_sheet_settings.hpp"
 #include <SDL2/SDL_render.h>
 #include <core/containers.hpp>
-#include <core/entity.hpp>
+#include <core/database.hpp>
 #include <core/packed_enum.hpp>
 #include <core/tables.hpp>
 #include <cstdint>
 #include <systems/find_nearest.hpp>
 #include <systems/perishables_manager.hpp>
 #include <world/animal/enum.hpp>
-#include <world/item/entity.hpp>
+#include <world/item/database.hpp>
 #include <world/plant/enum.hpp>
 #include <world/tile/data.hpp>
 #include <world/tile/enum.hpp>

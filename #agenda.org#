@@ -1,7 +1,9 @@
 * REMEMBER
 ** boost.preprocessor enum to string
 * NOW
-** SpriteInfo-- get from sprite sheet
+** (maybe) macros regarding simple operations
+** aseprites for first launch
+** audio functionality
 ** gameLoop
 *** handleEvent
 *** processWorld
@@ -33,7 +35,9 @@ unit checks all its roles, and then selects the task with the lowest priority.
 
   All entities in NPACs are processed at a high frequency. There is lower batching, event driven. All entities in non-NPACs are processed at a low frequency. Higher batching, more concurrency of large tasks.
 * AFTER BETA
+** change globals to fit some convention, maybe namespaces
 ** Migration Logic
+** better procedural generation: no probabilities
 ** bureaucrat can produce reports-- tell player they need more of a certain role, based on automatic analysis 
 ** larger simulations
 *** actually manage Separate database for active chunks

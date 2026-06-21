@@ -7,9 +7,9 @@
 #include "world/chunk/data.hpp"
 #include "world/plant/tables.hpp"
 #include <cstddef>
-#include <world/plant/entity.hpp>
+#include <world/plant/database.hpp>
 #include "world/world.hpp"
-#include <world/item/entity.hpp>
+#include <world/item/database.hpp>
 #include <optional>
 
 inline void evalTemperature(World& world, int chunkIndex, Plant p, float& nextGrowth, auto&& alive, bool regrowth = false)

@@ -1,5 +1,5 @@
 #include "find_nearest.hpp"
-#include "core/entity.hpp"
+#include "core/database.hpp"
 #include "world/animal/enum.hpp"
 #include "world/tile/data.hpp"
 #include "world/tile/database.hpp"

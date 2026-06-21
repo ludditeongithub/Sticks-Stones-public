@@ -67,7 +67,7 @@ struct Array
         ar(capacity, count);
 
         data = static_cast<T*>(
-            arena_alloc(arena, sizeof(T) * capacity)
+            arena_alloc(*arena, sizeof(T) * capacity)
         );
 
         for (uint16_t i = 0; i < count; i++)
@@ -76,7 +76,7 @@ struct Array
 };
 
 template <typename T>
-Array<T>& arena_make_array(Arena* arena, size_t capacity)
+Array<T>& arena_make_array(Arena& arena, size_t capacity)
 {
     void* mem = arena_alloc_aligned(
         arena,
@@ -145,7 +145,7 @@ struct Array2D
 };
 
 template <typename T>
-Array2D<T>& arena_make_2d_array(Arena* arena,
+Array2D<T>& arena_make_2d_array(Arena& arena,
                                 uint16_t width,
                                 uint16_t height)
 {

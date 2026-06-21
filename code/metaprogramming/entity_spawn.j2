@@ -1,0 +1,46 @@
+{#TODO: fix it so that plant category rolls are calaculated beforehand: a number is automatically within range of one plant! #}
+
+inline {{ Entity_name }} roll{{ Entity_name }}Spawn(Biome biome, Tile tile, int temperature, int humidity)
+{
+float highestRoll = 0.0;
+{{ Entity_name }} {{ entity_name }} = {{ Entity_name }}::NONE;
+
+
+{% if entity_name == 'plant' %}
+  for (size_t i = 0; i < static_cast<size_t>(PlantCategory::MAX); i++) { // 1
+  float categoryRoll = random_chance->next();
+  if (categoryRoll < plant::categorySpawnChances[static_cast<PlantCategory>(i)][biome]) for (size_t j = 0; j < plant::categories[static_cast<PlantCategory>(i)].size(); j++) { //2
+  Plant selectedPlant = plant::categories[static_cast<PlantCategory>(i)][static_cast<Plant>(j)];
+{% else %}
+  for (size_t i = 0; i < static_cast<size_t>({{ Entity_name }}::MAX); i++) { //2
+  {{ Entity_name }} selected{{ Entity_name }} = static_cast<{{ Entity_name }}>(i);
+{% endif %}
+float rawRoll = random_chance->next() * 0.4;
+for (size_t j = 0; j < static_cast<size_t>(Tile::MAX); j++) { //3
+if (tile == static_cast<Tile>(j)) { //4
+float multipliedRoll = {{ entity_name }}::tileSpawnMultipliers[{{ entity_name }}][static_cast<Tile>(j)] * rawRoll;
+
+const Coord tpr = {{ entity_name }}::temperaturePenaltyRanges[{{ entity_name }}];
+float adjTempRoll = rangePenalty(temperature, tpr.x, tpr.y, multipliedRoll);
+const Coord hpr = {{ entity_name }}::humidityPenaltyRanges[{{ entity_name }}];
+float adjFinalRoll = rangePenalty(humidity, hpr.x, hpr.y, adjTempRoll);
+if (adjFinalRoll > highestRoll) { //5
+highestRoll = adjFinalRoll;
+{{ entity_name }} = selected{{ Entity_name }};
+} //5
+} //4
+} //3
+} //2
+
+if ({{ entity_name }} != {{ Entity_name }}::NONE)
+{% if entity_name == 'grass' %}
+  if (highestRoll > grass::minimumRoll[biome]) tileSpawnBuffer.{{ entity_name}}es = {{ entity_name }};
+{% else %}
+  {{ entity_name }}SpawnBuffer.{{ entity_name}}s = {{ entity_name }};
+{% endif %}
+
+{% if entity_name == 'plant' %}
+  } // 1
+  {% endif %}
+}
+

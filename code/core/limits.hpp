@@ -1,7 +1,7 @@
 #ifndef LIMITS_HPP
 #define LIMITS_HPP
 #include "data.hpp"
-#include "entity.hpp"
+#include "database.hpp"
 #include <cstddef>
 #include <cstdint>
 #include <limits>

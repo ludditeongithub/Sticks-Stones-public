@@ -117,7 +117,7 @@ struct Container
 	float weight = 0;
 
 	std::array<HoldableSlot, HOLDABLE_UNDERFLOW_LIMIT> holdables;
-	// TODO: can go back and optimize? this into 3 seperate fields
+	// OPTI: can go back and optimize? this into 3 seperate fields
 	//  std::array<ItemSlot, 3> items;
 	//  VariantItemSlot variantItem;
 	//  std::array<ToolSlot, 2> tools;

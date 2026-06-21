@@ -5,6 +5,48 @@
 #include <core/data.hpp>
 #include <core/tables.hpp>
 #include <core/time.hpp>
+#include <world/tile/enum.hpp>
+
+namespace animal
+{
+inline constexpr LookupTable2D<Animal, Tile, float> tileSpawnChances = []
+{
+	LookupTable2D<Animal, Tile, float> lt{};
+
+	return lt;
+}();
+
+inline constexpr LookupTable<Animal, uint16_t> penalitiesMinTemperatures = []
+{
+	LookupTable<Animal, uint16_t> lt{};
+	using enum Animal;
+
+	return lt;
+}();
+
+inline constexpr LookupTable<Animal, uint16_t> penaltiesMaxTemperatures = []
+{
+	LookupTable<Animal, uint16_t> lt{};
+	using enum Animal;
+
+	return lt;
+}();
+
+inline constexpr LookupTable<Animal, uint16_t> penaltiesMinHumidities = []
+{
+	LookupTable<Animal, uint16_t> lt{};
+	using enum Animal;
+
+	return lt;
+}();
+
+inline constexpr LookupTable<Animal,uint16_t> penaltiesMaxHumidity = [] {
+    LookupTable<Animal,uint16_t> lt{};
+    using enum Animal;
+    
+    return lt;
+  }();
+}
 
 constexpr float dominant = 0.003;
 constexpr float abundant = 0.0015;

@@ -1,7 +1,7 @@
 #include "inventory_manager.hpp"
 #include "world/item/enum.hpp"
 #include "world/item/tags.hpp"
-#include "world/unit/entity.hpp"
+#include "world/unit/database.hpp"
 #include <array>
 #include <cstdint>
 #include <optional>

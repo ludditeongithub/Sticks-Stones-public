@@ -2,7 +2,7 @@
 #include "core/containers.hpp"
 #include "world/tile/data.hpp"
 #include <limits>
-#include <world/unit/entity.hpp>
+#include <world/unit/database.hpp>
 #include <core/position_check.hpp>
 #include <simulation/game.hpp>
 #include <world/tile/database.hpp>

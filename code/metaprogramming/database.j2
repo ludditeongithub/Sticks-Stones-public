@@ -1,0 +1,170 @@
+    // =========================
+    // BASE DATABASE MEMBERS
+    // =========================
+
+constexpr static uint16_t ENTITY_SIZE = sizeof(bool)
+{% for r in runtime_arrays %}
+ +  sizeof({{ r.type }}) 
+{% endfor %}
+;
+
+size_t capacity;
+Array<{{ Main_enum }}> {{ entity_name }}s;
+{% if not 'immortal' in traits %}
+    size_t size;
+    Stack<size_t> freeSlots;
+    Array<bool> alives;
+  {% endif %}
+{% if ('movable' in traits) or ('searchable' in traits) %}
+  SearchGrid& search;
+{% endif %}
+{% if 'movable' in traits %}
+  World& world;
+{% endif %}
+
+    // =========================
+    // ENTITY-SPECIFIC MEMBERS
+    // =========================
+{% for r in runtime_arrays %}
+    Array<{{ r.type }}> {{ r.name }};
+{% endfor %}    
+
+{% if not 'immortal' in traits %}
+  // =========================
+  // SPAWN
+  // =========================
+  
+  bool spawn({{ Entity_name }} entity, bool newborn, Coord coord)
+    {
+        if (size + 1 > capacity)
+            return false;
+
+        size_t i;
+
+        if (freeSlots.empty())
+        {
+            i = size;
+            size++;
+        }
+        else
+        {
+            i = freeSlots.top();
+            freeSlots.pop();
+        }
+
+        alives[i] = true;
+
+        if (newborn)
+        {
+      {% for r in runtime_arrays %}
+            {{ r.name }}[i] = {{ r.newborn_default }};
+	  {% endfor %}
+        }
+        else
+        {
+        Time age = random_bool->next();
+	  {% for r in runtime_arrays %}
+            {{ r.name }}[i] = {{ r.random_age_default }};
+	  {% endfor %}
+        }
+	  {% if 'searchable' in traits %}
+  
+          {% endif %}
+
+        return true;
+    }
+{% endif %}    
+
+{% if not 'immortal' in traits %}
+  // =========================
+  // REMOVE
+  // =========================
+  
+  bool remove(size_t i)
+    {
+        if (!alives[i])
+            return false;
+
+        freeSlots.push(i);
+        alives[i] = false;
+
+        search.deleteEntity;
+
+        return true;
+    }
+{% endif %}    
+
+{% if 'movable' in traits %}
+  // =========================
+  // MOVE
+  // =========================
+  
+    inline bool attemptMoveEntity(size_t index)
+    {
+        Coord& pos = coords[index];
+        Coord newPos = getPos(directions[index], pos);
+        size_t ti = world.getTileIndexFromCoord(newPos);
+
+        if (search.tiles.occupieds[ti] == false)
+        {
+            pos = newPos;
+            return true;
+        }
+
+        return false;
+    }
+    {% endif %}
+      
+    // =========================
+    // SERIALIZATION
+    // =========================
+
+    template <class Archive>
+    void save(Archive &archive) const
+    {
+    archive(capacity);
+{% if not 'immortal' in traits %}
+        archive(size);
+        archive(freeSlots);
+        archive(alives);
+{% endif %}   
+
+{% for r in runtime_arrays %}
+        {{ r.name }}.save(archive);
+{% endfor %}
+    }
+
+    template <class Archive>
+    void load(Archive &archive)
+    {
+        archive(capacity);
+{% if not 'immortal' in traits %}
+        archive(size);
+        archive(freeSlots);
+        archive(alives);
+{% endif %}
+        
+{% for r in runtime_arrays %}
+        {{ r.name }}.load(archive);
+{% endfor %}
+    }
+
+    // =========================
+    // CONSTRUCTOR
+    // =========================
+
+{{ Entity_name }}Database(Arena *arena, size_t capacity
+{% if 'movable' or 'searchable' in traits %}
+  , World& world
+{% endif %}
+{% if 'searchable' in traits %}
+  , SearchGrid& search
+{% endif %}
+)
+    {
+this->capacity = capacity;
+{% if not 'immortal' in traits %}
+  this->size = 0;
+{% endif %}        
+    }
+

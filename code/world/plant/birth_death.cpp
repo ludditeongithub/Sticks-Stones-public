@@ -1,6 +1,6 @@
 #include <core/random.hpp>
-#include "core/entity.hpp"
-#include "entity.hpp"
+#include "core/database.hpp"
+#include "database.hpp"
 #include "tables.hpp"
 
 inline void PlantDatabase::setGerminationTime(int seedIndex)

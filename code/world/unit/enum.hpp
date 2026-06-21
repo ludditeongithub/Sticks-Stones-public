@@ -1,5 +1,6 @@
 #pragma once
 #include "core/packed_enum.hpp"
+#include <SDL2/SDL_pixels.h>
 #include <cstdint>
 #include <core/data.hpp>
 
@@ -521,3 +522,13 @@ enum class ActState : uint8_t
 
 //TODO: ensure Frame can be properly packed
 using FrameData = PackedEnum<EnumField<ActState, 2>, EnumField<Direction, 2>, EnumField<Frame, 4>>;
+
+float sunburnLevel1Threshold = 0.3;
+float sunburnLevel2Threshold = 0.75;
+
+struct SkinData {
+	float melanin;
+	float skinWarmth;
+	float environmentalTanOffset;
+        float sunburn;
+};

@@ -1,15 +1,10 @@
+#pragma once
 #include "world_gen.hpp"
 #include <core/containers.hpp>
 #include <core/data.hpp>
 #include <world/animal/enum.hpp>
 #include <world/plant/enum.hpp>
-
-struct AnimalSpawnBuffer
-{
-	uint16_t size = 0;
-	std::vector<Animal> types;
-	std::vector<Coord> coords;
-};
+#include <core/tables.hpp>
 
 using PlantTable = LookupTable<Plant, float>;
 using SpawnTable = LookupTable<Animal, float>;
@@ -481,7 +476,7 @@ inline constexpr LookupTable<Plant, float> coldDesertPlantChances = []
 
 constexpr const PlantTable &coldDesertPlantTable() { return coldDesertPlantChances; }
 
-const PlantTable &getPlantChanceTable(Biome biome)
+PlantTable &getPlantChanceTable(Biome biome)
 {
 	switch (biome)
 	{

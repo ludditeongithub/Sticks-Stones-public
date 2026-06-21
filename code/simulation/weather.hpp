@@ -3,7 +3,7 @@
 /* precipitation
 */
 
-#include <world/plant/entity.hpp>
+#include <world/plant/database.hpp>
 #include "core/data.hpp"
 #include "world/chunk/data.hpp"
 #include "world/tile/database.hpp"

@@ -1,0 +1,14 @@
+databases:
+	animal:
+		traits: [health, hunger, movable, positional]
+	unit:
+		traits: [health, hunger, movable, positional]
+	tile:
+		traits: [immortal]
+	plant:
+		traits: [positional]
+	item:
+		traits: [positional]
+	buildable:
+		traits: [health, movable, positional]
+	

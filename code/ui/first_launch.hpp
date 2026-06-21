@@ -1,4 +1,5 @@
 #pragma once
+#include "render/animation.hpp"
 #include "render/sprite.hpp"
 #include "render/sprite_sheet_settings.hpp"
 #include "ui/components/button_functionality.hpp"
@@ -75,6 +76,9 @@ struct FirstLaunchBuffer
 
 	void launchFirstLauncher(FirstLaunchBuffer flb)
 	{
+	        FC_Font* amble20 = FC_CreateFont();
+		FC_LoadFont(amble20, renderer, "../../fonts/Amble-Regular.ttf", 20,
+			    FC_MakeColor(9, 9, 9, 255), TTF_STYLE_NORMAL);
 		ButtonSpriteData bsd = SpriteSheet::buttonSprites[ButtonSprite::FirstLaunchButton];
 
 		PositionedText fullscreen = {amble20, "Fullscreen: ", {30, 30}};
@@ -86,13 +90,18 @@ struct FirstLaunchBuffer
 		DropdownMenu ddm = DropdownMenu(headerButton, screen_dimensions.size());
 
 		int accum = headerButton.topLeftCorner.y + headerButton.dimensions.y;
-		for (auto sd: screen_dimensions) {
-			ddm.addItem(TextButtonUI(
-			    std::to_string(sd.x) + " x " + std::to_string(sd.y),
+		for (auto sd : screen_dimensions)
+		{		  
+		  ddm.addItem(TextButtonUI({amble20, std::to_string(sd.x) + " x " + std::to_string(sd.y)},
 			    ChangeScreenDimensionsBF(sd), {headerButton.topLeftCorner.x, accum}, bsd.dimensions, bsd.unpressed, bsd.hover));
 		}
 
-		TextButtonUI launchButton = TextButtonUI({amble20, "Launch"}, LaunchBF(Launches::GameWindow), {180, fullscreen.position.y + 150}, {20, 100}, bsd.dimensions, bsd.unpressed, bsd.hover, bsd.pressed);
+		TextButtonUI launchButton =
+		    TextButtonUI({amble20, "Launch"}, LaunchBF(Launches::GameWindow),
+				 {180, fullscreen.position.y + 150}, {20, 100}, bsd.dimensions,
+				 bsd.unpressed, bsd.hover, bsd.pressed);
+		launchButton.render(mainScreenViewport);
+		
 	}
 
 

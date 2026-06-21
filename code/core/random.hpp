@@ -1,9 +1,11 @@
 #pragma once
 #include "data.hpp"
+#include <SDL2/SDL_pixels.h>
 #include <array>
 #include <limits>
 #include <random>
 #include <type_traits>
+#include <cstdint>
 
 static std::random_device rd;
 static std::mt19937 gen(rd());
@@ -48,6 +50,28 @@ template <typename T> struct RandomMachine
 	}
 };
 
+struct RandomSDLColorMachine
+{
+  RandomMachine<uint8_t> red;
+  RandomMachine<uint8_t> green;
+  RandomMachine<uint8_t> blue;
+  RandomMachine<uint8_t> alpha;
+
+  RandomSDLColorMachine(std::pair<uint8_t,uint8_t> redLimits, std::pair<uint8_t, uint8_t> greenLimits, std::pair<uint8_t, uint8_t> blueLimits)
+  {
+    red = RandomMachine<uint8_t>(redLimits.first, redLimits.second);
+    blue = RandomMachine<uint8_t>(blueLimits.first, blueLimits.second);
+    green = RandomMachine<uint8_t>(greenLimits.first, greenLimits.second);
+    alpha = 255;
+  }
+
+  SDL_Color next()
+  {
+    return {red.next(), green.next(), blue.next(), alpha};
+  }
+};
+
+
 template <typename E>
 struct RandomEnumMachine
 {
@@ -86,8 +110,7 @@ struct RandomEnumMachine
     }
 };
 
-RandomEnumMachine<Direction> *random_direction =
-    new RandomEnumMachine<Direction>(Direction::North, Direction::West);
+RandomEnumMachine<Direction> random_direction = RandomEnumMachine<Direction>(Direction::North, Direction::West);
 
 struct RandomChanceMachine
 {

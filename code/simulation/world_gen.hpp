@@ -14,25 +14,25 @@ struct TileSpawnBuffer
 {
 	uint32_t size;
 	std::vector<Tile> tiles;
-	std::vector<Grass> grass;
+	std::vector<Grass> grasses;
 	std::vector<Alt> altitudes;
 };
 
 struct PlantSpawnBuffer
 {
-	std::vector<Plant> types;
+	std::vector<Plant> plants;
 	std::vector<Coord> coords;
 	uint16_t size;
 
 	inline void add(Plant plant, Coord coord)
 	{
-		types[size++] = plant;
+		plants[size++] = plant;
 		coords[size] = coord;
 	}
 };
 
 struct AnimalSpawnBuffer {
-	std::vector<Animal> types;
+	std::vector<Animal> animals;
 	std::vector<Coord> coords;
 	size_t size;
 };
@@ -128,9 +128,9 @@ class WorldSpawner
 	std::vector<std::vector<bool>> rVisited; // holds visited rivers
 
 	const uint32_t TILE_AMOUNT;
-	TileSpawnBuffer tsb;
-	PlantSpawnBuffer psb;
-	AnimalSpawnBuffer asb;
+	TileSpawnBuffer tileSpawnBuffer;
+	PlantSpawnBuffer plantSpawnBuffer;
+	AnimalSpawnBuffer animalSpawnBuffer;
 
 	template <typename T>
 	void mapReserveRows(int width, int height, std::vector<std::vector<T>> &map)
@@ -160,6 +160,18 @@ class WorldSpawner
 		mapReserveRows(width, height, rVisited);
 	}
 
+	void generateWorld();
+  
+	// helpers
+	void recursiveLower();
+	void recursiveFill();
+	void printMap();
+        void moveRegionsToChunks(Array<Hum> humidities, Array<Temp> temperatures,
+				 Array<Alt> altitudes);
+	void printInfo();
+        Coord getTileCoordFromIndex(size_t i);
+
+  // world generation
 	void generateOceansOnMaps();
 	void markCoasts();
 	void applyExtraHighlandsAndMountains();
@@ -178,21 +190,16 @@ std::vector<std::tuple<float, bool, bool>>
 humidityAndRainShadowEffects(int y, int x, int water, bool biomes);
 	void addDepressions();
 	void applyRiverTiles();
-	void recursiveLower();
-	void recursiveFill();
-	void printMap();
 	std::vector<std::vector<int>>
 	calculateOceanDistance(std::vector<std::vector<int>> &waterMap, bool lake, bool river);
 	std::vector<Coord> generateVoronoiSites();
 	void generateTileTypes(std::vector<float> &chances, std::vector<Coord> &voronoiSites,
 			       std::vector<Tile> &rTiles, Array<Alt> &rAltitudes);
 	std::vector<float> generateTileChances();
-	void spawnGrassAndFirstPlants();
-	void generateWorld();
-	void moveRegionsToChunks(Array<Hum> humidities, Array<Temp> temperatures,
-				 Array<Alt> altitudes);
-	void printInfo();
 
+  // spawners
+	void spawnGrassAndFirstPlants();
+	
 	// Constants
 	// IN CELLS
 	int currentXMin = 0;

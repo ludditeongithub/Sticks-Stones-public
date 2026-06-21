@@ -1,7 +1,7 @@
 #ifndef LIFEMANAGER_HPP
 #define LIFEMANAGER_HPP
 
-#include "entity.hpp"
+#include "database.hpp"
 
 class LifeManager
 {

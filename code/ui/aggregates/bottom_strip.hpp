@@ -1,4 +1,4 @@
-#include "core/entity.hpp"
+#include "core/database.hpp"
 #include "world/animal/enum.hpp"
 #include <ui/components/status_bar.hpp>
 #include <ui/components/text_box.hpp>

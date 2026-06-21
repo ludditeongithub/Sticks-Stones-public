@@ -3,22 +3,22 @@
 #include "simulation/saveGame.hpp"
 #include <optional>
 
-void Game::initWorld()
+void Game::initNewWorld()
 {
 	absoluteTime = 0;
 	WorldSpawner *ws = new WorldSpawner(50 / 2, 50 / 2);
 	ws->generateWorld();
 
-	Arena* chunkArena =
-	    new Arena(World::ENTITY_SIZE * (ws->WIDTH_WITH_BORDER + ws->HEIGHT_WITH_BORDER) *
+	chunkArena =
+	    Arena(World::ENTITY_SIZE * (ws->WIDTH_WITH_BORDER + ws->HEIGHT_WITH_BORDER) *
 		      CHUNKS_PER_REGION);
 	world = World(chunkArena, 50, 50);
 	world.loadChunkData(*ws);
 
-	Arena* tileArena = Arena(TileDatabase::ENTITY_SIZE * world.WORLD_TILE_AMOUNT);
+	tileArena = Arena(TileDatabase::ENTITY_SIZE * world.WORLD_TILE_AMOUNT);
 	tileDatabase = TileDatabase(tileArena, ws->tsb, world);
 
-	SearchGrid search(world);
+	search(world);
 	
 	plantArena = Arena(PlantDatabase::ENTITY_SIZE * ws->psb.size * PLANT_ALLOC_FACTOR);
 	plantDatabase = PlantDatabase(&plantArena, search, ws->psb.size * PLANT_ALLOC_FACTOR);
@@ -30,7 +30,7 @@ void Game::initWorld()
 	spriteSheetTexture.loadFromFile("sprite_sheet.png");
 
 	unitArena = Arena(UnitDatabase::ENTITY_SIZE * UNIT_CAP);
-	unitDatabase = UnitDatabase(unitArena, UNIT_CAP);
+	unitDatabase = UnitDatabase(unitArena, UNIT_CAP, world, search);
 }
 
 GameSave& Game::saveGame(std::string name, GameSave* save)
@@ -39,20 +39,20 @@ GameSave& Game::saveGame(std::string name, GameSave* save)
   if (save == nullptr)
   {
 		  save = new GameSave(name);
-		  successful = true;
-		  
+		  successful = true;		  
   }
   else
-  {		  
-		  successful = ; // TODO: print urgent box "Overwrite"
+  {                   
+		  successful = save->confirmSave(); // TODO: print urgent box "Overwrite"
   }
   if (successful) save->save(*this);
 }
 
 void Game::loadGame(GameSave& save)
 {
-		initWorld();
-		save.load(*this);		
+  // TODO: init and loading can be different if entities exceed maximum size
+		initNewWorld();
+		save.load(*this);
 }
 
 void Game::deinitWorld()

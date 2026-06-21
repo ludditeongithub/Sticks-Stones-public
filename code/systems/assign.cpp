@@ -2,10 +2,10 @@
 #include <core/containers.hpp>
 #include <cstdint>
 #include <queue>
-#include <world/animal/entity.hpp>
+#include <world/animal/database.hpp>
 #include <world/animal/tables.hpp>
 #include <world/chunk/data.hpp>
-#include <world/unit/entity.hpp>
+#include <world/unit/database.hpp>
 
 // TODO: make certain tasks pausable and resumable, change to iterating over
 // tasks per pawn rather than other way around (when pawns stats are

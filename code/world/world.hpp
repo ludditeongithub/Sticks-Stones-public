@@ -113,11 +113,10 @@ struct World
 
 	ChunkTempData chunkTempData;
 
-World(Arena *arena, int width, int height)
-    : LENGTH_CHUNKS(width),
-      HEIGHT_CHUNKS(height),
-      CHUNK_AMOUNT(width * height),
-      EQUATOR(height / 2),
+	World(Arena& arena, int width, int height)
+	    : LENGTH_CHUNKS(width), HEIGHT_CHUNKS(height),
+	      EQUATOR(height / 2),
+      CHUNK_AMOUNT(width * height),      
       chunkTempData(this) 
 {
     humidities = arena_make_array<Hum>(arena, width * height);
@@ -132,13 +131,13 @@ World(Arena *arena, int width, int height)
 
 	inline uint16_t getChunkWidth(int i) { return i % HEIGHT_CHUNKS; }
 
-	inline int16_t getChunkLatitude(int i)
+	inline uint16_t getChunkLatitude(int i)
 	{
 		return (getChunkHeight(i) / CHUNK_LATITUDE_HEIGHT) - (LATITUDE_TOTAL / 2);
 	}
 
 	inline uint16_t getChunkTimeZone(uint32_t chunkIndex);
-
+        inline uint16_t getChunkIndexFromCoord(Coord c);
 	inline uint32_t getTileIndexFromCoord(Coord c);
 	inline Coord getTileCoordFromIndex(uint32_t i);
 	inline uint32_t getTileIndexChunkRelative(uint32_t i);

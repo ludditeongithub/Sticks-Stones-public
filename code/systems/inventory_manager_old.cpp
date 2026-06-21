@@ -1,7 +1,7 @@
 #include "inventory_manager.hpp"
 #include <array>
 #include <cstdint>
-#include <world/unit/entity.hpp>
+#include <world/unit/database.hpp>
 inline float calculateRemainingBulk(BulkStatus bulkStatus, float bulk)
 {
 	switch (bulkStatus)

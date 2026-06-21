@@ -1,6 +1,6 @@
 #ifndef ANIMATION_HPP
 #define ANIMATION_HPP
-#include <core/entity.hpp>
+#include <core/database.hpp>
 #include "texture.hpp"
 #include "viewport.hpp"
 #include <SDL2/SDL_rect.h>

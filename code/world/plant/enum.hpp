@@ -85,7 +85,6 @@ enum class PlantCategory
 	Stone,
 	Pome,
 	Olive,
-	Foliage,
 	Succulent,
 	BerryShrub,
 	Flowering,
@@ -93,7 +92,6 @@ enum class PlantCategory
 	Leafy,
 	Root,
 	Reed,
-	Tuber,
 	Bulb,
 	Grain,
 	Grapevine,
@@ -104,6 +102,8 @@ enum class PlantCategory
 	Bush,
 	MAX
 };
+
+
 
 enum class Fruit
 {

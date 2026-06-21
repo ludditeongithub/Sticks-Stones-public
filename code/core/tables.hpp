@@ -31,15 +31,43 @@ template <typename T, uint16_t Cols> struct Row : std::array<T, Cols>
 	}
 };
 
-template <typename Enum, typename T, uint16_t Rows = static_cast<uint16_t>(Enum::MAX),
-	  uint16_t Cols = 5>
+template <typename T, uint16_t Cols, typename ColEnum>
+struct LookupRow
+{
+    std::array<T, Cols> data{};
+
+    constexpr T& operator[](ColEnum col)
+    {
+        return data[static_cast<uint16_t>(col)];
+    }
+
+    constexpr const T& operator[](ColEnum col) const
+    {
+        return data[static_cast<uint16_t>(col)];
+    }
+};
+
+template <
+    typename RowEnum,
+    typename ColEnum,
+    typename T,
+    uint16_t Rows = static_cast<uint16_t>(RowEnum::MAX),
+    uint16_t Cols = static_cast<uint16_t>(ColEnum::MAX)>
 struct LookupTable2D
 {
-	using RowType = Row<T, Cols>;
-	std::array<RowType, Rows> data{};
+    using Row = LookupRow<T, Cols, ColEnum>;
 
-	constexpr RowType &operator[](Enum e) { return data[static_cast<uint16_t>(e)]; }
-	constexpr const RowType &operator[](Enum e) const { return data[static_cast<uint16_t>(e)]; }
+    std::array<Row, Rows> data{};
+
+    constexpr Row& operator[](RowEnum row)
+    {
+        return data[static_cast<uint16_t>(row)];
+    }
+
+    constexpr const Row& operator[](RowEnum row) const
+    {
+        return data[static_cast<uint16_t>(row)];
+    }
 };
 
 template <typename Enum, uint16_t N = static_cast<uint16_t>(Enum::MAX)>

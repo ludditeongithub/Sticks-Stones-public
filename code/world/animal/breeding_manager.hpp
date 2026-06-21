@@ -1,7 +1,7 @@
 #ifndef BREEDING_MANAGER_HPP
 #define BREEDING_MANAGER_HPP
 
-#include "entity.hpp"
+#include "database.hpp"
 #include "registry.hpp"
 
 class BreedingManager : public Manager

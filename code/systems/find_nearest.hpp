@@ -7,7 +7,7 @@
 
 #include <core/containers.hpp>
 #include <core/data.hpp>
-#include <core/entity.hpp>
+#include <core/database.hpp>
 #include <core/memory.hpp>
 
 #include <world/animal/enum.hpp>
