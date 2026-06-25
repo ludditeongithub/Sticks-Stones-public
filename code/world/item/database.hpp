@@ -102,7 +102,7 @@ Array<Item> items;
         freeSlots.push(i);
         alives[i] = false;
 
-        search.deleteEntity;
+        search.deleteEntity();
 
         return true;
     }

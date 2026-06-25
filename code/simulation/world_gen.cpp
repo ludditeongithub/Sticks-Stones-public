@@ -1350,8 +1350,8 @@ void WorldSpawner::generateTileTypes(std::vector<float> &chances, std::vector<Co
 				// int secondBiome =
 				// biomeMap[secondCell.first][secondCell.second];
 				int index = y *;
-				tsb.tiles[index] = getTileType(biome, chances[ci++]);
-				tsb.altitudes[index] = calcAlt;
+				tileSpawnBuffer.tiles[index] = getTileType(biome, chances[ci++]);
+				tileSpawnBuffer.altitudes[index] = calcAlt;
 			}
 		}
 	}

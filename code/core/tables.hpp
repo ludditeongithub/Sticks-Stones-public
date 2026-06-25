@@ -117,10 +117,10 @@ struct BitsetTable
 	}
 };
 
-template <typename Enum, typename T, uint32_t N, uint32_t MAX = Enum::MAX>
+template <typename Enum, typename T, size_t N, size_t MAX = Enum::MAX>
 struct RaggedLookupTable {
 	std::array<T, N> data;
-	std::array<uint32_t, MAX> offsets{};
+	std::array<size_t, MAX> offsets{};
 	// uint16_t current = 0; //current relies on RaggedTable being initialized correctly (all of the same Enum being done at once), and only once, as it increments over the lambda initalization.
 	// Enum type;
 	// //TODO: safety checking with dynamic boolean table during intialization
@@ -130,12 +130,12 @@ struct RaggedLookupTable {
 	// 	return N;
 	// }		
 
-	constexpr uint32_t size(Enum e) const
+	constexpr size_t size(Enum e) const
 	{
 		return offsets[static_cast<int>(e) + 1] - offsets[static_cast<int>(e)];
 	}		
 
-	constexpr T get(Enum e, uint8_t index) const
+	constexpr T get(Enum e, size_t index) const
 	{
 		uint32_t offset = offsets[static_cast<int>(e)];
 		assert(index < offsets[static_cast<int>(e) + 1] - offset);

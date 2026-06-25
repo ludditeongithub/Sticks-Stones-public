@@ -5,7 +5,7 @@
 #include <core/tags.hpp>
 
 // TODO:: sieve, which can separte sand and clay in, liquids and soil, etc
-enum class ItemTags : uint16_t
+enum class ItemTags : uint32_t
 {
 	NONE = 0,
 	Resource = 1 << 0,
@@ -19,12 +19,16 @@ enum class ItemTags : uint16_t
 	OptionalIngredient = 1 << 8,
 	Tool = 1 << 9,
 	Container = 1 << 10,
-	// TODO: add flammable tags
 	Mould = 1 << 11,
 	Wearable = 1 << 12,
 	Perishable = 1 << 13,
+        // TODO: sort from rust
 	WaterDamage = 1 << 14,
 	Art = 1 << 15,
+	// TODO: add scavengeable tags
+	Scavengeable = 1 << 16,
+	// TODO: add flammable tags
+	Flammable = 1 << 17,	
 };
 
 
@@ -84,7 +88,7 @@ inline constexpr LookupTable<Item, ItemTags> itemTags = []
 	lt[Item::AnimalHair] =
 	    ItemTags::FromCorpse | ItemTags::VariableAmountProduced | ItemTags::Perishable;
 	lt[Item::AnimalHides] = ItemTags::FromCorpse | ItemTags::VariableAmountProduced;
-	lt[Item::Soot] = ItemTags::VariableAmountsRequired |
+	lt[Item::Soot] = ItemTags::VariableAmountsRequired;
 			 // ItemTags::VariableAmountProduced;
 			 lt[Item::TanningAgent] =
 			     ItemTags::VariableAmountProduced | ItemTags::Perishable;
@@ -100,8 +104,7 @@ inline constexpr LookupTable<Item, ItemTags> itemTags = []
 	lt[Item::Wedge] = ItemTags::VariableAmountProduced;
 	lt[Item::SmallHandle] = ItemTags::VariableAmountProduced | ItemTags::Alternate;
 	lt[Item::LargeHandle] = ItemTags::Alternate;
-	lt[Item::BrickMold] = ItemTags::Mould;
-	lt[Item::MetalArrowhead] = ItemTags::Alternate;
+	lt[Item::BrickMould] = ItemTags::Mould;
 	lt[Item::ArrowShaft] = ItemTags::Alternate;
 	lt[Item::Trigger] = ItemTags::VariableAmountsRequired;
 	lt[Item::PrimitiveString] = ItemTags::WaterDamage;
@@ -174,8 +177,8 @@ inline constexpr LookupTable<Item, ItemTags> itemTags = []
 	lt[Item::DyedCloth] = ItemTags::WaterDamage;
 	lt[Item::Tribalwear] = ItemTags::Wearable;
 	lt[Item::BasicClothes] = ItemTags::Wearable;
-	lt[Item::FormalClothes] = ItemTags::VariableAmountRequired | ItemTags::Wearable;
-	lt[Item::FancyClothes] = ItemTags::VariableAmountRequired | ItemTags::Wearable;
+	lt[Item::FormalClothes] = ItemTags::VariableAmountsRequired | ItemTags::Wearable;
+	lt[Item::FancyClothes] = ItemTags::VariableAmountsRequired | ItemTags::Wearable;
 	lt[Item::GoldCrown] = ItemTags::Wearable;
 	lt[Item::RoyalCrown] = ItemTags::Wearable;
 	lt[Item::Necklace] = ItemTags::Wearable;

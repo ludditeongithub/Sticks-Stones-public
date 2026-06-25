@@ -9,20 +9,15 @@
 #include <format>
 #include "button_functionality.hpp"
 #include "text.hpp"
+#include <ui/sound/sound.hpp>
+
+
 enum class ButtonSprite : uint8_t
 {
 	MainButton,
 	FirstLaunchButton,
 	Checkbox,
-	
 	MAX
-};
-
-struct ButtonSpriteData {
-	SCoord dimensions;
-	SCoord unpressed;
-	SCoord hover;
-	SCoord pressed;
 };
 
 enum class ButtonState
@@ -32,44 +27,51 @@ enum class ButtonState
 	Pressed
 };
 
-struct Sound //placeholder
+inline SCoord getButtonSpriteDimensions(ButtonSprite sprite)
 {
+  return {SpriteSheet::buttonSprites[static_cast<int>(sprite)].w, SpriteSheet::buttonSprites[static_cast<int>(sprite)].h / 3};
+}
 
-};	
+inline SDL_Rect getButtonSprite(ButtonSprite sprite, ButtonState state)
+{
+  SDL_Rect buttonSheet = SpriteSheet::buttonSprites[static_cast<int>(sprite)];
+  switch (state) {
+  case ButtonState::Unpressed:
+		  return {buttonSheet.x, buttonSheet.y, buttonSheet.w, buttonSheet.h / 3};
+    break;
+  case ButtonState::Hover:
+        return {buttonSheet.x, buttonSheet.y + buttonSheet.h / 3, buttonSheet.w, buttonSheet.h / 3};
+    break;
+  case ButtonState::Pressed:
+    return {buttonSheet.x, buttonSheet.y + (2 * buttonSheet.h) / 3, buttonSheet.w, buttonSheet.h / 3};
+    break;
+  default:
+    // TODO: error
+    break;
+  }
+}	
 
 struct ButtonUI
 {
       public:
 	ButtonFunctionality function;
+    ButtonSprite sprite;
 	SCoord topLeftCorner;
-	SCoord dimensions;
-	SCoord unpressed;
-	SCoord hover;
-	SCoord pressed;
-	Sound pressedSound;
+	Sound* pressedSound;
 	ButtonState state = ButtonState::Unpressed;
 
-	ButtonUI(ButtonFunctionality function, SCoord topLeftCorner, SCoord dimensions, SCoord unpressed, SCoord hover, SCoord pressed, Sound pressedSound)
-	:  function(function), topLeftCorner(topLeftCorner), dimensions(dimensions), unpressed(unpressed), hover(hover),   pressed(pressed), pressedSound(pressedSound)  {
+	ButtonUI(ButtonFunctionality function, ButtonSprite sprite, SCoord topLeftCorner,
+		 Sound *pressedSound = nullptr)
+	    : function(function), sprite(sprite), topLeftCorner(topLeftCorner),
+	      pressedSound(pressedSound)
+	{	
 	}
 
 	inline void render(SDL_Rect *viewport)
 	{
-		SDL_Rect r;
-		switch (state)
-		{
-		case ButtonState::Unpressed:
-			r = {unpressed.x, unpressed.y, dimensions.x, dimensions.y};
-			break;
-		case ButtonState::Pressed:
-			r = {pressed.x, pressed.y, dimensions.x, dimensions.y};
-			break;
-		case ButtonState::Hover:
-			r = {hover.x, hover.y, dimensions.x, dimensions.y};
-			break;
-		default:
-		}
-		spriteSheetTexture.render(topLeftCorner.x, topLeftCorner.y, &r, viewport);
+		SDL_Rect rect;
+		rect = getButtonSprite(sprite, state);
+		spriteSheetTexture.render(topLeftCorner.x, topLeftCorner.y, &rect, viewport);
 	}
 
 	void handleEvent(SDL_Event *e)
@@ -80,6 +82,7 @@ struct ButtonUI
 		int x, y;
 		SDL_GetMouseState( &x, &y );
 
+		SCoord dimensions = getButtonSpriteDimensions(sprite);
 		bool inside = mouseInside({x,y}, topLeftCorner, dimensions);
 
 		//Mouse is outside button
@@ -101,7 +104,7 @@ struct ButtonUI
 			case SDL_MOUSEBUTTONUP:
 				state = ButtonState::Pressed;
 				function.trigger();
-				if (pressedSound != NULL) playSound(pressedSound);
+				if (pressedSound != NULL) playSound(*pressedSound);
 				break;
 			}
 		}
@@ -109,26 +112,18 @@ struct ButtonUI
 	}
 };
 
-struct TextButtonUI : ButtonUI
+struct TextButtonUI : public ButtonUI
 {
     Text text;	
 
-    TextButtonUI(Text text, ButtonFunctionality function,      
+  TextButtonUI(Text text, ButtonFunctionality function, ButtonSprite sprite,      
         SCoord topLeftCorner,
-        SCoord dimensions,
-        SCoord unpressed,
-        SCoord hover,
-        SCoord pressed,
-        Sound pressedSound)
-        : ButtonUI(function,
+        Sound* pressedSound = nullptr)
+        : ButtonUI(function, sprite,
             topLeftCorner,
-            dimensions,
-            unpressed,
-            hover,
-            pressed,
             pressedSound),
           text(text)
-    {
+  {    
     }
 
     inline void render(SDL_Rect* viewport)
@@ -151,61 +146,27 @@ struct ItemButtonUI : ButtonUI
 };
 
 //TODO: make a wrapper with it next to text, as well as the functionality.
-struct CheckboxUI
+struct CheckboxUI : public ButtonUI
 {
-    SCoord topLeftCorner;
-    SCoord dimensions;
-
-    SCoord uncheckedSprite;
-    SCoord checkedSprite;
-
-    Sound clickSound;
-
     bool checked = false;
-    bool hovered = false;
 
-    CheckboxUI(
-        const SCoord topLeftCorner,
-        const SCoord dimensions,
-        const SCoord uncheckedSprite,
-        const SCoord checkedSprite,
-        const Sound clickSound = nullptr)
-        : topLeftCorner(topLeftCorner),
-          dimensions(dimensions),
-          uncheckedSprite(uncheckedSprite),
-          checkedSprite(checkedSprite),
-          clickSound(clickSound)
-    {
-    }
+    CheckboxUI(ButtonFunctionality function, ButtonSprite sprite, const SCoord topLeftCorner,
+	       Sound *sound = nullptr)
+	: function(
+	      function, sprite(sprite), topLeftCorner(topLeftCorner),
+	      sound(sound) {}
 
-    void render(SDL_Rect* viewport)
-    {
-        SDL_Rect src;
-
+    void render(SDL_Rect *viewport){
+      SDL_Rect rect;
         if (checked)
         {
-            src = {
-                checkedSprite.x,
-                checkedSprite.y,
-                dimensions.x,
-                dimensions.y
-            };
+				rect = getButtonSprite(sprite, ButtonState::Pressed);
         }
         else
-        {
-            src = {
-                uncheckedSprite.x,
-                uncheckedSprite.y,
-                dimensions.x,
-                dimensions.y
-            };
-        }
-
-        spriteSheetTexture.render(
-            topLeftCorner.x,
-            topLeftCorner.y,
-            &src,
-            viewport);
+		{
+			rect = getButtonSprite(sprite, state);	
+	}
+        spriteSheetTexture.render(topLeftCorner.x, topLeftCorner.y, &rect, viewport);
     }
 
     bool handleEvent(SDL_Event* e)
@@ -219,10 +180,10 @@ struct CheckboxUI
         int mx, my;
         SDL_GetMouseState(&mx, &my);
 
-        hovered = mouseInside(
-            {mx, my},
-            topLeftCorner,
-            dimensions);
+	if (mouseInside({mx, my}, topLeftCorner, dimensions) && !checked)
+			{
+				state = Button::Hovered;	
+			}
 
         if (hovered &&
             e->type == SDL_MOUSEBUTTONUP &&
@@ -233,8 +194,7 @@ struct CheckboxUI
             // if (clickSound)
             // {
             //     playSound(clickSound);
-            // }
-
+            // }		
             return true;
         }
 

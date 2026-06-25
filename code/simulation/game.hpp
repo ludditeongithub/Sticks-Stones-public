@@ -16,7 +16,6 @@
 #include <render/window.hpp>
 #include <render/camera.hpp>
 #include <render/draw.hpp>
-#include <string>
 
 struct Game
 {
@@ -49,9 +48,9 @@ void deinitWorld();
 
 GameSave& saveGame(std::string name, GameSave *save);
 
-void loadGame(GameSave& save);  
+void loadGame(GameSave& save);
 
-void newGame();
+void newGame();  
 
 void quit();
 
@@ -61,8 +60,12 @@ void processWorld();
 
 void gameLoop();
 
-uint16_t getDay();
+void frameLoop();
+
+void hourlyLoop();  
+
+uint32_t getDay();
 
 };
 
-	
+Game* g_Game = nullptr;

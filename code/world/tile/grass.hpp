@@ -36,6 +36,13 @@ inline constexpr LookupTable<Biome, float> coverages = []
 		float good = 0.25;
 		float poorly = 0.125;
 		float rarely = 0.6325;
+
+inline constexpr LookupTable<Biome,float> minimumRoll = [] {
+  LookupTable<Biome,float> lt{};
+  using enum Biome;
+  
+  return lt;
+ }();  
   
 inline constexpr LookupTable2D<Grass, Tile, float> tileSpawnMultipliers = []
 {
@@ -83,3 +90,4 @@ inline constexpr LookupTable<Grass, Coord> humidityPenaltyRanges = []
         lt[SavannahGrass] = {20, 60};
 	return lt;
 }();
+} //namespace grass

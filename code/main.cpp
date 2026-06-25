@@ -10,6 +10,7 @@
 #include <ui/aggregates/main_menu.hpp>
 #include <cereal/archives/json.hpp>
 #include <ui/system.hpp>
+#include <ui/first_launch.hpp>
 #include <fstream>	
 
 int main()
@@ -20,14 +21,8 @@ int main()
 		printf("TTF_Init failed: %s\n", TTF_GetError());
 	}
 
-	UISystem = new UISystem();
-	
 	// SDL_GetRendererOutputSize(window, userScreenWidth, userScreenHeight);
 	// int factor = std::min((int)(userScreenWidth/SCREEN_WIDTH), (int)(userScreenHeight/SCREEN_HEIGHT));
-
-	// SDL_RenderSetScale(gRenderer, factor);
-	handleLaunch();
-	
-	UISystem UISystem = new UISystem(flb.userScreenData.x, flb.userScreenData.y, flb.fullscreen);
-	
+        launch();
+	// SDL_RenderSetScale(gRenderer, factor);	
 }

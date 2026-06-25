@@ -5,4 +5,5 @@ generation:
                 name: plant
         grass:
                 name: grass
-                
+        scavengeable:
+                name: scavengeable

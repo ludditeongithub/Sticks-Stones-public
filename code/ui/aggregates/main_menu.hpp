@@ -8,7 +8,14 @@
 #include <render/sprite_sheet_settings.hpp>
 #include <simulation/launch_game.hpp>
 
-//TODO: loadGameButton
+// TODO: loadGameButton
+
+struct MainButtonUI : public ButtonUI {
+  MainButtonUI(const ButtonFunctionality function, const SCoord leftCorner) : ButtonUI(function, ButtonSprite::MainButton, leftCorner)
+	{
+          
+        }
+};
 
 struct MainMenu
 {
@@ -17,30 +24,26 @@ struct MainMenu
 	uint8_t rawToUserScalar;
 	// Button Positions
 	SCoord background = {}; //TODO
-	int buttonLeftAlignment = SCREEN_WIDTH / 2 - (SpriteSheet::buttonSprites[static_cast<int>(Button::MainButton)].w / 2);
+	int buttonLeftAlignment =
+	    SCREEN_WIDTH / 2 -
+	    (SpriteSheet::buttonSprites[static_cast<int>(ButtonSprite::MainButton)].w / 2);
 	
 	SCoord newLeftCorner = {buttonLeftAlignment, 2 * SCREEN_HEIGHT / 6};
 	SCoord loadLeftCorner = {buttonLeftAlignment / 2, 3 * SCREEN_HEIGHT / 6};
 	SCoord optionsLeftCorner = {buttonLeftAlignment / 2, 4 * SCREEN_HEIGHT / 6};
 	SCoord aboutLeftCorner = {buttonLeftAlignment / 2, 5 * SCREEN_HEIGHT / 6};
-	// Button Sprite Sheet positions
-	SCoord Unpressed = {SpriteSheet::buttonSprites[static_cast<int>(Button::MainButton)].x, SpriteSheet::buttonSprites[static_cast<int>(Button::MainButton)].y};
-	SCoord Hover = {SpriteSheet::buttonSprites[static_cast<int>(Button::MainButtonHover)].x, SpriteSheet::buttonSprites[static_cast<int>(Button::MainButtonHover)].y};
-	SCoord Pressed = {SpriteSheet::buttonSprites[static_cast<int>(Button::MainButtonPressed)].x, SpriteSheet::buttonSprites[static_cast<int>(Button::MainButtonPressed)].y};
-	SCoord buttonDimensions = {SpriteSheet::buttonSprites[static_cast<int>(Button::MainButton)].x, SpriteSheet::buttonSprites[static_cast<int>(Button::MainButton)].y};
-	
-	ButtonUI newGameButton;
-	ButtonUI loadGameButton;
-	ButtonUI aboutButton;
-	ButtonUI optionsButton;
+	MainButtonUI newGameButton;
+	MainButtonUI loadGameButton;
+	MainButtonUI aboutButton;
+	MainButtonUI optionsButton;
 	
 	SCoord videoLeftCorner;	
 	SCoord audioLeftCorner;
 	SCoord keybindingsLeftCorner;
 
-	ButtonUI videoButton;
-	ButtonUI audioButton;
-	ButtonUI keybindingsButton;
+	MainButtonUI videoButton;
+	MainButtonUI audioButton;
+	MainButtonUI keybindingsButton;
 	SDL_Rect mainMenuViewport;
 
 	enum class Mode
@@ -56,19 +59,18 @@ struct MainMenu
 
 	MainMenu() 
 	{		
-		newGameButton = ButtonUI(newLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
-		loadGameButton = ButtonUI(loadLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
-		aboutButton = ButtonUI(aboutLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
-		optionsButton =
-		    ButtonUI(optionsLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
+          newGameButton = MainButtonUI(NewGameBF(this), newLeftCorner);
+          loadGameButton = MainButtonUI(LoadMenuBF(), loadLeftCorner);
+          aboutButton = MainButtonUI(AboutBF(), aboutLeftCorner);
+          optionsButton = MainButtonUI(OptionsBF(), optionsLeftCorner);
 
-		videoLeftCorner = {buttonLeftAlignment, 2 * SCREEN_HEIGHT / 6};
-		audioLeftCorner = {buttonLeftAlignment / 2, 3 * SCREEN_HEIGHT / 6};
-		keybindingsLeftCorner = {buttonLeftAlignment / 2, 4 * SCREEN_HEIGHT / 6};
+          videoLeftCorner = {buttonLeftAlignment, 2 * SCREEN_HEIGHT / 6};
+          audioLeftCorner = {buttonLeftAlignment / 2, 3 * SCREEN_HEIGHT / 6};
+          keybindingsLeftCorner = {buttonLeftAlignment / 2, 4 * SCREEN_HEIGHT / 6};
 
-	 videoButton = ButtonUI(videoLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
-	 audioButton = ButtonUI(audioLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
-	 keybindingsButton = ButtonUI(keybindingsLeftCorner, buttonDimensions, Unpressed, Hover, Pressed);
+          videoButton = ButtonUI(VideoBF(), videoLeftCorner);
+          audioButton = ButtonUI(AudioBF(), audioLeftCorner);
+          keybindingsButton = ButtonUI(KeybindingsBF(),keybindingsLeftCorner);
 	}
 
 	void render()
@@ -108,15 +110,7 @@ struct MainMenu
 
 	void mainHandle(SDL_Event *e, SCoord mousePosition)
 	{
-		if (e->type == SDL_MOUSEBUTTONUP) {
-			if (mouseInside(mousePosition, newLeftCorner, buttonDimensions)) {
-				startGame();
-			}
-			else if (mouseInside(mousePosition, loadLeftCorner, buttonDimensions))
-			{
-				mode = Mode::Load;
-			} else if (mouseInside(mousePosition, optionsLeftCorner, buttonDimensions)) mode = Mode::Options;
-		}
+		
 	}
 
 	void loadHandle(SDL_Event *e, SCoord mousePosition)

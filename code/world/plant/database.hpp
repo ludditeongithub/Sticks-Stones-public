@@ -168,12 +168,8 @@ Array<Plant> plants;
     // =========================
 
 PlantDatabase(Arena *arena, size_t capacity
-
   , World& world
-
-
   , SearchGrid& search
-
 )
     {
 this->capacity = capacity;

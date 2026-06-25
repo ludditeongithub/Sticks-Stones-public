@@ -14,6 +14,7 @@
 #include <ui/components/drop_down_menu.hpp>
 #include <fstream>
 #include "fonts.hpp"
+#include "system.hpp"
 
 bool initFirstLaunchWindow()
 	{
@@ -79,50 +80,52 @@ struct FirstLaunchBuffer
 	        FC_Font* amble20 = FC_CreateFont();
 		FC_LoadFont(amble20, renderer, "../../fonts/Amble-Regular.ttf", 20,
 			    FC_MakeColor(9, 9, 9, 255), TTF_STYLE_NORMAL);
-		ButtonSpriteData bsd = SpriteSheet::buttonSprites[ButtonSprite::FirstLaunchButton];
+		
 
 		PositionedText fullscreen = {amble20, "Fullscreen: ", {30, 30}};
 		int textWidth = FC_GetWidth(amble20, fullscreen.text);
 		CheckboxUI cb = CheckboxUI({textWidth + 8,30}, {30,30}, SpriteSheet::buttonSprites[ButtonSprite::Checkbox].unpressed, SpriteSheet::buttonSprites[ButtonSprite::Checkbox].pressed);
-
-		TextButtonUI headerButton = TextButtonUI(NullBF(), {amble20, "Click to Select Window Dimensions"}, {30, fullscreen.position.y + 50}, {20, 180}, bsd.dimensions, bsd.unpressed, bsd.hover, bsd.pressed);
+		Text text = {amble20, "Click to Select Window Dimensions"};
+		TextButtonUI headerButton = TextButtonUI(text, NullBF(), ButtonSprite::FirstLaunchButton, {30, static_cast<int>(fullscreen.position.y) + 50});
 
 		DropdownMenu ddm = DropdownMenu(headerButton, screen_dimensions.size());
 
 		int accum = headerButton.topLeftCorner.y + headerButton.dimensions.y;
 		for (auto sd : screen_dimensions)
 		{		  
-		  ddm.addItem(TextButtonUI({amble20, std::to_string(sd.x) + " x " + std::to_string(sd.y)},
-			    ChangeScreenDimensionsBF(sd), {headerButton.topLeftCorner.x, accum}, bsd.dimensions, bsd.unpressed, bsd.hover));
+		  ddm.addItem(TextButtonUI({amble20, std::to_string(sd.x) + " x " + std::to_string(sd.y)},                                           ChangeScreenDimensionsBF(sd), ButtonSprite::FirstLaunchButton, {headerButton.topLeftCorner.x, accum}));
 		}
 
+                Text lbt = {amble20, "Launch"};
 		TextButtonUI launchButton =
-		    TextButtonUI({amble20, "Launch"}, LaunchBF(Launches::GameWindow),
-				 {180, fullscreen.position.y + 150}, {20, 100}, bsd.dimensions,
-				 bsd.unpressed, bsd.hover, bsd.pressed);
+                  TextButtonUI(lbt, LaunchBF(Launches::GameWindow),				 ButtonSprite::FirstLaunchButton, {180, static_cast<int>(fullscreen.position.y + 150)});
 		launchButton.render(mainScreenViewport);
-		
+                
 	}
 
 
-void handleLaunch()
+FirstLaunchBuffer handleLaunch()
 {
 FirstLaunchBuffer flb;
-std::string file = "file.bin";
-std::ifstream is(file, std::ios_base::binary);
+std::string file = "first_launch.bin";
+std::ifstream is(file);
 
 try
 {
     cereal::BinaryInputArchive firstLaunchArchive = cereal::BinaryInputArchive(is);
     flb.serialize(firstLaunchArchive);
-  
 }
 catch (...)
 {
   flb = FirstLaunchBuffer{};
   launchFirstLauncher(flb);
 }
+ return flb;
 }
 
-
-	
+void launch()
+{
+        FirstLaunchBuffer flb = handleLaunch();	
+	g_UISystem = new UISystem(flb.userScreenResolution.x, flb.userScreenResolution.y, flb.fullscreen);
+        
+}

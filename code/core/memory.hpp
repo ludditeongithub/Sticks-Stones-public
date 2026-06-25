@@ -28,6 +28,16 @@ struct Arena
     }
 };
 
+template <typename... Types>
+size_t getTypesSizeBytes(Types ... types)
+{
+
+}
+
+void reserveDatabases
+
+ 
+
 void* arena_alloc(Arena& arena, size_t bytes)
 {
     if (arena.used + bytes > arena.capacity)

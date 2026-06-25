@@ -92,21 +92,3 @@ void Game::handleEvent(SDL_Event *e)
 {
 	for (size_t i = 0; i < ui.buttons.size(); i++) ui.buttons[i].handleEvent(e);
 }
-
-void Game::gameLoop()
-{
-	bool quit = false;
-	SDL_Event e;
-	while( !quit )
-	{				
-		while( SDL_PollEvent( &e ) != 0 )
-		{
-			handleEvent(&e);
-		}
-		processWorld(world);
-		drawEntities(world, {0, 0}, tileDatabase->tiles, animalDatabase->ages, animalDatabase->frames, animalDatabase->statuses, unitDatabase->frames, unitDatabase->ages, unitDatabase->frameDatas, search);
-	}
-}	
-
-
-	

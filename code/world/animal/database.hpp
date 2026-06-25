@@ -17,17 +17,6 @@ struct AnimalDatabase
 {
 public:
   //TODO: calculate entity size in templates
-	static constexpr uint32_t ENTITY_SIZE =
-	    sizeof(Coord) +
-	    sizeof(Health) +
-	    sizeof(Hunger) +
-	    sizeof(Time) +
-	    sizeof(Frame) +
-	    sizeof(AnimalStatus) +
-	    sizeof(Action) +
-	    sizeof(uint16_t) +
-	    sizeof(TargetType) +
-	    sizeof(Animal);
 
 	// @codegen:begin database_generation
     // =========================

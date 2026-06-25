@@ -39,7 +39,7 @@ def create_world_gen_functions():
             relative_path,
             entity["name"] + "_spawn",
             generated_code,
-        )        
+        ) 
 
 def create_entity_spawn_function(entity):
     context = {

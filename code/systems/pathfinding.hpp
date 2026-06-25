@@ -1,4 +1,5 @@
 #include "core/data.hpp"
+#include "core/memory.hpp"
 #include "schedule/dispatch.hpp"
 #include <core/containers.hpp>
 #include <core/math.hpp>
@@ -24,25 +25,32 @@ struct Entity
 
 struct PathsBuffer
 {
-	uint16_t size;
+	static constexpr size_t elementSize = (sizeof(uint8_t) * 2 + sizeof(Coord) * 2);
+	size_t size;
 	Array<uint8_t> currents;
 	Array<uint8_t> ends;
 	Array<Coord> destinations;
-	Array<Array<Coord>> datas;
+	Array2D<Coord> datas;
 
-	Coord pop(uint16_t i)
+	Coord pop(size_t i)
 	{
 		int c = currents[i];
 		currents[i]++;
 		return datas[i][c];
 	}
 
-	PathsBuffer(uint16_t size) : currents(size), ends(size), destinations(size), datas(size) {}
+	PathsBuffer(Arena& arena, size_t size)
+	{
+			currents = arena_make_array<uint8_t>(arena, size);
+			ends = arena_make_array<uint8_t>(arena, size);
+			destinations = arena_make_array<Coord>(arena, size);
+			datas = arena_make_2d_array<Coord>(arena, MAX_PATH_SIZE, size);
+	}
 };
 
 struct PathExecution
 {
-	uint16_t startIndex;
+	size_t startIndex;
 	Coord start;
 	uint8_t length;
 };

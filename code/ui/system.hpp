@@ -5,7 +5,7 @@
 #include <cstdint>
 #include <SDL2/SDL_video.h>
 
-Coord currentScreenDimensions = {SCREEN_WIDTH, SCREEN_HEIGHT};
+Coord g_screenDimensions = {SCREEN_WIDTH, SCREEN_HEIGHT};
 
 struct UISystem
 {
@@ -170,4 +170,4 @@ void closeWindow()
 }
 };
 
-UISystem* UISystem;
+UISystem* g_UISystem;

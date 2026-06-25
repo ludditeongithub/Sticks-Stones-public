@@ -57,7 +57,7 @@ struct Array
     {
         ar(capacity, count);
 
-        for (uint16_t i = 0; i < count; i++)
+        for (size_t i = 0; i < count; i++)
             ar(data[i]);
     }
 
@@ -149,7 +149,7 @@ Array2D<T>& arena_make_2d_array(Arena& arena,
                                 uint16_t width,
                                 uint16_t height)
 {
-    size_t total_elements = static_cast<size_t>(width) * height;
+  size_t total_elements = static_cast<size_t>(width * height);
 
     size_t bytes =
         sizeof(Array2D<T>) +

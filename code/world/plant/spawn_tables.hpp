@@ -6,12 +6,169 @@
 namespace plant
 {
 
-
-
-inline constexpr LookupTable<PlantCategory,float> categorySpawnChances = [] {
-  LookupTable<PlantCategory,float> lt{};
+  inline constexpr LookupTable2D<Biome, PlantCategory, float> categorySpawnChances = [] {
+    LookupTable2D<Biome, PlantCategory, float> lt{};
   using enum PlantCategory;
-  
+   	lt[Biome::HotDesert][Tree] = 0.04; // acacia
+	lt[Biome::HotDesert][Citrus] = 0.0;
+	lt[Biome::HotDesert][Stone] = 0.0;
+	lt[Biome::HotDesert][Pome] = 0.0;
+	lt[Biome::HotDesert][Olive] = 0.06;
+	lt[Biome::HotDesert][Moss] = 0.0;
+	lt[Biome::HotDesert][Fern] = 0.0;
+	lt[Biome::HotDesert][Bush] = 0.45;
+	lt[Biome::HotDesert][Succulent] = 0.7;
+	lt[Biome::HotDesert][BerryShrub] = 0.0;
+	lt[Biome::HotDesert][Leafy] = 0.00;
+	lt[Biome::HotDesert][Root] = 0.0;
+	lt[Biome::HotDesert][Bulb] = 0.06;
+	lt[Biome::HotDesert][Grain] = 0.0;
+	lt[Biome::HotDesert][Grapevine] = 0.0;
+	lt[Biome::HotDesert][Herb] = 0.075;
+	lt[Biome::HotDesert][Textile] = 0.02;
+
+        lt[Biome::Grassland][Tree] = 0.2;
+	lt[Biome::Grassland][Citrus] = 0.005;
+	lt[Biome::Grassland][Stone] = 0.005;
+	lt[Biome::Grassland][Pome] = 0.005;
+	lt[Biome::Grassland][Olive] = 0.005;
+	lt[Biome::Grassland][Moss] = 0.2;
+	lt[Biome::Grassland][Fern] = 0.2;
+	lt[Biome::Grassland][Bush] = 0.3;
+	lt[Biome::Grassland][Succulent] = 0.06;
+	lt[Biome::Grassland][BerryShrub] = 0.2;
+	lt[Biome::Grassland][Leafy] = 0.2;
+	lt[Biome::Grassland][Root] = 0.1;
+	lt[Biome::Grassland][Reed] = 0.0;
+	lt[Biome::Grassland][Bulb] = 0.06;
+	lt[Biome::Grassland][Grain] = 0.35;
+	lt[Biome::Grassland][Grapevine] = 0.0;
+	lt[Biome::Grassland][Herb] = 0.25;
+	lt[Biome::Grassland][Textile] = 0.06;
+
+        lt[Biome::Savanna][Tree] = 0.80;
+	lt[Biome::Savanna][Citrus] = 0.08;
+	lt[Biome::Savanna][Stone] = 0.08;
+	lt[Biome::Savanna][Pome] = 0.0;
+	lt[Biome::Savanna][Olive] = 0.08;
+	lt[Biome::Savanna][Moss] = 0.04;
+	lt[Biome::Savanna][Fern] = 0.08;
+	lt[Biome::Savanna][Bush] = 0.6;
+	lt[Biome::Savanna][Succulent] = 0.16;
+	lt[Biome::Savanna][BerryShrub] = 0.12;
+	lt[Biome::Savanna][Leafy] = 0.08;
+	lt[Biome::Savanna][Root] = 0.1;
+	lt[Biome::Savanna][Bulb] = 0.12;
+	lt[Biome::Savanna][Grain] = 0.2;
+	lt[Biome::Savanna][Grapevine] = 0.0;
+	lt[Biome::Savanna][Herb] = 0.2;
+	lt[Biome::Savanna][Textile] = 0.04;
+
+        lt[Biome::Wetland][Tree] = 0.3;
+	lt[Biome::Wetland][Citrus] = 0.0;
+	lt[Biome::Wetland][Stone] = 0.0;
+	lt[Biome::Wetland][Pome] = 0.0;
+	lt[Biome::Wetland][Olive] = 0.0;
+	lt[Biome::Wetland][Moss] = 0.15;
+	lt[Biome::Wetland][Fern] = 0.3;
+	lt[Biome::Wetland][Bush] = 0.3;
+	lt[Biome::Wetland][Reed] = 0.4;
+	lt[Biome::Wetland][Succulent] = 0.06;
+	lt[Biome::Wetland][BerryShrub] = 0.09;
+	lt[Biome::Wetland][Leafy] = 0.0; // increase when adding duckweed and lt] water plants
+	lt[Biome::Wetland][Root] = 0.0;	 // increase when adding wetland root plants
+	lt[Biome::Wetland][Bulb] = 0.0;
+	lt[Biome::Wetland][Grain] = 0.3;
+	lt[Biome::Wetland][Grapevine] = 0.0;
+	lt[Biome::Wetland][Herb] = 0.3;
+	lt[Biome::Wetland][Textile] = 0.02;
+
+        lt[Biome::Temperate][Tree] = 0.92;
+	lt[Biome::Temperate][Citrus] = 0.02;
+	lt[Biome::Temperate][Stone] = 0.02;
+	lt[Biome::Temperate][Pome] = 0.0;
+	lt[Biome::Temperate][Olive] = 0.0;
+	lt[Biome::Temperate][Moss] = 0.25;
+	lt[Biome::Temperate][Fern] = 0.35;
+	lt[Biome::Temperate][Bush] = 0.2;
+	lt[Biome::Temperate][Reed] = 0.05;
+	lt[Biome::Temperate][Succulent] = 0.04;
+	lt[Biome::Temperate][BerryShrub] = 0.1;
+	lt[Biome::Temperate][Leafy] = 0.1;
+	lt[Biome::Temperate][Root] = 0.1;
+	lt[Biome::Temperate][Bulb] = 0.07;
+	lt[Biome::Temperate][Grain] = 0.1;
+	lt[Biome::Temperate][Grapevine] = 0.04;
+	lt[Biome::Temperate][Herb] = 0.18;
+	lt[Biome::Temperate][Textile] = 0.02;
+
+        lt[Biome::Boreal][Tree] = 0.85;
+	lt[Biome::Boreal][Citrus] = 0.0;
+	lt[Biome::Boreal][Stone] = 0.0;
+	lt[Biome::Boreal][Pome] = 0.0;
+	lt[Biome::Boreal][Olive] = 0.0;
+	lt[Biome::Boreal][Moss] = 0.2;
+	lt[Biome::Boreal][Fern] = 0.14;
+	lt[Biome::Boreal][Bush] = 0.2;
+	lt[Biome::Boreal][Succulent] = 0.02;
+	lt[Biome::Boreal][BerryShrub] = 0.2;
+	lt[Biome::Boreal][Leafy] = 0.08;
+	lt[Biome::Boreal][Root] = 0.08;
+	lt[Biome::Boreal][Bulb] = 0.04;
+	lt[Biome::Boreal][Grain] = 0.06;
+	lt[Biome::Boreal][Grapevine] = 0.0;
+	lt[Biome::Boreal][Herb] = 0.08;
+	lt[Biome::Boreal][Textile] = 0.02;
+
+        lt[Biome::Jungle][Tree] = 0.85;
+	lt[Biome::Jungle][Citrus] = 0.02;
+	lt[Biome::Jungle][Stone] = 0.02;
+	lt[Biome::Jungle][Pome] = 0.0;
+	lt[Biome::Jungle][Olive] = 0.0;
+	lt[Biome::Jungle][Moss] = 0.2;
+	lt[Biome::Jungle][Fern] = 0.3;
+	lt[Biome::Jungle][Bush] = 0.2;
+	lt[Biome::Jungle][Reed] = 0.02;
+	lt[Biome::Jungle][Succulent] = 0.0;
+	lt[Biome::Jungle][BerryShrub] = 0.2;
+	lt[Biome::Jungle][Leafy] = 0.05; // add more later
+	lt[Biome::Jungle][Root] = 0.06;
+	lt[Biome::Jungle][Bulb] = 0.04;
+	lt[Biome::Jungle][Grain] = 0.07;
+	lt[Biome::Jungle][Grapevine] = 0.04;
+	lt[Biome::Jungle][Herb] = 0.18;
+	lt[Biome::Jungle][Textile] = 0.02;
+
+        lt[Biome::Rocky][Tree] = 0.114108f;
+	lt[Biome::Rocky][Moss] = 0.342324f;
+	lt[Biome::Rocky][Fern] = 0.114108f;
+	lt[Biome::Rocky][Succulent] = 0.186722f;
+	lt[Biome::Rocky][BerryShrub] = 0.082988f;
+	lt[Biome::Rocky][Leafy] = 0.020747f;
+	lt[Biome::Rocky][Root] = 0.031121f;
+	lt[Biome::Rocky][Herb] = 0.082988f;
+	lt[Biome::Rocky][Textile] = 0.004149f;
+
+        lt[Biome::Tundra][Moss] = 0.6;
+	lt[Biome::Tundra][Fern] = 0.06;
+	lt[Biome::Tundra][Bush] = 0.4;
+	lt[Biome::Tundra][Succulent] = 0.07;
+	lt[Biome::Tundra][Leafy] = 0.2;
+	lt[Biome::Tundra][Root] = 0.2;
+	lt[Biome::Tundra][Herb] = 0.02;
+
+        lt[Biome::ColdDesert][Moss] = 0.2;
+	lt[Biome::ColdDesert][Fern] = 0.05;
+	lt[Biome::ColdDesert][Bush] = 0.3;
+	lt[Biome::ColdDesert][Succulent] = 0.2;
+	lt[Biome::ColdDesert][BerryShrub] = 0.05;
+	lt[Biome::ColdDesert][Leafy] = 0.15;
+	lt[Biome::ColdDesert][Root] = 0.15;
+	lt[Biome::ColdDesert][Bulb] = 0.05;
+	lt[Biome::ColdDesert][Grain] = 0.0;
+	lt[Biome::ColdDesert][Grapevine] = 0.0;
+	lt[Biome::ColdDesert][Herb] = 0.02;
+	lt[Biome::ColdDesert][Textile] = 0.03;
   return lt;
  }();
 
@@ -117,8 +274,9 @@ inline constexpr LookupTable<Plant, Coord> humidityPenaltyRanges = []
 		float good = 0.25;
 		float poorly = 0.125;
 		float rarely = 0.6325;
-  
-inline constexpr LookupTable2D<Plant, Tile, float> tileSpawnMultipliers = []
+
+
+inline LookupTable2D<Plant, Tile, float> tileSpawnMultipliers = []
 {
 	LookupTable2D<Plant, Tile, float> lt{};
 	using enum Tile;
@@ -146,8 +304,7 @@ inline constexpr LookupTable2D<Plant, Tile, float> tileSpawnMultipliers = []
 	lt[Plant::EvergreenTree][RockySoil] = poorly;
 	lt[Plant::EvergreenTree][AridSoil] = rarely;
 	lt[Plant::EvergreenTree][Oxisol] = poorly;
-	lt[Plant::EvergreenTree][Gleysol] = poorly;
-	
+	lt[Plant::EvergreenTree][Gleysol] = poorly;	
 					
 	lt[Plant::PioneerTree][Podzol] = rarely;
 	lt[Plant::PioneerTree][LoamSoil] = optimal;
@@ -613,8 +770,6 @@ inline constexpr LookupTable2D<Plant, Tile, float> tileSpawnMultipliers = []
 
 
 
-
-
 // =========================
 // REEDS
 // =========================
@@ -632,248 +787,20 @@ inline constexpr LookupTable2D<Plant, Tile, float> tileSpawnMultipliers = []
 	return lt;
 }();
 
-using PlantTable = LookupTable<PlantCategory, float>;
-
-inline constexpr LookupTable2D<PlantCategory, float> hotDesertChances = []
-{
-	LookupTable<PlantCategory, float> lt{};
-	using enum PlantCategory;
-	lt[Biome::HotDesert][Tree] = 0.04; // acacia
-	lt[Biome::HotDesert][Citrus] = 0.0;
-	lt[Biome::HotDesert][Stone] = 0.0;
-	lt[Biome::HotDesert][Pome] = 0.0;
-	lt[Biome::HotDesert][Olive] = 0.06;
-	lt[Biome::HotDesert][Moss] = 0.0;
-	lt[Biome::HotDesert][Fern] = 0.0;
-	lt[Biome::HotDesert][Bush] = 0.45;
-	lt[Biome::HotDesert][Succulent] = 0.7;
-	lt[Biome::HotDesert][BerryShrub] = 0.0;
-	lt[Biome::HotDesert][Leafy] = 0.00;
-	lt[Biome::HotDesert][Root] = 0.0;
-	lt[Biome::HotDesert][Bulb] = 0.06;
-	lt[Biome::HotDesert][Grain] = 0.0;
-	lt[Biome::HotDesert][Grapevine] = 0.0;
-	lt[Biome::HotDesert][Herb] = 0.075;
-	lt[Biome::HotDesert][Textile] = 0.02;
-	return lt;
-}();
-
-inline constexpr LookupTable<PlantCategory, float> grasslandChances = []
-{
-	LookupTable<PlantCategory, float> lt{};
-	using enum PlantCategory;
-	lt[Biome::Grassland][Tree] = 0.2;
-	lt[Biome::Grassland][Citrus] = 0.005;
-	lt[Biome::Grassland][Stone] = 0.005;
-	lt[Biome::Grassland][Pome] = 0.005;
-	lt[Biome::Grassland][Olive] = 0.005;
-	lt[Biome::Grassland][Moss] = 0.2;
-	lt[Biome::Grassland][Fern] = 0.2;
-	lt[Biome::Grassland][Bush] = 0.3;
-	lt[Biome::Grassland][Succulent] = 0.06;
-	lt[Biome::Grassland][BerryShrub] = 0.2;
-	lt[Biome::Grassland][Leafy] = 0.2;
-	lt[Biome::Grassland][Root] = 0.1;
-	lt[Biome::Grassland][Reed] = 0.0;
-	lt[Biome::Grassland][Bulb] = 0.06;
-	lt[Biome::Grassland][Grain] = 0.35;
-	lt[Biome::Grassland][Grapevine] = 0.0;
-	lt[Biome::Grassland][Herb] = 0.25;
-	lt[Biome::Grassland][Textile] = 0.06;
-	return lt;
-}();
-
-inline constexpr LookupTable<PlantCategory, float> savannahChances = []
-{
-	LookupTable<PlantCategory, float> lt{};
-	using enum PlantCategory;
-	lt[Biome::Savannah][Tree] = 0.80;
-	lt[Biome::Savannah][Citrus] = 0.08;
-	lt[Biome::Savannah][Stone] = 0.08;
-	lt[Biome::Savannah][Pome] = 0.0;
-	lt[Biome::Savannah][Olive] = 0.08;
-	lt[Biome::Savannah][Moss] = 0.04;
-	lt[Biome::Savannah][Fern] = 0.08;
-	lt[Biome::Savannah][Bush] = 0.6;
-	lt[Biome::Savannah][Succulent] = 0.16;
-	lt[Biome::Savannah][BerryShrub] = 0.12;
-	lt[Biome::Savannah][Leafy] = 0.08;
-	lt[Biome::Savannah][Root] = 0.1;
-	lt[Biome::Savannah][Bulb] = 0.12;
-	lt[Biome::Savannah][Grain] = 0.2;
-	lt[Biome::Savannah][Grapevine] = 0.0;
-	lt[Biome::Savannah][Herb] = 0.2;
-	lt[Biome::Savannah][Textile] = 0.04;
-	return lt;
-}();
-
-inline constexpr LookupTable<PlantCategory, float> wetlandChances = []
-{
-	LookupTable<PlantCategory, float> lt{};
-	using enum PlantCategory;
-	lt[Biome::Wetland][Tree] = 0.3;
-	lt[Biome::Wetland][Citrus] = 0.0;
-	lt[Biome::Wetland][Stone] = 0.0;
-	lt[Biome::Wetland][Pome] = 0.0;
-	lt[Biome::Wetland][Olive] = 0.0;
-	lt[Biome::Wetland][Moss] = 0.15;
-	lt[Biome::Wetland][Fern] = 0.3;
-	lt[Biome::Wetland][Bush] = 0.3;
-	lt[Biome::Wetland][Reed] = 0.4;
-	lt[Biome::Wetland][Succulent] = 0.06;
-	lt[Biome::Wetland][BerryShrub] = 0.09;
-	lt[Biome::Wetland][Leafy] = 0.0; // increase when adding duckweed and lt] water plants
-	lt[Biome::Wetland][Root] = 0.0;	 // increase when adding wetland root plants
-	lt[Biome::Wetland][Bulb] = 0.0;
-	lt[Biome::Wetland][Grain] = 0.3;
-	lt[Biome::Wetland][Grapevine] = 0.0;
-	lt[Biome::Wetland][Herb] = 0.3;
-	lt[Biome::Wetland][Textile] = 0.02;
-	return lt;
-}();
-
-inline constexpr LookupTable<PlantCategory, float> temperateChances = []
-{
-	LookupTable<PlantCategory, float> lt{};
-	using enum PlantCategory;
-	lt[Biome::Temperate][Tree] = 0.92;
-	lt[Biome::Temperate][Citrus] = 0.02;
-	lt[Biome::Temperate][Stone] = 0.02;
-	lt[Biome::Temperate][Pome] = 0.0;
-	lt[Biome::Temperate][Olive] = 0.0;
-	lt[Biome::Temperate][Moss] = 0.25;
-	lt[Biome::Temperate][Fern] = 0.35;
-	lt[Biome::Temperate][Bush] = 0.2;
-	lt[Biome::Temperate][Reed] = 0.05;
-	lt[Biome::Temperate][Succulent] = 0.04;
-	lt[Biome::Temperate][BerryShrub] = 0.1;
-	lt[Biome::Temperate][Leafy] = 0.1;
-	lt[Biome::Temperate][Root] = 0.1;
-	lt[Biome::Temperate][Bulb] = 0.07;
-	lt[Biome::Temperate][Grain] = 0.1;
-	lt[Biome::Temperate][Grapevine] = 0.04;
-	lt[Biome::Temperate][Herb] = 0.18;
-	lt[Biome::Temperate][Textile] = 0.02;
-	return lt;
-}();
-
-inline constexpr LookupTable<PlantCategory, float> borealChances = []
-{
-	LookupTable<PlantCategory, float> lt{};
-	using enum PlantCategory;
-	lt[Biome::Boreal][Tree] = 0.85;
-	lt[Biome::Boreal][Citrus] = 0.0;
-	lt[Biome::Boreal][Stone] = 0.0;
-	lt[Biome::Boreal][Pome] = 0.0;
-	lt[Biome::Boreal][Olive] = 0.0;
-	lt[Biome::Boreal][Moss] = 0.2;
-	lt[Biome::Boreal][Fern] = 0.14;
-	lt[Biome::Boreal][Bush] = 0.2;
-	lt[Biome::Boreal][Succulent] = 0.02;
-	lt[Biome::Boreal][BerryShrub] = 0.2;
-	lt[Biome::Boreal][Leafy] = 0.08;
-	lt[Biome::Boreal][Root] = 0.08;
-	lt[Biome::Boreal][Bulb] = 0.04;
-	lt[Biome::Boreal][Grain] = 0.06;
-	lt[Biome::Boreal][Grapevine] = 0.0;
-	lt[Biome::Boreal][Herb] = 0.08;
-	lt[Biome::Boreal][Textile] = 0.02;
-	return lt;
-}();
-
-inline constexpr LookupTable<PlantCategory, float> jungleChances = []
-{
-	LookupTable<PlantCategory, float> lt{};
-	using enum PlantCategory;
-	lt[Biome::Jungle][Tree] = 0.85;
-	lt[Biome::Jungle][Citrus] = 0.02;
-	lt[Biome::Jungle][Stone] = 0.02;
-	lt[Biome::Jungle][Pome] = 0.0;
-	lt[Biome::Jungle][Olive] = 0.0;
-	lt[Biome::Jungle][Moss] = 0.2;
-	lt[Biome::Jungle][Fern] = 0.3;
-	lt[Biome::Jungle][Bush] = 0.2;
-	lt[Biome::Jungle][Reed] = 0.02;
-	lt[Biome::Jungle][Succulent] = 0.0;
-	lt[Biome::Jungle][BerryShrub] = 0.2;
-	lt[Biome::Jungle][Leafy] = 0.05; // add more later
-	lt[Biome::Jungle][Root] = 0.06;
-	lt[Biome::Jungle][Bulb] = 0.04;
-	lt[Biome::Jungle][Grain] = 0.07;
-	lt[Biome::Jungle][Grapevine] = 0.04;
-	lt[Biome::Jungle][Herb] = 0.18;
-	lt[Textile] = 0.02;
-	return lt;
-}();
-
-inline constexpr LookupTable<PlantCategory, float> rockyChances = []
-{
-	LookupTable<PlantCategory, float> lt{};
-	using enum PlantCategory;
-	lt[Biome::Rocky][Tree] = 0.114108f;
-	lt[Biome::Rocky][Moss] = 0.342324f;
-	lt[Biome::Rocky][Fern] = 0.114108f;
-	lt[Biome::Rocky][Succulent] = 0.186722f;
-	lt[Biome::Rocky][BerryShrub] = 0.082988f;
-	lt[Biome::Rocky][Leafy] = 0.020747f;
-	lt[Biome::Rocky][Root] = 0.031121f;
-	lt[Biome::Rocky][Tuber] = 0.020747f;
-	lt[Biome::Rocky][Herb] = 0.082988f;
-	lt[Biome::Rocky][Textile] = 0.004149f;
-	return lt;
-}();
-
-inline constexpr LookupTable<PlantCategory, float> tundraChances = []
-{
-	LookupTable<PlantCategory, float> lt{};
-	using enum PlantCategory;
-	lt[Biome::Tundra][Moss] = 0.6;
-	lt[Biome::Tundra][Fern] = 0.06;
-	lt[Biome::Tundra][Bush] = 0.4;
-	lt[Biome::Tundra][Succulent] = 0.07;
-	lt[Biome::Tundra][Leafy] = 0.2;
-	lt[Biome::Tundra][Root] = 0.2;
-	lt[Biome::Tundra][Herb] = 0.02;
-	return lt;
-}();
-
-constexpr const PlantTable &tundraPlantTable() { return tundraChances; }
-
-inline constexpr LookupTable<PlantCategory, float> coldDesertChances = []
-{
-	LookupTable<PlantCategory, float> lt{};
-	using enum PlantCategory;
-	lt[Biome::ColdDesert][Moss] = 0.2;
-	lt[Biome::ColdDesert][Fern] = 0.05;
-	lt[Biome::ColdDesert][Bush] = 0.3;
-	lt[Biome::ColdDesert][Succulent] = 0.2;
-	lt[Biome::ColdDesert][BerryShrub] = 0.05;
-	lt[Biome::ColdDesert][Leafy] = 0.15;
-	lt[Biome::ColdDesert][Root] = 0.15;
-	lt[Biome::ColdDesert][Bulb] = 0.05;
-	lt[Biome::ColdDesert][Grain] = 0.0;
-	lt[Biome::ColdDesert][Grapevine] = 0.0;
-	lt[Biome::ColdDesert][Herb] = 0.02;
-	lt[Biome::ColdDesert][Textile] = 0.03;
-	return lt;
-}();
-
-
-
-inline constexpr LookupTable<Biome, float> plantCoverages = []
+inline constexpr LookupTable<Biome, float> coverages = []
 {
 	LookupTable<Biome, float> lt{};
 	using enum Biome;
-	HotDesert = 0.08;
-	Grasslands = 0.2;
-	Savannah = 0.25;
-	Wetlands = 0.43;
-	Temperate = 0.89;
-	Boreal = 0.79;
-	Jungle = 0.98;
-	Rocky = 0.17;
-	Tundra = 0.15;
-	ColdDesert = 0.08;
+	lt[HotDesert] = 0.08;
+	lt[Grassland] = 0.2;
+	lt[Savanna] = 0.25;
+	lt[Wetland] = 0.43;
+	lt[Temperate] = 0.89;
+	lt[Boreal] = 0.79;
+	lt[Jungle] = 0.98;
+	lt[Rocky] = 0.17;
+	lt[Tundra] = 0.15;
+	lt[ColdDesert] = 0.08;
 	return lt;
 }();
 }; //namespace plant

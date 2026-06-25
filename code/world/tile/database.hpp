@@ -30,13 +30,10 @@ class TileDatabase
 
   
   	// @codegen:begin database_generation
+
     // =========================
     // BASE DATABASE MEMBERS
     // =========================
-
-constexpr static uint16_t ENTITY_SIZE = sizeof(bool)
-
-;
 
 size_t capacity;
 Array<Tile> tiles;
@@ -83,7 +80,7 @@ Array<Tile> tiles;
 
 TileDatabase(Arena *arena, size_t capacity
 
-  , World& world
+  World& world,
 
 
 )

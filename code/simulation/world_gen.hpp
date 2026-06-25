@@ -1,4 +1,7 @@
 #pragma once
+
+#include "systems/find_nearest.hpp"
+#include "world/world.hpp"
 #include <core/random.hpp>
 #include <cstdint>
 #include <vector>
@@ -8,34 +11,8 @@
 #include <world/chunk/data.hpp>
 #include <world/tile/enum.hpp>
 
+
 float rangePenalty(float originalValue, float minValue, float maxValue, float adjustedValue);
-
-struct TileSpawnBuffer
-{
-	uint32_t size;
-	std::vector<Tile> tiles;
-	std::vector<Grass> grasses;
-	std::vector<Alt> altitudes;
-};
-
-struct PlantSpawnBuffer
-{
-	std::vector<Plant> plants;
-	std::vector<Coord> coords;
-	uint16_t size;
-
-	inline void add(Plant plant, Coord coord)
-	{
-		plants[size++] = plant;
-		coords[size] = coord;
-	}
-};
-
-struct AnimalSpawnBuffer {
-	std::vector<Animal> animals;
-	std::vector<Coord> coords;
-	size_t size;
-};
 
 class WorldSpawner
 {
@@ -128,8 +105,114 @@ class WorldSpawner
 	std::vector<std::vector<bool>> rVisited; // holds visited rivers
 
 	const uint32_t TILE_AMOUNT;
+
+
+  struct TileSpawnBuffer
+{
+	size_t size;
+	std::vector<Tile> tiles;
+	std::vector<Grass> grasses;
+	std::vector<Alt> altitudes;
+  std::vector<bool> occupieds;
+
+  TileSpawnBuffer(size_t capacity)
+	{
+		tiles.reserve(capacity);
+		grasses.reserve(capacity);
+		altitudes.reserve(capacity);
+                size = capacity;
+        }
+
+  inline void add(Grass grass, Coord coord)
+  {
+    size_t i = getTileIndexFromCoord(coord);
+          grasses[i] = grass;
+	}
+};
+
+struct PlantSpawnBuffer
+{
+	std::vector<Plant> plants;
+	std::vector<Coord> coords;      
+        size_t size;
+
+  PlantSpawnBuffer(size_t capacity) 
+	{
+		reserve(capacity);                
+        }
+	inline void add(Plant plant, Coord coord)
+	{
+		plants[size++] = plant;
+		coords[size] = coord;
+                tileSpawnBuffer.occupieds[getTileIndexFromCoord(coord)] = true;
+	}
+	void reserve(size_t amount)
+	{
+		plants.reserve(amount);
+                coords.reserve(amount);
+	}
+	void shrink_to_size()
+	{
+		plants.resize(size);
+                coords.resize(size);
+		plants.shrink_to_fit();
+                coords.shrink_to_fit();
+        }
+};
+
+struct ScavengeableSpawnBuffer {
+  std::vector<Scavengeable> scavengeables;
+	std::vector<Coord> coords; 
+	size_t size;
+ScavengeableSpawnBuffer(size_t capacity) 
+	{
+		reserve(capacity);                
+        }
+  void reserve(size_t cap) {
+    scavengeables.reserve(cap);
+    coords.reserve(cap);
+  }
+  inline void add(Scavengeable scavengeable, Coord coord)
+	{
+		scavengeables[size++] = scavengeable;
+		coords[size] = coord;
+                tileSpawnBuffer.occupieds[getTileIndexFromCoord(coord)] = true;
+	}
+  void shrink_to_size()
+	{
+		scavengeables.resize(size);
+                coords.resize(size);
+		scavengeables.shrink_to_fit();
+                coords.shrink_to_fit();
+        }
+};
+
+struct AnimalSpawnBuffer {
+	std::vector<Animal> animals;
+	std::vector<Coord> coords; 
+	size_t size;
+  void reserve(size_t cap) {
+    animals.reserve(cap);
+    coords.reserve(cap);
+  }
+  inline void add(Animal animal, Coord coord)
+	{
+		animals[size++] = animal;
+		coords[size] = coord;
+                tileSpawnBuffer.occupieds[getTileIndexFromCoord(coord)] = true;
+	}
+  void shrink_to_size()
+	{
+		animals.resize(size);
+                coords.resize(size);
+		animals.shrink_to_fit();
+                coords.shrink_to_fit();
+        }
+};
+
 	TileSpawnBuffer tileSpawnBuffer;
 	PlantSpawnBuffer plantSpawnBuffer;
+  ScavengeableSpawnBuffer scavengeableSpawnBuffer;
 	AnimalSpawnBuffer animalSpawnBuffer;
 
 	template <typename T>
@@ -158,6 +241,10 @@ class WorldSpawner
 		mapReserveRows(width, height, instantiatedWaterMap);
 		mapReserveRows(width, height, oceanDistance);
 		mapReserveRows(width, height, rVisited);
+                tileSpawnBuffer = TileSpawnBuffer(width * height);
+		plantSpawnBuffer = PlantSpawnBuffer(width * height);
+                scavengeableSpawnBufer = ScavengeableSpawnBuffer(width * height);
+                animalSpawnBufer = AnimalSpawnBuffer(width * height);
 	}
 
 	void generateWorld();
@@ -169,7 +256,8 @@ class WorldSpawner
         void moveRegionsToChunks(Array<Hum> humidities, Array<Temp> temperatures,
 				 Array<Alt> altitudes);
 	void printInfo();
-        Coord getTileCoordFromIndex(size_t i);
+	Coord getTileCoordFromIndex(size_t i);
+        size_t getTileIndexFromCoord(Coord c);
 
   // world generation
 	void generateOceansOnMaps();
@@ -198,8 +286,14 @@ humidityAndRainShadowEffects(int y, int x, int water, bool biomes);
 	std::vector<float> generateTileChances();
 
   // spawners
-	void spawnGrassAndFirstPlants();
-	
+  void spawnGrassAndFirstPlants();
+  void spawnScavengeables();
+  void spawnAnimals();
+
+        inline void rollGrassSpawn(Coord coord, Biome biome, Tile tile, int temperature, int humidity);
+        inline void rollPlantSpawn(Coord coord, Biome biome, Tile tile, int temperature, int humidity);
+        inline void rollAnimalSpawn(Coord coord, Biome biome, Tile tile, int temperature, int humidity);
+      inline void rollScavengeableSpawn(Coord coord, Biome biome, Tile tile, int temperature, int humidity);
 	// Constants
 	// IN CELLS
 	int currentXMin = 0;

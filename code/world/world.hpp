@@ -33,6 +33,7 @@ constexpr uint16_t YEAR_LENGTH = SEASON_LENGTH * 4;
 constexpr uint16_t LATITUDE_TOTAL = 180;
 constexpr int LATITUDE_MIN = -90;
 constexpr int LATITUDE_MAX = 90;
+constexpr uint16_t LONGITUDE_TOTAL = 180;
 constexpr float MAX_CLOUD_FACTOR = 3.2;
 
 // Terain and Climate
@@ -71,7 +72,7 @@ struct World
 	const uint16_t EQUATOR;
 	const uint16_t CHUNK_AMOUNT;
 	const uint16_t CHUNK_LATITUDE_HEIGHT = HEIGHT_CHUNKS / LATITUDE_TOTAL; // amount of chunks per latitude
-
+  const uint16_t CHUNK_LONGITUDE_WIDTH = LENGTH_CHUNKS / LONGITUDE_TOTAL;
 	const uint32_t WORLD_TILE_AMOUNT = CHUNK_AMOUNT * CHUNK_SIZE;
 	const uint32_t WORLD_TILE_LENGTH = sqrt(WORLD_TILE_AMOUNT);
 
@@ -144,7 +145,7 @@ struct World
 	inline uint32_t getTileIndexChunkRelative(Coord c);
 
 	Coord getRandomPlayerStart()
-	{	return{ static_cast<uint16_t>(random_chance->next() * LENGTH_CHUNKS) , static_cast<uint16_t>(random_chance->next() * HEIGHT_CHUNKS)};
+	{	return{ static_cast<uint32_t>(random_chance->next() * LENGTH_CHUNKS) , static_cast<uint32_t>(random_chance->next() * HEIGHT_CHUNKS)};
 	}		
 
 	void loadChunkData(WorldSpawner &ws)

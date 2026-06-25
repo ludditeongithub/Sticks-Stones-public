@@ -1,5 +1,7 @@
 #pragma once
 #include <cstdint>
+#include <vector>
+#include <core/tables.hpp>
 // enum class Type {
 // NONE, EDIBLE, WOOD, Fern, Moss, Reed, Wheat, Oat, Rice, Bush, Papyrus,
 // PioneerTree, DeciduousTree, EvergreenTree, TropicalTree, OrangeTree,
@@ -77,7 +79,7 @@ enum class Plant : uint16_t {
 	MAX
 };
 // TODO: let leaf types have heights-- tall animals, animals that climb can eat trees
-enum class PlantCategory
+enum class PlantCategory : size_t
 {
 	NONE,
 	Tree,
@@ -103,8 +105,6 @@ enum class PlantCategory
 	MAX
 };
 
-
-
 enum class Fruit
 {
 	NONE,
@@ -129,3 +129,111 @@ enum class Fruit
 	MAX
 
 };
+
+namespace plant
+{
+  inline constexpr RaggedLookupTable<PlantCategory, std::vector<Plant>, 56>
+  categories = []
+  {
+    using enum Plant;
+
+    RaggedLookupTable<PlantCategory, std::vector<Plant>, 56> lt{};
+  lt.set(PlantCategory::Tree,
+       {PioneerTree,
+        DeciduousTree,
+        EvergreenTree,
+        TropicalTree,
+        Cocoa});
+
+lt.set(PlantCategory::Citrus,
+       {Orange,
+        Lemon,
+        Lime});
+
+lt.set(PlantCategory::Stone,
+       {Peach,
+        Cherry,
+        Apricot,
+        Plum});
+
+lt.set(PlantCategory::Pome,
+       {Apple,
+        Pear});
+
+lt.set(PlantCategory::Olive,
+       {Olive});
+
+lt.set(PlantCategory::Succulent,
+       {Cactus,
+        AloeVera});
+
+lt.set(PlantCategory::BerryShrub,
+       {Blueberry,
+        Strawberry});
+
+lt.set(PlantCategory::Flowering,
+       {Broccoli,
+        Poppy,
+        Saffron});
+
+lt.set(PlantCategory::FruitVeggie,
+       {Tomato,
+        Cucumber,
+        Pepper});
+
+lt.set(PlantCategory::Leafy,
+       {Lettuce,
+        Kale,
+        Cabbage});
+
+lt.set(PlantCategory::Root,
+       {Carrot,
+        Beets,
+        Potato,
+        Ginseng,
+        Rhubarb});
+
+lt.set(PlantCategory::Bulb,
+       {Onion,
+        Garlic});
+
+lt.set(PlantCategory::Reed,
+       {Reed,
+        Papyrus});
+
+lt.set(PlantCategory::Grain,
+       {Wheat,
+        Oat,
+        Rice,
+        Corn});
+
+lt.set(PlantCategory::Grapevine,
+       {Grapevine});
+
+lt.set(PlantCategory::Herb,
+       {BlackPepper,
+        Woad,
+        Madder,
+        Indigo,
+        Lavender,
+        Mint,
+        Thyme,
+        Sage,
+        Senna});
+
+lt.set(PlantCategory::Textile,
+       {Cotton,
+        Hemp,
+        Flax});
+
+lt.set(PlantCategory::Moss,
+       {Moss});
+
+lt.set(PlantCategory::Fern,
+       {Fern});
+
+lt.set(PlantCategory::Bush,
+       {Bush});
+    return lt;
+  }
+}

@@ -1,238 +1,199 @@
 #include "enum.hpp"
+#include "world/tile/grass.hpp"
+#include <world/tile/enum.hpp>
 #include <core/tables.hpp>
 
-using SpawnTable = LookupTable<Animal, float>;
-
-inline constexpr LookupTable<Animal, float> hotDesertSpawnChances = []
+namespace animal
 {
-	LookupTable<Animal, float> lt{};
+
+inline constexpr LookupTable<Animal, Coord> temperaturePenaltyRanges = []
+{
+	LookupTable<Animal, Coord> lt{};
 	using enum Animal;
-	lt[Pig] = rare;
-	lt[Camel] = dominant;
-	lt[WaterBuffalo] = uncommon;
-	lt[Rabbit] = common;
-	lt[Antelope] = abundant;
-	lt[Wolf] = semicommon;
-	lt[Bear] = veryrare;
+
+	lt[Pig]          = {23, 77};
+	lt[Cow]          = {14, 77};
+	lt[Chicken]      = {50, 86};
+	lt[Duck]         = {32, 77};
+	lt[Sheep]        = {14, 68};
+	lt[Goat]         = {41, 86};
+	lt[Horse]        = {14, 77};
+	lt[Ox]           = {14, 77};
+	lt[Donkey]       = {50, 95};
+	lt[Camel]        = {59, 104};
+	lt[WaterBuffalo] = {68, 95};
+	lt[Rabbit]       = {41, 68};
+	lt[Antelope]     = {50, 95};
+	lt[Deer]         = {14, 68};
+	lt[Moose]        = {-4, 59};
+	lt[Capybara]     = {68, 95};
+	lt[Turtle]       = {68, 95};
+	lt[Elephant]     = {68, 95};
+	lt[Bison]        = {-4, 68};
+	lt[Wolf]         = {-4, 59};
+	lt[Bear]         = {5, 68};
+	lt[Caribou]      = {-13, 50};
+
 	return lt;
 }();
 
-constexpr const SpawnTable &hotDesertSpawnTable() { return hotDesertSpawnChances; }
-
-inline constexpr LookupTable<Animal, float> grasslandSpawnChances = []
+inline constexpr LookupTable<Animal, Coord> humidityPenaltyRanges = []
 {
-	LookupTable<Animal, float> lt{};
+	LookupTable<Animal, Coord> lt{};
 	using enum Animal;
-	lt[Pig] = common;
-	lt[Cow] = abundant;
-	lt[Sheep] = abundant;
-	lt[Goat] = semicommon;
-	lt[Horse] = dominant;
-	lt[Ox] = semicommon;
-	lt[Donkey] = uncommon;
-	lt[Rabbit] = abundant;
-	lt[Antelope] = abundant;
-	lt[Bison] = dominant;
-	lt[Wolf] = semicommon;
-	lt[Bear] = rare;
-	lt[Caribou] = never;
+
+	lt[Pig]          = {50, 80};
+	lt[Cow]          = {40, 80};
+	lt[Chicken]      = {40, 70};
+	lt[Duck]         = {60, 100};
+	lt[Sheep]        = {30, 70};
+	lt[Goat]         = {20, 60};
+	lt[Horse]        = {30, 70};
+	lt[Ox]           = {30, 70};
+	lt[Donkey]       = {20, 50};
+	lt[Camel]        = {10, 40};
+	lt[WaterBuffalo] = {60, 100};
+	lt[Rabbit]       = {40, 70};
+	lt[Antelope]     = {20, 60};
+	lt[Deer]         = {40, 80};
+	lt[Moose]        = {50, 90};
+	lt[Capybara]     = {70, 100};
+	lt[Turtle]       = {60, 100};
+	lt[Elephant]     = {40, 80};
+	lt[Bison]        = {30, 70};
+	lt[Wolf]         = {40, 80};
+	lt[Bear]         = {40, 80};
+	lt[Caribou]      = {40, 90};
+
 	return lt;
 }();
+  
+constexpr float dominant = 0.003;
+constexpr float abundant = 0.0015;
+constexpr float common = 0.0008;
+constexpr float semicommon = 0.0004;
+constexpr float uncommon = 0.0002;
+constexpr float rare = 0.00008;
+constexpr float veryrare = 0.00003;
+constexpr float endangered = 0.00001;
+constexpr float never = 0.0;
 
-constexpr const SpawnTable &grasslandSpawnTable() { return grasslandSpawnChances; }
-
-inline constexpr LookupTable<Animal, float> savannahSpawnChances = []
+inline constexpr LookupTable2D<Biome, Animal, float> biomeSpawnChances = []
 {
-	LookupTable<Animal, float> lt{};
+	LookupTable2D<Biome, Animal, float> lt{};
 	using enum Animal;
-	lt[Pig] = rare;
-	lt[Cow] = common;
-	lt[Sheep] = uncommon;
-	lt[Goat] = semicommon;
-	lt[Camel] = rare;
-	lt[WaterBuffalo] = uncommon;
-	lt[Rabbit] = common;
-	lt[Antelope] = abundant;
-	lt[Elephant] = dominant;
-	lt[Bison] = rare;
-	lt[Wolf] = semicommon;
-	lt[Bear] = rare;
-	lt[Caribou] = never;
-	Return lt;
-}();
 
-constexpr const SpawnTable &savannahSpawnTable() { return savannahSpawnChances; }
+        lt[Biome::HotDesert][Pig]          = rare;
+        lt[Biome::HotDesert][Camel]        = dominant;
+        lt[Biome::HotDesert][WaterBuffalo] = uncommon;
+        lt[Biome::HotDesert][Rabbit]       = common;
+        lt[Biome::HotDesert][Antelope]     = abundant;
+        lt[Biome::HotDesert][Wolf]         = semicommon;
+        lt[Biome::HotDesert][Bear]         = veryrare;
 
-inline constexpr LookupTable<Animal, float> wetlandSpawnChances = []
-{
-	LookupTable<Animal, float> lt{};
-	using enum Animal;
-	lt[Pig] = common;
-	lt[Cow] = uncommon;
-	lt[Sheep] = rare;
-	lt[Goat] = rare;
-	lt[Camel] = rare;
-	lt[WaterBuffalo] = dominant;
-	lt[Rabbit] = semicommon;
-	lt[Antelope] = abundant;
-	lt[Elephant] = semicommon;
-	lt[Bison] = rare;
-	lt[Wolf] = uncommon;
-	lt[Bear] = semicommon;
-	lt[Caribou] = never;
-	return lt;
-}();
+        lt[Biome::Grassland][Pig]      = common;
+        lt[Biome::Grassland][Cow]      = abundant;
+        lt[Biome::Grassland][Sheep]    = abundant;
+        lt[Biome::Grassland][Goat]     = semicommon;
+        lt[Biome::Grassland][Horse]    = dominant;
+        lt[Biome::Grassland][Ox]       = semicommon;
+        lt[Biome::Grassland][Donkey]   = uncommon;
+        lt[Biome::Grassland][Rabbit]   = abundant;
+        lt[Biome::Grassland][Antelope] = abundant;
+        lt[Biome::Grassland][Bison]    = dominant;
+        lt[Biome::Grassland][Wolf]     = semicommon;
+        lt[Biome::Grassland][Bear]     = rare;
+        lt[Biome::Grassland][Caribou]  = never;
 
-constexpr const SpawnTable &wetlandSpawnTable() { return wetlandSpawnChances; }
+        lt[Biome::Savanna][Pig]          = rare;
+        lt[Biome::Savanna][Cow]          = common;
+        lt[Biome::Savanna][Sheep]        = uncommon;
+        lt[Biome::Savanna][Goat]         = semicommon;
+        lt[Biome::Savanna][Camel]        = rare;
+        lt[Biome::Savanna][WaterBuffalo] = uncommon;
+        lt[Biome::Savanna][Rabbit]       = common;
+        lt[Biome::Savanna][Antelope]     = abundant;
+        lt[Biome::Savanna][Elephant]     = dominant;
+        lt[Biome::Savanna][Bison]        = rare;
+        lt[Biome::Savanna][Wolf]         = semicommon;
+        lt[Biome::Savanna][Bear]         = rare;
+        lt[Biome::Savanna][Caribou]      = never;
 
-inline constexpr LookupTable<Animal, float> temperateSpawnChances = []
-{
-	LookupTable<Animal, float> lt{};
-	using enum Animal;
-	lt[Pig] = semicommon;
-	lt[Cow] = common;
-	lt[Sheep] = uncommon;
-	lt[Goat] = semicommon;
-	lt[Horse] = rare;
-	lt[Ox] = uncommon;
-	lt[Donkey] = rare;
-	lt[Rabbit] = abundant;
-	lt[Antelope] = rare;
-	lt[Deer] = dominant;
-	lt[Moose] = abundant;
-	lt[Wolf] = semicommon;
-	lt[Bear] = dominant;
-	lt[Caribou] = never;
-	return lt;
-}();
+        lt[Biome::Wetland][Pig]          = common;
+        lt[Biome::Wetland][Cow]          = uncommon;
+        lt[Biome::Wetland][Sheep]        = rare;
+        lt[Biome::Wetland][Goat]         = rare;
+        lt[Biome::Wetland][Camel]        = rare;
+        lt[Biome::Wetland][WaterBuffalo] = dominant;
+        lt[Biome::Wetland][Rabbit]       = semicommon;
+        lt[Biome::Wetland][Antelope]     = abundant;
+        lt[Biome::Wetland][Elephant]     = semicommon;
+        lt[Biome::Wetland][Bison]        = rare;
+        lt[Biome::Wetland][Wolf]         = uncommon;
+        lt[Biome::Wetland][Bear]         = semicommon;
+        lt[Biome::Wetland][Caribou]      = never;
 
-constexpr const SpawnTable &temperateSpawnTable() { return temperateSpawnChances; }
+        lt[Biome::Temperate][Pig]      = semicommon;
+        lt[Biome::Temperate][Cow]      = common;
+        lt[Biome::Temperate][Sheep]    = uncommon;
+        lt[Biome::Temperate][Goat]     = semicommon;
+        lt[Biome::Temperate][Horse]    = rare;
+        lt[Biome::Temperate][Ox]       = uncommon;
+        lt[Biome::Temperate][Donkey]   = rare;
+        lt[Biome::Temperate][Rabbit]   = abundant;
+        lt[Biome::Temperate][Antelope] = rare;
+        lt[Biome::Temperate][Deer]     = dominant;
+        lt[Biome::Temperate][Moose]    = abundant;
+        lt[Biome::Temperate][Wolf]     = semicommon;
+        lt[Biome::Temperate][Bear]     = dominant;
+        lt[Biome::Temperate][Caribou]  = never;
 
-inline constexpr LookupTable<Animal, float> borealSpawnChances = []
-{
-	LookupTable<Animal, float> lt{};
-	using enum Animal;
-	lt[Pig] = rare;
-	lt[Cow] = rare;
-	lt[Sheep] = rare;
-	lt[Goat] = rare;
-	lt[Horse] = rare;
-	lt[Ox] = rare;
-	lt[Donkey] = rare;
-	lt[Rabbit] = semicommon;
-	lt[Antelope] = never;
-	lt[Deer] = abundant;
-	lt[Moose] = dominant;
-	lt[Bison] = rare;
-	lt[Wolf] = semicommon;
-	lt[Bear] = abundant;
-	lt[Caribou] = dominant;
-	return lt;
-}();
+        lt[Biome::Boreal][Pig]      = rare;
+        lt[Biome::Boreal][Cow]      = rare;
+        lt[Biome::Boreal][Sheep]    = rare;
+        lt[Biome::Boreal][Goat]     = rare;
+        lt[Biome::Boreal][Horse]    = rare;
+        lt[Biome::Boreal][Ox]       = rare;
+        lt[Biome::Boreal][Donkey]   = rare;
+        lt[Biome::Boreal][Rabbit]   = semicommon;
+        lt[Biome::Boreal][Antelope] = never;
+        lt[Biome::Boreal][Deer]     = abundant;
+        lt[Biome::Boreal][Moose]    = dominant;
+        lt[Biome::Boreal][Bison]    = rare;
+        lt[Biome::Boreal][Wolf]     = semicommon;
+        lt[Biome::Boreal][Bear]     = abundant;
+        lt[Biome::Boreal][Caribou]  = dominant;
 
-constexpr const SpawnTable &borealSpawnTable() { return borealSpawnChances; }
+        lt[Biome::Jungle][Pig]      = rare;
+        lt[Biome::Jungle][Cow]      = veryrare;
+        lt[Biome::Jungle][Horse]    = rare;
+        lt[Biome::Jungle][Ox]       = veryrare;
+        lt[Biome::Jungle][Donkey]   = rare;
+        lt[Biome::Jungle][Rabbit]   = rare;
+        lt[Biome::Jungle][Antelope] = rare;
+        lt[Biome::Jungle][Elephant] = abundant;
+        lt[Biome::Jungle][Wolf]     = rare;
+        lt[Biome::Jungle][Bear]     = rare;
+        lt[Biome::Jungle][Caribou]  = never;
 
-inline constexpr LookupTable<Animal, float> jungleSpawnChances = []
-{
-	LookupTable<Animal, float> lt{};
-	using enum Animal;
-	lt[Pig] = rare;
-	lt[Cow] = veryrare;
-	lt[Horse] = rare;
-	lt[Ox] = veryrare;
-	lt[Donkey] = rare;
-	lt[Rabbit] = rare;
-	lt[Antelope] = rare;
-	lt[Elephant] = abundant;
-	lt[Wolf] = rare;
-	lt[Bear] = rare;
-	lt[Caribou] = never;
-	return lt;
-}();
+        lt[Biome::Rocky][Goat]  = common;
+        lt[Biome::Rocky][Wolf]  = rare;
+        lt[Biome::Rocky][Sheep] = rare;
 
-constexpr const SpawnTable &jungleSpawnTable() { return jungleSpawnChances; }
-
-inline constexpr LookupTable<Animal, float> rockySpawnChances = []
-{
-	LookupTable<Animal, float> lt{};
-	using enum Animal;
-	lt[Goat] = common;
-	lt[Wolf] = rare;
-	lt[Sheep] = rare;
-	return lt;
-}();
-
-constexpr const SpawnTable &rockySpawnTable() { return rockySpawnChances; }
-
-inline constexpr LookupTable<Animal, float> tundraSpawnChances = []
-{
-	LookupTable<Animal, float> lt{};
-	using enum Animal;
-	lt[Pig] = never;
-	lt[Cow] = never;
-	lt[Sheep] = rare;
-	lt[Goat] = uncommon;
-	lt[Horse] = never;
-	lt[Ox] = rare;
-	lt[Donkey] = never;
-	lt[Rabbit] = semicommon;
-	lt[Antelope] = never;
-	lt[Elephant] = never;
-	lt[Bison] = never;
-	lt[Wolf] = abundant;
-	lt[Bear] = rare;
-	lt[Caribou] = dominant;
-	return lt;
-}();
-
-constexpr const SpawnTable &tundraSpawnTable() { return tundraSpawnChances; }
-
-inline constexpr LookupTable<Animal, float> coldDesertSpawnChances = []
-{
-	LookupTable<Animal, float> lt{};
-	using enum Animal;
-	lt[Pig] = rare;
-	lt[Cow] = rare;
-	lt[Sheep] = uncommon;
-	lt[Goat] = semicommon;
-	lt[Horse] = rare;
-	lt[Ox] = rare;
-	lt[Donkey] = rare;
-	lt[Rabbit] = common;
-	lt[Antelope] = rare;
-	lt[Elephant] = veryrare;
-	lt[Bison] = never;
-	lt[Wolf] = uncommon;
-	lt[Bear] = rare;
-	lt[Caribou] = never;
-	Return lt;
-}();
-
-constexpr const SpawnTable &coldDesertSpawnTable() { return coldDesertSpawnChances; }
-
-const AnimalTable &getAnimalChanceTable(Biome biome)
-{
-	switch (biome)
-	{
-	case Biome::HotDesert:
-		return hotDesertSpawnTable();
-	case Biome::Grassland:
-		return grasslandSpawnTable();
-	case Biome::Savanna:
-		return savannahSpawnTable();
-	case Biome::Wetlands:
-		return wetlandsSpawnTable();
-	case Biome::Temperate:
-		return temperateSpawnTable();
-	case Biome::Boreal:
-		return borealSpawnTable();
-	case Biome::Jungle:
-		return jungleSpawnTable();
-	case Biome::Rocky:
-		return rockySpawnTable();
-	case Biome::Tundra:
-		return tundraSpawnTable();
-	case Biome::ColdDesert:
-		return coldDesertSpawnTable();
-	}
-}
+        lt[Biome::Tundra][Pig]      = never;
+        lt[Biome::Tundra][Cow]      = never;
+        lt[Biome::Tundra][Sheep]    = rare;
+        lt[Biome::Tundra][Goat]     = uncommon;
+        lt[Biome::Tundra][Horse]    = never;
+        lt[Biome::Tundra][Ox]       = rare;
+        lt[Biome::Tundra][Donkey]   = never;
+        lt[Biome::Tundra][Rabbit]   = semicommon;
+        lt[Biome::Tundra][Antelope] = never;
+        lt[Biome::Tundra][Elephant] = never;
+        lt[Biome::Tundra][Bison]    = never;
+        lt[Biome::Tundra][Wolf]     = abundant;
+        lt[Biome::Tundra][Bear]     = rare;
+        lt[Biome::Tundra][Caribou] = dominant;
+    return lt;
+  }();
+};

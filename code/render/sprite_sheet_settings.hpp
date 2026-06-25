@@ -42,7 +42,7 @@ inline void saveSprite(int index, Sprite sprite, SCoord position, SCoord dimensi
 	} else if (std::is_same<Grass, Sprite>::value) {
 		grassSprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
 	} else if (std::is_same<ButtonUI, Sprite>::value) {
-		buttonSprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
+          buttonSprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y}; // NOTE: since buttons have three states, the dimension is divided by 3.
 	} else if (std::is_same<UISprite, Sprite>::value ) {
 		UISprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
 	} 

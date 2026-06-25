@@ -181,7 +181,13 @@ std::vector<float> WorldSpawner::generateTileChances()
 	return chances;
 }
 
-Coord WorldSpawner::getTileCoordFromIndex(size_t i)
+inline Coord WorldSpawner::getTileCoordFromIndex(size_t i)
 {
   return {static_cast<uint32_t>(i % (size_t)WIDTH), static_cast<uint32_t>(i / (size_t)HEIGHT)};
+}
+
+// NOTE: may be wrong, maybe vertical should be multiplication
+inline size_t WorldSpawner::getTileIndexFromCoord(Coord c)
+{
+  return static_cast<size_t>(c.x) + static_cast<size_t>(c.y * (size_t)WIDTH);
 }

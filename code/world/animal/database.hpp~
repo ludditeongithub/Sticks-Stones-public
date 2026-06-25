@@ -30,30 +30,51 @@ public:
 	    sizeof(Animal);
 
 	// @codegen:begin database_generation
-
     // =========================
     // BASE DATABASE MEMBERS
     // =========================
 
+constexpr static uint16_t ENTITY_SIZE = sizeof(bool)
+
+ +  sizeof(Health) 
+
+ +  sizeof(Hunger) 
+
+ +  sizeof(Sex) 
+
+ +  sizeof(Time) 
+
+ +  sizeof(size_t) 
+
+ +  sizeof(TargetType) 
+
+ +  sizeof(Action) 
+
+ +  sizeof(FrameData) 
+
+ +  sizeof(Coord) 
+
+ +  sizeof(AnimalStatus) 
+
+;
+
 size_t capacity;
 Array<Animal> animals;
-
 
     size_t size;
     Stack<size_t> freeSlots;
     Array<bool> alives;
   
 
+  SearchGrid& search;
+
+
+  World& world;
 
 
     // =========================
     // ENTITY-SPECIFIC MEMBERS
     // =========================
-
-
-
-
-
 
     Array<Health> healths;
 
@@ -74,14 +95,14 @@ Array<Animal> animals;
     Array<Coord> coords;
 
     Array<AnimalStatus> animalStatuses;
+    
 
 
-    // =========================
-    // SPAWN
-    // =========================
-
-
-  bool spawn(Animal entity, bool newborn)
+  // =========================
+  // SPAWN
+  // =========================
+  
+  bool spawn(Animal entity, bool newborn, Coord coord)
     {
         if (size + 1 > capacity)
             return false;
@@ -100,8 +121,6 @@ Array<Animal> animals;
         }
 
         alives[i] = true;
-
-  
 
         if (newborn)
         {
@@ -153,16 +172,18 @@ Array<Animal> animals;
 	  
         }
 	  
+  
+          
 
         return true;
     }
+    
 
 
-    // =========================
-    // REMOVE
-    // =========================
-
-
+  // =========================
+  // REMOVE
+  // =========================
+  
   bool remove(size_t i)
     {
         if (!alives[i])
@@ -171,16 +192,31 @@ Array<Animal> animals;
         freeSlots.push(i);
         alives[i] = false;
 
-        search.deleteEntity;
+        search.deleteEntity();
 
         return true;
     }
     
 
-    // =========================
-    // MOVE
-    // =========================
 
+  // =========================
+  // MOVE
+  // =========================
+  
+    inline bool attemptMoveEntity(size_t index)
+    {
+        Coord& pos = coords[index];
+        Coord newPos = getPos(directions[index], pos);
+        size_t ti = world.getTileIndexFromCoord(newPos);
+
+        if (search.tiles.occupieds[ti] == false)
+        {
+            pos = newPos;
+            return true;
+        }
+
+        return false;
+    }
     
       
     // =========================
@@ -195,11 +231,7 @@ Array<Animal> animals;
         archive(size);
         archive(freeSlots);
         archive(alives);
-
-    
-
-
-
+   
 
 
         healths.save(archive);
@@ -235,10 +267,6 @@ Array<Animal> animals;
 
         
 
-
-
-
-
         healths.load(archive);
 
         hungers.load(archive);
@@ -265,7 +293,14 @@ Array<Animal> animals;
     // CONSTRUCTOR
     // =========================
 
-    AnimalDatabase(Arena *arena, size_t capacity)
+AnimalDatabase(Arena *arena, size_t capacity
+
+  , World& world
+
+
+  , SearchGrid& search
+
+)
     {
 this->capacity = capacity;
 
@@ -277,4 +312,5 @@ this->capacity = capacity;
   
   inline void addAnimals(AnimalSpawnBuffer asb);
   inline void move(size_t i);
+  
 };

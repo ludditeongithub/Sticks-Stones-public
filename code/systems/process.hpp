@@ -14,8 +14,7 @@ void Game::processWorldHourly(World* world)
 
 //every tick
 void Game::processWorld(World* world)
-{
-	
+{	
 	Array<float> cloudCovers; //TODO
 	plantDatabase->updatePlants(world->temperatures, world->dailyInsolations, cloudCovers, 1);
 

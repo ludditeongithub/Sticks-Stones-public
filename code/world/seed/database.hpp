@@ -98,7 +98,7 @@ Array<Plant> seeds;
         freeSlots.push(i);
         alives[i] = false;
 
-        search.deleteEntity;
+        search.deleteEntity();
 
         return true;
     }
