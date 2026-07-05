@@ -7,8 +7,8 @@ enum class Item : uint16_t
 	NONE,
 	HOLDING,
 	// VARIANT ITEMS
-	Log,        
-	Fruit, //TODO: replace 'Fruit' with 'RawProduce'
+	Log,
+	Fruit, // TODO: replace 'Fruit' with 'RawProduce'
 	Seed,
 	Juice,
 	AlcoholicDrink,
@@ -450,6 +450,71 @@ enum class Item : uint16_t
 	ShortStory,
 	Novel,
 	Decree,
+
+
+	// TODO: tools
+	Handaxe,
+	Machete,
+	Knife,
+	Cleaver,
+	Trowel,
+	Chisel,
+	Hammer,
+	Scalpel,
+	Mallet,
+	Sickle,
+	Adze,
+	Awl,
+	Graver,
+	// LONG HANDLE
+	Pickaxe,
+	Shovel,
+	Saw,
+	Ard,
+	HeavyPlow,
+	FishingRod,
+	Staff,
+	Scythe,
+	// NO HANDLE
+	Shears,
+	Pestle,
+	Needle,
+	Drum,
+	Plate,
+	Brush,
+	Pen,
+	Stylus,
+	Scraper,
+	Lyre,
+	Lur,
+	PanFlute,
+	PermanentMould,
+	MeasuringTools,
+	Scale,
+	HandheldLoom,
+	Shuttle,
+	Cheesecloth,
+	Compass,
+	Binocular,
+	SurveyingTools,
+	Net,
+	Stamp,
+	Cart,
+	Wagon,
+	Ladle,
+	Spindle,
+	Distaff,
+	DryingRack,
+	Abacus,
+	Mould,
+	CandleMould,
+	MeltingPot,
+	PatternedDie,
+	Shield,
+	HeavyShield,
+	MeasuringItems,
+        Spinner,
+        
 	MAX
 };
 
@@ -503,4 +568,4 @@ enum class ContainerType : uint8_t
 	MAX
 };
 
-using SpecialItemData = PackedEnum<EnumField<Material, 5>, EnumField<Quality, 3>>;
+using SpecialItemData = PackedEnum<Field<Material, 5>, Field<Quality, 3>>;

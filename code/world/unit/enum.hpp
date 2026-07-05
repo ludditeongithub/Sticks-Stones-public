@@ -4,6 +4,8 @@
 #include <cstdint>
 #include <core/data.hpp>
 
+constexpr size_t MATURITY_AGE = 15;
+
 enum class Unit : uint8_t
 {
 	Child,
@@ -30,6 +32,8 @@ enum class Role : uint8_t
 	Apprentice,
 	Student,
 	// MELEE
+	SpearHunter,
+	MeleeSoldier,
 	// RANGED
 	// ARTIST
 	Performer,
@@ -60,6 +64,7 @@ enum class Role : uint8_t
 	Trader,
 	ShipCaptain,
 	Sailor,
+	Negotiator,
 	// bronze
 	Carter,
 	ChariotDriver,
@@ -103,16 +108,16 @@ enum class Role : uint8_t
 	Herbalist,
 	Planter, // farmer is combination of planter and plower
 	Harvester,
-	// copper negotiator put here instead of neo
+	// copper 
 	CopperMiner,
 	Fisherman,
 	Beekeeper,
+	Stoneworker,
 	CerealFarmer,
 	FlaxFarmer,
 	HerbFarmer,
 	Horticulturalist,
-	TextileFarmer,
-	Negotiator,
+	TextileFarmer,	
 	HorseBreeder,
 	// iron, no fishmonger, no rancher, no vineyard worker,
 	PapyrusHarvester,
@@ -202,6 +207,7 @@ enum class Role : uint8_t
 	Shipwright,
 	Apothecary,
 	Glassworker,
+	GlassMaker,
 	LoomWeaver,
 	// classical,
 	Cartwright,
@@ -237,6 +243,7 @@ enum class Role : uint8_t
 	Dyer,
 	Blacksmith,
 	NavalEngineer,
+	Steelsmith,
 	Toolsmith,
 	Weaponsmith,
 	Chandler,
@@ -260,8 +267,14 @@ enum class Role : uint8_t
 	Mathematician,
 	Cartographer,
 	Diplomat,
+
 	Librarian,
 	Surveyor,
+	BooksAcademicAny,
+	BooksAcademicHistory,
+	BooksAcademicPhilosophy,
+	BooksAcademicMathematics,
+	BooksAcademicNatural,
 	// LEADER
 	AdvisorFarming,
 	AdvisorForeign,
@@ -394,7 +407,10 @@ enum class Action : uint8_t
 	Compound,
 	Saponify,
 	BowCraft,
-
+	GlassMake,
+	Melee,
+	LowPott,
+	BasketWeave,
 	// TODO: this maybe should be a special MAX
 	ACTION_MAX,
 	// WALK_MIN,
@@ -514,14 +530,14 @@ enum class Action : uint8_t
 
 enum class ActState : uint8_t
 {
-	Walk,
-	Run,
-	Act,
-	NewPath,
+	Walk = 0,
+	Run = 1,
+	Act = 2,
+	NewPath = 3
 };
 
 //TODO: ensure Frame can be properly packed
-using FrameData = PackedEnum<EnumField<ActState, 2>, EnumField<Direction, 2>, EnumField<Frame, 4>>;
+using FrameData = PackedEnum<Field<ActState, 2>, Field<Direction, 2>, Field<Frame, 4>>;
 
 float sunburnLevel1Threshold = 0.3;
 float sunburnLevel2Threshold = 0.75;

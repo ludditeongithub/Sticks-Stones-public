@@ -12,7 +12,7 @@
 #include <ui/components/button.hpp>
 #include <variant>
 
-namespace SpriteSheet
+namespace sprite
 {
 using json = nlohmann::json;
 // using Sprite = std::variant<Item, Plant, Tile, Grass, Animal, Unit, Buildable, ButtonSprite, UISprite>;
@@ -23,6 +23,7 @@ std::array<SDL_Rect, static_cast<size_t>(Plant::MAX)> plantSprites;
 std::array<SDL_Rect, static_cast<size_t>(Item::MAX)> itemSprites;
 std::array<SDL_Rect, static_cast<size_t>(Tile::MAX)> tileSprites;
 std::array<SDL_Rect, static_cast<size_t>(Grass::MAX)> grassSprites;
+std::array<SDL_Rect, static_cast<size_t>(Unit::MAX)> unitSprites;
 std::array<SDL_Rect, static_cast<size_t>(ButtonSprite::MAX)> buttonSprites;
 std::array<SDL_Rect, static_cast<size_t>(UISprite::MAX)> UISprites;
 

@@ -1,17 +1,25 @@
 #pragma once
-
 #include <cstdint>
 #include <tuple>
 #include <type_traits>
+#include <utility>
 
-template<typename Enum, unsigned Bits>
-struct EnumField
+template<typename T, unsigned Bits>
+struct Field
 {
-    using enum_type = Enum;
+    using value_type = T;
     static constexpr unsigned bits = Bits;
 
-    static_assert(std::is_enum_v<Enum>);
+    static_assert(std::is_enum_v<T> ||
+                  (std::is_integral_v<T> && std::is_unsigned_v<T>));
 };
+
+template<typename T>
+using field_value_type =
+    std::conditional_t<
+        std::is_enum_v<T>,
+        std::underlying_type_t<T>,
+        T>;
 
 template<typename T>
 constexpr T bitmask(unsigned bits)
@@ -42,139 +50,87 @@ class PackedEnum
 {
 private:
     static constexpr unsigned total_bits = (Fs::bits + ... + 0);
-
     static_assert(total_bits <= 64);
 
 public:
     using Storage = smallest_uint_t<total_bits>;
-
     Storage raw{};
 
-private:
-    template<typename Enum>
+    template<typename T>
     static consteval unsigned bits_of()
     {
         unsigned result = 0;
-        bool found = false;
 
         (
             [&]
             {
-                if constexpr (std::is_same_v<Enum, typename Fs::enum_type>)
-                {
+                if constexpr (std::is_same_v<T, typename Fs::value_type>)
                     result = Fs::bits;
-                    found = true;
-                }
             }(),
             ...
         );
 
-        //static_assert(found, "Enum not present in PackedEnum");
-
         return result;
     }
 
-    template<typename Enum>
-    static consteval unsigned offset_of()
-    {
-        constexpr auto fields = std::tuple<Fs...>{};
+    template<typename T>
+    static constexpr unsigned field_bits = bits_of<T>();
 
+    template<typename T>
+    static constexpr unsigned field_offset = [] {
         unsigned offset = 0;
-        bool found = false;
-
-        [&]<std::size_t... I>(std::index_sequence<I...>)
-        {
-            (
-                [&]
-                {
-                    using F = std::tuple_element_t<I, decltype(fields)>;
-
-                    if constexpr (std::is_same_v<Enum, typename F::enum_type>)
-                    {
-                        for (std::size_t j = I + 1; j < sizeof...(Fs); ++j)
-                        {
-                            offset += []<std::size_t K>()
-                            {
-                                using G = std::tuple_element_t<K, decltype(fields)>;
-                                return G::bits;
-                            }.template operator()<j>();
-                        }
-
-                        found = true;
-                    }
-                }(),
-                ...
-            );
-        }(std::make_index_sequence<sizeof...(Fs)>{});
-
-        // static_assert(found, "Enum not present in PackedEnum");
-
-        return offset;
-    }
-
-    template<typename Enum>
-    static constexpr unsigned field_bits = bits_of<Enum>();
-
-    template<typename Enum>
-    static constexpr unsigned field_offset = []{
-        unsigned result = 0;
         bool found = false;
 
         auto process = [&]<typename F>()
         {
             if (!found)
             {
-                if constexpr (std::is_same_v<Enum, typename F::enum_type>)
+                if constexpr (std::is_same_v<T, typename F::value_type>)
                 {
                     found = true;
                 }
                 else
                 {
-                    result += F::bits;
+                    offset += F::bits;
                 }
             }
         };
 
         (process.template operator()<Fs>(), ...);
 
-        return total_bits - result - field_bits<Enum>;
+        return offset;
     }();
 
-    template<typename Enum>
+    template<typename T>
     static constexpr Storage field_mask =
-        bitmask<Storage>(field_bits<Enum>)
-        << field_offset<Enum>;
+        bitmask<Storage>(field_bits<T>) << field_offset<T>;
 
-public:
     constexpr PackedEnum() = default;
 
-    constexpr PackedEnum(typename Fs::enum_type... values)
+    constexpr PackedEnum(typename Fs::value_type... values)
     {
-        (set<typename Fs::enum_type>(values), ...);
+        (set<typename Fs::value_type>(values), ...);
     }
 
-    template<typename Enum>
-    constexpr Enum get() const
+    template<typename T>
+    constexpr T get() const
     {
-        using U = std::underlying_type_t<Enum>;
+        using U = field_value_type<T>;
 
-        return static_cast<Enum>(
+        return static_cast<T>(
             static_cast<U>(
-                (raw & field_mask<Enum>) >>
-                field_offset<Enum>));
+                (raw & field_mask<T>) >> field_offset<T>));
     }
 
-    template<typename Enum>
-    constexpr void set(Enum value)
+    template<typename T>
+    constexpr void set(T value)
     {
-        using U = std::underlying_type_t<Enum>;
+        using U = field_value_type<T>;
 
-        Storage v = static_cast<Storage>(
-            static_cast<U>(value));
+        Storage v = static_cast<Storage>(static_cast<U>(value));
 
         raw =
-            (raw & ~field_mask<Enum>) |
-            ((v << field_offset<Enum>) &
-             field_mask<Enum>);
+            (raw & ~field_mask<T>) |
+            ((v << field_offset<T>) & field_mask<T>);
     }
 };

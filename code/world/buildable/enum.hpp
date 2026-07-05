@@ -27,6 +27,10 @@ enum class Buildable : uint16_t
 	Pillar,
 	Watchtower,
 	PitFire,
+	Oven,
+	Furnace,
+	RollingMachine,
+	Mill,
 
 	TentCover,
 	WattleRoof,
@@ -78,6 +82,7 @@ enum class Buildable : uint16_t
 	WallCarving,
 	LargeWallCarving,
 	PaintedGlass,
+	Spinner,
 
 	WheeledCart,
 	WheeledWagon,
@@ -97,7 +102,8 @@ enum class Buildable : uint16_t
 	Catapult,
 	SiegeLadder,
 	SiegeTower,
-
+	Tabletop,
+	Loom,
 	Corpse,
 	MAX
 };

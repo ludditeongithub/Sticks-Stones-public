@@ -132,12 +132,20 @@ enum class Fruit
 
 namespace plant
 {
-  inline constexpr RaggedLookupTable<PlantCategory, std::vector<Plant>, 56>
+inline constexpr LookupTable<PlantCategory, float> test = []
+{
+	LookupTable<PlantCategory, float> lt{};
+	using enum PlantCategory;
+	lt[PlantCategory::NONE] = 0.4;
+	return lt;
+}();
+  
+  inline const RaggedLookupTable<PlantCategory, Plant> 56>
   categories = []
   {
     using enum Plant;
 
-    RaggedLookupTable<PlantCategory, std::vector<Plant>, 56> lt{};
+    RaggedLookupTable<PlantCategory, Plant, 56> lt{};
   lt.set(PlantCategory::Tree,
        {PioneerTree,
         DeciduousTree,
@@ -235,5 +243,5 @@ lt.set(PlantCategory::Fern,
 lt.set(PlantCategory::Bush,
        {Bush});
     return lt;
-  }
+  };
 }

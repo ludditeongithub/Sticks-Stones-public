@@ -7,7 +7,7 @@
 
 #include <core/containers.hpp>
 #include <core/data.hpp>
-#include <core/database.hpp>
+#include <core/entity.hpp>
 #include <core/memory.hpp>
 
 #include <world/animal/enum.hpp>
@@ -54,8 +54,8 @@ struct SearchGrid
 	Arena *chunkBucketArena;
 	Arena *activeBucketArena;
 
-	Array<ChunkBucket *> chunkBuckets;
-	Array<ChunkBucket *> activeChunkBuckets;
+	Array<ChunkBucket*> chunkBuckets;
+	Array<ChunkBucket*> activeChunkBuckets;
 	std::unordered_map<uint16_t, uint16_t> chunkToActiveChunks;
 	std::stack<uint16_t> freeIndices;
 	std::vector<bool> activeChunks;

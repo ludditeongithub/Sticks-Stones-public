@@ -1,6 +1,9 @@
 #include "game.hpp"
 #include "core/saves.hpp"
+#include "simulation/game_time.hpp"
+#include "simulation/launch_game.hpp"
 #include "simulation/saveGame.hpp"
+#include "world/unit/database.hpp"
 #include <optional>
 
 void Game::initNewWorld()
@@ -10,27 +13,29 @@ void Game::initNewWorld()
 	ws->generateWorld();
 
 	chunkArena =
-	    Arena(World::ENTITY_SIZE * (ws->WIDTH_WITH_BORDER + ws->HEIGHT_WITH_BORDER) *
-		      CHUNKS_PER_REGION);
+	    Arena(World::ENTITY_SIZE * (ws->WIDTH_WITH_BORDER + ws->HEIGHT_WITH_BORDER) * CHUNKS_PER_REGION);
 	world = World(chunkArena, 50, 50);
 	world.loadChunkData(*ws);
 
 	tileArena = Arena(TileDatabase::ENTITY_SIZE * world.WORLD_TILE_AMOUNT);
-	tileDatabase = TileDatabase(tileArena, ws->tsb, world);
+	tileDatabase = TileDatabase(tileArena, ws->tileSpawnBuffer, world);
 
 	search(world);
 	
-	plantArena = Arena(PlantDatabase::ENTITY_SIZE * ws->psb.size * PLANT_ALLOC_FACTOR);
-	plantDatabase = PlantDatabase(&plantArena, search, ws->psb.size * PLANT_ALLOC_FACTOR);
+	plantArena = Arena(PlantDatabase::ENTITY_SIZE * PLANT_DATABASE_CAP);
+	plantDatabase = PlantDatabase(&plantArena, search, PLANT_DATABASE_CAP);
 
-	animalArena = Arena(AnimalDatabase::ENTITY_SIZE * ws->asb.size * ANIMAL_ALLOC_FACTOR);
-	animalDatabase = AnimalDatabase(&animalArena, ws->asb.size * ANIMAL_ALLOC_FACTOR, search);
-	animalDatabase->addAnimals(ws->asb);
+	animalArena = Arena(AnimalDatabase::ENTITY_SIZE * ANIMAL_DATABASE_CAP);
+	animalDatabase = AnimalDatabase(&animalArena, ANIMAL_DATABASE_CAP, search);
+	animalDatabase->addAnimals(ws->animalSpawnBuffer);	
 
-	spriteSheetTexture.loadFromFile("sprite_sheet.png");
+	playerUnitArena = Arena(UnitDatabase::ENTITY_SIZE * UNIT_CAP);
+	playerUnitDatabase = UnitDatabase(playerUnitArena, PLAYER_UNIT_DATABASE_CAP, world, search);
 
-	unitArena = Arena(UnitDatabase::ENTITY_SIZE * UNIT_CAP);
-	unitDatabase = UnitDatabase(unitArena, UNIT_CAP, world, search);
+	NPCUnitArena = Arena(UnitDatabase::ENTITY_SIZE * NPC_UNIT_DATABASE_CAP);
+        NPCUnitDatabase = UnitDatabase(NPCUnitArena, NPC_UNIT_DATABASE_CAP, world, search);
+
+        spriteSheetTexture.loadFromFile("sprite_sheet.png");
 }
 
 GameSave& Game::saveGame(std::string name, GameSave* save)
@@ -57,8 +62,13 @@ void Game::loadGame(GameSave& save)
 
 void Game::deinitWorld()
 {
-	
-}	
+  
+}
+
+void Game::playerSpawn()
+{
+  
+}
 
 void Game::newGame()
 {
@@ -67,25 +77,7 @@ void Game::newGame()
 	// NOTE: right now Ws uses regions while world does chunks, but the same width
 	// and height is used for both.
 	
-	Coord chunkStart = world.getRandomPlayerStart();
-	uint32_t startChunkIndex = getChunkIndex(chunkStart);
-	Coord leftCornerTile = getChunkLeftCornerTile(chunkStart);
-	uint16_t startingUnits = 10;
-	for (size_t i = 0; i < startingUnits; i++)
-	{
-		bool foundTile = false;
-		uint32_t tile;
-		while (!foundTile)
-		{
-			tile = world.getTileIndexFromCoord(
-				{leftCornerTile.x + static_cast<uint16_t>(CHUNK_LENGTH * random_chance->next()),
-			     leftCornerTile.y + CHUNK_LENGTH});
-			if (!tileDatabase.occupieds[tile])
-				foundTile = true;
-		}
-		Coord tileCoord = world.getTileCoordFromIndex(tile);
-		unitDatabase->birthUnit(tileCoord);
-	}
+	
 }
 
 void Game::handleEvent(SDL_Event *e)

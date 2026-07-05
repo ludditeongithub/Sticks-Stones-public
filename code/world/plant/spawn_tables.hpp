@@ -6,6 +6,35 @@
 namespace plant
 {
 
+  inline const RaggedLookupTable<PlantCategory, Plant>
+  categories = []
+  {
+    using enum Plant;
+
+    RaggedLookupTable<PlantCategory, Plant> lt{};
+    lt.set(PlantCategory::Tree, {PioneerTree, DeciduousTree, EvergreenTree, TropicalTree});
+    lt.set(PlantCategory::Citrus, {Orange, Lemon});
+    lt.set(PlantCategory::Stone, {Peach, Apricot});
+    lt.set(PlantCategory::Pome, {Apple, Pear});
+    lt.set(PlantCategory::Olive, {Olive});
+    lt.set(PlantCategory::Succulent, {AloeVera, Cactus});
+    lt.set(PlantCategory::BerryShrub, {Blueberry, Strawberry});
+    lt.set(PlantCategory::Flowering, {Poppy, Corn});
+    lt.set(PlantCategory::FruitVeggie, {Cucumber, Broccoli, Rhubarb, Tomato, Pepper});
+    lt.set(PlantCategory::Leafy, {Cabbage, Kale, Lettuce});
+    lt.set(PlantCategory::Root, {Beets, Carrot, Potato});
+    lt.set(PlantCategory::Reed, {Reed, Papyrus});
+    lt.set(PlantCategory::Bulb, {Onion, Garlic});
+    lt.set(PlantCategory::Grain, {Wheat, Oat, Rice});
+    lt.set(PlantCategory::Grapevine, {Grapevine});
+    lt.set(PlantCategory::Herb, {Madder, Indigo, Lavender, Mint, Thyme, Sage, Ginseng, BlackPepper});
+    lt.set(PlantCategory::Textile, {Cotton, Hemp, Flax});
+    lt.set(PlantCategory::Moss, {Moss});
+    lt.set(PlantCategory::Fern, {Fern});
+    lt.set(PlantCategory::Bush, {Bush});
+    return lt;
+  }();
+
   inline constexpr LookupTable2D<Biome, PlantCategory, float> categorySpawnChances = [] {
     LookupTable2D<Biome, PlantCategory, float> lt{};
   using enum PlantCategory;
@@ -291,9 +320,7 @@ inline LookupTable2D<Plant, Tile, float> tileSpawnMultipliers = []
 	lt[Plant::DeciduousTree][RockySoil] = poorly;
 	lt[Plant::DeciduousTree][AridSoil] = poorly;
 	lt[Plant::DeciduousTree][Oxisol] = poorly;
-	lt[Plant::DeciduousTree][Gleysol] = rarely;
-	
-					
+	lt[Plant::DeciduousTree][Gleysol] = rarely;					
 					
 	lt[Plant::EvergreenTree][Podzol] = good;
 	lt[Plant::EvergreenTree][LoamSoil] = good;
@@ -377,8 +404,6 @@ inline LookupTable2D<Plant, Tile, float> tileSpawnMultipliers = []
 	lt[Plant::Lemon][AridSoil] = poorly;
 	lt[Plant::Lemon][Oxisol] = good;
 
-
-
 // Lime
 
 	lt[Plant::Lime][Podzol] = poorly;
@@ -389,9 +414,7 @@ inline LookupTable2D<Plant, Tile, float> tileSpawnMultipliers = []
 	lt[Plant::Lime][SiltySoil] = good;
 	lt[Plant::Lime][RockySoil] = rarely;
 	lt[Plant::Lime][AridSoil] = poorly;
-	lt[Plant::Lime][Oxisol] = great;
-	
-
+	lt[Plant::Lime][Oxisol] = great;	
 
 // Orange
 
@@ -404,7 +427,6 @@ inline LookupTable2D<Plant, Tile, float> tileSpawnMultipliers = []
 	lt[Plant::Orange][RockySoil] = poorly;
 	lt[Plant::Orange][AridSoil] = poorly;
 	lt[Plant::Orange][Oxisol] = good;
-
 
 // Peach  
 	lt[Plant::Peach][Podzol] = poorly;
@@ -470,8 +492,7 @@ inline LookupTable2D<Plant, Tile, float> tileSpawnMultipliers = []
 	lt[Plant::Pear][Oxisol] = poorly;
 	lt[Plant::Pear][Gleysol] = poorly;
 
-
-				// Olive Trees
+// Olive Trees
 				
 	lt[Plant::Olive][Podzol] = rarely;
 	lt[Plant::Olive][LoamSoil] = great;
@@ -724,8 +745,6 @@ inline LookupTable2D<Plant, Tile, float> tileSpawnMultipliers = []
 	lt[Plant::Cotton][Gleysol] = poorly;
 
 
-
-
 	lt[Plant::Hemp][Podzol] = poorly;
 	lt[Plant::Hemp][LoamSoil] = optimal;
 	lt[Plant::Hemp][PeatSoil] = poorly;
@@ -737,8 +756,6 @@ inline LookupTable2D<Plant, Tile, float> tileSpawnMultipliers = []
 	lt[Plant::Hemp][Oxisol] = poorly;
 	lt[Plant::Hemp][Gleysol] = poorly;
 
-
-
 	lt[Plant::Flax][Podzol] = poorly;
 	lt[Plant::Flax][LoamSoil] = optimal;
 	lt[Plant::Flax][PeatSoil] = poorly;
@@ -749,9 +766,6 @@ inline LookupTable2D<Plant, Tile, float> tileSpawnMultipliers = []
 	lt[Plant::Flax][AridSoil] = rarely;
 	lt[Plant::Flax][Oxisol] = poorly;
 	lt[Plant::Flax][Gleysol] = poorly;
-
-
-
 
 
 // =========================

@@ -21,12 +21,13 @@ public:
     std::ofstream ofs(name, std::ios::binary);
     cereal::BinaryOutputArchive archive(ofs);
     // NOTE: the order of this is VERY important!
-    game.tileDatabase.save();
-    game.plantDatabase.save();
-    game.animalDatabase.save();
-    game.unitDatabase.save();
-    game.itemDatabase.save();
-    game.buildableDatabase.save();
+    game.tileDatabase.save(archive);
+    game.plantDatabase.save(archive);
+    game.animalDatabase.save(archive);
+    game.playerUnitDatabase.save(archive);
+	game.NPCUnitDatabase.save(archive);
+    game.itemDatabase.save(archive);
+    game.buildableDatabase.save(archive);
   }
 
   void load(Game& game)
@@ -34,12 +35,13 @@ public:
     std::ifstream ifs(name, std::ios::binary);
     cereal::BinaryInputArchive archive(ifs);
     // NOTE: the order of this is VERY important!
-    game.tileDatabase.load(game.tileArena, archive);
-    game.plantDatabase.load(game.plantArena, archive);
-    game.animalDatabase.load(game.animalArena, archive);
-    game.unitDatabase.load(game.unitArena, archive);
-    game.itemDatabase.load(game.itemArena, archive);
-    game.buildableDatabase.load(game.buildableArena, archive);
+    game.tileDatabase.load(archive);
+    game.plantDatabase.load(archive);
+    game.animalDatabase.load(archive);
+    game.playerUnitDatabase.load(archive);
+	game.NPCUnitDatabase.load(archive);
+    game.itemDatabase.load(archive);
+    game.buildableDatabase.load(archive);
   }
 
   bool confirmSave()

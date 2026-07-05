@@ -8,6 +8,7 @@ env = Environment(
 )
 database_template = env.get_template("database.j2")
 spawn_entity_template = env.get_template("entity_spawn.j2")
+spawn_buffer_template = env.get_template("spawn_buffers.j2")
 
 def replace_block(filepath, marker, new_content):
     with open(filepath, "r") as f:
@@ -26,7 +27,7 @@ def replace_block(filepath, marker, new_content):
         f.write(new_contents)
 
 def create_world_gen_functions():
-    with open("world_generation.yaml", "r") as f:
+    with open("entity_spawn.yaml", "r") as f:
         config = yaml.safe_load(f)
 
         relative_path = f"../simulation/first_spawn.cpp"
@@ -39,8 +40,31 @@ def create_world_gen_functions():
             relative_path,
             entity["name"] + "_spawn",
             generated_code,
-        ) 
+        )         
+        
+def create_world_gen_functions():
+    with open("spawn_buffer.yaml", "r") as f:
+        config = yaml.safe_load(f)
 
+        relative_path = f"../simulation/world_gen.hpp"
+
+    for _, entity in config["generation"].items():
+        print(entity["name"] + " spawn buffer")
+        generated_code = create_world_gen_function(entity["name"])
+        
+        replace_block(
+            relative_path,
+            "spawn_buffer_" + entity["name"],
+            generated_code,
+        )         
+
+def create_world_gen_function(entity):
+    context = {
+        "Entity_name": entity.capitalize(),
+        "entity_name": entity
+    }
+    return spawn_buffer_template.render(**context) 
+        
 def create_entity_spawn_function(entity):
     context = {
         "Entity_name": entity.capitalize(),

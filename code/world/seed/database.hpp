@@ -10,7 +10,10 @@ struct SeedDatabase {
     // BASE DATABASE MEMBERS
     // =========================
 
-constexpr static uint16_t ENTITY_SIZE = sizeof(bool)
+constexpr static uint16_t ENTITY_SIZE = sizeof(Plant) +
+
++ sizeof(bool)
+  
 
  +  sizeof(Coord) 
 

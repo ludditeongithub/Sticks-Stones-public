@@ -63,7 +63,27 @@ inline Coord getPos(Direction direction, Coord coord, uint8_t stride = 1)
 }
 
 using Time = uint32_t;
-using Frame = uint8_t;
+#include <cstdint>
+
+enum class Frame : uint8_t
+{
+    F0,
+    F1,
+    F2,
+    F3,
+    F4,
+    F5,
+    F6,
+    F7,
+    F8,
+    F9,
+    F10,
+    F11,
+    F12,
+    F13,
+    F14,
+    F15   
+};
 
 // geography
 using Hum = uint16_t;

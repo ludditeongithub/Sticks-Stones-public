@@ -11,7 +11,7 @@
 #include <extern/magic_enum/magic_enum_utility.hpp>
 #include <string>
 
-namespace SpriteSheet {
+namespace sprite {
 
 std::string toKebabCase(std::string& s) {
     std::string result;

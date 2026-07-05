@@ -2,7 +2,10 @@
     // BASE DATABASE MEMBERS
     // =========================
 
-constexpr static uint16_t ENTITY_SIZE = sizeof(bool)
+constexpr static uint16_t ENTITY_SIZE = sizeof({{ Main_enum }}) +
+{% if not 'immortal' in traits %}
++ sizeof(bool)
+{% endif %}  
 {% for r in runtime_arrays %}
  +  sizeof({{ r.type }}) 
 {% endfor %}

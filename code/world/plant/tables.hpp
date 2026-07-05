@@ -207,7 +207,7 @@ inline constexpr LookupTable<Plant, float> waterRequired = []
 	arr[Lime] = 1250.0 / DAY_LENGTH;
 	arr[Blueberry] = 800.0 / DAY_LENGTH;
 	arr[Strawberry] = 600.0 / DAY_LENGTH;
-	arr[Grape] = 700.0 / DAY_LENGTH;
+	arr[Grapevine] = 700.0 / DAY_LENGTH;
 	arr[Olive] = 400.0 / DAY_LENGTH;
 
 	return arr;

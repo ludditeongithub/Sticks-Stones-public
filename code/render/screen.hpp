@@ -11,6 +11,13 @@ SDL_Window *window = NULL;
 // The window renderer
 SDL_Renderer *renderer = NULL;
 
+
+// VIEWPORTS
+SDL_Rect mainScreenViewport = {0, 0, 640, 320};
+
+SDL_Rect bottomBarViewport = {0, 305, 640, 55};
+
+
 const int FIRST_LAUNCH_WINDOW_WIDTH = 200;
 const int FIRST_LAUNCH_WINDOW_HEIGHT = 500;
 

@@ -7,9 +7,11 @@
 #include <vector>
 #include <variant>
 #include <world/item/enum.hpp>
+#include <world/buildable/enum.hpp>
 #include <core/tables.hpp>
 
 constexpr uint16_t MAX_ROLES_PER_TASK = 6;
+constexpr uint16_t ACTION_TOOLS_AMOUNT = 100; //NOTE: likely wrong
 
 struct RoleData
 {
@@ -23,136 +25,186 @@ struct RoleData
 
 RoleData roleDatas[static_cast<int>(Role::MAX)];
 
-//TODO: make both of these lookup tables more efficient, (make them ragged tables)
-struct ToolArray
+struct ActionRequirement
 {
-	ToolOrStation tool[9];
+		std::variant<Buildable, Item> requirement;
+		int8_t index; // negatives are unnecessary.
 };
 
-ToolArray actionToTools[static_cast<uint16_t>(Action::ACTION_MAX)];
-
-//negatives are unnecessary.
-inline constexpr RaggedLookupTable<Action, std::pair<std::variant<Station, Item>, int8_t>, ACTION_TOOLS_AMOUNT> actionToTools = [] {
-	RaggedLookupTable<Action, std::pair<Item, int8_t>, ACTION_TOOLS_AMOUNT, std::numeric_limits<uint8_t>::max()> lt{};
+inline RaggedLookupTable<Action, ActionRequirement> actionToTools = [] {
+	RaggedLookupTable<Action, ActionRequirement> lt{};
 	using enum Action;
-	lt.set(Action::Pott, {1, 1, 0, -1, -2}, {Buildable::Oven, Buildable::Furnace, Buildable::PottersWheel, Item::Scraper, Item::Stylus});
-	lt.set(Action::Smelt, {0, 1}, {Buildable::Furnace, Item::Crucible});
-	lt.set(Action::Smith, {0, 1, 2}, {Buildable::Anvil, Item::Hammer, Item::Chisel});
-	lt.set(Action::Perform, {-1, -1, -1, -1}, {Item::Lyre, Item::Drum, Item::Lur, Item::PanFlute});
-	lt.set(Action::Operate, {0, 1}, {Item::Scalpel, Item::Needle});
-	lt.set(Action::Build, {-1, -1}, {Item::Hammer, Item::Mallet});
-	lt.set(Action::Woodwork, {-1, 1, 2, 3, 4, 5});
-	lt.set(Action::Stonework, {0, 1, 2, 3, 4, 5});
-	lt.set(Action::GlassMake, {0, 1, 2}, {Item::Bellows, Buildable::RollingMachine, Buildable::Furnace});
-	lt.set(Action::Glasswork, {0, 1, (Action::Glasswork, {0, 1, 2})); //TODO
-	lt.set(Action::Burn, {0, 1, 2}, {Item::Candle, Item::Flint, Item::Torch});
-	lt.set(Action::WoodCarve, {0, 1, 2, 0}, {Item::Chisel, Item::Adze, Item::Knife, Item::Mallet});
-	lt.set(Action::Weave, {0, 1}, {Item::HandheldLoom, Buildable::Loom});
-	lt.set(Action::Cook, {0, 1, 2}, {Item::Pot, Buildable::Oven, Buildable::Tabletop});
-	lt.set(Action::Harvest, {-1, -1}, {Item::Sickle, Item::Scythe});
-	lt.set(Action::Milk, {0, 0, 0}, {Item::Bucket, Item::Pot, Item::Jar});
-	lt.set(Action::Trade, {-1, -1, -1}, {Item::Bucket, Item::Basket, Item::Jar});
-	lt.set(Action::Mix, {0, 0, 1, 1, 1}, {Item::Staff, Item::Stick, Item::Bucket, Item::ClayPot, Item::Pot});
-	lt.set(Action::Churn, {0, 0, 1, 1, 1}, {Item::Staff, Item::Stick, Item::Bucket, Item::ClayPot, Item::Pot});
-	lt.set(Action::Boil, {0, 0, 1, 1}, {Buildable::PitFire, Buildable::Oven, Item::Bucket, Item::Pot});
-	lt.set(Action::Spin, {0, 0, -1}, {Item::Spindle, Item::Distaff, Buildable::Spinner});
-	lt.set(Action::LeatherCraft, {0, 1, 2}, {Item::Knife, Item::Awl, Item::Needle});
-	lt.set(Action::CanoeCarve, {0, 0, 1}, {Item::Saw, Item::Axe, Item::Adze});
-	lt.set(
-	    Action::BoatCraft,
-	    {0, (Action::BoatCraft, {0, 1})); //TODO
-        lt.set(Action::Engineer, {-1,0}, {Item::Mallet, Item::MeasuringTools}));
-	lt.set(Action::MudbrickSculpt, {1, -2}, {Item::Trowel, Item::BrickMould});
-	lt.set(Action::BrickSculpt, {1, -2}, {Item::Trowel, Item::BrickMould});
-	lt.set(Action::Mash, {1, 1}, {Item::Pestle, Buildable::Mill});
-	lt.set(Action::StoneCarve, {0, 1, 2}, {Item::Chisel, Item::Mallet, Item::Scraper});
-	lt.set(Action::Mint, {0, 1, 2, 3},
-	       {Item::PatternedDie, Item::PatternedDie, Item::Mallet, Buildable::Furnace});
-	lt.set(Action::Sculpt, {0, 1, -1}, {Item::Scraper, Item::Stylus, Item::MeasuringItems});
-	lt.set(Action::LowPott, {0, -1, -2}), {Buildable::PitFire, Item::Scraper, Item::Stylus};
-	lt.set(Action::Hunt, {Item::PrimitiveSpear, Item::Spear, Item::Pike, Item::Greatsword,
-			      Item::Halberd, Buildable::Animal}); // TODO: station
-	lt.set(Action::Mine, {Item::Pickaxe});
-	lt.set(Action::Cut, {Item::Knife, Item::Machete, Item::Sword});
-	lt.set(Action::Chop, {Item::Axe, Item::Greataxe, Buildable::Tree}); // TODO: station
-	lt.set(Action::FineChop, {Item::Knife, Item::Cleaver, Item::Machete});
-	lt.set(Action::Dig, {Item::Shovel, Item::Trowel, Item::DiggingStick});
-	lt.set(Action::Light, {Item::Torch, Item::Candle, Item::Flint});
-	lt.set(Action::Butcher,
-	       {Item::Cleaver, Item::Knife, Item::Machete, Buildable::Corpse}); // TODO: station
-	lt.set(Action::Paint, {Item::Brush});
-	lt.set(Action::Chisel, {Item::Chisel});
-	lt.set(Action::Write, {Item::Pen});
-	lt.set(Action::Mould, {Item::Mould});
-	lt.set(Action::Glasswork, {Item::Blowpipe, Item::Graver, Buildable::Forge});
-	lt.set(Action::Saw, {Item::Saw});
-	lt.set(Action::Engrave, {Item::Graver});
-	lt.set(Action::Fire, {Buildable::Furnace, Buildable::Oven, Buildable::Kiln, Buildable::Forge});
-	lt.set(Action::Press, {Buildable::Press});
-	lt.set(Action::Carve, {Item::Knife});
-	lt.set(Action::Bless, {Item::Incense});
-	lt.set(Action::Explore, {Item::Compass, Item::Binocular});
-	lt.set(Action::Plow, {Item::Ard, Item::HeavyPlow});
-	lt.set(Action::Weed, {Item::Trowel});
-	lt.set(Action::Shear, {Item::Machete, Item::Shears});
-	lt.set(Action::Mill, {Item::Pestle, Buildable::Mill});
-	lt.set(Action::Fish, {Item::FishingRod, Item::Net});
-	lt.set(Action::Herd, {Item::Whip, Item::Staff});
-	lt.set(Action::Haul, {Item::Basket, Item::Bucket, Buildable::Cart, Buildable::Wagon});
-	lt.set(Action::Bake, {Buildable::Oven, Item::Pot, Item::Plate});
-	lt.set(Action::Treat, {Item::Pot, Item::Bucket});
-	lt.set(Action::Tan, {Item::Bucket});
-	lt.set(Action::Cast, {Item::Mould, Buildable::SculptMould});
-	lt.set(Action::Whittle, {Item::Knife});
-	lt.set(Action::Knapp, {Item::Hammerstone, Item::Chisel});
-	lt.set(Action::Grind, {Item::Pestle});
-	lt.set(Action::Preserve, {Buildable::Keg, Buildable::MashTun, Item::Pot});
-	lt.set(Action::Dip, {Item::MeltingPot});
-	lt.set(Action::CandleMould, {Item::CandleMould});
-	lt.set(Action::Lay, {Item::Spindle, Buildable::Spinner});
-	lt.set(Action::WoodCraft, {Item::Hammer, Item::Mallet});
-	lt.set(Action::WheelCraft, {Item::Adze, Item::Hammer, Item::Chisel});
-	lt.set(Action::BoatCraft, {Item::Mallet, Item::MeasuringItems});
-	lt.set(Action::SiegeCraft, {Item::Mallet, Item::Hammerstone, Item::MeasuringItems});
-	lt.set(Action::Engineer, {Item::Mallet, Item::MeasuringItems});
-	lt.set(Action::Wait, {Item::Bucket, Item::Pot, Item::Jar});
-	lt.set(Action::Measure, {Item::MeasuringItems, Item::Scale});
-	lt.set(Action::Crush, {Item::Hammer, Item::Hammerstone});
-	lt.set(Action::BowCraft, {Item::Knife, Item::Adze, Item::Awl, Item::Drill});
-	lt.set(Action::Brew, {Buildable::Cask});
-	lt.set(Action::OilMake, {Buildable::Press});
-	lt.set(Action::SculptMould, {Buildable::ClaySculpture});
-	lt.set(Action::Sew, {Item::Needle});
-	lt.set(Action::Tan, {Item::Bucket, Item::Pot});
-	lt.set(Action::CandleCast, {Item::CandleMould});
+	lt.set(Action::Pott, {
+    {Buildable::Oven, 1},
+    {Buildable::Furnace, 1},
+    {Buildable::PottersWheel, 0},
+    {Item::Scraper, -1},
+    {Item::Stylus, -2}
+});
+
+lt.set(Action::Smelt, {
+    {Buildable::Furnace, 0},
+    {Item::Crucible, 1}
+});
+
+lt.set(Action::Smith, {
+    {Buildable::Anvil, 0},
+    {Item::Hammer, 1},
+    {Item::Chisel, 2}
+});
+
+lt.set(Action::Perform, {
+    {Item::Lyre, -1},
+    {Item::Drum, -1},
+    {Item::Lur, -1},
+    {Item::PanFlute, -1}
+});
+
+lt.set(Action::Operate, {
+    {Item::Scalpel, 0},
+    {Item::Needle, 1}
+});
+
+lt.set(Action::Build, {
+    {Item::Hammer, -1},
+    {Item::Mallet, -1}
+});
+
+lt.set(Action::GlassMake, {
+    {Item::HandheldBellows, 0},
+    {Buildable::Bellows, 0},
+    {Buildable::DoubleBellows, 0},
+    {Buildable::RollingMachine, 1},
+    {Buildable::Furnace, 2}
+});
+
+lt.set(Action::Burn, {
+    {Item::Candle, 0},
+    {Item::Flint, 1},
+    {Item::Torch, 2}
+});
+
+lt.set(Action::WoodCarve, {
+    {Item::Chisel, 0},
+    {Item::Adze, 1},
+    {Item::Knife, 2},
+    {Item::Mallet, 0}
+});
+
+lt.set(Action::Weave, {
+    {Item::HandheldLoom, 0},
+    {Buildable::Loom, 1}
+});
+
+lt.set(Action::Cook, {
+    {Item::Pot, 0},
+    {Buildable::Oven, 1},
+    {Buildable::Tabletop, 2}
+});
+
+lt.set(Action::Harvest, {
+    {Item::Sickle, -1},
+    {Item::Scythe, -1}
+});
+
+lt.set(Action::Milk, {
+    {Item::Bucket, 0},
+    {Item::Pot, 0},
+    {Item::Jar, 0}
+});
+
+lt.set(Action::Trade, {
+    {Item::Bucket, -1},
+    {Item::Basket, -1},
+    {Item::Jar, -1}
+});
+
+lt.set(Action::Mix, {
+    {Item::Staff, 0},
+    {Item::Stick, 0},
+    {Item::Bucket, 1},
+    {Item::ClayPot, 1},
+    {Item::Pot, 1}
+});
+
+lt.set(Action::Churn, {
+    {Item::Staff, 0},
+    {Item::Stick, 0},
+    {Item::Bucket, 1},
+    {Item::ClayPot, 1},
+    {Item::Pot, 1}
+});
+
+lt.set(Action::Boil, {
+    {Buildable::PitFire, 0},
+    {Buildable::Oven, 0},
+    {Item::Bucket, 1},
+    {Item::Pot, 1}
+});
+
+lt.set(Action::Spin, {
+    {Item::Spindle, 0},
+    {Item::Distaff, 0},
+    {Buildable::Spinner, -1}
+});
+
+lt.set(Action::LeatherCraft, {
+    {Item::Knife, 0},
+    {Item::Awl, 1},
+    {Item::Needle, 2}
+});
+
+lt.set(Action::CanoeCarve, {
+    {Item::Saw, 0},
+    {Item::Axe, 0},
+    {Item::Adze, 1}
+});
+
+lt.set(Action::MudbrickSculpt, {
+    {Item::Trowel, 1},
+    {Item::BrickMould, -2}
+});
+
+lt.set(Action::BrickSculpt, {
+    {Item::Trowel, 1},
+    {Item::BrickMould, -2}
+});
+
+lt.set(Action::Mash, {
+    {Item::Pestle, 1},
+    {Buildable::Mill, 1}
+});
+
+lt.set(Action::StoneCarve, {
+    {Item::Chisel, 0},
+    {Item::Mallet, 1},
+    {Item::Scraper, 2}
+});
+
+lt.set(Action::Sculpt, {
+    {Item::Scraper, 0},
+    {Item::Stylus, 1},
+    {Item::MeasuringItems, -1}
+});
 	return lt;
 	    }();
 
-	    inline constexpr RaggedLookupTable<Action, Role, ACTION_ROLE_AMOUNT, Action::MAX>
-		actionToRoles =
-		    []
-	    {
-		    using enum Action;
-
-		    RaggedLookupTable<Action, Role, ACTION_ROLE_AMOUNT, Action::MAX> lt{};
-		    
+inline const RaggedLookupTable<Action, Role> actionToRoles = []
+	    {		    
+		    RaggedLookupTable<Action, Role> lt{};
+  			using enum Action;   
 		    lt.set(Action::Melee, {Role::MeleeSoldier, Role::SpearHunter});
-		    lt.set(Action::Mine, {Role::StoneMiner, Role::CopperMiner, Role::IronMiner,
-					  Role::GoldMiner, Role::SilverMiner, Role::SaltMiner});
-			   lt.set(Action::Cut, {Role::Apothecary, Role::Planter});
-			   lt.set(Action::Chop, {Role::Woodcutter});
-			   lt.set(Action::FineChop, {Role::Cook, Role::Chef, Role::Apothecary});
-			   lt.set(Action::Dig, {Role::Planter, Role::Structures});
-			   lt.set(Action::Light, {Role::NONE});
-			   lt.set(Action::Butcher, {Role::Butcher});
-			   lt.set(Action::Paint, {Role::Painter});
-			   lt.set(Action::Sculpt, {Role::Sculptor, Role::ClayWorker, Role::Potter});
-			   lt.set(Action::Chisel, {Role::Stoneworker});
-			   lt.set(Action::Write,
-				  {Role::BooksAcademicAny, Role::BooksAcademicHistory,
-				   Role::BooksAcademicPhilosophy, Role::BooksAcademicMathematics,
-				   Role::BooksAcademicNatural, Role::Transcriber,
-				   Role::AdvisorKnowledge, Role::AdvisorOrderAdministrative});
+		    lt.set(Action::Mine, {Role::StoneMiner, Role::CopperMiner, Role::IronMiner, Role::GoldMiner, Role::SilverMiner, Role::SaltMiner});
+			lt.set(Action::Cut, {Role::Apothecary, Role::Planter});
+			lt.set(Action::Chop, {Role::Woodcutter});
+			lt.set(Action::FineChop, {Role::Cook, Role::Chef, Role::Apothecary});
+			lt.set(Action::Dig, {Role::Planter, Role::Builder});
+			lt.set(Action::Light, {Role::NONE});
+			lt.set(Action::Butcher, {Role::Butcher});
+			lt.set(Action::Paint, {Role::Painter});
+			lt.set(Action::Sculpt, {Role::Sculptor, Role::ClayWorker, Role::Potter});
+			lt.set(Action::Chisel, {Role::Stoneworker});
+			lt.set(Action::Write, {Role::BooksAcademicAny, Role::BooksAcademicHistory, Role::BooksAcademicPhilosophy, Role::BooksAcademicMathematics, Role::BooksAcademicNatural, Role::Scribe, Role::AdvisorKnowledge, Role::AdvisorOrderAdministrative});
 			   lt.set(Action::LowPott, {Role::ClayWorker});
 			   lt.set(Action::Pott, {Role::Potter});
 			   lt.set(Action::Pott, {Role::Potter});
@@ -163,8 +215,8 @@ inline constexpr RaggedLookupTable<Action, std::pair<std::variant<Station, Item>
 			   // TODO: alternate shitty operation tools
 			   lt.set(Action::Operate, {Role::Surgeon});
 			   lt.set(Action::Administer, {Role::Surgeon, Role::Herbalist, Role::Apothecary});
-			   lt.set(Action::Build = {Role::ShelterBuilder, Role::Builder});
-			   lt.set(Action::Mould = {Role::Chandler, Role::Potter});
+			   lt.set(Action::Build, {Role::ShelterBuilder, Role::Builder});
+			   lt.set(Action::Mould, {Role::Chandler, Role::Potter});
                             lt.set(Action::Woodwork, {Role::Woodworker});
 			    lt.set(Action::Stonework, {Role::Stoneworker});
 	lt.set(Action::GlassMake, {Role::GlassMaker});
@@ -184,7 +236,7 @@ inline constexpr RaggedLookupTable<Action, std::pair<std::variant<Station, Item>
 	lt.set(Action::Cook, {Role::Cook});
 	lt.set(Action::Craft, {Role::Crafter});
 	lt.set(Action::Explore, {Role::Explorer});
-	lt.set(Action::Negotiate, {Role::Negotiater});
+	lt.set(Action::Negotiate, {Role::Negotiator});
 	lt.set(Action::Plow, {Role::Plower});
 	lt.set(Action::Plant, {Role::Planter});
 	lt.set(Action::Weed, {Role::Planter});
@@ -236,7 +288,6 @@ inline constexpr RaggedLookupTable<Action, std::pair<std::variant<Station, Item>
 
 	// NON PRODUCT/RESOURCE
 	lt.set(Action::Tame, {Role::HorseBreeder, Role::Shepherd, Role::Herder});
-	lt.set(Action::Command, {Role::MilLeader, Role::Monarch, Role::Landowner});
 		    return lt;
-	    }	    
+	    }();	    
 #endif // ROLES_H_

@@ -32,7 +32,6 @@
 // humidity
 // neighboring plants
 
-#include "first_spawn.hpp"
 #include "core/data.hpp"
 #include "world_gen.hpp"
 #include "core/tables.hpp"

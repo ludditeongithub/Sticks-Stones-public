@@ -61,7 +61,7 @@ enum class Grass : uint8_t
 	MAX
 };
 
-using TileData = PackedEnum<EnumField<Tile, 5>, EnumField<Grass, 3>>;
+using TileData = PackedEnum<Field<Tile, 5>, Field<Grass, 3>>;
 
 // TODO: water and floating
 enum class OccupiedStatus : uint8_t
@@ -82,7 +82,7 @@ enum class VisionStatus : uint8_t
 };
 
 // NOTE: 2 bits remaining
-using TileStatus = PackedEnum<EnumField<OccupiedStatus, 3>, EnumField<VisionStatus, 2>>;
+using TileStatus = PackedEnum<Field<OccupiedStatus, 3>, Field<VisionStatus, 2>>;
 
 
 bool isWater(Tile tile)

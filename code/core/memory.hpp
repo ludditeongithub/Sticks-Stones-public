@@ -34,9 +34,6 @@ size_t getTypesSizeBytes(Types ... types)
 
 }
 
-void reserveDatabases
-
- 
 
 void* arena_alloc(Arena& arena, size_t bytes)
 {

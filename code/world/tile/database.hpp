@@ -1,6 +1,5 @@
 #pragma once
 #include "enum.hpp"
-#include "data.hpp"
 #include "world/chunk/data.hpp"
 #include "world/tile/data.hpp"
 #include <core/containers.hpp>
@@ -14,29 +13,25 @@
 class TileDatabase
 {
       public:
-	static constexpr uint32_t ENTITY_SIZE = sizeof(TileData) + sizeof(Alt);
-	uint32_t size;
-	Array<TileData> tiles;
-	Array<Alt> altitudes;
-	Array<Liquid> waters;
-        Array<TileStatus> tileStatuses;
-
-	World& world;
-
-	Coord totalRevealedBoxTopLeftCorner;
-	Coord totalRevealedBoxDimensions;
-	Arena* edgeBufferArena = new Arena(1500 * sizeof(Coord));
-	Array<Coord> edgeBuffer = arena_make_array<Coord>(edgeBufferArena, 1500);
-
   
   	// @codegen:begin database_generation
-
     // =========================
     // BASE DATABASE MEMBERS
     // =========================
 
+constexpr static uint16_t ENTITY_SIZE = sizeof(Tiledata) +
+  
+
+ +  sizeof(Alt) 
+
+ +  sizeof(Liquid) 
+
+ +  sizeof(TileStatus) 
+
+;
+
 size_t capacity;
-Array<Tile> tiles;
+Array<Tiledata> tiles;
 
 
 
@@ -44,6 +39,12 @@ Array<Tile> tiles;
     // =========================
     // ENTITY-SPECIFIC MEMBERS
     // =========================
+
+    Array<Alt> altitudes;
+
+    Array<Liquid> waters;
+
+    Array<TileStatus> tileStatuses;
     
 
     
@@ -63,6 +64,12 @@ Array<Tile> tiles;
    
 
 
+        altitudes.save(archive);
+
+        waters.save(archive);
+
+        tileStatuses.save(archive);
+
     }
 
     template <class Archive>
@@ -72,6 +79,12 @@ Array<Tile> tiles;
 
         
 
+        altitudes.load(archive);
+
+        waters.load(archive);
+
+        tileStatuses.load(archive);
+
     }
 
     // =========================
@@ -80,7 +93,7 @@ Array<Tile> tiles;
 
 TileDatabase(Arena *arena, size_t capacity
 
-  World& world,
+  , World& world
 
 
 )

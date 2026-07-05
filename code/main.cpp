@@ -4,7 +4,6 @@
 #include <core/memory.hpp>
 #include <core/memory_control.hpp>
 #include <render/texture.hpp>
-#include <render/window.hpp>
 #include <render/camera.hpp>
 #include <render/draw.hpp>
 #include <ui/aggregates/main_menu.hpp>

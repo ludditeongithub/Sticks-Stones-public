@@ -17,15 +17,15 @@
 
 struct PlantDatabase
 {
-	static constexpr uint32_t ENTITY_SIZE =
-	    sizeof(Plant) + sizeof(float) + sizeof(Coord) + sizeof(float) + sizeof(Time);
-
 	// @codegen:begin database_generation
     // =========================
     // BASE DATABASE MEMBERS
     // =========================
 
-constexpr static uint16_t ENTITY_SIZE = sizeof(bool)
+constexpr static uint16_t ENTITY_SIZE = sizeof(Plant) +
+
++ sizeof(bool)
+  
 
  +  sizeof(Coord) 
 
@@ -117,7 +117,7 @@ Array<Plant> plants;
         freeSlots.push(i);
         alives[i] = false;
 
-        search.deleteEntity;
+        search.deleteEntity();
 
         return true;
     }
@@ -168,8 +168,12 @@ Array<Plant> plants;
     // =========================
 
 PlantDatabase(Arena *arena, size_t capacity
+
   , World& world
+
+
   , SearchGrid& search
+
 )
     {
 this->capacity = capacity;

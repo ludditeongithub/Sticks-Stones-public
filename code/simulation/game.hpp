@@ -27,7 +27,7 @@ struct Game
   World world;
   SearchGrid search;
   
-  Arena tileArena;
+Arena tileArena;
 TileDatabase tileDatabase;
 Arena plantArena;
 PlantDatabase plantDatabase;
@@ -35,8 +35,10 @@ Arena regrowthPlantArena;
 RegrowthPlantDatabase regrowthPlantDatabase;
 Arena animalArena;
 AnimalDatabase animalDatabase;
-Arena unitArena;
-UnitDatabase unitDatabase;
+Arena playerUnitArena;
+UnitDatabase playerUnitDatabase;
+Arena NPCUnitArena;  
+UnitDatabase NPCUnitDatabase;
 Arena itemArena;
 ItemDatabase itemDatabase;
 BuildableDatabase buildableDatabase;
@@ -50,7 +52,9 @@ GameSave& saveGame(std::string name, GameSave *save);
 
 void loadGame(GameSave& save);
 
-void newGame();  
+void newGame();
+
+void playerSpawn();  
 
 void quit();
 

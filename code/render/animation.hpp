@@ -1,14 +1,14 @@
 #ifndef ANIMATION_HPP
 #define ANIMATION_HPP
-#include <core/database.hpp>
 #include "texture.hpp"
-#include "viewport.hpp"
 #include <SDL2/SDL_rect.h>
 #include <core/containers.hpp>
 #include <core/data.hpp>
+#include <core/entity.hpp>
 #include <cstdint>
 #include <systems/find_nearest.hpp>
 #include <world/animal/enum.hpp>
+#include <world/animal/tables.hpp>
 #include <world/tile/enum.hpp>
 #include <world/unit/enum.hpp>
 #include "sprite.hpp"
@@ -18,8 +18,8 @@
 template <typename T>
 void updateAnimations(Array<Coord> &coords, Array<Frame> &frames, Array<T> &states);
 
-const Frame WALK_ANIMATION_SPRITE_LENGTH = 4;
-const Frame RUN_ANIMATION_SPRITE_LENGTH = 8;
+const Frame WALK_ANIMATION_SPRITE_LENGTH = Frame::F4;
+const Frame RUN_ANIMATION_SPRITE_LENGTH = Frame::F8;
 
 // TODO: right now this is only fitted for walk animations. need to make sure
 // all the LOGIC is only fitted for walk animations, for now.
@@ -115,8 +115,9 @@ inline uint16_t getDirectionSpriteOffset(SpriteInfo &asi, Direction d, bool chil
 	return dOffset;
 }
 
-inline uint16_t getFrameSpriteOffset(SpriteInfo &asi, ActionStatus as, uint16_t frame, uint16_t spriteHeight)
+inline uint16_t getFrameSpriteOffset(SpriteInfo &asi, ActionStatus as, Frame frameNumber, uint16_t spriteHeight)
 {
+	uint8_t frame = static_cast<uint8_t>(frameNumber);
 	switch (as)
 	{
 		// WALK
@@ -135,9 +136,10 @@ inline uint16_t getFrameSpriteOffset(SpriteInfo &asi, ActionStatus as, uint16_t 
 	}	
 }
 
-inline uint16_t getFrameSpriteOffset(SpriteInfo &asi, ActState as, uint16_t frame,
+inline uint16_t getFrameSpriteOffset(SpriteInfo &asi, ActState as, Frame frameNumber,
 				     uint16_t spriteHeight)
 {
+	uint8_t frame = static_cast<uint8_t>(frame);
 	switch (as)
 	{
 		// WALK
@@ -206,23 +208,25 @@ inline Coord getSpriteDimensions(SpriteInfo &asi, Direction d, bool child)
 
 SDL_Rect getAnimalRect(Animal a, AnimalStatus as, Time age, Frame frame, SpriteInfo& asi)
 {
-	bool child = age < maturityAges[a];
-	int x = asi.leftCorner.x;
-	ActionStatus ac = as.second();
+	bool child = age < animal::fertilityAges[a];
+	SDL_Rect spriteSet = sprite::animalSprites[a];
+	int x = spriteSet.x;
+	ActionStatus ac = as.get<ActionStatus>();
 	if (child)
 		x += getChildSpriteOffset(asi);
 	x += getActionSpriteOffset(asi, ac);
-	Direction d = as.first();
+	Direction d = as.get<Direction>();
 	x += getDirectionSpriteOffset(asi, d, child);
 
 	Coord c = getSpriteDimensions(asi, d, child);
-	int y = asi.leftCorner.y + getFrameSpriteOffset(asi, ac, frame, c.y);
+	int y = spriteSet.y + getFrameSpriteOffset(asi, ac, frame, c.y);
 
 	return {x, y, static_cast<int>(c.x), static_cast<int>(c.y)};
 }
 
-inline Frame getNextAnimalFrame(Animal a, ActionStatus as, Frame frame, SpriteInfo& asi)
+inline Frame getNextAnimalFrame(Animal a, ActionStatus as, Frame frameNumber, SpriteInfo& asi)
 {
+		uint8_t frame = static_cast<uint8_t>(frameNumber);
 	switch (as)
 	{
 		// WALK
@@ -249,7 +253,7 @@ inline Frame getNextAnimalFrame(Animal a, ActionStatus as, Frame frame, SpriteIn
 void updateAnimalAnimations(Coord leftCorner, EntityRenderBuffer &erd, Array<Frame> &frames,
 			    Array<Time> &ages, Array<AnimalStatus> &states)
 {
-	for (uint16_t i = 0; i < erd.animalAmount; i++)
+	for (size_t i = 0; i < erd.animalAmount; i++)
 	{
 		AnimalRenderData ard = erd.animals[i];
 		uint16_t ai = ard.index;
@@ -261,12 +265,13 @@ void updateAnimalAnimations(Coord leftCorner, EntityRenderBuffer &erd, Array<Fra
 		// TODO: position must be relative to screen
 		spriteSheetTexture.render(ard.position.x, ard.position.y, &r, &mainScreenViewport);
 		
-		f = getNextAnimalFrame(ard.animal, s.second(), f, asi);
+		f = getNextAnimalFrame(ard.animal, s.get<ActionStatus>(), f, asi);
 	}
 }
 
-inline Frame getNextUnitFrame(Unit u, ActState as, Frame frame, SpriteInfo& asi)
+inline Frame getNextUnitFrame(Unit u, ActState as, Frame frameNumber)
 {
+	uint8_t frame = static_cast<uint8_t>(frameNumber);
 	switch (as)
 	{
 		// TODO: change this to play animations for specific actions (maybe a
@@ -278,12 +283,12 @@ inline Frame getNextUnitFrame(Unit u, ActState as, Frame frame, SpriteInfo& asi)
 		break;
 		// WALK
 	case ActState::Walk:
-		if (frame++ > asi.WALK_SPRITE_FRAME_LENGTH)
+		if (frame++ > UNIT_SPRITE_INFO.WALK_SPRITE_FRAME_LENGTH)
 			frame = 0;
 		break;
 		// TODO: RUN
 	case ActState::Run:
-		if (frame++ > asi.RUN_SPRITE_FRAME_LENGTH)
+		if (frame++ > UNIT_SPRITE_INFO.RUN_SPRITE_FRAME_LENGTH)
 			frame = 0;
 		break;
         // TODO: implement		
@@ -293,20 +298,20 @@ inline Frame getNextUnitFrame(Unit u, ActState as, Frame frame, SpriteInfo& asi)
 	// 	break;
 	default:
 	}
-	return frame;
+	return static_cast<Frame>(frame);
 }
 
-inline SDL_Rect getUnitRect(Unit unit, ActState state, Direction direction, Frame frame, Time age, SpriteInfo& usi) {
+inline SDL_Rect getUnitRect(Unit unit, ActState state, Direction direction, Frame frame, Time age) {
 	bool child = age < MATURITY_AGE;
-	int x = usi.leftCorner.x;
-
-	if (child)
-        x += getChildSpriteOffset(usi);
+	SDL_Rect spriteSet = sprite::unitSprites[];
+	int x = spriteSet.x;
+	SpriteInfo usi = UNIT_SPRITE_INFO;
+	if (child) x += getChildSpriteOffset(usi);
 	x += getActionSpriteOffset(usi, state);
 	x += getDirectionSpriteOffset(usi, direction, child);
 
 	Coord c = getSpriteDimensions(usi, direction, child);
-	int y = usi.leftCorner.y + getFrameSpriteOffset(usi, state, frame, c.y);
+	int y = spriteSet.y + getFrameSpriteOffset(usi, state, frame, c.y);
 
 	return {x, y, static_cast<int>(c.x), static_cast<int>(c.y)};
 }
@@ -314,18 +319,18 @@ inline SDL_Rect getUnitRect(Unit unit, ActState state, Direction direction, Fram
 void updateUnitAnimations(Coord leftCorner, EntityRenderBuffer &erd,
 			  Array<Time> &ages, Array<FrameData> &frameDatas)
 {
-	for (uint16_t i = 0; i < erd.animalAmount; i++)
+	for (size_t i = 0; i < erd.animalAmount; i++)
 	{
 		UnitRenderData ard = erd.units[i];
-		uint16_t ai = ard.index;
-		ActState state = frameDatas[ai].first();
-		Direction direction = frameDatas[ai].second();
-		Frame&& frame = frameDatas[ai].third();
-		SpriteInfo usi = unitSpriteInfos[ard.unit];
-		SDL_Rect r = getUnitRect(ard.unit, state, direction, frame, ages[ai], usi);
+		size_t ai = ard.index;
+		ActState state = frameDatas[ai].get<ActState>();
+		Direction direction = frameDatas[ai].get<Direction>();
+		Frame frame = frameDatas[ai].get<Frame>();
+		// TODO: implement skin color
+		SDL_Rect r = getUnitRect(ard.unit, state, direction, frame, ages[ai]);
 		// TODO: position must be relative to screen
 		spriteSheetTexture.render(ard.position.x, ard.position.y, &r, &mainScreenViewport);
-		frame = getNextUnitFrame(ard.unit, state, frame, usi);		
+		frame = getNextUnitFrame(ard.unit, state, frame);		
 	}
 }
 

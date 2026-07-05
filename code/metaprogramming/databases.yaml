@@ -16,7 +16,9 @@ databases:
         extra_arrays: [role_mana, role_list, skin_data, skill, inventory, place]
     tile:
         name: tile
-        traits: [immortal]
+        traits: [immortal, foreign_enum]
+        extra_arrays: [altitude, water, tile_status]
+        foreign_enum: [tileData]
     plant:
         name: plant
         traits: [positional, age, searchable]
@@ -25,7 +27,6 @@ databases:
         name: seed
         traits: [positional, age, foreign_enum]
         foreign_enum: [plant]
-    
     vehicle:
         name: vehicle
         traits: [health, movable, positional, seats]
@@ -122,4 +123,18 @@ extra_arrays:
     type: Places
     newborn_default: Places{}
     random_age_default: Places{}
-  
+  - id: tile_status
+    name: tileStatuses
+    type: TileStatus
+    newborn_default: TileStatus{OccupiedStatus::Vacant, VisionStatus::Hidden}
+    random_age_default: TileStatus{OccupiedStatus::Vacant, VisionStatus::Hidden}
+  - id: water
+    name: waters
+    type: Liquid
+    newborn_default: tile::waterDefaults[tile]
+    random_age_default: tile::waterDefaults[tile]
+  - id: altitude
+    name: altitudes
+    type: Alt
+    newborn_default: 0
+    random_age_default: 0

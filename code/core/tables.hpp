@@ -2,9 +2,10 @@
 #include <array>
 #include <bitset>
 #include <cstdint>
-#include <array>
 #include <cassert>
 #include <utility>
+#include <vector>
+#include <span>
 
 template <typename Enum, typename T, uint16_t N = static_cast<uint16_t>(Enum::MAX)>
 struct LookupTable
@@ -117,38 +118,27 @@ struct BitsetTable
 	}
 };
 
-template <typename Enum, typename T, size_t N, size_t MAX = Enum::MAX>
-struct RaggedLookupTable {
-	std::array<T, N> data;
-	std::array<size_t, MAX> offsets{};
-	// uint16_t current = 0; //current relies on RaggedTable being initialized correctly (all of the same Enum being done at once), and only once, as it increments over the lambda initalization.
-	// Enum type;
-	// //TODO: safety checking with dynamic boolean table during intialization
-	
-	// constexpr uint32_t size()
-	// {
-	// 	return N;
-	// }		
+template<typename Enum, typename T>
+struct RaggedLookupTable
+{
+    std::vector<T> data;
+    std::array<std::pair<size_t, size_t>, static_cast<size_t>(Enum::MAX) + 1> ranges{};
 
-	constexpr size_t size(Enum e) const
-	{
-		return offsets[static_cast<int>(e) + 1] - offsets[static_cast<int>(e)];
-	}		
+    void set(Enum e, std::initializer_list<T> list)
+    {
+        size_t start = data.size();
 
-	constexpr T get(Enum e, size_t index) const
-	{
-		uint32_t offset = offsets[static_cast<int>(e)];
-		assert(index < offsets[static_cast<int>(e) + 1] - offset);
-		return data[offset + index];
-	}
-	
-	template<typename Container>
-	constexpr void set(Enum e, const Container& value)
-	{
-		uint32_t offset = offsets[static_cast<int>(e)];
-		//TODO: sort role enums and turn on assert
-		//assert(!(static_cast<int>(e) != 0 && offset == 0));
-		for (size_t i = 0; i < value.size(); i++) data[offset + i] = value[i];
-		offsets[static_cast<int>(e)] = offset + value.size();
-        }		
+        data.insert(data.end(), list.begin(), list.end());
+
+        ranges[static_cast<size_t>(e)] = {
+            start,
+            data.size()
+        };
+    }
+
+    std::span<const T> get(Enum e) const
+    {
+        auto [start, end] = ranges[static_cast<size_t>(e)];
+        return std::span<const T>(data.data() + start, end - start);
+    }
 };

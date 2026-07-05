@@ -17,18 +17,20 @@ enum class ItemTags : uint32_t
 	FromCorpse = 1 << 6,
 	RequiresUniqueVariant = 1 << 7,
 	OptionalIngredient = 1 << 8,
-	Tool = 1 << 9,
+	OneHandedTool = 1 << 9,
 	Container = 1 << 10,
 	Mould = 1 << 11,
 	Wearable = 1 << 12,
 	Perishable = 1 << 13,
-        // TODO: sort from rust
+	// TODO: sort from rust
 	WaterDamage = 1 << 14,
 	Art = 1 << 15,
 	// TODO: add scavengeable tags
 	Scavengeable = 1 << 16,
 	// TODO: add flammable tags
-	Flammable = 1 << 17,	
+	Flammable = 1 << 17,
+	TwoHandedTool = 1 << 18,
+        VisibleInHand = 1 << 19,
 };
 
 

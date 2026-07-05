@@ -31,9 +31,9 @@ struct SpriteInfo
     uint8_t WALKING_SPRITE_LENGTH = 0;
     uint8_t RUNNING_SPRITE_LENGTH = 0;
 
-    Frame WALK_SPRITE_FRAME_LENGTH{};
-    Frame RUN_SPRITE_FRAME_LENGTH{};
-    Frame ACT_SPRITE_FRAME_LENGTH{};
+    uint8_t WALK_SPRITE_FRAME_LENGTH{};
+    uint8_t RUN_SPRITE_FRAME_LENGTH{};
+    uint8_t ACT_SPRITE_FRAME_LENGTH{};
 
     constexpr SpriteInfo() = default;
 
@@ -51,6 +51,8 @@ struct SpriteInfo
           CHILD_FRONT_HEIGHT(CHILD_FRONT_HEIGHT)
     {}
 };
+
+constexpr SpriteInfo UNIT_SPRITE_INFO = SpriteInfo(1,2,1,2,1,2,1,2);
 
 inline constexpr LookupTable<Animal, SpriteInfo> animalSpriteInfos = []
 {

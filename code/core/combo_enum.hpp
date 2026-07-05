@@ -4,6 +4,7 @@
 #include <array>
 #include <variant>
 #include <tuple>
+#include <stdexcept>
 
 template<typename... Enums>
 struct ConcatEnum {
@@ -54,7 +55,9 @@ private:
     template<typename T, std::size_t I = 0>
     static consteval std::size_t index_of() {
         using types = std::tuple<Enums...>;
-        if constexpr (I >= sizeof...(Enums)) {
+	if constexpr (I >= sizeof...(Enums))
+			{
+			// NOTE
             static_assert(I < sizeof...(Enums), "Type not found in ConcatEnum");
             return 0;
         } else if constexpr (std::is_same_v<T, std::tuple_element_t<I, types>>) {

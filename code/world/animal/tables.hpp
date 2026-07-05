@@ -40,7 +40,7 @@ inline constexpr LookupTable<Animal, Hunger> eatingSpeeds = []
 	return lt;
 }();
 
-inline constexpr LookupTable<Animal, Time> fertilityAge = []
+inline constexpr LookupTable<Animal, Time> fertilityAges = []
 {
 	LookupTable<Animal, Time> arr;
 	arr[Animal::Pig] = static_cast<int>(0.5 * YEAR_LENGTH);

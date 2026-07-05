@@ -23,7 +23,10 @@ public:
     // BASE DATABASE MEMBERS
     // =========================
 
-constexpr static uint16_t ENTITY_SIZE = sizeof(bool)
+constexpr static uint16_t ENTITY_SIZE = sizeof(Animal) +
+
++ sizeof(bool)
+  
 
  +  sizeof(Health) 
 
@@ -181,7 +184,7 @@ Array<Animal> animals;
         freeSlots.push(i);
         alives[i] = false;
 
-        search.deleteEntity;
+        search.deleteEntity();
 
         return true;
     }

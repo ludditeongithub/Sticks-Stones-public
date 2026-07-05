@@ -64,6 +64,8 @@ constexpr float MAX_SEASONAL_VAR = 42.1;
 
 constexpr Time CORPSE_ROT_TIME = DAY_LENGTH * 3;
 
+
+
 struct World
 {
 	static const uint16_t ENTITY_SIZE = sizeof(uint8_t) * 3;
@@ -98,7 +100,8 @@ struct World
 	Array<float> seasonalInsolations;
 	Array<float> cloudCovers;
 
-	struct ChunkTempData
+
+  struct ChunkTempData
 {
     std::vector<float> minTemps;
     std::vector<float> diurnalTempVariances;
@@ -111,7 +114,6 @@ struct World
         seasonalTempVariances.reserve(world->CHUNK_AMOUNT);
     }
 };
-
 	ChunkTempData chunkTempData;
 
 	World(Arena& arena, int width, int height)

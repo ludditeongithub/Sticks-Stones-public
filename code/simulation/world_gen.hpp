@@ -10,6 +10,7 @@
 #include <world/plant/enum.hpp>
 #include <world/chunk/data.hpp>
 #include <world/tile/enum.hpp>
+#include <world/scavengeable/enum.hpp>
 
 
 float rangePenalty(float originalValue, float minValue, float maxValue, float adjustedValue);
@@ -107,7 +108,7 @@ class WorldSpawner
 	const uint32_t TILE_AMOUNT;
 
 
-  struct TileSpawnBuffer
+struct TileSpawnBuffer
 {
 	size_t size;
 	std::vector<Tile> tiles;
@@ -123,35 +124,60 @@ class WorldSpawner
                 size = capacity;
         }
 
-  inline void add(Grass grass, Coord coord)
+inline void add(WorldSpawner& worldSpawner, Grass grass, Coord coord)
   {
-    size_t i = getTileIndexFromCoord(coord);
+    size_t i = worldSpawner.getTileIndexFromCoord(coord);
           grasses[i] = grass;
 	}
 };
 
-struct PlantSpawnBuffer
-{
-	std::vector<Plant> plants;
-	std::vector<Coord> coords;      
-        size_t size;
-
-  PlantSpawnBuffer(size_t capacity) 
+  // @codegen:begin spawn_buffer_animal
+struct AnimalSpawnBuffer {
+  std::vector<Animal> animals;
+	std::vector<Coord> coords; 
+	size_t size;
+AnimalSpawnBuffer(size_t capacity) 
 	{
 		reserve(capacity);                
         }
-	inline void add(Plant plant, Coord coord)
+  void reserve(size_t cap) {
+    animals.reserve(cap);
+    coords.reserve(cap);
+  }
+  inline void add(WorldSpawner& worldSpawner, TileSpawnBuffer& tileSpawnBuffer, Animal animal, Coord coord)
+	{
+		animals[size++] = animal;
+		coords[size] = coord;                   tileSpawnBuffer.occupieds[worldSpawner.getTileIndexFromCoord(coord)] = true;
+	}
+  void shrink_to_size()
+	{
+		animals.resize(size);
+                coords.resize(size);
+		animals.shrink_to_fit();
+                coords.shrink_to_fit();
+        }
+};
+// @codegen:end spawn_buffer_animal
+
+  // @codegen:begin spawn_buffer_plant
+struct PlantSpawnBuffer {
+  std::vector<Plant> plants;
+	std::vector<Coord> coords; 
+	size_t size;
+PlantSpawnBuffer(size_t capacity) 
+	{
+		reserve(capacity);                
+        }
+  void reserve(size_t cap) {
+    plants.reserve(cap);
+    coords.reserve(cap);
+  }
+  inline void add(WorldSpawner& worldSpawner, TileSpawnBuffer& tileSpawnBuffer, Plant plant, Coord coord)
 	{
 		plants[size++] = plant;
-		coords[size] = coord;
-                tileSpawnBuffer.occupieds[getTileIndexFromCoord(coord)] = true;
+		coords[size] = coord;                   tileSpawnBuffer.occupieds[worldSpawner.getTileIndexFromCoord(coord)] = true;
 	}
-	void reserve(size_t amount)
-	{
-		plants.reserve(amount);
-                coords.reserve(amount);
-	}
-	void shrink_to_size()
+  void shrink_to_size()
 	{
 		plants.resize(size);
                 coords.resize(size);
@@ -159,7 +185,9 @@ struct PlantSpawnBuffer
                 coords.shrink_to_fit();
         }
 };
+// @codegen:end spawn_buffer_plant
 
+  // @codegen:begin spawn_buffer_scavengeable
 struct ScavengeableSpawnBuffer {
   std::vector<Scavengeable> scavengeables;
 	std::vector<Coord> coords; 
@@ -172,11 +200,10 @@ ScavengeableSpawnBuffer(size_t capacity)
     scavengeables.reserve(cap);
     coords.reserve(cap);
   }
-  inline void add(Scavengeable scavengeable, Coord coord)
+  inline void add(WorldSpawner& worldSpawner, TileSpawnBuffer& tileSpawnBuffer, Scavengeable scavengeable, Coord coord)
 	{
 		scavengeables[size++] = scavengeable;
-		coords[size] = coord;
-                tileSpawnBuffer.occupieds[getTileIndexFromCoord(coord)] = true;
+		coords[size] = coord;                   tileSpawnBuffer.occupieds[worldSpawner.getTileIndexFromCoord(coord)] = true;
 	}
   void shrink_to_size()
 	{
@@ -186,33 +213,12 @@ ScavengeableSpawnBuffer(size_t capacity)
                 coords.shrink_to_fit();
         }
 };
+// @codegen:end spawn_buffer_scavengeable
 
-struct AnimalSpawnBuffer {
-	std::vector<Animal> animals;
-	std::vector<Coord> coords; 
-	size_t size;
-  void reserve(size_t cap) {
-    animals.reserve(cap);
-    coords.reserve(cap);
-  }
-  inline void add(Animal animal, Coord coord)
-	{
-		animals[size++] = animal;
-		coords[size] = coord;
-                tileSpawnBuffer.occupieds[getTileIndexFromCoord(coord)] = true;
-	}
-  void shrink_to_size()
-	{
-		animals.resize(size);
-                coords.resize(size);
-		animals.shrink_to_fit();
-                coords.shrink_to_fit();
-        }
-};
 
 	TileSpawnBuffer tileSpawnBuffer;
 	PlantSpawnBuffer plantSpawnBuffer;
-  ScavengeableSpawnBuffer scavengeableSpawnBuffer;
+        ScavengeableSpawnBuffer scavengeableSpawnBuffer;
 	AnimalSpawnBuffer animalSpawnBuffer;
 
 	template <typename T>
@@ -243,8 +249,8 @@ struct AnimalSpawnBuffer {
 		mapReserveRows(width, height, rVisited);
                 tileSpawnBuffer = TileSpawnBuffer(width * height);
 		plantSpawnBuffer = PlantSpawnBuffer(width * height);
-                scavengeableSpawnBufer = ScavengeableSpawnBuffer(width * height);
-                animalSpawnBufer = AnimalSpawnBuffer(width * height);
+                scavengeableSpawnBuffer = ScavengeableSpawnBuffer(width * height);
+                animalSpawnBuffer = AnimalSpawnBuffer(width * height);
 	}
 
 	void generateWorld();
