@@ -1,169 +1,171 @@
-#include <animal/enum.hpp>
-#include <basic/structs.hpp>
-#include <plant/enum.hpp>
+#include <world/animal/enum.hpp>
+#include <world/plant/enum.hpp>
+#include <core/tables.hpp>
+#include "enum.hpp"
 
-enum class Category
-{
-	Leaves,
-	Fruit,
-	Tuber,
-	Birds,
-	Fish,
-	SmallMammals,
-	MediumMammals,
-	SmallReptiles,
-	LargeReptiles,
-	MAX
-};
-
-constexpr BitsetTable<Category> meatCategories = []
+inline constexpr const BitsetTable<Category> meatCategories = []
 {
 	BitsetTable<Category> s;
+	auto add = [&](Category e) {s.bitset.set(static_cast<uint16_t>(e)); };
 	using enum Category;
-	s.set(SmallMammals);
-	s.set(MediumMammals);
-	s.set(SmallReptiles);
-	s.set(LargeReptiles);
+	add(SmallMammals);
+	add(MediumMammals);
+	add(SmallReptiles);
+	add(LargeReptiles);
 	return s;
-};
+}();
 
 // TODO height of plant factored
 // TODO  'attraction factor' (some bitter or repulsive plants avoided)
-constexpr BitsetTable<Plant> leaves = []
+inline constexpr const BitsetTable<Plant> leaves = []
 {
 	BitsetTable<Plant> s;
+	auto add = [&](Plant e) {s.bitset.set(static_cast<uint16_t>(e)); };
 	using enum Plant;
-	s.set(Fern);
-	s.set(PioneerTree);
-	s.set(DeciduousTree);
-	s.set(EvergreenTree);
-	s.set(Kale);
-	s.set(Lettuce);
-	s.set(Mint);
-	s.set(Thyme);
-	s.set(Sage);
-	s.set(Bush);
-	s.set(Rhubarb);
+	add(Fern);
+	add(PioneerTree);
+	add(DeciduousTree);
+	add(EvergreenTree);
+	add(Kale);
+	add(Lettuce);
+	add(Mint);
+	add(Thyme);
+	add(Sage);
+	add(Bush);
+	add(Rhubarb);
 	// flowers
-	s.set(Broccoli);
-	s.set(Cauliflower);
+	add(Broccoli);
 	return s;
-};
+}();
 
-constexpr BitsetTable<Plant> fruit = []
+inline constexpr const BitsetTable<Plant> fruits = []
+{
+	BitsetTable<Plant> s;
+	auto add = [&](Plant e) {s.bitset.set(static_cast<uint16_t>(e)); };	
+	using enum Plant;
+	add(Orange);
+	add(Apple);
+	add(Lemon);
+	add(Pear);
+	add(Peach);
+	add(Cherry);
+	add(Apricot);
+	add(Plum);
+	add(Lime);
+	add(Blueberry);
+	add(Strawberry);
+	// maybe
+	add(Cocoa);
+	return s;
+}();
+
+inline constexpr const BitsetTable<Plant> grains = []
 {
 	BitsetTable<Plant> s;
 	using enum Plant;
-	s.set(Orange);
-	s.set(Apple);
-	s.set(Lemon);
-	s.set(Pear);
-	s.set(Peach);
-	s.set(Cherry);
-	s.set(Apricot);
-	s.set(Plum);
-	s.set(Lime);
-	s.set(Blueberry);
-	s.set(Strawberry);
-	s.set(Grape);
-
-	// maybe
-	s.set(Cocoa);
+	auto add = [&](Plant e) {s.bitset.set(static_cast<uint16_t>(e)); };
+	add(Wheat);
+	add(Corn);
+	add(Oat);
+	add(Rice);
 	return s;
-};
+}();
 
-constexpr BitsetTable<plant::Type> grains = []
+inline constexpr const BitsetTable<Plant> undergrounds = []
 {
-	BitsetTable<plant::Type> s;
-	s.set(Wheat);
-	s.set(Corn);
-	s.set(Oat);
-	s.set(Rice);
+	BitsetTable<Plant> s;
+	using enum Plant;
+	auto add = [&](Plant e) {s.bitset.set(static_cast<uint16_t>(e)); };
+	add(Potato);
+	add(Carrot);
+	add(Onion);
+	add(Garlic);
+	add(Beets);
+	add(Ginseng);
 	return s;
-};
+}();
 
-constexpr BitsetTable<plant::Type> underground = []
+inline constexpr const BitsetTable<Plant> stems = []
 {
-	BitsetTable<plant::Type> s;
-	s.set(Potato);
-	s.set(Carrot);
-	s.set(Yam);
-	s.set(Onion);
-	s.set(Garlic);
-	s.set(Beets);
-	s.set(Ginseng);
+	BitsetTable<Plant> s;
+	using enum Plant;
+	auto add = [&](Plant e) {s.bitset.set(static_cast<uint16_t>(e)); };	
+	add(Papyrus);
+	add(Reed);
 	return s;
-};
+}();
 
-constexpr BitsetTable<plant::Type> stems = []
+inline constexpr const BitsetTable<Animal> birds = []
 {
-	BitsetTable<plant::Type> s;
-	s.set(Papyrus);
-	s.set(Reed);
-	s.set(Sugarcane);
+		BitsetTable<Animal> s;
+		auto add = [&](Animal e) { s.bitset.set(static_cast<uint16_t>(e)); };
+		using enum Animal;
+	add(Duck);
+	add(Chicken);
 	return s;
-};
+}();
 
-constexpr BitsetTable<animal::Type> birds = []
+inline constexpr const BitsetTable<Animal> fish = []
 {
-	BitsetTable<animal::Type> s;
-	s.set(Duck);
-	s.set(Chicken);
-	return s;
-};
+	BitsetTable<Animal> s;
 
-constexpr BitsetTable<animal::Type> fish = []
+	return s;
+}();
+
+inline constexpr const BitsetTable<Animal> smallMammals = []
 {
-	BitsetTable<animal::Type> s;
-
+		BitsetTable<Animal> s;
+	auto add = [&](Animal e) { s.bitset.set(static_cast<uint16_t>(e)); };
+		using enum Animal;
+	add(Rabbit);
 	return s;
-};
+}();
 
-constexpr BitsetTable<animal::Type> smallMammals = []
+inline constexpr const BitsetTable<Animal> mediumMammals = []
 {
-	BitsetTable<animal::Type> s;
-	s.set(Rabbit);
+		BitsetTable<Animal> s;
+			auto add = [&](Animal e) { s.bitset.set(static_cast<uint16_t>(e)); };
+		using enum Animal;
+	add(Pig);
+	add(Sheep);
+	add(Deer);
+	add(Capybara);
+	add(Donkey);
+	add(Caribou);
+	add(Goat);
 	return s;
-};
+}();
 
-constexpr BitsetTable<animal::Type> mediumMammals = []
+inline constexpr const BitsetTable<Animal> largeMammals = []
 {
-	BitsetTable<animal::Type> s;
-	s.set(Pig);
-	s.set(Sheep);
-	s.set(Deer);
-	s.set(Capybara);
-	s.set(Donkey);
-	s.set(Caribou);
-	s.set(Goat);
+		BitsetTable<Animal> s;
+			auto add = [&](Animal e) { s.bitset.set(static_cast<uint16_t>(e)); };
+		using enum Animal;
+	add(Cow);
+	add(Ox);
+	add(Moose);
+	add(Horse);
+	add(Camel);
+	add(WaterBuffalo);
+	add(Antelope);
+	add(Bison);
 	return s;
-};
+}();
 
-constexpr BitsetTable<animal::Type> largeMammals = []
+inline constexpr const BitsetTable<Animal> smallReptiles = []
 {
-	BitsetTable<animal::Type> s;
-	s.set(Cow);
-	s.set(Ox);
-	s.set(Moose);
-	s.set(Horse);
-	s.set(Camel);
-	s.set(WaterBuffalo);
-	s.set(Antelope);
-	s.set(Bison);
+		BitsetTable<Animal> s;
+			auto add = [&](Animal e) { s.bitset.set(static_cast<uint16_t>(e)); };
+		using enum Animal;
+	add(Turtle);
 	return s;
-};
+}();
 
-constexpr BitsetTable<animal::Type> smallReptiles = []
+inline constexpr const BitsetTable<Animal> largeReptiles = []
 {
-	BitsetTable<animal::Type> s;
-	s.set(Turtle);
+	BitsetTable<Animal> s;
+auto add = [&](Animal e) { s.bitset.set(static_cast<uint16_t>(e)); };
+		using enum Animal;
 	return s;
-};
+}();
 
-constexpr BitsetTable<animal::Type> largeReptiles = []
-{
-	BitsetTable<animal::Type> s;
-
-	return s;
-};
-}

@@ -12,16 +12,21 @@
 #include <ui/first_launch.hpp>
 #include <fstream>	
 
+// int main()
+// {
+// 	SDL_Init();
+// 	if (TTF_Init() == -1)
+// 	{
+// 		printf("TTF_Init failed: %s\n", TTF_GetError());
+// 	}
+
+// 	// SDL_GetRendererOutputSize(window, userScreenWidth, userScreenHeight);
+// 	// int factor = std::min((int)(userScreenWidth/SCREEN_WIDTH), (int)(userScreenHeight/SCREEN_HEIGHT));
+//         launch();
+// 	// SDL_RenderSetScale(gRenderer, factor);	
+// }
+
 int main()
 {
-	SDL_Init();
-	if (TTF_Init() == -1)
-	{
-		printf("TTF_Init failed: %s\n", TTF_GetError());
-	}
-
-	// SDL_GetRendererOutputSize(window, userScreenWidth, userScreenHeight);
-	// int factor = std::min((int)(userScreenWidth/SCREEN_WIDTH), (int)(userScreenHeight/SCREEN_HEIGHT));
-        launch();
-	// SDL_RenderSetScale(gRenderer, factor);	
+		
 }

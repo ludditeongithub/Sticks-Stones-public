@@ -1,6 +1,7 @@
 #ifndef FOODHUNGER_HPP
 #define FOODHUNGER_HPP
 
+#include "animal_diet_categories.hpp"
 #include <core/data.hpp>
 #include <core/tables.hpp>
 #include <world/plant/enum.hpp>
@@ -18,7 +19,6 @@ inline constexpr LookupTable<Plant, Hunger> fruitHunger = []
 	arr[Cherry] = 14;
 	arr[Blueberry] = 4;
 	arr[Strawberry] = 15;
-	arr[Grape] = 6;
 	arr[Lemon] = 20;
 	arr[Lime] = 20;
 	return arr;

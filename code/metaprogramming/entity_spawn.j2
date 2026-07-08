@@ -1,4 +1,6 @@
 {#TODO: fix it so that plant category rolls are calaculated beforehand: a number is automatically within range of one plant! #}
+
+// THIS IS  a Test
 inline void WorldSpawner::roll{{ Entity_name }}Spawn(Coord coord, Biome biome, Tile tile, int temperature, int humidity)
 {
 float highestRoll = 0.0;
@@ -45,9 +47,9 @@ highestRoll = adjFinalRoll;
 
 if ({{ entity_name }} != {{ Entity_name }}::NONE)
 {% if entity_name == 'grass' %}
-  if (highestRoll > grass::minimumRoll[biome]) tileSpawnBuffer.add({{ entity_name }});
+  if (highestRoll > grass::minimumRoll[biome]) tileSpawnBuffer.add(*this, {{ entity_name }}, coord);
 {% else %}
-  {{ entity_name }}SpawnBuffer.add({{ entity_name }}, coord);
+  {{ entity_name }}SpawnBuffer.add(*this, {{ entity_name }}, coord);
 {% endif %}
 
 {% if entity_name == 'plant' %}

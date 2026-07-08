@@ -1,0 +1,14 @@
+#pragma once
+
+void 
+					for (int k = 0;
+					     k < resourcerResources[static_cast<int>(tRole)].size;
+					     k++)
+					{
+						if (resourcerResources[static_cast<int>(tRole)]
+								      [k] ==
+						    resourcePriorityQueue[i].first)
+						{
+							attemptResource(pawnIndex, tRole);
+						}
+					}

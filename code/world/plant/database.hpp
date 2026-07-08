@@ -1,7 +1,6 @@
 #pragma once
 
 #include "enum.hpp"
-#include "seed_database.hpp"
 #include "defaults.hpp"
 #include "world/tile/database.hpp"
 #include <core/containers.hpp>
@@ -23,49 +22,67 @@ struct PlantDatabase
     // =========================
 
 constexpr static uint16_t ENTITY_SIZE = sizeof(Plant) +
-
 + sizeof(bool)
   
-
+ +  sizeof(Plant) 
  +  sizeof(Coord) 
-
  +  sizeof(Time) 
-
 ;
 
 size_t capacity;
-Array<Plant> plants;
-
     size_t size;
     Stack<size_t> freeSlots;
     Array<bool> alives;
-  
-
   SearchGrid& search;
-
-
+  World& world;
+  TileDatabase& tiles;
 
     // =========================
     // ENTITY-SPECIFIC MEMBERS
     // =========================
-
+    Array<Plant> plants;
     Array<Coord> coords;
-
     Array<Time> ages;
     
 
+// =========================
+    // CONSTRUCTOR
+    // =========================
+
+PlantDatabase(Arena *arena, size_t capacity
+  , World& world
+ 
+  , SearchGrid& search
+  , TileDatabase& tiles
+) :
+  world(world),
+  tiles(tiles),
+search(search),
+{
+this->capacity = capacity;
+  this->size = 0;
+
+}
 
   // =========================
   // SPAWN
   // =========================
-  
-  bool spawn(Plant entity, bool newborn, Coord coord)
-    {
+
+  void addPlants(WorldSpawner::PlantSpawnBuffer& spawnBuffer)
+{
+	for (size_t i = 0; i < spawnBuffer.size; i++)
+	  if (spawn(spawnBuffer.plants[i], spawnBuffer.coords[i], false)) {}
+	  else
+	    {
+	      //TODO: error
+	    }
+}
+ 
+  bool attemptSpawn(Plant plant, bool newborn, Coord coord, )
+  {       
         if (size + 1 > capacity)
             return false;
-
         size_t i;
-
         if (freeSlots.empty())
         {
             i = size;
@@ -76,53 +93,52 @@ Array<Plant> plants;
             i = freeSlots.top();
             freeSlots.pop();
         }
-
         alives[i] = true;
-
         if (newborn)
         {
-      
+            plants[i] = plant;
             coords[i] = coord;
-	  
             ages[i] = 0;
-	  
         }
         else
         {
         Time age = random_bool->next();
-	  
+            plants[i] = plant;
             coords[i] = coord;
-	  
             ages[i] = age;
-	  
         }
-	  
-  
-          
-
+            search.insertEntity(plant, {i, coords[i]});
         return true;
-    }
+          }
+          bool spawn(Plant plant, bool newborn, Coord origin) {
+          Coord spawnPoint = tiles.getNearestEmptyTile(origin);
+          while (!attemptSpawn(plant, newborn, spawnPoint)) freeUnusedEntity();                 
+          }        
     
-
 
   // =========================
   // REMOVE
   // =========================
   
   bool remove(size_t i)
-    {
+  {
         if (!alives[i])
             return false;
 
         freeSlots.push(i);
         alives[i] = false;
-
-        search.deleteEntity();
-
+        Plant plant = plants[i];
+            search.removeEntity(plant, {i, coords[i]});
         return true;
-    }
-    
+  }
 
+  void freeUnusedEntity()
+  {
+    for (size_t i = 0; i < coords.size; i++) {
+    if (tiles.tileStatuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
+    }
+  }
+    
 
       
     // =========================
@@ -133,55 +149,55 @@ Array<Plant> plants;
     void save(Archive &archive) const
     {
     archive(capacity);
-
         archive(size);
         archive(freeSlots);
         archive(alives);
    
 
-
+        plants.save(archive);
         coords.save(archive);
-
         ages.save(archive);
-
     }
 
     template <class Archive>
     void load(Archive &archive)
     {
         archive(capacity);
-
         archive(size);
         archive(freeSlots);
         archive(alives);
-
         
-
+        plants.load(archive);
         coords.load(archive);
-
         ages.load(archive);
-
     }
 
-    // =========================
-    // CONSTRUCTOR
-    // =========================
 
-PlantDatabase(Arena *arena, size_t capacity
+// =========================
+// TRANSFER
+// =========================
 
-  , World& world
-
-
-  , SearchGrid& search
-
-)
-    {
-this->capacity = capacity;
-
-  this->size = 0;
-        
-    }
-
+inline bool transferPlant(size_t i, PlantDatabase &oldDB, PlantDatabase &newDB)
+  {
+  if (newDB.size >= newDB.capacity) return false;
+  int index;  
+  if (newDB.freeSlots.empty())
+  {
+  index = ++size;
+	}
+	else
+	{
+		index = newDB.freeSlots.top();
+		newDB.freeSlots.pop();			
+  }
+    newDB.plants[index] = oldDB.plants[i];
+    newDB.coords[index] = oldDB.coords[i];
+    newDB.ages[index] = oldDB.ages[i];
+  newDB.alives[index] = true;
+  oldDB.freeSlots.push(i);
+  oldDB.alives[index] = false;
+  return true;
+  }
 // @codegen:end database_generation
 
 	inline bool viableHarvest(int plantIndex);

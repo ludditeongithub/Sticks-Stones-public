@@ -1,0 +1,282 @@
+data:
+    wearable:
+        part_tribalwear:
+          toughness: 8.0
+          durability: 250.0
+          bulk: 5.2
+          weight: 5.2
+          bulk_level: BulkLevel::Solid
+          min_temp: _8.0
+          max_temp: 50.0
+          covers:
+            _ BodyArea::LeftLeg
+            _ BodyArea::RightLeg
+
+        tribalwear:
+          toughness: 8.0
+          durability: 250.0
+          bulk: 9.2
+          weight: 8.4
+          bulk_level: BulkLevel::Solid
+          min_temp: _16.0
+          max_temp: 50.0
+          covers: [BodyArea::Chest, BodyArea::RightShoulder, BodyArea::LeftShoulder, BodyArea::RightArm, BodyArea::RightArm, BodyArea::RightLeg, BodyArea::LeftLeg]
+
+        robe:
+          toughness: 3.0
+          durability: 120.0
+          bulk: 2.8
+          weight: 2.2
+          bulk_level: BulkLevel::Soft
+          min_temp: _6.0
+          max_temp: 58.0
+          covers: [BodyArea::Chest, BodyArea::RightShoulder, BodyArea::LeftShoulder, BodyArea::RightArm, BodyArea::RightArm, BodyArea::RightLeg, BodyArea::LeftLeg]
+
+        tunic:
+          toughness: 4.0
+          durability: 120.0
+          bulk: 1.6
+          weight: 1.5
+          bulk_level: BulkLevel::Soft
+          min_temp: _10.0
+          max_temp: 54.0
+          covers: [BodyArea::Chest, BodyArea::RightShoulder, BodyArea::LeftShoulder, BodyArea::RightArm, BodyArea::LeftArm]
+
+        pants:
+          toughness: 4.5
+          durability: 200.0
+          bulk: 1.5
+          weight: 1.9
+          bulk_level: BulkLevel::Soft
+          min_temp: _8.0
+          max_temp: 50.0
+          covers: [BodyArea::LeftLeg, BodyArea::RightLeg]
+
+        dress:
+          toughness: 4.5
+          durability: 120.0
+          bulk: 1.5
+          weight: 1.9
+          bulk_level: BulkLevel::Soft
+          min_temp: _4.0
+          max_temp: 60.0
+          covers: [BodyArea::LeftLeg, BodyArea::RightLeg]
+
+        sandles:
+          toughness: 0.0
+          durability: 320.0
+          bulk: 6.2
+          weight: 2.2
+          bulk_level: BulkLevel::Solid
+          min_temp: _1.0
+          max_temp: 60.0
+          covers: [BodyArea::LeftFoot, BodyArea::RightFoot]
+
+        boots:
+          toughness: 33.0
+          durability: 650.0
+          bulk: 11.5
+          weight: 5.5
+          bulk_level: BulkLevel::Solid
+          min_temp: _15.0
+          max_temp: 50.0
+          covers: [BodyArea::LeftFoot, BodyArea::RightFoot]
+
+        scarf:
+          toughness: 6.0
+          durability: 450.0
+          bulk: 0.9
+          weight: 1.4
+          bulk_level: BulkLevel::Soft
+          min_temp: _30.0
+          max_temp: 60.0
+          covers: [BodyArea::Neck]
+
+        headwrap:
+          toughness: 4.0
+          durability: 450.0
+          bulk: 1.4
+          weight: 1.3
+          bulk_level: BulkLevel::Soft
+          min_temp: _18.0
+          max_temp: 58.0
+          covers: [BodyArea::Neck, BodyArea::Head, BodyArea::Face]
+
+        mitts:
+          toughness: 3.0
+          durability: 200.0
+          bulk: 0.3
+          weight: 0.5
+          bulk_level: BulkLevel::Soft
+          min_temp: _20.0
+          max_temp: 35.0
+          covers: [BodyArea::LeftHand, BodyArea::RightHand]
+
+        gloves:
+          toughness: 29.0
+          durability: 300.0
+          bulk: 1.0
+          weight: 1.2
+          bulk_level: BulkLevel::Solid
+          min_temp: _5.0
+          max_temp: 50.0
+          covers: [BodyArea::LeftHand, BodyArea::RightHand]
+
+        apron:
+          toughness: 3.0
+          durability: 250.0
+          bulk: 0.2
+          weight: 0.3
+          bulk_level: BulkLevel::Soft
+          min_temp: _1.0
+          max_temp: 40.0
+          covers: [BodyArea::Chest]
+
+        helmet:
+          toughness: 36.0
+          durability: 450.0
+          bulk: 5.5
+          weight: 3.5
+          bulk_level: BulkLevel::Solid
+          min_temp: _5.0
+          max_temp: 35.0
+          covers: [BodyArea::Head]
+
+        bracers:
+          toughness: 35.0
+          durability: 400.0
+          bulk: 4.5
+          weight: 2.4
+          bulk_level: BulkLevel::Solid
+          min_temp: _5.0
+          max_temp: 35.0
+          covers: [BodyArea::LeftArm, BodyArea::RightArm]
+
+        guards:
+          toughness: 26.0
+          durability: 400.0
+          bulk: 6.5
+          weight: 4.5
+          bulk_level: BulkLevel::Solid
+          min_temp: _5.0
+          max_temp: 25.0
+          covers: [BodyArea::LeftLeg, BodyArea::RightLeg]
+
+        cape:
+          toughness: 2.0
+          durability: 80.0
+          bulk: 1.2
+          weight: 0.9
+          bulk_level: BulkLevel::Soft
+          min_temp: _1.0
+          max_temp: 40.0
+          covers: []
+
+        heavy_shirt:
+          toughness: 9.0
+          durability: 300.0
+          bulk: 3.5
+          weight: 5.5
+          bulk_level: BulkLevel::Soft
+          min_temp: _18.0
+          max_temp: 25.0
+          covers: [BodyArea::Chest, BodyArea::LeftArm, BodyArea::RightArm, BodyArea::LeftShoulder, BodyArea::RightShoulder]
+
+        heavy_pants:
+          toughness: 9.5
+          durability: 300.0
+          bulk: 3.8
+          weight: 6.2
+          bulk_level: BulkLevel::Soft
+          min_temp: _18.0
+          max_temp: 25.0
+          covers: [BodyArea::LeftLeg, BodyArea::RightLeg]
+
+        gambeson:
+          toughness: 18.0
+          durability: 400.0
+          bulk: 12.1
+          weight: 12.1
+          bulk_level: BulkLevel::Solid
+          min_temp: _18.0
+          max_temp: 25.0
+          covers: [BodyArea::Chest, BodyArea::LeftShoulder, BodyArea::RightShoulder]
+
+        chainmail:
+          toughness: 34.0
+          durability: 280.0
+          bulk: 25.0
+          weight: 8.8
+          bulk_level: BulkLevel::Single
+          min_temp: _1.0
+          max_temp: 40.0
+          covers: [BodyArea::Chest, BodyArea::RightShoulder, BodyArea::LeftShoulder, BodyArea::RightArm, BodyArea::RightArm, BodyArea::RightLeg, BodyArea::LeftLeg]
+
+        breastplate:
+          toughness: 32.0
+          durability: 500.0
+          bulk: 16.8
+          weight: 32.2
+          bulk_level: BulkLevel::Single
+          min_temp: _6.0
+          max_temp: 40.0
+          covers: [BodyArea::Chest, BodyArea::RightShoulder, BodyArea::LeftShoulder]
+
+        plate:
+          toughness: 49.0
+          durability: 500.0
+          bulk: 120.0
+          weight: 130.0
+          bulk_level: BulkLevel::Single
+          min_temp: _6.0
+          max_temp: 35.0
+          covers: [BodyArea::Chest, BodyArea::RightShoulder, BodyArea::LeftShoulder, BodyArea::RightArm, BodyArea::RightArm, BodyArea::RightLeg, BodyArea::LeftLeg]
+
+        wood_crown:
+          toughness: 0.0
+          durability: 100.0
+          bulk: 5.0
+          weight: 3.3
+          bulk_level: BulkLevel::Solid
+          min_temp: _1.0
+          max_temp: 40.0
+          covers: [BodyArea::Head]
+
+        gold_crown:
+          toughness: 0.0
+          durability: 100.0
+          bulk: 4.0
+          weight: 4.3
+          bulk_level: BulkLevel::Solid
+          min_temp: _1.0
+          max_temp: 40.0
+          covers: [BodyArea::Head]
+
+        royal_crown:
+          toughness: 0.0
+          durability: 100.0
+          bulk: 4.0
+          weight: 4.3
+          bulk_level: BulkLevel::Solid
+          min_temp: _1.0
+          max_temp: 50.0
+          covers: [BodyArea::Head]
+
+        necklace:
+          toughness: 1.0
+          durability: 100.0
+          bulk: 0.1
+          weight: 0.2
+          bulk_level: BulkLevel::Solid
+          min_temp: _100.0
+          max_temp: 60.0
+          covers: []
+          
+     perishables:
+        flour:
+                base_enjoyment: Horrid
+                base_nutrition: 0.0005
+                fridge_temp: 15
+                frozen_temp: 4
+                decay_period: YEAR_LENGTH * 0.4
+                disease_risk:        

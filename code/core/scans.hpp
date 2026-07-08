@@ -2,8 +2,12 @@
 #include "../include/categories.hpp"
 #include "../include/unit.hpp"
 #include "core/data.hpp"
+#include <core/containers.hpp>
+
+// NOTE: old file. contains many checks for certain entities at bottom, which are outdated, but may be useful. as well as adjacency checks.
 
 // NOTE: may not work
+/*
 Direction checkIfAdjTarget(int pawn)
 {
 	std::pair<int, int> coords = coords[pawn];
@@ -37,6 +41,7 @@ Direction checkIfAdjTarget(int pawn)
 	return Direction::NONE;
 }
 
+
 void moveInDirection(int pawn, bool animal)
 {
 	Direction direction = currentDirection[pawn];
@@ -67,12 +72,14 @@ void moveInDirection(int pawn, bool animal)
 		currentIndices[coords[pawn]] = pawn;
 	}
 }
+ */
 
 // NOTE: this is brute force greedy move. change if becomes to inefficient to mix of shortest path,
 // but only as far as animal could realistically calculate and see
 //
 // right now, tells you direction and if you should move (if you have reached target)
 //  for when dest is tile
+/*
 std::pair<Direction, bool> nextDirectionToTarget(int pawnIndex)
 {
 	if (adjCheckTile(coords[pawnIndex], dest[pawnIndex]) != Direction::NONE)
@@ -100,7 +107,9 @@ std::pair<Direction, bool> nextDirectionToTarget(int pawnIndex)
 	}
 	return {direction, true};
 }
+ */
 
+/*
 // for when dest is animal or human
 std::pair<Direction, bool> nextDirectionToMovingTarget(int pawnIndex, bool animal)
 {
@@ -137,7 +146,7 @@ std::pair<Direction, bool> nextDirectionToMovingTarget(int pawnIndex, bool anima
 	}
 	return {direction, true};
 }
-
+*/
 std::vector<std::pair<int, int>> getDiamond(int cx, int cy, int radius)
 {
 	std::vector<std::pair<int, int>> result;
@@ -157,28 +166,29 @@ std::vector<std::pair<int, int>> getDiamond(int cx, int cy, int radius)
 }
 
 //returns size of edgeBuffer
-inline int getNewDiamondEdge(const Array<Coord>& edgeBuffer, uint32_t cx, uint32_t cy, int radius, Direction direction)
+inline int getNewDiamondEdge(Array<Coord>& edgeBuffer, uint32_t cx, uint32_t cy, int radius, Direction direction)
 {
+		int edge = 0;
 	// LAYER 1 to LAYER 2
 	for (int l = 0; l < 2; l++)
 	{
 		for (int i = -radius; i <= radius; ++i)
 		{
-			int x,y;
+			uint32_t x, y;
 			switch (direction) {
-			case Direction::Right:
+			case Direction::East:
 				x = cx + radius - std::abs(i - l);
 				y = cy + i;
 				break;
-			case Direction::Left:
+			case Direction::West:
 				x = cx - radius + std::abs(i - l);
 				y = cy + i;
 				break;
-			case Direction::Down:
+			case Direction::South:
 				y = cy + radius - std::abs(i - l);
 				x = cx + i;
 				break;
-			case Direction::Up:
+			case Direction::North:
 				y = cy - radius + std::abs(i - l);
 				x = cx + i;
 				break;

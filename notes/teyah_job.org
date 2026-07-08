@@ -1,0 +1,62 @@
+* Potential Prototypes and High Priority Items
+** UI
+- click main player interaction menu buttons. (large round buttons). two stages-- press down, release? 
+- classic click-- for board buttons and arrow buttons. whole, broad, medium pitched sound.
+** Environment Ambience Noise
+This is the average background noise that is always playing when the player's camera is in that biome-- it should not jarring or overbearing, and it must seamlessly be able to flow into the sounds when the player moves the camera from one biome to another. I recommend combining the most similar biomes: one for 'plains', one for 'forests', one for tundra, one for coastal areas and one for deserts.  From there we can test, layer and specify for the individual biomes. For now, avoid the sounds of non-bug animals like owls and wolves, since those are separate animals.
+
+also, to be separately applied:
+- [ ] gentle river noise
+- [ ] gentle wind noise
+** Unit noises
+*** Movement 
+We're keeping these minimal for now. A gentle walking sound, one on grass/sand, one on hard stone, should be fine, and a running sound for each of those. Keep in mind this will play when a player has selected a Unit who is walking/running.
+
+a generic patter noise that can be used for animals is also good.
+*** Work
+- [ ] chipping stone
+- [ ] cutting wood (not chopping a tree, but tearing and cutting bark, sticks)
+- [ ] fire crackling
+- [ ] planting noise
+- [ ] boat paddling noise  
+** Animal noises
+keep these to the most generic few (wolf howl, cow moo) if you spend time on them at all at this stage: low priority.
+** Triggered Noises
+- [ ] lighting a fire
+- [ ] splash noise (going into water)
+* Entity List
+Here is the list of all entity types: relevant for sounds are the Biomes and Animals. 
+*** Biomes
+	HotDesert,
+	Grassland,
+	Savanna,
+	Wetland,
+	Temperate,
+	Boreal,
+	Jungle,
+	Rocky,
+	Tundra,
+	ColdDesert,
+*** Animals
+	Pig,
+	Cow,
+	Chicken,
+	Duck,
+	Sheep,
+	Goat,
+	Horse,
+	Ox,
+	Donkey,
+	Camel,
+	WaterBuffalo,
+	Rabbit,
+	Antelope,
+	Deer,
+	Moose,
+	Capybara,
+	Turtle,
+	Elephant,
+	Bison,
+	Wolf,
+	Bear,
+	Caribou,

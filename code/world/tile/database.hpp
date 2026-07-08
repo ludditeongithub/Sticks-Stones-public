@@ -13,7 +13,7 @@
 class TileDatabase
 {
       public:
-  
+	World& world;
   	// @codegen:begin database_generation
     // =========================
     // BASE DATABASE MEMBERS
@@ -21,36 +21,41 @@ class TileDatabase
 
 constexpr static uint16_t ENTITY_SIZE = sizeof(Tiledata) +
   
-
+ +  sizeof(Tiledata) 
  +  sizeof(Alt) 
-
  +  sizeof(Liquid) 
-
  +  sizeof(TileStatus) 
-
 ;
 
 size_t capacity;
-Array<Tiledata> tiles;
-
-
-
+  World& world;
 
     // =========================
     // ENTITY-SPECIFIC MEMBERS
     // =========================
-
+    Array<Tiledata> tiledatas;
     Array<Alt> altitudes;
-
     Array<Liquid> waters;
-
     Array<TileStatus> tileStatuses;
     
 
-    
+// =========================
+    // CONSTRUCTOR
+    // =========================
+
+TileDatabase(Arena *arena, size_t capacity
+  , World& world
+ 
+) :
+  world(world),
+{
+this->capacity = capacity;
+
+}
 
     
 
+    
 
       
     // =========================
@@ -63,47 +68,31 @@ Array<Tiledata> tiles;
     archive(capacity);
    
 
-
+        tiledatas.save(archive);
         altitudes.save(archive);
-
         waters.save(archive);
-
         tileStatuses.save(archive);
-
     }
 
     template <class Archive>
     void load(Archive &archive)
     {
         archive(capacity);
-
         
-
+        tiledatas.load(archive);
         altitudes.load(archive);
-
         waters.load(archive);
-
         tileStatuses.load(archive);
-
-    }
-
-    // =========================
-    // CONSTRUCTOR
-    // =========================
-
-TileDatabase(Arena *arena, size_t capacity
-
-  , World& world
-
-
-)
-    {
-this->capacity = capacity;
-        
     }
 
 // @codegen:end database_generation
 	
 	Coord getNearestEmptyTile(Coord coord);
-	
+		Coord getNearestEmptyTileBlock(Coord coord, size_t length, size_t width = 1);
+		inline size_t getIndex(const Coord coord)
+		{
+return coord.y * 
+		}
+		inline Frame calcInertia(const Coord coord, bool running);
+		inline Frame calcInertia(Frame entityBaseFrames, const Coord coord);
 };

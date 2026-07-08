@@ -1,8 +1,12 @@
 #pragma once
 #include <cmath>
 #include <core/random.hpp>
+#include <core/data.hpp>
 #include <world/world.hpp>
 #include <world/chunk/data.hpp>
+
+constexpr Frame BASE_WALKING_FRAMES = 8;
+constexpr Frame BASE_RUNNING_FRAMES = 8;
 
 float generateSkinWarmth(float parent1, float parent2)
 {

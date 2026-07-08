@@ -50,24 +50,20 @@
 
 // @codegen:begin grass_spawn
 
+// THIS IS  a Test
 inline void WorldSpawner::rollGrassSpawn(Coord coord, Biome biome, Tile tile, int temperature, int humidity)
 {
 float highestRoll = 0.0;
 Grass grass = Grass::NONE;
 
 
-
   for (size_t i = 0; i < static_cast<size_t>(Grass::MAX); i++) { //2
   Grass selectedGrass = static_cast<Grass>(i);
-
-
 
 float roll = random_chance->next() * 0.4;
 for (size_t j = 0; j < static_cast<size_t>(Tile::MAX); j++) { //3
 if (tile == static_cast<Tile>(j)) { //4
 float multipliedRoll = grass::tileSpawnMultipliers[grass][static_cast<Tile>(j)] * roll;
-
-
 
 const Coord tpr = grass::temperaturePenaltyRanges[grass];
 float adjTempRoll = rangePenalty(temperature, tpr.x, tpr.y, multipliedRoll);
@@ -79,17 +75,12 @@ if (adjFinalRoll > highestRoll) { //5
 highestRoll = adjFinalRoll;
 grass = selectedGrass;
 } //5
-
   } //4
 } //3
-
 } //2
 
 if (grass != Grass::NONE)
-
-  if (highestRoll > grass::minimumRoll[biome]) tileSpawnBuffer.add(grass);
-
-
+  if (highestRoll > grass::minimumRoll[biome]) tileSpawnBuffer.add(*this, grass, coord);
 
 }
 
@@ -97,11 +88,11 @@ if (grass != Grass::NONE)
 
 // @codegen:begin plant_spawn
 
+// THIS IS  a Test
 inline void WorldSpawner::rollPlantSpawn(Coord coord, Biome biome, Tile tile, int temperature, int humidity)
 {
 float highestRoll = 0.0;
 Plant plant = Plant::NONE;
-
 
 
   for (size_t i = 0; i < static_cast<size_t>(PlantCategory::MAX); i++) { // 1
@@ -109,14 +100,10 @@ Plant plant = Plant::NONE;
   if (categoryRoll < plant::categorySpawnChances[static_cast<PlantCategory>(i)][biome]) for (size_t j = 0; j < plant::categories[static_cast<PlantCategory>(i)].size(); j++) { //2
   Plant selectedPlant = plant::categories[static_cast<PlantCategory>(i)][static_cast<Plant>(j)];
 
-
-
 float roll = random_chance->next() * 0.4;
 for (size_t j = 0; j < static_cast<size_t>(Tile::MAX); j++) { //3
 if (tile == static_cast<Tile>(j)) { //4
 float multipliedRoll = plant::tileSpawnMultipliers[plant][static_cast<Tile>(j)] * roll;
-
-
 
 const Coord tpr = plant::temperaturePenaltyRanges[plant];
 float adjTempRoll = rangePenalty(temperature, tpr.x, tpr.y, multipliedRoll);
@@ -128,41 +115,31 @@ if (adjFinalRoll > highestRoll) { //5
 highestRoll = adjFinalRoll;
 plant = selectedPlant;
 } //5
-
   } //4
 } //3
-
 } //2
 
 if (plant != Plant::NONE)
-
-  plantSpawnBuffer.add(plant, coord);
-
-
+  plantSpawnBuffer.add(*this, plant, coord);
 
   } // 1
-  
 }
 
 // @codegen:end plant_spawn
 
 // @codegen:begin scavengeable_spawn
 
+// THIS IS  a Test
 inline void WorldSpawner::rollScavengeableSpawn(Coord coord, Biome biome, Tile tile, int temperature, int humidity)
 {
 float highestRoll = 0.0;
 Scavengeable scavengeable = Scavengeable::NONE;
 
 
-
   for (size_t i = 0; i < static_cast<size_t>(Scavengeable::MAX); i++) { //2
   Scavengeable selectedScavengeable = static_cast<Scavengeable>(i);
 
-
-
 float multipliedRoll = scavengeable::biomeSpawnChances[biome][scavengeable];
-
-
 
 float adjFinalRoll = multipliedRoll;
   
@@ -171,14 +148,10 @@ if (adjFinalRoll > highestRoll) { //5
 highestRoll = adjFinalRoll;
 scavengeable = selectedScavengeable;
 } //5
-
 } //2
 
 if (scavengeable != Scavengeable::NONE)
-
-  scavengeableSpawnBuffer.add(scavengeable, coord);
-
-
+  scavengeableSpawnBuffer.add(*this, scavengeable, coord);
 
 }
 
@@ -187,21 +160,17 @@ if (scavengeable != Scavengeable::NONE)
 
 // @codegen:begin animal_spawn
 
+// THIS IS  a Test
 inline void WorldSpawner::rollAnimalSpawn(Coord coord, Biome biome, Tile tile, int temperature, int humidity)
 {
 float highestRoll = 0.0;
 Animal animal = Animal::NONE;
 
 
-
   for (size_t i = 0; i < static_cast<size_t>(Animal::MAX); i++) { //2
   Animal selectedAnimal = static_cast<Animal>(i);
 
-
-
 float multipliedRoll = animal::biomeSpawnChances[biome][animal];
-
-
 
 const Coord tpr = animal::temperaturePenaltyRanges[animal];
 float adjTempRoll = rangePenalty(temperature, tpr.x, tpr.y, multipliedRoll);
@@ -213,14 +182,10 @@ if (adjFinalRoll > highestRoll) { //5
 highestRoll = adjFinalRoll;
 animal = selectedAnimal;
 } //5
-
 } //2
 
 if (animal != Animal::NONE)
-
-  animalSpawnBuffer.add(animal, coord);
-
-
+  animalSpawnBuffer.add(*this, animal, coord);
 
 }
 

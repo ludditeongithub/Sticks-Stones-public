@@ -199,10 +199,10 @@ inline constexpr LookupTable<Item, ItemTags> itemTags = []
 	lt[Item::Boots] = ItemTags::Wearable;
 	lt[Item::Cape] = ItemTags::Wearable;
 	lt[Item::Javelin] = ItemTags::Alternate;
-	lt[Item::PitFire] = ItemTags::VariableAmountRequired | ItemTags::WaterDamage;
 	lt[Item::Torch] = ItemTags::WaterDamage;
 	lt[Item::CandleMould] = ItemTags::Alternate;
 	lt[Item::Candle] = ItemTags::Alternate | ItemTags::Wearable | ItemTags::WaterDamage;
 	lt[Item::OilLamp] = ItemTags::Alternate | ItemTags::WaterDamage;
+	return lt;
 }();
 #endif

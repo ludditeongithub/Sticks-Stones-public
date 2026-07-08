@@ -5,6 +5,11 @@
 #include <stack>
 #include <core/packed_enum.hpp>
 
+// @codegen:begin specialization
+//
+// @codegen:end specialization
+
+
 constexpr uint16_t HOLDABLE_UNDERFLOW_LIMIT = 6;
 
 struct ItemSlot
@@ -60,7 +65,7 @@ struct ToolSlot
 
 	ToolSlot(Item item, SpecialItemData specialData) : item(item), specialData(specialData)
 	{
-		assert(hasTag(ItemTags::Tool, itemTags[item]));
+		assert(hasTag(ItemTags::OneHandedTool, itemTags[item]));
 	}
 
 	inline bool isEmpty()

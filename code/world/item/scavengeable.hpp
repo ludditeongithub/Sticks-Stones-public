@@ -52,9 +52,14 @@ enum class Scavengeable : uint16_t
 	IronOre,
 	SilverOre,
 	GoldOre,
-        Coal,
-        MAX
+	Coal,
+	MAX
 };
+
+// @codegen:begin specialization
+//
+// @codegen:end specialization
+
 
 namespace scavengeable
 {
@@ -68,6 +73,7 @@ namespace scavengeable
 	float veryrare = 0.0046;
 	float legendary = 0.0015;
 	float never = 0.0;
+  
 inline LookupTable2D<Biome, Scavengeable, float> biomeSpawnChances = []
 {
 	LookupTable2D<Biome, Scavengeable, float> lt{};

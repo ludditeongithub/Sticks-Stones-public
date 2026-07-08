@@ -4,7 +4,7 @@
 static class AlreadyDead : public std::exception
 {
       private:
-	constexpr static std::string message = "Tried to kill already dead entity of type";
+	std::string message = "Tried to kill already dead entity of type";
 	std::string typeName = "";
 	int index;
 

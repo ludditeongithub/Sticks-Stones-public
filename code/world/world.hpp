@@ -105,7 +105,7 @@ struct World
 {
     std::vector<float> minTemps;
     std::vector<float> diurnalTempVariances;
-    std::vector<float> seasonalTempVariances;
+	std::vector<float> seasonalTempVariances;
 
     ChunkTempData(World* world)
     {

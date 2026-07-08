@@ -1,0 +1,7 @@
+#ifndef EXCRETION_MANAGER_HPP
+#define EXCRETION_MANAGER_HPP
+#include <entt/entt.hpp>
+#include <plant/enum.hpp>
+
+AnimalDatabase::prepareSeedDropping
+#endif

@@ -111,15 +111,13 @@ class WorldSpawner
 struct TileSpawnBuffer
 {
 	size_t size;
-	std::vector<Tile> tiles;
-	std::vector<Grass> grasses;
+	std::vector<TileData> tiles;
 	std::vector<Alt> altitudes;
   std::vector<bool> occupieds;
 
   TileSpawnBuffer(size_t capacity)
 	{
 		tiles.reserve(capacity);
-		grasses.reserve(capacity);
 		altitudes.reserve(capacity);
                 size = capacity;
         }
@@ -127,7 +125,7 @@ struct TileSpawnBuffer
 inline void add(WorldSpawner& worldSpawner, Grass grass, Coord coord)
   {
     size_t i = worldSpawner.getTileIndexFromCoord(coord);
-          grasses[i] = grass;
+    tiles[i].set<Grass>(grass);
 	}
 };
 

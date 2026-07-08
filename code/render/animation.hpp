@@ -247,7 +247,7 @@ inline Frame getNextAnimalFrame(Animal a, ActionStatus as, Frame frameNumber, Sp
 	default:
 		break;
 	}
-	return frame;
+	return static_cast<Frame>(frame);
 }
 
 void updateAnimalAnimations(Coord leftCorner, EntityRenderBuffer &erd, Array<Frame> &frames,

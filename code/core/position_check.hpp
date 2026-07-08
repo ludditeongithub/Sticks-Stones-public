@@ -1,8 +1,9 @@
-#include <pair>
 #include <vector>
 #include <cmath>
 #include <optional>
-#include "data.cpp"
+#include "data.hpp"
+#include "math.hpp"
+#include <queue>
 
 float maxAltChange = 2.0;
 
@@ -168,7 +169,7 @@ bool adjCheckObject(int firstIndex, int secondIndex, bool firstAnimal, bool seco
 // TODO: check to see if this makes sense returns nullptr if not adjacent
 std::optional<Direction> adjCheckTile(std::pair<int, int> subject, std::pair<int, int> target)
 {
-	if (manDist(subject, target) > 1)
+	if (manhattanDist(subject, target) > 1)
 		return std::nullopt;
 	if (subject.first - target.first == 1)
 		return std::make_optional<Direction>(Direction::East);
@@ -281,23 +282,6 @@ std::pair<int, int> adjGet(vector<vector<int>> &map, int y, int x, int check, in
 	return adj;
 }
 
-// checking any tile parameter
-template <typename T, typename C>
-std::pair<int, int> adjGetTileOfType(vector<T> &tileVector, int tileIndex, C type, int range)
-{
-	std::pair<int, int> adj = tileIndices(tileIndex);
-	// Ensure we're checking only directly adjacent tiles within the range
-	if (abs(r) + abs(c) <= range && nx >= 0 && nx < rows && ny >= 0 && ny < cols)
-	{
-		if (tileVector[index] == type)
-		{
-			adj = tileIndices(tileIndex);
-			return adj;
-		}
-	}
-	return adj;
-}
-
 int adjRange(const std::vector<std::vector<int>> &map, int y, int x, int check)
 {
 	int rows = map.size(), cols = map[0].size();
@@ -360,7 +344,7 @@ std::vector<std::tuple<int, int, int>> adjGetAll(vector<vector<int>> &map, int y
 }
 
 // adds corner adjacent tiles to adjCheck
-bool diagAdjCheck(vector<vector<int>> &map, int y, int x, int check, int range)
+bool diagAdjCheck(std::vector<std::vector<int>> &map, int y, int x, int check, int range)
 {
 	int rows = map.size();
 	int cols = map[0].size();
@@ -390,7 +374,7 @@ bool diagAdjCheck(vector<vector<int>> &map, int y, int x, int check, int range)
 }
 
 // gets adjacent tile with lowest value
-std::pair<int, int> getLowestAdj(vector<vector<int>> &map, int y, int x)
+std::pair<int, int> getLowestAdj(std::vector<std::vector<int>> &map, int y, int x)
 {
 	int dx[] = {-1, 0, 1, 0}; // x-direction for up/down
 	int dy[] = {0, 1, 0, -1}; // y-direction for left/right
@@ -416,7 +400,7 @@ std::pair<int, int> getLowestAdj(vector<vector<int>> &map, int y, int x)
 }
 
 // gets adjacent tile with highest value
-std::pair<int, int> getHighestAdj(vector<vector<int>> &map, int y, int x)
+std::pair<int, int> getHighestAdj(std::vector<std::vector<int>> &map, int y, int x)
 {
 	int dx[] = {-1, 0, 1, 0}; // x-direction for up/down
 	int dy[] = {0, 1, 0, -1}; // y-direction for left/right

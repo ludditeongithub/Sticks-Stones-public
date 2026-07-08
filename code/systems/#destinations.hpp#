@@ -1,0 +1,24 @@
+#include <core/containers.hpp>
+#include <core/data.hpp>
+#include <schedule/dispatch.hpp>
+#include <world/animal/enum.hpp>
+#include <world/animal/tables.hpp>
+#include <world/food/categories.hpp>
+
+enum class GeneralFeedingCategory
+	{
+		Herbivore,
+		Carnivore,
+		Scavenger
+	};
+
+// TODO: possible optimization: separate herbivores and carnivores into separate loops, to improve
+// cache efficiency
+void setHungryDestinations(DispatchData<Animal> &dispatch)
+{
+	Array<Animal> &animals = dispatch.types;
+	Array<Coord> &positions = dispatch.positions;
+	Array<Coord> &destinations = dispatch.destinations;	
+		
+	for (EntityID i = 0; i < animals.size; i++) determineFeedingTarget(animals[i], i, positions, destinations);
+}

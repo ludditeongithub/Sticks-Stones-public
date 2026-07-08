@@ -19,45 +19,56 @@ struct ItemDatabase
     // =========================
 
 constexpr static uint16_t ENTITY_SIZE = sizeof(Item) +
-
 + sizeof(bool)
   
-
+ +  sizeof(Item) 
  +  sizeof(Coord) 
-
 ;
 
 size_t capacity;
-Array<Item> items;
-
     size_t size;
     Stack<size_t> freeSlots;
     Array<bool> alives;
-  
-
   SearchGrid& search;
-
-
+  World& world;
+  TileDatabase& tiles;
 
     // =========================
     // ENTITY-SPECIFIC MEMBERS
     // =========================
-
+    Array<Item> items;
     Array<Coord> coords;
     
 
+// =========================
+    // CONSTRUCTOR
+    // =========================
+
+ItemDatabase(Arena *arena, size_t capacity
+  , World& world
+ 
+  , SearchGrid& search
+  , TileDatabase& tiles
+) :
+  world(world),
+  tiles(tiles),
+search(search),
+{
+this->capacity = capacity;
+  this->size = 0;
+
+}
 
   // =========================
   // SPAWN
   // =========================
-  
-  bool spawn(Item entity, bool newborn, Coord coord)
-    {
+
+ 
+  bool attemptSpawn(Item item, bool newborn, Coord coord, )
+  {       
         if (size + 1 > capacity)
             return false;
-
         size_t i;
-
         if (freeSlots.empty())
         {
             i = size;
@@ -68,49 +79,50 @@ Array<Item> items;
             i = freeSlots.top();
             freeSlots.pop();
         }
-
         alives[i] = true;
-
         if (newborn)
         {
-      
+            items[i] = item;
             coords[i] = coord;
-	  
         }
         else
         {
         Time age = random_bool->next();
-	  
+            items[i] = item;
             coords[i] = coord;
-	  
         }
-	  
-  
-          
-
+            search.insertEntity(item, {i, coords[i]});
         return true;
-    }
+          }
+          bool spawn(Item item, bool newborn, Coord origin) {
+          Coord spawnPoint = tiles.getNearestEmptyTile(origin);
+          while (!attemptSpawn(item, newborn, spawnPoint)) freeUnusedEntity();                 
+          }        
     
-
 
   // =========================
   // REMOVE
   // =========================
   
   bool remove(size_t i)
-    {
+  {
         if (!alives[i])
             return false;
 
         freeSlots.push(i);
         alives[i] = false;
-
-        search.deleteEntity();
-
+        Item item = items[i];
+            search.removeEntity(item, {i, coords[i]});
         return true;
-    }
-    
+  }
 
+  void freeUnusedEntity()
+  {
+    for (size_t i = 0; i < coords.size; i++) {
+    if (tiles.tileStatuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
+    }
+  }
+    
 
       
     // =========================
@@ -121,59 +133,55 @@ Array<Item> items;
     void save(Archive &archive) const
     {
     archive(capacity);
-
         archive(size);
         archive(freeSlots);
         archive(alives);
    
 
-
+        items.save(archive);
         coords.save(archive);
-
     }
 
     template <class Archive>
     void load(Archive &archive)
     {
         archive(capacity);
-
         archive(size);
         archive(freeSlots);
         archive(alives);
-
         
-
+        items.load(archive);
         coords.load(archive);
-
     }
 
-    // =========================
-    // CONSTRUCTOR
-    // =========================
 
-ItemDatabase(Arena *arena, size_t capacity
+// =========================
+// TRANSFER
+// =========================
 
-  , World& world
-
-
-  , SearchGrid& search
-
-)
-    {
-this->capacity = capacity;
-
-  this->size = 0;
-        
-    }
-
+inline bool transferItem(size_t i, ItemDatabase &oldDB, ItemDatabase &newDB)
+  {
+  if (newDB.size >= newDB.capacity) return false;
+  int index;  
+  if (newDB.freeSlots.empty())
+  {
+  index = ++size;
+	}
+	else
+	{
+		index = newDB.freeSlots.top();
+		newDB.freeSlots.pop();			
+  }
+    newDB.items[index] = oldDB.items[i];
+    newDB.coords[index] = oldDB.coords[i];
+  newDB.alives[index] = true;
+  oldDB.freeSlots.push(i);
+  oldDB.alives[index] = false;
+  return true;
+  }
 // @codegen:end database_generation
   
 	inline void addItem(Item item, Coord coord);
 	inline void dropFruit(Plant plant, Coord coord, uint16_t amount);
 };
-
-struct VariantItemDatabase : ItemDatabase {
-	 Array<uint8_t> variants;
-};
-
 

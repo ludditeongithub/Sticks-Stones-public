@@ -6,9 +6,9 @@
 namespace animal
 {
 
-inline constexpr LookupTable<Animal, Coord> temperaturePenaltyRanges = []
+inline constexpr LookupTable<Animal, SCoord> temperaturePenaltyRanges = []
 {
-	LookupTable<Animal, Coord> lt{};
+	LookupTable<Animal, SCoord> lt{};
 	using enum Animal;
 
 	lt[Pig]          = {23, 77};

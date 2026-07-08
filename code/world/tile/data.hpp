@@ -1,4 +1,4 @@
-#pragma once
+ #pragma once
 #include "enum.hpp"
 #include <world/world.hpp>
 #include <cstdint>
@@ -20,10 +20,3 @@ inline uint32_t World::getTileIndexChunkRelative(uint32_t i) { return {i % CHUNK
 inline uint32_t World::getTileIndexChunkRelative(Coord c) {
 	return {getTileIndexFromCoord(c) % CHUNK_SIZE};
 }
-
-inline constexpr LookupTable<Tile, Frame> tileMoveCost = []
-{
-	LookupTable<Tile, Frame> lt{};
-
-	return lt;
-}();

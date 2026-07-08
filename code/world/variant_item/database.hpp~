@@ -1,0 +1,224 @@
+#pragma once
+
+#include <world/item/database.hpp>
+
+struct VariantItemDatabase {
+		// @codegen:begin database_generation
+    // =========================
+    // BASE DATABASE MEMBERS
+    // =========================
+
+constexpr static uint16_t ENTITY_SIZE = sizeof(Item) +
+
++ sizeof(bool)
+  
+
+ +  sizeof(Coord) 
+
+ +  sizeof(uint8_t) 
+
+;
+
+size_t capacity;
+Array<Item> variantItems;
+
+    size_t size;
+    Stack<size_t> freeSlots;
+    Array<bool> alives;
+  
+
+
+
+  TileDatabase& tiles;
+
+
+
+    // =========================
+    // ENTITY-SPECIFIC MEMBERS
+    // =========================
+
+    Array<Coord> coords;
+
+    Array<uint8_t> variants;
+    
+
+// =========================
+    // CONSTRUCTOR
+    // =========================
+
+Variant_itemDatabase(Arena *arena, size_t capacity
+
+  , World& world
+ 
+
+
+  , TileDatabase& tiles
+
+
+) :
+
+  world(world),
+
+
+  tiles(tiles),
+
+
+{
+this->capacity = capacity;
+
+  this->size = 0;
+
+
+
+
+}
+
+
+  // =========================
+  // SPAWN
+  // =========================
+
+
+ 
+  bool attemptSpawn(Variant_item variantItem, bool newborn, Coord coord)
+  {       
+        if (size + 1 > capacity)
+            return false;
+        size_t i;
+        if (freeSlots.empty())
+        {
+            i = size;
+            size++;
+        }
+        else
+        {
+            i = freeSlots.top();
+            freeSlots.pop();
+        }
+        alives[i] = true;
+        if (newborn)
+        {
+      
+            coords[i] = coord;
+	  
+            variants[i] = variant;
+	  
+        }
+        else
+        {
+        Time age = random_bool->next();
+	  
+            coords[i] = coord;
+	  
+            variants[i] = variant;
+	  
+        }
+	  
+        return true;
+          }
+
+          bool spawn(Variant_item variantItem, bool newborn, Coord origin) {
+          Coord spawnPoint = tiles.getNearestEmptyTile(origin);
+          while (!attemptSpawn(variantItem, newborn, spawnPoint)) freeUnusedEntity();                 
+          }        
+    
+
+
+  // =========================
+  // REMOVE
+  // =========================
+  
+  bool remove(size_t i)
+  {
+        if (!alives[i])
+            return false;
+
+        freeSlots.push(i);
+        alives[i] = false;
+  
+        return true;
+  }
+
+  
+  void freeUnusedEntity()
+  {
+  
+    for (size_t i = 0; i < coords.size; i++) {
+    if (tiles.tileStatuses.get<VisionStatus>() == VisionStatus::Hidden) remove(i);
+    }
+  
+  }
+    
+
+
+      
+    // =========================
+    // SERIALIZATION
+    // =========================
+
+    template <class Archive>
+    void save(Archive &archive) const
+    {
+    archive(capacity);
+
+        archive(size);
+        archive(freeSlots);
+        archive(alives);
+   
+
+
+        coords.save(archive);
+
+        variants.save(archive);
+
+    }
+
+    template <class Archive>
+    void load(Archive &archive)
+    {
+        archive(capacity);
+
+        archive(size);
+        archive(freeSlots);
+        archive(alives);
+
+        
+
+        coords.load(archive);
+
+        variants.load(archive);
+
+    }
+
+
+
+// =========================
+// TRANSFER
+// =========================
+
+inline bool transferVariant_item(size_t i, Variant_itemDatabase &oldDB, Variant_itemDatabase &newDB)
+  {
+  if (newDB.size >= newDB.capacity) return false;
+  int index;  
+  if (newDB.freeSlots.empty())
+  {
+  index = ++size;
+	}
+	else
+	{
+		index = newDB.freeSlots.top();
+		newDB.freeSlots.pop();			
+  }
+   
+    newDB.coords[index] = oldDB.coords[i];
+  
+    newDB.variants[index] = oldDB.variants[i];
+  
+  newDB.alives[index] = true;
+  oldDB.freeSlots.push(i);
+  oldDB.alives[index] = false;
+  return true;
+  }
+
+// @codegen:end database_generation
+};

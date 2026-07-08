@@ -1,9 +1,172 @@
 * REMEMBER
 ** boost.preprocessor enum to string
 * NOW
+** Algorithm, scheduling and dispatch general plan
+First, inertiaLoop goes through and inertia[i]--. if inertia[i] == 0, checks actions[i] and then marks correct flag in the dispatch buffer.
+
+later individual algorithms go through each individual dispatch buffer, pulling up the relevant data to modify for that task, triggering relevant events for that entity. 
+** Movement + Action + NewPath
+first queueReadyActions sees if sub-action is finished. (inertia 0)
+if sub-action finished, then marked for buffer to processEntityActions.
+
+processEntityActions marks for main actions shared across animals and units. std::optional and bool marker for relevant unit code in the same function. some of the lazy code is just marking for the XBuffer to triggerXFunctions.
+
+triggerXFunctions triggers relevant lazy function for each type, using XBuffer as data.
+** System Design Decision Tree: AoS vs SoA + Event vs Tick
+*** 1. Start: Write pseudocode (NO data layout decisions)
+   - Define gameplay logic in abstract form
+   - Identify:
+     - what changes
+     - when it changes
+     - how often it runs
+   - DO NOT think about structs or arrays yet
+
+   /Goal: describe behavior, not storage/
+*** 2. Classify each system by access pattern
+**** 2.1 Entity-centric logic (many fields per entity)
+    - Example:
+      - AI decision making
+      - inventory logic
+      - combat resolution
+    - Pattern:
+      - one entity → many fields accessed together
+    - Candidate: AoS / chunked AoS
+
+**** 2.2 Field-centric logic (one field across many entities)
+    - Example:
+      - hunger decay
+      - physics integration
+      - animation updates
+    - Pattern:
+      - one operation → many entities
+    - Candidate: SoA
+
+**** 2.3 Reactive / sparse logic (only some entities update)
+    - Example:
+      - starvation triggers
+      - job assignment
+      - events / state transitions
+    - Pattern:
+      - only "active" entities matter
+    - Candidate: event queue / active set
+
+*** 3. Classify execution model (independent axis)
+
+**** 3.1 Tick-based systems
+    - runs every frame or fixed interval
+    - good for:
+      - continuous simulation (hunger, physics)
+    - typically SoA-friendly
+
+**** 3.2 Event-driven systems
+    - runs only when triggered
+    - good for:
+      - thresholds
+      - state changes
+      - rare interactions
+    - typically AoS-friendly or hybrid
+
+**** 3.3 Hybrid systems
+    - tick updates state
+    - events react to thresholds
+    - most real game systems fall here
+
+*** 4. Choose data layout AFTER classification
+
+**** 4.1 AoS / chunked AoS
+    - use when:
+      - multiple fields accessed per entity
+      - entity-centric logic dominates
+      - sparse updates
+    - benefits:
+      - cache-friendly per entity
+      - simple reasoning
+
+**** 4.2 SoA
+    - use when:
+      - one field updated across many entities
+      - SIMD/vectorization possible
+      - bulk processing dominates
+    - benefits:
+      - memory bandwidth efficient
+      - fast streaming
+
+**** 4.3 Hybrid / ECS-style
+    - use when:
+      - mixed workloads
+      - multiple systems with different patterns
+    - typical engine solution
+
+*** 5. Implement hot systems first
+   - identify performance-critical loops
+   - ensure:
+     - correct memory access pattern
+     - minimal indirection
+     - contiguous iteration where possible
+
+*** 6. Implement event-driven systems second
+   - use:
+     - queues (push-based)
+     - scheduled events
+     - active entity sets
+   - avoid:
+     - full scans over all entities
+     - flag-based O(N) sweeps as primary mechanism
+
+*** 7. Validate with profiling
+   - check:
+     - cache misses
+     - memory bandwidth usage
+     - branch mispredictions
+   - adjust layout ONLY based on measured bottlenecks
+
+*** 8. Final optimization phase
+   - split SoA where bulk data dominates
+   - merge into AoS where per-entity locality dominates
+   - introduce chunking if both are needed
+   - avoid premature global redesigns
+** Prereqs to launch alpha
+*** Finish UI
+*** Get Tobi to finish menu sprites
+*** Sprite loading no errors
+*** functional large menus
+*** actual funcs to transfer data from world spawner to world 
+*** bridge from UI and player input to PlayerFactionDatabase
+PFD holds:
+- stockpiles
+- player policy zones
+- mini socities' zones
+- faction level inventory
+  - items queued
+  - items needed
+- ideologies
+*** ensuring searching for any entity actually works!
+*** Normal base game cycle works
+**** queue production
+**** build buildings
+**** check needs- aggregate and individual 
+**** receive event warnings
+- death
+- close to deaths
+- attack
+- mental break
+**** messages (tutorials)
+**** combat
+**** inventory
+**** eating
+**** farming
+** cleaning up for errors
 ** (maybe) macros regarding simple operations
-** aseprites for first launch
-** audio functionality
+** aseprites for first launch (launching menu)
+** AoS vs SoA metaprogramming based on access patterns
+- pseudo code main algorithms, separate into hot and cold
+  - cold may be event driven (if entity-based)
+    - if more event driven, then AoS
+    - if more hot (data heavy), then SoA
+- metaprogram layouts
+- ensure dispatch mechanisms (collect entities indexes from hot paths) is accurate
+- implement algorithms hot
+- implement algorithms event-driven
 ** gameLoop
 *** handleEvent
 *** processWorld
@@ -28,14 +191,36 @@ unit checks all its roles, and then selects the task with the lowest priority.
 ** Writing to data to file
 ** option to configure screen size
 ** get rid of all vectors, standardize overflow/imps
-** chunked rendering
 * NOTES
 ** Programming
 *** Scheduling and Simulation Precision
 - there are two main divisions: player - active chunks (the player's pawns frequent the area, and non - player - active chunks. PAC and NPAC entity data are stored in different databases, their may also be several different PAC and NPAC databases, with special cases of nearer NPAC databases which contain chunks closer to the player, which they are likely to discover soon.
 
   All entities in NPACs are processed at a high frequency. There is lower batching, event driven. All entities in non-NPACs are processed at a low frequency. Higher batching, more concurrency of large tasks.
-* AFTER BETA
+** Cleaning Up
+*** Checklist
+- [X] Core (scans.hpp needs more cleaning)
+- [ ] World 
+* AFTER PROTOTYPE
+** additional metaprogramming features: crossed enum:
+list = {A, B, C}
+crossedEnum(list) returns:
+
+enum class {
+A,
+B,
+C,
+AB,
+AC,
+BC,
+ABC,
+MAX
+};
+or consider bitmaks depending on use case
+** audio functionality
+** chunked rendering
+* AFTER ALPHA
+** automatic 'greedy' and 'hungry' interest
 ** change globals to fit some convention, maybe namespaces
 ** Migration Logic
 ** better procedural generation: no probabilities

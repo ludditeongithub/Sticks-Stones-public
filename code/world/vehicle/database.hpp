@@ -7,55 +7,58 @@ struct VehicleDatabase {
     // =========================
 
 constexpr static uint16_t ENTITY_SIZE = sizeof(Vehicle) +
-
 + sizeof(bool)
   
-
+ +  sizeof(Vehicle) 
  +  sizeof(Health) 
-
  +  sizeof(FrameData) 
-
  +  sizeof(Coord) 
-
 ;
 
 size_t capacity;
-Array<Vehicle> vehicles;
-
     size_t size;
     Stack<size_t> freeSlots;
     Array<bool> alives;
-  
-
   SearchGrid& search;
-
-
   World& world;
-
+  TileDatabase& tiles;
 
     // =========================
     // ENTITY-SPECIFIC MEMBERS
     // =========================
-
+    Array<Vehicle> vehicles;
     Array<Health> healths;
-
     Array<FrameData> frameDatas;
-
     Array<Coord> coords;
     
 
+// =========================
+    // CONSTRUCTOR
+    // =========================
+
+VehicleDatabase(Arena *arena, size_t capacity
+  , World& world
+ 
+  , TileDatabase& tiles
+) :
+  world(world),
+  tiles(tiles),
+{
+this->capacity = capacity;
+  this->size = 0;
+
+}
 
   // =========================
   // SPAWN
   // =========================
-  
-  bool spawn(Vehicle entity, bool newborn, Coord coord)
-    {
+
+ 
+  bool attemptSpawn(Vehicle vehicle, bool newborn, Coord coord, )
+  {       
         if (size + 1 > capacity)
             return false;
-
         size_t i;
-
         if (freeSlots.empty())
         {
             i = size;
@@ -66,55 +69,51 @@ Array<Vehicle> vehicles;
             i = freeSlots.top();
             freeSlots.pop();
         }
-
         alives[i] = true;
-
         if (newborn)
         {
-      
-            healths[i] = maxHealths[{{ entity_name }}] * INFANT_HEALTH_MODIFIER;
-	  
-            frameDatas[i] = FrameData{ActState::NONE, Direction::South, 0};
-	  
+            vehicles[i] = vehicle;
+            healths[i] = vehicle::maxHealths[vehicle] * INFANT_HEALTH_MODIFIER;
+            frameDatas[i] = FrameData{ActState::NewPath, Direction::South, Frame::F0};
             coords[i] = coord;
-	  
         }
         else
         {
         Time age = random_bool->next();
-	  
-            healths[i] = getMaxHealth(age);
-	  
-            frameDatas[i] = FrameData{ActState::NONE, Direction::South, 0};
-	  
+            vehicles[i] = vehicle;
+            healths[i] = getMaxHealth(vehicle, age);
+            frameDatas[i] = FrameData{ActState::NewPath, Direction::South, Frame::F0};
             coords[i] = coord;
-	  
         }
-	  
-
         return true;
-    }
+          }
+          bool spawn(Vehicle vehicle, bool newborn, Coord origin) {
+          Coord spawnPoint = tiles.getNearestEmptyTile(origin);
+          while (!attemptSpawn(vehicle, newborn, spawnPoint)) freeUnusedEntity();                 
+          }        
     
-
 
   // =========================
   // REMOVE
   // =========================
   
   bool remove(size_t i)
-    {
+  {
         if (!alives[i])
             return false;
 
         freeSlots.push(i);
         alives[i] = false;
-
-        search.deleteEntity();
-
         return true;
-    }
-    
+  }
 
+  void freeUnusedEntity()
+  {
+    for (size_t i = 0; i < coords.size; i++) {
+    if (tiles.tileStatuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
+    }
+  }
+    
 
   // =========================
   // MOVE
@@ -123,10 +122,10 @@ Array<Vehicle> vehicles;
     inline bool attemptMoveEntity(size_t index)
     {
         Coord& pos = coords[index];
-        Coord newPos = getPos(directions[index], pos);
+        Coord newPos = getPos(frameDatas[index].get<Direction>(), pos);
         size_t ti = world.getTileIndexFromCoord(newPos);
 
-        if (search.tiles.occupieds[ti] == false)
+        if (search.tiles.tileStatuses.get<OccupiedStatus>()[ti] == false)
         {
             pos = newPos;
             return true;
@@ -134,7 +133,6 @@ Array<Vehicle> vehicles;
 
         return false;
     }
-    
       
     // =========================
     // SERIALIZATION
@@ -144,55 +142,29 @@ Array<Vehicle> vehicles;
     void save(Archive &archive) const
     {
     archive(capacity);
-
         archive(size);
         archive(freeSlots);
         archive(alives);
    
 
-
+        vehicles.save(archive);
         healths.save(archive);
-
         frameDatas.save(archive);
-
         coords.save(archive);
-
     }
 
     template <class Archive>
     void load(Archive &archive)
     {
         archive(capacity);
-
         archive(size);
         archive(freeSlots);
         archive(alives);
-
         
-
+        vehicles.load(archive);
         healths.load(archive);
-
         frameDatas.load(archive);
-
         coords.load(archive);
-
-    }
-
-    // =========================
-    // CONSTRUCTOR
-    // =========================
-
-VehicleDatabase(Arena *arena, size_t capacity
-
-  , World& world
-
-
-)
-    {
-this->capacity = capacity;
-
-  this->size = 0;
-        
     }
 
 // @codegen:end database_generation

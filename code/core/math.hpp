@@ -4,6 +4,7 @@
 #include <cmath>
 #include <cstdint>
 #include <functional>
+#include <stdexcept>
 
 // Distance and Coords
 template <typename T> T chebyshev(T x1, T y1, T x2, T y2)
@@ -23,8 +24,11 @@ inline uint16_t manhattanDist(int x1, int x2, int y1, int y2)
 
 inline uint16_t manhattanDist(Coord c1, Coord c2)
 {
-	return std::abs(c1.x - c2.x) + std::abs(c1.y - c2.y);
-};
+    int dx = static_cast<int>(c1.x) - static_cast<int>(c2.x);
+    int dy = static_cast<int>(c1.y) - static_cast<int>(c2.y);
+
+    return static_cast<uint16_t>(std::abs(dx) + std::abs(dy));
+}
 
 template <typename T> inline float diffMult(T value, T target, T bound)
 {

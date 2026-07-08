@@ -11,47 +11,55 @@ struct SeedDatabase {
     // =========================
 
 constexpr static uint16_t ENTITY_SIZE = sizeof(Plant) +
-
 + sizeof(bool)
   
-
+ +  sizeof(Plant) 
  +  sizeof(Coord) 
-
  +  sizeof(Time) 
-
 ;
 
 size_t capacity;
-Array<Plant> seeds;
-
     size_t size;
     Stack<size_t> freeSlots;
     Array<bool> alives;
-  
-
-
+  World& world;
+  TileDatabase& tiles;
 
     // =========================
     // ENTITY-SPECIFIC MEMBERS
     // =========================
-
+    Array<Plant> plants;
     Array<Coord> coords;
-
     Array<Time> ages;
     
 
+// =========================
+    // CONSTRUCTOR
+    // =========================
+
+SeedDatabase(Arena *arena, size_t capacity
+  , World& world
+ 
+  , TileDatabase& tiles
+) :
+  world(world),
+  tiles(tiles),
+{
+this->capacity = capacity;
+  this->size = 0;
+
+}
 
   // =========================
   // SPAWN
   // =========================
-  
-  bool spawn(Seed entity, bool newborn, Coord coord)
-    {
+
+ 
+  bool attemptSpawn(Plant plant, bool newborn, Coord coord, )
+  {       
         if (size + 1 > capacity)
             return false;
-
         size_t i;
-
         if (freeSlots.empty())
         {
             i = size;
@@ -62,51 +70,49 @@ Array<Plant> seeds;
             i = freeSlots.top();
             freeSlots.pop();
         }
-
         alives[i] = true;
-
         if (newborn)
         {
-      
+            plants[i] = plant;
             coords[i] = coord;
-	  
             ages[i] = 0;
-	  
         }
         else
         {
         Time age = random_bool->next();
-	  
+            plants[i] = plant;
             coords[i] = coord;
-	  
             ages[i] = age;
-	  
         }
-	  
-
         return true;
-    }
+          }
+          bool spawn(Plant plant, bool newborn, Coord origin) {
+          Coord spawnPoint = tiles.getNearestEmptyTile(origin);
+          while (!attemptSpawn(plant, newborn, spawnPoint)) freeUnusedEntity();                 
+          }        
     
-
 
   // =========================
   // REMOVE
   // =========================
   
   bool remove(size_t i)
-    {
+  {
         if (!alives[i])
             return false;
 
         freeSlots.push(i);
         alives[i] = false;
-
-        search.deleteEntity();
-
         return true;
-    }
-    
+  }
 
+  void freeUnusedEntity()
+  {
+    for (size_t i = 0; i < coords.size; i++) {
+    if (tiles.tileStatuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
+    }
+  }
+    
 
       
     // =========================
@@ -117,51 +123,27 @@ Array<Plant> seeds;
     void save(Archive &archive) const
     {
     archive(capacity);
-
         archive(size);
         archive(freeSlots);
         archive(alives);
    
 
-
+        plants.save(archive);
         coords.save(archive);
-
         ages.save(archive);
-
     }
 
     template <class Archive>
     void load(Archive &archive)
     {
         archive(capacity);
-
         archive(size);
         archive(freeSlots);
         archive(alives);
-
         
-
+        plants.load(archive);
         coords.load(archive);
-
         ages.load(archive);
-
-    }
-
-    // =========================
-    // CONSTRUCTOR
-    // =========================
-
-SeedDatabase(Arena *arena, size_t capacity
-
-  , World& world
-
-
-)
-    {
-this->capacity = capacity;
-
-  this->size = 0;
-        
     }
 
 // @codegen:end database_generation

@@ -4,11 +4,14 @@ import re
 
 env = Environment(
     loader=FileSystemLoader("."),
-    undefined=StrictUndefined
+    undefined=StrictUndefined,
+    trim_blocks=True,
+    lstrip_blocks=True
 )
 database_template = env.get_template("database.j2")
 spawn_entity_template = env.get_template("entity_spawn.j2")
 spawn_buffer_template = env.get_template("spawn_buffers.j2")
+specialization_template = env.get_template("item_specializations.j2")
 
 def replace_block(filepath, marker, new_content):
     with open(filepath, "r") as f:
@@ -26,14 +29,14 @@ def replace_block(filepath, marker, new_content):
     with open(filepath, "w") as f:
         f.write(new_contents)
 
-def create_world_gen_functions():
+def create_entity_spawn_functions():
     with open("entity_spawn.yaml", "r") as f:
         config = yaml.safe_load(f)
 
         relative_path = f"../simulation/first_spawn.cpp"
 
     for _, entity in config["generation"].items():
-        print(entity["name"])
+        print(entity["name"] + "world_gen")
         generated_code = create_entity_spawn_function(entity["name"])
         
         replace_block(
@@ -94,35 +97,113 @@ def create_databases():
             generated_code,
         )
 
+def snake_to_camel(s: str) -> str:
+    parts = s.split("_")
+    return parts[0] + "".join(word.capitalize() for word in parts[1:])
 
-def create_database(database, trait_data, extra_arrays):
+def snake_to_pascal(s: str) -> str:
+    return "".join(word.capitalize() for word in s.split("_"))
+
+def make_entity_yaml(main_enum: str) -> dict:
+    entity_name = main_enum[0].lower() + main_enum[1:]
+    return {
+        "name": entity_name + "s",
+        "type": main_enum,
+        "newborn_default": entity_name,
+        "random_age_default": entity_name,
+    }
+
+def uncapitalize(s: str) -> str:
+    return s[:1].lower() + s[1:]
+
+def create_database(database, trait_data, structs, extra_arrays):
     main_enum = database["name"].capitalize()
     if "foreign_enum" in database:
         main_enum = database["foreign_enum"][0].capitalize()
-
+# TODO: main enum might not be in runtime_arrays, may be in main struct
     runtime_arrays = create_runtime_arrays(
         database,
+        main_enum,
         trait_data,
         extra_arrays,
     )
+    structs = create_structs(
+        database,
+        trait_data,
+        structs
+    )
     context = {
-        "Entity_name": database["name"].capitalize(),
-        "entity_name": database["name"],
-        "Main_enum": main_enum,
+        "Entity_name": snake_to_camel(database["name"].capitalize()),
+        "entity_name": uncapitalize(snake_to_camel(main_enum)),
+        "folder_name": database["name"],
+        "Main_enum": main_enum,        
         "runtime_arrays": runtime_arrays,
+        "structs": structs,
         "database": database,
         "traits": database.get("traits", []),
+        "database_references": database.get("database_references", []),
         "extra_arrays": database.get("extra_arrays", []),
     }
-    return database_template.render(**context)
+    first_pass = database_template.render(**context)
+    return env.from_string(first_pass).render(**context)
 
+def create_specialization(entity_name, specialization_type, specialization, specialization_data):
+    context = {
+    "Entity_name": snake_to_camel(entity_name.capitalize()),
+    "entity_name": entity_name,
+    "folder_name": entity_name,
 
-def create_runtime_arrays(database, trait_data, extra_arrays):
+    "Specialization": specialization_type.capitalize(),
+    "specialization": uncapitalize(specialization_type),
+
+    "fields": [
+    {"name": name, "type": type_}
+    for name, type_ in specialization["fields"].items()
+    ],
+
+    "items": [
+        {"name": snake_to_pascal(item_name), **item_data}
+        for item_name, item_data in specialization_data.items()
+    ],
+    }
+
+    first_pass = specialization_template.render(**context)
+    return env.from_string(first_pass).render(**context)
+
+def create_specializations():
+    with open("item_specializations.yaml", "r") as f:
+        specializations = yaml.safe_load(f)
+
+    with open("specialization_data.yaml", "r") as f:
+        data = yaml.safe_load(f)
+
+    specialization_data = data["data"]
+
+    for specialization_name, specialization in specializations["specializations"].items():
+        generated_code = create_specialization(
+            "item",
+            specialization_name,
+            specialization,
+            specialization_data[specialization_name],
+        )
+
+        relative_path = f"../world/item/{specialization_name}.hpp"
+
+        replace_block(
+            relative_path,
+            "specialization",
+            generated_code,
+        )        
+        
+def create_runtime_arrays(database, main_enum, trait_info, extra_arrays):
     runtime_arrays = []
 
+    runtime_arrays.append(make_entity_yaml(main_enum))
+    
     for trait in database.get("traits", []):
         for trait_info in trait_data:
-            if trait_info["trait_name"] == trait:
+            
+            if trait_info["trait_name"] == trait:                
                 runtime_arrays.append(trait_info)
 
     for array_id in database.get("extra_arrays", []):
@@ -132,10 +213,21 @@ def create_runtime_arrays(database, trait_data, extra_arrays):
 
     return runtime_arrays
 
+def create_structs(database, trait_data, structs):
+    for struct in database.get("structs", [])
+        
+    for trait in database.get("traits", []):
+        for trait_info in trait_data:
+            if trait_info["trait_name"] == trait:
+                structs.append(trait_info)
+
+    
 
 def main():
     create_databases()
+    create_specializations()
     create_world_gen_functions()
+    create_entity_spawn_functions()
 
 
 if __name__ == "__main__":

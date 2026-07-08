@@ -23,10 +23,12 @@ struct Game
   bool unsavedChanges = true;
 
   Time absoluteTime;
+  SDL_Rect playerBounds;      
+		
   Arena chunkArena;
   World world;
   SearchGrid search;
-  
+
 Arena tileArena;
 TileDatabase tileDatabase;
 Arena plantArena;

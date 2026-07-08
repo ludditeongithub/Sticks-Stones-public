@@ -13,7 +13,7 @@ template <typename T>
 struct Array
 {
     Arena* arena;
-    size_t count;    
+    size_t size;    
     size_t capacity;
 
     T* data;
@@ -23,15 +23,15 @@ struct Array
         if (index >= capacity)
             throw std::out_of_range("capacity overflow");
 
-        if (index >= count)
-            count = index + 1;
+        if (index >= size)
+            size = index + 1;
 
         return data[index];
     }
 
     const T& operator[](size_t index) const
     {
-        if (index >= count)
+        if (index >= size)
             throw std::out_of_range("reading uninitialized element");
 
         return data[index];
@@ -39,7 +39,7 @@ struct Array
 
     bool is_full() const
     {
-        return count == capacity;
+        return size == capacity;
     }
 
     uint16_t size_bytes() const
@@ -55,22 +55,22 @@ struct Array
     template<class Archive>
     void save(Archive& ar) const
     {
-        ar(capacity, count);
+        ar(capacity, size);
 
-        for (size_t i = 0; i < count; i++)
+        for (size_t i = 0; i < size; i++)
             ar(data[i]);
     }
 
     template<class Archive>
     void load(Archive& ar)
     {
-        ar(capacity, count);
+        ar(capacity, size);
 
         data = static_cast<T*>(
             arena_alloc(*arena, sizeof(T) * capacity)
         );
 
-        for (uint16_t i = 0; i < count; i++)
+        for (uint16_t i = 0; i < size; i++)
             ar(data[i]);
     }
 };
@@ -88,7 +88,7 @@ Array<T>& arena_make_array(Arena& arena, size_t capacity)
 
     arr->arena = arena;
     arr->capacity = capacity;
-    arr->count = 0;
+    arr->size = 0;
 
     arr->data = static_cast<T*>(
         arena_alloc(arena, sizeof(T) * capacity)
@@ -224,49 +224,49 @@ struct Stack
 
     bool empty() const
     {
-        return array->count == 0;
+        return array->size == 0;
     }
 
     uint16_t size() const
     {
-        return array->count;
+        return array->size;
     }
 
     void push(const T& value)
     {
-        if (array->count >= array->capacity)
+        if (array->size >= array->capacity)
             throw std::out_of_range("stack overflow");
 
-        array->data[array->count++] = value;
+        array->data[array->size++] = value;
     }
 
     void pop()
     {
-        if (array->count == 0)
+        if (array->size == 0)
             throw std::out_of_range("stack underflow");
 
-        --array->count;
+        --array->size;
     }
 
     T& top()
     {
-        if (array->count == 0)
+        if (array->size == 0)
             throw std::out_of_range("empty stack");
 
-        return array->data[array->count - 1];
+        return array->data[array->size - 1];
     }
 
     const T& top() const
     {
-        if (array->count == 0)
+        if (array->size == 0)
             throw std::out_of_range("empty stack");
 
-        return array->data[array->count - 1];
+        return array->data[array->size - 1];
     }
 
     void clear()
     {
-        array->count = 0;
+        array->size = 0;
     }
 };
 

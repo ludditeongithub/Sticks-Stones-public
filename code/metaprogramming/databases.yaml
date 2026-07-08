@@ -1,18 +1,29 @@
 databases:
     animal:
         name: animal
-        traits: [health, hunger, sex, age, targeting, movable, positional, searchable]
-        extra_arrays: [animal_status]
-        database_references: []
+        traits: [health, hunger, sex, age, targeting, movable, positional, searchable, transferable, generated]
+        structs:
+               main: [health, sex, age, targeting, animal_status]               
+        extra_arrays: [hunger, positional, movable]
+        database_references: [items, variant_items]
     buildable:
         name: buildable
         traits: [health, positional]
+        main_struct: [health, positional]
     item:
         name: item
-        traits: [positional, searchable]
+        traits: [positional, searchable, transferable]
+        main_struct: [positional]
+        specializations: [clothing, weapon, tool, scavengeable]
+    variant_item:
+        name: variant_item
+        traits: [positional, searachable, transferable, foreign_enum, variant]
+        main_struct: [positional, variant]
+        foreign_enum: [item]
     unit:
         name: unit
-        traits: [health, hunger, sex, age, targeting, movable, positional, searchable]
+        traits: [health, hunger, sex, age, targeting, movable, positional, searchable, transferable]
+        main_struct: [health, sex, age, targeting]        
         extra_arrays: [role_mana, role_list, skin_data, skill, inventory, place]
     tile:
         name: tile
@@ -21,7 +32,7 @@ databases:
         foreign_enum: [tileData]
     plant:
         name: plant
-        traits: [positional, age, searchable]
+        traits: [positional, age, searchable, transferable, generated]
         database_references: [seed, tile, animal]
     seed:
         name: seed
@@ -42,20 +53,26 @@ trait_data:
   - trait_name: health
     name: healths
     type: Health
-    newborn_default: maxHealths[{{ entity_name }}] * INFANT_HEALTH_MODIFIER
-    random_age_default: getMaxHealth(age)
+    newborn_default: "{{ entity_name }}::maxHealths[{{ entity_name }}] * INFANT_HEALTH_MODIFIER"
+    random_age_default: getMaxHealth({{ entity_name }}, age)
 
   - trait_name: hunger
     name: hungers
     type: Hunger
-    newborn_default: maxHungers[{{ entity_name }}] * INFANT_HUNGER_MODIFIER
-    random_age_default: getMaxHunger(age)
+    newborn_default: "{{ entity_name }}::maxHungers[{{ entity_name }}] * INFANT_HUNGER_MODIFIER"
+    random_age_default: getMaxHunger({{ entity_name }}, age)
 
   - trait_name: movable
     name: frameDatas
     type: FrameData
-    newborn_default: FrameData{ActState::NONE, Direction::South, 0}
-    random_age_default: FrameData{ActState::NONE, Direction::South, 0}
+    newborn_default: FrameData{ActState::NewPath, Direction::South, Frame::F0}
+    random_age_default: FrameData{ActState::NewPath, Direction::South, Frame::F0}
+
+  - trait_name: movable
+    name: inertias
+    type: Frame
+    newborn_default: 0
+    random_age_default: 0
 
   - trait_name: positional
     name: coords
@@ -86,6 +103,12 @@ trait_data:
     type: Sex
     newborn_default: random_bool->next()
     random_age_default: random_bool->next()
+
+  - trait_name: variant
+    name: variants
+    type: Variant
+    newborn_default: variant
+    random_age_default: variant
 
 extra_arrays:
   - id: animal_status
@@ -138,3 +161,4 @@ extra_arrays:
     type: Alt
     newborn_default: 0
     random_age_default: 0
+    

@@ -1,16 +1,38 @@
 #pragma once
 #include <cmath>
 #include <cstdint>
+enum class Direction : uint8_t
+{
+	North = 0,
+	South = 1,
+	East = 2,
+	West = 3
+};
 
 struct Coord
 {
 	uint32_t x;
 	uint32_t y;
 
-	Coord operator*=(uint32_t s)
-	{
-		return Coord(this->x * s, this->y * s);
-	}		
+		Coord operator*=(uint32_t s) { return Coord(this->x * s, this->y * s); }
+
+		inline void move(Direction direction)
+		{
+switch (direction) {
+case Direction::North:
+       	y -= 1;
+       	break;
+case Direction::South:
+       	y += 1;
+	    break;
+case Direction::East:
+       	x += 1;
+       	break;
+default:
+		x -= 1;
+        break;
+}
+		}			
 };
 
 struct SCoord
@@ -29,14 +51,6 @@ bool adjacentCoords(Coord first, Coord second)
 	return (std::abs(static_cast<int>(first.x - second.x)) <= 1 &&
 		std::abs(static_cast<int>(first.y - second.y)) <= 1);
 }
-
-enum class Direction : uint8_t
-{
-	North = 0,
-	South = 1,
-	East = 2,
-	West = 3
-};
 
 //TODO: consider stride
 inline Coord getPos(Direction direction, Coord coord, uint8_t stride = 1)
@@ -63,27 +77,11 @@ inline Coord getPos(Direction direction, Coord coord, uint8_t stride = 1)
 }
 
 using Time = uint32_t;
-#include <cstdint>
+using Frame = uint16_t;
 
-enum class Frame : uint8_t
-{
-    F0,
-    F1,
-    F2,
-    F3,
-    F4,
-    F5,
-    F6,
-    F7,
-    F8,
-    F9,
-    F10,
-    F11,
-    F12,
-    F13,
-    F14,
-    F15   
-};
+// general
+using EntityID = size_t;
+using Variant = uint8_t;
 
 // geography
 using Hum = uint16_t;
@@ -111,7 +109,6 @@ using Creativity = uint8_t;
 using Charisma = uint8_t;
 using Determination = uint8_t;
 
-
 using CloudKey = uint8_t;
 using PrecipitationKey = uint8_t;
 using Precipitation = float;
@@ -131,4 +128,16 @@ struct Target
 {
 	TargetType type;
 	uint32_t index;
+};
+
+// Food
+enum class FoodEnjoyment
+{
+	Trash,
+	Horrid,
+	Poor,
+	Mediocre,
+	Good,
+	Great,
+        Legendary
 };

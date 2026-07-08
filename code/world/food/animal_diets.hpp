@@ -1,75 +1,79 @@
 #ifndef DIETS_HPP
 #define DIETS_HPP
 
-#include "categories.hpp"
 #include <core/containers.hpp>
 #include <world/animal/enum.hpp>
 #include <world/plant/enum.hpp>
+#include "enum.hpp"
+#include "core/tables.hpp"
 
 inline constexpr BitsetTable<Animal> carnivores = []
 {
 	BitsetTable<Animal> s;
 	using enum Animal;
-	s[Pig] = true;
-	s[Wolf] = true;
-	s[Bear] = true;
-	return s;
-};
-
-inline constexpr LookupTable2D<Animal, Category> dietCategories = []
-{
-	LookupTable2D<Animal, Category> lt{};
+	auto add = [&](Animal e) { s.bitset.set(static_cast<uint16_t>(e)); };
 	using enum Animal;
-	lt[NONE] = {};
-	lt[Pig] = {Grass, Leaves, Fruit, Tuber, SmallMammals, SmallReptiles};
-	lt[Cow] = {Grass, Leaves};
-	lt[Chicken] = {Leaves, Fruit, Reeds};
-	lt[Duck] = {Leaves, Fruit, Fish, Reeds};
-	lt[Sheep] = {Leaves};
-	lt[Goat] = {Leaves, Fruit, Tuber};
-	lt[Horse] = {Grass, Leaves};
-	lt[Ox] = {Grass, Leaves};
-	lt[Donkey] = {Grass, Leaves};
-	lt[Camel] = {Grass, Leaves, Fruit};
-	lt[WaterBuffalo] = {Grass, Leaves};
-	lt[Rabbit] = {Grass, Leaves, Fruit, Tuber};
-	lt[Antelope] = {Grass, Leaves, Fruit};
-	lt[Deer] = {Grass, Leaves, Fruit, Tuber};
-	lt[Moose] = {Grass, Leaves, Fruit};
-	lt[Capybara] = {Leaves, Fruit};
-	lt[Turtle] = {Leaves, Fruit, Fish};
-	lt[Elephant] = {Leaves, Fruit, Tuber};
-	lt[Bison] = {Grass, Leaves};
-	lt[Caribou] = {Grass, Leaves, Tuber, Fruit};
+	add(Pig);
+    add(Wolf);
+    add(Bear);
+	return s;
+}();
 
-	lt[Wolf] = {MediumMammals, SmallMammals, Birds, Fish, SmallReptiles};
-	lt[Bear] = {Leaves, Fruit, Fish, SmallMammals, MediumMammals, Birds, SmallReptiles};
-
-	lt[MAX] = {};
+inline const RaggedLookupTable<Animal, Category> dietCategories = []
+{
+	RaggedLookupTable<Animal, Category> lt{};
+	using enum Category;
+	lt.set(Animal::NONE, {});
+	lt.set(Animal::Pig, {Grass, Leaves, Fruit, Tuber, SmallMammals, SmallReptiles});
+	lt.set(Animal::Cow, {Grass, Leaves});
+	lt.set(Animal::Chicken, {Leaves, Fruit, Reeds});
+	lt.set(Animal::Duck, {Leaves, Fruit, Fish, Reeds});
+	lt.set(Animal::Sheep, {Leaves});
+	lt.set(Animal::Goat, {Leaves, Fruit, Tuber});
+	lt.set(Animal::Horse, {Grass, Leaves});
+	lt.set(Animal::Ox, {Grass, Leaves});
+	lt.set(Animal::Donkey, {Grass, Leaves});
+	lt.set(Animal::Camel, {Grass, Leaves, Fruit});
+	lt.set(Animal::WaterBuffalo, {Grass, Leaves});
+	lt.set(Animal::Rabbit, {Grass, Leaves, Fruit, Tuber});
+	lt.set(Animal::Antelope, {Grass, Leaves, Fruit});
+	lt.set(Animal::Deer, {Grass, Leaves, Fruit, Tuber});
+	lt.set(Animal::Moose, {Grass, Leaves, Fruit});
+	lt.set(Animal::Capybara, {Leaves, Fruit});
+	lt.set(Animal::Turtle, {Leaves, Fruit, Fish});
+	lt.set(Animal::Elephant, {Leaves, Fruit, Tuber});
+	lt.set(Animal::Bison, {Grass, Leaves});
+	lt.set(Animal::Caribou, {Grass, Leaves, Tuber, Fruit});
+	lt.set(Animal::Wolf, {MediumMammals, SmallMammals, Birds, Fish, SmallReptiles});
+	lt.set(Animal::Bear, {Leaves, Fruit, Fish, SmallMammals, MediumMammals, Birds, SmallReptiles});
 
 	return lt;
 }();
 
-BitsetTable &getFoodTable(Category c)
+template <typename E>
+BitsetTable<E> &getFoodTable(const Category c)
 {
+	using enum Category;
 	switch (c)
 	{
 	case Leaves:
 		return leaves;
 	case Fruit:
-		return fruit;
+		return fruits;
 	case Grain:
-		return grain;
+		return grains;
 	case Underground:
-		return underground;
+		return undergrounds;
 	case Stem:
-		return stem;
+		return stems;
 	case Birds:
 		return birds;
 	case Fish:
 		return fish;
 	case SmallMammals:
-		return smallMammals;
+			return smallMammals;
+	case MediumMammals:
+			return mediumMammals;
 	case LargeMammals:
 		return largeMammals;
 	case SmallReptiles:
@@ -79,29 +83,31 @@ BitsetTable &getFoodTable(Category c)
 	}
 };
 
-BitSetTable getHerbivoreDiet(Animal a)
+
+BitsetTable<Plant> getHerbivoreDiet(Animal a)
 {
-	std::array<Category, 5> &cats = dietCategories[a];
-	BitSetTable b;
-	for (auto x : cats)
-		if !(meatCategories[x])
-			b |= getFoodTable(x);
+	std::span<const Category> cats = dietCategories.get(a);
+	BitsetTable<Plant> b;
+	for (const Category x : cats)
+		if (!meatCategories[x])
+			b |= getFoodTable<Plant>(x);
 	return b;
 };
 
-BitSetTable getCarnivoreDiet(Animal a)
+BitsetTable<Animal> getCarnivoreDiet(Animal a)
 {
 	std::array<Category, 5> &cats = dietCategories[a];
-	BitSetTable b;
+	BitsetTable<Animal> b;
 	for (auto x : cats)
 		if (meatCategories[x])
-			b |= getFoodTable(x);
+			b |= getFoodTable<Animal>(x);
 	return b;
 };
 
-inline constexpr LookupTable<BitsetTable<Animal>> herbivoreDiets = []
+inline const LookupTable<Animal, BitsetTable<Plant>> herbivoreDiets = []
 {
-	LookupTable<BitsetTable<Animal>> lt{};
+	LookupTable<Animal, BitsetTable<Plant>> lt{};
+	using enum Animal;
 	lt[Pig] = getHerbivoreDiet(Pig);
 	lt[Cow] = getHerbivoreDiet(Cow);
 	lt[Chicken] = getHerbivoreDiet(Chicken);
@@ -125,10 +131,10 @@ inline constexpr LookupTable<BitsetTable<Animal>> herbivoreDiets = []
 	return lt;
 }();
 
-inline constexpr LookupTable<BitsetTable<Animal>> carnivoreDiets = []
+inline const LookupTable<Animal, BitsetTable<Animal>> carnivoreDiets = []
 {
-	LookupTable<BitsetTable<Animal>> lt{};
-
+	LookupTable<Animal, BitsetTable<Animal>> lt{};
+    using enum Animal;
 	lt[Pig] = getCarnivoreDiet(Pig);
 	lt[Wolf] = getCarnivoreDiet(Wolf);
 	lt[Bear] = getCarnivoreDiet(Bear);

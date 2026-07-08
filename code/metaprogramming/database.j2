@@ -12,7 +12,6 @@ constexpr static uint16_t ENTITY_SIZE = sizeof({{ Main_enum }}) +
 ;
 
 size_t capacity;
-Array<{{ Main_enum }}> {{ entity_name }}s;
 {% if not 'immortal' in traits %}
     size_t size;
     Stack<size_t> freeSlots;
@@ -21,8 +20,14 @@ Array<{{ Main_enum }}> {{ entity_name }}s;
 {% if ('movable' in traits) or ('searchable' in traits) %}
   SearchGrid& search;
 {% endif %}
-{% if 'movable' in traits %}
+{% if 'movable' or 'searchable' in traits %}
   World& world;
+{% endif %}
+{% if 'positional' in traits %}
+  TileDatabase& tiles;
+{% endif %}
+{% if 'variant_items' in database_references %}
+  VariantItemDatabase& variantItems;
 {% endif %}
 
     // =========================
@@ -32,18 +37,87 @@ Array<{{ Main_enum }}> {{ entity_name }}s;
     Array<{{ r.type }}> {{ r.name }};
 {% endfor %}    
 
+// =========================
+    // CONSTRUCTOR
+    // =========================
+
+{{ Entity_name }}Database(Arena *arena, size_t capacity
+{% if 'movable' or 'searchable' in traits %}
+  , World& world
+{% endif %} 
+{% if 'searchable' in traits %}
+  , SearchGrid& search
+{% endif %}
+{% if 'positional' in traits %}
+  , TileDatabase& tiles
+{% endif %}
+{% if 'variant_items' in database_references %}
+  , VariantItemDatabase& variantItems
+{% endif %}
+) :
+{% if 'movable' or 'searchable' in traits %}
+  world(world),
+{% endif %}
+{% if 'positional' in traits %}
+  tiles(tiles),
+{% endif %}
+{% if 'searchable' in traits %}
+search(search),
+{% endif %}
+{
+this->capacity = capacity;
+{% if not 'immortal' in traits %}
+  this->size = 0;
+{% endif %}
+{% if 'variant_items' in database_references %}
+  this->variantItems = variantItems;
+{% endif %}
+{% if entity_name == 'animal' %}
+  fertilizationHandler = EggFertilizationHandler(capacity / 20);  
+{% endif %}
+
+}
+
+// =========================
+// GETTERS
+// =========================
+
+{% for r in runtime_arrays %}
+  inline {{ r.type }}& {{ r.name }}(size_t index) {
+return {{ r.name }}s[index];
+  }
+{% endfor %}
+
+{% for s in structs %}
+  {% for f in s.fields %}
+    inline {{ f.type }}& {{ f.name }}(size_t index) {    
+return {{ s.name }}[index].{{ f.name }};
+    }
+  {% endfor %}
+{% endfor %}
+
 {% if not 'immortal' in traits %}
   // =========================
   // SPAWN
   // =========================
-  
-  bool spawn({{ Entity_name }} entity, bool newborn, Coord coord)
-    {
+
+{% if 'generated' in traits %}
+  void add{{ Entity_name }}s(WorldSpawner::{{ Entity_name }}SpawnBuffer& spawnBuffer)
+{
+	for (size_t i = 0; i < spawnBuffer.size; i++)
+	  if (spawn(spawnBuffer.{{ entity_name }}s[i], spawnBuffer.coords[i], false)) {}
+	  else
+	    {
+	      //TODO: error
+	    }
+}
+{% endif %}
+ 
+  bool attemptSpawn({{ Main_enum }} {{ entity_name }}, bool newborn, Coord coord, {% if 'variant' in traits %} Variant variant {% endif %})
+  {       
         if (size + 1 > capacity)
             return false;
-
         size_t i;
-
         if (freeSlots.empty())
         {
             i = size;
@@ -54,9 +128,7 @@ Array<{{ Main_enum }}> {{ entity_name }}s;
             i = freeSlots.top();
             freeSlots.pop();
         }
-
         alives[i] = true;
-
         if (newborn)
         {
       {% for r in runtime_arrays %}
@@ -71,11 +143,15 @@ Array<{{ Main_enum }}> {{ entity_name }}s;
 	  {% endfor %}
         }
 	  {% if 'searchable' in traits %}
-  
+            search.insertEntity({{ entity_name }}, {i, coords[i]});
           {% endif %}
-
         return true;
-    }
+          }
+{# TODO: error report if it does NOT spawn on passed origin #}
+          bool spawn({{ Main_enum }} {{ entity_name }}, bool newborn, Coord origin) {
+          Coord spawnPoint = tiles.getNearestEmptyTile(origin);
+          while (!attemptSpawn({{ entity_name }}, newborn, spawnPoint)) freeUnusedEntity();                 
+          }        
 {% endif %}    
 
 {% if not 'immortal' in traits %}
@@ -84,17 +160,28 @@ Array<{{ Main_enum }}> {{ entity_name }}s;
   // =========================
   
   bool remove(size_t i)
-    {
+  {
         if (!alives[i])
             return false;
 
         freeSlots.push(i);
         alives[i] = false;
-
-        search.deleteEntity();
-
+  {% if 'searchable' in traits %}
+        {{ Main_enum }} {{ entity_name}} = {{ entity_name }}s[i];
+            search.removeEntity({{ entity_name }}, {i, coords[i]});
+  {% endif %}
         return true;
+  }
+
+  {# OPTI: operation if EVERY tile has been discovered#}
+  void freeUnusedEntity()
+  {
+  {% if 'positional' in traits %}
+    for (size_t i = 0; i < coords.size; i++) {
+    if (tiles.tileStatuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
     }
+  {% endif %}
+  }
 {% endif %}    
 
 {% if 'movable' in traits %}
@@ -105,10 +192,10 @@ Array<{{ Main_enum }}> {{ entity_name }}s;
     inline bool attemptMoveEntity(size_t index)
     {
         Coord& pos = coords[index];
-        Coord newPos = getPos(directions[index], pos);
+        Coord newPos = getPos(frameDatas[index].get<Direction>(), pos);
         size_t ti = world.getTileIndexFromCoord(newPos);
 
-        if (search.tiles.occupieds[ti] == false)
+        if (search.tiles.tileStatuses.get<OccupiedStatus>()[ti] == false)
         {
             pos = newPos;
             return true;
@@ -152,22 +239,32 @@ Array<{{ Main_enum }}> {{ entity_name }}s;
 {% endfor %}
     }
 
-    // =========================
-    // CONSTRUCTOR
-    // =========================
+{% if 'transferable' in traits %}
 
-{{ Entity_name }}Database(Arena *arena, size_t capacity
-{% if 'movable' or 'searchable' in traits %}
-  , World& world
+// =========================
+// TRANSFER
+// =========================
+
+inline bool transfer{{ Entity_name }}(size_t i, {{ Entity_name }}Database &oldDB, {{ Entity_name }}Database &newDB)
+  {
+  if (newDB.size >= newDB.capacity) return false;
+  int index;  
+  if (newDB.freeSlots.empty())
+  {
+  index = ++size;
+	}
+	else
+	{
+		index = newDB.freeSlots.top();
+		newDB.freeSlots.pop();			
+  }
+   {% for r in runtime_arrays %}
+    newDB.{{r.name}}[index] = oldDB.{{r.name}}[i];
+  {% endfor %}
+  newDB.alives[index] = true;
+  oldDB.freeSlots.push(i);
+  oldDB.alives[index] = false;
+  return true;
+  }
 {% endif %}
-{% if 'searchable' in traits %}
-  , SearchGrid& search
-{% endif %}
-)
-    {
-this->capacity = capacity;
-{% if not 'immortal' in traits %}
-  this->size = 0;
-{% endif %}        
-    }
 
