@@ -16,14 +16,13 @@
 #include <schedule/event.hpp>
 #include <queue>
 
-
 struct AnimalDatabase
 {
 public:
 struct EggFertilizationHandler {
-		std::vector<size_t> fertilizedEggLayers;
+		std::vector<size_t> fertilized_egg_layers;
 		std::vector<bool> valid;
-		std::queue<size_t> freeIndices;
+		std::queue<size_t> free_indices;
 		void push_back(size_t index)
 		{
 			if (freeIndices.empty())
@@ -52,14 +51,14 @@ struct EggFertilizationHandler {
 				valid.reserve(size);				
 		}
 };
-		EggFertilizationHandler fertilizationHandler;
+		EggFertilizationHandler fertilization_handler;
 	
 	// @codegen:begin database_generation
     // =========================
     // BASE DATABASE MEMBERS
     // =========================
 
-constexpr static uint16_t ENTITY_SIZE = sizeof(Animal) +
+constexpr static uint16_t entity_size = sizeof(Animal) +
 + sizeof(bool)
   
  +  sizeof(Animal) 
@@ -77,12 +76,12 @@ constexpr static uint16_t ENTITY_SIZE = sizeof(Animal) +
 
 size_t capacity;
     size_t size;
-    Stack<size_t> freeSlots;
+    Stack<size_t> free_slots;
     Array<bool> alives;
   SearchGrid& search;
   World& world;
   TileDatabase& tiles;
-  VariantItemDatabase& variantItems;
+  VariantItemDatabase& variant_items;
 
     // =========================
     // ENTITY-SPECIFIC MEMBERS
@@ -93,11 +92,11 @@ size_t capacity;
     Array<Sex> sexes;
     Array<Time> ages;
     Array<size_t> targets;
-    Array<TargetType> targetTypes;
+    Array<TargetType> target_types;
     Array<Action> actions;
-    Array<FrameData> frameDatas;
+    Array<FrameData> frame_datas;
     Array<Coord> coords;
-    Array<AnimalStatus> animalStatuses;
+    Array<AnimalStatus> animal_statuses;
     
 
 // =========================
@@ -108,15 +107,15 @@ AnimalDatabase(Arena *arena, size_t capacity
   , World& world 
   , SearchGrid& search
   , TileDatabase& tiles
-  , VariantItemDatabase& variantItems
+  , VariantItemDatabase& variant_items
 ) :
   world(world),
   tiles(tiles),
-search(search),
+search(search)
 {
 this->capacity = capacity;
   this->size = 0;
-  this->variantItems = variantItems;
+  this->variant_items = variant_items;
   fertilizationHandler = EggFertilizationHandler(capacity / 20);  
 
 }
@@ -125,17 +124,17 @@ this->capacity = capacity;
   // SPAWN
   // =========================
 
-  void addAnimals(WorldSpawner::AnimalSpawnBuffer& spawnBuffer)
+  void add_animals(WorldSpawner::AnimalSpawnBuffer& spawn_buffer)
 {
-	for (size_t i = 0; i < spawnBuffer.size; i++)
-	  if (spawn(spawnBuffer.animals[i], spawnBuffer.coords[i], false)) {}
+	for (size_t i = 0; i < spawn_buffer.size; i++)
+	  if (spawn(spawn_buffer.animals[i], spawn_buffer.coords[i], false)) {}
 	  else
 	    {
 	      //TODO: error
 	    }
 }
  
-  bool attemptSpawn(Animal animal, bool newborn, Coord coord, )
+  bool attempt_spawn(Animal animal, bool newborn, Coord coord )
   {       
         if (size + 1 > capacity)
             return false;
@@ -184,8 +183,8 @@ this->capacity = capacity;
         return true;
           }
           bool spawn(Animal animal, bool newborn, Coord origin) {
-          Coord spawnPoint = tiles.getNearestEmptyTile(origin);
-          while (!attemptSpawn(animal, newborn, spawnPoint)) freeUnusedEntity();                 
+          Coord spawn_point = tiles.get_nearest_empty_tile(origin);
+          while (!attempt_spawn(animal, newborn, spawn_point)) free_unused_entity();                 
           }        
     
 
@@ -205,7 +204,7 @@ this->capacity = capacity;
         return true;
   }
 
-  void freeUnusedEntity()
+  void free_unused_entity()
   {
     for (size_t i = 0; i < coords.size; i++) {
     if (tiles.tileStatuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
@@ -217,15 +216,15 @@ this->capacity = capacity;
   // MOVE
   // =========================
   
-    inline bool attemptMoveEntity(size_t index)
+    inline bool attempt_move_entity(size_t index)
     {
         Coord& pos = coords[index];
-        Coord newPos = getPos(frameDatas[index].get<Direction>(), pos);
-        size_t ti = world.getTileIndexFromCoord(newPos);
+        Coord new_pos = getPos(frameDatas[index].get<Direction>(), pos);
+        size_t ti = world.get_tile_index_from_coord(new_pos);
 
         if (search.tiles.tileStatuses.get<OccupiedStatus>()[ti] == false)
         {
-            pos = newPos;
+            pos = new_pos;
             return true;
         }
 
@@ -284,33 +283,33 @@ this->capacity = capacity;
 // TRANSFER
 // =========================
 
-inline bool transferAnimal(size_t i, AnimalDatabase &oldDB, AnimalDatabase &newDB)
+inline bool transfer_animal(size_t i, AnimalDatabase &old_db, AnimalDatabase &new_db)
   {
-  if (newDB.size >= newDB.capacity) return false;
+  if (new_db.size >= new_db.capacity) return false;
   int index;  
-  if (newDB.freeSlots.empty())
+  if (new_db.freeSlots.empty())
   {
   index = ++size;
 	}
 	else
 	{
-		index = newDB.freeSlots.top();
-		newDB.freeSlots.pop();			
+		index = new_db.freeSlots.top();
+		new_db.freeSlots.pop();			
   }
-    newDB.animals[index] = oldDB.animals[i];
-    newDB.healths[index] = oldDB.healths[i];
-    newDB.hungers[index] = oldDB.hungers[i];
-    newDB.sexes[index] = oldDB.sexes[i];
-    newDB.ages[index] = oldDB.ages[i];
-    newDB.targets[index] = oldDB.targets[i];
-    newDB.targetTypes[index] = oldDB.targetTypes[i];
-    newDB.actions[index] = oldDB.actions[i];
-    newDB.frameDatas[index] = oldDB.frameDatas[i];
-    newDB.coords[index] = oldDB.coords[i];
-    newDB.animalStatuses[index] = oldDB.animalStatuses[i];
-  newDB.alives[index] = true;
-  oldDB.freeSlots.push(i);
-  oldDB.alives[index] = false;
+    new_db.animals[index] = old_db.animals[i];
+    new_db.healths[index] = old_db.healths[i];
+    new_db.hungers[index] = old_db.hungers[i];
+    new_db.sexes[index] = old_db.sexes[i];
+    new_db.ages[index] = old_db.ages[i];
+    new_db.targets[index] = old_db.targets[i];
+    new_db.targetTypes[index] = old_db.targetTypes[i];
+    new_db.actions[index] = old_db.actions[i];
+    new_db.frameDatas[index] = old_db.frameDatas[i];
+    new_db.coords[index] = old_db.coords[i];
+    new_db.animalStatuses[index] = old_db.animalStatuses[i];
+  new_db.alives[index] = true;
+  old_db.freeSlots.push(i);
+  old_db.alives[index] = false;
   return true;
   }
 // @codegen:end database_generation
@@ -319,15 +318,15 @@ inline bool transferAnimal(size_t i, AnimalDatabase &oldDB, AnimalDatabase &newD
 		// REPRODUCTION
 		// =========================
 
-		void birthAnimal(Animal animal, size_t motherIndex);
-		void breed(Animal animal, size_t femaleIndex, size_t maleIndex);
-        void setTrackMatePath(Animal animal, size_t index);
-		inline bool getConceptionRoll(Animal animal, size_t femaleIndex, size_t maleIndex);
+		void birth_animal(Animal animal, size_t mother_index);
+		void breed(Animal animal, size_t female_index, size_t male_index);
+        void set_track_mate_path(Animal animal, size_t index);
+		inline bool get_conception_roll(Animal animal, size_t female_index, size_t male_index);
 				
-  inline void handleEvent(Event& event);
+  inline void handle_event(Event& event);
 		inline void move(size_t i);
 		
-		void makeCorpse(const size_t index);
-		void killAnimal(const size_t index);
-		void layEgg(Animal animal, Coord coord, bool fertilized);
+		void make_corpse(const size_t index);
+		void kill_animal(const size_t index);
+		void lay_egg(Animal animal, Coord coord, bool fertilized);
 };

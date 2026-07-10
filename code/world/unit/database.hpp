@@ -25,7 +25,7 @@ using OverflowHashMap = std::unordered_map<uint32_t, std::vector<HoldableSlot>>;
 
 using OverflowContainerMap = std::unordered_map<uint16_t, std::vector<Container>>;
 
-constexpr uint16_t UNIT_CAP = 1000;
+constexpr uint16_t unit_cap = 1000;
 
 // the total volume of each bulk category hands can maximally carry.
 // where 0.1 is 100mL
@@ -33,7 +33,7 @@ constexpr uint16_t UNIT_CAP = 1000;
 
 // mas weights pawns can carry
 
-constexpr uint16_t CONTAINER_UNDERFLOW_LIMIT = 3;
+constexpr uint16_t container_underflow_limit = 3;
 
 // Fine means that only fine objects can be carried, mid means that loose, soft, or solid objects
 // can be carried, single means that only single objects can be carried
@@ -43,8 +43,8 @@ struct Inventory
 	// TODO
 	//  std::variant<ItemSlot, VariantItemSlot, ToolSlot> leftHand;
 	//  std::variant<ItemSlot, VariantItemSlot, ToolSlot> rightHand;
-	std::array<Container, CONTAINER_UNDERFLOW_LIMIT> containers; // first container is HANDS
-	BulkStatus bulkStatus = BulkStatus::NONE;		     // for hands
+	std::array<Container, container_underflow_limit> containers; // first container is HANDS
+	BulkStatus bulk_status = BulkStatus::NONE;		     // for hands
 	float weight;
 	Inventory()
 	{
@@ -52,7 +52,7 @@ struct Inventory
 		weight = 0;
 	}
 
-	bool attemptHold(Item item) {}
+	bool attempt_hold(Item item) {}
 };
 
 struct Skills
@@ -67,26 +67,26 @@ struct Skills
 	Charisma charisma;
 	Determination determination;
 
-	uint8_t getRandomStartingSkill()
+	uint8_t get_random_starting_skill()
 	{
 		return static_cast<uint8_t>(STARTING_SKILL_MAX * random_chance->next());
 	}
 
 	Skills()
 	{
-		strength = getRandomStartingSkill();
-		athleticism = getRandomStartingSkill();
-		dexterity = getRandomStartingSkill();
-		intellect = getRandomStartingSkill();
-		perception = getRandomStartingSkill();
-		creativity = getRandomStartingSkill();
-		charisma = getRandomStartingSkill();
-		determination = getRandomStartingSkill();
+		strength = get_random_starting_skill();
+		athleticism = get_random_starting_skill();
+		dexterity = get_random_starting_skill();
+		intellect = get_random_starting_skill();
+		perception = get_random_starting_skill();
+		creativity = get_random_starting_skill();
+		charisma = get_random_starting_skill();
+		determination = get_random_starting_skill();
 	}
 };
 
-constexpr uint8_t MAX_ROLES = 5;
-using Roles = std::array<Role, MAX_ROLES>;
+constexpr uint8_t max_roles = 5;
+using Roles = std::array<Role, max_roles>;
 using RoleMana = uint8_t;
 
 using Sex = bool;
@@ -111,7 +111,7 @@ struct UnitDatabase
     // BASE DATABASE MEMBERS
     // =========================
 
-constexpr static uint16_t ENTITY_SIZE = sizeof(Unit) +
+constexpr static uint16_t entity_size = sizeof(Unit) +
 + sizeof(bool)
   
  +  sizeof(Unit) 
@@ -134,7 +134,7 @@ constexpr static uint16_t ENTITY_SIZE = sizeof(Unit) +
 
 size_t capacity;
     size_t size;
-    Stack<size_t> freeSlots;
+    Stack<size_t> free_slots;
     Array<bool> alives;
   SearchGrid& search;
   World& world;
@@ -149,13 +149,13 @@ size_t capacity;
     Array<Sex> sexes;
     Array<Time> ages;
     Array<size_t> targets;
-    Array<TargetType> targetTypes;
+    Array<TargetType> target_types;
     Array<Action> actions;
-    Array<FrameData> frameDatas;
+    Array<FrameData> frame_datas;
     Array<Coord> coords;
-    Array<RoleMana> roleManas;
-    Array<std::array<Role, ROLE_MAX>> roleLists;
-    Array<SkinData> skinDatas;
+    Array<RoleMana> role_manas;
+    Array<std::array<Role, ROLE_MAX>> role_lists;
+    Array<SkinData> skin_datas;
     Array<Skills{}> skills;
     Array<Inventory> inventories;
     Array<Places> places;
@@ -185,7 +185,7 @@ this->capacity = capacity;
   // =========================
 
  
-  bool attemptSpawn(Unit unit, bool newborn, Coord coord, )
+  bool attempt_spawn(Unit unit, bool newborn, Coord coord )
   {       
         if (size + 1 > capacity)
             return false;
@@ -244,8 +244,8 @@ this->capacity = capacity;
         return true;
           }
           bool spawn(Unit unit, bool newborn, Coord origin) {
-          Coord spawnPoint = tiles.getNearestEmptyTile(origin);
-          while (!attemptSpawn(unit, newborn, spawnPoint)) freeUnusedEntity();                 
+          Coord spawn_point = tiles.get_nearest_empty_tile(origin);
+          while (!attempt_spawn(unit, newborn, spawn_point)) free_unused_entity();                 
           }        
     
 
@@ -265,7 +265,7 @@ this->capacity = capacity;
         return true;
   }
 
-  void freeUnusedEntity()
+  void free_unused_entity()
   {
     for (size_t i = 0; i < coords.size; i++) {
     if (tiles.tileStatuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
@@ -277,15 +277,15 @@ this->capacity = capacity;
   // MOVE
   // =========================
   
-    inline bool attemptMoveEntity(size_t index)
+    inline bool attempt_move_entity(size_t index)
     {
         Coord& pos = coords[index];
-        Coord newPos = getPos(frameDatas[index].get<Direction>(), pos);
-        size_t ti = world.getTileIndexFromCoord(newPos);
+        Coord new_pos = getPos(frameDatas[index].get<Direction>(), pos);
+        size_t ti = world.get_tile_index_from_coord(new_pos);
 
         if (search.tiles.tileStatuses.get<OccupiedStatus>()[ti] == false)
         {
-            pos = newPos;
+            pos = new_pos;
             return true;
         }
 
@@ -354,38 +354,38 @@ this->capacity = capacity;
 // TRANSFER
 // =========================
 
-inline bool transferUnit(size_t i, UnitDatabase &oldDB, UnitDatabase &newDB)
+inline bool transfer_unit(size_t i, UnitDatabase &old_db, UnitDatabase &new_db)
   {
-  if (newDB.size >= newDB.capacity) return false;
+  if (new_db.size >= new_db.capacity) return false;
   int index;  
-  if (newDB.freeSlots.empty())
+  if (new_db.freeSlots.empty())
   {
   index = ++size;
 	}
 	else
 	{
-		index = newDB.freeSlots.top();
-		newDB.freeSlots.pop();			
+		index = new_db.freeSlots.top();
+		new_db.freeSlots.pop();			
   }
-    newDB.units[index] = oldDB.units[i];
-    newDB.healths[index] = oldDB.healths[i];
-    newDB.hungers[index] = oldDB.hungers[i];
-    newDB.sexes[index] = oldDB.sexes[i];
-    newDB.ages[index] = oldDB.ages[i];
-    newDB.targets[index] = oldDB.targets[i];
-    newDB.targetTypes[index] = oldDB.targetTypes[i];
-    newDB.actions[index] = oldDB.actions[i];
-    newDB.frameDatas[index] = oldDB.frameDatas[i];
-    newDB.coords[index] = oldDB.coords[i];
-    newDB.roleManas[index] = oldDB.roleManas[i];
-    newDB.roleLists[index] = oldDB.roleLists[i];
-    newDB.skinDatas[index] = oldDB.skinDatas[i];
-    newDB.skills[index] = oldDB.skills[i];
-    newDB.inventories[index] = oldDB.inventories[i];
-    newDB.places[index] = oldDB.places[i];
-  newDB.alives[index] = true;
-  oldDB.freeSlots.push(i);
-  oldDB.alives[index] = false;
+    new_db.units[index] = old_db.units[i];
+    new_db.healths[index] = old_db.healths[i];
+    new_db.hungers[index] = old_db.hungers[i];
+    new_db.sexes[index] = old_db.sexes[i];
+    new_db.ages[index] = old_db.ages[i];
+    new_db.targets[index] = old_db.targets[i];
+    new_db.targetTypes[index] = old_db.targetTypes[i];
+    new_db.actions[index] = old_db.actions[i];
+    new_db.frameDatas[index] = old_db.frameDatas[i];
+    new_db.coords[index] = old_db.coords[i];
+    new_db.roleManas[index] = old_db.roleManas[i];
+    new_db.roleLists[index] = old_db.roleLists[i];
+    new_db.skinDatas[index] = old_db.skinDatas[i];
+    new_db.skills[index] = old_db.skills[i];
+    new_db.inventories[index] = old_db.inventories[i];
+    new_db.places[index] = old_db.places[i];
+  new_db.alives[index] = true;
+  old_db.freeSlots.push(i);
+  old_db.alives[index] = false;
   return true;
   }
 // @codegen:end database_generation

@@ -1,0 +1,37 @@
+// wander becomes idle at end
+// also automatically sets
+void setPositionsAndQueueNextActions(PathsBuffer& rpd, std::vector<EntityID>& indices, Array<Coord> positions, Array<Action> actions)
+{
+	int j = 0;
+	for (int k = 0; k < indices.size; k++)
+			{
+			EntityID i = indices[k];
+			Action &action = actions[i];
+			// this could be pre-stored in a contiguous array
+			Coord c = rpd.pop(i);
+					
+            #if !SHIPPING_BUILD
+			assert(
+			    manhattanDist(c, p) > 1 &&
+			    "Tile movement must be between tiles 1 distance away from each other.");
+			if (animal) assert(action > Action::ANIMAL_MIN && action < Action::ANIMAL_MAX || action == Action::Wander);
+#endif
+					
+		    Coord &p = positions[i];
+			p = c;
+			// get new path if there are x or less tiles to go and destination farther
+			// than x tiles
+			if (rpd.currents[i] >= rpd.ends[i] - NEW_PATH_DIST)
+			{
+				if (manhattanDist(rpd.destinations[i], p) >= NEW_PATH_DIST)
+				{
+					action = Action::NewPath;
+				}
+				else
+						{
+								if (animal) handleAnimalNewAction(database, i);
+								else handleUnitNewAction(database, i);
+						}
+			}
+		}
+	}

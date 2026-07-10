@@ -29,7 +29,7 @@ struct Arena
 };
 
 template <typename... Types>
-size_t getTypesSizeBytes(Types ... types)
+size_t get_types_size_bytes(Types ... types)
 {
 
 }
@@ -71,29 +71,29 @@ void* arena_alloc_aligned(Arena& arena,
 template <typename T> struct Pool
 {
 	T *data;
-	uint32_t *freeList;
+	uint32_t *free_list;
 	uint32_t capacity;
-	uint32_t freeHead;
+	uint32_t free_head;
 
-	Pool(uint32_t cap) : capacity(cap), freeHead(0)
+	Pool(uint32_t cap) : capacity(cap), free_head(0)
 	{
 		data = static_cast<T *>(operator new[](sizeof(T) * capacity));
-		freeList = new uint32_t[capacity];
+		free_list = new uint32_t[capacity];
 		for (uint32_t i = 0; i < capacity; ++i)
-			freeList[i] = i;
+			free_list[i] = i;
 	}
 
 	~Pool()
 	{
 		operator delete[](data);
-		delete[] freeList;
+		delete[] free_list;
 	}
 
 	T *alloc()
 	{
-		if (freeHead >= capacity)
+		if (free_head >= capacity)
 			return nullptr;
-		uint32_t index = freeList[freeHead++];
+		uint32_t index = free_list[free_head++];
 		return new (&data[index]) T();
 	}
 
@@ -103,7 +103,7 @@ template <typename T> struct Pool
 			return;
 		uint32_t index = static_cast<uint32_t>(obj - data);
 		obj->~T();
-		freeList[--freeHead] = index;
+		free_list[--free_head] = index;
 	}
 };
 

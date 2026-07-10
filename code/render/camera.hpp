@@ -3,6 +3,6 @@
 class Camera
 {
 public:
-	Coord leftCorner;
+	Coord left_corner;
 	Camera(){}
 };

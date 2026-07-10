@@ -8,7 +8,7 @@ struct VariantItemDatabase {
     // BASE DATABASE MEMBERS
     // =========================
 
-constexpr static uint16_t ENTITY_SIZE = sizeof(Item) +
+constexpr static uint16_t entity_size = sizeof(Item) +
 + sizeof(bool)
   
  +  sizeof(Item) 
@@ -18,7 +18,7 @@ constexpr static uint16_t ENTITY_SIZE = sizeof(Item) +
 
 size_t capacity;
     size_t size;
-    Stack<size_t> freeSlots;
+    Stack<size_t> free_slots;
     Array<bool> alives;
   World& world;
   TileDatabase& tiles;
@@ -53,7 +53,7 @@ this->capacity = capacity;
   // =========================
 
  
-  bool attemptSpawn(Item item, bool newborn, Coord coord,  Variant variant )
+  bool attempt_spawn(Item item, bool newborn, Coord coord,  Variant variant )
   {       
         if (size + 1 > capacity)
             return false;
@@ -85,8 +85,8 @@ this->capacity = capacity;
         return true;
           }
           bool spawn(Item item, bool newborn, Coord origin) {
-          Coord spawnPoint = tiles.getNearestEmptyTile(origin);
-          while (!attemptSpawn(item, newborn, spawnPoint)) freeUnusedEntity();                 
+          Coord spawn_point = tiles.get_nearest_empty_tile(origin);
+          while (!attempt_spawn(item, newborn, spawn_point)) free_unused_entity();                 
           }        
     
 
@@ -104,7 +104,7 @@ this->capacity = capacity;
         return true;
   }
 
-  void freeUnusedEntity()
+  void free_unused_entity()
   {
     for (size_t i = 0; i < coords.size; i++) {
     if (tiles.tileStatuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
@@ -149,25 +149,25 @@ this->capacity = capacity;
 // TRANSFER
 // =========================
 
-inline bool transferVariantItem(size_t i, VariantItemDatabase &oldDB, VariantItemDatabase &newDB)
+inline bool transfer_variant_item(size_t i, VariantItemDatabase &old_db, VariantItemDatabase &new_db)
   {
-  if (newDB.size >= newDB.capacity) return false;
+  if (new_db.size >= new_db.capacity) return false;
   int index;  
-  if (newDB.freeSlots.empty())
+  if (new_db.freeSlots.empty())
   {
   index = ++size;
 	}
 	else
 	{
-		index = newDB.freeSlots.top();
-		newDB.freeSlots.pop();			
+		index = new_db.freeSlots.top();
+		new_db.freeSlots.pop();			
   }
-    newDB.items[index] = oldDB.items[i];
-    newDB.coords[index] = oldDB.coords[i];
-    newDB.variants[index] = oldDB.variants[i];
-  newDB.alives[index] = true;
-  oldDB.freeSlots.push(i);
-  oldDB.alives[index] = false;
+    new_db.items[index] = old_db.items[i];
+    new_db.coords[index] = old_db.coords[i];
+    new_db.variants[index] = old_db.variants[i];
+  new_db.alives[index] = true;
+  old_db.freeSlots.push(i);
+  old_db.alives[index] = false;
   return true;
   }
 // @codegen:end database_generation

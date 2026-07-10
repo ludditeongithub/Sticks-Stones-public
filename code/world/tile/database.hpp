@@ -19,7 +19,7 @@ class TileDatabase
     // BASE DATABASE MEMBERS
     // =========================
 
-constexpr static uint16_t ENTITY_SIZE = sizeof(Tiledata) +
+constexpr static uint16_t entity_size = sizeof(Tiledata) +
   
  +  sizeof(Tiledata) 
  +  sizeof(Alt) 
@@ -36,7 +36,7 @@ size_t capacity;
     Array<Tiledata> tiledatas;
     Array<Alt> altitudes;
     Array<Liquid> waters;
-    Array<TileStatus> tileStatuses;
+    Array<TileStatus> tile_statuses;
     
 
 // =========================
@@ -87,12 +87,12 @@ this->capacity = capacity;
 
 // @codegen:end database_generation
 	
-	Coord getNearestEmptyTile(Coord coord);
-		Coord getNearestEmptyTileBlock(Coord coord, size_t length, size_t width = 1);
-		inline size_t getIndex(const Coord coord)
+	Coord get_nearest_empty_tile(Coord coord);
+		Coord get_nearest_empty_tile_block(Coord coord, size_t length, size_t width = 1);
+		inline size_t get_index(const Coord coord)
 		{
 return coord.y * 
 		}
-		inline Frame calcInertia(const Coord coord, bool running);
-		inline Frame calcInertia(Frame entityBaseFrames, const Coord coord);
+		inline Frame calc_inertia(const Coord coord, bool running);
+		inline Frame calc_inertia(Frame entity_base_frames, const Coord coord);
 };

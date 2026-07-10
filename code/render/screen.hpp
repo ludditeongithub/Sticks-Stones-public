@@ -13,21 +13,21 @@ SDL_Renderer *renderer = NULL;
 
 
 // VIEWPORTS
-SDL_Rect mainScreenViewport = {0, 0, 640, 320};
+SDL_Rect main_screen_viewport = {0, 0, 640, 320};
 
-SDL_Rect bottomBarViewport = {0, 305, 640, 55};
+SDL_Rect bottom_bar_viewport = {0, 305, 640, 55};
 
 
-const int FIRST_LAUNCH_WINDOW_WIDTH = 200;
-const int FIRST_LAUNCH_WINDOW_HEIGHT = 500;
+const int first_launch_window_width = 200;
+const int first_launch_window_height = 500;
 
 // Game Simulation screen dimensions, before upscale to user screen
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+const int screen_width = 640;
+const int screen_height = 480;
 
-constexpr uint32_t TILE_LENGTH = 16;
-constexpr uint32_t SCREEN_TILE_HEIGHT = SCREEN_HEIGHT / TILE_LENGTH;
-constexpr uint32_t SCREEN_TILE_WIDTH = SCREEN_WIDTH / TILE_LENGTH;
+constexpr uint32_t tile_length = 16;
+constexpr uint32_t screen_tile_height = screen_height / tile_length;
+constexpr uint32_t screen_tile_width = screen_width / tile_length;
 
 std::array<Coord, 6> screen_dimensions = {Coord{640, 360},  {1280, 720},  {1366, 768},
 					  {1600, 900}, {1920, 1080}, {3840, 2160}};

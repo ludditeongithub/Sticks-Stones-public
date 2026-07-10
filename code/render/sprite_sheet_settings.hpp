@@ -17,41 +17,41 @@ namespace sprite
 using json = nlohmann::json;
 // using Sprite = std::variant<Item, Plant, Tile, Grass, Animal, Unit, Buildable, ButtonSprite, UISprite>;
 
-std::array<SDL_Rect, static_cast<size_t>(Animal::MAX)> animalSprites;
-std::array<SDL_Rect, static_cast<size_t>(Buildable::MAX)> buildableSprites;
-std::array<SDL_Rect, static_cast<size_t>(Plant::MAX)> plantSprites;
-std::array<SDL_Rect, static_cast<size_t>(Item::MAX)> itemSprites;
-std::array<SDL_Rect, static_cast<size_t>(Tile::MAX)> tileSprites;
-std::array<SDL_Rect, static_cast<size_t>(Grass::MAX)> grassSprites;
-std::array<SDL_Rect, static_cast<size_t>(Unit::MAX)> unitSprites;
-std::array<SDL_Rect, static_cast<size_t>(ButtonSprite::MAX)> buttonSprites;
-std::array<SDL_Rect, static_cast<size_t>(UISprite::MAX)> UISprites;
+std::array<SDL_Rect, static_cast<size_t>(Animal::MAX)> animal_sprites;
+std::array<SDL_Rect, static_cast<size_t>(Buildable::MAX)> buildable_sprites;
+std::array<SDL_Rect, static_cast<size_t>(Plant::MAX)> plant_sprites;
+std::array<SDL_Rect, static_cast<size_t>(Item::MAX)> item_sprites;
+std::array<SDL_Rect, static_cast<size_t>(Tile::MAX)> tile_sprites;
+std::array<SDL_Rect, static_cast<size_t>(Grass::MAX)> grass_sprites;
+std::array<SDL_Rect, static_cast<size_t>(Unit::MAX)> unit_sprites;
+std::array<SDL_Rect, static_cast<size_t>(ButtonSprite::MAX)> button_sprites;
+std::array<SDL_Rect, static_cast<size_t>(UISprite::MAX)> ui_sprites;
 
 template<typename Sprite>
-inline void saveSprite(int index, Sprite sprite, SCoord position, SCoord dimension)
+inline void save_sprite(int index, Sprite sprite, SCoord position, SCoord dimension)
 {
 	if (std::is_same<Animal, Sprite>::value) {
-		animalSprites[index] = SDL_Rect{position.x, position.y, dimension.x, dimension.y};	
+		animal_sprites[index] = SDL_Rect{position.x, position.y, dimension.x, dimension.y};	
 	    } else if (std::is_same<Buildable, Sprite>::value) {
-		buildableSprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
+		buildable_sprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
 	} else if (std::is_same<Plant, Sprite>::value) {
-		plantSprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
+		plant_sprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
 	} else if (std::is_same<Item, Sprite>::value) {
-		itemSprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
+		item_sprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
 	} else if (std::is_same<Tile, Sprite>::value) {
-		tileSprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
+		tile_sprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
 	} else if (std::is_same<Grass, Sprite>::value) {
-		grassSprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
+		grass_sprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
 	} else if (std::is_same<ButtonUI, Sprite>::value) {
-          buttonSprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y}; // NOTE: since buttons have three states, the dimension is divided by 3.
+          button_sprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y}; // NOTE: since buttons have three states, the dimension is divided by 3.
 	} else if (std::is_same<UISprite, Sprite>::value ) {
-		UISprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
+		ui_sprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
 	} 
 }
 
 // TODO: fix using BetterEnum
 template <typename Enum>
-void loadOneTypeSprites(const json& sheet) {
+void load_one_type_sprites(const json& sheet) {
     for (size_t i = 0; i < static_cast<size_t>(Enum::MAX); i++) {
         Enum sprite = static_cast<Enum>(i);
 
@@ -71,7 +71,7 @@ void loadOneTypeSprites(const json& sheet) {
 }
 
 template <typename ... Enums>
-void loadTypeSprites() {
+void load_type_sprites() {
 	std::ifstream file("../../sprites/game.json");
 
 	json sheet;
@@ -79,7 +79,7 @@ void loadTypeSprites() {
 	(loadOneTypeSprites<Enums>(sheet), ...);
 }
 
-void loadSprites()
+void load_sprites()
 {
 	loadTypeSprites<Animal, Plant, Item, Tile, Grass, Buildable,  ButtonSprite, UISprite>();
 }	

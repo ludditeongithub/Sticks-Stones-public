@@ -29,18 +29,16 @@ struct Game
   World world;
   SearchGrid search;
 
-Arena tileArena;
-TileDatabase tileDatabase;
 Arena plantArena;
 PlantDatabase plantDatabase;
 Arena regrowthPlantArena;
 RegrowthPlantDatabase regrowthPlantDatabase;
 Arena animalArena;
 AnimalDatabase animalDatabase;
-Arena playerUnitArena;
-UnitDatabase playerUnitDatabase;
-Arena NPCUnitArena;  
-UnitDatabase NPCUnitDatabase;
+Arena unitArena;
+UnitDatabase unitDatabase;
+// Arena NPCUnitArena;  
+// UnitDatabase NPCUnitDatabase;
 Arena itemArena;
 ItemDatabase itemDatabase;
 BuildableDatabase buildableDatabase;
@@ -73,5 +71,3 @@ void hourlyLoop();
 uint32_t getDay();
 
 };
-
-Game* g_Game = nullptr;

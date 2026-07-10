@@ -16,16 +16,16 @@
 // TODO: perhaps walking frames last for twice as long as running frames
 
 template <typename T>
-void updateAnimations(Array<Coord> &coords, Array<Frame> &frames, Array<T> &states);
+void update_animations(Array<Coord> &coords, Array<Frame> &frames, Array<T> &states);
 
-const Frame WALK_ANIMATION_SPRITE_LENGTH = Frame::F4;
-const Frame RUN_ANIMATION_SPRITE_LENGTH = Frame::F8;
+const Frame walk_animation_sprite_length = Frame::F4;
+const Frame run_animation_sprite_length = Frame::F8;
 
 // TODO: right now this is only fitted for walk animations. need to make sure
 // all the LOGIC is only fitted for walk animations, for now.
 
 
-inline uint16_t getActionSpriteOffset(SpriteInfo &ai, ActionStatus as)
+inline uint16_t get_action_sprite_offset(SpriteInfo &ai, ActionStatus as)
 {
 	switch (as)
 	{
@@ -40,7 +40,7 @@ inline uint16_t getActionSpriteOffset(SpriteInfo &ai, ActionStatus as)
 		// TODO: RUN
 	case ActionStatus::Pursuit:
 	case ActionStatus::Flee:
-		return ai.WALKING_SPRITE_LENGTH;
+		return ai.walking_sprite_length;
 		break;
 	default:
 		break;
@@ -48,7 +48,7 @@ inline uint16_t getActionSpriteOffset(SpriteInfo &ai, ActionStatus as)
 	// TODO: PerformAction, set of actions, be sure to update child sprite offset!
 }
 
-inline uint16_t getActionSpriteOffset(SpriteInfo &info, ActState state) {
+inline uint16_t get_action_sprite_offset(SpriteInfo &info, ActState state) {
 	switch (state)
 	{
 		// WALK
@@ -58,39 +58,39 @@ inline uint16_t getActionSpriteOffset(SpriteInfo &info, ActState state) {
 		break;
 		// TODO: RUN
 	case ActState::Run:
-		return info.WALKING_SPRITE_LENGTH;
+		return info.walking_sprite_length;
 		break;
         case ActState::Act:
-		return info.WALKING_SPRITE_LENGTH + info.RUNNING_SPRITE_LENGTH;
+		return info.walking_sprite_length + info.running_sprite_length;
 		break;
 	default:
 		break;
 	}
 }
 
-inline uint16_t getChildSpriteOffset(SpriteInfo &ai)
+inline uint16_t get_child_sprite_offset(SpriteInfo &ai)
 {
-	return ai.WALKING_SPRITE_LENGTH + ai.RUNNING_SPRITE_LENGTH;
+	return ai.walking_sprite_length + ai.running_sprite_length;
 }
 
-inline uint16_t getDirectionSpriteOffset(SpriteInfo &asi, Direction d, bool child)
+inline uint16_t get_direction_sprite_offset(SpriteInfo &asi, Direction d, bool child)
 {
-	uint16_t dOffset = 0;
+	uint16_t d_offset = 0;
 	if (child)
 	{
 		switch (d)
 		{
 		case Direction::South:
-			dOffset = 0;
+			d_offset = 0;
 			break;
 		case Direction::West:
-			dOffset = asi.CHILD_FRONT_LENGTH;
+			d_offset = asi.child_front_length;
 			break;
 		case Direction::East:
-			dOffset = asi.CHILD_FRONT_LENGTH + asi.CHILD_SIDE_LENGTH;
+			d_offset = asi.child_front_length + asi.child_side_length;
 			break;
 		case Direction::North:
-			dOffset = asi.CHILD_FRONT_LENGTH + asi.CHILD_SIDE_LENGTH * 2;
+			d_offset = asi.child_front_length + asi.child_side_length * 2;
 			break;
 		}
 	}
@@ -99,25 +99,25 @@ inline uint16_t getDirectionSpriteOffset(SpriteInfo &asi, Direction d, bool chil
 		switch (d)
 		{
 		case Direction::South:
-			dOffset = 0;
+			d_offset = 0;
 			break;
 		case Direction::West:
-			dOffset = asi.FRONT_LENGTH;
+			d_offset = asi.front_length;
 			break;
 		case Direction::East:
-			dOffset = asi.FRONT_LENGTH + asi.SIDE_LENGTH;
+			d_offset = asi.front_length + asi.side_length;
 			break;
 		case Direction::North:
-			dOffset = asi.FRONT_LENGTH + asi.SIDE_LENGTH * 2;
+			d_offset = asi.front_length + asi.side_length * 2;
 			break;
 		}
 	}
-	return dOffset;
+	return d_offset;
 }
 
-inline uint16_t getFrameSpriteOffset(SpriteInfo &asi, ActionStatus as, Frame frameNumber, uint16_t spriteHeight)
+inline uint16_t get_frame_sprite_offset(SpriteInfo &asi, ActionStatus as, Frame frame_number, uint16_t sprite_height)
 {
-	uint8_t frame = static_cast<uint8_t>(frameNumber);
+	uint8_t frame = static_cast<uint8_t>(frame_number);
 	switch (as)
 	{
 		// WALK
@@ -126,18 +126,18 @@ inline uint16_t getFrameSpriteOffset(SpriteInfo &asi, ActionStatus as, Frame fra
 	case ActionStatus::Idle:
 	case ActionStatus::ReturnHome:
 	case ActionStatus::Prowl:
-		return spriteHeight * (frame / asi.WALK_SPRITE_FRAME_LENGTH);
+		return sprite_height * (frame / asi.walk_sprite_frame_length);
 		break;
 		// TODO: RUN
 	case ActionStatus::Pursuit:
 	case ActionStatus::Flee:
-		return spriteHeight * (frame / asi.RUN_SPRITE_FRAME_LENGTH);
+		return sprite_height * (frame / asi.run_sprite_frame_length);
 		break;	
 	}	
 }
 
-inline uint16_t getFrameSpriteOffset(SpriteInfo &asi, ActState as, Frame frameNumber,
-				     uint16_t spriteHeight)
+inline uint16_t get_frame_sprite_offset(SpriteInfo &asi, ActState as, Frame frame_number,
+				     uint16_t sprite_height)
 {
 	uint8_t frame = static_cast<uint8_t>(frame);
 	switch (as)
@@ -145,14 +145,14 @@ inline uint16_t getFrameSpriteOffset(SpriteInfo &asi, ActState as, Frame frameNu
 		// WALK
 	case ActState::Walk:
 		// TODO: sometimes idle moves, sometimes it does not
-		return spriteHeight * (frame / asi.WALK_SPRITE_FRAME_LENGTH);
+		return sprite_height * (frame / asi.walk_sprite_frame_length);
 		break;
 		// TODO: RUN
 	case ActState::Run:
-		return spriteHeight * (frame / asi.RUN_SPRITE_FRAME_LENGTH);
+		return sprite_height * (frame / asi.run_sprite_frame_length);
 		break;
         case ActState::Act:
-		return spriteHeight * (frame / asi.RUN_SPRITE_FRAME_LENGTH);
+		return sprite_height * (frame / asi.run_sprite_frame_length);
 		break;
         case ActState::NewPath:
 		return 0;
@@ -163,7 +163,7 @@ inline uint16_t getFrameSpriteOffset(SpriteInfo &asi, ActState as, Frame frameNu
 }
 
 
-inline Coord getSpriteDimensions(SpriteInfo &asi, Direction d, bool child)
+inline Coord get_sprite_dimensions(SpriteInfo &asi, Direction d, bool child)
 {
 	uint16_t h = 0;
 	uint16_t w = 0;
@@ -173,13 +173,13 @@ inline Coord getSpriteDimensions(SpriteInfo &asi, Direction d, bool child)
 		{
 		case Direction::North:
 		case Direction::South:
-			w = asi.CHILD_FRONT_LENGTH;
-			h = asi.CHILD_FRONT_HEIGHT;
+			w = asi.child_front_length;
+			h = asi.child_front_height;
 			break;
 		case Direction::East:
 		case Direction::West:
-			w = asi.CHILD_SIDE_LENGTH;
-			h = asi.CHILD_SIDE_HEIGHT;
+			w = asi.child_side_length;
+			h = asi.child_side_height;
 			break;
 		default:
 			break;
@@ -191,13 +191,13 @@ inline Coord getSpriteDimensions(SpriteInfo &asi, Direction d, bool child)
 		{
 		case Direction::North:
 		case Direction::South:
-			w = asi.SIDE_LENGTH;
-			h = asi.FRONT_HEIGHT;
+			w = asi.side_length;
+			h = asi.front_height;
 			break;
 		case Direction::East:
 		case Direction::West:
-			w = asi.FRONT_LENGTH;
-			h = asi.SIDE_HEIGHT;
+			w = asi.front_length;
+			h = asi.side_height;
 			break;
 		default:
 			break;
@@ -206,27 +206,27 @@ inline Coord getSpriteDimensions(SpriteInfo &asi, Direction d, bool child)
 	return {w, h};
 }
 
-SDL_Rect getAnimalRect(Animal a, AnimalStatus as, Time age, Frame frame, SpriteInfo& asi)
+SDL_Rect get_animal_rect(Animal a, AnimalStatus as, Time age, Frame frame, SpriteInfo& asi)
 {
-	bool child = age < animal::fertilityAges[a];
-	SDL_Rect spriteSet = sprite::animalSprites[a];
-	int x = spriteSet.x;
+	bool child = age < animal::fertility_ages[a];
+	SDL_Rect sprite_set = sprite::animalSprites[a];
+	int x = sprite_set.x;
 	ActionStatus ac = as.get<ActionStatus>();
 	if (child)
-		x += getChildSpriteOffset(asi);
+		x += get_child_sprite_offset(asi);
 	x += getActionSpriteOffset(asi, ac);
 	Direction d = as.get<Direction>();
-	x += getDirectionSpriteOffset(asi, d, child);
+	x += get_direction_sprite_offset(asi, d, child);
 
-	Coord c = getSpriteDimensions(asi, d, child);
+	Coord c = get_sprite_dimensions(asi, d, child);
 	int y = spriteSet.y + getFrameSpriteOffset(asi, ac, frame, c.y);
 
 	return {x, y, static_cast<int>(c.x), static_cast<int>(c.y)};
 }
 
-inline Frame getNextAnimalFrame(Animal a, ActionStatus as, Frame frameNumber, SpriteInfo& asi)
+inline Frame get_next_animal_frame(Animal a, ActionStatus as, Frame frame_number, SpriteInfo& asi)
 {
-		uint8_t frame = static_cast<uint8_t>(frameNumber);
+		uint8_t frame = static_cast<uint8_t>(frame_number);
 	switch (as)
 	{
 		// WALK
@@ -235,13 +235,13 @@ inline Frame getNextAnimalFrame(Animal a, ActionStatus as, Frame frameNumber, Sp
 	case ActionStatus::Idle:
 	case ActionStatus::ReturnHome:
 	case ActionStatus::Prowl:
-		if (frame++ > asi.WALK_SPRITE_FRAME_LENGTH)
+		if (frame++ > asi.walk_sprite_frame_length)
 			frame = 0;
 		break;
 		// TODO: RUN
 	case ActionStatus::Pursuit:
 	case ActionStatus::Flee:
-		if (frame++ > asi.RUN_SPRITE_FRAME_LENGTH)
+		if (frame++ > asi.run_sprite_frame_length)
 			frame = 0;
 		break;
 	default:
@@ -250,10 +250,10 @@ inline Frame getNextAnimalFrame(Animal a, ActionStatus as, Frame frameNumber, Sp
 	return static_cast<Frame>(frame);
 }
 
-void updateAnimalAnimations(Coord leftCorner, EntityRenderBuffer &erd, Array<Frame> &frames,
+void update_animal_animations(Coord left_corner, EntityRenderBuffer &erd, Array<Frame> &frames,
 			    Array<Time> &ages, Array<AnimalStatus> &states)
 {
-	for (size_t i = 0; i < erd.animalAmount; i++)
+	for (size_t i = 0; i < erd.animal_amount; i++)
 	{
 		AnimalRenderData ard = erd.animals[i];
 		uint16_t ai = ard.index;
@@ -263,15 +263,15 @@ void updateAnimalAnimations(Coord leftCorner, EntityRenderBuffer &erd, Array<Fra
 		SDL_Rect r = getAnimalRect(ard.animal, s, ages[ai], f, asi);
 
 		// TODO: position must be relative to screen
-		spriteSheetTexture.render(ard.position.x, ard.position.y, &r, &mainScreenViewport);
+		sprite_sheet_texture.render(ard.position.x, ard.position.y, &r, &main_screen_viewport);
 		
 		f = getNextAnimalFrame(ard.animal, s.get<ActionStatus>(), f, asi);
 	}
 }
 
-inline Frame getNextUnitFrame(Unit u, ActState as, Frame frameNumber)
+inline Frame get_next_unit_frame(Unit u, ActState as, Frame frame_number)
 {
-	uint8_t frame = static_cast<uint8_t>(frameNumber);
+	uint8_t frame = static_cast<uint8_t>(frame_number);
 	switch (as)
 	{
 		// TODO: change this to play animations for specific actions (maybe a
@@ -283,12 +283,12 @@ inline Frame getNextUnitFrame(Unit u, ActState as, Frame frameNumber)
 		break;
 		// WALK
 	case ActState::Walk:
-		if (frame++ > UNIT_SPRITE_INFO.WALK_SPRITE_FRAME_LENGTH)
+		if (frame++ > unit_sprite_info.walk_sprite_frame_length)
 			frame = 0;
 		break;
 		// TODO: RUN
 	case ActState::Run:
-		if (frame++ > UNIT_SPRITE_INFO.RUN_SPRITE_FRAME_LENGTH)
+		if (frame++ > unit_sprite_info.run_sprite_frame_length)
 			frame = 0;
 		break;
         // TODO: implement		
@@ -301,25 +301,25 @@ inline Frame getNextUnitFrame(Unit u, ActState as, Frame frameNumber)
 	return static_cast<Frame>(frame);
 }
 
-inline SDL_Rect getUnitRect(Unit unit, ActState state, Direction direction, Frame frame, Time age) {
-	bool child = age < MATURITY_AGE;
-	SDL_Rect spriteSet = sprite::unitSprites[];
-	int x = spriteSet.x;
-	SpriteInfo usi = UNIT_SPRITE_INFO;
-	if (child) x += getChildSpriteOffset(usi);
+inline SDL_Rect get_unit_rect(Unit unit, ActState state, Direction direction, Frame frame, Time age) {
+	bool child = age < maturity_age;
+	SDL_Rect sprite_set = sprite::unitSprites[];
+	int x = sprite_set.x;
+	SpriteInfo usi = unit_sprite_info;
+	if (child) x += get_child_sprite_offset(usi);
 	x += getActionSpriteOffset(usi, state);
-	x += getDirectionSpriteOffset(usi, direction, child);
+	x += get_direction_sprite_offset(usi, direction, child);
 
-	Coord c = getSpriteDimensions(usi, direction, child);
+	Coord c = get_sprite_dimensions(usi, direction, child);
 	int y = spriteSet.y + getFrameSpriteOffset(usi, state, frame, c.y);
 
 	return {x, y, static_cast<int>(c.x), static_cast<int>(c.y)};
 }
 
-void updateUnitAnimations(Coord leftCorner, EntityRenderBuffer &erd,
-			  Array<Time> &ages, Array<FrameData> &frameDatas)
+void update_unit_animations(Coord left_corner, EntityRenderBuffer &erd,
+			  Array<Time> &ages, Array<FrameData> &frame_datas)
 {
-	for (size_t i = 0; i < erd.animalAmount; i++)
+	for (size_t i = 0; i < erd.animal_amount; i++)
 	{
 		UnitRenderData ard = erd.units[i];
 		size_t ai = ard.index;
@@ -329,7 +329,7 @@ void updateUnitAnimations(Coord leftCorner, EntityRenderBuffer &erd,
 		// TODO: implement skin color
 		SDL_Rect r = getUnitRect(ard.unit, state, direction, frame, ages[ai]);
 		// TODO: position must be relative to screen
-		spriteSheetTexture.render(ard.position.x, ard.position.y, &r, &mainScreenViewport);
+		sprite_sheet_texture.render(ard.position.x, ard.position.y, &r, &main_screen_viewport);
 		frame = getNextUnitFrame(ard.unit, state, frame);		
 	}
 }

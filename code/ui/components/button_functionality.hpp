@@ -23,11 +23,11 @@ public:
 class ChangeScreenDimensionsBF : public ButtonFunctionality
 {
 	public:
-	  Coord screenDimensions;
-	ChangeScreenDimensionsBF(Coord screenDimensions) : screenDimensions(screenDimensions) {}
+	  Coord screen_dimensions;
+	ChangeScreenDimensionsBF(Coord screen_dimensions) : screen_dimensions(screen_dimensions) {}
 	void trigger() override
 	{
-	  screenDimensions = screenDimensions;
+	  screen_dimensions = screen_dimensions;
 	}
 };
 
@@ -60,8 +60,8 @@ struct NewGameBF : public ButtonFunctionality
 	{
 		g_Game = new Game();
 		// TODO: player can adjust world gen settings
-                g_Game->initNewWorld();
-		g_Game->newGame();
+                g_Game->init_new_world();
+		g_Game->new_game();
         }
 };
 

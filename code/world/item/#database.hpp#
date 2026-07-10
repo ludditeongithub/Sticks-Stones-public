@@ -26,7 +26,6 @@ constexpr static uint16_t ENTITY_SIZE = sizeof(Item) +
 ;
 
 size_t capacity;
-Array<Item> items;
     size_t size;
     Stack<size_t> freeSlots;
     Array<bool> alives;
@@ -47,6 +46,7 @@ Array<Item> items;
 
 ItemDatabase(Arena *arena, size_t capacity
   , World& world
+ 
   , SearchGrid& search
   , TileDatabase& tiles
 ) :
@@ -119,10 +119,12 @@ this->capacity = capacity;
   void freeUnusedEntity()
   {
     for (size_t i = 0; i < coords.size; i++) {
-    if (tiles.tileStatuses.get<VisionStatus>() == VisionStatus::Hidden) remove(i);
+    if (tiles.tileStatuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
     }
   }
-          
+    
+
+      
     // =========================
     // SERIALIZATION
     // =========================

@@ -13,7 +13,7 @@
 
 namespace sprite {
 
-std::string toKebabCase(std::string& s) {
+std::string to_kebab_case(std::string& s) {
     std::string result;
 
     for (size_t i = 0; i < s.size(); ++i) {
@@ -31,9 +31,9 @@ std::string toKebabCase(std::string& s) {
 }
 
 template<typename S>
-std::string getSpriteName(S spriteType)
+std::string get_sprite_name(S sprite_type)
 {
-    std::string name = std::string(magic_enum::enum_name(spriteType));
+    std::string name = std::string(magic_enum::enum_name(sprite_type));
 
     if constexpr (std::is_same_v<S, Plant>)
     {
@@ -42,7 +42,7 @@ std::string getSpriteName(S spriteType)
             name += "-plant";
         }
     }
-    return toKebabCase(name) + ".aseprite";
+    return to_kebab_case(name) + ".aseprite";
 }
 
 };

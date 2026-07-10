@@ -2,6 +2,7 @@
 #define ITEMBULKANDWEIGHT_H_
 
 #include <cstdint>
+#include <core/data.hpp>
 
 enum class BulkLevel
 {

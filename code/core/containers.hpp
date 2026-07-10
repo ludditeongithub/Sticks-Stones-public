@@ -214,7 +214,7 @@ template <typename T> struct Queue
 		return data()[nx++];
 	};
 
-	inline void resetNext() { nx = current; };
+	inline void reset_next() { nx = current; };
 };
 
 template<typename T>

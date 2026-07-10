@@ -1,0 +1,106 @@
+
+// OPTI: have plant temp values be precalcuated so chunk temps is accessed
+// faster
+void PlantDatabase::updatePlants(World& world, Array2D<float> &dailyInsolations, Array<float> &cloudCovers, Time timePassed)
+{
+	for (uint32_t i = 0; i < plantList.size(); i++)
+	{
+		Plant p = plantList[i];		
+		
+		if (plantList[i] == Plant::NONE)
+			continue;
+		float nextGrowth = 1.0;
+		const Coord pos = coords[i];
+		uint32_t chunkIndex = getChunkIndexFromTile(pos);
+		evalSunlight(world, chunkIndex, nextGrowth, world.dailyInsolations, world.cloudCovers, p);
+		evalTemperature(world, chunkIndex, p, nextGrowth, alive[i]);
+		if (!alive[i]) continue;		
+
+		growths[i] += nextGrowth * timePassed;
+	}
+}
+
+void RegrowthPlantDatabase::updateRegrowthPlants(ItemDatabase& itemDatabase, World& world, Array<float> &tileWater, Time timePassed)
+{
+	Array<Plant> &plantList = plantDatabase.plantList;
+	
+		for (uint32_t i = 0; i < plantList.size(); i++)
+	{
+		Plant p = plantList[i];		
+		
+		if (plantList[i] == Plant::NONE) continue;
+		float nextGrowth = 1.0;
+		const Coord pos = plantDatabase.coords[i];
+		uint32_t chunkIndex = getChunkIndexFromTile(pos);
+
+		evalSunlight(world, chunkIndex, nextGrowth, world.dailyInsolations, world.cloudCovers, p);
+		// sunlight must come before temp, because temp sets nextGrowth to negative
+		// sometimes for regrowth
+		evalTemperature(world, chunkIndex, p, nextGrowth, plantDatabase.alive[i], true);
+		if (!plantDatabase.alive[i]) continue;
+
+		Time& growth = plantDatabase.growths[i];
+		growth += std::fmin(nextGrowth * timePassed, 0);
+		if (growth > maxAge[p]) plantDatabase.alive[i] = false;
+		else if (growth > regrowthStartAge[p]) {
+			Time &regrowth = regrowths[i];
+		if (regrowth <= regrowthMax[p])
+			regrowth += nextGrowth * timePassed;
+		uint16_t produceTarget = getProduceCurrentTarget(p, regrowths[i], ages[i]);
+		uint16_t currentProduce = produces[i];
+		if (produceTarget < currentProduce)
+		{
+			if (fruitsFall[p])
+				itemDatabase.dropFruit(p, pos, currentProduce - produceTarget);
+			regrowths[i] -= regrowths[i] *  static_cast<float>(static_cast<int>(produces[i] - produceTarget) / produceTarget);
+		}		
+		produces[i] = produceTarget;
+		}
+	}						
+}
+
+void updateAlivePlants(PlantDatabase& database)
+{
+	for (size_t i = 0; i < database.alive.size(); i++) {
+		
+	}
+}	
+
+// wander becomes idle at end
+// also automatically sets
+void updateAnimalPositions(PathfindingManager::PathsBuffer &rpd, Array<Coord> positions, Array<float> timers, Array<ActionDecisionStatus> actions)
+{
+	int j = 0;
+	for (int i = 0; i < rpd.size; i++)
+	{
+		if (timers[i] <= 0 && actions[i] != ActionDecisionStatus::Idle)
+		{
+			// this could be pre-stored in a contiguous array
+			Coord c = rpd.pop(i);
+			if (manhattanDist(c, positions[i]) > 1)
+				throw std::invalid_argument("Tile movement must be between tiles 1 "
+							    "distance away from each other.");
+			Coord &p = positions[i];
+			p = c;
+			// get new path if there are x or less tiles to go and destination farther
+			// than x tiles
+			if (rpd.current[i] >= rpd.end[i] - NEW_PATH_DIST)
+			{
+				if (manhattanDist(rpd.destination[i], p) >= NEW_PATH_DIST)
+				{
+					actions[i] = ActionDecisionStatus::NewPath;
+				}
+				else
+					switch (actions[i])
+					{
+					case ActionDecisionStatus::AnimalFoodSearch:
+					case ActionDecisionStatus::AnimalDrinkSearch:
+					case ActionDecisionStatus::AnimalBreedSearch:
+						break;
+					default:
+						actions[i] = ActionDecisionStatus::Assign;
+					}
+			}
+		}
+	}
+}

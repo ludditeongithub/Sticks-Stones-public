@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <core/data.hpp>
 
-constexpr size_t MATURITY_AGE = 15;
+constexpr size_t maturity_age = 15;
 
 enum class Unit : uint8_t
 {
@@ -299,12 +299,12 @@ enum class Role : uint8_t
 	MAX
 };
 
-float sunburnLevel1Threshold = 0.3;
-float sunburnLevel2Threshold = 0.75;
+float sunburn_level1_threshold = 0.3;
+float sunburn_level2_threshold = 0.75;
 
 struct SkinData {
 	float melanin;
-	float skinWarmth;
-	float environmentalTanOffset;
+	float skin_warmth;
+	float environmental_tan_offset;
         float sunburn;
 };

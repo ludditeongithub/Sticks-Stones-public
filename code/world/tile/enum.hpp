@@ -85,7 +85,7 @@ enum class VisionStatus : uint8_t
 using TileStatus = PackedEnum<Field<OccupiedStatus, 3>, Field<VisionStatus, 2>>;
 
 
-bool isWater(Tile tile)
+bool is_water(Tile tile)
 {
   switch (tile) {
   case Tile::DeepWater:

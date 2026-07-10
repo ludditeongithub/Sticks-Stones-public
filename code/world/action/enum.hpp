@@ -10,8 +10,8 @@
 // weapons
 enum class Action : uint8_t
 {
-		NONE,
-		UNIT_MIN,
+	NONE,
+	UNIT_MIN,
 	Collect,
 	Hunt,
 	Mine,
@@ -128,6 +128,8 @@ enum class Action : uint8_t
 	CheckProwl,
 	Assign,
 	Wander,
+	Flee,
+	Pursuit,	
 	// end shared by animals
 	PickupTool,
 	MAIN_MAX,
@@ -138,9 +140,15 @@ enum class Action : uint8_t
 	ApproachGrass,
 	ApproachTile,
 	APPROACH_MAX,
-	
-	ANIMAL_MIN,
-	Breed,	
+
+	ANIMAL_MIN, 
+	Breed, // TODO 
+	AnimalFoodSearch,  // TODO 
+	AnimalBreedSearch, // TODO
+	AnimalDrinkSearch, // TODO 
+	RejoinPack, // wanders if animal is not a pack animal, possibly change
+			  // to wander
+	Migration, // TODO 
 	ANIMAL_MAX,
 	MAX
 };
@@ -155,4 +163,3 @@ enum class ActState : uint8_t
 
 //TODO: ensure Frame can be properly packed
 using FrameData = PackedEnum<Field<ActState, 2>, Field<Direction, 2>, Field<Frame, 4>>;
-

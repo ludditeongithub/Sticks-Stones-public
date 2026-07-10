@@ -5,7 +5,7 @@
 #include <string>
 
 // Loads individual image as texture
-SDL_Texture *loadTexture(std::string path);
+SDL_Texture *load_texture(std::string path);
 
 // Texture wrapper class
 class LTexture
@@ -18,7 +18,7 @@ class LTexture
 	~LTexture();
 
 	// Loads image at specified path
-	bool loadFromFile(std::string path);
+	bool load_from_file(std::string path);
 
 	// Deallocates texture
 	void free();
@@ -27,16 +27,16 @@ class LTexture
 	void render(int x, int y, SDL_Rect *clip, SDL_Rect *viewport);
 
 	// Gets image dimensions
-	int getWidth();
-	int getHeight();
+	int get_width();
+	int get_height();
 
       private:
 	// The actual hardware texture
-	SDL_Texture *mTexture;
+	SDL_Texture *m_texture;
 
 	// Image dimensions
-	int mWidth;
-	int mHeight;
+	int m_width;
+	int m_height;
 };
 
-LTexture spriteSheetTexture;
+LTexture sprite_sheet_texture;

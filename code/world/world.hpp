@@ -25,87 +25,87 @@ enum class Weather : uint8_t
 };
 
 // Time Data
-constexpr uint16_t HOUR_LENGTH = 300;
-constexpr uint16_t DAY_LENGTH = HOUR_LENGTH * 24;
-constexpr uint16_t SEASON_LENGTH = DAY_LENGTH * 7;
-constexpr uint16_t YEAR_LENGTH = SEASON_LENGTH * 4;
+constexpr uint16_t hour_length = 300;
+constexpr uint16_t day_length = hour_length * 24;
+constexpr uint16_t season_length = day_length * 7;
+constexpr uint16_t year_length = season_length * 4;
 
-constexpr uint16_t LATITUDE_TOTAL = 180;
-constexpr int LATITUDE_MIN = -90;
-constexpr int LATITUDE_MAX = 90;
-constexpr uint16_t LONGITUDE_TOTAL = 180;
-constexpr float MAX_CLOUD_FACTOR = 3.2;
+constexpr uint16_t latitude_total = 180;
+constexpr int latitude_min = -90;
+constexpr int latitude_max = 90;
+constexpr uint16_t longitude_total = 180;
+constexpr float max_cloud_factor = 3.2;
 
 // Terain and Climate
-constexpr uint8_t MAX_ALTITUDE = 120;	     // TODO: check
-constexpr uint8_t MAX_HUMIDITY = 120;	     // TODO: check
-constexpr uint8_t MAX_OCEAN_AFFECT_DIST = 4; // TODO: check
+constexpr uint8_t max_altitude = 120;	     // TODO: check
+constexpr uint8_t max_humidity = 120;	     // TODO: check
+constexpr uint8_t max_ocean_affect_dist = 4; // TODO: check
 
-constexpr float WINTER_SOLSTICE = SEASON_LENGTH / 2;
-constexpr float SPRING_EQUINOX = SEASON_LENGTH / 2 + SEASON_LENGTH;
-constexpr float SUMMER_SOLSTICE = SEASON_LENGTH / 2 + SEASON_LENGTH * 2;
-constexpr float FALL_EQUINOX = SEASON_LENGTH / 2 + SEASON_LENGTH * 3;
+constexpr float winter_solstice = season_length / 2;
+constexpr float spring_equinox = season_length / 2 + season_length;
+constexpr float summer_solstice = season_length / 2 + season_length * 2;
+constexpr float fall_equinox = season_length / 2 + season_length * 3;
 
-constexpr float SPRING_MULT = 1.10;
-constexpr float AUTUMN_MULT = 0.98;
-constexpr float SUMMER_MULT = 1.45;
-constexpr float WINTER_MULT = 0.74;
+constexpr float spring_mult = 1.10;
+constexpr float autumn_mult = 0.98;
+constexpr float summer_mult = 1.45;
+constexpr float winter_mult = 0.74;
 
 // temp range between -70 C to 57 C, -70 = 0, 57 = 127
-constexpr float TEMP_OFFSET = 70;
+constexpr float temp_offset = 70;
 
 // diurnal temperature variation influenced mostly by aridity, then latitude, then proximity to
 // large water bodies
-constexpr float MAX_DIURNAL_VAR = 20.2;
+constexpr float max_diurnal_var = 20.2;
 
 // seasonal temperature variation influenced mostly by latitude, then proximity to large water
 // bodies, then elevation
-constexpr float MAX_SEASONAL_VAR = 42.1;
+constexpr float max_seasonal_var = 42.1;
 
-constexpr Time CORPSE_ROT_TIME = DAY_LENGTH * 3;
+constexpr Time corpse_rot_time = day_length * 3;
 
 
 
 struct World
 {
-	static const uint16_t ENTITY_SIZE = sizeof(uint8_t) * 3;
-	const uint16_t LENGTH_CHUNKS;
-	const uint16_t HEIGHT_CHUNKS;
-	const uint16_t EQUATOR;
-	const uint16_t CHUNK_AMOUNT;
-	const uint16_t CHUNK_LATITUDE_HEIGHT = HEIGHT_CHUNKS / LATITUDE_TOTAL; // amount of chunks per latitude
-  const uint16_t CHUNK_LONGITUDE_WIDTH = LENGTH_CHUNKS / LONGITUDE_TOTAL;
-	const uint32_t WORLD_TILE_AMOUNT = CHUNK_AMOUNT * CHUNK_SIZE;
-	const uint32_t WORLD_TILE_LENGTH = sqrt(WORLD_TILE_AMOUNT);
+	static const uint16_t entity_size = sizeof(uint8_t) * 3;
+	const uint16_t length_chunks;
+	const uint16_t height_chunks;
+	const uint16_t equator;
+	const uint16_t chunk_amount;
+	const uint16_t chunk_latitude_height = height_chunks / latitude_total; // amount of chunks per latitude
+  const uint16_t chunk_longitude_width = length_chunks / longitude_total;
+	const uint32_t world_tile_amount = chunk_amount * chunk_size;
+	const uint32_t world_tile_length = sqrt(world_tile_amount);
 
-	const CloudKey MIN_LIGHT_CLOUDS = 50;
-	const CloudKey MIN_HEAVY_CLOUDS = 150;
-	const PrecipitationKey PRECIPITATION_MIN = 160;
-	const float PRECIPITATION_VARIANCE_FACTOR = 0.45;
-	const float HEAVY_PRECIPITATION_FACTOR = 1.85;
-	const float MM_PER_PRECIPITATION = 8;
+	const CloudKey min_light_clouds = 50;
+	const CloudKey min_heavy_clouds = 150;
+	const PrecipitationKey precipitation_min = 160;
+	const float precipitation_variance_factor = 0.45;
+	const float heavy_precipitation_factor = 1.85;
+	const float mm_per_precipitation = 8;
 
 	Array<Hum> humidities;
 	Array<Temp> temperatures;
 	Array<Alt> altitudes;
 
-	Array<CloudKey> cloudValues;
-	Array<PrecipitationKey> precipitationValues;
-	Array<Precipitation> precipitationCores; //base amount of precipitation that chunk produces, based on biome, water bodies, etc
-	RandomMachine<int8_t> nextCloudChanges = RandomMachine<int8_t>(-5, 5);
-	RandomMachine<int8_t> nextPrecipitationChanges = RandomMachine<int8_t>(-5, 5);
-	RandomChanceMachine precipitationVariance = RandomChanceMachine();
+	Array<CloudKey> cloud_values;
+	Array<PrecipitationKey> precipitation_values;
+	Array<Precipitation> precipitation_cores; //base amount of precipitation that chunk produces, based on biome, water bodies, etc
+	RandomMachine<int8_t> next_cloud_changes = RandomMachine<int8_t>(-5, 5);
+	RandomMachine<int8_t> next_precipitation_changes = RandomMachine<int8_t>(-5, 5);
+	RandomChanceMachine precipitation_variance = RandomChanceMachine();
 	
-	Array2D<float> dailyInsolations;
-	Array<float> seasonalInsolations;
-	Array<float> cloudCovers;
+	Array2D<float> daily_insolations;
+	Array<float> seasonal_insolations;
+	Array<float> cloud_covers;
 
 
   struct ChunkTempData
 {
-    std::vector<float> minTemps;
-    std::vector<float> diurnalTempVariances;
-	std::vector<float> seasonalTempVariances;
+    std::vector<float> min_temps;
+    std::vector<float> diurnal_temp_variances;
+	std::vector<float> seasonal_temp_variances;
 
     ChunkTempData(World* world)
     {
@@ -114,12 +114,12 @@ struct World
         seasonalTempVariances.reserve(world->CHUNK_AMOUNT);
     }
 };
-	ChunkTempData chunkTempData;
+	ChunkTempData chunk_temp_data;
 
 	World(Arena& arena, int width, int height)
-	    : LENGTH_CHUNKS(width), HEIGHT_CHUNKS(height),
-	      EQUATOR(height / 2),
-      CHUNK_AMOUNT(width * height),      
+	    : length_chunks(width), height_chunks(height),
+	      equator(height / 2),
+      chunk_amount(width * height),      
       chunkTempData(this) 
 {
     humidities = arena_make_array<Hum>(arena, width * height);
@@ -130,45 +130,46 @@ struct World
     cloudCovers = arena_make_array<float>(arena, width * height);
 }
 
-	inline uint16_t getChunkHeight(int i) { return i / HEIGHT_CHUNKS; }
+	inline uint16_t get_chunk_height(int i) { return i / height_chunks; }
 
-	inline uint16_t getChunkWidth(int i) { return i % HEIGHT_CHUNKS; }
+	inline uint16_t get_chunk_width(int i) { return i % height_chunks; }
 
-	inline uint16_t getChunkLatitude(int i)
+	inline uint16_t get_chunk_latitude(int i)
 	{
-		return (getChunkHeight(i) / CHUNK_LATITUDE_HEIGHT) - (LATITUDE_TOTAL / 2);
+		return (get_chunk_height(i) / chunk_latitude_height) - (latitude_total / 2);
 	}
 
-	inline uint16_t getChunkTimeZone(uint32_t chunkIndex);
-        inline uint16_t getChunkIndexFromCoord(Coord c);
-	inline uint32_t getTileIndexFromCoord(Coord c);
-	inline Coord getTileCoordFromIndex(uint32_t i);
-	inline uint32_t getTileIndexChunkRelative(uint32_t i);
-	inline uint32_t getTileIndexChunkRelative(Coord c);
+	inline uint16_t get_chunk_time_zone(uint32_t chunk_index);
+        inline uint16_t get_chunk_index_from_coord(Coord c);
+	inline uint32_t get_tile_index_from_coord(Coord c);
+	inline Coord get_tile_coord_from_index(uint32_t i);
+	inline uint32_t get_tile_index_chunk_relative(uint32_t i);
+	inline uint32_t get_tile_index_chunk_relative(Coord c);
 
-	Coord getRandomPlayerStart()
-	{	return{ static_cast<uint32_t>(random_chance->next() * LENGTH_CHUNKS) , static_cast<uint32_t>(random_chance->next() * HEIGHT_CHUNKS)};
+	Coord get_random_player_start()
+	{	return{ static_cast<uint32_t>(random_chance->next() * length_chunks) , static_cast<uint32_t>(random_chance->next() * height_chunks)};
 	}		
 
-	void loadChunkData(WorldSpawner &ws)
+	void load_chunk_data(WorldSpawner &ws)
 	{
-		ws.moveRegionsToChunks(humidities, temperatures, altitudes);
+		ws.move_regions_to_chunks(humidities, temperatures, altitudes);
 	}
 
-	void updateDailyInsolations(uint16_t day365);
+	void update_daily_insolations(uint16_t day365);
 
-	void calculateChunkTemperatureInputs(Array<int8_t> &waterBodiesDists);
+	void calculate_chunk_temperature_inputs(Array<int8_t> &water_bodies_dists);
 
-	void updateChunkTemperature();
+	void update_chunk_temperature();
 
-	void updateWeather();
+	void update_weather();
 
-	void applyWeather(TileDatabase* tileDB);
+	void apply_weather(TileDatabase* tile_db);
 
-	void applyPrecipitation(TileDatabase *tileDB, uint16_t chunk, bool heavy);
+	void apply_precipitation(TileDatabase *tile_db, uint16_t chunk, bool heavy);
 	
 };
 
+World* g_world;
 /*
  * Need to ensure that if a block of tile generates, that some of those tiles aren't actually river
  * tiles,  but haven't been generated as such because neighboring ungenerated tiles which should

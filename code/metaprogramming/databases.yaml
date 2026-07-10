@@ -114,8 +114,8 @@ extra_arrays:
   - id: animal_status
     name: animalStatuses
     type: AnimalStatus
-    newborn_default: AnimalStatus{Direction::North, ActionStatus::Idle, MatingStatus::Idle}
-    random_age_default: AnimalStatus{Direction::North, ActionStatus::Idle, MatingStatus::Idle}
+    newborn_default: AnimalStatus{Direction::North, MatingStatus::Idle}
+    random_age_default: AnimalStatus{Direction::North, MatingStatus::Idle}
   - id: skin_data
     name: skinDatas
     type: SkinData

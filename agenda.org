@@ -20,6 +20,8 @@ triggerXFunctions triggers relevant lazy function for each type, using XBuffer a
      - when it changes
      - how often it runs
    - DO NOT think about structs or arrays yet
+   - pass only domains (XDatabase&) as parameters
+     - specify after parameter list what references are accessed
 
    /Goal: describe behavior, not storage/
 *** 2. Classify each system by access pattern
@@ -51,7 +53,6 @@ triggerXFunctions triggers relevant lazy function for each type, using XBuffer a
     - Candidate: event queue / active set
 
 *** 3. Classify execution model (independent axis)
-
 **** 3.1 Tick-based systems
     - runs every frame or fixed interval
     - good for:
@@ -72,7 +73,6 @@ triggerXFunctions triggers relevant lazy function for each type, using XBuffer a
     - most real game systems fall here
 
 *** 4. Choose data layout AFTER classification
-
 **** 4.1 AoS / chunked AoS
     - use when:
       - multiple fields accessed per entity
@@ -190,7 +190,6 @@ all units currently performing a non-material role, have their min priorities co
 unit checks all its roles, and then selects the task with the lowest priority.
 ** Writing to data to file
 ** option to configure screen size
-** get rid of all vectors, standardize overflow/imps
 * NOTES
 ** Programming
 *** Scheduling and Simulation Precision
@@ -220,6 +219,7 @@ or consider bitmaks depending on use case
 ** audio functionality
 ** chunked rendering
 * AFTER ALPHA
+** actually implement NPC tribes
 ** automatic 'greedy' and 'hungry' interest
 ** change globals to fit some convention, maybe namespaces
 ** Migration Logic
@@ -392,6 +392,7 @@ generated layer under tiles that is indexed-matched to tile above. replaces tile
 - Affects both generation and diurnal and seasonal temp variance
 ** Tile drops display if altitude variation is too high to prevent building contiguously
 ** Artificial Selection-- plants and animals can get 'better'
+** get rid of all vectors, standardize overflow/imps
 * Hot and Cold Algorithms
 Estimates are based on:
 - chunk size 32x32

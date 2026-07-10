@@ -13,66 +13,66 @@
 #include <world/scavengeable/enum.hpp>
 
 
-float rangePenalty(float originalValue, float minValue, float maxValue, float adjustedValue);
+float range_penalty(float original_value, float min_value, float max_value, float adjusted_value);
 
 class WorldSpawner
 {
       public:
-	RandomMachine<int> r1To5 = RandomMachine<int>(1, 5);
-	RandomMachine<int> r1To2 = RandomMachine<int>(1, 2);
-	RandomMachine<int> r1To4 = RandomMachine<int>(1, 4);
-	RandomMachine<int> r1To3 = RandomMachine<int>(1, 4);
+	RandomMachine<int> r1_to5 = RandomMachine<int>(1, 5);
+	RandomMachine<int> r1_to2 = RandomMachine<int>(1, 2);
+	RandomMachine<int> r1_to4 = RandomMachine<int>(1, 4);
+	RandomMachine<int> r1_to3 = RandomMachine<int>(1, 4);
 	RandomMachine<int> rcx;
 	RandomMachine<int> rcy;
 
 	RandomChanceMachine rchance;
 
-	const Hum MAX_HUMIDITY = 500;
+	const Hum max_humidity = 500;
 	
-	const float coastThreshold = -0.2f;
-	const float landThreshold = -25.0f;
-	const float lowlandsThreshold = 9.0f;
-	const float midlandsThreshold = 14.0f;
+	const float coast_threshold = -0.2f;
+	const float land_threshold = -25.0f;
+	const float lowlands_threshold = 9.0f;
+	const float midlands_threshold = 14.0f;
 
-	const int depressionThreshold = 15;
-	const float lowlandsToHighlandsChance =
+	const int depression_threshold = 15;
+	const float lowlands_to_highlands_chance =
 	    0.01f;				  // chance of const lowlands becoming highlands
-	const float lowlandsToLakeChance = 0.04f; // additional threshold const to become lake
-	const float highlandsChance = 0.20f;
-	const float coastalRangeChance = 0.005f;
-	const float riverFromMountainChance = 0.5f;
-	const float riverFromHighlandChance = 0.2f;
-	const float riverFromGroundwaterChance = 0.3f;
-	const float riverEndChance = 0.50f;
-	const float lakeFromRiverChance = 0.60f;
-	const float lakeFromLowlandsChance = 0.05f;
-	const float lakeFromMidlandsChance = 0.01f;
-	const float lakeExpansionChance = 0.60f;
-	const float riverFromLakeChance = 0.40f;
-	const float groundWaterThreshold =
+	const float lowlands_to_lake_chance = 0.04f; // additional threshold const to become lake
+	const float highlands_chance = 0.20f;
+	const float coastal_range_chance = 0.005f;
+	const float river_from_mountain_chance = 0.5f;
+	const float river_from_highland_chance = 0.2f;
+	const float river_from_groundwater_chance = 0.3f;
+	const float river_end_chance = 0.50f;
+	const float lake_from_river_chance = 0.60f;
+	const float lake_from_lowlands_chance = 0.05f;
+	const float lake_from_midlands_chance = 0.01f;
+	const float lake_expansion_chance = 0.60f;
+	const float river_from_lake_chance = 0.40f;
+	const float ground_water_threshold =
 	    80.0f; // how high humidity needs to be for a chance of substantial groundwater to form
-	const float humidityMult = 2.2f;
-	const float lakeTileChance =
+	const float humidity_mult = 2.2f;
+	const float lake_tile_chance =
 	    0.07f; // chance that lake tile does NOT happen (smaller sizes mean larger lakes)
 
 	// BIOMES AMOUNT
 	using alt = uint16_t;
 
 	// in biomes
-	const int WIDTH;
-	const int HEIGHT;
-	const int BORDER_WIDTH = 3;
-	const int BORDER_HEIGHT = 3;
-	const int AMOUNT = WIDTH * HEIGHT;
-	const int REGION_SIZE = 100; // average WIDTH and HEIGHT of each region
-	const int EQUATOR = HEIGHT / 2;
+	const int width;
+	const int height;
+	const int border_width = 3;
+	const int border_height = 3;
+	const int amount = width * height;
+	const int region_size = 100; // average WIDTH and HEIGHT of each region
+	const int equator = height / 2;
 	// IN TILES
-	const int WORLD_WIDTH = WIDTH * REGION_SIZE;
-	const int WORLD_HEIGHT = HEIGHT * REGION_SIZE;
+	const int world_width = width * region_size;
+	const int world_height = height * region_size;
 
 	// New variables to store the size of the map with borders
-	const int WIDTH_WITH_BORDER = WIDTH + BORDER_WIDTH * 2;
-	const int HEIGHT_WITH_BORDER = HEIGHT + BORDER_HEIGHT * 2;
+	const int width_with_border = width + border_width * 2;
+	const int height_with_border = height + border_height * 2;
 
 	struct SeedCloud
 	{
@@ -91,21 +91,21 @@ class WorldSpawner
 		template <class BBOX> bool kdtree_get_bbox(BBOX & /*bb*/) const { return false; }
 	};
 
-	std::vector<std::vector<Alt>> altitudeMap;
-	std::vector<std::vector<Temp>> temperatureMap;
-	std::vector<std::vector<Hum>> humidityMap;
-	std::vector<std::vector<Biome>> biomeMap;
-	std::vector<std::vector<int>> oceanMap;
-	std::vector<std::vector<int>> landsMap;
-	std::vector<std::vector<int>> waterMap;
-	std::vector<std::vector<int>> potentialHumidityMap;
-	std::vector<std::vector<int>> createdHumidityMap;
-	std::vector<std::vector<bool>> instantiatedWaterMap;
-	std::vector<std::vector<int>> oceanDistance;
+	std::vector<std::vector<Alt>> altitude_map;
+	std::vector<std::vector<Temp>> temperature_map;
+	std::vector<std::vector<Hum>> humidity_map;
+	std::vector<std::vector<Biome>> biome_map;
+	std::vector<std::vector<int>> ocean_map;
+	std::vector<std::vector<int>> lands_map;
+	std::vector<std::vector<int>> water_map;
+	std::vector<std::vector<int>> potential_humidity_map;
+	std::vector<std::vector<int>> created_humidity_map;
+	std::vector<std::vector<bool>> instantiated_water_map;
+	std::vector<std::vector<int>> ocean_distance;
 
-	std::vector<std::vector<bool>> rVisited; // holds visited rivers
+	std::vector<std::vector<bool>> r_visited; // holds visited rivers
 
-	const uint32_t TILE_AMOUNT;
+	const uint32_t tile_amount;
 
 
 struct TileSpawnBuffer
@@ -122,9 +122,9 @@ struct TileSpawnBuffer
                 size = capacity;
         }
 
-inline void add(WorldSpawner& worldSpawner, Grass grass, Coord coord)
+inline void add(WorldSpawner& world_spawner, Grass grass, Coord coord)
   {
-    size_t i = worldSpawner.getTileIndexFromCoord(coord);
+    size_t i = world_spawner.get_tile_index_from_coord(coord);
     tiles[i].set<Grass>(grass);
 	}
 };
@@ -142,10 +142,10 @@ AnimalSpawnBuffer(size_t capacity)
     animals.reserve(cap);
     coords.reserve(cap);
   }
-  inline void add(WorldSpawner& worldSpawner, TileSpawnBuffer& tileSpawnBuffer, Animal animal, Coord coord)
+  inline void add(WorldSpawner& world_spawner, TileSpawnBuffer& tile_spawn_buffer, Animal animal, Coord coord)
 	{
 		animals[size++] = animal;
-		coords[size] = coord;                   tileSpawnBuffer.occupieds[worldSpawner.getTileIndexFromCoord(coord)] = true;
+		coords[size] = coord;                   tile_spawn_buffer.occupieds[world_spawner.get_tile_index_from_coord(coord)] = true;
 	}
   void shrink_to_size()
 	{
@@ -170,10 +170,10 @@ PlantSpawnBuffer(size_t capacity)
     plants.reserve(cap);
     coords.reserve(cap);
   }
-  inline void add(WorldSpawner& worldSpawner, TileSpawnBuffer& tileSpawnBuffer, Plant plant, Coord coord)
+  inline void add(WorldSpawner& world_spawner, TileSpawnBuffer& tile_spawn_buffer, Plant plant, Coord coord)
 	{
 		plants[size++] = plant;
-		coords[size] = coord;                   tileSpawnBuffer.occupieds[worldSpawner.getTileIndexFromCoord(coord)] = true;
+		coords[size] = coord;                   tile_spawn_buffer.occupieds[world_spawner.get_tile_index_from_coord(coord)] = true;
 	}
   void shrink_to_size()
 	{
@@ -198,10 +198,10 @@ ScavengeableSpawnBuffer(size_t capacity)
     scavengeables.reserve(cap);
     coords.reserve(cap);
   }
-  inline void add(WorldSpawner& worldSpawner, TileSpawnBuffer& tileSpawnBuffer, Scavengeable scavengeable, Coord coord)
+  inline void add(WorldSpawner& world_spawner, TileSpawnBuffer& tile_spawn_buffer, Scavengeable scavengeable, Coord coord)
 	{
 		scavengeables[size++] = scavengeable;
-		coords[size] = coord;                   tileSpawnBuffer.occupieds[worldSpawner.getTileIndexFromCoord(coord)] = true;
+		coords[size] = coord;                   tile_spawn_buffer.occupieds[world_spawner.get_tile_index_from_coord(coord)] = true;
 	}
   void shrink_to_size()
 	{
@@ -214,13 +214,13 @@ ScavengeableSpawnBuffer(size_t capacity)
 // @codegen:end spawn_buffer_scavengeable
 
 
-	TileSpawnBuffer tileSpawnBuffer;
-	PlantSpawnBuffer plantSpawnBuffer;
-        ScavengeableSpawnBuffer scavengeableSpawnBuffer;
-	AnimalSpawnBuffer animalSpawnBuffer;
+	TileSpawnBuffer tile_spawn_buffer;
+	PlantSpawnBuffer plant_spawn_buffer;
+        ScavengeableSpawnBuffer scavengeable_spawn_buffer;
+	AnimalSpawnBuffer animal_spawn_buffer;
 
 	template <typename T>
-	void mapReserveRows(int width, int height, std::vector<std::vector<T>> &map)
+	void map_reserve_rows(int width, int height, std::vector<std::vector<T>> &map)
 	{
 		map.reserve(height);
 		for (int i = 0; i < width; i++)
@@ -228,8 +228,8 @@ ScavengeableSpawnBuffer(size_t capacity)
 	}
 
 	WorldSpawner(int width, int height)
-	    : WIDTH(width), HEIGHT(height),
-	      TILE_AMOUNT(width * height * CHUNK_SIZE * CHUNKS_PER_REGION)
+	    : width(width), height(height),
+	      tile_amount(width * height * chunk_size * chunks_per_region)
 	{
 		rcx = RandomMachine<int>(WIDTH / 8, 7 * WIDTH / 8);
 		rcy = RandomMachine<int>(HEIGHT / 8, 7 * HEIGHT / 8);
@@ -251,57 +251,57 @@ ScavengeableSpawnBuffer(size_t capacity)
                 animalSpawnBuffer = AnimalSpawnBuffer(width * height);
 	}
 
-	void generateWorld();
+	void generate_world();
   
 	// helpers
-	void recursiveLower();
-	void recursiveFill();
-	void printMap();
-        void moveRegionsToChunks(Array<Hum> humidities, Array<Temp> temperatures,
+	void recursive_lower();
+	void recursive_fill();
+	void print_map();
+        void move_regions_to_chunks(Array<Hum> humidities, Array<Temp> temperatures,
 				 Array<Alt> altitudes);
-	void printInfo();
-	Coord getTileCoordFromIndex(size_t i);
-        size_t getTileIndexFromCoord(Coord c);
+	void print_info();
+	Coord get_tile_coord_from_index(size_t i);
+        size_t get_tile_index_from_coord(Coord c);
 
   // world generation
-	void generateOceansOnMaps();
-	void markCoasts();
-	void applyExtraHighlandsAndMountains();
-	void generateLandsMap();
-	void extendRiversFromSource(uint16_t riverLength, int x, int y);
-	void markRiverEnds();
-	void generateWaterMap();
-	void generateTemperatureMap();
-	void generateHumidityMap();
-	void factorWetlandsJunglesAndForests();
-	void generateBiomes();
-	void generateAltitudeMap();
-	void getRiversFromGroundwater();
-	void cleanAltitudeMap();	
+	void generate_oceans_on_maps();
+	void mark_coasts();
+	void apply_extra_highlands_and_mountains();
+	void generate_lands_map();
+	void extend_rivers_from_source(uint16_t river_length, int x, int y);
+	void mark_river_ends();
+	void generate_water_map();
+	void generate_temperature_map();
+	void generate_humidity_map();
+	void factor_wetlands_jungles_and_forests();
+	void generate_biomes();
+	void generate_altitude_map();
+	void get_rivers_from_groundwater();
+	void clean_altitude_map();	
 std::vector<std::tuple<float, bool, bool>>
-humidityAndRainShadowEffects(int y, int x, int water, bool biomes);
-	void addDepressions();
-	void applyRiverTiles();
+humidity_and_rain_shadow_effects(int y, int x, int water, bool biomes);
+	void add_depressions();
+	void apply_river_tiles();
 	std::vector<std::vector<int>>
-	calculateOceanDistance(std::vector<std::vector<int>> &waterMap, bool lake, bool river);
-	std::vector<Coord> generateVoronoiSites();
-	void generateTileTypes(std::vector<float> &chances, std::vector<Coord> &voronoiSites,
-			       std::vector<Tile> &rTiles, Array<Alt> &rAltitudes);
-	std::vector<float> generateTileChances();
+	calculate_ocean_distance(std::vector<std::vector<int>> &water_map, bool lake, bool river);
+	std::vector<Coord> generate_voronoi_sites();
+	void generate_tile_types(std::vector<float> &chances, std::vector<Coord> &voronoi_sites,
+			       std::vector<Tile> &r_tiles, Array<Alt> &r_altitudes);
+	std::vector<float> generate_tile_chances();
 
   // spawners
-  void spawnGrassAndFirstPlants();
-  void spawnScavengeables();
-  void spawnAnimals();
+  void spawn_grass_and_first_plants();
+  void spawn_scavengeables();
+  void spawn_animals();
 
-        inline void rollGrassSpawn(Coord coord, Biome biome, Tile tile, int temperature, int humidity);
-        inline void rollPlantSpawn(Coord coord, Biome biome, Tile tile, int temperature, int humidity);
-        inline void rollAnimalSpawn(Coord coord, Biome biome, Tile tile, int temperature, int humidity);
-      inline void rollScavengeableSpawn(Coord coord, Biome biome, Tile tile, int temperature, int humidity);
+        inline void roll_grass_spawn(Coord coord, Biome biome, Tile tile, int temperature, int humidity);
+        inline void roll_plant_spawn(Coord coord, Biome biome, Tile tile, int temperature, int humidity);
+        inline void roll_animal_spawn(Coord coord, Biome biome, Tile tile, int temperature, int humidity);
+      inline void roll_scavengeable_spawn(Coord coord, Biome biome, Tile tile, int temperature, int humidity);
 	// Constants
 	// IN CELLS
-	int currentXMin = 0;
-	int currentXMax = 0;
-	int currentYMin = 0;
-	int currentYMax = 0;
+	int current_x_min = 0;
+	int current_x_max = 0;
+	int current_y_min = 0;
+	int current_y_max = 0;
 };

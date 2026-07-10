@@ -27,23 +27,23 @@ enum class ButtonState
 	Pressed
 };
 
-inline SCoord getButtonSpriteDimensions(ButtonSprite sprite)
+inline SCoord get_button_sprite_dimensions(ButtonSprite sprite)
 {
   return {SpriteSheet::buttonSprites[static_cast<int>(sprite)].w, SpriteSheet::buttonSprites[static_cast<int>(sprite)].h / 3};
 }
 
-inline SDL_Rect getButtonSprite(ButtonSprite sprite, ButtonState state)
+inline SDL_Rect get_button_sprite(ButtonSprite sprite, ButtonState state)
 {
-  SDL_Rect buttonSheet = SpriteSheet::buttonSprites[static_cast<int>(sprite)];
+  SDL_Rect button_sheet = SpriteSheet::buttonSprites[static_cast<int>(sprite)];
   switch (state) {
   case ButtonState::Unpressed:
-		  return {buttonSheet.x, buttonSheet.y, buttonSheet.w, buttonSheet.h / 3};
+		  return {button_sheet.x, button_sheet.y, button_sheet.w, button_sheet.h / 3};
     break;
   case ButtonState::Hover:
-        return {buttonSheet.x, buttonSheet.y + buttonSheet.h / 3, buttonSheet.w, buttonSheet.h / 3};
+        return {button_sheet.x, button_sheet.y + button_sheet.h / 3, button_sheet.w, button_sheet.h / 3};
     break;
   case ButtonState::Pressed:
-    return {buttonSheet.x, buttonSheet.y + (2 * buttonSheet.h) / 3, buttonSheet.w, buttonSheet.h / 3};
+    return {button_sheet.x, button_sheet.y + (2 * button_sheet.h) / 3, button_sheet.w, button_sheet.h / 3};
     break;
   default:
     // TODO: error
@@ -56,25 +56,25 @@ struct ButtonUI
       public:
 	ButtonFunctionality function;
     ButtonSprite sprite;
-	SCoord topLeftCorner;
-	Sound* pressedSound;
+	SCoord top_left_corner;
+	Sound* pressed_sound;
 	ButtonState state = ButtonState::Unpressed;
 
-	ButtonUI(ButtonFunctionality function, ButtonSprite sprite, SCoord topLeftCorner,
-		 Sound *pressedSound = nullptr)
-	    : function(function), sprite(sprite), topLeftCorner(topLeftCorner),
-	      pressedSound(pressedSound)
+	ButtonUI(ButtonFunctionality function, ButtonSprite sprite, SCoord top_left_corner,
+		 Sound *pressed_sound = nullptr)
+	    : function(function), sprite(sprite), top_left_corner(top_left_corner),
+	      pressed_sound(pressed_sound)
 	{	
 	}
 
 	inline void render(SDL_Rect *viewport)
 	{
 		SDL_Rect rect;
-		rect = getButtonSprite(sprite, state);
-		spriteSheetTexture.render(topLeftCorner.x, topLeftCorner.y, &rect, viewport);
+		rect = get_button_sprite(sprite, state);
+		sprite_sheet_texture.render(top_left_corner.x, top_left_corner.y, &rect, viewport);
 	}
 
-	void handleEvent(SDL_Event *e)
+	void handle_event(SDL_Event *e)
 	{
 		if( e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP )
 	{
@@ -82,8 +82,8 @@ struct ButtonUI
 		int x, y;
 		SDL_GetMouseState( &x, &y );
 
-		SCoord dimensions = getButtonSpriteDimensions(sprite);
-		bool inside = mouseInside({x,y}, topLeftCorner, dimensions);
+		SCoord dimensions = get_button_sprite_dimensions(sprite);
+		bool inside = mouse_inside({x,y}, top_left_corner, dimensions);
 
 		//Mouse is outside button
 		if( !inside )
@@ -104,7 +104,7 @@ struct ButtonUI
 			case SDL_MOUSEBUTTONUP:
 				state = ButtonState::Pressed;
 				function.trigger();
-				if (pressedSound != NULL) playSound(*pressedSound);
+				if (pressed_sound != NULL) play_sound(*pressed_sound);
 				break;
 			}
 		}
@@ -117,11 +117,11 @@ struct TextButtonUI : public ButtonUI
     Text text;	
 
   TextButtonUI(Text text, ButtonFunctionality function, ButtonSprite sprite,      
-        SCoord topLeftCorner,
-        Sound* pressedSound = nullptr)
+        SCoord top_left_corner,
+        Sound* pressed_sound = nullptr)
         : ButtonUI(function, sprite,
-            topLeftCorner,
-            pressedSound),
+            top_left_corner,
+            pressed_sound),
           text(text)
   {    
     }
@@ -130,10 +130,10 @@ struct TextButtonUI : public ButtonUI
     {
       ButtonUI::render(viewport);
       SDL_RenderSetViewport(renderer, viewport);
-	FC_DrawColor(text.font, renderer, topLeftCorner.x, topLeftCorner.y, text.color, text.text); 
+	fc_draw_color(text.font, renderer, top_left_corner.x, top_left_corner.y, text.color, text.text); 
     }
 
-    void handleEvent(SDL_Event *e) { ButtonUI::handleEvent(e); }
+    void handle_event(SDL_Event *e) { ButtonUI::handle_event(e); }
     
 };
 
@@ -150,7 +150,7 @@ struct CheckboxUI : public ButtonUI
 {
     bool checked = false;
 
-    CheckboxUI(ButtonFunctionality function, ButtonSprite sprite, const SCoord topLeftCorner,
+    CheckboxUI(ButtonFunctionality function, ButtonSprite sprite, const SCoord top_left_corner,
 	       Sound *sound = nullptr)
 	: function(
 	      function, sprite(sprite), topLeftCorner(topLeftCorner),
@@ -207,15 +207,15 @@ class SaveButtonUI
 private:
 public:
   SaveButtonUI() {};
-  std::chrono::system_clock::time_point lastSaved;
+  std::chrono::system_clock::time_point last_saved;
   std::string name;
-  inline static int maxSaveNameSize = 24;
-  inline static int saveButtonSize = 8;
+  inline static int max_save_name_size = 24;
+  inline static int save_button_size = 8;
   void render() {}
 
-  void changeName(std::string newName)
+  void change_name(std::string new_name)
   {
-	  if (newName > maxSaveNameSize)
+	  if (new_name > max_save_name_size)
 	    {
 	      userError("Name too long! Keep it 24 or less characters.");
 	    }

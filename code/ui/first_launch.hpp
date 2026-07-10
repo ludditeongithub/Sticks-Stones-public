@@ -16,7 +16,7 @@
 #include "fonts.hpp"
 #include "system.hpp"
 
-bool initFirstLaunchWindow()
+bool init_first_launch_window()
 	{
 		// Initialization flag
 	bool success = true;
@@ -36,7 +36,7 @@ bool initFirstLaunchWindow()
 		}
 
 		// Create window
-		window = SDL_CreateWindow("First Launch", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, FIRST_LAUNCH_WINDOW_WIDTH, FIRST_LAUNCH_WINDOW_HEIGHT,SDL_WINDOW_SHOWN);
+		window = SDL_CreateWindow("First Launch", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, first_launch_window_width, first_launch_window_height,SDL_WINDOW_SHOWN);
 		if (window == NULL)
 		{
 			printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
@@ -59,7 +59,7 @@ bool initFirstLaunchWindow()
 			}
 
 			// create raw rendering
-			SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
+			SDL_RenderSetLogicalSize(renderer, screen_width, screen_height);
 			
 		}
 	}
@@ -68,43 +68,43 @@ bool initFirstLaunchWindow()
 
 struct FirstLaunchBuffer
 {
-	bool firstLaunch = true;
-	Coord userScreenResolution;
+	bool first_launch = true;
+	Coord user_screen_resolution;
 	bool fullscreen = false;
 
-	template <typename Archive> void serialize(Archive &a) { a(firstLaunch, 1); }
+	template <typename Archive> void serialize(Archive &a) { a(first_launch, 1); }
 };
 
-	void launchFirstLauncher(FirstLaunchBuffer flb)
+	void launch_first_launcher(FirstLaunchBuffer flb)
 	{
-	        FC_Font* amble20 = FC_CreateFont();
-		FC_LoadFont(amble20, renderer, "../../fonts/Amble-Regular.ttf", 20,
-			    FC_MakeColor(9, 9, 9, 255), TTF_STYLE_NORMAL);
+	        FC_Font* amble20 = fc_create_font();
+		fc_load_font(amble20, renderer, "../../fonts/Amble-Regular.ttf", 20,
+			    fc_make_color(9, 9, 9, 255), TTF_STYLE_NORMAL);
 		
 
 		PositionedText fullscreen = {amble20, "Fullscreen: ", {30, 30}};
-		int textWidth = FC_GetWidth(amble20, fullscreen.text);
+		int text_width = fc_get_width(amble20, fullscreen.text);
 		CheckboxUI cb = CheckboxUI({textWidth + 8,30}, {30,30}, SpriteSheet::buttonSprites[ButtonSprite::Checkbox].unpressed, SpriteSheet::buttonSprites[ButtonSprite::Checkbox].pressed);
 		Text text = {amble20, "Click to Select Window Dimensions"};
-		TextButtonUI headerButton = TextButtonUI(text, NullBF(), ButtonSprite::FirstLaunchButton, {30, static_cast<int>(fullscreen.position.y) + 50});
+		TextButtonUI header_button = TextButtonUI(text, NullBF(), ButtonSprite::FirstLaunchButton, {30, static_cast<int>(fullscreen.position.y) + 50});
 
-		DropdownMenu ddm = DropdownMenu(headerButton, screen_dimensions.size());
+		DropdownMenu ddm = DropdownMenu(header_button, screen_dimensions.size());
 
-		int accum = headerButton.topLeftCorner.y + headerButton.dimensions.y;
+		int accum = header_button.top_left_corner.y + header_button.dimensions.y;
 		for (auto sd : screen_dimensions)
 		{		  
 		  ddm.addItem(TextButtonUI({amble20, std::to_string(sd.x) + " x " + std::to_string(sd.y)},                                           ChangeScreenDimensionsBF(sd), ButtonSprite::FirstLaunchButton, {headerButton.topLeftCorner.x, accum}));
 		}
 
                 Text lbt = {amble20, "Launch"};
-		TextButtonUI launchButton =
+		TextButtonUI launch_button =
                   TextButtonUI(lbt, LaunchBF(Launches::GameWindow),				 ButtonSprite::FirstLaunchButton, {180, static_cast<int>(fullscreen.position.y + 150)});
-		launchButton.render(mainScreenViewport);
+		launch_button.render(main_screen_viewport);
                 
 	}
 
 
-FirstLaunchBuffer handleLaunch()
+FirstLaunchBuffer handle_launch()
 {
 FirstLaunchBuffer flb;
 std::string file = "first_launch.bin";
@@ -112,20 +112,20 @@ std::ifstream is(file);
 
 try
 {
-    cereal::BinaryInputArchive firstLaunchArchive = cereal::BinaryInputArchive(is);
-    flb.serialize(firstLaunchArchive);
+    cereal::BinaryInputArchive first_launch_archive = cereal::BinaryInputArchive(is);
+    flb.serialize(first_launch_archive);
 }
 catch (...)
 {
   flb = FirstLaunchBuffer{};
-  launchFirstLauncher(flb);
+  launch_first_launcher(flb);
 }
  return flb;
 }
 
 void launch()
 {
-        FirstLaunchBuffer flb = handleLaunch();	
-	g_UISystem = new UISystem(flb.userScreenResolution.x, flb.userScreenResolution.y, flb.fullscreen);
+        FirstLaunchBuffer flb = handle_launch();	
+	g_ui_system = new UISystem(flb.user_screen_resolution.x, flb.user_screen_resolution.y, flb.fullscreen);
         
 }

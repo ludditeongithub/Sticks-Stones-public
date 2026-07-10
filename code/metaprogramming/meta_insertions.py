@@ -214,14 +214,13 @@ def create_runtime_arrays(database, main_enum, trait_info, extra_arrays):
     return runtime_arrays
 
 def create_structs(database, trait_data, structs):
-    for struct in database.get("structs", [])
-        
-    for trait in database.get("traits", []):
+    structs = []
+    for struct in database.get("structs", []):
         for trait_info in trait_data:
-            if trait_info["trait_name"] == trait:
+            if trait_info["trait_name"] == trait:   
                 structs.append(trait_info)
 
-    
+    return structs
 
 def main():
     create_databases()

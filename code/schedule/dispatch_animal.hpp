@@ -13,40 +13,6 @@
 struct AnimalDispatcher
 {
 
-	struct BucketCounts
-	{
-		uint16_t assignCount;
-		uint16_t newPathCount;
-		uint16_t hungryCount;
-		uint16_t thirstyCount;
-		uint16_t breedingCount;
-		uint16_t rejoinPackCount;
-		uint16_t migrationCount;
-	};
-
-	BucketCounts getBucketCounts(Array<ActionDecisionStatus> &actions)
-	{
-		BucketCounts bc;
-		for (auto i = 0; i < actions.size(); i++)
-		{
-			switch (actions[i])
-			{
-				if (actions[i] == ActionDecisionStatus::Assign)
-					bc.assignCount++;
-				if (actions[i] == ActionDecisionStatus::AnimalFoodSearch)
-					bc.hungryCount++;
-				if (actions[i] == ActionDecisionStatus::AnimalBreedSearch)
-					bc.breedingCount++;
-				if (actions[i] == ActionDecisionStatus::AnimalDrinkSearch)
-					bc.thirstyCount++;
-				if (actions[i] == ActionDecisionStatus::AnimalRejoinPack)
-					bc.rejoinPackCount++;
-				if (actions[i] == ActionDecisionStatus::AnimalMigration)
-					bc.migrationCount++;
-			}
-		}
-	}
-
 	struct DispatchCollection
 	{
 		PathDispatchData newPathDispatch;

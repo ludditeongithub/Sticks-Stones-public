@@ -8,33 +8,6 @@
 
 // Moving, Mating, Direction are packed
 
-enum class ActionStatus
-{
-	Idle,
-	NewPath,
-	Prowl, // looking for targets, but don't know where
-	Flee,
-	// PursuitX means sprinting to visible target
-	Pursuit,
-	// ApproachX means walking to known/visible target
-	Approach,
-	PerformAction,
-	ReturnHome,
-};
-
-// TODO: make pack animals work, will search for needs using pack logic
-enum class ActionDecisionStatus
-{
-	AnimalFoodSearch,
-	AnimalBreedSearch,
-	AnimalDrinkSearch,
-	AnimalRejoinPack, // wanders if animal is not a pack animal, possibly change
-			  // to wander
-	AnimalMigration,
-	Assign,
-	Idle
-};
-
 enum class MatingStatus
 {
 	Idle,
@@ -43,7 +16,7 @@ enum class MatingStatus
 	Infertile
 };
 
-using AnimalStatus = PackedEnum<Field<Direction, 2>, Field<ActionStatus, 4>, Field<MatingStatus, 2>>;
+using AnimalStatus = PackedEnum<Field<Direction, 2>, Field<MatingStatus, 2>>;
 
 // COLD
 

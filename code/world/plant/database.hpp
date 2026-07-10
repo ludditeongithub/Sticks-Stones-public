@@ -21,7 +21,7 @@ struct PlantDatabase
     // BASE DATABASE MEMBERS
     // =========================
 
-constexpr static uint16_t ENTITY_SIZE = sizeof(Plant) +
+constexpr static uint16_t entity_size = sizeof(Plant) +
 + sizeof(bool)
   
  +  sizeof(Plant) 
@@ -31,7 +31,7 @@ constexpr static uint16_t ENTITY_SIZE = sizeof(Plant) +
 
 size_t capacity;
     size_t size;
-    Stack<size_t> freeSlots;
+    Stack<size_t> free_slots;
     Array<bool> alives;
   SearchGrid& search;
   World& world;
@@ -68,17 +68,17 @@ this->capacity = capacity;
   // SPAWN
   // =========================
 
-  void addPlants(WorldSpawner::PlantSpawnBuffer& spawnBuffer)
+  void add_plants(WorldSpawner::PlantSpawnBuffer& spawn_buffer)
 {
-	for (size_t i = 0; i < spawnBuffer.size; i++)
-	  if (spawn(spawnBuffer.plants[i], spawnBuffer.coords[i], false)) {}
+	for (size_t i = 0; i < spawn_buffer.size; i++)
+	  if (spawn(spawn_buffer.plants[i], spawn_buffer.coords[i], false)) {}
 	  else
 	    {
 	      //TODO: error
 	    }
 }
  
-  bool attemptSpawn(Plant plant, bool newborn, Coord coord, )
+  bool attempt_spawn(Plant plant, bool newborn, Coord coord )
   {       
         if (size + 1 > capacity)
             return false;
@@ -111,8 +111,8 @@ this->capacity = capacity;
         return true;
           }
           bool spawn(Plant plant, bool newborn, Coord origin) {
-          Coord spawnPoint = tiles.getNearestEmptyTile(origin);
-          while (!attemptSpawn(plant, newborn, spawnPoint)) freeUnusedEntity();                 
+          Coord spawn_point = tiles.get_nearest_empty_tile(origin);
+          while (!attempt_spawn(plant, newborn, spawn_point)) free_unused_entity();                 
           }        
     
 
@@ -132,7 +132,7 @@ this->capacity = capacity;
         return true;
   }
 
-  void freeUnusedEntity()
+  void free_unused_entity()
   {
     for (size_t i = 0; i < coords.size; i++) {
     if (tiles.tileStatuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
@@ -177,52 +177,52 @@ this->capacity = capacity;
 // TRANSFER
 // =========================
 
-inline bool transferPlant(size_t i, PlantDatabase &oldDB, PlantDatabase &newDB)
+inline bool transfer_plant(size_t i, PlantDatabase &old_db, PlantDatabase &new_db)
   {
-  if (newDB.size >= newDB.capacity) return false;
+  if (new_db.size >= new_db.capacity) return false;
   int index;  
-  if (newDB.freeSlots.empty())
+  if (new_db.freeSlots.empty())
   {
   index = ++size;
 	}
 	else
 	{
-		index = newDB.freeSlots.top();
-		newDB.freeSlots.pop();			
+		index = new_db.freeSlots.top();
+		new_db.freeSlots.pop();			
   }
-    newDB.plants[index] = oldDB.plants[i];
-    newDB.coords[index] = oldDB.coords[i];
-    newDB.ages[index] = oldDB.ages[i];
-  newDB.alives[index] = true;
-  oldDB.freeSlots.push(i);
-  oldDB.alives[index] = false;
+    new_db.plants[index] = old_db.plants[i];
+    new_db.coords[index] = old_db.coords[i];
+    new_db.ages[index] = old_db.ages[i];
+  new_db.alives[index] = true;
+  old_db.freeSlots.push(i);
+  old_db.alives[index] = false;
   return true;
   }
 // @codegen:end database_generation
 
-	inline bool viableHarvest(int plantIndex);
-	inline void setGerminationTime(int seedIndex);
-	inline void germinate(int seedIndex, bool randomGrowth, SearchGrid &searchGrid);
-	inline void spawnSeed(Plant plant, Coord position);
-	inline void prepareSeedDropping(int animalIndex, int plantIndex, bool regrowth);
-	inline void attemptPlantGrowth(int plant, int time, int biomeIndex);
-		inline void excreteSeed(AnimalDatabase& database, int animalIndex, TileDatabase& tiles, Plant plant);
-	inline void plant(int unitIndex, Plant plant);
-	inline void killTree(int plantIndex);
-	inline void killPlant(int plantIndex);
+	inline bool viable_harvest(int plant_index);
+	inline void set_germination_time(int seed_index);
+	inline void germinate(int seed_index, bool random_growth, SearchGrid &search_grid);
+	inline void spawn_seed(Plant plant, Coord position);
+	inline void prepare_seed_dropping(int animal_index, int plant_index, bool regrowth);
+	inline void attempt_plant_growth(int plant, int time, int biome_index);
+		inline void excrete_seed(AnimalDatabase& database, int animal_index, TileDatabase& tiles, Plant plant);
+	inline void plant(int unit_index, Plant plant);
+	inline void kill_tree(int plant_index);
+	inline void kill_plant(int plant_index);
 
-	void updatePlants(World& world, Time timePassed);
+	void update_plants(World& world, Time time_passed);
 };
 
 struct RegrowthPlantDatabase
 {
-	PlantDatabase plantDatabase;
+	PlantDatabase plant_database;
 	Array<Time> regrowths;
 	Array<Time> ages;
 	Array<uint16_t> produces;
 	
-	inline void germinate(int seedIndex, bool randomGrowth, SearchGrid &searchGrid);
-	inline void attemptPlantGrowth(int plant, int time, int biomeIndex);
+	inline void germinate(int seed_index, bool random_growth, SearchGrid &search_grid);
+	inline void attempt_plant_growth(int plant, int time, int biome_index);
 	
 };
 

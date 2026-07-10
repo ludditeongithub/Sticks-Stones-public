@@ -11,7 +11,7 @@
 // TODO: loadGameButton
 
 struct MainButtonUI : public ButtonUI {
-  MainButtonUI(const ButtonFunctionality function, const SCoord leftCorner) : ButtonUI(function, ButtonSprite::MainButton, leftCorner)
+  MainButtonUI(const ButtonFunctionality function, const SCoord left_corner) : ButtonUI(function, ButtonSprite::MainButton, leftCorner)
 	{
           
         }
@@ -19,32 +19,32 @@ struct MainButtonUI : public ButtonUI {
 
 struct MainMenu
 {
-	uint16_t userScreenWidth;
-	uint16_t userScreenHeight;
-	uint8_t rawToUserScalar;
+	uint16_t user_screen_width;
+	uint16_t user_screen_height;
+	uint8_t raw_to_user_scalar;
 	// Button Positions
 	SCoord background = {}; //TODO
-	int buttonLeftAlignment =
+	int button_left_alignment =
 	    SCREEN_WIDTH / 2 -
 	    (SpriteSheet::buttonSprites[static_cast<int>(ButtonSprite::MainButton)].w / 2);
 	
-	SCoord newLeftCorner = {buttonLeftAlignment, 2 * SCREEN_HEIGHT / 6};
-	SCoord loadLeftCorner = {buttonLeftAlignment / 2, 3 * SCREEN_HEIGHT / 6};
-	SCoord optionsLeftCorner = {buttonLeftAlignment / 2, 4 * SCREEN_HEIGHT / 6};
-	SCoord aboutLeftCorner = {buttonLeftAlignment / 2, 5 * SCREEN_HEIGHT / 6};
-	MainButtonUI newGameButton;
-	MainButtonUI loadGameButton;
-	MainButtonUI aboutButton;
-	MainButtonUI optionsButton;
+	SCoord new_left_corner = {buttonLeftAlignment, 2 * SCREEN_HEIGHT / 6};
+	SCoord load_left_corner = {buttonLeftAlignment / 2, 3 * SCREEN_HEIGHT / 6};
+	SCoord options_left_corner = {buttonLeftAlignment / 2, 4 * SCREEN_HEIGHT / 6};
+	SCoord about_left_corner = {buttonLeftAlignment / 2, 5 * SCREEN_HEIGHT / 6};
+	MainButtonUI new_game_button;
+	MainButtonUI load_game_button;
+	MainButtonUI about_button;
+	MainButtonUI options_button;
 	
-	SCoord videoLeftCorner;	
-	SCoord audioLeftCorner;
-	SCoord keybindingsLeftCorner;
+	SCoord video_left_corner;	
+	SCoord audio_left_corner;
+	SCoord keybindings_left_corner;
 
-	MainButtonUI videoButton;
-	MainButtonUI audioButton;
-	MainButtonUI keybindingsButton;
-	SDL_Rect mainMenuViewport;
+	MainButtonUI video_button;
+	MainButtonUI audio_button;
+	MainButtonUI keybindings_button;
+	SDL_Rect main_menu_viewport;
 
 	enum class Mode
 	{
@@ -68,72 +68,72 @@ struct MainMenu
           audioLeftCorner = {buttonLeftAlignment / 2, 3 * SCREEN_HEIGHT / 6};
           keybindingsLeftCorner = {buttonLeftAlignment / 2, 4 * SCREEN_HEIGHT / 6};
 
-          videoButton = ButtonUI(VideoBF(), videoLeftCorner);
-          audioButton = ButtonUI(AudioBF(), audioLeftCorner);
-          keybindingsButton = ButtonUI(KeybindingsBF(),keybindingsLeftCorner);
+          video_button = ButtonUI(VideoBF(), video_left_corner);
+          audio_button = ButtonUI(AudioBF(), audio_left_corner);
+          keybindings_button = ButtonUI(KeybindingsBF(),keybindings_left_corner);
 	}
 
 	void render()
 	{
-        newGameButton.render();
-	loadGameButton.render();
-	aboutButton.render();
-	optionsButton.render();
-	videoButton.render();
-	audioButton.render();
-	keybindingsButton.render();
+        new_game_button.render();
+	load_game_button.render();
+	about_button.render();
+	options_button.render();
+	video_button.render();
+	audio_button.render();
+	keybindings_button.render();
 	}	
 	
-	void handleEvent(SDL_Event *e)
+	void handle_event(SDL_Event *e)
 	{
-		SCoord mousePosition;
-		SDL_GetMouseState(&mousePosition.x, &mousePosition.y);
+		SCoord mouse_position;
+		SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
 		switch (mode)
 		{
 		case Mode::Main:
-			mainHandle(e, mousePosition);
+			main_handle(e, mouse_position);
 			break;
 		case Mode::Load:
-			loadHandle(e, mousePosition);
+			load_handle(e, mouse_position);
 			break;
 		case Mode::Options:
-			optionsHandle(e, mousePosition);
+			options_handle(e, mouse_position);
 			break;
 		case Mode::Video:
-			videoHandle(e, mousePosition);
+			video_handle(e, mouse_position);
 			break;
 		case Mode::Audio:
-			audioHandle(e, mousePosition);
+			audio_handle(e, mouse_position);
 			break;
 		}
 	}
 
-	void mainHandle(SDL_Event *e, SCoord mousePosition)
+	void main_handle(SDL_Event *e, SCoord mouse_position)
 	{
 		
 	}
 
-	void loadHandle(SDL_Event *e, SCoord mousePosition)
+	void load_handle(SDL_Event *e, SCoord mouse_position)
 	{
 		//TODO: finish UI element ScrollableList. saves are ScrollableList.
 		if (e->type == SDL_MOUSEBUTTONUP) {
-			if (mouseInside(mousePosition, newLeftCorner, buttonDimensions)) {
+			if (mouseInside(mouse_position, newLeftCorner, buttonDimensions)) {
 				startGame();
 			}
-			else if (mouseInside(mousePosition, loadLeftCorner, buttonDimensions))
+			else if (mouseInside(mouse_position, loadLeftCorner, buttonDimensions))
 			{
 				mode = Mode::Load;
-			} else if (mouseInside(mousePosition, optionsLeftCorner, buttonDimensions)) mode = Mode::Options;
+			} else if (mouseInside(mouse_position, optionsLeftCorner, buttonDimensions)) mode = Mode::Options;
 		}
 	}		
 
-	void optionsHandle(SDL_Event *e, SCoord mousePosition)
+	void options_handle(SDL_Event *e, SCoord mouse_position)
 	{
 		if (e->type == SDL_MOUSEBUTTONUP) {
-			if (mouseInside(mousePosition, audioLeftCorner, buttonDimensions)) mode = Mode::Audio;
-			else if (mouseInside(mousePosition, videoLeftCorner, buttonDimensions)) mode = Mode::Video;
+			if (mouseInside(mouse_position, audio_left_corner, buttonDimensions)) mode = Mode::Audio;
+			else if (mouseInside(mouse_position, video_left_corner, buttonDimensions)) mode = Mode::Video;
 		}
 	}
-	void audioHandle(SDL_Event *e, SCoord mousePosition);
-	void videoHandle(SDL_Event *e, SCoord mousePosition);
+	void audio_handle(SDL_Event *e, SCoord mouse_position);
+	void video_handle(SDL_Event *e, SCoord mouse_position);
 };	

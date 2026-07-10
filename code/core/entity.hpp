@@ -61,15 +61,15 @@ struct UnitRenderData {
 using EntityRenderData = std::variant<PlantRenderData, AnimalRenderData, UnitRenderData, BuildableRenderData, ItemRenderData>;
 
   struct EntityRenderBuffer {
-    size_t plantAmount;
-    std::array<PlantRenderData, CHUNK_SIZE> plants;
-    size_t animalAmount;
-    std::array<AnimalRenderData, CHUNK_SIZE> animals;
-    size_t unitAmount;
-    std::array<UnitRenderData, CHUNK_SIZE> units;
-    size_t itemAmount;
-    std::array<ItemRenderData, CHUNK_SIZE> items;
-    size_t buildableAmount;
-    std::array<BuildableRenderData, CHUNK_SIZE> buildables;
+    size_t plant_amount;
+    std::array<PlantRenderData, chunk_size> plants;
+    size_t animal_amount;
+    std::array<AnimalRenderData, chunk_size> animals;
+    size_t unit_amount;
+    std::array<UnitRenderData, chunk_size> units;
+    size_t item_amount;
+    std::array<ItemRenderData, chunk_size> items;
+    size_t buildable_amount;
+    std::array<BuildableRenderData, chunk_size> buildables;
   };
 

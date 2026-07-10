@@ -44,30 +44,30 @@ enum class ProwlAction
 struct Event
 {
 	Time time;
-	EventType eventType;
-	size_t typeIndex; // index which converts to the enum class that is the main object in the
+	EventType event_type;
+	size_t type_index; // index which converts to the enum class that is the main object in the
 		       // event in question
-	size_t databaseIndex;  // index of the vector that stores the entities of the type in question
-	size_t secondaryIndex; // if there is a secondary object this converts to its enum class
+	size_t database_index;  // index of the vector that stores the entities of the type in question
+	size_t secondary_index; // if there is a secondary object this converts to its enum class
 };
 
 
 struct EventManager {
-		std::vector<Event> upcomingEvents;
+		std::vector<Event> upcoming_events;
 		Game& game;
 
-void addEvent(Time time, EventType type, size_t typeIndex, size_t databaseIndex)
+void add_event(Time time, EventType type, size_t type_index, size_t database_index)
 {
 	upcomingEvents.push_back({game.absoluteTime + time, type, typeIndex, databaseIndex});
 }
 
-void addEvent(Time time, EventType type, size_t typeIndex, size_t databaseIndex, size_t secondaryIndex)
+void add_event(Time time, EventType type, size_t type_index, size_t database_index, size_t secondary_index)
 {
 	upcomingEvents.push_back({game.absoluteTime + time, type, typeIndex, databaseIndex, secondaryIndex});
 }
 
 // OPTI: if things begin to lag, optimize this to O log n or O1 using jump table
-void interpretEvent(Event event)
+void interpret_event(Event event)
 {
 	switch (event.eventType)
 	{	
@@ -126,6 +126,6 @@ void interpretEvent(Event event)
 }
 };
 
-EventManager* g_Events;
+EventManager* g_events;
 
 #endif // EVENT_H_

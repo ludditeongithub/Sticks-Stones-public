@@ -12,17 +12,17 @@ template <typename T> T chebyshev(T x1, T y1, T x2, T y2)
 	return std::max(std::abs(x2 - x1), std::abs(y2 - y1));
 }
 
-template <typename T> inline T euclideanDist(T x1, T y1, T x2, T y2)
+template <typename T> inline T euclidean_dist(T x1, T y1, T x2, T y2)
 {
 	return std::sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
 
-inline uint16_t manhattanDist(int x1, int x2, int y1, int y2)
+inline uint16_t manhattan_dist(int x1, int x2, int y1, int y2)
 {
 	return abs(x1 - x2) + abs(y1 - y2);
 };
 
-inline uint16_t manhattanDist(Coord c1, Coord c2)
+inline uint16_t manhattan_dist(Coord c1, Coord c2)
 {
     int dx = static_cast<int>(c1.x) - static_cast<int>(c2.x);
     int dy = static_cast<int>(c1.y) - static_cast<int>(c2.y);
@@ -30,7 +30,7 @@ inline uint16_t manhattanDist(Coord c1, Coord c2)
     return static_cast<uint16_t>(std::abs(dx) + std::abs(dy));
 }
 
-template <typename T> inline float diffMult(T value, T target, T bound)
+template <typename T> inline float diff_mult(T value, T target, T bound)
 {
 	T range = std::abs(bound - target);
 	T diff = std::abs(bound - value);
@@ -58,7 +58,7 @@ inline float lerp(float x1, float x2, float x3, float s1, float s2, float s3)
 }
 
 // Custom hash function for pair<int, int>
-struct hashPair
+struct HashPair
 {
 	uint16_t operator()(const std::pair<int, int> &p) const
 	{
@@ -68,7 +68,7 @@ struct hashPair
 	}
 };
 
-inline uint16_t hashCoords(int x, int y)
+inline uint16_t hash_coords(int x, int y)
 {
 	auto h1 = std::hash<int>{}(x);
 	auto h2 = std::hash<int>{}(y);

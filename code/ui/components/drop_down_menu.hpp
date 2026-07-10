@@ -12,16 +12,16 @@ public:
 
     bool expanded = false;
 
-    int selectedIndex = -1;
+    int selected_index = -1;
 
     DropdownMenu(
-        const TextButtonUI& headerButton, uint16_t size)
-        : header(headerButton)
+        const TextButtonUI& header_button, uint16_t size)
+        : header(header_button)
     {
 	    items.reserve(size);
     }
 
-    void addItem(const TextButtonUI& item)
+    void add_item(const TextButtonUI& item)
     {
         items.push_back(item);
     }
@@ -39,22 +39,22 @@ public:
         }
     }
 
-    void handleEvent(SDL_Event* e)
+    void handle_event(SDL_Event* e)
     {
-        header.handleEvent(e);
+        header.handle_event(e);
 
         if (e->type == SDL_MOUSEBUTTONUP)
         {
             int mx, my;
             SDL_GetMouseState(&mx, &my);
 
-            bool headerClicked =
+            bool header_clicked =
                 mouseInside(
                     {mx, my},
-                    header.topLeftCorner,
+                    header.top_left_corner,
                     header.dimensions);
 
-            if (headerClicked)
+            if (header_clicked)
             {
                 expanded = !expanded;
                 return;
@@ -68,7 +68,7 @@ public:
         {
             TextButtonUI& item = items[i];
 
-            item.handleEvent(e);
+            item.handle_event(e);
 
             if (e->type == SDL_MOUSEBUTTONUP)
             {
@@ -78,12 +78,12 @@ public:
                 bool clicked =
                     mouseInside(
                         {mx, my},
-                        item.topLeftCorner,
+                        item.top_left_corner,
                         item.dimensions);
 
                 if (clicked)
                 {
-                    selectedIndex = static_cast<int>(i);
+                    selected_index = static_cast<int>(i);
 
                     header.text = item.text;
 
@@ -93,7 +93,7 @@ public:
         }
     }
 
-    const std::string& selectedText() const
+    const std::string& selected_text() const
     {
         return header.text;
     }

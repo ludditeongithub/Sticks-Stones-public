@@ -5,23 +5,23 @@
 #include <core/random.hpp>
 // ANIMAL UNIQUES
 
-constexpr float INFANT_HUNGER_MODIFIER = 0.2;
+constexpr float infant_hunger_modifier = 0.2;
 
-constexpr float INFANT_HEALTH_MODIFIER = 0.2;
+constexpr float infant_health_modifier = 0.2;
 
-inline Time randomAge(Animal animal) { return animal::maxAges[animal] * random_chance->next(); }
+inline Time random_age(Animal animal) { return animal::maxAges[animal] * random_chance->next(); }
 
-inline Health getMaxHealth(Animal animal, Time age)
+inline Health get_max_health(Animal animal, Time age)
 {
 	return animal::maxHealths[animal] * (age / animal::fertilityAges[animal]);
 }
 
-inline Hunger getMaxHunger(Animal animal, Time age)
+inline Hunger get_max_hunger(Animal animal, Time age)
 {
 	return animal::maxHungers[animal] * (age / animal::fertilityAges[animal]);
 }
 
-inline float getConceptionRoll()
+inline float get_conception_roll()
 {
 
 }

@@ -25,7 +25,7 @@ inline Enum operator&(Enum a, Enum b)
 }
 
 template <typename Enum>
-inline bool hasTag(Enum value, Enum tag)
+inline bool has_tag(Enum value, Enum tag)
 {
 	return static_cast<std::underlying_type_t<Enum>>(value & tag) != 0;
 }

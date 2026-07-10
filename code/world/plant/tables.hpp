@@ -9,12 +9,12 @@
 using enum Plant;
 using PlantTable = LookupTable<PlantCategory, float>;
 
-constexpr float UNOPTIMAL_TEMP_MULT = 0.65;
-constexpr float LOW_WATER_MULT = 0.55;
+constexpr float unoptimal_temp_mult = 0.65;
+constexpr float low_water_mult = 0.55;
 
 // TODO: manage sunlight and sun values
 // TODO: change these all to uint16_ts
-inline constexpr LookupTable<Plant, float> waterDeathMin = []
+inline constexpr LookupTable<Plant, float> water_death_min = []
 {
 	LookupTable<Plant, float> arr{};
 	arr[Fern] = 10.0;
@@ -79,141 +79,141 @@ inline constexpr LookupTable<Plant, float> waterDeathMin = []
 	return arr;
 }();
 
-inline constexpr LookupTable<Plant, float> waterDeath = []
+inline constexpr LookupTable<Plant, float> water_death = []
 {
 	LookupTable<Plant, float> arr{};
 
 	arr[NONE] = 0.0;
-	arr[Fern] = HOUR_LENGTH * 18;
-	arr[Moss] = HOUR_LENGTH * 12;
-	arr[Reed] = HOUR_LENGTH * 4;
-	arr[Wheat] = HOUR_LENGTH * 70;
-	arr[Oat] = HOUR_LENGTH * 42;
-	arr[Rice] = HOUR_LENGTH * 20;
-	arr[Bush] = HOUR_LENGTH * 60;
-	arr[Papyrus] = HOUR_LENGTH * 1;
-	arr[PioneerTree] = HOUR_LENGTH * 120;
-	arr[DeciduousTree] = HOUR_LENGTH * 140;
-	arr[EvergreenTree] = HOUR_LENGTH * 160;
-	arr[TropicalTree] = HOUR_LENGTH * 80;
-	arr[Cactus] = HOUR_LENGTH * 400;
-	arr[Grapevine] = HOUR_LENGTH * 90;
-	arr[Lettuce] = HOUR_LENGTH * 20;
-	arr[Kale] = HOUR_LENGTH * 28;
-	arr[Corn] = HOUR_LENGTH * 36;
-	arr[Carrot] = HOUR_LENGTH * 30;
-	arr[Beets] = HOUR_LENGTH * 32;
-	arr[Potato] = HOUR_LENGTH * 28;
-	arr[Onion] = HOUR_LENGTH * 36;
-	arr[Garlic] = HOUR_LENGTH * 42;
-	arr[Cabbage] = HOUR_LENGTH * 36;
-	arr[Broccoli] = HOUR_LENGTH * 30;
-	arr[Tomato] = HOUR_LENGTH * 20;
-	arr[Cucumber] = HOUR_LENGTH * 22;
-	arr[Pepper] = HOUR_LENGTH * 20;
-	arr[BlackPepper] = HOUR_LENGTH * 26;
-	arr[Cotton] = HOUR_LENGTH * 104;
-	arr[Hemp] = HOUR_LENGTH * 52;
-	arr[Flax] = HOUR_LENGTH * 30;
-	arr[Woad] = HOUR_LENGTH * 48;
-	arr[Madder] = HOUR_LENGTH * 55;
-	arr[Indigo] = HOUR_LENGTH * 40;
-	arr[Lavender] = HOUR_LENGTH * 120;
-	arr[Mint] = HOUR_LENGTH * 24;
-	arr[Thyme] = HOUR_LENGTH * 140;
-	arr[Sage] = HOUR_LENGTH * 120;
-	arr[Ginseng] = HOUR_LENGTH * 60;
-	arr[Rhubarb] = HOUR_LENGTH * 50;
-	arr[Poppy] = HOUR_LENGTH * 29;
-	arr[Cocoa] = HOUR_LENGTH * 30;
-	arr[Senna] = HOUR_LENGTH * 68;
-	arr[Saffron] = HOUR_LENGTH * 180;
-	arr[AloeVera] = HOUR_LENGTH * 220;
-	arr[Orange] = HOUR_LENGTH * 80;
-	arr[Apple] = HOUR_LENGTH * 120;
-	arr[Lemon] = HOUR_LENGTH * 75;
-	arr[Pear] = HOUR_LENGTH * 120;
-	arr[Peach] = HOUR_LENGTH * 100;
-	arr[Cherry] = HOUR_LENGTH * 110;
-	arr[Apricot] = HOUR_LENGTH * 100;
-	arr[Plum] = HOUR_LENGTH * 110;
-	arr[Lime] = HOUR_LENGTH * 70;
-	arr[Blueberry] = HOUR_LENGTH * 40;
-	arr[Strawberry] = HOUR_LENGTH * 24;
+	arr[Fern] = hour_length * 18;
+	arr[Moss] = hour_length * 12;
+	arr[Reed] = hour_length * 4;
+	arr[Wheat] = hour_length * 70;
+	arr[Oat] = hour_length * 42;
+	arr[Rice] = hour_length * 20;
+	arr[Bush] = hour_length * 60;
+	arr[Papyrus] = hour_length * 1;
+	arr[PioneerTree] = hour_length * 120;
+	arr[DeciduousTree] = hour_length * 140;
+	arr[EvergreenTree] = hour_length * 160;
+	arr[TropicalTree] = hour_length * 80;
+	arr[Cactus] = hour_length * 400;
+	arr[Grapevine] = hour_length * 90;
+	arr[Lettuce] = hour_length * 20;
+	arr[Kale] = hour_length * 28;
+	arr[Corn] = hour_length * 36;
+	arr[Carrot] = hour_length * 30;
+	arr[Beets] = hour_length * 32;
+	arr[Potato] = hour_length * 28;
+	arr[Onion] = hour_length * 36;
+	arr[Garlic] = hour_length * 42;
+	arr[Cabbage] = hour_length * 36;
+	arr[Broccoli] = hour_length * 30;
+	arr[Tomato] = hour_length * 20;
+	arr[Cucumber] = hour_length * 22;
+	arr[Pepper] = hour_length * 20;
+	arr[BlackPepper] = hour_length * 26;
+	arr[Cotton] = hour_length * 104;
+	arr[Hemp] = hour_length * 52;
+	arr[Flax] = hour_length * 30;
+	arr[Woad] = hour_length * 48;
+	arr[Madder] = hour_length * 55;
+	arr[Indigo] = hour_length * 40;
+	arr[Lavender] = hour_length * 120;
+	arr[Mint] = hour_length * 24;
+	arr[Thyme] = hour_length * 140;
+	arr[Sage] = hour_length * 120;
+	arr[Ginseng] = hour_length * 60;
+	arr[Rhubarb] = hour_length * 50;
+	arr[Poppy] = hour_length * 29;
+	arr[Cocoa] = hour_length * 30;
+	arr[Senna] = hour_length * 68;
+	arr[Saffron] = hour_length * 180;
+	arr[AloeVera] = hour_length * 220;
+	arr[Orange] = hour_length * 80;
+	arr[Apple] = hour_length * 120;
+	arr[Lemon] = hour_length * 75;
+	arr[Pear] = hour_length * 120;
+	arr[Peach] = hour_length * 100;
+	arr[Cherry] = hour_length * 110;
+	arr[Apricot] = hour_length * 100;
+	arr[Plum] = hour_length * 110;
+	arr[Lime] = hour_length * 70;
+	arr[Blueberry] = hour_length * 40;
+	arr[Strawberry] = hour_length * 24;
 	arr[Grape] = HOUR_LENGTH * 90;
-	arr[Olive] = HOUR_LENGTH * 200;
+	arr[Olive] = hour_length * 200;
 
 	return arr;
 }();
 
-inline constexpr LookupTable<Plant, float> waterRequired = []
+inline constexpr LookupTable<Plant, float> water_required = []
 {
 	LookupTable<Plant, float> arr{};
 
 	arr[NONE] = 0.0;
-	arr[Fern] = 900.0 / DAY_LENGTH;
-	arr[Moss] = 1200.0 / DAY_LENGTH;
-	arr[Reed] = 1400.0 / DAY_LENGTH;
-	arr[Wheat] = 750.0 / DAY_LENGTH;
-	arr[Oat] = 650.0 / DAY_LENGTH;
-	arr[Rice] = 1750.0 / DAY_LENGTH;
-	arr[Bush] = 700.0 / DAY_LENGTH;
-	arr[Papyrus] = 1500.0 / DAY_LENGTH;
-	arr[PioneerTree] = 800.0 / DAY_LENGTH;
-	arr[DeciduousTree] = 900.0 / DAY_LENGTH;
-	arr[EvergreenTree] = 700.0 / DAY_LENGTH;
-	arr[TropicalTree] = 1300.0 / DAY_LENGTH;
-	arr[Cactus] = 100.0 / DAY_LENGTH;
-	arr[Grapevine] = 700.0 / DAY_LENGTH;
-	arr[Lettuce] = 400.0 / DAY_LENGTH;
-	arr[Kale] = 500.0 / DAY_LENGTH;
-	arr[Corn] = 1250.0 / DAY_LENGTH;
-	arr[Carrot] = 600.0 / DAY_LENGTH;
-	arr[Beets] = 650.0 / DAY_LENGTH;
-	arr[Potato] = 750.0 / DAY_LENGTH;
-	arr[Onion] = 450.0 / DAY_LENGTH;
-	arr[Garlic] = 400.0 / DAY_LENGTH;
-	arr[Cabbage] = 600.0 / DAY_LENGTH;
-	arr[Broccoli] = 700.0 / DAY_LENGTH;
-	arr[Tomato] = 750.0 / DAY_LENGTH;
-	arr[Cucumber] = 800.0 / DAY_LENGTH;
-	arr[Pepper] = 450.0 / DAY_LENGTH;
-	arr[BlackPepper] = 900.0 / DAY_LENGTH;
-	arr[Cotton] = 800.0 / DAY_LENGTH;
-	arr[Hemp] = 750.0 / DAY_LENGTH;
-	arr[Flax] = 600.0 / DAY_LENGTH;
-	arr[Woad] = 600.0 / DAY_LENGTH;
-	arr[Madder] = 650.0 / DAY_LENGTH;
-	arr[Indigo] = 900.0 / DAY_LENGTH;
-	arr[Lavender] = 300.0 / DAY_LENGTH;
-	arr[Mint] = 800.0 / DAY_LENGTH;
-	arr[Thyme] = 250.0 / DAY_LENGTH;
-	arr[Sage] = 300.0 / DAY_LENGTH;
-	arr[Ginseng] = 850.0 / DAY_LENGTH;
-	arr[Rhubarb] = 750.0 / DAY_LENGTH;
-	arr[Poppy] = 450.0 / DAY_LENGTH;
-	arr[Cocoa] = 1400.0 / DAY_LENGTH;
-	arr[Senna] = 300.0 / DAY_LENGTH;
-	arr[Saffron] = 200.0 / DAY_LENGTH;
-	arr[AloeVera] = 150.0 / DAY_LENGTH;
-	arr[Orange] = 1200.0 / DAY_LENGTH;
-	arr[Apple] = 900.0 / DAY_LENGTH;
-	arr[Lemon] = 1200.0 / DAY_LENGTH;
-	arr[Pear] = 900.0 / DAY_LENGTH;
-	arr[Peach] = 950.0 / DAY_LENGTH;
-	arr[Cherry] = 900.0 / DAY_LENGTH;
-	arr[Apricot] = 900.0 / DAY_LENGTH;
-	arr[Plum] = 900.0 / DAY_LENGTH;
-	arr[Lime] = 1250.0 / DAY_LENGTH;
-	arr[Blueberry] = 800.0 / DAY_LENGTH;
-	arr[Strawberry] = 600.0 / DAY_LENGTH;
-	arr[Grapevine] = 700.0 / DAY_LENGTH;
-	arr[Olive] = 400.0 / DAY_LENGTH;
+	arr[Fern] = 900.0 / day_length;
+	arr[Moss] = 1200.0 / day_length;
+	arr[Reed] = 1400.0 / day_length;
+	arr[Wheat] = 750.0 / day_length;
+	arr[Oat] = 650.0 / day_length;
+	arr[Rice] = 1750.0 / day_length;
+	arr[Bush] = 700.0 / day_length;
+	arr[Papyrus] = 1500.0 / day_length;
+	arr[PioneerTree] = 800.0 / day_length;
+	arr[DeciduousTree] = 900.0 / day_length;
+	arr[EvergreenTree] = 700.0 / day_length;
+	arr[TropicalTree] = 1300.0 / day_length;
+	arr[Cactus] = 100.0 / day_length;
+	arr[Grapevine] = 700.0 / day_length;
+	arr[Lettuce] = 400.0 / day_length;
+	arr[Kale] = 500.0 / day_length;
+	arr[Corn] = 1250.0 / day_length;
+	arr[Carrot] = 600.0 / day_length;
+	arr[Beets] = 650.0 / day_length;
+	arr[Potato] = 750.0 / day_length;
+	arr[Onion] = 450.0 / day_length;
+	arr[Garlic] = 400.0 / day_length;
+	arr[Cabbage] = 600.0 / day_length;
+	arr[Broccoli] = 700.0 / day_length;
+	arr[Tomato] = 750.0 / day_length;
+	arr[Cucumber] = 800.0 / day_length;
+	arr[Pepper] = 450.0 / day_length;
+	arr[BlackPepper] = 900.0 / day_length;
+	arr[Cotton] = 800.0 / day_length;
+	arr[Hemp] = 750.0 / day_length;
+	arr[Flax] = 600.0 / day_length;
+	arr[Woad] = 600.0 / day_length;
+	arr[Madder] = 650.0 / day_length;
+	arr[Indigo] = 900.0 / day_length;
+	arr[Lavender] = 300.0 / day_length;
+	arr[Mint] = 800.0 / day_length;
+	arr[Thyme] = 250.0 / day_length;
+	arr[Sage] = 300.0 / day_length;
+	arr[Ginseng] = 850.0 / day_length;
+	arr[Rhubarb] = 750.0 / day_length;
+	arr[Poppy] = 450.0 / day_length;
+	arr[Cocoa] = 1400.0 / day_length;
+	arr[Senna] = 300.0 / day_length;
+	arr[Saffron] = 200.0 / day_length;
+	arr[AloeVera] = 150.0 / day_length;
+	arr[Orange] = 1200.0 / day_length;
+	arr[Apple] = 900.0 / day_length;
+	arr[Lemon] = 1200.0 / day_length;
+	arr[Pear] = 900.0 / day_length;
+	arr[Peach] = 950.0 / day_length;
+	arr[Cherry] = 900.0 / day_length;
+	arr[Apricot] = 900.0 / day_length;
+	arr[Plum] = 900.0 / day_length;
+	arr[Lime] = 1250.0 / day_length;
+	arr[Blueberry] = 800.0 / day_length;
+	arr[Strawberry] = 600.0 / day_length;
+	arr[Grapevine] = 700.0 / day_length;
+	arr[Olive] = 400.0 / day_length;
 
 	return arr;
 }();
 
-inline constexpr LookupTable<Plant, float> tempDeathMin = []
+inline constexpr LookupTable<Plant, float> temp_death_min = []
 {
 	LookupTable<Plant, float> arr{};
 
@@ -281,7 +281,7 @@ inline constexpr LookupTable<Plant, float> tempDeathMin = []
 }();
 
 // TODO : change these to int16_ts?
-inline constexpr LookupTable<Plant, float> tempDeathMax = []
+inline constexpr LookupTable<Plant, float> temp_death_max = []
 {
 	LookupTable<Plant, float> arr{};
 
@@ -348,7 +348,7 @@ inline constexpr LookupTable<Plant, float> tempDeathMax = []
 	return arr;
 }();
 
-inline constexpr LookupTable<Plant, float> tempOptimalMin = []
+inline constexpr LookupTable<Plant, float> temp_optimal_min = []
 {
 	LookupTable<Plant, float> arr{};
 
@@ -415,7 +415,7 @@ inline constexpr LookupTable<Plant, float> tempOptimalMin = []
 	return arr;
 }();
 
-inline constexpr LookupTable<Plant, float> tempOptimalMax = []
+inline constexpr LookupTable<Plant, float> temp_optimal_max = []
 {
 	LookupTable<Plant, float> arr{};
 
@@ -482,7 +482,7 @@ inline constexpr LookupTable<Plant, float> tempOptimalMax = []
 	return arr;
 }();
 
-inline constexpr LookupTable<Plant, float> tempGrowthMin = []
+inline constexpr LookupTable<Plant, float> temp_growth_min = []
 {
 	LookupTable<Plant, float> arr{};
 
@@ -549,7 +549,7 @@ inline constexpr LookupTable<Plant, float> tempGrowthMin = []
 	return arr;
 }();
 
-inline constexpr LookupTable<Plant, float> tempGrowthMax = []
+inline constexpr LookupTable<Plant, float> temp_growth_max = []
 {
 	LookupTable<Plant, float> arr{};
 
@@ -617,7 +617,7 @@ inline constexpr LookupTable<Plant, float> tempGrowthMax = []
 }();
 
 
-inline constexpr LookupTable<Plant, int> harvestAmt = []
+inline constexpr LookupTable<Plant, int> harvest_amt = []
 {
 	LookupTable<Plant, int> arr{};
 
@@ -705,7 +705,7 @@ inline constexpr LookupTable<Plant, int> harvestAmt = []
 	return arr;
 }();
 
-inline constexpr LookupTable<Plant, bool> perfectSunlight = []
+inline constexpr LookupTable<Plant, bool> perfect_sunlight = []
 {
 	LookupTable<Plant, bool> lt{};
 
@@ -791,7 +791,7 @@ inline constexpr LookupTable<Plant, bool> perfectSunlight = []
 	return lt;
 }();
 
-inline constexpr LookupTable<Plant, bool> requiresScythe = []
+inline constexpr LookupTable<Plant, bool> requires_scythe = []
 {
 	LookupTable<Plant, bool> arr{};
 
@@ -877,184 +877,184 @@ inline constexpr LookupTable<Plant, bool> requiresScythe = []
 	return arr;
 }();
 
-inline constexpr LookupTable<Plant, Time> germinationPeriod = []
+inline constexpr LookupTable<Plant, Time> germination_period = []
 {
 	LookupTable<Plant, Time> lt{};
 	using enum Plant;
 
 	lt[NONE] = 0;
 
-	lt[Fern] = 0.02 * YEAR_LENGTH;
-	lt[Moss] = 0.01 * YEAR_LENGTH;
+	lt[Fern] = 0.02 * year_length;
+	lt[Moss] = 0.01 * year_length;
 
-	lt[Reed] = 0.02 * YEAR_LENGTH;
-	lt[Papyrus] = 0.03 * YEAR_LENGTH;
+	lt[Reed] = 0.02 * year_length;
+	lt[Papyrus] = 0.03 * year_length;
 
-	lt[Wheat] = 0.03 * YEAR_LENGTH;
-	lt[Oat] = 0.03 * YEAR_LENGTH;
-	lt[Rice] = 0.03 * YEAR_LENGTH;
-	lt[Corn] = 0.04 * YEAR_LENGTH;
+	lt[Wheat] = 0.03 * year_length;
+	lt[Oat] = 0.03 * year_length;
+	lt[Rice] = 0.03 * year_length;
+	lt[Corn] = 0.04 * year_length;
 
-	lt[Bush] = 0.04 * YEAR_LENGTH;
+	lt[Bush] = 0.04 * year_length;
 
-	lt[PioneerTree] = 0.08 * YEAR_LENGTH;
-	lt[DeciduousTree] = 0.10 * YEAR_LENGTH;
-	lt[EvergreenTree] = 0.12 * YEAR_LENGTH;
-	lt[TropicalTree] = 0.10 * YEAR_LENGTH;
+	lt[PioneerTree] = 0.08 * year_length;
+	lt[DeciduousTree] = 0.10 * year_length;
+	lt[EvergreenTree] = 0.12 * year_length;
+	lt[TropicalTree] = 0.10 * year_length;
 
-	lt[Cactus] = 0.05 * YEAR_LENGTH;
+	lt[Cactus] = 0.05 * year_length;
 
-	lt[Grapevine] = 0.04 * YEAR_LENGTH;
+	lt[Grapevine] = 0.04 * year_length;
 
-	lt[Lettuce] = 0.02 * YEAR_LENGTH;
-	lt[Kale] = 0.03 * YEAR_LENGTH;
-	lt[Cabbage] = 0.03 * YEAR_LENGTH;
-	lt[Broccoli] = 0.03 * YEAR_LENGTH;
+	lt[Lettuce] = 0.02 * year_length;
+	lt[Kale] = 0.03 * year_length;
+	lt[Cabbage] = 0.03 * year_length;
+	lt[Broccoli] = 0.03 * year_length;
 
-	lt[Carrot] = 0.03 * YEAR_LENGTH;
-	lt[Beets] = 0.03 * YEAR_LENGTH;
+	lt[Carrot] = 0.03 * year_length;
+	lt[Beets] = 0.03 * year_length;
 
-	lt[Potato] = 0.05 * YEAR_LENGTH;
+	lt[Potato] = 0.05 * year_length;
 
-	lt[Onion] = 0.04 * YEAR_LENGTH;
-	lt[Garlic] = 0.05 * YEAR_LENGTH;
+	lt[Onion] = 0.04 * year_length;
+	lt[Garlic] = 0.05 * year_length;
 
-	lt[Tomato] = 0.02 * YEAR_LENGTH;
-	lt[Cucumber] = 0.03 * YEAR_LENGTH;
-	lt[Pepper] = 0.03 * YEAR_LENGTH;
-	lt[BlackPepper] = 0.06 * YEAR_LENGTH;
+	lt[Tomato] = 0.02 * year_length;
+	lt[Cucumber] = 0.03 * year_length;
+	lt[Pepper] = 0.03 * year_length;
+	lt[BlackPepper] = 0.06 * year_length;
 
-	lt[Cotton] = 0.05 * YEAR_LENGTH;
-	lt[Hemp] = 0.04 * YEAR_LENGTH;
-	lt[Flax] = 0.03 * YEAR_LENGTH;
+	lt[Cotton] = 0.05 * year_length;
+	lt[Hemp] = 0.04 * year_length;
+	lt[Flax] = 0.03 * year_length;
 
-	lt[Woad] = 0.03 * YEAR_LENGTH;
-	lt[Madder] = 0.04 * YEAR_LENGTH;
-	lt[Indigo] = 0.05 * YEAR_LENGTH;
+	lt[Woad] = 0.03 * year_length;
+	lt[Madder] = 0.04 * year_length;
+	lt[Indigo] = 0.05 * year_length;
 
-	lt[Lavender] = 0.02 * YEAR_LENGTH;
-	lt[Mint] = 0.02 * YEAR_LENGTH;
-	lt[Thyme] = 0.02 * YEAR_LENGTH;
-	lt[Sage] = 0.03 * YEAR_LENGTH;
+	lt[Lavender] = 0.02 * year_length;
+	lt[Mint] = 0.02 * year_length;
+	lt[Thyme] = 0.02 * year_length;
+	lt[Sage] = 0.03 * year_length;
 
-	lt[Ginseng] = 0.06 * YEAR_LENGTH;
-	lt[Rhubarb] = 0.04 * YEAR_LENGTH;
+	lt[Ginseng] = 0.06 * year_length;
+	lt[Rhubarb] = 0.04 * year_length;
 
-	lt[Poppy] = 0.02 * YEAR_LENGTH;
-	lt[Cocoa] = 0.08 * YEAR_LENGTH;
-	lt[Senna] = 0.05 * YEAR_LENGTH;
-	lt[Saffron] = 0.06 * YEAR_LENGTH;
-	lt[AloeVera] = 0.04 * YEAR_LENGTH;
+	lt[Poppy] = 0.02 * year_length;
+	lt[Cocoa] = 0.08 * year_length;
+	lt[Senna] = 0.05 * year_length;
+	lt[Saffron] = 0.06 * year_length;
+	lt[AloeVera] = 0.04 * year_length;
 
-	lt[Orange] = 0.08 * YEAR_LENGTH;
-	lt[Apple] = 0.10 * YEAR_LENGTH;
-	lt[Lemon] = 0.08 * YEAR_LENGTH;
-	lt[Pear] = 0.10 * YEAR_LENGTH;
-	lt[Peach] = 0.08 * YEAR_LENGTH;
-	lt[Cherry] = 0.08 * YEAR_LENGTH;
-	lt[Apricot] = 0.08 * YEAR_LENGTH;
-	lt[Plum] = 0.08 * YEAR_LENGTH;
-	lt[Lime] = 0.08 * YEAR_LENGTH;
+	lt[Orange] = 0.08 * year_length;
+	lt[Apple] = 0.10 * year_length;
+	lt[Lemon] = 0.08 * year_length;
+	lt[Pear] = 0.10 * year_length;
+	lt[Peach] = 0.08 * year_length;
+	lt[Cherry] = 0.08 * year_length;
+	lt[Apricot] = 0.08 * year_length;
+	lt[Plum] = 0.08 * year_length;
+	lt[Lime] = 0.08 * year_length;
 
-	lt[Blueberry] = 0.04 * YEAR_LENGTH;
-	lt[Strawberry] = 0.02 * YEAR_LENGTH;
+	lt[Blueberry] = 0.04 * year_length;
+	lt[Strawberry] = 0.02 * year_length;
 	lt[Grape] = 0.04 * YEAR_LENGTH;
 
-	lt[Olive] = 0.10 * YEAR_LENGTH;
+	lt[Olive] = 0.10 * year_length;
 
 	return lt;
 }();
 
 
-inline constexpr LookupTable<Plant, Time> maxAges = []
+inline constexpr LookupTable<Plant, Time> max_ages = []
 {
 	LookupTable<Plant, Time> lt{};
 	using enum Plant;
 
 	lt[NONE] = 0;
 
-	lt[Fern] = 10 * YEAR_LENGTH;
-	lt[Moss] = 5 * YEAR_LENGTH;
+	lt[Fern] = 10 * year_length;
+	lt[Moss] = 5 * year_length;
 
-	lt[Reed] = 3 * YEAR_LENGTH;
-	lt[Papyrus] = 4 * YEAR_LENGTH;
+	lt[Reed] = 3 * year_length;
+	lt[Papyrus] = 4 * year_length;
 
-	lt[Wheat] = 1 * YEAR_LENGTH;
-	lt[Oat] = 1 * YEAR_LENGTH;
-	lt[Rice] = 1 * YEAR_LENGTH;
-	lt[Corn] = 1 * YEAR_LENGTH;
+	lt[Wheat] = 1 * year_length;
+	lt[Oat] = 1 * year_length;
+	lt[Rice] = 1 * year_length;
+	lt[Corn] = 1 * year_length;
 
-	lt[Bush] = 8 * YEAR_LENGTH;
+	lt[Bush] = 8 * year_length;
 
-	lt[PioneerTree] = 60 * YEAR_LENGTH;
-	lt[DeciduousTree] = 120 * YEAR_LENGTH;
-	lt[EvergreenTree] = 200 * YEAR_LENGTH;
-	lt[TropicalTree] = 80 * YEAR_LENGTH;
+	lt[PioneerTree] = 60 * year_length;
+	lt[DeciduousTree] = 120 * year_length;
+	lt[EvergreenTree] = 200 * year_length;
+	lt[TropicalTree] = 80 * year_length;
 
-	lt[Cactus] = 100 * YEAR_LENGTH;
+	lt[Cactus] = 100 * year_length;
 
-	lt[Grapevine] = 40 * YEAR_LENGTH;
+	lt[Grapevine] = 40 * year_length;
 
-	lt[Lettuce] = 1 * YEAR_LENGTH;
-	lt[Kale] = 2 * YEAR_LENGTH;
-	lt[Cabbage] = 1 * YEAR_LENGTH;
-	lt[Broccoli] = 1 * YEAR_LENGTH;
+	lt[Lettuce] = 1 * year_length;
+	lt[Kale] = 2 * year_length;
+	lt[Cabbage] = 1 * year_length;
+	lt[Broccoli] = 1 * year_length;
 
-	lt[Carrot] = 1 * YEAR_LENGTH;
-	lt[Beets] = 1 * YEAR_LENGTH;
+	lt[Carrot] = 1 * year_length;
+	lt[Beets] = 1 * year_length;
 
-	lt[Potato] = 1 * YEAR_LENGTH;
+	lt[Potato] = 1 * year_length;
 
-	lt[Onion] = 1 * YEAR_LENGTH;
-	lt[Garlic] = 2 * YEAR_LENGTH;
+	lt[Onion] = 1 * year_length;
+	lt[Garlic] = 2 * year_length;
 
-	lt[Tomato] = 1 * YEAR_LENGTH;
-	lt[Cucumber] = 1 * YEAR_LENGTH;
-	lt[Pepper] = 2 * YEAR_LENGTH;
-	lt[BlackPepper] = 15 * YEAR_LENGTH;
+	lt[Tomato] = 1 * year_length;
+	lt[Cucumber] = 1 * year_length;
+	lt[Pepper] = 2 * year_length;
+	lt[BlackPepper] = 15 * year_length;
 
-	lt[Cotton] = 3 * YEAR_LENGTH;
-	lt[Hemp] = 5 * YEAR_LENGTH;
-	lt[Flax] = 2 * YEAR_LENGTH;
+	lt[Cotton] = 3 * year_length;
+	lt[Hemp] = 5 * year_length;
+	lt[Flax] = 2 * year_length;
 
-	lt[Woad] = 2 * YEAR_LENGTH;
-	lt[Madder] = 3 * YEAR_LENGTH;
-	lt[Indigo] = 4 * YEAR_LENGTH;
+	lt[Woad] = 2 * year_length;
+	lt[Madder] = 3 * year_length;
+	lt[Indigo] = 4 * year_length;
 
-	lt[Lavender] = 6 * YEAR_LENGTH;
-	lt[Mint] = 3 * YEAR_LENGTH;
-	lt[Thyme] = 8 * YEAR_LENGTH;
-	lt[Sage] = 10 * YEAR_LENGTH;
+	lt[Lavender] = 6 * year_length;
+	lt[Mint] = 3 * year_length;
+	lt[Thyme] = 8 * year_length;
+	lt[Sage] = 10 * year_length;
 
-	lt[Ginseng] = 20 * YEAR_LENGTH;
-	lt[Rhubarb] = 8 * YEAR_LENGTH;
+	lt[Ginseng] = 20 * year_length;
+	lt[Rhubarb] = 8 * year_length;
 
-	lt[Poppy] = 1 * YEAR_LENGTH;
-	lt[Cocoa] = 30 * YEAR_LENGTH;
-	lt[Senna] = 4 * YEAR_LENGTH;
-	lt[Saffron] = 3 * YEAR_LENGTH;
-	lt[AloeVera] = 15 * YEAR_LENGTH;
+	lt[Poppy] = 1 * year_length;
+	lt[Cocoa] = 30 * year_length;
+	lt[Senna] = 4 * year_length;
+	lt[Saffron] = 3 * year_length;
+	lt[AloeVera] = 15 * year_length;
 
-	lt[Orange] = 50 * YEAR_LENGTH;
-	lt[Apple] = 80 * YEAR_LENGTH;
-	lt[Lemon] = 60 * YEAR_LENGTH;
-	lt[Pear] = 80 * YEAR_LENGTH;
-	lt[Peach] = 40 * YEAR_LENGTH;
-	lt[Cherry] = 60 * YEAR_LENGTH;
-	lt[Apricot] = 40 * YEAR_LENGTH;
-	lt[Plum] = 50 * YEAR_LENGTH;
-	lt[Lime] = 60 * YEAR_LENGTH;
+	lt[Orange] = 50 * year_length;
+	lt[Apple] = 80 * year_length;
+	lt[Lemon] = 60 * year_length;
+	lt[Pear] = 80 * year_length;
+	lt[Peach] = 40 * year_length;
+	lt[Cherry] = 60 * year_length;
+	lt[Apricot] = 40 * year_length;
+	lt[Plum] = 50 * year_length;
+	lt[Lime] = 60 * year_length;
 
-	lt[Blueberry] = 20 * YEAR_LENGTH;
-	lt[Strawberry] = 5 * YEAR_LENGTH;
+	lt[Blueberry] = 20 * year_length;
+	lt[Strawberry] = 5 * year_length;
 	lt[Grape] = 40 * YEAR_LENGTH;
 
-	lt[Olive] = 100 * YEAR_LENGTH;
+	lt[Olive] = 100 * year_length;
 
 	return lt;
 }();
 
-inline constexpr LookupTable<Plant, float> fullMaturityAges = []
+inline constexpr LookupTable<Plant, float> full_maturity_ages = []
 {
 	LookupTable<Plant, float> lt{};
 	using enum Plant;
@@ -1102,7 +1102,7 @@ inline constexpr LookupTable<Plant, float> fullMaturityAges = []
 
 
 
-inline constexpr BitsetTable<Plant> isRegrowth = []
+inline constexpr BitsetTable<Plant> is_regrowth = []
 {
 	BitsetTable<Plant> t{};
 
@@ -1148,7 +1148,7 @@ inline constexpr BitsetTable<Plant> isRegrowth = []
 }();
 
 //relative to maxAge
-inline constexpr LookupTable<Plant, float> regrowthStartAge = []
+inline constexpr LookupTable<Plant, float> regrowth_start_age = []
 {
 	LookupTable<Plant, float> lt{};
 	using enum Plant;
@@ -1202,65 +1202,65 @@ inline constexpr LookupTable<Plant, float> regrowthStartAge = []
 	return lt;
 }();
 
-inline constexpr LookupTable<Plant, Time> regrowthMax = []
+inline constexpr LookupTable<Plant, Time> regrowth_max = []
 {
 	LookupTable<Plant, Time> lt{};
 	using enum Plant;
 
 	// Wild / generic
-	lt[Bush] = 0.18f * YEAR_LENGTH;
+	lt[Bush] = 0.18f * year_length;
 
 	// Trees
-	lt[PioneerTree]   = 0.85f * YEAR_LENGTH;
-	lt[DeciduousTree] = 0.95f * YEAR_LENGTH;
-	lt[EvergreenTree] = 1.2f  * YEAR_LENGTH;
-	lt[TropicalTree]  = 0.65f * YEAR_LENGTH;
+	lt[PioneerTree]   = 0.85f * year_length;
+	lt[DeciduousTree] = 0.95f * year_length;
+	lt[EvergreenTree] = 1.2f  * year_length;
+	lt[TropicalTree]  = 0.65f * year_length;
 
 	// Arid
-	lt[Cactus] = 1.3f * YEAR_LENGTH;
+	lt[Cactus] = 1.3f * year_length;
 
 	// Vines
-	lt[Grapevine] = 0.9f * YEAR_LENGTH;
+	lt[Grapevine] = 0.9f * year_length;
 
 	// Herbs
-	lt[Lavender] = 0.2f * YEAR_LENGTH; 
-	lt[Mint]     = 0.15f * YEAR_LENGTH; 
-	lt[Thyme]    = 0.22f * YEAR_LENGTH;
-	lt[Sage]     = 0.22f * YEAR_LENGTH;
+	lt[Lavender] = 0.2f * year_length; 
+	lt[Mint]     = 0.15f * year_length; 
+	lt[Thyme]    = 0.22f * year_length;
+	lt[Sage]     = 0.22f * year_length;
 
 	// Perennials
-	lt[Ginseng] = 0.9f  * YEAR_LENGTH; // gameplay-friendly vs real multi-year root harvest
-	lt[Rhubarb] = 0.2f  * YEAR_LENGTH;
+	lt[Ginseng] = 0.9f  * year_length; // gameplay-friendly vs real multi-year root harvest
+	lt[Rhubarb] = 0.2f  * year_length;
 
 	// Tropical crops
-	lt[Cocoa]    = 0.45f * YEAR_LENGTH;
-	lt[AloeVera] = 0.4f  * YEAR_LENGTH;
+	lt[Cocoa]    = 0.45f * year_length;
+	lt[AloeVera] = 0.4f  * year_length;
 
 	// Fruit trees 
-	lt[Orange]  = 0.6f  * YEAR_LENGTH;
-	lt[Apple]   = 0.55f * YEAR_LENGTH;
-	lt[Lemon]   = 0.45f * YEAR_LENGTH;
-	lt[Pear]    = 0.65f * YEAR_LENGTH;
-	lt[Peach]   = 0.6f  * YEAR_LENGTH;
-	lt[Cherry]  = 0.7f  * YEAR_LENGTH;
-	lt[Apricot] = 0.64f * YEAR_LENGTH;
-	lt[Plum]    = 0.66f * YEAR_LENGTH;
-	lt[Lime]    = 0.55f * YEAR_LENGTH;
+	lt[Orange]  = 0.6f  * year_length;
+	lt[Apple]   = 0.55f * year_length;
+	lt[Lemon]   = 0.45f * year_length;
+	lt[Pear]    = 0.65f * year_length;
+	lt[Peach]   = 0.6f  * year_length;
+	lt[Cherry]  = 0.7f  * year_length;
+	lt[Apricot] = 0.64f * year_length;
+	lt[Plum]    = 0.66f * year_length;
+	lt[Lime]    = 0.55f * year_length;
 
 	// Berries 
-	lt[Blueberry]  = 0.42f * YEAR_LENGTH;
-	lt[Strawberry] = 0.12f * YEAR_LENGTH;
+	lt[Blueberry]  = 0.42f * year_length;
+	lt[Strawberry] = 0.12f * year_length;
 	lt[Grape]      = 0.8f  * YEAR_LENGTH;
 
 	// Slow 
-	lt[Olive] = 1.1f * YEAR_LENGTH;
+	lt[Olive] = 1.1f * year_length;
 
 	return lt;
 }();
 
-float FRUITS_FALL_CHANCE_PER_TICK = 0.058;
+float fruits_fall_chance_per_tick = 0.058;
 
-inline constexpr LookupTable<Plant, bool> fruitsFall = []
+inline constexpr LookupTable<Plant, bool> fruits_fall = []
 {
 	LookupTable<Plant, bool> lt{};
 	using enum Plant;
@@ -1278,7 +1278,7 @@ inline constexpr LookupTable<Plant, bool> fruitsFall = []
 	return lt;
 }();
 
-inline constexpr LookupTable<Plant, int> produceMaxYield = []
+inline constexpr LookupTable<Plant, int> produce_max_yield = []
 {
 	LookupTable<Plant, int> lt{};
 	using enum Plant;
@@ -1318,7 +1318,7 @@ inline constexpr LookupTable<Plant, int> produceMaxYield = []
 	return lt;
 }();
 
-inline constexpr LookupTable<Plant, int> maxProduce = []
+inline constexpr LookupTable<Plant, int> max_produce = []
 {
 	LookupTable<Plant, int> lt{};
 	using enum Plant;
@@ -1358,11 +1358,11 @@ inline constexpr LookupTable<Plant, int> maxProduce = []
 	return lt;
 }();
 
-inline uint16_t getProduceCurrentTarget(Plant plant, const Time currentRegrowth, const Time currentAge)
+inline uint16_t get_produce_current_target(Plant plant, const Time current_regrowth, const Time current_age)
 {
 	Time fma = fullMaturityAges[plant] * maxAge[plant];
-	float maturity = std::min(currentAge, fma)  / fma;
-	float producePortion = std::min(currentRegrowth, regrowthMax[plant]) / regrowthMax[plant];
-	return maxProduce[plant] * maturity * producePortion;	
+	float maturity = std::min(current_age, fma)  / fma;
+	float produce_portion = std::min(current_regrowth, regrowthMax[plant]) / regrowthMax[plant];
+	return maxProduce[plant] * maturity * produce_portion;	
 }
 	

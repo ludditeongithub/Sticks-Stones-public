@@ -2,12 +2,12 @@
 #include "tables.hpp"
 #include <core/data.hpp>
 
-Time RANDOM_PLANT_AGE(Plant plant)
+Time random_plant_age(Plant plant)
 {
 		return maxAges[plant] * random_bool->next();
 }
 
-void getRandomPlantStartingTileWater()
+void get_random_plant_starting_tile_water()
 {
 		
 }

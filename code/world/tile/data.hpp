@@ -7,7 +7,7 @@
 #include <core/tables.hpp>
 #include <core/data.hpp>
 
-constexpr uint16_t AVERAGE_MOVE_COST = 5;
+constexpr uint16_t average_move_cost = 5;
 
 inline uint32_t World::getTileIndexFromCoord(Coord c) { return (c.y * WORLD_TILE_LENGTH) + c.x; }
 

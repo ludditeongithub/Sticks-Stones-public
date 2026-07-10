@@ -9,12 +9,12 @@ struct FontData
 
 //TODO: calculate these automatically once, print, then hardcode. 
 struct RawFontData {
-	int cagliostroSize = 4;
-	int cantarellSize = 3;
+	int cagliostro_size = 4;
+	int cantarell_size = 3;
 };
 
 // create font atlas for different screen sizes (or at least current screen size)
-void createFontAtlas(Coord screenSize)
+void create_font_atlas(Coord screen_size)
 {
 	
 }	

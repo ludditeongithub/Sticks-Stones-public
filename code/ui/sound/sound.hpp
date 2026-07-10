@@ -5,4 +5,4 @@ struct Sound //placeholder
 {
 };
 
-void playSound(Sound sound);
+void play_sound(Sound sound);

@@ -1,22 +1,22 @@
 #pragma once
 #include "data.hpp"
 
-bool mouseInside(SCoord mousePosition, SCoord topLeftCorner, SCoord dimensions) {
+bool mouse_inside(SCoord mouse_position, SCoord top_left_corner, SCoord dimensions) {
 		bool inside = true;
 
-		if( mousePosition.x < topLeftCorner.x )
+		if( mouse_position.x < top_left_corner.x )
 		{
 			inside = false;
 		}
-		else if( mousePosition.x > topLeftCorner.x + dimensions.x )
+		else if( mouse_position.x > top_left_corner.x + dimensions.x )
 		{
 			inside = false;
 		}
-		else if( mousePosition.y < topLeftCorner.y )
+		else if( mouse_position.y < top_left_corner.y )
 		{
 			inside = false;
 		}
-		else if( mousePosition.y > topLeftCorner.y + dimensions.y )
+		else if( mouse_position.y > top_left_corner.y + dimensions.y )
 		{
 			inside = false;
 		}

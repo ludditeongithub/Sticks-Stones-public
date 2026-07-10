@@ -20,76 +20,76 @@
 #include <world/tile/data.hpp>
 #include <world/tile/enum.hpp>
 
-constexpr uint16_t RENDER_CHUNK_WIDTH = 4;
-constexpr uint16_t RENDER_CHUNK_HEIGHT = 4;
+constexpr uint16_t render_chunk_width = 4;
+constexpr uint16_t render_chunk_height = 4;
 
 // entities are stored by central tile, but must drawn from left corner tile
-inline Coord getLeftCornerTile(Coord origin, Coord dimensions)
+inline Coord get_left_corner_tile(Coord origin, Coord dimensions)
 {
 	return {origin.x - (dimensions.x / 2), origin.y - dimensions.y};
 }
 
-inline void copyTiles(SDL_Texture* chunkTexture, World& world, Array<TileData> &tiles)
+inline void copy_tiles(SDL_Texture* chunk_texture, World& world, Array<TileData> &tiles)
 {
-	for (uint16_t i = 0; i < SCREEN_TILE_HEIGHT; i++)
+	for (uint16_t i = 0; i < screen_tile_height; i++)
 	{
-		for (uint16_t j = 0; j < SCREEN_TILE_WIDTH; j++)
+		for (uint16_t j = 0; j < screen_tile_width; j++)
 		{
-			uint16_t ti = world.getTileIndexFromCoord({i, j});
+			uint16_t ti = world.get_tile_index_from_coord({i, j});
 			// draw tiles
 			Tile t = tiles[ti].first();
 			SDL_Rect sd = SpriteSheet::tileSprites[static_cast<int>(t)];
-			spriteSheetTexture.render(j * TILE_LENGTH, i * TILE_LENGTH, &sd,
-						   &mainScreenViewport);
+			sprite_sheet_texture.render(j * tile_length, i * tile_length, &sd,
+						   &main_screen_viewport);
 
 			// draw grass
 			Grass g = tiles[ti].second();
 			if (g != Grass::NONE)
 			{
 				sd = SpriteSheet::grassSprites[static_cast<int>(g)];
-				spriteSheetTexture.render(i * TILE_LENGTH, j * TILE_LENGTH, &sd, &mainScreenViewport);
+				sprite_sheet_texture.render(i * tile_length, j * tile_length, &sd, &main_screen_viewport);
 		}
 	}
 	}
 }	
 
-void copyPlants(EntityRenderBuffer &erd)
+void copy_plants(EntityRenderBuffer &erd)
 {
-	for (uint16_t i = 0; i < erd.plantAmount; i++)
+	for (uint16_t i = 0; i < erd.plant_amount; i++)
 	{
 		EntitySearchData esd = {erd.plants[i].index, erd.plants[i].position};
 		
 		SDL_Rect sr = plantSpriteDimensions[erd.plants[i].plant];
-		Coord lc = getLeftCornerTile(
+		Coord lc = get_left_corner_tile(
 		    esd.position, {static_cast<uint32_t>(sr.w), static_cast<uint32_t>(sr.y)});
-		spriteSheetTexture.render(lc.x, lc.y, &sr, &mainScreenViewport);
+		sprite_sheet_texture.render(lc.x, lc.y, &sr, &main_screen_viewport);
 	}
 }
 
-void copyItems(EntityRenderBuffer &erd)
+void copy_items(EntityRenderBuffer &erd)
 {
-	for (uint16_t i = 0; i < erd.itemAmount; i++)
+	for (uint16_t i = 0; i < erd.item_amount; i++)
 	{
 		EntitySearchData esd = {erd.items[i].index, erd.plants[i].position};
 		SDL_Rect sr = itemSpriteDimensions[erd.items[i].item];
-		Coord lc = getLeftCornerTile(
+		Coord lc = get_left_corner_tile(
 		    esd.position, {static_cast<uint32_t>(sr.w), static_cast<uint32_t>(sr.y)});
-		spriteSheetTexture.render(lc.x, lc.y, &sr, &mainScreenViewport);
+		sprite_sheet_texture.render(lc.x, lc.y, &sr, &main_screen_viewport);
 	}
 }
 
 //renders entites which can't be chunked
-void renderMovingEntities(World& world, Coord leftCorner, Array<TileData> &tiles, Array<Time> &animalAges,
-		  Array<Frame> &animalFrames, Array<AnimalStatus> &animalStates,
-		  Array<FrameData>& unitFrameData, Array<Time> &unitAges,
-		  SearchGrid &sg, EntityRenderBuffer& entityRenderBuffer)
+void render_moving_entities(World& world, Coord left_corner, Array<TileData> &tiles, Array<Time> &animal_ages,
+		  Array<Frame> &animal_frames, Array<AnimalStatus> &animal_states,
+		  Array<FrameData>& unit_frame_data, Array<Time> &unit_ages,
+		  SearchGrid &sg, EntityRenderBuffer& entity_render_buffer)
 {
 	SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	SDL_RenderClear(renderer);
 
-	updateAnimalAnimations(leftCorner, entityRenderBuffer, animalFrames, animalAges, animalStates);
+	update_animal_animations(left_corner, entity_render_buffer, animal_frames, animal_ages, animal_states);
 
-	updateUnitAnimations(leftCorner, entityRenderBuffer, unitAges, unitFrameData);
+	updateUnitAnimations(left_corner, entity_render_buffer, unit_ages, unitFrameData);
 
 	// draw equippables
 
@@ -101,17 +101,17 @@ void renderMovingEntities(World& world, Coord leftCorner, Array<TileData> &tiles
 	SDL_RenderPresent(renderer);
 }
   
-SDL_Texture& renderChunkTexture(World& world, Array<TileData>& tiles, Coord leftCorner, EntityRenderBuffer& entityRenderBuffer)
+SDL_Texture& render_chunk_texture(World& world, Array<TileData>& tiles, Coord left_corner, EntityRenderBuffer& entity_render_buffer)
 {
-	SDL_Texture *chunkTexture =
+	SDL_Texture *chunk_texture =
 	    SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
-			      RENDER_CHUNK_WIDTH, RENDER_CHUNK_HEIGHT);
+			      render_chunk_width, render_chunk_height);
 	
-	SDL_SetRenderTarget(renderer, chunkTexture);
+	SDL_SetRenderTarget(renderer, chunk_texture);
 
-	copyTiles(chunkTexture, world, tiles);
-	copyItems(entityRenderBuffer);
-	copyPlants(entityRenderBuffer);
+	copy_tiles(chunk_texture, world, tiles);
+	copy_items(entity_render_buffer);
+	copy_plants(entity_render_buffer);
 }
 
 enum class Renderable
@@ -146,17 +146,17 @@ struct RenderingEventsBuffer { //events that have taken place since last render,
 
 struct RenderManager
 {
-	bool firstRender = false;
+	bool first_render = false;
 	
-	void render(World& world, Array<TileData>& tiles, RenderingEventsBuffer& renderingEventsBuffer)
+	void render(World& world, Array<TileData>& tiles, RenderingEventsBuffer& rendering_events_buffer)
 	{
-		EntityRenderBuffer entityRenderBuffer;
-		if (firstRender)
+		EntityRenderBuffer entity_render_buffer;
+		if (first_render)
 		{
 	// render rendering-chunks
-	for (size_t i = 0; i < world.WORLD_TILE_LENGTH; i+=RENDER_CHUNK_WIDTH) {
-		for (size_t j = 0; j < world.WORLD_TILE_LENGTH; j+=RENDER_CHUNK_HEIGHT) {
-			renderChunkTexture(world, tiles, {i,j} , entityRenderBuffer);
+	for (size_t i = 0; i < world.world_tile_length; i+=render_chunk_width) {
+		for (size_t j = 0; j < world.world_tile_length; j+=render_chunk_height) {
+			render_chunk_texture(world, tiles, {i,j} , entity_render_buffer);
 		}
 	}
 		} else {			

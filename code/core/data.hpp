@@ -46,34 +46,34 @@ struct SCoord
 	}
 };
 
-bool adjacentCoords(Coord first, Coord second)
+bool adjacent_coords(Coord first, Coord second)
 {
 	return (std::abs(static_cast<int>(first.x - second.x)) <= 1 &&
 		std::abs(static_cast<int>(first.y - second.y)) <= 1);
 }
 
 //TODO: consider stride
-inline Coord getPos(Direction direction, Coord coord, uint8_t stride = 1)
+inline Coord get_pos(Direction direction, Coord coord, uint8_t stride = 1)
 {
-  Coord newPos;
+  Coord new_pos;
   switch (direction) {
   case Direction::North:
-    newPos = {coord.x, coord.y - stride};
+    new_pos = {coord.x, coord.y - stride};
     break;
   case Direction::South:
-    newPos = {coord.x, coord.y + stride};
+    new_pos = {coord.x, coord.y + stride};
     break;
   case Direction::East:
-    newPos = {coord.x + stride, coord.y};
+    new_pos = {coord.x + stride, coord.y};
     break;
   case Direction::West:
-    newPos = {coord.x - stride, coord.y};
+    new_pos = {coord.x - stride, coord.y};
     break;
   default:
   // TODO: error
     break;
   }
-  return newPos;
+  return new_pos;
 }
 
 using Time = uint32_t;
@@ -99,6 +99,7 @@ using Priority = uint8_t;
 using RoleMana = uint8_t;
 
 // unit skills
+constexpr uint8_t stat_max = 100;
 using Strength = uint8_t;
 using Athleticism = uint8_t;
 using Dexterity = uint8_t;
@@ -127,7 +128,7 @@ enum class TargetType : uint8_t
 struct Target
 {
 	TargetType type;
-	uint32_t index;
+	size_t index;
 };
 
 // Food

@@ -14,7 +14,7 @@ struct BuildableDatabase
     // BASE DATABASE MEMBERS
     // =========================
 
-constexpr static uint16_t ENTITY_SIZE = sizeof(Buildable) +
+constexpr static uint16_t entity_size = sizeof(Buildable) +
 + sizeof(bool)
   
  +  sizeof(Buildable) 
@@ -24,7 +24,7 @@ constexpr static uint16_t ENTITY_SIZE = sizeof(Buildable) +
 
 size_t capacity;
     size_t size;
-    Stack<size_t> freeSlots;
+    Stack<size_t> free_slots;
     Array<bool> alives;
   World& world;
   TileDatabase& tiles;
@@ -59,7 +59,7 @@ this->capacity = capacity;
   // =========================
 
  
-  bool attemptSpawn(Buildable buildable, bool newborn, Coord coord, )
+  bool attempt_spawn(Buildable buildable, bool newborn, Coord coord )
   {       
         if (size + 1 > capacity)
             return false;
@@ -91,8 +91,8 @@ this->capacity = capacity;
         return true;
           }
           bool spawn(Buildable buildable, bool newborn, Coord origin) {
-          Coord spawnPoint = tiles.getNearestEmptyTile(origin);
-          while (!attemptSpawn(buildable, newborn, spawnPoint)) freeUnusedEntity();                 
+          Coord spawn_point = tiles.get_nearest_empty_tile(origin);
+          while (!attempt_spawn(buildable, newborn, spawn_point)) free_unused_entity();                 
           }        
     
 
@@ -110,7 +110,7 @@ this->capacity = capacity;
         return true;
   }
 
-  void freeUnusedEntity()
+  void free_unused_entity()
   {
     for (size_t i = 0; i < coords.size; i++) {
     if (tiles.tileStatuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);

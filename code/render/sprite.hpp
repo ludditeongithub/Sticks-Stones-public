@@ -18,43 +18,43 @@
 
 struct SpriteInfo
 {
-    uint8_t SIDE_LENGTH;
-    uint8_t SIDE_HEIGHT;
-    uint8_t FRONT_LENGTH;
-    uint8_t FRONT_HEIGHT;
+    uint8_t side_length;
+    uint8_t side_height;
+    uint8_t front_length;
+    uint8_t front_height;
 
-    uint8_t CHILD_SIDE_LENGTH;
-    uint8_t CHILD_SIDE_HEIGHT;
-    uint8_t CHILD_FRONT_LENGTH;
-    uint8_t CHILD_FRONT_HEIGHT;
+    uint8_t child_side_length;
+    uint8_t child_side_height;
+    uint8_t child_front_length;
+    uint8_t child_front_height;
 
-    uint8_t WALKING_SPRITE_LENGTH = 0;
-    uint8_t RUNNING_SPRITE_LENGTH = 0;
+    uint8_t walking_sprite_length = 0;
+    uint8_t running_sprite_length = 0;
 
-    uint8_t WALK_SPRITE_FRAME_LENGTH{};
-    uint8_t RUN_SPRITE_FRAME_LENGTH{};
-    uint8_t ACT_SPRITE_FRAME_LENGTH{};
+    uint8_t walk_sprite_frame_length{};
+    uint8_t run_sprite_frame_length{};
+    uint8_t act_sprite_frame_length{};
 
     constexpr SpriteInfo() = default;
 
-    constexpr SpriteInfo(uint8_t SIDE_LENGTH, uint8_t SIDE_HEIGHT, uint8_t FRONT_LENGTH,
-			 uint8_t FRONT_HEIGHT, uint8_t CHILD_SIDE_LENGTH, uint8_t CHILD_SIDE_HEIGHT,
-			 uint8_t CHILD_FRONT_LENGTH,
-			 uint8_t CHILD_FRONT_HEIGHT)
-        : SIDE_LENGTH(SIDE_LENGTH),
-          SIDE_HEIGHT(SIDE_HEIGHT),
-          FRONT_LENGTH(FRONT_LENGTH),
-          FRONT_HEIGHT(FRONT_HEIGHT),
-          CHILD_SIDE_LENGTH(CHILD_SIDE_LENGTH),
-          CHILD_SIDE_HEIGHT(CHILD_SIDE_HEIGHT),
-          CHILD_FRONT_LENGTH(CHILD_FRONT_LENGTH),
-          CHILD_FRONT_HEIGHT(CHILD_FRONT_HEIGHT)
+    constexpr SpriteInfo(uint8_t side_length, uint8_t side_height, uint8_t front_length,
+			 uint8_t front_height, uint8_t child_side_length, uint8_t child_side_height,
+			 uint8_t child_front_length,
+			 uint8_t child_front_height)
+        : side_length(side_length),
+          side_height(side_height),
+          front_length(front_length),
+          front_height(front_height),
+          child_side_length(child_side_length),
+          child_side_height(child_side_height),
+          child_front_length(child_front_length),
+          child_front_height(child_front_height)
     {}
 };
 
-constexpr SpriteInfo UNIT_SPRITE_INFO = SpriteInfo(1,2,1,2,1,2,1,2);
+constexpr SpriteInfo unit_sprite_info = SpriteInfo(1,2,1,2,1,2,1,2);
 
-inline constexpr LookupTable<Animal, SpriteInfo> animalSpriteInfos = []
+inline constexpr LookupTable<Animal, SpriteInfo> animal_sprite_infos = []
 {
     LookupTable<Animal, SpriteInfo> lt{};
 
@@ -86,7 +86,7 @@ inline constexpr LookupTable<Animal, SpriteInfo> animalSpriteInfos = []
     return lt;
 }();
 
-constexpr uint8_t MAX_STAGES = 4;
+constexpr uint8_t max_stages = 4;
 
 struct StageInfo {
 	SDL_Rect dimensions;
@@ -98,7 +98,7 @@ struct StageInfo {
 	}
 };
 
-inline constexpr BitsetTable<Plant> plantSpriteProgressiveStages = []
+inline constexpr BitsetTable<Plant> plant_sprite_progressive_stages = []
 	{
 		BitsetTable<Plant> t{};
 		using enum Plant;
@@ -106,7 +106,7 @@ inline constexpr BitsetTable<Plant> plantSpriteProgressiveStages = []
 		return t;
 	}();
 
-inline constexpr BitsetTable<Plant> plantProduces = []
+inline constexpr BitsetTable<Plant> plant_produces = []
 	{
 		BitsetTable<Plant> t{};
 		using enum Plant;
@@ -162,7 +162,7 @@ inline constexpr BitsetTable<Plant> plantProduces = []
 	}();
 
 //farmable fruiting stages are a SEPARATE StageInfo. reminder that all trees that produce fruit start as default 'tree'
-inline constexpr LookupTable<Plant, std::array<StageInfo, MAX_STAGES>> plantSpriteDimensions = []
+inline constexpr LookupTable<Plant, std::array<StageInfo, MAX_STAGES>> plant_sprite_dimensions = []
 {
 	LookupTable<Plant,std::array<StageInfo, MAX_STAGES>> lt{};
 	using enum Plant;

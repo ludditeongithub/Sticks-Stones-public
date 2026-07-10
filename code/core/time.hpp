@@ -1,8 +1,8 @@
 #pragma once
 #include "data.hpp"
 
-Time currentTime = 0;
-constexpr Time HOUR_LENGTH = 300;
-constexpr Time DAY_LENGTH = HOUR_LENGTH * 24;
-constexpr Time SEASON_LENGTH = DAY_LENGTH * 7;
-constexpr Time YEAR_LENGTH = SEASON_LENGTH * 4;
+Time current_time = 0;
+constexpr Time hour_length = 300;
+constexpr Time day_length = hour_length * 24;
+constexpr Time season_length = day_length * 7;
+constexpr Time year_length = season_length * 4;
