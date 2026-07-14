@@ -1,7 +1,9 @@
 #include "actions.hpp"
 #include "simulation/game_time.hpp"
+#include "world/action/enum.hpp"
 #include "world/animal/database.hpp"
 #include "world/unit/database.hpp"
+#include "world/unit/roles_commodities.hpp"
 
 
 // TODO: factor in hunger
@@ -9,10 +11,10 @@
 // items etc, when pawn goes to grab items
 // may only be
 template <typename DB>
-ActionEventDispatchBuffer markActingEntities(std::vector<EntityID> &indices, DB& database)
+ActionEventDispatchBuffer mark_acting_entities(std::vector<EntityID> &indices, DB& database)
 {
-		bool ifAnimals = typeof(database) == AnimalDatabase;
-		ActionEventDispatchBuffer buffer = ActionEventDispatchBuffer(indices.size(), ifAnimals);
+		bool if_animals = typeof(database) == AnimalDatabase;
+		ActionEventDispatchBuffer buffer = ActionEventDispatchBuffer(indices.size(), if_animals);
 	
 	for (int j = 0; j < indices.size(); j++)
 			{
@@ -36,53 +38,111 @@ ActionEventDispatchBuffer markActingEntities(std::vector<EntityID> &indices, DB&
 	return buffer;
 	}
 
+inline Role get_valid_action_role(UnitDatabase& database, size_t i, Commodity c)
+{
+	Skills skill = database.skill(i);
+	Commodity& commodity = database.commoditys(i);
+	for (int j = 0; j < database.roleData(i).size(); j++)
+			{
+			const Role& role = roleData(i)[j];
+			auto &commodity_list = rolesToCommodities[role];
+					for (auto x: commodityList) {					
+					// TODO: precompute all scores for all roles
+					uint8_t cs =
+					    getCommodityScore(x, skill); // returns 0 if invalid
+					if (cs > commodityData[x].skillReq)
+					{
+						
+						commodity = c;																	
+						return role;
+					}
+					}
+		 }
+					// TODO: set action
+		 return Role::NONE;
+	}
+
+inline void start_timed_task(Time& inertia, const Task task, const Skills& skill)
+{
+	inertia = getTaskTimer(task, skill);
+}
+
+void assign_action(Role role, Action action)
+{
+		ActionClass action_class = getActionClass(action);		
+		switch (action_class) {
+		case ActionClass::Resource:
+       			attemptResourceAssignment();
+       			break;
+		case ActionClass::Product:
+       			attemptProductsAssignment();
+				break;
+		case ActionClass::Support:
+       			
+       			break;
+		case ActionClass::Researcher:
+       			
+				break;
+		default:
+				
+		}
+}
+
+void assign_task(Commodity commodity, size_t amount, Role role, Action action)
+{
+		ActionClass action_class = getActionClass(action);
+		switch (action_class) {
+		case ActionClass::Resource:
+       			
+       			break;
+		case ActionClass::Production:
+       			
+				break;
+		case ActionClass:::
+       			
+       			break;
+		case case-4:
+       			
+				break;
+		default:
+				
+		}
+
+}
 
 // TODO: make certain tasks pausable and resumable, change to iterating over
 // tasks per pawn rather than other way around (when pawns stats are
 // implemented)-- timers will skip most pawns repeatedly, maybe need bool for
 // whether job has just started
 // only send alive and timer up units
-
-void assignActions(std::vector<EntityID> &indices, std::priority_queue<std::pair<uint8_t, PlayerTaskJobData>> &pq, UnitDatabase& database)
+void assign_actions(std::vector<EntityID> &indices, PriorityQueue<PlayerTaskJobData> &pq, UnitDatabase& database)
 {
+		if (pq.empty()) return;
 		for (int i = 0; i < indices.size(); i++)
-			{
-			if (database.action(i) == Action::Assign) {
+		{						
+			if (database.action(i) != Action::Assign || database.action(i) != Action::Idle) continue;
 			// get valid task for selected pawn
-			bool v = false;
+			Role role = Role::NONE;
 			PlayerTaskJobData td = pq.top();
-			while (v == false)
+			size_t amount = 0;
+			while (role == Role::NONE && !pq.nextEmpty())
 			{
-				Task t = td.task;
-				uint32_t &a = td.amount;
-				if (a <= 0)
+				Commodity c = td.commodity;
+				amount = td.amount;
+				if (amount <= 0)
 					continue;
-				for (int j = 0; j < database.roleData(i).size(); j++)
-				{
-						Skills skill = database.skill(i);
-					// TODO: precompute all scores for all roles
-					uint8_t ts =
-					    getTaskScore(t, skill); // returns 0 if invalid
-					if (ts > taskData[t].skillReq)
-					{
-						database.task(i) = t;
-						v = true;
-						a -= getTaskMinimumOutput[t];
-						inertia(i) = getTaskTimer(database.task(i), skill);
-					}
-					// TODO: set action
-					break;
-				}
+				role = (database, i, c);
 				td = pq.next();
 			}
-		}
-		if (!v)
-			database.action(i) = Action::Idle;
-	}
+			pq.snapback();
+			if (role == Role::NONE)
+					database.action(i) = Action::Idle;
+			else assignTask(c, amount); //TODO
+	 }
 }
 
 // only for idle animals
-void assignAnimalTasks(Array<Animal> &animals, Array<ActionDecisionStatus> &actions,
+void assign_animal_tasks(Array<Animal> &animals, Array<ActionDecisionStatus> &actions,
 		       Array<Coord> &positions, Array<Hunger> hungers)
 {
 	using enum ActionDecisionStatus;
@@ -101,7 +161,7 @@ void assignAnimalTasks(Array<Animal> &animals, Array<ActionDecisionStatus> &acti
 
 			// TODO: assign thirsty animals to drink
 			// assign animals that need to breed to find mate
-			uint16_t seasonTime =
+			uint16_t season_time =
 			    getSeasonTime(time, getChunkIndexFromTile(position(i)));
 
 			if (seasonTime <= breedingSeasonStart[a] &&
@@ -124,19 +184,19 @@ void assignAnimalTasks(Array<Animal> &animals, Array<ActionDecisionStatus> &acti
 	}
 }
 
-void handleActionsAndMovement()
+void handle_actions_and_movement()
 	{
-		UnitDatabase& unitDatabase = g_Game->unitDatabase;
+		UnitDatabase& unit_database = g_Game->unitDatabase;
         Array<Time>& inertias = unitDatabase.inertias;
-		std::vector<EntityID> readyActors = getReadyActors(inertias);
-		ActionEventDispatchBuffer actionEventBuffer = markActingEntities(
+		std::vector<EntityID> ready_actors = getReadyActors(inertias);
+		ActionEventDispatchBuffer action_event_buffer = markActingEntities(
 		    readyActors, nullptr, unitDatabase.coords, unitDatabase.targets,
 																		 unitDatabase.actions, unitDatabase.frameDatas);
 
 		handleMovements();
 	}
 
-std::vector<EntityID> getReadyActors()
+std::vector<EntityID> get_ready_actors()
 {
 		size_t size = ;
 		// OPTI

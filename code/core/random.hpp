@@ -13,8 +13,8 @@ static std::mt19937 gen(rd());
 
 template <typename T> struct RandomMachine
 {
-	static constexpr uint16_t pregenerated_random_size = 15650;
-	std::array<T, pregenerated_random_size> randoms;
+	static constexpr uint16_t PREGENERATED_RANDOM_SIZE = 15650;
+	std::array<T, PREGENERATED_RANDOM_SIZE> randoms;
 	uint16_t current = 0;
 	std::mt19937 gen{std::random_device{}()};
 
@@ -24,7 +24,7 @@ template <typename T> struct RandomMachine
 
 	T next()
 	{
-		if (current >= pregenerated_random_size)
+		if (current >= PREGENERATED_RANDOM_SIZE)
 			current = 0;
 		return randoms[current++];
 	}
@@ -76,8 +76,8 @@ template <typename E>
 struct RandomEnumMachine
 {
     using EU = typename std::underlying_type<E>::type; 
-    static constexpr uint16_t pregenerated_random_size = 15000;
-    std::array<EU, pregenerated_random_size> randoms;
+    static constexpr uint16_t PREGENERATED_RANDOM_SIZE = 15000;
+    std::array<EU, PREGENERATED_RANDOM_SIZE> randoms;
     uint16_t current = 0;
     std::mt19937 gen{std::random_device{}()};
 
@@ -88,7 +88,7 @@ struct RandomEnumMachine
             static_cast<EU>(max)
         );
 
-        for (size_t i = 0; i < pregenerated_random_size; i++)
+        for (size_t i = 0; i < PREGENERATED_RANDOM_SIZE; i++)
             randoms[i] = dis(gen);
     }
 
@@ -99,13 +99,13 @@ struct RandomEnumMachine
             static_cast<EU>(E::MAX)
         );
 
-        for (size_t i = 0; i < pregenerated_random_size; i++)
+        for (size_t i = 0; i < PREGENERATED_RANDOM_SIZE; i++)
             randoms[i] = dis(gen);
     }
 
     E next()
     {
-        if (current >= pregenerated_random_size) current = 0;
+        if (current >= PREGENERATED_RANDOM_SIZE) current = 0;
         return static_cast<E>(randoms[current++]);
     }
 };

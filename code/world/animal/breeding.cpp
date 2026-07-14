@@ -6,13 +6,13 @@
 #include "world/animal/enum.hpp"
 #include "world/animal/tables.hpp"
 
-void AnimalDatabase::birthAnimal(Animal animal, size_t motherIndex)
+void AnimalDatabase::birth_animal(Animal animal, size_t motherIndex)
 {
 	// TODO: perhaps include age lowering fertility later
 	Coord origin = coords[motherIndex];	
 	int length = animalSpriteInfos[animal].CHILD_SIDE_LENGTH;
 	// TODO: make non-index versions of all pathfinding algos
-	Coord bottomLeftCorner = tiles.getNearestEmptyTileBlock(origin, length);
+	Coord bottom_left_corner = tiles.getNearestEmptyTileBlock(origin, length);
 	spawn(animal, true, bottomLeftCorner);
 	// after birth, add event for next breeding in the future
 	// TODO: consider sleeping
@@ -22,10 +22,10 @@ void AnimalDatabase::birthAnimal(Animal animal, size_t motherIndex)
 }
 
 
-inline bool AnimalDatabase::getConceptionRoll(Animal animal, size_t femaleIndex, size_t maleIndex)
+inline bool AnimalDatabase::get_conception_roll(Animal animal, size_t femaleIndex, size_t maleIndex)
 {		
-		const Time maleAge = ages[maleIndex];
-		const Time femaleAge = ages[femaleIndex];
+		const Time male_age = ages[maleIndex];
+		const Time female_age = ages[femaleIndex];
 		if (femaleAge < animal::fertilityAges[animal] || maleAge < animal::fertilityAges[animal])
 			{
 					// TODO: error handling
@@ -55,7 +55,7 @@ void AnimalDatabase::breed(Animal animal, size_t femaleIndex, size_t maleIndex)
 		}
 }
 
-void AnimalDatabase::setTrackMatePath(Animal animal, size_t index)
+void AnimalDatabase::set_track_mate_path(Animal animal, size_t index)
 {
 		bool found = false;
 		int nearest = 0;
@@ -75,7 +75,7 @@ void AnimalDatabase::setTrackMatePath(Animal animal, size_t index)
 }
 
 // TODO: protective mothers
-void AnimalDatabase::layEgg(Animal animal, Coord coord, bool fertilized)
+void AnimalDatabase::lay_egg(Animal animal, Coord coord, bool fertilized)
 {
 	
 	Item item;
@@ -99,7 +99,7 @@ void AnimalDatabase::layEgg(Animal animal, Coord coord, bool fertilized)
 }
 
 
-void AnimalDatabase::makeCorpse(const size_t index)
+void AnimalDatabase::make_corpse(const size_t index)
 {
 	const Coord coord = coords[index];
 	const Animal animal = animals[index];
@@ -108,11 +108,11 @@ void AnimalDatabase::makeCorpse(const size_t index)
 	if (age < animal::fertilityAges[animal]) {
 	   length = animalSpriteInfos[animal].CHILD_FRONT_LENGTH;
 	} else length = animalSpriteInfos[animal].FRONT_LENGTH;
-	Coord leftCorner = tiles.getNearestEmptyTileBlock(coord, length);
+	Coord left_corner = tiles.getNearestEmptyTileBlock(coord, length);
 	variantItems.attemptSpawn(Item::Corpse, false, coord, static_cast<Variant>(animal));
 }
 
-void AnimalDatabase::killAnimal(const size_t index)
+void AnimalDatabase::kill_animal(const size_t index)
 {
 	if (remove(index)) makeCorpse(index);
 	else

@@ -54,7 +54,7 @@ void UnitDatabase::setNewAction(EntityID i)
 // and sell goods among each other. Resource Estimates are decent, but true
 // bureaucratic recording is impossible
 
-inline bool attemptResourceAssignment(EntityID pawnIndex, size_t taskPriorityQueueIndex, Role role) {
+inline bool attempt_resource_assignment(EntityID pawnIndex, size_t taskPriorityQueueIndex, Role role) {
 					for (int k = 0;
 					     k < resourcerResources[(role)].size;
 					     k++)
@@ -70,25 +70,20 @@ inline bool attemptResourceAssignment(EntityID pawnIndex, size_t taskPriorityQue
 				return false;
 }
 
-inline bool attemptProductsAssignment(EntityID pawnIndex, size_t taskPriorityQueueIndex, Role role)
+inline bool attempt_products_assignment(EntityID pawnIndex, TaskPriorityQueue& pq, size_t taskPriorityQueueIndex, Role role)
 {
 					// PRODUCTS
 					for (int k = 0;
 					     k < producerProducts[(role)].size;
 					     k++)
-					{
-						if (producerProducts[(role)][k] ==
-						    static_cast<Item>(g_TaskPriorityQueue[taskPriorityQueueIndex].task))
-						{
-						}
-					}
+							if (producerProducts[(role)][k] == static_cast<Item>(pq[taskPriorityQueueIndex].task)) attemptProduction(pawnIndex);					
 }
 
 /* Get jobs from  */
 // NOTE: can implement jump table. this is for authority command structure
-void decideTask(EntityID pawnIndex, UnitDatabase& database)
+void decide_task(EntityID pawnIndex, UnitDatabase& database)
 {
-	int taskIndex = -1;
+	int task_index = -1;
 	TaskType type = TaskType::NONE;
 	Role role;
 	for (size_t i = 0; i < g_TaskPriorityQueue.size; i++)
@@ -98,7 +93,7 @@ void decideTask(EntityID pawnIndex, UnitDatabase& database)
 		{
 			for (EntityID j = 0; j < roles[pawnIndex].size; j++)
 			{
-				Role tRole = g_TaskPriorityQueue[i].role;
+				Role t_role = g_TaskPriorityQueue[i].role;
 
 				if (tRole < Role::RESOURCEMAX && tRole > Role::SUPPORTMAX)
 				{

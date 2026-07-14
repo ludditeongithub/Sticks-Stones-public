@@ -34,7 +34,7 @@ enum class ItemTags : uint32_t
 };
 
 
-inline constexpr LookupTable<Item, ItemTags> item_tags = []
+inline constexpr LookupTable<Item, ItemTags> ITEM_TAGS = []
 {	
 	LookupTable<Item,ItemTags> lt{};
 	using enum Item;

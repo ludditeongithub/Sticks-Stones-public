@@ -1,21 +1,21 @@
 #include "database.hpp"
 #include "world/tile/enum.hpp"
 
-Coord TileDatabase::getNearestEmptyTileBlock(Coord coord, size_t length, size_t width = 1)
+Coord TileDatabase::get_nearest_empty_tile_block(Coord coord, size_t length, size_t width = 1)
 {
-		bool foundWidth = 0;
+		bool found_width = 0;
 		bool found = false;
 		Coord last = coord;
-		Coord topLeftCorner;
-		while (foundWidth < width) {
+		Coord top_left_corner;
+		while (found_width < width) {
 			Coord start = getNearestEmptyTile(last);
-			if (foundWidth = 0) topLeftCorner = start;
+			if (found_width = 0) top_left_corner = start;
 			Coord next = getNearestEmptyTile(start, Adjacency::Horizontal);
-			if (adjacent(start, next, Adjacency::Horizontal)) foundWidth++;
+			if (adjacent(start, next, Adjacency::Horizontal)) found_width++;
 					// TODO: currently wrong. will error if near border
 			else {
 					last = getNearestEmptyTile(next);
-					foundWidth = 0;
+					found_width = 0;
 			}
 		}
 		return topLeftCorner;
@@ -41,7 +41,7 @@ bool TileDatabase::adjacent(Coord start, Coord next, Adjacency adjacency = Adjac
 		return false;
 }
 
-Coord TileDatabase::getNearestEmptyTile(Coord coord, Adjacency adjacency = Adjacency::Any)
+Coord TileDatabase::get_nearest_empty_tile(Coord coord, Adjacency adjacency = Adjacency::Any)
 	{
 		int index = world.getTileIndexFromCoord(coord);
 		if (adjacency == Adjacency::Any) SCoord vectors[4] = {{0, 1}, {1, 0}, {-1, 0}, {1, 0}};

@@ -70,8 +70,8 @@ struct NodeData
 	bool closedFlag = false;
 };
 
-std::vector<NodeData> nodeData;
-std::vector<float> tileMoveCosts;
+std::vector<NodeData> node_data;
+std::vector<float> tile_move_costs;
 
 float heuristic(Coord a, Coord b) { return std::abs(a.x - b.x) + std::abs(a.y - b.y); }
 
@@ -98,11 +98,11 @@ struct NodeData
 	bool closedFlag = false;
 };
 
-PathData aStar(Coord start, Coord goal, int width, int height);
+PathData a_star(Coord start, Coord goal, int width, int height);
 
-PathData reconstructPath(int startIndex, int goalIndex);
+PathData reconstruct_path(int startIndex, int goalIndex);
 
-std::vector<EntityID> markNewPathEntities(std::vector<EntityID> &actingEntities,
+std::vector<EntityID> mark_new_path_entities(std::vector<EntityID> &actingEntities,
 								Array<FrameData> &frameDatas);
 
-void setNewPaths(std::vector<EntityID>& pathDispatchBuffer, Array<Coord>& coords, Array<Target>& targets, PathsBuffer& pb);
+void set_new_paths(std::vector<EntityID>& pathDispatchBuffer, Array<Coord>& coords, Array<Target>& targets, PathsBuffer& pb);

@@ -11,7 +11,7 @@
 
 // all functions that consume are unsafe. safety controlled by main eating
 // function
-void processEatingAnimals(Array<Animal> &animals, Array<Hunger> &hungers, Array<Time> &timers,
+void process_eating_animals(Array<Animal> &animals, Array<Hunger> &hungers, Array<Time> &timers,
 			  Array<Coord> &coords, Array<uint16_t> &targets,
 			  Array<TargetType> &targetTypes,
 			  // plant info
@@ -54,12 +54,12 @@ void processEatingAnimals(Array<Animal> &animals, Array<Hunger> &hungers, Array<
 	}
 }
 
-inline Time eatingTimer(Hunger eatingAmount, Animal eater)
+inline Time eating_timer(Hunger eatingAmount, Animal eater)
 {
 	return eatingAmount / (eatingSpeeds[eater] / HOUR_LENGTH);
 }
 
-inline bool eatPerishable(Array<Animal> &animals, Array<Hunger> &hungers,
+inline bool eat_perishable(Array<Animal> &animals, Array<Hunger> &hungers,
 			  Array<Coord> &animalCoords, Array<Time> &timers, uint16_t animalIndex,
 			  Array<Item> &perishables, Array<Hunger> &perishableHungers,
 			  Array<Time> &perishableTimes, Array<Coord> &perishableCoords,
@@ -93,7 +93,7 @@ inline bool eatPerishable(Array<Animal> &animals, Array<Hunger> &hungers,
 }
 
 // lacks verification if animal can eat current plant
-inline bool eatPlant(Array<Animal> &animals, Array<Hunger> &hungers, Array<Time> &timers, Array<Coord> &animalCoords, uint16_t animalIndex, Array<Health> &plantHealths, Array<Coord> &plantCoords, uint16_t plantIndex)
+inline bool eat_plant(Array<Animal> &animals, Array<Hunger> &hungers, Array<Time> &timers, Array<Coord> &animalCoords, uint16_t animalIndex, Array<Health> &plantHealths, Array<Coord> &plantCoords, uint16_t plantIndex)
 {
 	if (adjacentCoords(plantCoords[plantIndex], animalCoords[animalIndex])) return false;
 	Animal a = animals[animalIndex];
@@ -118,7 +118,7 @@ inline bool eatPlant(Array<Animal> &animals, Array<Hunger> &hungers, Array<Time>
 }
 
 // TODO: events like these, what happesn to the grass tile is
-inline bool eatGrass(Array<Animal> &animals, Array<Hunger> &hungers, Array<Coord> &coords,
+inline bool eat_grass(Array<Animal> &animals, Array<Hunger> &hungers, Array<Coord> &coords,
 		     Array<Time> &timers, uint16_t animalIndex, Array<TileData> &tiles)
 {
 	uint16_t ti = coordToIndex(coords[animalIndex], TILE_AMOUNT);
@@ -139,7 +139,7 @@ inline bool eatGrass(Array<Animal> &animals, Array<Hunger> &hungers, Array<Coord
 // for both Hunters and Herbivores
 // TODO: perhaps have two levels of scanFood, one for within sight, first
 // triggered, one for a search, like this
-void scanFood(entt::registry &reg, entt::entity &e)
+void scan_food(entt::registry &reg, entt::entity &e)
 {
 	const Type t = reg.get<Type>(e);
 	auto index = entt::to_entity(e);
@@ -148,7 +148,7 @@ void scanFood(entt::registry &reg, entt::entity &e)
 	auto rt = roamThreshold[t];
 	if (carnivores[t])
 	{
-		uint32_t preyIndex;
+		uint32_t prey_index;
 		BitsetTable bt = food::carnivoreDiets[t];
 		for (Type prey : bt)
 		{
@@ -177,7 +177,7 @@ void scanFood(entt::registry &reg, entt::entity &e)
 
 	if (herbivores[t])
 	{
-		uint32_t forageIndex;
+		uint32_t forage_index;
 		BitsetTable bt = food::getHerbivoreDiet(t);
 		for (Type fd : bt)
 		{
@@ -207,14 +207,14 @@ void scanFood(entt::registry &reg, entt::entity &e)
 }
 
 // in ticks
-int calculateTimeTillFeed(int hungerAmount, Animal animal)
+int calculate_time_till_feed(int hungerAmount, Animal animal)
 {
-	float maxHunger;
-	float tickBurnRate;
-	int timeTillFeed;
+	float max_hunger;
+	float tick_burn_rate;
+	int time_till_feed;
 
-	int EatingThreshold = maxHunger / 2;
-	if (hungerAmount < EatingThreshold)
+	int eating_threshold = max_hunger / 2;
+	if (hungerAmount < eating_threshold)
 		return 0;
 	else
 		return static_cast<int>((hungerAmount - EatingThreshold) / burnRate);

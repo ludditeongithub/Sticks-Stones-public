@@ -125,6 +125,12 @@ triggerXFunctions triggers relevant lazy function for each type, using XBuffer a
    - merge into AoS where per-entity locality dominates
    - introduce chunking if both are needed
    - avoid premature global redesigns
+** AttemptProduction and other complete task necessary functions
+*** zeroeth function adds amount of commodity back to queue if first function fails.
+*** first function just iterates through recipe, and sees if pawn can realistically get and reserve all the inputs/requirements. 
+- puts data about to-do list for getting inputs into inventory pickup buffer- this system might also contain all items (can be searchgrid), so pawns can reserve items.
+*** second function assigns pawn path based one targets for each of the items
+*** 
 ** Prereqs to launch alpha
 *** Finish UI
 *** Get Tobi to finish menu sprites
@@ -158,15 +164,6 @@ PFD holds:
 ** cleaning up for errors
 ** (maybe) macros regarding simple operations
 ** aseprites for first launch (launching menu)
-** AoS vs SoA metaprogramming based on access patterns
-- pseudo code main algorithms, separate into hot and cold
-  - cold may be event driven (if entity-based)
-    - if more event driven, then AoS
-    - if more hot (data heavy), then SoA
-- metaprogram layouts
-- ensure dispatch mechanisms (collect entities indexes from hot paths) is accurate
-- implement algorithms hot
-- implement algorithms event-driven
 ** gameLoop
 *** handleEvent
 *** processWorld

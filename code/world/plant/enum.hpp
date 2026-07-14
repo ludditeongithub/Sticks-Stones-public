@@ -132,7 +132,7 @@ enum class Fruit
 
 namespace plant
 {
-inline constexpr LookupTable<PlantCategory, float> test = []
+inline constexpr LookupTable<PlantCategory, float> TEST = []
 {
 	LookupTable<PlantCategory, float> lt{};
 	using enum PlantCategory;

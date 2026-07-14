@@ -2,16 +2,23 @@ cmake_minimum_required(VERSION 3.16)
 
 project(MyProject LANGUAGES CXX)
 
-# Use C++23 standard
 set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Specify include directories
-include_directories(${PROJECT_SOURCE_DIR})
+message(STATUS "Current source dir: ${CMAKE_CURRENT_SOURCE_DIR}")
 
-# Collect all source files
-file(GLOB_RECURSE SOURCES "*.cpp")
+file(GLOB_RECURSE SOURCES
+    CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp"
+)
 
-# Create executable
-add_executable(main_exe main.cpp)
+list(FILTER SOURCES EXCLUDE REGEX "/\\.#")
+
+add_executable(main_exe ${SOURCES})
+
+message(STATUS "Found sources:")
+foreach(src IN LISTS SOURCES)
+    message(STATUS "  ${src}")
+endforeach()
+
+

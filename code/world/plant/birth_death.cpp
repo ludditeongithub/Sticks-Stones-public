@@ -3,7 +3,7 @@
 #include "database.hpp"
 #include "tables.hpp"
 
-inline void PlantDatabase::setGerminationTime(int seedIndex)
+inline void PlantDatabase::set_germination_time(int seedIndex)
 {
 	Plant plant = seeds[seedIndex];
 	// randomize time based on duration of germination period
@@ -45,7 +45,7 @@ inline void RegrowthPlantDatabase::germinate(int seedIndex, bool randomGrowth, S
 // seeds, consider making this in animal database
 //  only performs the seed function, and removing the plant object, does not
 //  affect the animal
-void PlantDatabase::prepareSeedDropping(int animalIndex, int plantIndex, bool regrowth)
+void PlantDatabase::prepare_seed_dropping(int animalIndex, int plantIndex, bool regrowth)
 {
 	if (tileIndexToPlantIndex.contains(foodTileIndex))
 	{
@@ -65,15 +65,15 @@ void PlantDatabase::prepareSeedDropping(int animalIndex, int plantIndex, bool re
 	}
 	if (regrowth)
 	{
-		Plant &plantType = regrowthPlants[index];
+		Plant &plant_type = regrowthPlants[index];
 	}
 	else
-		Plant &plantType = plants[index];
+		Plant &plant_type = plants[index];
 	addEvent(digestionTime, EventType::FutureSeedDropping, (int)plantType, animalIndex);
 }
 
 // TODO: complete and render
-void PlantDatabase::killTree(int plantIndex)
+void PlantDatabase::kill_tree(int plantIndex)
 {
 	switch (tilePlant[plantIndex])
 	{
@@ -93,14 +93,14 @@ void PlantDatabase::killTree(int plantIndex)
 		return;
 	}
 	TileBlock tb = findNearestAdjacentEmptyTileBlock(plantIndex, blockSize);
-	std::tuple<int, int, int, int> adjacentTiles = adjacentTilesIndices[plantIndex];
+	std::tuple<int, int, int, int> adjacent_tiles = adjacentTilesIndices[plantIndex];
 	tilePlant[plantIndex] = Plant::Stump;
-	int newTileIndex;
+	int new_tile_index;
 	for (int i = 1; i < blockSize; i++)
 	{
 		if (tb.direction == Direction::North)
 		{
-			newTileIndex = std::get<0>(adjacentTiles);
+			new_tile_index = std::get<0>(adjacentTiles);
 			adjacentTiles = adjacentTilesIndices;
 		}
 		if (tb.direction == Direction::South)
@@ -118,7 +118,7 @@ void PlantDatabase::killTree(int plantIndex)
 	}
 }
 
-void PlantDatabase::killPlant(int plantIndex)
+void PlantDatabase::kill_plant(int plantIndex)
 {
 	Plant plant = tilePlant[tileIndex];
 	PlantType type = plants[(int)plant].plantType;

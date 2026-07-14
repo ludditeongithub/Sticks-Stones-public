@@ -9,7 +9,7 @@
 #include <algorithm>
 #include <limits>
 
-std::vector<EntityID> markNewPathEntities(std::vector<EntityID>& actingEntities, Array<FrameData>& frameDatas)
+std::vector<EntityID> mark_new_path_entities(std::vector<EntityID>& actingEntities, Array<FrameData>& frameDatas)
 {
 		std::vector<EntityID> indices;
 		indices.reserve(actingEntities.size());		
@@ -23,7 +23,7 @@ std::vector<EntityID> markNewPathEntities(std::vector<EntityID>& actingEntities,
 
 // sets start and end, inputted from all types of jobs, of only entity indices that have been chosen
 // to need new paths
-PathsBuffer getNewPaths(std::vector<EntityID>& pathDispatchBuffer, Array<Coord>& coords, Array<Target>& targets)
+PathsBuffer get_new_paths(std::vector<EntityID>& pathDispatchBuffer, Array<Coord>& coords, Array<Target>& targets)
 {	
 		PathsBuffer pb = PathsBuffer();
 		for (size_t i = 0; i < pathDispatchBuffer.size(); i++)
@@ -54,10 +54,10 @@ struct OpenNode
 	}
 };
 
-static uint32_t currentSearchID = 0;
+static uint32_t current_search_id = 0;
 
 
-static void initializeNode(NodeData& node)
+static void initialize_node(NodeData& node)
 {
 	node.gCost = FLT_MAX;
 	node.fCost = FLT_MAX;
@@ -65,7 +65,7 @@ static void initializeNode(NodeData& node)
 }
 
 
-static Direction directionFromTo(size_t from, size_t to)
+static Direction direction_from_to(size_t from, size_t to)
 {
 	const size_t width = g_World->WORLD_TILE_LENGTH;
 
@@ -86,7 +86,7 @@ static Direction directionFromTo(size_t from, size_t to)
 }
 
 
-static PathData reconstructPath(
+static PathData reconstruct_path(
 	size_t startIndex,
 	size_t goalIndex)
 {
@@ -142,9 +142,9 @@ static PathData reconstructPath(
 }
 
 
-PathData aStar(Coord start, Coord goal)
+PathData a_star(Coord start, Coord goal)
 {
-	currentSearchID++;
+	current_search_id++;
 
 
 	const size_t width =
@@ -153,10 +153,10 @@ PathData aStar(Coord start, Coord goal)
 	const size_t height =
 		g_World->WORLD_TILE_LENGTH;
 
-	const size_t startIndex =
+	const size_t start_index =
 		g_World->getTileIndexFromCoord(start);
 
-	const size_t goalIndex =
+	const size_t goal_index =
 		g_World->getTileIndexFromCoord(goal);
 
 	std::priority_queue<
@@ -166,15 +166,15 @@ PathData aStar(Coord start, Coord goal)
 	> openSet;
 
 
-	NodeData& startNode =
-		nodeData[startIndex];
+	NodeData& start_node =
+		nodeData[start_index];
 
 
-	startNode.searchID = currentSearchID;
-	initializeNode(startNode);
+	start_node.searchID = current_search_id;
+	initialize_node(start_node);
 
 
-	startNode.gCost = 0;
+	start_node.gCost = 0;
 
 	startNode.fCost =
 		heuristic(start, goal);
@@ -191,74 +191,74 @@ PathData aStar(Coord start, Coord goal)
 
 	while (!openSet.empty())
 	{
-		size_t currentIndex = openSet.top().index;
+		size_t current_index = openSet.top().index;
 			
 		openSet.pop();
 
-		NodeData& currentNode =
-			nodeData[currentIndex];
+		NodeData& current_node =
+			nodeData[current_index];
 
-		if (currentNode.closedFlag)
+		if (current_node.closedFlag)
 			continue;
 
-		if (currentIndex == goalIndex)
+		if (current_index == goal_index)
 		{
-			return reconstructPath(
-				startIndex,
-				goalIndex
+			return reconstruct_path(
+				start_index,
+				goal_index
 			);
 		}
 
 
 
-		currentNode.closedFlag = true;
+		current_node.closedFlag = true;
 
 
 
-		size_t x = currentIndex % width;
-		size_t y = currentIndex / width;
+		size_t x = current_index % width;
+		size_t y = current_index / width;
 
 
 
 		const size_t neighbors[4] =
 		{
 			(y > 0)
-				? currentIndex - width
-				: currentIndex,
+				? current_index - width
+				: current_index,
 
 			(y + 1 < height)
-				? currentIndex + width
-				: currentIndex,
+				? current_index + width
+				: current_index,
 
 			(x > 0)
-				? currentIndex - 1
-				: currentIndex,
+				? current_index - 1
+				: current_index,
 
 			(x + 1 < width)
-				? currentIndex + 1
-				: currentIndex
+				? current_index + 1
+				: current_index
 		};
 
 
 
 		for (size_t neighbor : neighbors)
 		{
-			if (neighbor == currentIndex)continue;
-			NodeData& neighborNode = nodeData[neighbor];
+			if (neighbor == current_index)continue;
+			NodeData& neighbor_node = nodeData[neighbor];
 
-			if (neighborNode.searchID != currentSearchID)
+			if (neighbor_node.searchID != current_search_id)
 			{
-				neighborNode.searchID = currentSearchID;
-				initializeNode(neighborNode);
+				neighbor_node.searchID = current_search_id;
+				initialize_node(neighbor_node);
 			}
 
-			if (neighborNode.closedFlag)
+			if (neighbor_node.closedFlag)
 				continue;kxs
-			float tentativeG = currentNode.gCost + tileMoveCosts[neighbor];
+			float tentative_g = current_node.gCost + tileMoveCosts[neighbor];
 
-			if (tentativeG < neighborNode.gCost)
+			if (tentativeG < neighbor_node.gCost)
 			{
-				neighborNode.gCost =
+				neighbor_node.gCost =
 					tentativeG;
 
 				neighborNode.fCost =

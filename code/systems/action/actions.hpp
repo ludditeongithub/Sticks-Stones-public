@@ -42,4 +42,4 @@ struct ActionEventDispatchBuffer
 		}			
 };
 
-ActionEventDispatchBuffer& markActingEntities(std::vector<EntityID> &indices, std::optional<Array<Animal>> &animals, Array<Coord> &coords, Array<size_t>& targets, Array<Action>& actions, Array<FrameData>& frameDatas);
+ActionEventDispatchBuffer& mark_acting_entities(std::vector<EntityID> &indices, std::optional<Array<Animal>> &animals, Array<Coord> &coords, Array<size_t>& targets, Array<Action>& actions, Array<FrameData>& frameDatas);

@@ -19,7 +19,7 @@ class TileDatabase
     // BASE DATABASE MEMBERS
     // =========================
 
-constexpr static uint16_t entity_size = sizeof(Tiledata) +
+constexpr static uint16_t ENTITY_SIZE = sizeof(Tiledata) +
   
  +  sizeof(Tiledata) 
  +  sizeof(Alt) 

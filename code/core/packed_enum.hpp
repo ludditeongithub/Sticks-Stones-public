@@ -8,7 +8,7 @@ template<typename T, unsigned Bits>
 struct Field
 {
     using value_type = T;
-    static constexpr unsigned bits = Bits;
+    static constexpr unsigned BITS = Bits;
 
     static_assert(std::is_enum_v<T> ||
                   (std::is_integral_v<T> && std::is_unsigned_v<T>));
@@ -24,9 +24,9 @@ using field_value_type =
 template<typename T>
 constexpr T bitmask(unsigned bits)
 {
-    constexpr unsigned width = sizeof(T) * 8;
+    constexpr unsigned WIDTH = sizeof(T) * 8;
 
-    if (bits >= width)
+    if (bits >= WIDTH)
         return ~T{0};
 
     return (T{1} << bits) - 1;
@@ -49,8 +49,8 @@ template<typename... Fs>
 class PackedEnum
 {
 private:
-    static constexpr unsigned total_bits = (Fs::bits + ... + 0);
-    static_assert(total_bits <= 64);
+    static constexpr unsigned TOTAL_BITS = (Fs::bits + ... + 0);
+    static_assert(TOTAL_BITS <= 64);
 
 public:
     using Storage = smallest_uint_t<total_bits>;
@@ -74,10 +74,10 @@ public:
     }
 
     template<typename T>
-    static constexpr unsigned field_bits = bits_of<T>();
+    static constexpr unsigned FIELD_BITS = bits_of<T>();
 
     template<typename T>
-    static constexpr unsigned field_offset = [] {
+    static constexpr unsigned FIELD_OFFSET = [] {
         unsigned offset = 0;
         bool found = false;
 
@@ -102,7 +102,7 @@ public:
     }();
 
     template<typename T>
-    static constexpr Storage field_mask =
+    static constexpr Storage FIELD_MASK =
         bitmask<Storage>(field_bits<T>) << field_offset<T>;
 
     constexpr PackedEnum() = default;

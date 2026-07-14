@@ -65,18 +65,18 @@ void World::calculateChunkTemperatureInputs(Array<int8_t> &waterBodiesDists)
 // }
 
 // insolations are normalized to be between 0 and 1.
-Array<float> calculateSeasonalInsolations(int day365)
+Array<float> calculate_seasonal_insolations(int day365)
 {
 	Array<float> insolations(static_cast<uint32_t>(LATITUDE_TOTAL));
 
-	float solarDeclination =
+	float solar_declination =
 	    23.44f * std::sin((2 * std::numbers::pi_v<float> / 365.0f) * (day365 - 80));
-	float solarDeclinationRad = solarDeclination * std::numbers::pi_v<float> / 180.0f;
+	float solar_declination_rad = solarDeclination * std::numbers::pi_v<float> / 180.0f;
 
 	for (auto i = 0; i < LATITUDE_TOTAL; i++)
 	{
 		float latitude = -90.0f + i * (180.0f / (LATITUDE_TOTAL - 1));
-		float latitudeRad = latitude * std::numbers::pi_v<float> / 180.0f;
+		float latitude_rad = latitude * std::numbers::pi_v<float> / 180.0f;
 		insolations[i] = 2.0f * std::cos(latitudeRad - solarDeclinationRad) - 1.0f;
 	}
 	return insolations;

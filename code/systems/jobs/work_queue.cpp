@@ -6,11 +6,11 @@
 #include <variant>
 #include "inventory_manager.hpp"
 
-void setUnitJob(UnitDatabase &database, CommodityDispatcher& dispatcher, uint16_t unitIndex) {
+void set_unit_job(UnitDatabase &database, CommodityDispatcher& dispatcher, uint16_t unitIndex) {
 	Commodity::underlying commodity = getUnitNextCommodity(database, dispatcher, unitIndex);
-	auto commodityVariant = Commodity::cast(commodity);
+	auto commodity_variant = Commodity::cast(commodity);
 	if (auto ptr = std::get_if<Item>( &commodityVariant )) {
-		attemptProduction(unitIndex);
+		attempt_production(unitIndex);
 	}
 	else if (auto ptr = std::get_if<Buildable>( &commodityVariant )) {
 		
@@ -26,12 +26,12 @@ void setUnitJob(UnitDatabase &database, CommodityDispatcher& dispatcher, uint16_
 }
 
 
-Commodity::underlying getUnitNextCommodity(UnitDatabase& database, CommodityDispatcher& dispatcher, uint16_t unitIndex)
+Commodity::underlying get_unit_next_commodity(UnitDatabase& database, CommodityDispatcher& dispatcher, uint16_t unitIndex)
 {
 	assert(unitIndex < database.size);
 	int highest = std::numeric_limits<int>::min();
-	int roleIndex = std::numeric_limits<int>::max();
-	int commodityIndex =  std::numeric_limits<int>::max();
+	int role_index = std::numeric_limits<int>::max();
+	int commodity_index =  std::numeric_limits<int>::max();
 	
 
 	for (size_t i = 0; i < database.roles[unitIndex].size(); i++) {
@@ -42,15 +42,15 @@ Commodity::underlying getUnitNextCommodity(UnitDatabase& database, CommodityDisp
 			if (dispatcher.priorities[j] > highest) 
 			{
 				highest = dispatcher.priorities[j];
-				roleIndex = i;
-				commodityIndex = j;
+				role_index = i;
+				commodity_index = j;
 			}
 		}
 	}
 	return rolesToCommodities.get(static_cast<Role>(roleIndex), commodityIndex);
 }	
 
-bool continueOrFindToolsOrQuit(OverflowHashMap &overflows,
+bool continue_or_find_tools_or_quit(OverflowHashMap &overflows,
 					  OverflowContainerMap &overflowContainers, Action& action, Target& target, Inventory& inventory, NecessaryToolsBuffer& buffer, Coord coord, uint16_t unitIndex)
 {
 	buffer = ensureNecessaryTools(overflows, overflowContainers, action, inventory, unitIndex, coord);
@@ -72,16 +72,16 @@ bool continueOrFindToolsOrQuit(OverflowHashMap &overflows,
 }
 
 
-bool attemptRecipe(bool alternate) {
+bool attempt_recipe(bool alternate) {
 
 }
 
 // TODO: processes basic productions that do not include liquids, buildables. Break this function down into an 'attemptRecipe' function, which all attempt work fucntions that consume inputs can use.
 // variant items
-bool attemptProduction(int pawn)
+bool attempt_production(int pawn)
 {
 	// TODO: get type of product variant to deterine itemType
-	bool attemptAlternateRecipe = false;
+	bool attempt_alternate_recipe = false;
 	for (int i = 0; i < 2; i++)
 	{
 		if (itemType == ItemType::Item)
@@ -114,13 +114,13 @@ bool attemptProduction(int pawn)
 			    : VehicleRecipe recipe = vehicles[static_cast<int>(product)];
 		}
 		
-		bool toolsFound = false;
-		while (!toolsFound) {
+		bool tools_found = false;
+		while (!tools_found) {
 		NecessaryToolsBuffer buffer = ensureNecessaryTools(pawn, action, miniActions, items, dests);
 
 		switch (buffer.state) {
 		case ToolsState::FoundAll:			
-			toolsFound = true;
+			tools_found = true;
 			break;
 		case ToolsState::Finding:
 			
@@ -148,7 +148,7 @@ bool attemptProduction(int pawn)
 					coords[pawn].first, coords[pawn] second)) !=
 				    filledLiquidContainers.end())
 			}
-			int maxAmount = 99999;
+			int max_amount = 99999;
 			for (int i = 0; i < recipe.ingredients.size(); i++)
 			{
 				// TODO: get amount of liquid in found vessel
@@ -205,9 +205,9 @@ bool attemptProduction(int pawn)
 				}
 				if (!foundIngredient)
 				{
-					if (!attemptAlternateRecipe)
+					if (!attempt_alternate_recipe)
 					{
-						attemptAlternateRecipe = true;
+						attempt_alternate_recipe = true;
 					}
 					else
 						return false; // item not craftable
@@ -257,7 +257,7 @@ bool attemptProduction(int pawn)
 				}
 				if (recipe.ingredients[i] == Item::EMPTY)
 					continue;
-				bool foundIngredient = false;
+				bool found_ingredient = false;
 				// loop through non-variant items
 				for (int j = 0; j < inventories[pawn].items.size(); j++)
 				{
@@ -268,12 +268,12 @@ bool attemptProduction(int pawn)
 						// add the right amount of the type of item in
 						// inventory
 						ingredientsFound.push_back({i, recipe.amounts[i]});
-						foundIngredient = true;
+						found_ingredient = true;
 						while (recipe.replaceables[i] ==
 						       recipe.replaceables[i + 1])
 							i++;
 					}
-					if (foundIngredient)
+					if (found_ingredient)
 						break;
 				}
 				// loop through variant items
@@ -288,16 +288,16 @@ bool attemptProduction(int pawn)
 						// inventory
 						variantIngredientsFound.push_back(
 						    {i, recipe.amounts[i]});
-						foundIngredient = true;
+						found_ingredient = true;
 					}
-					if (foundIngredient)
+					if (found_ingredient)
 						break;
 				}
-				if (!foundIngredient)
+				if (!found_ingredient)
 				{
-					if (!attemptAlternateRecipe)
+					if (!attempt_alternate_recipe)
 					{
-						attemptAlternateRecipe = true;
+						attempt_alternate_recipe = true;
 					}
 					else
 					{
@@ -345,13 +345,13 @@ bool attemptProduction(int pawn)
 }
 
 // variantIndex superfluous for non-variant items
-void getResourceAction(int pawn, Item item, int sourceIndex, int variantIndex)
+void get_resource_action(int pawn, Item item, int sourceIndex, int variantIndex)
 {
 	Resource resource = resources[item];
 	Action action = resource.action[sourceVariantIndex];
 	SourceVariant source = resource.source[sourceIndex];
 	// see if Object should be removed from tile
-	bool removeObject = true;
+	bool remove_object = true;
 	if (action == Actions::Collect)
 	{
 		if (source == Tile::ShallowWater || source == Tile::FlowingWater ||
@@ -359,23 +359,23 @@ void getResourceAction(int pawn, Item item, int sourceIndex, int variantIndex)
 		    source == Tile::Sand || source == Scavengeable::Beehive ||
 		    source == Scavengeable::ArtificialBeehive)
 		{
-			removeObject = false;
+			remove_object = false;
 		}
 	}
-	if (removeObject)
+	if (remove_object)
 	{
 		if (action == Actions::Milk)
-			removeObject = false;
+			remove_object = false;
 		else if (action == Actions::Fish)
-			removeObject = false;
+			remove_object = false;
 		else if (action == Actions::Shear)
-			removeObject = false;
+			remove_object = false;
 		else
 			for (int i = 0; i < regrowthCrops.size(); i++)
 			{
 				if (item == regrowthCrops[i])
 				{
-					removeObject = false;
+					remove_object = false;
 				}
 			}
 	}
@@ -405,15 +405,15 @@ void getResourceAction(int pawn, Item item, int sourceIndex, int variantIndex)
 
 // gets resource at certain tile, when pawn is adjacent to it, by confirming
 // action.
-void collectResource(Item item)
+void collect_resource(Item item)
 {
 	if (item < Item::RESOURCEMAX)
 		return;
 	Source resource = resources[item];
 	// find available pawns who can perform actions (On^3)
-	bool foundPawn = false;
-	int pawnIndex;
-	int actionIndex;
+	bool found_pawn = false;
+	int pawn_index;
+	int action_index;
 	Role role;
 	for (int i = 0; i < roles.size(); i++)
 	{ // check each pawn
@@ -423,54 +423,54 @@ void collectResource(Item item)
 			{
 				if (actionToRoles[resources.action[k]] == roles[i][j])
 				{
-					pawnIndex = i;
-					actionIndex = k;
+					pawn_index = i;
+					action_index = k;
 					role = roles[i][j];
-					foundPawn = true;
+					found_pawn = true;
 				}
-				if (foundPawn)
+				if (found_pawn)
 					break;
 			}
-			if (foundPawn)
+			if (found_pawn)
 				break;
 		}
-		if (foundPawn)
+		if (found_pawn)
 			break;
 		// get compatible SourceVariant (Tile, Plant, Animal, Scavengeable, or Item)
-		SourceVariant source = resource.source[actionIndex];
+		SourceVariant source = resource.source[action_index];
 		std::pair<int, int> coords = findNearestSource(source);
 		// SHORTEST PATH ALGORITHM
 	}
 }
 
 // NOTE: this seems a little shifty, tools part
-bool checkActionRequisites(Resource resource, int pawn)
+bool check_action_requisites(Resource resource, int pawn)
 {
 	for (int i = 0; i < resource.action.size(); i++)
 	{
 		Actions action = recipe.action;
 		if (action == Actions::NONE)
 			continue;
-		bool foundRole = false;
+		bool found_role = false;
 		for (int j = 0; j < actionToRoles[static_cast<int>(action)].size(); j++)
 		{
 			for (int k = 0; k < roles[pawn].size; k++)
 			{
 				if (actionToRoles[action][j] == roles[pawn][k])
 				{
-					foundRole = true;
+					found_role = true;
 					break;
 				}
 			}
-			if (foundRole)
+			if (found_role)
 				break;
 		}
-		if (!foundRole)
+		if (!found_role)
 			continue;
-		int toolReplaceableList = actionToToolsReplaceables[static_cast<int>(action)];
+		int tool_replaceable_list = actionToToolsReplaceables[static_cast<int>(action)];
 		for (int j = 0; j < actionToTools[static_cast<int>(action)].size(); j++)
 		{
-			bool foundTool = false;
+			bool found_tool = false;
 			if (toolReplaceableList[j] < 0)
 				continue; // optional tools
 			for (int k = 0; k < tools[pawn].size; k++)
@@ -479,10 +479,10 @@ bool checkActionRequisites(Resource resource, int pawn)
 				{
 					while (toolReplaceableList[j] == toolReplaceableList[j + 1])
 						j++;
-					foundTool = true;
+					found_tool = true;
 				}
 			}
-			if (!foundTool)
+			if (!found_tool)
 				continue;
 		}
 		if (foundTool && foundRole)
@@ -492,7 +492,7 @@ bool checkActionRequisites(Resource resource, int pawn)
 }
 
 // TODO: finish array-ifying
-Array<bool> checkActionRequisites(Recipe recipe, Array<Role> roles)
+Array<bool> check_action_requisites(Recipe recipe, Array<Role> roles)
 {
 	if !(recipe.action == Actions::NONE)
 	{
@@ -518,7 +518,7 @@ Array<bool> checkActionRequisites(Recipe recipe, Array<Role> roles)
 	int toolReplaceableList = actionToToolsReplaceables[action];
 	for (int j = 0; j < actionToTools[static_cast<int>(action)].size(); j++)
 	{
-		bool foundTool = false;
+		bool found_tool = false;
 		if (toolReplaceableList[j] < 0)
 			continue; // optional tools
 		for (int k = 0; k < tools[pawn].size; k++)
@@ -527,18 +527,18 @@ Array<bool> checkActionRequisites(Recipe recipe, Array<Role> roles)
 			{
 				while (toolReplaceableList[j] == toolReplaceableList[j + 1])
 					j++;
-				foundTool = true;
+				found_tool = true;
 			}
 		}
-		if (!foundTool)
+		if (!found_tool)
 			return false;
 	}
 	return true;
 }
 
-bool checkActionRequisites(Resource resource, int pawn)
+bool check_action_requisites(Resource resource, int pawn)
 {
-	bool foundRole = false;
+	bool found_role = false;
 	for (int i = 0; i = resource.actions.size(); i++)
 	{
 		if !(resource.action == Actions::NONE)
@@ -597,7 +597,7 @@ bool checkActionRequisites(Resource resource, int pawn)
 // objectLocation
 
 // RESOURCE PAWN MANAGEMENT
-void setTargetResource(int pawn, Role role)
+void set_target_resource(int pawn, Role role)
 {
 	if !(role < Role : RESOURCEMAX)
 		return;
@@ -617,12 +617,12 @@ void setTargetResource(int pawn, Role role)
 	}
 }
 
-void processResources() {}
+void process_resources() {}
 
 
 // when production of item is finished, wear tools that were used, place if
 // buildable or vehicle or go to inventory if item, variant optional
-void productFinish(ProductVariant product, int pawn, Actions action, uint16_t variant)
+void product_finish(ProductVariant product, int pawn, Actions action, uint16_t variant)
 {
 
 	/* TODO: change this section to be event-based */
@@ -643,8 +643,8 @@ void productFinish(ProductVariant product, int pawn, Actions action, uint16_t va
 				//  currentMaxBulk(currentBulkStatus, false) || currentWeight +
 				//  bulkAndWeights[static_cast<int>(currentProducts[pawn])].weight >
 				//  maxWeight(false))  {
-				float productAmount = corpse.amounts[i];
-				float remainingSpace =
+				float product_amount = corpse.amounts[i];
+				float remaining_space =
 				    min(currentMaxBulk(inventories[pawn].currentBulkStatus, child) -
 					    inventories[pawn].totalBulk,
 					0);
@@ -654,17 +654,17 @@ void productFinish(ProductVariant product, int pawn, Actions action, uint16_t va
 					{
 						uint16_t var = static_cast<uint16_t>(corpse.meat);
 						fullAddVariantItem(pawn, corpse.products[i],
-								   productAmount, var);
+								   product_amount, var);
 					}
 					else if (corpse.products[i] == Item::AnimaHides)
 					{
 						uint16_t var = static_cast<uint16_t>(corpse.hide);
 						fullAddVariantItem(pawn, corpse.products[i],
-								   productAmount, var);
+								   product_amount, var);
 					}
 					else
 						fullAddItem(pawn, corpse.products[i],
-							    productAmount);
+							    product_amount);
 				}
 			}
 		}
@@ -700,7 +700,7 @@ void productFinish(ProductVariant product, int pawn, Actions action, uint16_t va
 
 // SUPPORT (means they do not gain items from their action), but also don't do
 // damage
-void attemptSupport(int pawn, Role role)
+void attempt_support(int pawn, Role role)
 {
 	switch (role)
 	{

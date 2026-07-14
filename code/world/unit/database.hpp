@@ -21,11 +21,12 @@
 #include <world/tile/data.hpp>
 #include <world/world.hpp>
 
+constexpr uint16_t UNIT_CAP = 1000;
 using OverflowHashMap = std::unordered_map<uint32_t, std::vector<HoldableSlot>>;
-
 using OverflowContainerMap = std::unordered_map<uint16_t, std::vector<Container>>;
 
-constexpr uint16_t unit_cap = 1000;
+OverflowHashMap g_overflow_hash_map;
+OverflowContainerMap g_overflow_container_map;
 
 // the total volume of each bulk category hands can maximally carry.
 // where 0.1 is 100mL
@@ -33,7 +34,7 @@ constexpr uint16_t unit_cap = 1000;
 
 // mas weights pawns can carry
 
-constexpr uint16_t container_underflow_limit = 3;
+constexpr uint16_t CONTAINER_UNDERFLOW_LIMIT = 3;
 
 // Fine means that only fine objects can be carried, mid means that loose, soft, or solid objects
 // can be carried, single means that only single objects can be carried
@@ -43,7 +44,7 @@ struct Inventory
 	// TODO
 	//  std::variant<ItemSlot, VariantItemSlot, ToolSlot> leftHand;
 	//  std::variant<ItemSlot, VariantItemSlot, ToolSlot> rightHand;
-	std::array<Container, container_underflow_limit> containers; // first container is HANDS
+	std::array<Container, CONTAINER_UNDERFLOW_LIMIT> containers; // first container is HANDS
 	BulkStatus bulk_status = BulkStatus::NONE;		     // for hands
 	float weight;
 	Inventory()
@@ -85,8 +86,8 @@ struct Skills
 	}
 };
 
-constexpr uint8_t max_roles = 5;
-using Roles = std::array<Role, max_roles>;
+constexpr uint8_t MAX_ROLES = 5;
+using Roles = std::array<Role, MAX_ROLES>;
 using RoleMana = uint8_t;
 
 using Sex = bool;
@@ -111,7 +112,7 @@ struct UnitDatabase
     // BASE DATABASE MEMBERS
     // =========================
 
-constexpr static uint16_t entity_size = sizeof(Unit) +
+constexpr static uint16_t ENTITY_SIZE = sizeof(Unit) +
 + sizeof(bool)
   
  +  sizeof(Unit) 

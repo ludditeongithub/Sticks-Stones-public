@@ -52,9 +52,9 @@ struct SpriteInfo
     {}
 };
 
-constexpr SpriteInfo unit_sprite_info = SpriteInfo(1,2,1,2,1,2,1,2);
+constexpr SpriteInfo UNIT_SPRITE_INFO = SpriteInfo(1,2,1,2,1,2,1,2);
 
-inline constexpr LookupTable<Animal, SpriteInfo> animal_sprite_infos = []
+inline constexpr LookupTable<Animal, SpriteInfo> ANIMAL_SPRITE_INFOS = []
 {
     LookupTable<Animal, SpriteInfo> lt{};
 
@@ -86,7 +86,7 @@ inline constexpr LookupTable<Animal, SpriteInfo> animal_sprite_infos = []
     return lt;
 }();
 
-constexpr uint8_t max_stages = 4;
+constexpr uint8_t MAX_STAGES = 4;
 
 struct StageInfo {
 	SDL_Rect dimensions;
@@ -98,7 +98,7 @@ struct StageInfo {
 	}
 };
 
-inline constexpr BitsetTable<Plant> plant_sprite_progressive_stages = []
+inline constexpr BitsetTable<Plant> PLANT_SPRITE_PROGRESSIVE_STAGES = []
 	{
 		BitsetTable<Plant> t{};
 		using enum Plant;
@@ -106,7 +106,7 @@ inline constexpr BitsetTable<Plant> plant_sprite_progressive_stages = []
 		return t;
 	}();
 
-inline constexpr BitsetTable<Plant> plant_produces = []
+inline constexpr BitsetTable<Plant> PLANT_PRODUCES = []
 	{
 		BitsetTable<Plant> t{};
 		using enum Plant;
@@ -162,7 +162,7 @@ inline constexpr BitsetTable<Plant> plant_produces = []
 	}();
 
 //farmable fruiting stages are a SEPARATE StageInfo. reminder that all trees that produce fruit start as default 'tree'
-inline constexpr LookupTable<Plant, std::array<StageInfo, MAX_STAGES>> plant_sprite_dimensions = []
+inline constexpr LookupTable<Plant, std::array<StageInfo, MAX_STAGES>> PLANT_SPRITE_DIMENSIONS = []
 {
 	LookupTable<Plant,std::array<StageInfo, MAX_STAGES>> lt{};
 	using enum Plant;

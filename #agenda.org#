@@ -1,0 +1,478 @@
+* REMEMBER
+** boost.preprocessor enum to string
+* NOW
+** Algorithm, scheduling and dispatch general plan
+First, inertiaLoop goes through and inertia[i]--. if inertia[i] == 0, checks actions[i] and then marks correct flag in the dispatch buffer.
+
+later individual algorithms go through each individual dispatch buffer, pulling up the relevant data to modify for that task, triggering relevant events for that entity. 
+** Movement + Action + NewPath
+first queueReadyActions sees if sub-action is finished. (inertia 0)
+if sub-action finished, then marked for buffer to processEntityActions.
+
+processEntityActions marks for main actions shared across animals and units. std::optional and bool marker for relevant unit code in the same function. some of the lazy code is just marking for the XBuffer to triggerXFunctions.
+
+triggerXFunctions triggers relevant lazy function for each type, using XBuffer as data.
+** System Design Decision Tree: AoS vs SoA + Event vs Tick
+*** 1. Start: Write pseudocode (NO data layout decisions)
+   - Define gameplay logic in abstract form
+   - Identify:
+     - what changes
+     - when it changes
+     - how often it runs
+   - DO NOT think about structs or arrays yet
+   - pass only domains (XDatabase&) as parameters
+     - specify after parameter list what references are accessed
+
+   /Goal: describe behavior, not storage/
+*** 2. Classify each system by access pattern
+**** 2.1 Entity-centric logic (many fields per entity)
+    - Example:
+      - AI decision making
+      - inventory logic
+      - combat resolution
+    - Pattern:
+      - one entity → many fields accessed together
+    - Candidate: AoS / chunked AoS
+
+**** 2.2 Field-centric logic (one field across many entities)
+    - Example:
+      - hunger decay
+      - physics integration
+      - animation updates
+    - Pattern:
+      - one operation → many entities
+    - Candidate: SoA
+
+**** 2.3 Reactive / sparse logic (only some entities update)
+    - Example:
+      - starvation triggers
+      - job assignment
+      - events / state transitions
+    - Pattern:
+      - only "active" entities matter
+    - Candidate: event queue / active set
+
+*** 3. Classify execution model (independent axis)
+**** 3.1 Tick-based systems
+    - runs every frame or fixed interval
+    - good for:
+      - continuous simulation (hunger, physics)
+    - typically SoA-friendly
+
+**** 3.2 Event-driven systems
+    - runs only when triggered
+    - good for:
+      - thresholds
+      - state changes
+      - rare interactions
+    - typically AoS-friendly or hybrid
+
+**** 3.3 Hybrid systems
+    - tick updates state
+    - events react to thresholds
+    - most real game systems fall here
+
+*** 4. Choose data layout AFTER classification
+**** 4.1 AoS / chunked AoS
+    - use when:
+      - multiple fields accessed per entity
+      - entity-centric logic dominates
+      - sparse updates
+    - benefits:
+      - cache-friendly per entity
+      - simple reasoning
+
+**** 4.2 SoA
+    - use when:
+      - one field updated across many entities
+      - SIMD/vectorization possible
+      - bulk processing dominates
+    - benefits:
+      - memory bandwidth efficient
+      - fast streaming
+
+**** 4.3 Hybrid / ECS-style
+    - use when:
+      - mixed workloads
+      - multiple systems with different patterns
+    - typical engine solution
+
+*** 5. Implement hot systems first
+   - identify performance-critical loops
+   - ensure:
+     - correct memory access pattern
+     - minimal indirection
+     - contiguous iteration where possible
+
+*** 6. Implement event-driven systems second
+   - use:
+     - queues (push-based)
+     - scheduled events
+     - active entity sets
+   - avoid:
+     - full scans over all entities
+     - flag-based O(N) sweeps as primary mechanism
+
+*** 7. Validate with profiling
+   - check:
+     - cache misses
+     - memory bandwidth usage
+     - branch mispredictions
+   - adjust layout ONLY based on measured bottlenecks
+
+*** 8. Final optimization phase
+   - split SoA where bulk data dominates
+   - merge into AoS where per-entity locality dominates
+   - introduce chunking if both are needed
+   - avoid premature global redesigns
+** AttemptProduction and other complete task necessary functions
+*** zeroeth function adds amount of commodity back to queue if first function fails.
+*** first function just iterates through recipe, and sees if pawn can realistically get and reserve all the inputs/requirements. 
+- puts data about to-do list for getting inputs into inventory pickup buffer- this system might also contain all items (can be searchgrid), so pawns can reserve items.
+*** second function assigns pawn path based one targets for each of the items
+** Prereqs to launch alpha
+*** Finish UI
+*** Get Tobi to finish menu sprites
+*** Sprite loading no errors
+*** functional large menus
+*** actual funcs to transfer data from world spawner to world 
+*** bridge from UI and player input to PlayerFactionDatabase
+PFD holds:
+- stockpiles
+- player policy zones
+- mini socities' zones
+- faction level inventory
+  - items queued
+  - items needed
+- ideologies
+*** ensuring searching for any entity actually works!
+*** Normal base game cycle works
+**** queue production
+**** build buildings
+**** check needs- aggregate and individual 
+**** receive event warnings
+- death
+- close to deaths
+- attack
+- mental break
+**** messages (tutorials)
+**** combat
+**** inventory
+**** eating
+**** farming
+** cleaning up for errors
+** (maybe) macros regarding simple operations
+** aseprites for first launch (launching menu)
+** AoS vs SoA metaprogramming based on access patterns
+- pseudo code main algorithms, separate into hot and cold
+  - cold may be event driven (if entity-based)
+    - if more event driven, then AoS
+    - if more hot (data heavy), then SoA
+- metaprogram layouts
+- ensure dispatch mechanisms (collect entities indexes from hot paths) is accurate
+- implement algorithms hot
+- implement algorithms event-driven
+** gameLoop
+*** handleEvent
+*** processWorld
+*** cloud covers
+** New game generation
+** UI in game
+** upscaling to screen size
+** verify that 2d arrays are [y][x] indexed 
+** Menus
+*** wait for sprites to be done
+** Inventory and unit tasks
+*** TODO add .replaceable and .tool to actionToTools (also make proper lookup table)
+On event of player affecting tasks:
+*** structures :FILL:
+each role has a priority list, max size is the number of products (material or non material) that role can possibly make. 
+
+struct that holds priority list. each role also has its minimum priority, and the index to that product.
+*** Event: player affecting tasks directly affects certain roles' priority queues 
+all units currently performing a non-material role, have their min priorities compared against the new order's priority, and switch to that if applicable.
+*** Event: Unit finishes task
+unit checks all its roles, and then selects the task with the lowest priority.
+** Writing to data to file
+** option to configure screen size
+* NOTES
+** Programming
+*** Scheduling and Simulation Precision
+- there are two main divisions: player - active chunks (the player's pawns frequent the area, and non - player - active chunks. PAC and NPAC entity data are stored in different databases, their may also be several different PAC and NPAC databases, with special cases of nearer NPAC databases which contain chunks closer to the player, which they are likely to discover soon.
+
+  All entities in NPACs are processed at a high frequency. There is lower batching, event driven. All entities in non-NPACs are processed at a low frequency. Higher batching, more concurrency of large tasks.
+** Cleaning Up
+*** Checklist
+- [X] Core (scans.hpp needs more cleaning)
+- [ ] World 
+* AFTER PROTOTYPE
+** additional metaprogramming features: crossed enum:
+list = {A, B, C}
+crossedEnum(list) returns:
+
+enum class {
+A,
+B,
+C,
+AB,
+AC,
+BC,
+ABC,
+MAX
+};
+or consider bitmaks depending on use case
+** audio functionality
+** chunked rendering
+* AFTER ALPHA
+** actually implement NPC tribes
+** automatic 'greedy' and 'hungry' interest
+** change globals to fit some convention, maybe namespaces
+** Migration Logic
+** better procedural generation: no probabilities
+** bureaucrat can produce reports-- tell player they need more of a certain role, based on automatic analysis 
+** larger simulations
+*** actually manage Separate database for active chunks
+*** better arena management, ALLOC_FACTOR calculations
+*** faux time simulations
+** ERROR HANDLING: separate 'verify data' static assert functions, that only then pass to the actual functions! (at dispatch level
+** Role inventory policies: player can control how much a pawn of a certain role should keep on them at all times (or under certain circumstances), as unit's contents are invisible to all other units (unless asked for) (perhaps shipping roles can have this off)
+** A creature turning takes a second
+** family trees and different appearances, social institutions
+** Branchless programming if further optimization required
+** Keep certain arrays sorted 
+** Custom Temperature Spaces: fires, rooms (in chunk entities grid)
+** Rainfall, weather, humidity effects
+*** tile switches to snow or different water types if more water added, mud if water added to soil
+** Digging below tiles
+generated layer under tiles that is indexed-matched to tile above. replaces tile above if tile above is dug, and then auto-generates a new tile, so that there is always a pre-loaded lazy tile generation.
+** Rivers and lakes
+1. Identify Candidate Basins
+   a. For each tile in the map:
+       - If the tile is a local minimum (all neighbors higher or equal), mark as potential lake.
+   b. Group connected local minima into basins (cluster adjacent low tiles).
+   c. For each basin, compute:
+       - Basin area = number of connected low tiles
+       - Basin depth potential = minimum height difference between basin floor and lowest surrounding rim (lake height is randomized-- stored contiguosly with volume, and actual altitude lowers of volume reaches certain threshold due to player actions or seasons)
+   d. Discard basins with depth < minimum threshold (e.g., 1-2 tiles)
+
+2. Compute Water Input for Each Basin
+   a. River inflow:
+       - Sum volume of all rivers entering the basin (width × flow factor)
+   b. Rainfall contribution:
+       - rainfall_factor × basin_area
+   c. Snowmelt contribution (optional):
+       - Add seasonal snowmelt if basin contains mountain/snow tiles
+   d. Total water input:
+       - water_input = river_inflow + rainfall + snowmelt
+
+3. Determine Lake Surface Area and Depth
+   a. Compare water_input to basin capacity (max depth × basin area)
+   b. Rules of thumb:
+       - Low water_input → lake occupies only deepest tiles → small, deep lake
+       - Medium water_input → lake fills most of basin → medium-sized, moderate depth
+       - High water_input → lake fills basin, may overflow → large, shallow lake or floodplain
+
+4. Connect Lakes to Rivers
+   a. If a river enters the basin:
+       - Add its flow to water_input
+       - If water_input > basin capacity:
+           - Create an outflow river at the lowest rim tile
+   b. Ensure water flows logically downstream
+
+5. Optional Seasonal Variation
+   a. Wet season:
+       - Expand lake into surrounding floodplain tiles
+   b. Dry season:
+       - Shrink lake, leaving only deepest tiles
+   c. Adjust river inflow seasonally if desired
+
+6. Optional Micro-Features
+   a. Floodplains: 1–2 tile buffer around large/high-input lakes that fill in wet season
+   b. Swamps/marshes: low-lying shallow areas with persistent water
+   c. Sediment buildup: edges of lakes can gradually fill over time (optional)
+
+7. Assign Lake Tile Properties
+   a. Mark tiles as lake, floodplain, or wetland
+   b. Assign depth (optional) based on tile elevation relative to lake water level
+   c. Assign micro-features like vegetation, swamps, or marsh tiles
+
+*** 1. Precompute Water Sources
+**** Precipitation Map
+- Assign each tile a base rainfall value.
+- Apply seasonal multipliers:
+  - Spring: 1.0
+  - Summer: 1.1 (rainy regions) or 0.8 (dry regions)
+  - Autumn: 0.6–0.8
+  - Winter: 0.3–0.5
+
+**** Snow/Glacier Map
+- High-elevation tiles accumulate snow in winter.
+- Snowmelt contributes to rivers based on season:
+  - Spring: 100%
+  - Summer: 20–50%
+  - Autumn: 10–20%
+  - Winter: 0–10%
+
+**** Groundwater/Baseflow Map (optional)
+- Slow, steady contribution from precipitation infiltrating soil.
+
+*** 2. Determine River Sources
+- Sources chosen from:
+  - Mountain/high-altitude tiles with snow/glacier or high rainfall.
+  - Groundwater-fed springs.
+- Initial river volume or stage:
+  - initial_flow = rainfall + snowmelt + groundwater
+
+*** 3. River Path Generation
+- Route rivers along lowest altitude / slope.
+- Decide river age:
+  - Young rivers → narrow, steep, greedy paths.
+  - Mature rivers → wider, meandering, widen tiles along the path.
+- Use chunk-based altitude approximation to reduce computation.
+
+*** 4. Volume / Stage Propagation
+**** Water Representation
+- Float volume (continuous) or
+- Discrete stages (integer levels, e.g., 0–10) like Minecraft water blocks.
+  - Each stage corresponds to visual width/depth and flow potential.
+
+**** Tile Update Formula
+- tile_water = inflow_from_upstream + local_tile_input - evaporation - seepage
+- Adjust river width/visuals based on volume/stage.
+
+*** 5. Seasonal Updates
+- Apply seasonal multipliers to water input:
+  - Snowmelt: Spring 100%, Summer 20–50%, Autumn 10–20%, Winter 0–10%
+  - Precipitation: Spring 1.0, Summer 1.1 or 0.8, Autumn 0.6–0.8, Winter 0.3–0.5
+- Global seasonal river flow variation:
+  - Spring: ~1.0× (peak)
+  - Summer: 0.7–0.9×
+  - Autumn: 0.6–0.8×
+  - Winter: 0–0.5× (snow-fed rivers drop dramatically)
+- Snow-fed rivers can vary 2–3× between peak and trough.
+- Rain-fed rivers vary according to rainfall seasonality.
+
+*** 6. Lake Generation
+- Identify local minima in terrain.
+- Determine lake type:
+  - Small/floodplain → wet area, no major river.
+  - Medium → connected to river, not wet area.
+  - Large → connected to river and wet area.
+- Update lake volume per season:
+  - lake_volume_next = lake_volume_prev + inflow_from_rivers + local_tile_input - outflow - evaporation
+- Depth effects:
+  - Shallow lakes → fluctuate more, may dry out in dry season.
+  - Deep lakes → more stable, smaller relative fluctuations.
+
+*** 7. Optimizations for Tile-Based Games
+- Use discrete stages instead of float volumes → reduces computation and simplifies overflow.
+- Chunk-based pathfinding for river routing.
+- Seasonal updates once per season instead of per frame.
+- Overflow/spill: stage exceeds max → spill to adjacent lower tile.
+- Width/visuals derived from volume/stage.
+
+*** 8. Tile Water Inputs
+- tile_water_input = rainfall + snowmelt + groundwater
+- Seasonal multipliers applied.
+- Drives initial river volume, propagation, and lake levels.
+
+*** Outcome
+- Rivers expand and shrink seasonally.
+- Lakes store water and fluctuate realistically.
+- Computation remains lightweight for tile-based games.
+- Discrete stages simplify logic and rendering.
+
+*** Architecture of Game System
+- Cells/regions are spawned by the world spawner, which contain a variable amount of tiles which form various shapes as an entire cell when viewed from a bird's eye view.
+  Each region has a biome, altitude, temperature, lakes, and rivers value. 
+
+  They are deterministically spawned using a seed. The same seed is also used to create the vioronoi 
+*** check to see if Database functions can be instead made to freestanding functions than can be reused
+** transcendental function SIMD
+** first function loops through and gets entities with timers[0], puts their data into new active buffer, update functions only iterate on that (the same for any entity where most are not timers[0]
+** More accurate precipitation prediction per biome/zone
+** Engineers automatically build valid aqueducts (automatically track path of descent), when tasked to build between two points by player.
+** Fully simulate atmospheric latitude effects
+- Ferrel Cells and Hadley Cells, trade winds, etc
+- Affects both generation and diurnal and seasonal temp variance
+** Tile drops display if altitude variation is too high to prevent building contiguously
+** Artificial Selection-- plants and animals can get 'better'
+** get rid of all vectors, standardize overflow/imps
+* Hot and Cold Algorithms
+Estimates are based on:
+- chunk size 32x32
+- player is loading roughly 160 active chunks in late game, passively processing 290 chunks from enemy civs covered by fog of war (update speed vastly slowed on passive chunks)
+** ACTIVE
+Tiles: 163840
+Grass: 113000
+Plants: 28800
+Animals: 2000
+Units: 1450
+
+Total Movables: 3450
+** Hottest 1000+ per frame
+- check if units should move (every tick, x2000)
+*** Plant growth/death update (not death by event)
+- require updates ~ every 30 frames, so ~1300 per frame, can be reduced to Hot if every 60 frames
+*** path job, tile checks
+- ~ 2000 movables have pathfinding being calculated, and 4x tiles need to be checked so >8000 per frame (can improve from A*)
+**** Implementation 
+** Hot 100-1000 per frame
+** Medium 10-50 per frame
+- atttacking unit events
+** Cold 1-10 per frame
+*** temperature update for every chunk
+only ~ second, but for >100 chunks
+*** Jobs of any type started/finished/paused (average job takes thousands of ticks)
+[this should really be wrapped up in contiguous event processing], however ~1.5k units could be initiating/ending jobs that take ~5-10 secs per job
+  - job scheduling identity tag per unit, so that if the job was paused, the job over event taken off the stack must match the right unit and its current scheduling identity tag, which changes whenever the job is paused and is started again (a new event with a new identity tag is calculated whenever the job is (re)started
+** Coldest 1 per frame
+* Job Management
+Player assigns resources and products to be produced. Player 
+* New Core Implementation
+** Bounding Box Chunks, Enemy Detection for Factions
+Each unit (including animals) belong to a faction. Tiles belong to bounding box. Unit is inside a bounding box, bounding box loses 'ownership' of unit when unit leaves and another bounding box gained it. Each faction has a vector which shows identity of all bounding boxes it has currently detected, which means one or more units in that faction can see that box. Whenever a unit enters a new box, it is checked to see if any enemy factions can see that box. If an enemy faction can see the box, algorithm is triggered to manually detect all members of that faction that can see the box (and therefore the enemy unit which has entered it)-- this may be (often is) none. (or perhaps the detecting units are put on a 'high alert state', which can transition into a enemy detected state' where that can choose how to react (kill enemy, alert other units)). Counter-detection options may also be given to the unit that was detected entering the box. This minimizes checking for detection for every move, when the player and enemies are likely at peace, and also allows for better single unit detection and targeting later.
+* New Core Ideas
+** More civilizational development
+I have charted the western pathway, chart other possible pathways. perhaps less focus on specialization, more focus on developing each individual even MORE deeply.
+- also sex relations can be different.
+  - but the player can always choose.
+
+   - Memes (symbols, images, ideas) which the player can invest points in, sometimes automatically develop, and can syncretize with other symbols. Many developed memes needed to create a religion.
+
+     - Each pawn's *actual role mana* differs from their *raw role mana* (it can be less or more). The player's system of government determines how much control they have over the pawn's role mana, and also buffs/debuffs on role mana values, as well as assigning
+
+       certain systems of government and culture are better at creating high quality goods, others are good at creating owned quality goods fast.
+
+       player can control multiple tribes/nations/corporations which may also battle with each other, and if too disparate the player may have to choose one or the other to influence. 
+** Complex Roles vs Production roles (Social roles)
+Social roles can be tied to production roles (or not), and also have requirements (property, satisfaction, food) that if not met makes unit with that role unhappy.
+** User-Determined Aesthetic Culture Buffs
+The user can choose certain colours, and certain simple shapes (consider picking common ones from that psychological theorist who posited that our formation of objects is made up of several individual simple shapes, or perhaps it should be angular features (sharpness, curved, etc). The user then is able to get 'inspirations' for that aesthetic-- if a pawn is attacked by a tiger, the user may get an inspiration for the colour orange, with the value 'ferocity'. Every once in a while they may be able to get enough cultural points for a free aesthetic feature -> buff without inspiration points. Whenever the player's tribe builds an artifact or art that has that aesthetic feature, the player's tribe will receive that additional mini-buff. These aesthetic features can be wider kfpmotifs, or materials, as well. 
+* Possible Updates
+- TODO: water-powered hammers
+- add more trainer classes
+- flesh out leader classes, maybe add more leader classes
+- Advanced farming: soil types, fertilizers, waterlogging, diseases, weeding, specific sunlight sensitivity
+- Advanced Cuisine - Food variety, Different meats and cheeses, more spices, berries
+- Rust and decay (entropy update) (buildings and tools naturally wear)
+- Bamboo
+- Advanced Fishing
+- Ores extended: Brass, Lead, Nickel
+- Materials extended: Hardwoods, softwoods, Hardstones, softstones
+- Natural Dangers: disease, workplace injuries
+- Architecture expanded: Domes, Arches
+- Advanced Water: Dry Areas, Qanats, Ice, Distillation, Treatment, Salt/Freshwater
+- Weeds
+- Advanced Clothing - buffs for clothes, clothes wear, etc
+- Winds: Sailing, jfarming, knocking small objects
+* LATER
+- large seas in world gen
+- scouts, watchmen, notify the player and pawns during attacks
+- elevation
+- different logs in aseprite, and log falling animation
+- separate flint and hardstone (possibly granite) tools as early toolheads, one brittle but sharp, other more durable
+- add stats for hardstone as building material
+- coastal mountains, leeway affect on biome generation, and
+- logs collapse against trees if there are trees nearby upon another trees' death instead of finding nearest adjacentemptytile
+- new musical units unlock different soundtracks, or like my singing monsters

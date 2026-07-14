@@ -7,7 +7,7 @@ void negotiate(){"1. Serve him kind gestures and a nice meal."
 		 "4. (Negotiator) Request to send a trade caravan to his people."
 		 "5. Kill him."}
 
-void tradeDeal()
+void trade_deal()
 {
 	selectResources();
 }

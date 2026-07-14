@@ -6,7 +6,7 @@
 // seeds, not square cells
 
 // 1. Generate Ocean on altitude, land, and ocean maps
-void WorldSpawner::generateOceansOnMaps()
+void WorldSpawner::generate_oceans_on_maps()
 {
 	for (int x = 0; x < WIDTH; ++x)
 	{
@@ -28,7 +28,7 @@ void WorldSpawner::generateOceansOnMaps()
 }
 
 // Function to mark adjacent tiles to coast as lowlands
-void WorldSpawner::markCoasts()
+void WorldSpawner::mark_coasts()
 {
 	for (int x = 0; x < WIDTH; ++x)
 	{
@@ -46,7 +46,7 @@ void WorldSpawner::markCoasts()
 }
 
 // Function to apply user-defined chances for unlikely transitions
-void WorldSpawner::applyExtraHighlandsAndMountains()
+void WorldSpawner::apply_extra_highlands_and_mountains()
 {
 	// Step 1: Transition one tile to other tile
 	for (int y = 0; y < HEIGHT; ++y)
@@ -72,8 +72,8 @@ void WorldSpawner::applyExtraHighlandsAndMountains()
 			default:
 				threshold = -1.0f;
 			}
-			float randVal = rand() / (float)RAND_MAX;
-			if (randVal < threshold)
+			float rand_val = rand() / (float)RAND_MAX;
+			if (rand_val < threshold)
 			{
 				landsMap[y][x] = 5; // Mountains
 			}
@@ -213,7 +213,7 @@ void WorldSpawner::applyExtraHighlandsAndMountains()
 	}
 }
 
-void WorldSpawner::generateLandsMap()
+void WorldSpawner::generate_lands_map()
 {
 	markCoasts();
 	for (int x = 0; x < WIDTH; ++x)
@@ -241,7 +241,7 @@ void WorldSpawner::generateLandsMap()
 }
 
 // TODO: make river
-void WorldSpawner::extendRiversFromSource(uint16_t riverLength, int x, int y)
+void WorldSpawner::extend_rivers_from_source(uint16_t riverLength, int x, int y)
 {
 	// Base case 1: Hits the edge of the map
 	if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT)
@@ -316,7 +316,7 @@ void WorldSpawner::extendRiversFromSource(uint16_t riverLength, int x, int y)
 	}
 }
 
-void WorldSpawner::markRiverEnds()
+void WorldSpawner::mark_river_ends()
 {
 	for (int y = 0; y < HEIGHT; ++y)
 	{
@@ -352,7 +352,7 @@ void WorldSpawner::markRiverEnds()
 	}
 }
 
-void WorldSpawner::generateWaterMap()
+void WorldSpawner::generate_water_map()
 {
 	waterMap = oceanMap;
 
@@ -423,9 +423,9 @@ void WorldSpawner::generateWaterMap()
 
 // BFS function to calculate the distance from the ocean
 std::vector<std::vector<int>>
-WorldSpawner::calculateOceanDistance(std::vector<std::vector<int>> &waterMap, bool lake, bool river)
+WorldSpawner::calculate_ocean_distance(std::vector<std::vector<int>> &waterMap, bool lake, bool river)
 {
-	std::vector<std::vector<int>> distanceMap(
+	std::vector<std::vector<int>> distance_map(
 	    HEIGHT, std::vector<int>(WIDTH, WIDTH * HEIGHT)); // Initialize with large values
 
 	int water = lake ? 5 : 0;
@@ -440,7 +440,7 @@ WorldSpawner::calculateOceanDistance(std::vector<std::vector<int>> &waterMap, bo
 		{
 			if (waterMap[y][x] == water)
 			{ // Check waterMap, not landsMap
-				distanceMap[y][x] = 0;
+				distance_map[y][x] = 0;
 				q.push({y, x});
 			}
 		}
@@ -469,14 +469,14 @@ WorldSpawner::calculateOceanDistance(std::vector<std::vector<int>> &waterMap, bo
 }
 
 std::vector<std::vector<int>>
-WorldSpawner::generateWBDistances(std::vector<std::vector<int>> &waterMap)
+WorldSpawner::generate_wb_distances(std::vector<std::vector<int>> &waterMap)
 {
-	std::vector<std::vector<int>> oceanDistance =
+	std::vector<std::vector<int>> ocean_distance =
 	    calculateOceanDistance(waterMap, false, false);
 	return oceanDistance;
 }
 
-void WorldSpawner::generateTemperatureMap()
+void WorldSpawner::generate_temperature_map()
 {
 	for (int y = 0; y < HEIGHT; y++)
 	{
@@ -530,11 +530,11 @@ void WorldSpawner::generateTemperatureMap()
 }
 
 std::vector<std::tuple<float, bool, bool>>
-WorldSpawner::humidityAndRainShadowEffects(int y, int x, int water, bool biomes)
+WorldSpawner::humidity_and_rain_shadow_effects(int y, int x, int water, bool biomes)
 {
 	std::vector<std::tuple<float, bool, bool>> ret;
-	bool leewardEffect = false;
-	bool windwardEffect = false;
+	bool leeward_effect = false;
+	bool windward_effect = false;
 	float min;
 	float power;
 	int wdistance;
@@ -592,7 +592,7 @@ WorldSpawner::humidityAndRainShadowEffects(int y, int x, int water, bool biomes)
 	for (int i = 0; i < (int)ocoords.size(); i++)
 	{
 		std::tuple<int, int, int> t = ocoords[i];
-		std::pair<int, int> waterBody = {get<0>(t), get<1>(t)};
+		std::pair<int, int> water_body = {get<0>(t), get<1>(t)};
 
 		if (water == 0)
 		{
@@ -609,7 +609,7 @@ WorldSpawner::humidityAndRainShadowEffects(int y, int x, int water, bool biomes)
 		hincrease = fmax(0.0, (min + 1.0 - pow(wdistance, power)));
 		// check if mountain is between current tile and water body
 		if (isInPath(landsMap, current, waterBody, 5))
-			leewardEffect = true;
+			leeward_effect = true;
 
 		// get windward effect
 		// get all mountains near water body
@@ -622,27 +622,27 @@ WorldSpawner::humidityAndRainShadowEffects(int y, int x, int water, bool biomes)
 			// check if current tile is between waterbody and mountain
 			bool result = coordsInPath(mount, waterBody, current);
 			if (result)
-				windwardEffect = true;
+				windward_effect = true;
 		}
 		// add data to vector
-		ret.push_back({hincrease, leewardEffect, windwardEffect});
+		ret.push_back({hincrease, leeward_effect, windward_effect});
 	}
 	return ret;
 }
 
-float WorldSpawner::totalCreatedHumidity(int y, int x)
+float WorldSpawner::total_created_humidity(int y, int x)
 {
 	float createdhumidity = 0.0;
-	int waterBody;
+	int water_body;
 	for (int c = 0; c < 3; c++)
 	{
 		if (c == 0)
-			waterBody = 0;
+			water_body = 0;
 		if (c == 1)
-			waterBody = 5;
+			water_body = 5;
 		if (c == 2)
-			waterBody = 3;
-		std::vector<std::tuple<float, bool, bool>> waterBodies =
+			water_body = 3;
+		std::vector<std::tuple<float, bool, bool>> water_bodies =
 		    humidityAndRainShadowEffects(landsMap, y, x, waterBody, false);
 		for (int i = 0; i < (int)waterBodies.size(); i++)
 		{
@@ -661,7 +661,7 @@ float WorldSpawner::totalCreatedHumidity(int y, int x)
 }
 
 // generate the humidity map based on distance to ocean and altitude
-void WorldSpawner::generateHumidityMap()
+void WorldSpawner::generate_humidity_map()
 {
 	for (int x = 0; x < WIDTH; ++x)
 	{
@@ -679,41 +679,41 @@ void WorldSpawner::generateHumidityMap()
 
 				// latitudinal humidity effects
 				// make measurements relative, no matter HEIGHT
-				float adjustedHEIGHT = 1.0;
-				float adjustedLat = float(x) / HEIGHT;
+				float adjusted_height = 1.0;
+				float adjusted_lat = float(x) / HEIGHT;
 				float equator = 0.5;
-				float latitude = std::abs(adjustedLat - equator);
-				float latEffect = 0.0;
+				float latitude = std::abs(adjusted_lat - equator);
+				float lat_effect = 0.0;
 
 				// simulate hadley effect, which lowers humidity at 30 and 90,
 				// raises at 0 and 60
 				if (latitude <= (1.0 / 3.0))
 				{ // Roughly between 0 and 30
-					latEffect = cos((latitude / (1.0 / 3.0)) * M_PI) *
+					lat_effect = cos((latitude / (1.0 / 3.0)) * M_PI) *
 						    1.6; // Peak at 30
 				}
 				else if (latitude <= (2.0 / 3.0))
 				{ // Roughly between 30 and 60
-					latEffect =
+					lat_effect =
 					    cos(((latitude - (1.0 / 3.0)) / (1.0 / 3.0)) * M_PI) *
 					    1.6; // Peak at 30
 				}
 				else
 				{ // Roughly between 60 and 90
-					latEffect =
+					lat_effect =
 					    cos(((latitude - (2.0 / 3.0)) / (1.0 / 3.0)) * M_PI) *
 					    0.6; // Peak at 90
 				}
 
 				// Safeguard against extreme values
-				latEffect = std::max(1.0f, std::min(latEffect, 2.0f));
+				lat_effect = std::max(1.0f, std::min(lat_effect, 2.0f));
 				//
 				// calculate created humidity based on nearby water bodies and rain
 				// shadow effect
 				float evap = ((pow(temperatureMap[y][x] / 22, 1.1)) +
 					      (altitudeMap[y][x] / 12)) /
 					     6;
-				float createdHumidity =
+				float created_humidity =
 				    ((humidityMult * totalCreatedHumidity(landsMap, y, x)) * evap);
 				// potentialhumidity += fmax(3,((0.6 * (pow((temperatureMap[y][x]
 				// / 2.4), 1.5) - pow(landsMap[x][y],2.1))) - 30));
@@ -728,7 +728,7 @@ void WorldSpawner::generateHumidityMap()
 	}
 }
 
-void WorldSpawner::factorWetlandsJunglesAndForests()
+void WorldSpawner::factor_wetlands_jungles_and_forests()
 {
 	for (int x = 0; x < WIDTH; x++)
 	{
@@ -784,23 +784,23 @@ void WorldSpawner::factorWetlandsJunglesAndForests()
 // 8. Rocky/Badlands
 // 9. Tundra
 // 10. Cold Desert
-void WorldSpawner::generateBiomes()
+void WorldSpawner::generate_biomes()
 {
 	// load data of each biome
-	std::tuple<int, int, int, float, float, float, float> biomeData[11];
+	std::tuple<int, int, int, float, float, float, float> biome_data[11];
 	int size = 11;
 	// humidity, altitude, temp, humidity flexibility, altitude flexibility, temp
 	// flexibility, spread chance/size
-	biomeData[1] = {10, 7, 90, 1, 4, 2, 0.6};      // Hot Desert
-	biomeData[2] = {25, 5, 65, 1.5, 2, 2.5, 0.85}; // Grassland
-	biomeData[3] = {35, 3, 78, 2.5, 2, 2.5, 0.7};  // Savanna
-	biomeData[4] = {100, 2, 60, 1, 1.5, 3, 0.1};   // Wetland
-	biomeData[5] = {66, 6, 60, 2.5, 2, 2.5, 0.8};  // Forest
-	biomeData[6] = {50, 8, 43, 3, 3, 2, 0.7};      // Taiga
-	biomeData[7] = {90, 4, 88, 1.5, 2, 2, 0.65};   // Jungle
-	biomeData[8] = {15, 25, 52, 1, 3, 1.4, 0.4};   // Rocky
-	biomeData[9] = {5, 31, 20, 4, 6.0, 1, 0.7};    // Tundra
-	biomeData[10] = {10, 8, 40, 0.4, 1, 0.6, 0.5}; // Cold Desert
+	biome_data[1] = {10, 7, 90, 1, 4, 2, 0.6};      // Hot Desert
+	biome_data[2] = {25, 5, 65, 1.5, 2, 2.5, 0.85}; // Grassland
+	biome_data[3] = {35, 3, 78, 2.5, 2, 2.5, 0.7};  // Savanna
+	biome_data[4] = {100, 2, 60, 1, 1.5, 3, 0.1};   // Wetland
+	biome_data[5] = {66, 6, 60, 2.5, 2, 2.5, 0.8};  // Forest
+	biome_data[6] = {50, 8, 43, 3, 3, 2, 0.7};      // Taiga
+	biome_data[7] = {90, 4, 88, 1.5, 2, 2, 0.65};   // Jungle
+	biome_data[8] = {15, 25, 52, 1, 3, 1.4, 0.4};   // Rocky
+	biome_data[9] = {5, 31, 20, 4, 6.0, 1, 0.7};    // Tundra
+	biome_data[10] = {10, 8, 40, 0.4, 1, 0.6, 0.5}; // Cold Desert
 
 	for (int s = 0; s < 5; s++)
 	{
@@ -815,22 +815,22 @@ void WorldSpawner::generateBiomes()
 				int humidity = humidityMap[x][y];
 				int altitude = altitudeMap[x][y];
 				int temp = temperatureMap[x][y];
-				float lowestScore = RAND_MAX;
+				float lowest_score = RAND_MAX;
 				int biome = 0;
 
 				for (int i = 1; i < size; i++)
 				{
 					// get how far away stats are from each biomeType
-					float humDistance = abs(humidity - get<0>(biomeData[i])) /
+					float hum_distance = abs(humidity - get<0>(biomeData[i])) /
 							    get<3>(biomeData[i]);
-					float altDistance = abs(altitude - get<1>(biomeData[i])) *
+					float alt_distance = abs(altitude - get<1>(biomeData[i])) *
 							    2.3 / get<4>(biomeData[i]);
-					float tempDistance =
+					float temp_distance =
 					    abs(temp - get<2>(biomeData[i])) / get<5>(biomeData[i]);
-					if (humDistance + altDistance + tempDistance < lowestScore)
+					if (hum_distance + alt_distance + temp_distance < lowest_score)
 					{
-						lowestScore =
-						    humDistance + altDistance + tempDistance;
+						lowest_score =
+						    hum_distance + alt_distance + temp_distance;
 						biome = i;
 					}
 					biomeMap[x][y] = biome;
@@ -842,23 +842,23 @@ void WorldSpawner::generateBiomes()
 	}
 }
 
-void WorldSpawner::generateAltitudeMap()
+void WorldSpawner::generate_altitude_map()
 {
 	for (int y = 0; y < HEIGHT; ++y)
 	{
 		for (int x = 0; x < WIDTH; ++x)
 		{
 			// Generate noise value in range [-1, 1]
-			float noiseValue = rNoise.GetNoise((float)y, (float)x);
+			float noise_value = rNoise.GetNoise((float)y, (float)x);
 			// Map the noise value to a HEIGHT range (e.g., 0 to 255)
 			int altitude = static_cast<int>(
-			    pow((noiseValue * 23), 1.2)); // Converts from [-1, 1] to [-100, 100]
+			    pow((noise_value * 23), 1.2)); // Converts from [-1, 1] to [-100, 100]
 			altitudeMap[y][x] = altitude;
 		}
 	}
 }
 
-void WorldSpawner::getRiversFromGroundwater()
+void WorldSpawner::get_rivers_from_groundwater()
 {
 	for (int y = 0; y < HEIGHT; ++y)
 	{
@@ -884,7 +884,7 @@ void WorldSpawner::getRiversFromGroundwater()
 	}
 }
 
-void WorldSpawner::cleanAltitudeMap()
+void WorldSpawner::clean_altitude_map()
 {
 	for (int y = 0; y < HEIGHT; ++y)
 	{
@@ -898,19 +898,19 @@ void WorldSpawner::cleanAltitudeMap()
 	}
 }
 
-void WorldSpawner::addDepressions()
+void WorldSpawner::add_depressions()
 {
-	FastNoiseLite noiseGenerator;
-	noiseGenerator.SetSeed(43543);
-	noiseGenerator.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
+	FastNoiseLite noise_generator;
+	noise_generator.SetSeed(43543);
+	noise_generator.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
 
 	for (int y = 0; y < HEIGHT; y++)
 	{
 		for (int x = 0; x < WIDTH; x++)
 		{
-			float noiseValue = noiseGenerator.GetNoise((float)y, (float)x);
+			float noise_value = noiseGenerator.GetNoise((float)y, (float)x);
 			float altitude = static_cast<int>(
-			    (noiseValue) * 100); // Converts from [-1, 1] to [-100, 100]
+			    (noise_value) * 100); // Converts from [-1, 1] to [-100, 100]
 			if (altitude < depressionThreshold && altitude > 0 && oceanMap[x][y] == 1)
 			{
 				altitudeMap[y][x] =
@@ -939,7 +939,7 @@ void WorldSpawner::addDepressions()
 
 // Function to find the next tile to flow to (either towards target (lake or
 // river end) or lowest elevation)
-void WorldSpawner::applyRiverTiles()
+void WorldSpawner::apply_river_tiles()
 {
 	int index = rTileIndex[{y, x}];
 	// base case: reached target
@@ -952,9 +952,9 @@ void WorldSpawner::applyRiverTiles()
 	{
 		return;
 	}
-	int minElevation = rTileAlt[index];
-	int currentElevation = minElevation;
-	int minDist = calculateDistance(y, x, target);
+	int min_elevation = rTileAlt[index];
+	int current_elevation = min_elevation;
+	int min_dist = calculateDistance(y, x, target);
 	std::std::pair<int, int> nextTile = {y, x};
 
 	// Find the lowest elevation neighboring tile
@@ -988,7 +988,7 @@ void WorldSpawner::applyRiverTiles()
 
 	// If nearby elevation is equal to current tile's elevation, prioritize moving
 	// towards target
-	if (minElevation == currentElevation)
+	if (min_elevation == current_elevation)
 	{
 		// Check distance to target, if closer to the target, move that way
 		for (const auto &dir : directions)
@@ -1007,13 +1007,13 @@ void WorldSpawner::applyRiverTiles()
 	int ty = nextTile.first;
 	int tx = nextTile.second;
 	// apply nextTile as riverTile
-	int nextIndex = rTileIndex[{ty, tx}];
+	int next_index = rTileIndex[{ty, tx}];
 	rTileType[nextIndex] = Tile::FlowingWater;
 	rTileAlt[nextIndex] -= 1;
 	applyRiverTiles(rTileAlt, rTileType, rTileIndex, ty, tx, target);
 }
 
-void WorldSpawner::recursiveLower()
+void WorldSpawner::recursive_lower()
 {
 	if (decreaseAmount < 0)
 	{
@@ -1044,7 +1044,7 @@ void WorldSpawner::recursiveLower()
 	}
 }
 
-void WorldSpawner::recursiveFill()
+void WorldSpawner::recursive_fill()
 {
 	int index = rTileIndex[{y, x}];
 	if (tileAlt[index] > altThreshold)
@@ -1203,7 +1203,7 @@ void WorldSpawner::recursiveFill()
 //         applyRiverTiles(source.first, source.second,riverEnds[retIndex[0]]);
 // }
 
-float rangePenalty(float originalValue, float minValue, float maxValue, float adjustedValue)
+float range_penalty(float originalValue, float minValue, float maxValue, float adjustedValue)
 {
 	if (originalValue >= minValue && originalValue <= maxValue)
 	{
@@ -1227,7 +1227,7 @@ float rangePenalty(float originalValue, float minValue, float maxValue, float ad
 	}
 }
 
-template <typename T> void WorldSpawner::printMap(T map)
+template <typename T> void WorldSpawner::print_map(T map)
 {
 	for (int x = 0; x < WIDTH; ++x)
 	{
@@ -1241,11 +1241,11 @@ template <typename T> void WorldSpawner::printMap(T map)
 
 // Function to generate Voronoi sites, and each biome, altitude, avg temperature
 // generated before will be assigned to a voronoi site
-std::vector<Coord> WorldSpawner::generateVoronoiSites()
+std::vector<Coord> WorldSpawner::generate_voronoi_sites()
 {
 	FastNoiseLite noise;
 	noise.SetNoiseType(FastNoiseLite::NoiseType_Cellular);
-	std::vector<Coord> voronoiSites(AMOUNT);
+	std::vector<Coord> voronoi_sites(AMOUNT);
 	for (int y = 0; y < HEIGHT; y++)
 	{
 		for (int x = 0; x < WIDTH; x++)
@@ -1258,7 +1258,7 @@ std::vector<Coord> WorldSpawner::generateVoronoiSites()
 	return voronoiSites;
 }
 
-void WorldSpawner::generateTileTypes(std::vector<float> &chances, std::vector<Coord> &voronoiSites,
+void WorldSpawner::generate_tile_types(std::vector<float> &chances, std::vector<Coord> &voronoiSites,
 				     Array<Alt> &rAltitudes)
 {
 	SeedCloud cloud;
@@ -1293,7 +1293,7 @@ void WorldSpawner::generateTileTypes(std::vector<float> &chances, std::vector<Co
 			selected = true;
 	}
 
-	uint32_t seedIndex = cy * HEIGHT + cx;
+	uint32_t seed_index = cy * HEIGHT + cx;
 	std::std::pair<float, float> sVSeed = voronoiSites[seedIndex];
 
 	// generate tiles near to randomized spawn point
@@ -1308,36 +1308,36 @@ void WorldSpawner::generateTileTypes(std::vector<float> &chances, std::vector<Co
 	{
 		for (int x = currentXMin; x < currentXMax; x++)
 		{
-			std::vector<float> queryPoint = {(float)y, (float)x};
+			std::vector<float> query_point = {(float)y, (float)x};
 			// Perform the nearest neighbor search, numResults is # of neighbors
-			const uint16_t numResults = 5;
-			uint32_t retIndex[numResults]; // nearest neighbor index
-			float outDistSqr[numResults];  // distance between nn and current
+			const uint16_t num_results = 5;
+			uint32_t ret_index[num_results]; // nearest neighbor index
+			float out_dist_sqr[num_results];  // distance between nn and current
 
-			tree.knnSearch(&queryPoint[0], numResults, &retIndex[0], &outDistSqr[0]);
+			tree.knnSearch(&queryPoint[0], num_results, &ret_index[0], &out_dist_sqr[0]);
 			// check if tile is still part of current cell
 			int ti = rTileIndex[{y, x}];
 
 			// TODO: optimize this part
 			//  calculate altitude based on weighted average
-			float currentAlt = 0;
-			float strengths[numResults];
+			float current_alt = 0;
+			float strengths[num_results];
 			float denominator = 0.0000000001;
 
-			for (int i = 0; i < numResults; i++)
+			for (int i = 0; i < num_results; i++)
 			{
 				if (index >= 0 && index < rMapsLink.size())
 				{
 					std::std::pair<float, float> select = rMapsLink[index];
 					// get inversed distances for strengths
 					strengths[i] = 1 / (outDistSqr[i] + CELL_SIZE / 2);
-					float rTileAlt = altitudeMap[select.first][select.second];
-					currentAlt += strengths[i] * rTileAlt;
+					float r_tile_alt = altitudeMap[select.first][select.second];
+					current_alt += strengths[i] * r_tile_alt;
 					denominator += strengths[i];
 				}
 			}
 
-			int calcAlt = (int)currentAlt / denominator;
+			int calc_alt = (int)current_alt / denominator;
 
 			std::pair<float, float> cell = rMapsLink[retIndex[0]];
 
@@ -1357,7 +1357,7 @@ void WorldSpawner::generateTileTypes(std::vector<float> &chances, std::vector<Co
 	}
 }
 
-void WorldSpawner::moveRegionsToChunks(Array<uint8_t> &humidityTable,
+void WorldSpawner::move_regions_to_chunks(Array<uint8_t> &humidityTable,
 				       Array<int8_t> &minTemperatureTable,
 				       Array<uint8_t> &altitudes)
 {
@@ -1368,14 +1368,14 @@ void WorldSpawner::moveRegionsToChunks(Array<uint8_t> &humidityTable,
 		{
 			// for each chunk, count tiles per region slot
 			std::unordered_map<uint16_t, uint16_t> regionCounts;
-			int totalCount = 0;
+			int total_count = 0;
 			for (int k = 0; k < CHUNK_SIZE; k++)
 			{
 				uint16_t region =
 				    tileRegionSlot[(j * CHUNK_LENGTH) + (k / CHUNK_LENGTH)]
 						  [(i * CHUNK_LENGTH) + (k % CHUNK_LENGTH)];
 				regionCounts[region]++;
-				totalCount++;
+				total_count++;
 			}
 
 			// calculate values of each chunk based on region counts

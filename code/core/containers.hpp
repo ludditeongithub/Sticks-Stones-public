@@ -5,6 +5,7 @@
 #include <extern/cereal/archives/binary.hpp>
 #include <stdexcept>
 #include <typeinfo>
+#include <vector>
 
 // right now is really ArrayChunk,which points to next ArrayChunk if applicable
 // TODO: make separate LinkedArray which is really ArrayChunk,
@@ -268,6 +269,102 @@ struct Stack
     {
         array->size = 0;
     }
+};
+
+template <typename T, typename P = uint8_t, typename I = uint16_t> struct PriorityQueue
+{
+		std::vector<std::pair<T, P>> data;
+		I capacity;
+		I size = 0;
+		I topIndex = 0;
+		I endIndex = 0;
+		I current = 0;
+
+		PriorityQueue<T>(I capacity) : capacity(capacity)
+		{
+				
+		}
+
+		T top()
+		{
+				return data[topIndex];
+		}
+		void pop()
+		{
+				topIndex++;
+				size--;
+		}
+
+		inline I get_middle(I first, I end) {
+			if (end > capacity)
+					{
+							end = (first + size - capacity);
+							I range = capacity - first + end;
+							I half_range = range / 2;
+							if (half_range > end)
+							{
+									middle = first + halfRange;
+							} else middle = end - halfRange;
+					} else middle = (end - first) / 2;	
+			return middle;
+		}
+
+		void push(T item, P priority)
+		{
+			// binary search
+			I middle;
+			I end = endIndex;
+			I previous;
+			
+			bool found = false;
+			while (!found) {
+					if (priority <= data[middle].second()) 	          	{						
+					if (middle == 0) I previous = capacity;
+					else I previous = middle - 1;
+						if (priority >= data[previous].second()) {
+								found = true;
+								insert(item, priority, middle);
+						}
+						last = middle;
+						middle = get_middle(first, last);					
+					} else {
+					if (middle == capacity) I next = 0;
+					else I next = middle + 1;
+						if (priority <= data[next].second()) {
+								found = true;
+								insert(item, priority, middle);
+						}
+						first = middle;	
+						middle = get_middle(first, last);
+					}
+			}
+		}
+
+		void insert(T item, P priority, I index) {
+				if (size++ >= capacity) {
+					data.push_back(data[capacity]);										
+				} 
+					for (size_t i = capacity; i > 0; i--) {
+							if (i == index) {
+									data[i] = {item, priority};
+									break;
+							}
+							data[i] = data[i-1];
+					}
+					if (index < topIndex - 1) topIndex++;
+		}
+
+		
+		T next() 
+		{
+				return data[++current];
+		}
+		void snapback()
+		{
+				current = topIndex;
+		}
+		bool empty() { return size = 0; }
+		bool next_empty() { return ((endIndex > topIndex && current + 1 >= endIndex) || (endIndex < topIndex && (current + 1 =< topIndex && current + 1 >= endIndex))); }
 };
 
 template<typename T>

@@ -7,7 +7,7 @@
 namespace buildable
 {    
 
-inline constexpr LookupTable<Buildable,Health> max_healths = [] {
+inline constexpr LookupTable<Buildable,Health> MAX_HEALTHS = [] {
 		LookupTable<Buildable,Health> lt{};
 		using enum Buildable;
 		

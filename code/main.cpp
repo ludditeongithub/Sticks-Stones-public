@@ -1,10 +1,10 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_video.h>
 #include <cereal/archives/binary.hpp>
-#include <core/memory.hpp>
-#include <core/memory_control.hpp>
-#include <render/texture.hpp>
-#include <render/camera.hpp>
+#include "core/memory.hpp"
+#include "core/memory_control.hpp"
+#include "render/texture.hpp"
+#include "render/camera.hpp"
 #include <render/draw.hpp>
 #include <ui/aggregates/main_menu.hpp>
 #include <cereal/archives/json.hpp>

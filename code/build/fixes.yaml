@@ -1,0 +1,2933 @@
+Diagnostics:
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 22
+    FilePath: /home/logan/gameprogramming/code/systems/action/actions.hpp
+    Message: '''core/data.hpp'' file not found'
+    Ranges:
+    - FileOffset: 22
+      FilePath: /home/logan/gameprogramming/code/systems/action/actions.hpp
+      Length: 15
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1049
+    FilePath: /home/logan/gameprogramming/code/systems/action/actions.hpp
+    Message: invalid case style for parameter 'frameDatas'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/action/actions.hpp
+      Length: 10
+      Offset: 1049
+      ReplacementText: frame_datas
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 9
+    FilePath: /home/logan/gameprogramming/code/scratch.cpp
+    Message: '''systems/find_nearest.hpp'' file not found'
+    Ranges:
+    - FileOffset: 9
+      FilePath: /home/logan/gameprogramming/code/scratch.cpp
+      Length: 26
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 9
+    FilePath: /home/logan/gameprogramming/code/world/roles.cpp
+    Message: '''roles.hpp'' file not found'
+    Ranges:
+    - FileOffset: 9
+      FilePath: /home/logan/gameprogramming/code/world/roles.cpp
+      Length: 11
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 350
+    FilePath: /home/logan/gameprogramming/code/world/roles.cpp
+    Message: invalid case style for parameter 'pawnIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/world/roles.cpp
+      Length: 9
+      Offset: 350
+      ReplacementText: pawn_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 366
+    FilePath: /home/logan/gameprogramming/code/world/roles.cpp
+    Message: invalid case style for parameter 'apprenticeRole'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/world/roles.cpp
+      Length: 14
+      Offset: 366
+      ReplacementText: apprentice_role
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1465
+    FilePath: /home/logan/gameprogramming/code/world/roles.cpp
+    Message: invalid case style for parameter 'apprenticeIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/world/roles.cpp
+      Length: 15
+      Offset: 1465
+      ReplacementText: apprentice_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1691
+    FilePath: /home/logan/gameprogramming/code/world/roles.cpp
+    Message: invalid case style for parameter 'roleIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/world/roles.cpp
+      Length: 9
+      Offset: 1691
+      ReplacementText: role_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 0
+    FilePath: ''
+    Message: too many errors emitted, stopping now
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1740
+    FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+    Message: unknown type name 'EntityID'
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1749
+    FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+    Message: invalid case style for parameter 'pawnIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+      Length: 9
+      Offset: 1749
+      ReplacementText: pawn_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1760
+    FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+    Message: unknown type name 'UnitDatabase'
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1809
+    FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+    Message: unknown type name 'TaskType'
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1825
+    FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+    Message: use of undeclared identifier 'TaskType'
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1842
+    FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+    Message: unknown type name 'Role'
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1859
+    FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+    Message: unknown type name 'size_t'
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1877
+    FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+    Message: use of undeclared identifier 'g_TaskPriorityQueue'
+    Ranges:
+    - FileOffset: 1877
+      FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+      Length: 19
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1989
+    FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+    Message: use of undeclared identifier 'g_TaskPriorityQueue'
+    Ranges:
+    - FileOffset: 1989
+      FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+      Length: 19
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2023
+    FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+    Message: use of undeclared identifier 'highest'
+    Ranges:
+    - FileOffset: 2023
+      FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+      Length: 7
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2044
+    FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+    Message: unknown type name 'EntityID'
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2106
+    FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+    Message: use of undeclared identifier 'tRole'
+    Ranges:
+    - FileOffset: 2106
+      FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+      Length: 5
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2114
+    FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+    Message: use of undeclared identifier 'g_TaskPriorityQueue'
+    Ranges:
+    - FileOffset: 2114
+      FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+      Length: 19
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2160
+    FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+    Message: use of undeclared identifier 'Role'
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2181
+    FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+    Message: use of undeclared identifier 'tRole'
+    Ranges:
+    - FileOffset: 2181
+      FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+      Length: 5
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2246
+    FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+    Message: use of undeclared identifier 'Role'
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2267
+    FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+    Message: use of undeclared identifier 'tRole'
+    Ranges:
+    - FileOffset: 2267
+      FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+      Length: 5
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2325
+    FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+    Message: use of undeclared identifier 'highest'
+    Ranges:
+    - FileOffset: 2325
+      FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+      Length: 7
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2373
+    FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+    Message: use of undeclared identifier 'producerProducts'
+    Ranges:
+    - FileOffset: 2373
+      FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+      Length: 16
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2407
+    FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+    Message: use of undeclared identifier 'tRole'
+    Ranges:
+    - FileOffset: 2407
+      FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+      Length: 5
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 10994
+    FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+    Message: invalid case style for parameter 'sourceIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+      Length: 11
+      Offset: 10994
+      ReplacementText: source_index
+    - FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+      Length: 11
+      Offset: 11159
+      ReplacementText: source_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 11011
+    FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+    Message: invalid case style for parameter 'variantIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/action/attempt.cpp
+      Length: 12
+      Offset: 11011
+      ReplacementText: variant_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 9
+    FilePath: /home/logan/gameprogramming/code/world/unit/OLD_resouceUnits.cpp
+    Message: '''../include/basic.hpp'' file not found'
+    Ranges:
+    - FileOffset: 9
+      FilePath: /home/logan/gameprogramming/code/world/unit/OLD_resouceUnits.cpp
+      Length: 22
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 26
+    FilePath: /home/logan/gameprogramming/code/world/item/database.hpp
+    Message: '''core/packed_enum.hpp'' file not found'
+    Ranges:
+    - FileOffset: 26
+      FilePath: /home/logan/gameprogramming/code/world/item/database.hpp
+      Length: 22
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 22
+    FilePath: /home/logan/gameprogramming/code/systems/visibility/lazy.cpp
+    Message: '''core/containers.hpp'' file not found'
+    Ranges:
+    - FileOffset: 22
+      FilePath: /home/logan/gameprogramming/code/systems/visibility/lazy.cpp
+      Length: 21
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 106
+    FilePath: /home/logan/gameprogramming/code/systems/movement/position.cpp
+    Message: unknown type name 'PathsData'
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 128
+    FilePath: /home/logan/gameprogramming/code/systems/movement/position.cpp
+    Message: use of undeclared identifier 'Coord'
+    Ranges:
+    - FileOffset: 128
+      FilePath: /home/logan/gameprogramming/code/systems/movement/position.cpp
+      Length: 5
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 147
+    FilePath: /home/logan/gameprogramming/code/systems/movement/position.cpp
+    Message: no template named 'Array'
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 182
+    FilePath: /home/logan/gameprogramming/code/systems/movement/position.cpp
+    Message: use of undeclared identifier 'Action'
+    Ranges:
+    - FileOffset: 182
+      FilePath: /home/logan/gameprogramming/code/systems/movement/position.cpp
+      Length: 6
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 206
+    FilePath: /home/logan/gameprogramming/code/systems/movement/position.cpp
+    Message: use of undeclared identifier 'uint32_t'
+    Ranges:
+    - FileOffset: 206
+      FilePath: /home/logan/gameprogramming/code/systems/movement/position.cpp
+      Length: 8
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 217
+    FilePath: /home/logan/gameprogramming/code/systems/movement/position.cpp
+    Message: invalid case style for parameter 'requireNewPathIndices'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/movement/position.cpp
+      Length: 21
+      Offset: 217
+      ReplacementText: require_new_path_indices
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 9
+    FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+    Message: '''inventory_manager.hpp'' file not found'
+    Ranges:
+    - FileOffset: 9
+      FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 23
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 364
+    FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+    Message: invalid case style for parameter 'bulkStatus'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 10
+      Offset: 364
+      ReplacementText: bulk_status
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 10
+      Offset: 399
+      ReplacementText: bulk_status
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2140
+    FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+    Message: invalid case style for parameter 'unitIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 9
+      Offset: 2140
+      ReplacementText: unit_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2197
+    FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+    Message: invalid case style for parameter 'containerIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 14
+      Offset: 2197
+      ReplacementText: container_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 4768
+    FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+    Message: invalid case style for parameter 'holdableOverflows'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 17
+      Offset: 4768
+      ReplacementText: holdable_overflows
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 4813
+    FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+    Message: invalid case style for parameter 'overflowContainers'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 18
+      Offset: 4813
+      ReplacementText: overflow_containers
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 4842
+    FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+    Message: invalid case style for parameter 'unitIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 9
+      Offset: 4842
+      ReplacementText: unit_index
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 9
+      Offset: 5305
+      ReplacementText: unit_index
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 9
+      Offset: 5411
+      ReplacementText: unit_index
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 9
+      Offset: 5640
+      ReplacementText: unit_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 6254
+    FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+    Message: invalid case style for parameter 'itemAmount'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 10
+      Offset: 6254
+      ReplacementText: item_amount
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 10
+      Offset: 6504
+      ReplacementText: item_amount
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 10
+      Offset: 6614
+      ReplacementText: item_amount
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 10
+      Offset: 7120
+      ReplacementText: item_amount
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 6278
+    FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+    Message: invalid case style for parameter 'foundSpace'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 10
+      Offset: 6278
+      ReplacementText: found_space
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 10
+      Offset: 7106
+      ReplacementText: found_space
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 6296
+    FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+    Message: invalid case style for parameter 'unsearchedInventory'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 19
+      Offset: 6296
+      ReplacementText: unsearched_inventory
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 19
+      Offset: 7139
+      ReplacementText: unsearched_inventory
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 6327
+    FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+    Message: invalid case style for parameter 'containerIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 14
+      Offset: 6327
+      ReplacementText: container_index
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 14
+      Offset: 6710
+      ReplacementText: container_index
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 14
+      Offset: 7034
+      ReplacementText: container_index
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 14
+      Offset: 7080
+      ReplacementText: container_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 6374
+    FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+    Message: invalid case style for parameter 'addedAmount'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 11
+      Offset: 6374
+      ReplacementText: added_amount
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 11
+      Offset: 6648
+      ReplacementText: added_amount
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 7325
+    FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+    Message: invalid case style for parameter 'overflowContainers'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 18
+      Offset: 7325
+      ReplacementText: overflow_containers
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 7503
+    FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+    Message: invalid case style for parameter 'overflowContainers'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 18
+      Offset: 7503
+      ReplacementText: overflow_containers
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 7580
+    FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+    Message: invalid case style for parameter 'itemAmountOrMaterial'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 20
+      Offset: 7580
+      ReplacementText: item_amount_or_material
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 8114
+    FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+    Message: invalid case style for parameter 'overflowContainers'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 18
+      Offset: 8114
+      ReplacementText: overflow_containers
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 8169
+    FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+    Message: invalid case style for parameter 'unitIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 9
+      Offset: 8169
+      ReplacementText: unit_index
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 9
+      Offset: 9804
+      ReplacementText: unit_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 8220
+    FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+    Message: invalid case style for parameter 'itemAmountOrMaterial'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 20
+      Offset: 8220
+      ReplacementText: item_amount_or_material
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 20
+      Offset: 8704
+      ReplacementText: item_amount_or_material
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 12093
+    FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+    Message: invalid case style for parameter 'overflowContainers'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 18
+      Offset: 12093
+      ReplacementText: overflow_containers
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 12151
+    FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+    Message: invalid case style for parameter 'unitIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 9
+      Offset: 12151
+      ReplacementText: unit_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 12214
+    FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+    Message: invalid case style for parameter 'itemAmountOrMaterial'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 20
+      Offset: 12214
+      ReplacementText: item_amount_or_material
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 12805
+    FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+    Message: invalid case style for parameter 'overflowContainers'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 18
+      Offset: 12805
+      ReplacementText: overflow_containers
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 12891
+    FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+    Message: invalid case style for parameter 'unitIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
+      Length: 9
+      Offset: 12891
+      ReplacementText: unit_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 9
+    FilePath: /home/logan/gameprogramming/code/simulation/world_gen_helpers.cpp
+    Message: '''world/tile/data.hpp'' file not found'
+    Ranges:
+    - FileOffset: 9
+      FilePath: /home/logan/gameprogramming/code/simulation/world_gen_helpers.cpp
+      Length: 21
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 13
+    FilePath: /home/logan/gameprogramming/code/systems/visibility/scheduled.cpp
+    Message: use of undeclared identifier 'TileDatabase'
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 711
+    FilePath: /home/logan/gameprogramming/code/systems/visibility/scheduled.cpp
+    Message: use of undeclared identifier 'Game'
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 9
+    FilePath: /home/logan/gameprogramming/code/systems/feeding/feeding.cpp
+    Message: '''core/containers.hpp'' file not found'
+    Ranges:
+    - FileOffset: 9
+      FilePath: /home/logan/gameprogramming/code/systems/feeding/feeding.cpp
+      Length: 21
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 22
+    FilePath: /home/logan/gameprogramming/code/world/tile/enum.hpp
+    Message: '''core/packed_enum.hpp'' file not found'
+    Ranges:
+    - FileOffset: 22
+      FilePath: /home/logan/gameprogramming/code/world/tile/enum.hpp
+      Length: 22
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 9
+    FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+    Message: '''core/random.hpp'' file not found'
+    Ranges:
+    - FileOffset: 9
+      FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+      Length: 17
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 155
+    FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+    Message: invalid case style for parameter 'seedIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+      Length: 9
+      Offset: 155
+      ReplacementText: seed_index
+    - FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+      Length: 9
+      Offset: 404
+      ReplacementText: seed_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 704
+    FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+    Message: invalid case style for parameter 'seedIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+      Length: 9
+      Offset: 704
+      ReplacementText: seed_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 720
+    FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+    Message: invalid case style for parameter 'randomGrowth'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+      Length: 12
+      Offset: 720
+      ReplacementText: random_growth
+    - FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+      Length: 12
+      Offset: 1037
+      ReplacementText: random_growth
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 746
+    FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+    Message: invalid case style for parameter 'searchGrid'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+      Length: 10
+      Offset: 746
+      ReplacementText: search_grid
+    - FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+      Length: 10
+      Offset: 1157
+      ReplacementText: search_grid
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1258
+    FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+    Message: invalid case style for parameter 'seedIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+      Length: 9
+      Offset: 1258
+      ReplacementText: seed_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1274
+    FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+    Message: invalid case style for parameter 'randomGrowth'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+      Length: 12
+      Offset: 1274
+      ReplacementText: random_growth
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1300
+    FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+    Message: invalid case style for parameter 'searchGrid'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+      Length: 10
+      Offset: 1300
+      ReplacementText: search_grid
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1653
+    FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+    Message: invalid case style for parameter 'animalIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+      Length: 11
+      Offset: 1653
+      ReplacementText: animal_index
+    - FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+      Length: 11
+      Offset: 2303
+      ReplacementText: animal_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1670
+    FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+    Message: invalid case style for parameter 'plantIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+      Length: 10
+      Offset: 1670
+      ReplacementText: plant_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2383
+    FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+    Message: invalid case style for parameter 'plantIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+      Length: 10
+      Offset: 2383
+      ReplacementText: plant_index
+    - FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+      Length: 10
+      Offset: 2720
+      ReplacementText: plant_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 3361
+    FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+    Message: invalid case style for parameter 'plantIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+      Length: 10
+      Offset: 3361
+      ReplacementText: plant_index
+    - FilePath: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
+      Length: 10
+      Offset: 3569
+      ReplacementText: plant_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 22
+    FilePath: /home/logan/gameprogramming/code/systems/action/lazy.cpp
+    Message: '''core/data.hpp'' file not found'
+    Ranges:
+    - FileOffset: 22
+      FilePath: /home/logan/gameprogramming/code/systems/action/lazy.cpp
+      Length: 15
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2249
+    FilePath: /home/logan/gameprogramming/code/systems/action/lazy.cpp
+    Message: invalid case style for parameter 'pawnIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/action/lazy.cpp
+      Length: 9
+      Offset: 2249
+      ReplacementText: pawn_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2267
+    FilePath: /home/logan/gameprogramming/code/systems/action/lazy.cpp
+    Message: invalid case style for parameter 'taskPriorityQueueIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/action/lazy.cpp
+      Length: 22
+      Offset: 2267
+      ReplacementText: task_priority_queue_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2671
+    FilePath: /home/logan/gameprogramming/code/systems/action/lazy.cpp
+    Message: invalid case style for parameter 'pawnIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/action/lazy.cpp
+      Length: 9
+      Offset: 2671
+      ReplacementText: pawn_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2712
+    FilePath: /home/logan/gameprogramming/code/systems/action/lazy.cpp
+    Message: invalid case style for parameter 'taskPriorityQueueIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/action/lazy.cpp
+      Length: 22
+      Offset: 2712
+      ReplacementText: task_priority_queue_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 3101
+    FilePath: /home/logan/gameprogramming/code/systems/action/lazy.cpp
+    Message: invalid case style for parameter 'pawnIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/action/lazy.cpp
+      Length: 9
+      Offset: 3101
+      ReplacementText: pawn_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 24
+    FilePath: /home/logan/gameprogramming/code/systems/plant/update.cpp
+    Message: use of undeclared identifier 'PlantDatabase'
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 58
+    FilePath: /home/logan/gameprogramming/code/systems/plant/update.cpp
+    Message: use of undeclared identifier 'Temp'
+    Ranges:
+    - FileOffset: 58
+      FilePath: /home/logan/gameprogramming/code/systems/plant/update.cpp
+      Length: 4
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 77
+    FilePath: /home/logan/gameprogramming/code/systems/plant/update.cpp
+    Message: no template named 'Array2D'
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 111
+    FilePath: /home/logan/gameprogramming/code/systems/plant/update.cpp
+    Message: no template named 'Array'
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 9
+    FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+    Message: '''eating_manager.hpp'' file not found'
+    Ranges:
+    - FileOffset: 9
+      FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+      Length: 20
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 585
+    FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+    Message: invalid case style for parameter 'targetTypes'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+      Length: 11
+      Offset: 585
+      ReplacementText: target_types
+    - FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+      Length: 11
+      Offset: 1005
+      ReplacementText: target_types
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 659
+    FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+    Message: invalid case style for parameter 'plantHealths'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+      Length: 12
+      Offset: 659
+      ReplacementText: plant_healths
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 692
+    FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+    Message: invalid case style for parameter 'plantCoords'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+      Length: 11
+      Offset: 692
+      ReplacementText: plant_coords
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 787
+    FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+    Message: invalid case style for parameter 'perishableCoords'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+      Length: 16
+      Offset: 787
+      ReplacementText: perishable_coords
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 818
+    FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+    Message: invalid case style for parameter 'perishableTimes'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+      Length: 15
+      Offset: 818
+      ReplacementText: perishable_times
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 855
+    FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+    Message: invalid case style for parameter 'perishableHungers'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+      Length: 17
+      Offset: 855
+      ReplacementText: perishable_hungers
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1759
+    FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+    Message: invalid case style for parameter 'eatingAmount'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+      Length: 12
+      Offset: 1759
+      ReplacementText: eating_amount
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1946
+    FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+    Message: invalid case style for parameter 'animalCoords'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+      Length: 12
+      Offset: 1946
+      ReplacementText: animal_coords
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1990
+    FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+    Message: invalid case style for parameter 'animalIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+      Length: 11
+      Offset: 1990
+      ReplacementText: animal_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2049
+    FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+    Message: invalid case style for parameter 'perishableHungers'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+      Length: 17
+      Offset: 2049
+      ReplacementText: perishable_hungers
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2086
+    FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+    Message: invalid case style for parameter 'perishableTimes'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+      Length: 15
+      Offset: 2086
+      ReplacementText: perishable_times
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2117
+    FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+    Message: invalid case style for parameter 'perishableCoords'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+      Length: 16
+      Offset: 2117
+      ReplacementText: perishable_coords
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2149
+    FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+    Message: invalid case style for parameter 'perishableIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+      Length: 15
+      Offset: 2149
+      ReplacementText: perishable_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2911
+    FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+    Message: invalid case style for parameter 'animalCoords'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+      Length: 12
+      Offset: 2911
+      ReplacementText: animal_coords
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2934
+    FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+    Message: invalid case style for parameter 'animalIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+      Length: 11
+      Offset: 2934
+      ReplacementText: animal_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2962
+    FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+    Message: invalid case style for parameter 'plantHealths'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+      Length: 12
+      Offset: 2962
+      ReplacementText: plant_healths
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2990
+    FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+    Message: invalid case style for parameter 'plantCoords'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+      Length: 11
+      Offset: 2990
+      ReplacementText: plant_coords
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 3012
+    FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+    Message: invalid case style for parameter 'plantIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+      Length: 10
+      Offset: 3012
+      ReplacementText: plant_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 3707
+    FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+    Message: invalid case style for parameter 'animalIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+      Length: 11
+      Offset: 3707
+      ReplacementText: animal_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 5499
+    FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+    Message: invalid case style for parameter 'hungerAmount'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+      Length: 12
+      Offset: 5499
+      ReplacementText: hunger_amount
+    - FilePath: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
+      Length: 12
+      Offset: 5639
+      ReplacementText: hunger_amount
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 9
+    FilePath: /home/logan/gameprogramming/code/systems/plant/growth.cpp
+    Message: '''updates.hpp'' file not found'
+    Ranges:
+    - FileOffset: 9
+      FilePath: /home/logan/gameprogramming/code/systems/plant/growth.cpp
+      Length: 13
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 718
+    FilePath: /home/logan/gameprogramming/code/systems/plant/growth.cpp
+    Message: invalid case style for parameter 'chunkIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/plant/growth.cpp
+      Length: 10
+      Offset: 718
+      ReplacementText: chunk_index
+    - FilePath: /home/logan/gameprogramming/code/systems/plant/growth.cpp
+      Length: 10
+      Offset: 1025
+      ReplacementText: chunk_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 746
+    FilePath: /home/logan/gameprogramming/code/systems/plant/growth.cpp
+    Message: invalid case style for parameter 'nextGrowth'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/plant/growth.cpp
+      Length: 10
+      Offset: 746
+      ReplacementText: next_growth
+    - FilePath: /home/logan/gameprogramming/code/systems/plant/growth.cpp
+      Length: 10
+      Offset: 1133
+      ReplacementText: next_growth
+    - FilePath: /home/logan/gameprogramming/code/systems/plant/growth.cpp
+      Length: 10
+      Offset: 1168
+      ReplacementText: next_growth
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1359
+    FilePath: /home/logan/gameprogramming/code/systems/plant/growth.cpp
+    Message: invalid case style for parameter 'chunkIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/plant/growth.cpp
+      Length: 10
+      Offset: 1359
+      ReplacementText: chunk_index
+    - FilePath: /home/logan/gameprogramming/code/systems/plant/growth.cpp
+      Length: 10
+      Offset: 1530
+      ReplacementText: chunk_index
+    - FilePath: /home/logan/gameprogramming/code/systems/plant/growth.cpp
+      Length: 10
+      Offset: 1589
+      ReplacementText: chunk_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1378
+    FilePath: /home/logan/gameprogramming/code/systems/plant/growth.cpp
+    Message: invalid case style for parameter 'nextGrowth'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/plant/growth.cpp
+      Length: 10
+      Offset: 1378
+      ReplacementText: next_growth
+    - FilePath: /home/logan/gameprogramming/code/systems/plant/growth.cpp
+      Length: 10
+      Offset: 1744
+      ReplacementText: next_growth
+    - FilePath: /home/logan/gameprogramming/code/systems/plant/growth.cpp
+      Length: 10
+      Offset: 1983
+      ReplacementText: next_growth
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1406
+    FilePath: /home/logan/gameprogramming/code/systems/plant/growth.cpp
+    Message: invalid case style for parameter 'dailyInsolations'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/plant/growth.cpp
+      Length: 16
+      Offset: 1406
+      ReplacementText: daily_insolations
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1438
+    FilePath: /home/logan/gameprogramming/code/systems/plant/growth.cpp
+    Message: invalid case style for parameter 'cloudCovers'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/plant/growth.cpp
+      Length: 11
+      Offset: 1438
+      ReplacementText: cloud_covers
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 9
+    FilePath: /home/logan/gameprogramming/code/systems/pack/packMovementPatterns.cpp
+    Message: '''packMovementPatterns.h'' file not found'
+    Ranges:
+    - FileOffset: 9
+      FilePath: /home/logan/gameprogramming/code/systems/pack/packMovementPatterns.cpp
+      Length: 24
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 482
+    FilePath: /home/logan/gameprogramming/code/systems/pack/packMovementPatterns.cpp
+    Message: invalid case style for parameter 'animalIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/pack/packMovementPatterns.cpp
+      Length: 11
+      Offset: 482
+      ReplacementText: animal_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 9
+    FilePath: /home/logan/gameprogramming/code/systems/inventory/check.cpp
+    Message: '''world/action/enum.hpp'' file not found'
+    Ranges:
+    - FileOffset: 9
+      FilePath: /home/logan/gameprogramming/code/systems/inventory/check.cpp
+      Length: 23
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 314
+    FilePath: /home/logan/gameprogramming/code/systems/inventory/check.cpp
+    Message: invalid case style for parameter 'actionReqs'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/check.cpp
+      Length: 10
+      Offset: 314
+      ReplacementText: action_reqs
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 357
+    FilePath: /home/logan/gameprogramming/code/systems/inventory/check.cpp
+    Message: invalid case style for parameter 'unitIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/check.cpp
+      Length: 9
+      Offset: 357
+      ReplacementText: unit_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1221
+    FilePath: /home/logan/gameprogramming/code/systems/inventory/check.cpp
+    Message: invalid case style for parameter 'unitIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/inventory/check.cpp
+      Length: 9
+      Offset: 1221
+      ReplacementText: unit_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 9
+    FilePath: /home/logan/gameprogramming/code/world/animal/breeding.cpp
+    Message: '''core/data.hpp'' file not found'
+    Ranges:
+    - FileOffset: 9
+      FilePath: /home/logan/gameprogramming/code/world/animal/breeding.cpp
+      Length: 15
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 277
+    FilePath: /home/logan/gameprogramming/code/world/animal/breeding.cpp
+    Message: invalid case style for parameter 'motherIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/world/animal/breeding.cpp
+      Length: 11
+      Offset: 277
+      ReplacementText: mother_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1007
+    FilePath: /home/logan/gameprogramming/code/world/animal/breeding.cpp
+    Message: invalid case style for parameter 'femaleIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/world/animal/breeding.cpp
+      Length: 11
+      Offset: 1007
+      ReplacementText: female_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1027
+    FilePath: /home/logan/gameprogramming/code/world/animal/breeding.cpp
+    Message: invalid case style for parameter 'maleIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/world/animal/breeding.cpp
+      Length: 9
+      Offset: 1027
+      ReplacementText: male_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1552
+    FilePath: /home/logan/gameprogramming/code/world/animal/breeding.cpp
+    Message: invalid case style for parameter 'femaleIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/world/animal/breeding.cpp
+      Length: 11
+      Offset: 1552
+      ReplacementText: female_index
+    - FilePath: /home/logan/gameprogramming/code/world/animal/breeding.cpp
+      Length: 11
+      Offset: 1693
+      ReplacementText: female_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1572
+    FilePath: /home/logan/gameprogramming/code/world/animal/breeding.cpp
+    Message: invalid case style for parameter 'maleIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/world/animal/breeding.cpp
+      Length: 9
+      Offset: 1572
+      ReplacementText: male_index
+    - FilePath: /home/logan/gameprogramming/code/world/animal/breeding.cpp
+      Length: 9
+      Offset: 1706
+      ReplacementText: male_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 254
+    FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.cpp
+    Message: invalid case style for parameter 'unitIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.cpp
+      Length: 9
+      Offset: 254
+      ReplacementText: unit_index
+    - FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.cpp
+      Length: 9
+      Offset: 345
+      ReplacementText: unit_index
+    - FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.cpp
+      Length: 9
+      Offset: 490
+      ReplacementText: unit_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 903
+    FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.cpp
+    Message: invalid case style for parameter 'unitIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.cpp
+      Length: 9
+      Offset: 903
+      ReplacementText: unit_index
+    - FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.cpp
+      Length: 9
+      Offset: 924
+      ReplacementText: unit_index
+    - FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.cpp
+      Length: 9
+      Offset: 1150
+      ReplacementText: unit_index
+    - FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.cpp
+      Length: 9
+      Offset: 1205
+      ReplacementText: unit_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1647
+    FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.cpp
+    Message: invalid case style for parameter 'overflowContainers'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.cpp
+      Length: 18
+      Offset: 1647
+      ReplacementText: overflow_containers
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1773
+    FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.cpp
+    Message: invalid case style for parameter 'unitIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.cpp
+      Length: 9
+      Offset: 1773
+      ReplacementText: unit_index
+    - FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.cpp
+      Length: 9
+      Offset: 1867
+      ReplacementText: unit_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 10080
+    FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.cpp
+    Message: invalid case style for parameter 'sourceIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.cpp
+      Length: 11
+      Offset: 10080
+      ReplacementText: source_index
+    - FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.cpp
+      Length: 11
+      Offset: 10245
+      ReplacementText: source_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 10097
+    FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.cpp
+    Message: invalid case style for parameter 'variantIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.cpp
+      Length: 12
+      Offset: 10097
+      ReplacementText: variant_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 226
+    FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.hpp
+    Message: '''schedule/commodity_selection.hpp'' file not found'
+    Ranges:
+    - FileOffset: 226
+      FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.hpp
+      Length: 34
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 487
+    FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.hpp
+    Message: invalid case style for parameter 'unitIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.hpp
+      Length: 9
+      Offset: 487
+      ReplacementText: unit_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 611
+    FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.hpp
+    Message: invalid case style for parameter 'unitIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.hpp
+      Length: 9
+      Offset: 611
+      ReplacementText: unit_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 674
+    FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.hpp
+    Message: invalid case style for parameter 'sourceIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.hpp
+      Length: 11
+      Offset: 674
+      ReplacementText: source_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 691
+    FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.hpp
+    Message: invalid case style for parameter 'variantIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/jobs/work_queue.hpp
+      Length: 12
+      Offset: 691
+      ReplacementText: variant_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 9
+    FilePath: /home/logan/gameprogramming/code/world/policies.cpp
+    Message: '''policies.h'' file not found'
+    Ranges:
+    - FileOffset: 9
+      FilePath: /home/logan/gameprogramming/code/world/policies.cpp
+      Length: 12
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 9
+    FilePath: /home/logan/gameprogramming/code/systems/perishables/lazy.cpp
+    Message: '''world/item/enum.hpp'' file not found'
+    Ranges:
+    - FileOffset: 9
+      FilePath: /home/logan/gameprogramming/code/systems/perishables/lazy.cpp
+      Length: 21
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 104
+    FilePath: /home/logan/gameprogramming/code/systems/perishables/lazy.cpp
+    Message: invalid case style for parameter 'livingTime'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/perishables/lazy.cpp
+      Length: 10
+      Offset: 104
+      ReplacementText: living_time
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 166
+    FilePath: /home/logan/gameprogramming/code/systems/perishables/lazy.cpp
+    Message: invalid case style for parameter 'timePassed'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/perishables/lazy.cpp
+      Length: 10
+      Offset: 166
+      ReplacementText: time_passed
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 23
+    FilePath: /home/logan/gameprogramming/code/world/animal/enum.hpp
+    Message: '''core/data.hpp'' file not found'
+    Ranges:
+    - FileOffset: 23
+      FilePath: /home/logan/gameprogramming/code/world/animal/enum.hpp
+      Length: 15
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 26
+    FilePath: /home/logan/gameprogramming/code/simulation/weather_calculations.cpp
+    Message: '''core/math.hpp'' file not found'
+    Ranges:
+    - FileOffset: 26
+      FilePath: /home/logan/gameprogramming/code/simulation/weather_calculations.cpp
+      Length: 15
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 290
+    FilePath: /home/logan/gameprogramming/code/systems/perishables/continuous.cpp
+    Message: invalid case style for parameter 'perishableIndices'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/perishables/continuous.cpp
+      Length: 17
+      Offset: 290
+      ReplacementText: perishable_indices
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 351
+    FilePath: /home/logan/gameprogramming/code/systems/perishables/continuous.cpp
+    Message: invalid case style for parameter 'livingTimes'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/perishables/continuous.cpp
+      Length: 11
+      Offset: 351
+      ReplacementText: living_times
+    - FilePath: /home/logan/gameprogramming/code/systems/perishables/continuous.cpp
+      Length: 11
+      Offset: 615
+      ReplacementText: living_times
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 369
+    FilePath: /home/logan/gameprogramming/code/systems/perishables/continuous.cpp
+    Message: invalid case style for parameter 'timePassed'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/perishables/continuous.cpp
+      Length: 10
+      Offset: 369
+      ReplacementText: time_passed
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 398
+    FilePath: /home/logan/gameprogramming/code/systems/perishables/continuous.cpp
+    Message: invalid case style for parameter 'perishableCoords'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/perishables/continuous.cpp
+      Length: 16
+      Offset: 398
+      ReplacementText: perishable_coords
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 74
+    FilePath: /home/logan/gameprogramming/code/systems/perishables/perishables_manager.hpp
+    Message: '''core/containers.hpp'' file not found'
+    Ranges:
+    - FileOffset: 74
+      FilePath: /home/logan/gameprogramming/code/systems/perishables/perishables_manager.hpp
+      Length: 21
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 558
+    FilePath: /home/logan/gameprogramming/code/systems/perishables/perishables_manager.hpp
+    Message: invalid case style for parameter 'livingTimes'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/perishables/perishables_manager.hpp
+      Length: 11
+      Offset: 558
+      ReplacementText: living_times
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 576
+    FilePath: /home/logan/gameprogramming/code/systems/perishables/perishables_manager.hpp
+    Message: invalid case style for parameter 'timePassed'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/perishables/perishables_manager.hpp
+      Length: 10
+      Offset: 576
+      ReplacementText: time_passed
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 637
+    FilePath: /home/logan/gameprogramming/code/systems/perishables/perishables_manager.hpp
+    Message: invalid case style for parameter 'livingTime'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/perishables/perishables_manager.hpp
+      Length: 10
+      Offset: 637
+      ReplacementText: living_time
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 699
+    FilePath: /home/logan/gameprogramming/code/systems/perishables/perishables_manager.hpp
+    Message: invalid case style for parameter 'timePassed'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/perishables/perishables_manager.hpp
+      Length: 10
+      Offset: 699
+      ReplacementText: time_passed
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 0
+    FilePath: ''
+    Message: too many errors emitted, stopping now
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 110
+    FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+    Message: unknown type name 'Weapon'
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 127
+    FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+    Message: unknown type name 'Stats'
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 141
+    FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+    Message: unknown type name 'Coord'
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 196
+    FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+    Message: unknown type name 'Action'
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 259
+    FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+    Message: no template named 'Arena'
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 324
+    FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+    Message: no template named 'Arena'
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 374
+    FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+    Message: member reference base type 'int *' is not a structure or union
+    Ranges:
+    - FileOffset: 367
+      FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+      Length: 7
+    - FileOffset: 375
+      FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+      Length: 4
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 397
+    FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+    Message: use of undeclared identifier 'timer'
+    Ranges:
+    - FileOffset: 397
+      FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+      Length: 5
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 414
+    FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+    Message: use of undeclared identifier 'action'
+    Ranges:
+    - FileOffset: 414
+      FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+      Length: 6
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 427
+    FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+    Message: use of undeclared identifier 'Action'
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 467
+    FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+    Message: called object type 'int *' is not a function or function pointer
+    Ranges:
+    - FileOffset: 460
+      FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+      Length: 7
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 483
+    FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+    Message: use of undeclared identifier 'chance'
+    Ranges:
+    - FileOffset: 483
+      FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+      Length: 6
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 494
+    FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+    Message: use of undeclared identifier 'weapon'
+    Ranges:
+    - FileOffset: 494
+      FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+      Length: 6
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 505
+    FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+    Message: use of undeclared identifier 'stat'
+    Ranges:
+    - FileOffset: 505
+      FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+      Length: 4
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 525
+    FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+    Message: use of undeclared identifier 'dodge'
+    Ranges:
+    - FileOffset: 525
+      FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+      Length: 5
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 596
+    FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+    Message: expected expression
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 612
+    FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+    Message: use of undeclared identifier 'timer'
+    Ranges:
+    - FileOffset: 612
+      FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+      Length: 5
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 629
+    FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+    Message: use of undeclared identifier 'action'
+    Ranges:
+    - FileOffset: 629
+      FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+      Length: 6
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 642
+    FilePath: /home/logan/gameprogramming/code/systems/combat/combat.cpp
+    Message: use of undeclared identifier 'Action'
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 4942
+    FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+    Message: invalid case style for parameter 'riverLength'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+      Length: 11
+      Offset: 4942
+      ReplacementText: river_length
+    - FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+      Length: 11
+      Offset: 6407
+      ReplacementText: river_length
+    - FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+      Length: 11
+      Offset: 6466
+      ReplacementText: river_length
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 9167
+    FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+    Message: invalid case style for parameter 'waterMap'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+      Length: 8
+      Offset: 9167
+      ReplacementText: water_map
+    - FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+      Length: 8
+      Offset: 9545
+      ReplacementText: water_map
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 10173
+    FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+    Message: invalid case style for parameter 'waterMap'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+      Length: 8
+      Offset: 10173
+      ReplacementText: water_map
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 32988
+    FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+    Message: invalid case style for parameter 'originalValue'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+      Length: 13
+      Offset: 32988
+      ReplacementText: original_value
+    - FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+      Length: 13
+      Offset: 33063
+      ReplacementText: original_value
+    - FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+      Length: 13
+      Offset: 33092
+      ReplacementText: original_value
+    - FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+      Length: 13
+      Offset: 33190
+      ReplacementText: original_value
+    - FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+      Length: 13
+      Offset: 33245
+      ReplacementText: original_value
+    - FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+      Length: 13
+      Offset: 33275
+      ReplacementText: original_value
+    - FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+      Length: 13
+      Offset: 33319
+      ReplacementText: original_value
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 33009
+    FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+    Message: invalid case style for parameter 'minValue'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+      Length: 8
+      Offset: 33009
+      ReplacementText: min_value
+    - FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+      Length: 8
+      Offset: 33080
+      ReplacementText: min_value
+    - FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+      Length: 8
+      Offset: 33206
+      ReplacementText: min_value
+    - FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+      Length: 8
+      Offset: 33234
+      ReplacementText: min_value
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 33025
+    FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+    Message: invalid case style for parameter 'maxValue'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+      Length: 8
+      Offset: 33025
+      ReplacementText: max_value
+    - FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+      Length: 8
+      Offset: 33109
+      ReplacementText: max_value
+    - FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+      Length: 8
+      Offset: 33291
+      ReplacementText: max_value
+    - FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+      Length: 8
+      Offset: 33335
+      ReplacementText: max_value
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 33041
+    FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+    Message: invalid case style for parameter 'adjustedValue'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+      Length: 13
+      Offset: 33041
+      ReplacementText: adjusted_value
+    - FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+      Length: 13
+      Offset: 33131
+      ReplacementText: adjusted_value
+    - FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+      Length: 13
+      Offset: 33444
+      ReplacementText: adjusted_value
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 34285
+    FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+    Message: invalid case style for parameter 'voronoiSites'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+      Length: 12
+      Offset: 34285
+      ReplacementText: voronoi_sites
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 34320
+    FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+    Message: invalid case style for parameter 'rAltitudes'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+      Length: 10
+      Offset: 34320
+      ReplacementText: r_altitudes
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 37177
+    FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+    Message: invalid case style for parameter 'humidityTable'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+      Length: 13
+      Offset: 37177
+      ReplacementText: humidity_table
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 37218
+    FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+    Message: invalid case style for parameter 'minTemperatureTable'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/simulation/world_gen.cpp
+      Length: 19
+      Offset: 37218
+      ReplacementText: min_temperature_table
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 23
+    FilePath: /home/logan/gameprogramming/code/simulation/world_gen.hpp
+    Message: '''systems/find_nearest.hpp'' file not found'
+    Ranges:
+    - FileOffset: 23
+      FilePath: /home/logan/gameprogramming/code/simulation/world_gen.hpp
+      Length: 26
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 9
+    FilePath: /home/logan/gameprogramming/code/world/tribes.cpp
+    Message: '''tribes.h'' file not found'
+    Ranges:
+    - FileOffset: 9
+      FilePath: /home/logan/gameprogramming/code/world/tribes.cpp
+      Length: 10
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2784
+    FilePath: /home/logan/gameprogramming/code/world/tribes.cpp
+    Message: invalid case style for parameter 'groupRoles'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/world/tribes.cpp
+      Length: 10
+      Offset: 2784
+      ReplacementText: group_roles
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2806
+    FilePath: /home/logan/gameprogramming/code/world/tribes.cpp
+    Message: invalid case style for parameter 'roleIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/world/tribes.cpp
+      Length: 9
+      Offset: 2806
+      ReplacementText: role_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 59
+    FilePath: /home/logan/gameprogramming/code/world/plant/enum.hpp
+    Message: '''core/tables.hpp'' file not found'
+    Ranges:
+    - FileOffset: 59
+      FilePath: /home/logan/gameprogramming/code/world/plant/enum.hpp
+      Length: 17
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 334
+    FilePath: /home/logan/gameprogramming/code/world/plant/operations.cpp
+    Message: invalid case style for parameter 'plantIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/world/plant/operations.cpp
+      Length: 10
+      Offset: 334
+      ReplacementText: plant_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 553
+    FilePath: /home/logan/gameprogramming/code/world/plant/operations.cpp
+    Message: invalid case style for parameter 'animalIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/world/plant/operations.cpp
+      Length: 11
+      Offset: 553
+      ReplacementText: animal_index
+    - FilePath: /home/logan/gameprogramming/code/world/plant/operations.cpp
+      Length: 11
+      Offset: 634
+      ReplacementText: animal_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 9
+    FilePath: /home/logan/gameprogramming/code/simulation/game.hpp
+    Message: '''world/buildable/database.hpp'' file not found'
+    Ranges:
+    - FileOffset: 9
+      FilePath: /home/logan/gameprogramming/code/simulation/game.hpp
+      Length: 30
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 9
+    FilePath: /home/logan/gameprogramming/code/systems/movement/pathfinding.cpp
+    Message: '''core/data.hpp'' file not found'
+    Ranges:
+    - FileOffset: 9
+      FilePath: /home/logan/gameprogramming/code/systems/movement/pathfinding.cpp
+      Length: 15
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 319
+    FilePath: /home/logan/gameprogramming/code/systems/movement/pathfinding.cpp
+    Message: invalid case style for parameter 'actingEntities'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/movement/pathfinding.cpp
+      Length: 14
+      Offset: 319
+      ReplacementText: acting_entities
+    - FilePath: /home/logan/gameprogramming/code/systems/movement/pathfinding.cpp
+      Length: 14
+      Offset: 466
+      ReplacementText: acting_entities
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 353
+    FilePath: /home/logan/gameprogramming/code/systems/movement/pathfinding.cpp
+    Message: invalid case style for parameter 'frameDatas'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/movement/pathfinding.cpp
+      Length: 10
+      Offset: 353
+      ReplacementText: frame_datas
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 839
+    FilePath: /home/logan/gameprogramming/code/systems/movement/pathfinding.cpp
+    Message: invalid case style for parameter 'pathDispatchBuffer'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/movement/pathfinding.cpp
+      Length: 18
+      Offset: 839
+      ReplacementText: path_dispatch_buffer
+    - FilePath: /home/logan/gameprogramming/code/systems/movement/pathfinding.cpp
+      Length: 18
+      Offset: 967
+      ReplacementText: path_dispatch_buffer
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2103
+    FilePath: /home/logan/gameprogramming/code/systems/movement/pathfinding.cpp
+    Message: invalid case style for parameter 'startIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/movement/pathfinding.cpp
+      Length: 10
+      Offset: 2103
+      ReplacementText: start_index
+    - FilePath: /home/logan/gameprogramming/code/systems/movement/pathfinding.cpp
+      Length: 10
+      Offset: 2323
+      ReplacementText: start_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2123
+    FilePath: /home/logan/gameprogramming/code/systems/movement/pathfinding.cpp
+    Message: invalid case style for parameter 'goalIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/movement/pathfinding.cpp
+      Length: 9
+      Offset: 2123
+      ReplacementText: goal_index
+    - FilePath: /home/logan/gameprogramming/code/systems/movement/pathfinding.cpp
+      Length: 9
+      Offset: 2291
+      ReplacementText: goal_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2621
+    FilePath: /home/logan/gameprogramming/code/systems/movement/pathfinding.hpp
+    Message: invalid case style for parameter 'startIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/movement/pathfinding.hpp
+      Length: 10
+      Offset: 2621
+      ReplacementText: start_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2637
+    FilePath: /home/logan/gameprogramming/code/systems/movement/pathfinding.hpp
+    Message: invalid case style for parameter 'goalIndex'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/movement/pathfinding.hpp
+      Length: 9
+      Offset: 2637
+      ReplacementText: goal_index
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2718
+    FilePath: /home/logan/gameprogramming/code/systems/movement/pathfinding.hpp
+    Message: invalid case style for parameter 'actingEntities'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/movement/pathfinding.hpp
+      Length: 14
+      Offset: 2718
+      ReplacementText: acting_entities
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2760
+    FilePath: /home/logan/gameprogramming/code/systems/movement/pathfinding.hpp
+    Message: invalid case style for parameter 'frameDatas'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/movement/pathfinding.hpp
+      Length: 10
+      Offset: 2760
+      ReplacementText: frame_datas
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2816
+    FilePath: /home/logan/gameprogramming/code/systems/movement/pathfinding.hpp
+    Message: invalid case style for parameter 'pathDispatchBuffer'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/movement/pathfinding.hpp
+      Length: 18
+      Offset: 2816
+      ReplacementText: path_dispatch_buffer
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 1326
+    FilePath: /home/logan/gameprogramming/code/simulation/first_spawn.cpp
+    Message: '''core/data.hpp'' file not found'
+    Ranges:
+    - FileOffset: 1326
+      FilePath: /home/logan/gameprogramming/code/simulation/first_spawn.cpp
+      Length: 15
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 9
+    FilePath: /home/logan/gameprogramming/code/systems/movement/lazy.cpp
+    Message: '''core/tables.hpp'' file not found'
+    Ranges:
+    - FileOffset: 9
+      FilePath: /home/logan/gameprogramming/code/systems/movement/lazy.cpp
+      Length: 17
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 32
+    FilePath: /home/logan/gameprogramming/code/render/texture.cpp
+    Message: '''window.hpp'' file not found'
+    Ranges:
+    - FileOffset: 32
+      FilePath: /home/logan/gameprogramming/code/render/texture.cpp
+      Length: 12
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 9
+    FilePath: /home/logan/gameprogramming/code/world/tribeEvents.cpp
+    Message: '''tribeEvents.h'' file not found'
+    Ranges:
+    - FileOffset: 9
+      FilePath: /home/logan/gameprogramming/code/world/tribeEvents.cpp
+      Length: 15
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2596
+    FilePath: /home/logan/gameprogramming/code/systems/search/entity_search.hpp
+    Message: invalid case style for parameter 'tileCoord'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/search/entity_search.hpp
+      Length: 9
+      Offset: 2596
+      ReplacementText: tile_coord
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2825
+    FilePath: /home/logan/gameprogramming/code/systems/search/entity_search.hpp
+    Message: invalid case style for parameter 'maxRange'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/search/entity_search.hpp
+      Length: 8
+      Offset: 2825
+      ReplacementText: max_range
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 9
+    FilePath: /home/logan/gameprogramming/code/systems/search/specific_search.cpp
+    Message: '''core/entity.hpp'' file not found'
+    Ranges:
+    - FileOffset: 9
+      FilePath: /home/logan/gameprogramming/code/systems/search/specific_search.cpp
+      Length: 17
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 23
+    FilePath: /home/logan/gameprogramming/code/world/animal/enum.hpp
+    Message: '''core/data.hpp'' file not found'
+    Ranges:
+    - FileOffset: 23
+      FilePath: /home/logan/gameprogramming/code/world/animal/enum.hpp
+      Length: 15
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 3053
+    FilePath: /home/logan/gameprogramming/code/systems/search/entity_search.cpp
+    Message: invalid case style for parameter 'tileCoord'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/search/entity_search.cpp
+      Length: 9
+      Offset: 3053
+      ReplacementText: tile_coord
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 102
+    FilePath: /home/logan/gameprogramming/code/systems/search/entity_search.hpp
+    Message: '''core/containers.hpp'' file not found'
+    Ranges:
+    - FileOffset: 102
+      FilePath: /home/logan/gameprogramming/code/systems/search/entity_search.hpp
+      Length: 21
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2596
+    FilePath: /home/logan/gameprogramming/code/systems/search/entity_search.hpp
+    Message: invalid case style for parameter 'tileCoord'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/search/entity_search.hpp
+      Length: 9
+      Offset: 2596
+      ReplacementText: tile_coord
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 2825
+    FilePath: /home/logan/gameprogramming/code/systems/search/entity_search.hpp
+    Message: invalid case style for parameter 'maxRange'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/search/entity_search.hpp
+      Length: 8
+      Offset: 2825
+      ReplacementText: max_range
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 9
+    FilePath: /home/logan/gameprogramming/code/render/camera.hpp
+    Message: '''core/data.hpp'' file not found'
+    Ranges:
+    - FileOffset: 9
+      FilePath: /home/logan/gameprogramming/code/render/camera.hpp
+      Length: 15
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 62
+    FilePath: /home/logan/gameprogramming/code/systems/movement/queue_actions.cpp
+    Message: variable has incomplete type 'void'
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 99
+    FilePath: /home/logan/gameprogramming/code/systems/movement/queue_actions.cpp
+    Message: use of undeclared identifier 'PathsBuffer'
+    Ranges:
+    - FileOffset: 99
+      FilePath: /home/logan/gameprogramming/code/systems/movement/queue_actions.cpp
+      Length: 11
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 112
+    FilePath: /home/logan/gameprogramming/code/systems/movement/queue_actions.cpp
+    Message: use of undeclared identifier 'rpd'
+    Ranges:
+    - FileOffset: 112
+      FilePath: /home/logan/gameprogramming/code/systems/movement/queue_actions.cpp
+      Length: 3
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 117
+    FilePath: /home/logan/gameprogramming/code/systems/movement/queue_actions.cpp
+    Message: use of undeclared identifier 'std'
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 129
+    FilePath: /home/logan/gameprogramming/code/systems/movement/queue_actions.cpp
+    Message: use of undeclared identifier 'EntityID'
+    Ranges:
+    - FileOffset: 129
+      FilePath: /home/logan/gameprogramming/code/systems/movement/queue_actions.cpp
+      Length: 8
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 140
+    FilePath: /home/logan/gameprogramming/code/systems/movement/queue_actions.cpp
+    Message: use of undeclared identifier 'indices'
+    Ranges:
+    - FileOffset: 140
+      FilePath: /home/logan/gameprogramming/code/systems/movement/queue_actions.cpp
+      Length: 7
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 155
+    FilePath: /home/logan/gameprogramming/code/systems/movement/queue_actions.cpp
+    Message: use of undeclared identifier 'Coord'
+    Ranges:
+    - FileOffset: 155
+      FilePath: /home/logan/gameprogramming/code/systems/movement/queue_actions.cpp
+      Length: 5
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 179
+    FilePath: /home/logan/gameprogramming/code/systems/movement/queue_actions.cpp
+    Message: use of undeclared identifier 'Action'
+    Ranges:
+    - FileOffset: 179
+      FilePath: /home/logan/gameprogramming/code/systems/movement/queue_actions.cpp
+      Length: 6
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 197
+    FilePath: /home/logan/gameprogramming/code/systems/movement/queue_actions.cpp
+    Message: expected unqualified-id
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 9
+    FilePath: /home/logan/gameprogramming/code/systems/action/product.cpp
+    Message: '''world/buildable/enum.hpp'' file not found'
+    Ranges:
+    - FileOffset: 9
+      FilePath: /home/logan/gameprogramming/code/systems/action/product.cpp
+      Length: 26
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 22
+    FilePath: /home/logan/gameprogramming/code/schedule/loop.cpp
+    Message: '''simulation/game.hpp'' file not found'
+    Ranges:
+    - FileOffset: 22
+      FilePath: /home/logan/gameprogramming/code/schedule/loop.cpp
+      Length: 21
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 168
+    FilePath: /home/logan/gameprogramming/code/systems/movement/movement.cpp
+    Message: invalid case style for parameter 'actingEntities'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/movement/movement.cpp
+      Length: 14
+      Offset: 168
+      ReplacementText: acting_entities
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 412
+    FilePath: /home/logan/gameprogramming/code/systems/movement/movement.cpp
+    Message: invalid case style for parameter 'frameDatas'
+    Replacements:
+    - FilePath: /home/logan/gameprogramming/code/systems/movement/movement.cpp
+      Length: 10
+      Offset: 412
+      ReplacementText: frame_datas
+  DiagnosticName: readability-identifier-naming
+  Level: Warning
+- BuildDirectory: /home/logan/gameprogramming/code/build
+  DiagnosticMessage:
+    FileOffset: 22
+    FilePath: /home/logan/gameprogramming/code/systems/movement/movement.hpp
+    Message: '''core/data.hpp'' file not found'
+    Ranges:
+    - FileOffset: 22
+      FilePath: /home/logan/gameprogramming/code/systems/movement/movement.hpp
+      Length: 15
+    Replacements: []
+  DiagnosticName: clang-diagnostic-error
+  Level: Error
+MainSourceFile: ''

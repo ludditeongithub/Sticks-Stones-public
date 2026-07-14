@@ -1,9 +1,9 @@
 #include <world/item/enum.hpp>
 #include <core/data.hpp>
 
-inline bool checkRotten(Item perishable, Time livingTime);
+inline bool check_rotten(Item perishable, Time livingTime);
 
-inline Time getPerishableTime(Item item, Time timePassed, Temp temperature)
+inline Time get_perishable_time(Item item, Time timePassed, Temp temperature)
 {
 	// TODO: error checking if (!isPerishable(item)) {
 	//   }

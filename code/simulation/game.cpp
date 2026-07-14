@@ -6,7 +6,7 @@
 #include "world/unit/database.hpp"
 #include <optional>
 
-void Game::initNewWorld()
+void Game::init_new_world()
 {
 	absoluteTime = 0;
 	WorldSpawner *ws = new WorldSpawner(50 / 2, 50 / 2);
@@ -38,7 +38,7 @@ void Game::initNewWorld()
         spriteSheetTexture.loadFromFile("sprite_sheet.png");
 }
 
-GameSave& Game::saveGame(std::string name, GameSave* save)
+GameSave& Game::save_game(std::string name, GameSave* save)
 {
 		bool successful = false;
   if (save == nullptr)
@@ -53,24 +53,24 @@ GameSave& Game::saveGame(std::string name, GameSave* save)
   if (successful) save->save(*this);
 }
 
-void Game::loadGame(GameSave& save)
+void Game::load_game(GameSave& save)
 {
   // TODO: init and loading can be different if entities exceed maximum size
 		initNewWorld();
 		save.load(*this);
 }
 
-void Game::deinitWorld()
+void Game::deinit_world()
 {
   
 }
 
-void Game::playerSpawn()
+void Game::player_spawn()
 {
   
 }
 
-void Game::newGame()
+void Game::new_game()
 {
 	//	GameOptions go = selectGameOptions();
 
@@ -80,7 +80,7 @@ void Game::newGame()
 	
 }
 
-void Game::handleEvent(SDL_Event *e)
+void Game::handle_event(SDL_Event *e)
 {
 	for (size_t i = 0; i < ui.buttons.size(); i++) ui.buttons[i].handleEvent(e);
 }

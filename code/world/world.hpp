@@ -25,44 +25,44 @@ enum class Weather : uint8_t
 };
 
 // Time Data
-constexpr uint16_t hour_length = 300;
-constexpr uint16_t day_length = hour_length * 24;
-constexpr uint16_t season_length = day_length * 7;
-constexpr uint16_t year_length = season_length * 4;
+constexpr uint16_t HOUR_LENGTH = 300;
+constexpr uint16_t DAY_LENGTH = HOUR_LENGTH * 24;
+constexpr uint16_t SEASON_LENGTH = DAY_LENGTH * 7;
+constexpr uint16_t YEAR_LENGTH = SEASON_LENGTH * 4;
 
-constexpr uint16_t latitude_total = 180;
-constexpr int latitude_min = -90;
-constexpr int latitude_max = 90;
-constexpr uint16_t longitude_total = 180;
-constexpr float max_cloud_factor = 3.2;
+constexpr uint16_t LATITUDE_TOTAL = 180;
+constexpr int LATITUDE_MIN = -90;
+constexpr int LATITUDE_MAX = 90;
+constexpr uint16_t LONGITUDE_TOTAL = 180;
+constexpr float MAX_CLOUD_FACTOR = 3.2;
 
 // Terain and Climate
-constexpr uint8_t max_altitude = 120;	     // TODO: check
-constexpr uint8_t max_humidity = 120;	     // TODO: check
-constexpr uint8_t max_ocean_affect_dist = 4; // TODO: check
+constexpr uint8_t MAX_ALTITUDE = 120;	     // TODO: check
+constexpr uint8_t MAX_HUMIDITY = 120;	     // TODO: check
+constexpr uint8_t MAX_OCEAN_AFFECT_DIST = 4; // TODO: check
 
-constexpr float winter_solstice = season_length / 2;
-constexpr float spring_equinox = season_length / 2 + season_length;
-constexpr float summer_solstice = season_length / 2 + season_length * 2;
-constexpr float fall_equinox = season_length / 2 + season_length * 3;
+constexpr float WINTER_SOLSTICE = SEASON_LENGTH / 2;
+constexpr float SPRING_EQUINOX = SEASON_LENGTH / 2 + SEASON_LENGTH;
+constexpr float SUMMER_SOLSTICE = SEASON_LENGTH / 2 + SEASON_LENGTH * 2;
+constexpr float FALL_EQUINOX = SEASON_LENGTH / 2 + SEASON_LENGTH * 3;
 
-constexpr float spring_mult = 1.10;
-constexpr float autumn_mult = 0.98;
-constexpr float summer_mult = 1.45;
-constexpr float winter_mult = 0.74;
+constexpr float SPRING_MULT = 1.10;
+constexpr float AUTUMN_MULT = 0.98;
+constexpr float SUMMER_MULT = 1.45;
+constexpr float WINTER_MULT = 0.74;
 
 // temp range between -70 C to 57 C, -70 = 0, 57 = 127
-constexpr float temp_offset = 70;
+constexpr float TEMP_OFFSET = 70;
 
 // diurnal temperature variation influenced mostly by aridity, then latitude, then proximity to
 // large water bodies
-constexpr float max_diurnal_var = 20.2;
+constexpr float MAX_DIURNAL_VAR = 20.2;
 
 // seasonal temperature variation influenced mostly by latitude, then proximity to large water
 // bodies, then elevation
-constexpr float max_seasonal_var = 42.1;
+constexpr float MAX_SEASONAL_VAR = 42.1;
 
-constexpr Time corpse_rot_time = day_length * 3;
+constexpr Time CORPSE_ROT_TIME = DAY_LENGTH * 3;
 
 
 
@@ -73,9 +73,9 @@ struct World
 	const uint16_t height_chunks;
 	const uint16_t equator;
 	const uint16_t chunk_amount;
-	const uint16_t chunk_latitude_height = height_chunks / latitude_total; // amount of chunks per latitude
-  const uint16_t chunk_longitude_width = length_chunks / longitude_total;
-	const uint32_t world_tile_amount = chunk_amount * chunk_size;
+	const uint16_t chunk_latitude_height = height_chunks / LATITUDE_TOTAL; // amount of chunks per latitude
+  const uint16_t chunk_longitude_width = length_chunks / LONGITUDE_TOTAL;
+	const uint32_t world_tile_amount = chunk_amount * CHUNK_SIZE;
 	const uint32_t world_tile_length = sqrt(world_tile_amount);
 
 	const CloudKey min_light_clouds = 50;
@@ -136,7 +136,7 @@ struct World
 
 	inline uint16_t get_chunk_latitude(int i)
 	{
-		return (get_chunk_height(i) / chunk_latitude_height) - (latitude_total / 2);
+		return (get_chunk_height(i) / chunk_latitude_height) - (LATITUDE_TOTAL / 2);
 	}
 
 	inline uint16_t get_chunk_time_zone(uint32_t chunk_index);

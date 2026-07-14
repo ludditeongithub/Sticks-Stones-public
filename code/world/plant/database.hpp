@@ -21,7 +21,7 @@ struct PlantDatabase
     // BASE DATABASE MEMBERS
     // =========================
 
-constexpr static uint16_t entity_size = sizeof(Plant) +
+constexpr static uint16_t ENTITY_SIZE = sizeof(Plant) +
 + sizeof(bool)
   
  +  sizeof(Plant) 

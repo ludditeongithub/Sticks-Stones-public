@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <core/data.hpp>
 
-constexpr size_t maturity_age = 15;
+constexpr size_t MATURITY_AGE = 15;
 
 enum class Unit : uint8_t
 {

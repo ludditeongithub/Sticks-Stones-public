@@ -27,15 +27,15 @@ struct GroupData
 vector<GroupData> groups;
 
 // probably put military roles at the front as they may need to be found
-std::tuple<Role, uint16_t, int16_t> smallTribeRoles[];
-std::tuple<Role, uint16_t, int16_t> mediumTribeRoles[];
-std::tuple<Role, uint16_t, uint16_t> largeTribeRoles[];
+std::tuple<Role, uint16_t, int16_t> small_tribe_roles[];
+std::tuple<Role, uint16_t, int16_t> medium_tribe_roles[];
+std::tuple<Role, uint16_t, uint16_t> large_tribe_roles[];
 // consider replacing tribes with smaller lords (who can still be subjects of
 // kings or princes) once player has reached higher ages.
 
-std::tuple<Role, uint16_t, uint16_t> smallWarbandRoles[];
-std::tuple<Role, uint16_t, uint16_t> mediumWarbandRoles[];
-std::tuple<Role, uint16_t, uint16_t> largeWarbandRoles[];
+std::tuple<Role, uint16_t, uint16_t> small_warband_roles[];
+std::tuple<Role, uint16_t, uint16_t> medium_warband_roles[];
+std::tuple<Role, uint16_t, uint16_t> large_warband_roles[];
 // hordeRoles;
 
 // princedomRoles;
@@ -46,7 +46,7 @@ std::tuple<Role, uint16_t, uint16_t> largeWarbandRoles[];
 // mediumMultiplier;
 // largeMultiplier;
 
-void initializeGroupRoles()
+void initialize_group_roles()
 {
 	// SMALL TRIBE - changes from each age
 	// PALEO
@@ -81,7 +81,7 @@ void initializeGroupRoles()
 	// Horseman 3, 8;
 }
 
-bool roleInAge(Role role, Age age)
+bool role_in_age(Role role, Age age)
 {
 	// if role is a predecessor, making it obsolete
   for (int i = 0; i < roleDatas[static_cast<int>([roleDatas[static_cast<int>(role)].requisitesOf.size(); i++) {
@@ -92,7 +92,7 @@ bool roleInAge(Role role, Age age)
   return roleDatas[static_cast<int>(role)].age <= age;
 }
 
-bool attemptAddGroupMember(GroupData &group, std::tuple<Role, uint16_t, uint16_t> &groupRoles,
+bool attempt_add_group_member(GroupData &group, std::tuple<Role, uint16_t, uint16_t> &groupRoles,
 			   int roleIndex, bool min)
 {
 	if !(roleInAge(groupRoles[roleIndex].get<0>, group.age))
@@ -109,14 +109,14 @@ bool attemptAddGroupMember(GroupData &group, std::tuple<Role, uint16_t, uint16_t
 	}
 }
 
-void addGroupMember(uint16_t group)
+void add_group_member(uint16_t group)
 {
 	if (groups[group].size == groups[group].maxSize)
 		return;
-	vector<Role, uint16_t, uint16_t> &groupRoles = getGroupRoles(groups[group].groupType);
+	vector<Role, uint16_t, uint16_t> &group_roles = getGroupRoles(groups[group].groupType);
 	Group &group = groups[group];
 	bool found = false;
-	for (int i = 0; i < groupRoles.size(); i++)
+	for (int i = 0; i < group_roles.size(); i++)
 	{
 		if (attemptAddGroupMember(group, groupRoles, i))
 		{
@@ -128,18 +128,18 @@ void addGroupMember(uint16_t group)
 					       groups[i].memberCoords.push_back(getNearestAdjacentCoord(group.foundingTile.first + rint(- group.size / (group.size/9), group.size / (group.size / 9)) , group.foundingTile.second + rint(- group.size / (group.size/9), group.size / (group.size / 9))));
 }
 
-void generateTribe(uint16_t group)
+void generate_tribe(uint16_t group)
 {
-	int tribeNum = groups[group].size();
-	for (int i = 0; i < tribeNum; i++)
-		addGroupMember(i);
+	int tribe_num = groups[group].size();
+	for (int i = 0; i < tribe_num; i++)
+		add_group_member(i);
 }
 // tribe ratios
 // small tribe
-void generateSmallTribe()
+void generate_small_tribe()
 {
 	uint16_t size = rint(10, 20);
-	uint16_t maxSize = rint(20, 25);
+	uint16_t max_size = rint(20, 25);
 
 	groups.push_back();
 	// NOTE: may be size - 1
@@ -147,10 +147,10 @@ void generateSmallTribe()
 }
 
 // medium tribe
-void generateMediumTribe()
+void generate_medium_tribe()
 {
 	uint16_t size = rint(20, 45);
-	uint16_t maxSize = rint(45, 55);
+	uint16_t max_size = rint(45, 55);
 
 	groups.push_back();
 	// NOTE: may be size - 1
@@ -158,10 +158,10 @@ void generateMediumTribe()
 }
 
 // large tribe
-void generateLargeTribe()
+void generate_large_tribe()
 {
 	uint16_t size = rint(55, 150);
-	uint16_t maxSize = rint(150, 250);
+	uint16_t max_size = rint(150, 250);
 
 	groups.push_back();
 	// NOTE: may be size - 1
@@ -169,30 +169,30 @@ void generateLargeTribe()
 }
 
 // warbands
-void generateMiniWarband()
+void generate_mini_warband()
 {
 	uint16_t size = rint(10, 20);
-	uint16_t maxSize = rint(20, 25);
+	uint16_t max_size = rint(20, 25);
 
 	groups.push_back();
 	// NOTE: may be size - 1
 	generateTribe(groups.size());
 }
 
-void generateSmallWarband()
+void generate_small_warband()
 {
 	uint16_t size = rint(20, 45);
-	uint16_t maxSize = rint(45, 55);
+	uint16_t max_size = rint(45, 55);
 
 	groups.push_back();
 	// NOTE: may be size - 1
 	generateTribe(groups.size());
 }
 
-void generateMediumWarband()
+void generate_medium_warband()
 {
 	uint16_t size = rint(55, 150);
-	uint16_t maxSize = rint(150, 250);
+	uint16_t max_size = rint(150, 250);
 
 	groups.push_back();
 	// NOTE: may be size - 1

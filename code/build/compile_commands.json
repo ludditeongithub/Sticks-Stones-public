@@ -1,8 +1,320 @@
 [
 {
   "directory": "/home/logan/gameprogramming/code/build",
-  "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -std=c++20 -o CMakeFiles/main_exe.dir/main.cpp.o -c /home/logan/gameprogramming/code/main.cpp",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o -c /home/logan/gameprogramming/code/build/CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp",
+  "file": "/home/logan/gameprogramming/code/build/CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp",
+  "output": "CMakeFiles/main_exe.dir/CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.o -c /home/logan/gameprogramming/code/build/CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp",
+  "file": "/home/logan/gameprogramming/code/build/CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp",
+  "output": "CMakeFiles/main_exe.dir/CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o -c /home/logan/gameprogramming/code/build/CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp",
+  "file": "/home/logan/gameprogramming/code/build/CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp",
+  "output": "CMakeFiles/main_exe.dir/CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/main.cpp.o -c /home/logan/gameprogramming/code/main.cpp",
   "file": "/home/logan/gameprogramming/code/main.cpp",
   "output": "CMakeFiles/main_exe.dir/main.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/render/texture.cpp.o -c /home/logan/gameprogramming/code/render/texture.cpp",
+  "file": "/home/logan/gameprogramming/code/render/texture.cpp",
+  "output": "CMakeFiles/main_exe.dir/render/texture.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/schedule/loop.cpp.o -c /home/logan/gameprogramming/code/schedule/loop.cpp",
+  "file": "/home/logan/gameprogramming/code/schedule/loop.cpp",
+  "output": "CMakeFiles/main_exe.dir/schedule/loop.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/scratch.cpp.o -c /home/logan/gameprogramming/code/scratch.cpp",
+  "file": "/home/logan/gameprogramming/code/scratch.cpp",
+  "output": "CMakeFiles/main_exe.dir/scratch.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.o -c /home/logan/gameprogramming/code/simulation/first_spawn.cpp",
+  "file": "/home/logan/gameprogramming/code/simulation/first_spawn.cpp",
+  "output": "CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/simulation/game.cpp.o -c /home/logan/gameprogramming/code/simulation/game.cpp",
+  "file": "/home/logan/gameprogramming/code/simulation/game.cpp",
+  "output": "CMakeFiles/main_exe.dir/simulation/game.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.o -c /home/logan/gameprogramming/code/simulation/weather_calculations.cpp",
+  "file": "/home/logan/gameprogramming/code/simulation/weather_calculations.cpp",
+  "output": "CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/simulation/world_gen.cpp.o -c /home/logan/gameprogramming/code/simulation/world_gen.cpp",
+  "file": "/home/logan/gameprogramming/code/simulation/world_gen.cpp",
+  "output": "CMakeFiles/main_exe.dir/simulation/world_gen.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.o -c /home/logan/gameprogramming/code/simulation/world_gen_helpers.cpp",
+  "file": "/home/logan/gameprogramming/code/simulation/world_gen_helpers.cpp",
+  "output": "CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/action/assign.cpp.o -c /home/logan/gameprogramming/code/systems/action/assign.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/action/assign.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/action/assign.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/action/attempt.cpp.o -c /home/logan/gameprogramming/code/systems/action/attempt.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/action/attempt.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/action/attempt.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/action/lazy.cpp.o -c /home/logan/gameprogramming/code/systems/action/lazy.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/action/lazy.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/action/lazy.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/action/prioirities.cpp.o -c /home/logan/gameprogramming/code/systems/action/prioirities.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/action/prioirities.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/action/prioirities.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/action/product.cpp.o -c /home/logan/gameprogramming/code/systems/action/product.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/action/product.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/action/product.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/birth_death/animal.cpp.o -c /home/logan/gameprogramming/code/systems/birth_death/animal.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/birth_death/animal.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/birth_death/animal.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/birth_death/plant.cpp.o -c /home/logan/gameprogramming/code/systems/birth_death/plant.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/birth_death/plant.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/birth_death/plant.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/birth_death/scheduled.cpp.o -c /home/logan/gameprogramming/code/systems/birth_death/scheduled.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/birth_death/scheduled.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/birth_death/scheduled.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/birth_death/unit.cpp.o -c /home/logan/gameprogramming/code/systems/birth_death/unit.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/birth_death/unit.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/birth_death/unit.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/combat/combat.cpp.o -c /home/logan/gameprogramming/code/systems/combat/combat.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/combat/combat.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/combat/combat.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/feeding/feeding.cpp.o -c /home/logan/gameprogramming/code/systems/feeding/feeding.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/feeding/feeding.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/feeding/feeding.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/feeding/hunger.cpp.o -c /home/logan/gameprogramming/code/systems/feeding/hunger.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/feeding/hunger.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/feeding/hunger.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/inventory/check.cpp.o -c /home/logan/gameprogramming/code/systems/inventory/check.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/inventory/check.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/inventory/check.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/inventory/inventory.cpp.o -c /home/logan/gameprogramming/code/systems/inventory/inventory.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/inventory/inventory.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/inventory/inventory.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/jobs/work_queue.cpp.o -c /home/logan/gameprogramming/code/systems/jobs/work_queue.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/jobs/work_queue.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/jobs/work_queue.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.o -c /home/logan/gameprogramming/code/systems/movement/lazy.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/movement/lazy.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/movement/movement.cpp.o -c /home/logan/gameprogramming/code/systems/movement/movement.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/movement/movement.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/movement/movement.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.o -c /home/logan/gameprogramming/code/systems/movement/pathfinding.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/movement/pathfinding.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/movement/position.cpp.o -c /home/logan/gameprogramming/code/systems/movement/position.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/movement/position.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/movement/position.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/movement/queue_actions.cpp.o -c /home/logan/gameprogramming/code/systems/movement/queue_actions.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/movement/queue_actions.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/movement/queue_actions.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/pack/packMovementPatterns.cpp.o -c /home/logan/gameprogramming/code/systems/pack/packMovementPatterns.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/pack/packMovementPatterns.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/pack/packMovementPatterns.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/perishables/continuous.cpp.o -c /home/logan/gameprogramming/code/systems/perishables/continuous.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/perishables/continuous.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/perishables/continuous.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/perishables/lazy.cpp.o -c /home/logan/gameprogramming/code/systems/perishables/lazy.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/perishables/lazy.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/perishables/lazy.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/plant/growth.cpp.o -c /home/logan/gameprogramming/code/systems/plant/growth.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/plant/growth.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/plant/growth.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/plant/update.cpp.o -c /home/logan/gameprogramming/code/systems/plant/update.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/plant/update.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/plant/update.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/search/entity_search.cpp.o -c /home/logan/gameprogramming/code/systems/search/entity_search.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/search/entity_search.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/search/entity_search.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/search/specific_search.cpp.o -c /home/logan/gameprogramming/code/systems/search/specific_search.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/search/specific_search.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/search/specific_search.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.o -c /home/logan/gameprogramming/code/systems/visibility/lazy.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/visibility/lazy.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.o -c /home/logan/gameprogramming/code/systems/visibility/scheduled.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/visibility/scheduled.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/world/animal/breeding.cpp.o -c /home/logan/gameprogramming/code/world/animal/breeding.cpp",
+  "file": "/home/logan/gameprogramming/code/world/animal/breeding.cpp",
+  "output": "CMakeFiles/main_exe.dir/world/animal/breeding.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/world/animal/database.cpp.o -c /home/logan/gameprogramming/code/world/animal/database.cpp",
+  "file": "/home/logan/gameprogramming/code/world/animal/database.cpp",
+  "output": "CMakeFiles/main_exe.dir/world/animal/database.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/world/animal/events.cpp.o -c /home/logan/gameprogramming/code/world/animal/events.cpp",
+  "file": "/home/logan/gameprogramming/code/world/animal/events.cpp",
+  "output": "CMakeFiles/main_exe.dir/world/animal/events.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/world/item/operations.cpp.o -c /home/logan/gameprogramming/code/world/item/operations.cpp",
+  "file": "/home/logan/gameprogramming/code/world/item/operations.cpp",
+  "output": "CMakeFiles/main_exe.dir/world/item/operations.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o -c /home/logan/gameprogramming/code/world/plant/birth_death.cpp",
+  "file": "/home/logan/gameprogramming/code/world/plant/birth_death.cpp",
+  "output": "CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/world/plant/operations.cpp.o -c /home/logan/gameprogramming/code/world/plant/operations.cpp",
+  "file": "/home/logan/gameprogramming/code/world/plant/operations.cpp",
+  "output": "CMakeFiles/main_exe.dir/world/plant/operations.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/world/policies.cpp.o -c /home/logan/gameprogramming/code/world/policies.cpp",
+  "file": "/home/logan/gameprogramming/code/world/policies.cpp",
+  "output": "CMakeFiles/main_exe.dir/world/policies.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/world/roles.cpp.o -c /home/logan/gameprogramming/code/world/roles.cpp",
+  "file": "/home/logan/gameprogramming/code/world/roles.cpp",
+  "output": "CMakeFiles/main_exe.dir/world/roles.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/world/tile/database.cpp.o -c /home/logan/gameprogramming/code/world/tile/database.cpp",
+  "file": "/home/logan/gameprogramming/code/world/tile/database.cpp",
+  "output": "CMakeFiles/main_exe.dir/world/tile/database.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/world/tribeEvents.cpp.o -c /home/logan/gameprogramming/code/world/tribeEvents.cpp",
+  "file": "/home/logan/gameprogramming/code/world/tribeEvents.cpp",
+  "output": "CMakeFiles/main_exe.dir/world/tribeEvents.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/world/tribes.cpp.o -c /home/logan/gameprogramming/code/world/tribes.cpp",
+  "file": "/home/logan/gameprogramming/code/world/tribes.cpp",
+  "output": "CMakeFiles/main_exe.dir/world/tribes.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++   -std=gnu++23 -o CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o -c /home/logan/gameprogramming/code/world/unit/OLD_resouceUnits.cpp",
+  "file": "/home/logan/gameprogramming/code/world/unit/OLD_resouceUnits.cpp",
+  "output": "CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o"
 }
 ]

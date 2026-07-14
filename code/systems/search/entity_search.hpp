@@ -1,5 +1,4 @@
 #pragma once
-#include "world/tile/database.hpp"
 #include <cstdint>
 #include <stack>
 #include <unordered_map>
@@ -12,6 +11,7 @@
 
 #include <world/animal/enum.hpp>
 #include <world/chunk/data.hpp>
+#include "world/tile/database.hpp"
 #include <world/item/enum.hpp>
 #include <world/plant/enum.hpp>
 #include <world/tile/data.hpp>
@@ -45,7 +45,7 @@ struct SearchGrid
 {
 	World& world;
 
-	SearchGrid(World& world);
+  SearchGrid(World& world, TileDatabase& tiles);
 
 	using ChunkBucket = std::unordered_map<Entity, std::vector<EntitySearchData>>;
 
@@ -65,28 +65,28 @@ struct SearchGrid
 	// to begin with, all chunks are given the default amount of memory. active chunks and
 	// super-active chunks are upgraded to higher amounts of memory
 
-	uint16_t getActiveChunkIndex(uint16_t index);
+	uint16_t get_active_chunk_index(uint16_t index);
 
-	void addActiveChunk(uint16_t index);
+	void add_active_chunk(uint16_t index);
 
-	inline GridInfo getNthNearestChunk(Coord c, uint16_t n);
+	inline GridInfo get_nth_nearest_chunk(Coord c, uint16_t n);
 
 	void reset();
 
   //OPTI: only have buckets be per chunk, moving entities only move when moving between chunks 
-        inline void insertEntity(Entity type, EntitySearchData data);
-        inline void removeEntity(Entity type, EntitySearchData data);
-        inline void moveEntity(Entity type, EntitySearchData data);
+        inline void insert_entity(Entity type, EntitySearchData data);
+        inline void remove_entity(Entity type, EntitySearchData data);
+        inline void move_entity(Entity type, EntitySearchData data, Direction direction);
 
-	inline bool checkCollision(Coord tileCoord);
+	inline bool check_collision(Coord tileCoord);
 
-		inline EntitySearchData getNearest(Entity e, Coord c);
-		inline EntitySearchData getNthNearest(uint16_t nearest, Entity e, Coord c);
-	inline EntitySearchData getNearestWithinRange(Entity e, Coord c, uint16_t maxRange);
+		inline EntitySearchData get_nearest(Entity e, Coord c);
+		inline EntitySearchData get_nth_nearest(uint16_t nearest, Entity e, Coord c);
+	inline EntitySearchData get_nearest_within_range(Entity e, Coord c, uint16_t maxRange);
 
-	inline Array<EntitySearchData> getAllOFTypeInRange(Entity e, Coord o, Coord d);
+	inline Array<EntitySearchData> get_all_of_type_in_range(Entity e, Coord o, Coord d);
 
-	inline EntityRenderBuffer getAllInRange(Coord o, Coord d);
+	inline EntityRenderBuffer get_all_in_range(Coord o, Coord d);
 	// inline void setOldEntity(Coord tileCoord, uint16_t index) {
 	//   uint16_t gc = getChunkIndexFromTile(tileCoord);
 
@@ -113,3 +113,5 @@ struct SearchGrid
 	//   }
 	// }
 };
+
+SearchGrid* g_search;

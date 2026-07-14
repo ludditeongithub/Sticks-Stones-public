@@ -11,7 +11,7 @@ constexpr float FRIDGE_TIME_MULT = 0.08;
 constexpr float STANDARD_TIME_MULT = 1.00;
 constexpr float HOT_TIME_MULT = 1.85;
 
-inline constexpr LookupTable<Item, Time> perishableDestructionTimes = []
+inline constexpr LookupTable<Item, Time> PERISHABLE_DESTRUCTION_TIMES = []
 {
 	LookupTable<Item, Time> lt{};
 	using enum Item;
@@ -19,10 +19,10 @@ inline constexpr LookupTable<Item, Time> perishableDestructionTimes = []
 	return lt;
 }();
 
-void processPerishableRots(Array<Item> &perishables, Array<Time> &livingTimes, Time timePassed);
+void process_perishable_rots(Array<Item> &perishables, Array<Time> &livingTimes, Time timePassed);
 
-inline bool checkRotten(Item perishable, Time livingTime);
+inline bool check_rotten(Item perishable, Time livingTime);
 
-inline Time getPerishableTime(Item item, Time timePassed, Temp temperature);
+inline Time get_perishable_time(Item item, Time timePassed, Temp temperature);
 
 #endif

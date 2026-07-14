@@ -9,7 +9,7 @@
 
 namespace animal
 {
-inline constexpr LookupTable<Animal, Frame> walking_frame_per_tiles = [] 
+inline constexpr LookupTable<Animal, Frame> WALKING_FRAME_PER_TILES = [] 
 {
 	LookupTable<Animal, Frame> lt{};
 	using enum Animal;
@@ -17,7 +17,7 @@ inline constexpr LookupTable<Animal, Frame> walking_frame_per_tiles = []
 	return lt;
 }();
 
-inline constexpr LookupTable<Animal, Frame> running_frame_per_tiles = []
+inline constexpr LookupTable<Animal, Frame> RUNNING_FRAME_PER_TILES = []
 {
 	LookupTable<Animal, Frame> lt{};
 	using enum Animal;
@@ -32,66 +32,66 @@ LookupTable<Animal, Frame> get_frame_per_tiles_table(bool running)
 	else return walkingFramePerTiles;
 }
 
-inline constexpr LookupTable<Animal, Time> breeding_intervals = []
+inline constexpr LookupTable<Animal, Time> BREEDING_INTERVALS = []
 {
 	LookupTable<Animal, Time> lt{};
 	using enum Animal;
-	lt[Animal::Pig] = year_length * 2.4;
-	lt[Animal::Cow] = year_length * 3.0;
-	lt[Animal::Chicken] = year_length * 0.7;
-	lt[Animal::Duck] = year_length * 0.8;
-	lt[Animal::Sheep] = year_length * 2.4;
-	lt[Animal::Goat] = year_length * 2.4;
-	lt[Animal::Horse] = year_length * 4.0;
-	lt[Animal::Ox] = year_length * 3.2;
-	lt[Animal::Donkey] = year_length * 4.0;
-	lt[Animal::Camel] = year_length * 5.0;
-	lt[Animal::WaterBuffalo] = year_length * 4.0;
-	lt[Animal::Rabbit] = year_length * 0.6;
-	lt[Animal::Antelope] = year_length * 3.0;
-	lt[Animal::Deer] = year_length * 3.0;
-	lt[Animal::Moose] = year_length * 5.0;
-	lt[Animal::Capybara] = year_length * 2.0;
-	lt[Animal::Turtle] = year_length * 7.0;
-	lt[Animal::Elephant] = year_length * 12.0;
-	lt[Animal::Bison] = year_length * 4.0;
-	lt[Animal::Wolf] = year_length * 4.0;
-	lt[Animal::Bear] = year_length * 7.0;
-	lt[Animal::Caribou] = year_length * 3.0;
+	lt[Animal::Pig] = YEAR_LENGTH * 2.4;
+	lt[Animal::Cow] = YEAR_LENGTH * 3.0;
+	lt[Animal::Chicken] = YEAR_LENGTH * 0.7;
+	lt[Animal::Duck] = YEAR_LENGTH * 0.8;
+	lt[Animal::Sheep] = YEAR_LENGTH * 2.4;
+	lt[Animal::Goat] = YEAR_LENGTH * 2.4;
+	lt[Animal::Horse] = YEAR_LENGTH * 4.0;
+	lt[Animal::Ox] = YEAR_LENGTH * 3.2;
+	lt[Animal::Donkey] = YEAR_LENGTH * 4.0;
+	lt[Animal::Camel] = YEAR_LENGTH * 5.0;
+	lt[Animal::WaterBuffalo] = YEAR_LENGTH * 4.0;
+	lt[Animal::Rabbit] = YEAR_LENGTH * 0.6;
+	lt[Animal::Antelope] = YEAR_LENGTH * 3.0;
+	lt[Animal::Deer] = YEAR_LENGTH * 3.0;
+	lt[Animal::Moose] = YEAR_LENGTH * 5.0;
+	lt[Animal::Capybara] = YEAR_LENGTH * 2.0;
+	lt[Animal::Turtle] = YEAR_LENGTH * 7.0;
+	lt[Animal::Elephant] = YEAR_LENGTH * 12.0;
+	lt[Animal::Bison] = YEAR_LENGTH * 4.0;
+	lt[Animal::Wolf] = YEAR_LENGTH * 4.0;
+	lt[Animal::Bear] = YEAR_LENGTH * 7.0;
+	lt[Animal::Caribou] = YEAR_LENGTH * 3.0;
 	lt[Animal::Fish] = YEAR_LENGTH * 0.5;
 	return lt;
 }();
 
-inline constexpr LookupTable<Animal,Time> pregnancy_lengths = [] {
+inline constexpr LookupTable<Animal,Time> PREGNANCY_LENGTHS = [] {
   LookupTable<Animal,Time> lt{};
   using enum Animal;
-  lt[Animal::Pig] = 114 * day_length;
-lt[Animal::Cow] = 283 * day_length;
-lt[Animal::Chicken] = 21 * day_length;
-lt[Animal::Duck] = 28 * day_length;
-lt[Animal::Sheep] = 151 * day_length;
-lt[Animal::Goat] = 150 * day_length;
-lt[Animal::Horse] = 335 * day_length;
-lt[Animal::Ox] = 283 * day_length;
-lt[Animal::Donkey] = 365 * day_length;
-lt[Animal::Camel] = 395 * day_length;
-lt[Animal::WaterBuffalo] = 325 * day_length;
-lt[Animal::Rabbit] = 31 * day_length;
-lt[Animal::Antelope] = 200 * day_length;
-lt[Animal::Deer] = 205 * day_length;
-lt[Animal::Moose] = 235 * day_length;
-lt[Animal::Capybara] = 150 * day_length;
-lt[Animal::Turtle] = 60 * day_length;
-lt[Animal::Elephant] = 660 * day_length;
-lt[Animal::Bison] = 285 * day_length;
-lt[Animal::Wolf] = 63 * day_length;
-lt[Animal::Bear] = 220 * day_length;
-lt[Animal::Caribou] = 230 * day_length;
+  lt[Animal::Pig] = 114 * DAY_LENGTH;
+lt[Animal::Cow] = 283 * DAY_LENGTH;
+lt[Animal::Chicken] = 21 * DAY_LENGTH;
+lt[Animal::Duck] = 28 * DAY_LENGTH;
+lt[Animal::Sheep] = 151 * DAY_LENGTH;
+lt[Animal::Goat] = 150 * DAY_LENGTH;
+lt[Animal::Horse] = 335 * DAY_LENGTH;
+lt[Animal::Ox] = 283 * DAY_LENGTH;
+lt[Animal::Donkey] = 365 * DAY_LENGTH;
+lt[Animal::Camel] = 395 * DAY_LENGTH;
+lt[Animal::WaterBuffalo] = 325 * DAY_LENGTH;
+lt[Animal::Rabbit] = 31 * DAY_LENGTH;
+lt[Animal::Antelope] = 200 * DAY_LENGTH;
+lt[Animal::Deer] = 205 * DAY_LENGTH;
+lt[Animal::Moose] = 235 * DAY_LENGTH;
+lt[Animal::Capybara] = 150 * DAY_LENGTH;
+lt[Animal::Turtle] = 60 * DAY_LENGTH;
+lt[Animal::Elephant] = 660 * DAY_LENGTH;
+lt[Animal::Bison] = 285 * DAY_LENGTH;
+lt[Animal::Wolf] = 63 * DAY_LENGTH;
+lt[Animal::Bear] = 220 * DAY_LENGTH;
+lt[Animal::Caribou] = 230 * DAY_LENGTH;
 lt[Animal::Fish] = 4 * DAY_LENGTH;
   return lt;
  }();  
 
-inline constexpr LookupTable<Animal,float> base_fertility_chances = [] {
+inline constexpr LookupTable<Animal,float> BASE_FERTILITY_CHANCES = [] {
   LookupTable<Animal,float> lt{};
   using enum Animal;
   lt[Animal::Pig] = 0.90f;
@@ -121,7 +121,7 @@ lt[Animal::Fish] = 0.98f;
  }();
   
 // in terms of hunger consumed per hour
-inline constexpr LookupTable<Animal, Hunger> eating_speeds = []
+inline constexpr LookupTable<Animal, Hunger> EATING_SPEEDS = []
 {
 	LookupTable<Animal, Hunger> lt{};
 	lt[Animal::Pig] = 2950;
@@ -150,37 +150,37 @@ inline constexpr LookupTable<Animal, Hunger> eating_speeds = []
 	return lt;
 }();
 
-inline constexpr LookupTable<Animal, Time> max_ages = []
+inline constexpr LookupTable<Animal, Time> MAX_AGES = []
 {
 	LookupTable<Animal, Time> lt{};
 	using enum Animal;
-	lt[Animal::Pig] = static_cast<int>(15.0 * year_length);
-	lt[Animal::Cow] = static_cast<int>(20.0 * year_length);
-	lt[Animal::Chicken] = static_cast<int>(8.0 * year_length);
-	lt[Animal::Duck] = static_cast<int>(10.0 * year_length);
-	lt[Animal::Sheep] = static_cast<int>(12.0 * year_length);
-	lt[Animal::Goat] = static_cast<int>(15.0 * year_length);
-	lt[Animal::Horse] = static_cast<int>(30.0 * year_length);
-	lt[Animal::Ox] = static_cast<int>(20.0 * year_length);
-	lt[Animal::Donkey] = static_cast<int>(30.0 * year_length);
-	lt[Animal::Camel] = static_cast<int>(40.0 * year_length);
-	lt[Animal::WaterBuffalo] = static_cast<int>(25.0 * year_length);
-	lt[Animal::Rabbit] = static_cast<int>(9.0 * year_length);
-	lt[Animal::Antelope] = static_cast<int>(12.0 * year_length);
-	lt[Animal::Deer] = static_cast<int>(15.0 * year_length);
-	lt[Animal::Moose] = static_cast<int>(20.0 * year_length);
-	lt[Animal::Capybara] = static_cast<int>(10.0 * year_length);
-	lt[Animal::Turtle] = static_cast<int>(80.0 * year_length);
-	lt[Animal::Elephant] = static_cast<int>(70.0 * year_length);
-	lt[Animal::Bison] = static_cast<int>(20.0 * year_length);
-	lt[Animal::Wolf] = static_cast<int>(13.0 * year_length);
-	lt[Animal::Bear] = static_cast<int>(25.0 * year_length);
-	lt[Animal::Caribou] = static_cast<int>(15.0 * year_length);
+	lt[Animal::Pig] = static_cast<int>(15.0 * YEAR_LENGTH);
+	lt[Animal::Cow] = static_cast<int>(20.0 * YEAR_LENGTH);
+	lt[Animal::Chicken] = static_cast<int>(8.0 * YEAR_LENGTH);
+	lt[Animal::Duck] = static_cast<int>(10.0 * YEAR_LENGTH);
+	lt[Animal::Sheep] = static_cast<int>(12.0 * YEAR_LENGTH);
+	lt[Animal::Goat] = static_cast<int>(15.0 * YEAR_LENGTH);
+	lt[Animal::Horse] = static_cast<int>(30.0 * YEAR_LENGTH);
+	lt[Animal::Ox] = static_cast<int>(20.0 * YEAR_LENGTH);
+	lt[Animal::Donkey] = static_cast<int>(30.0 * YEAR_LENGTH);
+	lt[Animal::Camel] = static_cast<int>(40.0 * YEAR_LENGTH);
+	lt[Animal::WaterBuffalo] = static_cast<int>(25.0 * YEAR_LENGTH);
+	lt[Animal::Rabbit] = static_cast<int>(9.0 * YEAR_LENGTH);
+	lt[Animal::Antelope] = static_cast<int>(12.0 * YEAR_LENGTH);
+	lt[Animal::Deer] = static_cast<int>(15.0 * YEAR_LENGTH);
+	lt[Animal::Moose] = static_cast<int>(20.0 * YEAR_LENGTH);
+	lt[Animal::Capybara] = static_cast<int>(10.0 * YEAR_LENGTH);
+	lt[Animal::Turtle] = static_cast<int>(80.0 * YEAR_LENGTH);
+	lt[Animal::Elephant] = static_cast<int>(70.0 * YEAR_LENGTH);
+	lt[Animal::Bison] = static_cast<int>(20.0 * YEAR_LENGTH);
+	lt[Animal::Wolf] = static_cast<int>(13.0 * YEAR_LENGTH);
+	lt[Animal::Bear] = static_cast<int>(25.0 * YEAR_LENGTH);
+	lt[Animal::Caribou] = static_cast<int>(15.0 * YEAR_LENGTH);
 	lt[Animal::Fish] = static_cast<int>(5.0 * YEAR_LENGTH);
 	return lt;
 }();
 
-inline constexpr LookupTable<Animal, Time> fertility_ages = []
+inline constexpr LookupTable<Animal, Time> FERTILITY_AGES = []
 {
 	LookupTable<Animal, Time> lt;
 	lt[Animal::Pig] = 0.10f;
@@ -214,7 +214,7 @@ inline constexpr LookupTable<Animal, Time> fertility_ages = []
 }();
 
   
-inline constexpr LookupTable<Animal, Time> senescence_ages = [] {
+inline constexpr LookupTable<Animal, Time> SENESCENCE_AGES = [] {
 	LookupTable<Animal, Time> lt{};
 	using enum Animal;
 
@@ -255,7 +255,7 @@ inline LookupTable<Animal, uint16_t> hunger_search_threshold = []
 	return lt;
 }();
 
-inline constexpr LookupTable<Animal, uint16_t> sight_ranges = []
+inline constexpr LookupTable<Animal, uint16_t> SIGHT_RANGES = []
 {
 	LookupTable<Animal, uint16_t> lt;
 
@@ -286,7 +286,7 @@ inline constexpr LookupTable<Animal, uint16_t> sight_ranges = []
 	return lt;
 }();
 
-inline constexpr LookupTable<Animal, Speed> min_speed = []
+inline constexpr LookupTable<Animal, Speed> MIN_SPEED = []
 {
 	LookupTable<Animal, Speed> lt;
 
@@ -317,7 +317,7 @@ inline constexpr LookupTable<Animal, Speed> min_speed = []
 	return lt;
 }();
 
-inline constexpr LookupTable<Animal, Speed> max_speed = []
+inline constexpr LookupTable<Animal, Speed> MAX_SPEED = []
 {
 	LookupTable<Animal, Speed> lt;
 
@@ -348,7 +348,7 @@ inline constexpr LookupTable<Animal, Speed> max_speed = []
 	return lt;
 }();
 
-inline constexpr LookupTable<Animal, Health> max_healths = []
+inline constexpr LookupTable<Animal, Health> MAX_HEALTHS = []
 {
 	LookupTable<Animal, Health> lt{};
 	using enum Animal;
@@ -356,7 +356,7 @@ inline constexpr LookupTable<Animal, Health> max_healths = []
 	return lt;
 }();
 
-inline constexpr LookupTable<Animal, Hunger> max_hungers = []
+inline constexpr LookupTable<Animal, Hunger> MAX_HUNGERS = []
 {
 	LookupTable<Animal, Hunger> lt{};
 	using enum Animal;
@@ -364,7 +364,7 @@ inline constexpr LookupTable<Animal, Hunger> max_hungers = []
 	return lt;
 }();
 	
-inline constexpr const BitsetTable<Animal> is_egg_layer = []
+inline constexpr const BitsetTable<Animal> IS_EGG_LAYER = []
 {
 	BitsetTable<Animal> t;
 	auto add = [&](Animal a) { t.bitset.set(static_cast<uint16_t>(a)); };
@@ -376,12 +376,12 @@ inline constexpr const BitsetTable<Animal> is_egg_layer = []
 	return t;
 }();
 
-inline constexpr LookupTable<Animal,Time> hatch_times = [] {
+inline constexpr LookupTable<Animal,Time> HATCH_TIMES = [] {
 		LookupTable<Animal,Time> lt{};
 		using enum Animal;
-		lt[Chicken] = day_length * 23;
-		lt[Duck] = day_length * 29;
-		lt[Turtle] = day_length * 99;
+		lt[Chicken] = DAY_LENGTH * 23;
+		lt[Duck] = DAY_LENGTH * 29;
+		lt[Turtle] = DAY_LENGTH * 99;
 		// TODO: fish
 		return lt;
 }();

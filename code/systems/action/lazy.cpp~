@@ -54,7 +54,7 @@ void UnitDatabase::setNewAction(EntityID i)
 // and sell goods among each other. Resource Estimates are decent, but true
 // bureaucratic recording is impossible
 
-inline bool determineResourceAssignment(EntityID pawnIndex, size_t taskPriorityQueueIndex, Role role) {
+inline bool attemptResourceAssignment(EntityID pawnIndex, size_t taskPriorityQueueIndex, Role role) {
 					for (int k = 0;
 					     k < resourcerResources[(role)].size;
 					     k++)
@@ -70,7 +70,7 @@ inline bool determineResourceAssignment(EntityID pawnIndex, size_t taskPriorityQ
 				return false;
 }
 
-inline bool determineProductsAssignment(EntityID pawnIndex, size_t taskPriorityQueueIndex, Role role)
+inline bool attemptProductsAssignment(EntityID pawnIndex, size_t taskPriorityQueueIndex, Role role)
 {
 					// PRODUCTS
 					for (int k = 0;
@@ -86,7 +86,7 @@ inline bool determineProductsAssignment(EntityID pawnIndex, size_t taskPriorityQ
 
 /* Get jobs from  */
 // NOTE: can implement jump table. this is for authority command structure
-void decideTask(EntityID pawnIndex)
+void decideTask(EntityID pawnIndex, UnitDatabase& database)
 {
 	int taskIndex = -1;
 	TaskType type = TaskType::NONE;

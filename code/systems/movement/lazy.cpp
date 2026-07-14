@@ -25,11 +25,11 @@ inline void move(DB& database, EntityID i, const Direction direction)
 }
 
 template <typename DB>
-inline void setNextMoveInertia(DB& database, TileDatabase& tiles, EntityID i, const Coord coord, bool running)
+inline void set_next_move_inertia(DB& database, TileDatabase& tiles, EntityID i, const Coord coord, bool running)
 {
 if (typeid(database) == AnimalDatabase)
 		{
-	LookupTable<Animal, Frame> framePerTilesTable = animal::getFramePerTilesTable(running);
+	LookupTable<Animal, Frame> frame_per_tiles_table = animal::getFramePerTilesTable(running);
 		  
     Animal animal = database.animals[i];
     database.inertias[i] = tiles.calcInertia(framePerTilesTable[animal], coord);
@@ -39,7 +39,7 @@ if (typeid(database) == AnimalDatabase)
   // TODO: speed for different units
 }
 
-void setNextMovementInertia() {}
+void set_next_movement_inertia() {}
 
 else if (actions[i] == Action::Prowl ||
 			 actions[i] == Action::CheckProwl)

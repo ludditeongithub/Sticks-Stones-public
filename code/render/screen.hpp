@@ -25,9 +25,9 @@ const int first_launch_window_height = 500;
 const int screen_width = 640;
 const int screen_height = 480;
 
-constexpr uint32_t tile_length = 16;
-constexpr uint32_t screen_tile_height = screen_height / tile_length;
-constexpr uint32_t screen_tile_width = screen_width / tile_length;
+constexpr uint32_t TILE_LENGTH = 16;
+constexpr uint32_t SCREEN_TILE_HEIGHT = screen_height / TILE_LENGTH;
+constexpr uint32_t SCREEN_TILE_WIDTH = screen_width / TILE_LENGTH;
 
 std::array<Coord, 6> screen_dimensions = {Coord{640, 360},  {1280, 720},  {1366, 768},
 					  {1600, 900}, {1920, 1080}, {3840, 2160}};

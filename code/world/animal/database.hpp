@@ -58,7 +58,7 @@ struct EggFertilizationHandler {
     // BASE DATABASE MEMBERS
     // =========================
 
-constexpr static uint16_t entity_size = sizeof(Animal) +
+constexpr static uint16_t ENTITY_SIZE = sizeof(Animal) +
 + sizeof(bool)
   
  +  sizeof(Animal) 

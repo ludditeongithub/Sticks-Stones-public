@@ -9,32 +9,32 @@
 #include <world/unit/database.hpp>
 #include <world/unit/roles_commodities.hpp>
 
-void setUnitJob(UnitDatabase& database, CommodityDispatcher& dispatcher, uint16_t unitIndex);
-Commodity::underlying getUnitNextCommodity(UnitDatabase& database, CommodityDispatcher& dispatcher, uint16_t unitIndex);
+void set_unit_job(UnitDatabase& database, CommodityDispatcher& dispatcher, uint16_t unitIndex);
+Commodity::underlying get_unit_next_commodity(UnitDatabase& database, CommodityDispatcher& dispatcher, uint16_t unitIndex);
 
-void getResourceAction(int pawn, Item item, int sourceIndex, int variantIndex);
+void get_resource_action(int pawn, Item item, int sourceIndex, int variantIndex);
 // Get amount of item to put into inventory ();
 // if item in question is an item with variants ();
-void collectResource(Item item);
-bool checkActionRequisites(Resource resource, int pawn);
-Array<bool> checkActionRequisites(Recipe recipe, Array<Role> roles);
-bool checkActionRequisites(Resource resource, int pawn);
-void setTargetResource(int pawn, Role role);
-void processResources();
-bool attemptProduction(int pawn,);
+void collect_resource(Item item);
+bool check_action_requisites(Resource resource, int pawn);
+Array<bool> check_action_requisites(Recipe recipe, Array<Role> roles);
+bool check_action_requisites(Resource resource, int pawn);
+void set_target_resource(int pawn, Role role);
+void process_resources();
+bool attempt_production(int pawn);
 // FOR LIQUIDS ();
-void productFinish(ProductVariant product, int pawn, Actions action, uint16_t variant);
+void product_finish(ProductVariant product, int pawn, Actions action, uint16_t variant);
 /* TODO: change this section to be event-based */ ();
 // CORPSE ();
 // ();
-void attemptSupport(int pawn, Role role);
+void attempt_support(int pawn, Role role);
 // third plant in unplowed but exposed soil ();
 // fourth search for weeds ();
-void variantItemInterpreter();
+void variant_item_interpreter();
 // void ();
 // void ();
 
 
 // true if all tools have been found
-bool continueFindToolsOrQuit(Action action, Inventory& inventory, Coord coord);
+bool continue_find_tools_or_quit(Action action, Inventory& inventory, Coord coord);
 // bool ();

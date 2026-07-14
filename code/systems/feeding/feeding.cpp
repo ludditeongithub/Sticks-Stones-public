@@ -14,7 +14,7 @@ enum class GeneralFeedingCategory
 
 // TODO: possible optimization: separate herbivores and carnivores into separate loops, to improve
 // cache efficiency
-void setHungryDestinations(DispatchData<Animal> &dispatch)
+void set_hungry_destinations(DispatchData<Animal> &dispatch)
 {
 	Array<Animal> &animals = dispatch.types;
 	Array<Coord> &positions = dispatch.positions;
@@ -24,7 +24,7 @@ void setHungryDestinations(DispatchData<Animal> &dispatch)
 }
 
 
-void determineFeedingTarget(Animal a, EntityID i, Array<Coord>& positions, Array<Coord>& destinations)
+void determine_feeding_target(Animal a, EntityID i, Array<Coord>& positions, Array<Coord>& destinations)
 {
         uint16_t lowest = 0;
 		Coord nearest;
@@ -56,7 +56,7 @@ void determineFeedingTarget(Animal a, EntityID i, Array<Coord>& positions, Array
 
 		if (carnivores[a])
 		{
-			uint32_t preyIndex;
+			uint32_t prey_index;
 			BitsetTable bt = carnivoreDiets[a];
 			for (Animal prey : bt)
 			{

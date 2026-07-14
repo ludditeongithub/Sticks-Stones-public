@@ -104,6 +104,18 @@ def snake_to_camel(s: str) -> str:
 def snake_to_pascal(s: str) -> str:
     return "".join(word.capitalize() for word in s.split("_"))
 
+def words(value):
+    return re.findall(
+        r'[A-Z]?[a-z]+|[A-Z]+(?=[A-Z]|$)|\d+',
+        value
+    )
+
+def camelcase(value):
+    parts = words(value)
+    if not parts:
+        return ""
+    return parts[0].lower() + ''.join(x.capitalize() for x in parts[1:])
+
 def make_entity_yaml(main_enum: str) -> dict:
     entity_name = main_enum[0].lower() + main_enum[1:]
     return {

@@ -5,7 +5,7 @@
 
 // without upgrades, a pawn can only be an apprentice of one role at a time.
 
-std::stack nextApprenticeIndex;
+std::stack next_apprentice_index;
 
 struct ApprenticeData
 {
@@ -17,7 +17,7 @@ struct ApprenticeData
 vector<ApprenticeData>
     apprentices;
 
-void addApprentice(uint16_t pawnIndex, Role apprenticeRole)
+void add_apprentice(uint16_t pawnIndex, Role apprenticeRole)
 {
 	bool found = false;
 	int reductions = 0;
@@ -51,15 +51,15 @@ void addApprentice(uint16_t pawnIndex, Role apprenticeRole)
 	    return "";
     }
 	}
-	uint16_t xpLeft = apprenticeXPRequired[static_cast<int>(apprenticeRole)];
+	uint16_t xp_left = apprenticeXPRequired[static_cast<int>(apprenticeRole)];
 	apprentices[nextApprenticeIndex.pop()]({pawnIndex, apprenticeRole, xpLeft});
 }
 
-void finishApprenticeship(uint16_t apprenticeIndex)
+void finish_apprenticeship(uint16_t apprenticeIndex)
 {
-	uint16_t pawnIndex = apprentices[apprenticeIndex].pawnIndex;
+	uint16_t pawn_index = apprentices[apprenticeIndex].pawnIndex;
 	roles[pawnIndex].push_back(apprentices[apprenticeIndex].role);
-	nextApprenticeIndex.push(apprenticeIndex);
+	next_apprentice_index.push(apprenticeIndex);
 }
 
-void removeRole(int pawn, int roleIndex) { roles[pawn][roleIndex] = Role::EMPTY; }
+void remove_role(int pawn, int roleIndex) { roles[pawn][roleIndex] = Role::EMPTY; }

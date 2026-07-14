@@ -18,7 +18,7 @@ struct ItemDatabase
     // BASE DATABASE MEMBERS
     // =========================
 
-constexpr static uint16_t entity_size = sizeof(Item) +
+constexpr static uint16_t ENTITY_SIZE = sizeof(Item) +
 + sizeof(bool)
   
  +  sizeof(Item) 

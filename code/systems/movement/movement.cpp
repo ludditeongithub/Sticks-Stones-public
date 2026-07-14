@@ -1,18 +1,20 @@
 #include "movement.hpp"
+#include "core/data.hpp"
+#include <optional>
 
 
 template<typename DB>
-void handlePathsfindingAndMovement(DB& database, std::vector<EntityID> &actingEntities)
+void handle_pathsfinding_and_movement(DB& database, std::vector<EntityID> &actingEntities)
 {
 	std::vector<EntityID> newPathEntities =
 			markNewPathEntities(actingEntities, database.frameDatas);
 	setNewPaths(newPathEntities, database.coords, database.targets);
 }
 
-bool checkTileMovement(EntityID i, Array<FrameData>& frameDatas)
+bool check_tile_movement(EntityID i, Array<FrameData>& frameDatas)
 {
-const ActState actState = frameDatas[i].get<ActState>();
-switch (actState) {
+const ActState act_state = frameDatas[i].get<ActState>();
+switch (act_state) {
 case ActState::Walk:
        	
        	break;
@@ -30,7 +32,7 @@ default:
 }
 }
 
-	void moveAnimals()
+	void move_animals()
 	{
 	
 				if (animalAction[i] = Action::CheckProwl)
@@ -90,10 +92,16 @@ default:
 							if (attack(i, currentDest[i], false, true))
 								eatCorpse(i);
 					}
-		}			
+				}
+        }
 
-void triggerMovements(std::vector<EntityID>& indices, Array<Coord>& coords, Array<FrameData>& frameDatas)
+template <typename T>                                
+void trigger_movements(Array<T>& types, std::vector<EntityID>& indices, Array<Coord>& coords, Array<FrameData>& frameDatas)
 {
-		for (EntityID i = 0; i < indices.size(); i++) coords[i].move(frameDatas[i].get<Direction>());				        
+	for (EntityID i = 0; i < indices.size(); i++)
+	{
+          Direction direction = frameDatas[i].get<Direction>();
+          g_Search->moveEntity(types[i], {indices[i], std::make_optional<Coord>(coords[i]), direction});	coords[i].move(direction);                
+	}        
 }
 

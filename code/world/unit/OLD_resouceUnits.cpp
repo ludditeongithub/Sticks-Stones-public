@@ -1,9 +1,9 @@
 #include "../include/basic.hpp"
 #include "../include/categories.hpp"
 
-vector<Item> resourceUnitResources[static_cast<int>(Role::RESOURCEMAX)];
+vector<Item> resource_unit_resources[static_cast<int>(Role::RESOURCEMAX)];
 
-void initializeResourceUnitLists()
+void initialize_resource_unit_lists()
 {
 	resourceUnitResources[static_cast<int>(Role::Scavenger)] = {
 	    Item::Rock,	      Item::Pebble, Item::LargeRock, Item::Boulder,   Item::Stick,
@@ -59,7 +59,7 @@ void initializeResourceUnitLists()
 std::array<vector<Item>, static_cast<int>(Role::PRODUCTSMAX)> producerProducts;
 
 // TODO: MAP tools to producers who can craft them
-void intializeProducerProducts()
+void intialize_producer_products()
 {
 	// find way to restrict some items to meso age
 	producerProducts[static_cast<int>(Role::HideCrafter)] = {

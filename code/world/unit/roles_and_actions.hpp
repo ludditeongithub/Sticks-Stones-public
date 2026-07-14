@@ -1,6 +1,7 @@
 #ifndef ROLES_H_
 #define ROLES_H_
 #include "enum.hpp"
+#include <world/action/enum.hpp>
 #include <core/data.hpp>
 #include <cstdint>
 #include <limits>
@@ -11,7 +12,8 @@
 #include <core/tables.hpp>
 
 constexpr uint16_t MAX_ROLES_PER_TASK = 6;
-constexpr uint16_t ACTION_TOOLS_AMOUNT = 100; //NOTE: likely wrong
+constexpr uint16_t ACTION_TOOLS_AMOUNT = 100; // NOTE: likely wrong
+constexpr uint16_t ACTION_MAX_REQUIREMENTS = 7; // NOTE: likely wrong
 
 struct RoleData
 {

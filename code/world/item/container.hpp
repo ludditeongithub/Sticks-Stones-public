@@ -10,7 +10,7 @@
 // @codegen:end specialization
 
 
-constexpr uint16_t holdable_underflow_limit = 6;
+constexpr uint16_t HOLDABLE_UNDERFLOW_LIMIT = 6;
 
 struct ItemSlot
 {
@@ -121,7 +121,7 @@ struct Container
 	float bulk = 0;
 	float weight = 0;
 
-	std::array<HoldableSlot, holdable_underflow_limit> holdables;
+	std::array<HoldableSlot, HOLDABLE_UNDERFLOW_LIMIT> holdables;
 	// OPTI: can go back and optimize? this into 3 seperate fields
 	//  std::array<ItemSlot, 3> items;
 	//  VariantItemSlot variantItem;

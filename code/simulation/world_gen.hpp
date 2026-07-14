@@ -229,7 +229,7 @@ ScavengeableSpawnBuffer(size_t capacity)
 
 	WorldSpawner(int width, int height)
 	    : width(width), height(height),
-	      tile_amount(width * height * chunk_size * chunks_per_region)
+	      tile_amount(width * height * CHUNK_SIZE * CHUNKS_PER_REGION)
 	{
 		rcx = RandomMachine<int>(WIDTH / 8, 7 * WIDTH / 8);
 		rcy = RandomMachine<int>(HEIGHT / 8, 7 * HEIGHT / 8);

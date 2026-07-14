@@ -1,10 +1,10 @@
 // TODO: factor in variable distances creating variable chance of hitting
-void updateAttacks(float *chances, Weapon* weapons, Stats *stats, Coord *positions, float *healths,
+void update_attacks(float *chances, Weapon* weapons, Stats *stats, Coord *positions, float *healths,
 				   int *targets, Action *actions)
 {
 	// precompute attack success and damages
 
-	Arena<bool> attackSuccess; // ensure arena makes default value
+	Arena<bool> attack_success; // ensure arena makes default value
 	Arena<float> damages;
 	for (int i = 0; i < targets.size(); i++)
 	{

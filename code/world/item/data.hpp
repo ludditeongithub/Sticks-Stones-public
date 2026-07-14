@@ -25,12 +25,13 @@ constexpr float SOLID_BULK_MULT = 1.0; // mulitiplies mid bulk
 constexpr float MID_BULK_MAX = 35.0;
 constexpr float SINGLE_BULK_MAX = 60.0;
 
-// mas weights pawns can carry
 constexpr float MAX_CARRY = 250.0;
 
-uint8_t humanSight;
-uint16_t nearGatherRange = humanSight; // the farthest a pawn will  go to fetch an item
-uint16_t midGatherRange = humanSight * 2;
+constexpr uint8_t HUMAN_SIGHT = 50;
+constexpr uint16_t NEAR_GATHER_RANGE = HUMAN_SIGHT; // the farthest a pawn will  go to fetch an item
+constexpr uint16_t MID_GATHER_RANGE = HUMAN_SIGHT * 2;
+
+constexpr uint16_t PRODUCT_MAX_INGREDIENTS = 5;
 
 // Fine means that only fine objects can be carried, mid means that loose, soft, or solid objects
 // can be carried, single means that only single objects can be carried

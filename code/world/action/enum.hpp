@@ -129,7 +129,7 @@ enum class Action : uint8_t
 	Assign,
 	Wander,
 	Flee,
-	Pursuit,	
+	Pursuit,
 	// end shared by animals
 	PickupTool,
 	MAIN_MAX,
@@ -141,16 +141,27 @@ enum class Action : uint8_t
 	ApproachTile,
 	APPROACH_MAX,
 
-	ANIMAL_MIN, 
-	Breed, // TODO 
-	AnimalFoodSearch,  // TODO 
+	ANIMAL_MIN,
+	Breed,		   // TODO
+	AnimalFoodSearch,  // TODO
 	AnimalBreedSearch, // TODO
-	AnimalDrinkSearch, // TODO 
-	RejoinPack, // wanders if animal is not a pack animal, possibly change
-			  // to wander
-	Migration, // TODO 
+	AnimalDrinkSearch, // TODO
+	RejoinPack,	   // wanders if animal is not a pack animal, possibly change
+			   // to wander
+	Migration,	   // TODO
 	ANIMAL_MAX,
 	MAX
+};
+
+enum class ActionClass
+{
+	Resource,
+	Production,
+	Support,
+	Research,
+	Exploration,
+	Combat,
+	Hauling
 };
 
 enum class ActState : uint8_t

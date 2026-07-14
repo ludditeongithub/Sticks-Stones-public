@@ -44,30 +44,31 @@ ItemDatabase itemDatabase;
 BuildableDatabase buildableDatabase;
 Arena buildableArena;  
 
-void initNewWorld();
+void init_new_world();
 
-void deinitWorld();
+void deinit_world();
 
-GameSave& saveGame(std::string name, GameSave *save);
+GameSave& save_game(std::string name, GameSave *save);
 
-void loadGame(GameSave& save);
+void load_game(GameSave& save);
 
-void newGame();
+void new_game();
 
-void playerSpawn();  
+void player_spawn();  
 
 void quit();
 
-void handleEvent(SDL_Event *e);
+void handle_event(SDL_Event *e);
 
-void processWorld();
+void process_world();
 
-void gameLoop();
+void game_loop();
 
-void frameLoop();
+void frame_loop();
 
-void hourlyLoop();  
+void hourly_loop();  
 
-uint32_t getDay();
-
+uint32_t get_day();
 };
+
+Game* g_game;

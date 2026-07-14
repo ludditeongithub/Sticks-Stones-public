@@ -1,6 +1,6 @@
 // wander becomes idle at end
 // also automatically sets
-void setPositionsAndQueueNextActions(PathsBuffer& rpd, std::vector<EntityID>& indices, Array<Coord> positions, Array<Action> actions)
+void set_positions_and_queue_next_actions(PathsBuffer& rpd, std::vector<EntityID>& indices, Array<Coord> positions, Array<Action> actions);
 {
 	int j = 0;
 	for (int k = 0; k < indices.size; k++)

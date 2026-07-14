@@ -27,8 +27,7 @@ float generateMelanin(World& world, Coord coord) {
 	return std::lerp(latitude, random_chance->next(), 0.3);
 }
 
-float generateMelanin(float parent1, float parent2){
+float generateMelanin(float parent1, float parent2) {
         float crossedValue = std::lerp(parent1, parent2, 0.5);
 	return std::lerp(crossedValue, random_chance->next(), 0.08);
 }
-

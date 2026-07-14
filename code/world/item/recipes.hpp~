@@ -170,7 +170,7 @@ void intializeResources()
 // there are two alternate forms of alternate recipes: swappable materials, and truly alternate
 // recipes (which often require a different action
 
-struct Recipe
+struct ProductRecipe
 {
 	Actions action;
 	uint32_t time;
@@ -183,7 +183,7 @@ struct Recipe
 	itemTags tags;		// how much of the item is produced.
 };
 
-Recipe products[static_cast<int>(Item::MAX) -
+ProductRecipe products[static_cast<int>(Item::MAX) -
 		(static_cast<int>(Item::RESOURCESMAX) - static_cast<int>(Item::VARIANTSMAX))];
 
 void initializeProducts()
@@ -966,9 +966,9 @@ void initializeProducts()
 	}
 }
 
-Recipe alternateInterpreter(Item product)
+ProductRecipe alternateInterpreter(Item product)
 {
-	Recipe recipe = products[static_cast<int>(Item::product)];
+	ProductRecipe recipe = products[static_cast<int>(Item::product)];
 	if (static_cast<int>(recipe.tags) & static_cast<int>(itemTags::Alternate))
 	{
 		switch (product)
@@ -1402,9 +1402,7 @@ Recipe alternateInterpreter(Item product)
 			return {};
 		}
 
-		void meals() {}
-
-		struct ToolRecipe()
+		struct ToolRecipe
 		{
 			Actions action;
 			uint16_t time;
@@ -1653,7 +1651,7 @@ Recipe alternateInterpreter(Item product)
 				return 0;
 			}
 		}
-
+		// TODO: containers can just be items. liquidCapacity should go into its own table.
 		struct ContainerRecipe()
 		{
 			Actions action;
@@ -2130,4 +2128,5 @@ Recipe alternateInterpreter(Item product)
 			    {1, 2, 3, 4, 5}};
 		}
 
+std::variant<ProductRecipe, BuildableRecipe, VehicleRecipe> Recipe;
 #endif // ITEMRECIPES_H_

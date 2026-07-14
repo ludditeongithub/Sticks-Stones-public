@@ -14,7 +14,7 @@ struct BuildableDatabase
     // BASE DATABASE MEMBERS
     // =========================
 
-constexpr static uint16_t entity_size = sizeof(Buildable) +
+constexpr static uint16_t ENTITY_SIZE = sizeof(Buildable) +
 + sizeof(bool)
   
  +  sizeof(Buildable) 

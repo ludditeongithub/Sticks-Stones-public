@@ -208,7 +208,7 @@ inline Coord get_sprite_dimensions(SpriteInfo &asi, Direction d, bool child)
 
 SDL_Rect get_animal_rect(Animal a, AnimalStatus as, Time age, Frame frame, SpriteInfo& asi)
 {
-	bool child = age < animal::fertility_ages[a];
+	bool child = age < animal::FERTILITY_AGES[a];
 	SDL_Rect sprite_set = sprite::animalSprites[a];
 	int x = sprite_set.x;
 	ActionStatus ac = as.get<ActionStatus>();
@@ -283,12 +283,12 @@ inline Frame get_next_unit_frame(Unit u, ActState as, Frame frame_number)
 		break;
 		// WALK
 	case ActState::Walk:
-		if (frame++ > unit_sprite_info.walk_sprite_frame_length)
+		if (frame++ > UNIT_SPRITE_INFO.walk_sprite_frame_length)
 			frame = 0;
 		break;
 		// TODO: RUN
 	case ActState::Run:
-		if (frame++ > unit_sprite_info.run_sprite_frame_length)
+		if (frame++ > UNIT_SPRITE_INFO.run_sprite_frame_length)
 			frame = 0;
 		break;
         // TODO: implement		
@@ -302,10 +302,10 @@ inline Frame get_next_unit_frame(Unit u, ActState as, Frame frame_number)
 }
 
 inline SDL_Rect get_unit_rect(Unit unit, ActState state, Direction direction, Frame frame, Time age) {
-	bool child = age < maturity_age;
+	bool child = age < MATURITY_AGE;
 	SDL_Rect sprite_set = sprite::unitSprites[];
 	int x = sprite_set.x;
-	SpriteInfo usi = unit_sprite_info;
+	SpriteInfo usi = UNIT_SPRITE_INFO;
 	if (child) x += get_child_sprite_offset(usi);
 	x += getActionSpriteOffset(usi, state);
 	x += get_direction_sprite_offset(usi, direction, child);

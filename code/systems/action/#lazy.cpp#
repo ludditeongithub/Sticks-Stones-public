@@ -1,0 +1,27 @@
+#pragma once
+#include <core/data.hpp>
+#include <world/unit/database.hpp>
+
+void UnitDatabase::setNewAction(EntityID i)
+{
+		if (health(i) <= 0) action(i) = Action::Dead;
+
+		if (action(i) == Action::Assign)
+		{
+			// get best role for pawn to inhabit
+			float highest = std::numeric_limits<float>::min();
+			auto ji = INVALID;
+			for (int j = 0; j < rd[i].size(); j++)
+			{
+				// TODO: precompute all scores for all roles
+				float t = getJobScore(rd[i][j]);
+				if (t > highest)
+				{
+					highest = t;
+					ji = j;
+				}
+			}
+			action(i) = roleToAction[rd[i][ji]];
+		}
+}
+

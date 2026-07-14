@@ -20,8 +20,8 @@
 #include <world/tile/data.hpp>
 #include <world/tile/enum.hpp>
 
-constexpr uint16_t render_chunk_width = 4;
-constexpr uint16_t render_chunk_height = 4;
+constexpr uint16_t RENDER_CHUNK_WIDTH = 4;
+constexpr uint16_t RENDER_CHUNK_HEIGHT = 4;
 
 // entities are stored by central tile, but must drawn from left corner tile
 inline Coord get_left_corner_tile(Coord origin, Coord dimensions)
@@ -31,15 +31,15 @@ inline Coord get_left_corner_tile(Coord origin, Coord dimensions)
 
 inline void copy_tiles(SDL_Texture* chunk_texture, World& world, Array<TileData> &tiles)
 {
-	for (uint16_t i = 0; i < screen_tile_height; i++)
+	for (uint16_t i = 0; i < SCREEN_TILE_HEIGHT; i++)
 	{
-		for (uint16_t j = 0; j < screen_tile_width; j++)
+		for (uint16_t j = 0; j < SCREEN_TILE_WIDTH; j++)
 		{
 			uint16_t ti = world.get_tile_index_from_coord({i, j});
 			// draw tiles
 			Tile t = tiles[ti].first();
 			SDL_Rect sd = SpriteSheet::tileSprites[static_cast<int>(t)];
-			sprite_sheet_texture.render(j * tile_length, i * tile_length, &sd,
+			sprite_sheet_texture.render(j * TILE_LENGTH, i * TILE_LENGTH, &sd,
 						   &main_screen_viewport);
 
 			// draw grass
@@ -47,7 +47,7 @@ inline void copy_tiles(SDL_Texture* chunk_texture, World& world, Array<TileData>
 			if (g != Grass::NONE)
 			{
 				sd = SpriteSheet::grassSprites[static_cast<int>(g)];
-				sprite_sheet_texture.render(i * tile_length, j * tile_length, &sd, &main_screen_viewport);
+				sprite_sheet_texture.render(i * TILE_LENGTH, j * TILE_LENGTH, &sd, &main_screen_viewport);
 		}
 	}
 	}
@@ -105,7 +105,7 @@ SDL_Texture& render_chunk_texture(World& world, Array<TileData>& tiles, Coord le
 {
 	SDL_Texture *chunk_texture =
 	    SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
-			      render_chunk_width, render_chunk_height);
+			      RENDER_CHUNK_WIDTH, RENDER_CHUNK_HEIGHT);
 	
 	SDL_SetRenderTarget(renderer, chunk_texture);
 
@@ -154,8 +154,8 @@ struct RenderManager
 		if (first_render)
 		{
 	// render rendering-chunks
-	for (size_t i = 0; i < world.world_tile_length; i+=render_chunk_width) {
-		for (size_t j = 0; j < world.world_tile_length; j+=render_chunk_height) {
+	for (size_t i = 0; i < world.world_tile_length; i+=RENDER_CHUNK_WIDTH) {
+		for (size_t j = 0; j < world.world_tile_length; j+=RENDER_CHUNK_HEIGHT) {
 			render_chunk_texture(world, tiles, {i,j} , entity_render_buffer);
 		}
 	}

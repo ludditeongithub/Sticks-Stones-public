@@ -24,7 +24,7 @@
 		// } else nextGrowth *= LOW_WATER_MULT;
 		
 
-inline void evalTemperature(World& world, int chunkIndex, Plant p, float& nextGrowth, auto&& alive, bool regrowth = false)
+inline void eval_temperature(World& world, int chunkIndex, Plant p, float& nextGrowth, auto&& alive, bool regrowth = false)
 {
 	float dmin = tempDeathMin[p];
 		Temp dmax = tempDeathMax[p];
@@ -53,10 +53,10 @@ inline void evalTemperature(World& world, int chunkIndex, Plant p, float& nextGr
 		}
 }
 
-inline void evalSunlight(World& world, int chunkIndex, float& nextGrowth, Array2D<float>& dailyInsolations, Array<float>& cloudCovers, Plant p, bool regrowth = false)
+inline void eval_sunlight(World& world, int chunkIndex, float& nextGrowth, Array2D<float>& dailyInsolations, Array<float>& cloudCovers, Plant p, bool regrowth = false)
 {
 		uint16_t latitude = world.getChunkLatitude(chunkIndex);
-		uint16_t timeZone = world.getChunkTimeZone(chunkIndex);
+		uint16_t time_zone = world.getChunkTimeZone(chunkIndex);
 		float is = dailyInsolations[latitude][timeZone];
 		float psun = perfectSunlight[p];
 		// sunlight (from 0.0 to 1.0)
@@ -136,7 +136,7 @@ void RegrowthPlantDatabase::updateRegrowthPlants(ItemDatabase& itemDatabase, Wor
 	}						
 }
 
-void updateAlivePlants(PlantDatabase& database)
+void update_alive_plants(PlantDatabase& database)
 {
 	for (size_t i = 0; i < database.alive.size(); i++) {
 		

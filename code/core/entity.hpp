@@ -14,18 +14,11 @@
 
 // using Entity = PackedEnum4_32<Role, 8, Animal, 6, Plant, 6, Item, 10>;
 
-using Entity = std::variant<Role, Animal, Plant, Item, Buildable>;
+using Entity = std::variant<Unit, Animal, Plant, Item, Buildable>;
 
-struct OptionalEntitySearchData
-{
-	std::optional<size_t> index;
-	Coord position;
-};	
-
-//TODO: make it possible for these to be variant or null
 struct EntitySearchData {
    size_t index;
-   Coord position;
+   std::optional<Coord> position;
 };
 
 struct AnimalRenderData {
@@ -62,14 +55,14 @@ using EntityRenderData = std::variant<PlantRenderData, AnimalRenderData, UnitRen
 
   struct EntityRenderBuffer {
     size_t plant_amount;
-    std::array<PlantRenderData, chunk_size> plants;
+    std::array<PlantRenderData, CHUNK_SIZE> plants;
     size_t animal_amount;
-    std::array<AnimalRenderData, chunk_size> animals;
+    std::array<AnimalRenderData, CHUNK_SIZE> animals;
     size_t unit_amount;
-    std::array<UnitRenderData, chunk_size> units;
+    std::array<UnitRenderData, CHUNK_SIZE> units;
     size_t item_amount;
-    std::array<ItemRenderData, chunk_size> items;
+    std::array<ItemRenderData, CHUNK_SIZE> items;
     size_t buildable_amount;
-    std::array<BuildableRenderData, chunk_size> buildables;
+    std::array<BuildableRenderData, CHUNK_SIZE> buildables;
   };
 

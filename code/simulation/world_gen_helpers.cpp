@@ -1,6 +1,6 @@
 #include "world/tile/data.hpp"
 
-inline Tile getTileType(int biome, float chance)
+inline Tile get_tile_type(int biome, float chance)
 {
 	switch (biome)
 	{

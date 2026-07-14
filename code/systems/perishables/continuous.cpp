@@ -5,7 +5,7 @@
 #include <world/item/perishables.hpp>
 #include <world/tile/data.hpp>
 
-void processPerishables(LifetimeManager &lm, ChunkManager &cm, Array<uint16_t> &perishableIndices,
+void process_perishables(LifetimeManager &lm, ChunkManager &cm, Array<uint16_t> &perishableIndices,
 			Array<Item> &perishables, Array<Time> &livingTimes, Time timePassed,
 			Array<Coord> &perishableCoords)
 {

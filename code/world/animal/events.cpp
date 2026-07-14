@@ -1,7 +1,7 @@
 #pragma once
 #include "database.hpp"
 
-void AnimalDatabase::handleEvent(Event &event)
+void AnimalDatabase::handle_event(Event &event)
 {
 		const EventType type = event.eventType;
 		switch (type)

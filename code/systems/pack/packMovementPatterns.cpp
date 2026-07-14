@@ -15,11 +15,11 @@ MovingStatus::PackRegroup MovingStatus::PackFollow
 
 // TODO: nth neareest pack center based on nthnearestobject
 
-uint8_t packSizes[static_cast<int>(Animal::MAX)];
-vector<PackCenter> packCenters;
+uint8_t pack_sizes[static_cast<int>(Animal::MAX)];
+vector<PackCenter> pack_centers;
 vector<std::pair<int, int>> packCoords;
 
-void returnToPack(int animalIndex)
+void return_to_pack(int animalIndex)
 {
 	movingStatus[animalIndex] = MovingStatus::PackRegroup;
 	int i = 0;
@@ -38,7 +38,7 @@ void returnToPack(int animalIndex)
 	}
 }
 
-void checkPackDistance(int animal)
+void check_pack_distance(int animal)
 {
 	if (movingStatus[animalIndex] == MovingStatus::PackProwl ||
 	    movingStatus[animalIndex] == MovingStatus::PackWander ||
@@ -48,9 +48,9 @@ void checkPackDistance(int animal)
 	}
 }
 
-void movePackCenter() {}
+void move_pack_center() {}
 
-void notifySquad(int notifier, bool grouped)
+void notify_squad(int notifier, bool grouped)
 {
 	Squad &squad = playerSquads[pawn];
 	for (int i = 0; i < squad.pawns.size(); i++)
@@ -63,7 +63,7 @@ void notifySquad(int notifier, bool grouped)
 	}
 }
 
-void deliverNews(int pawn, bool player)
+void deliver_news(int pawn, bool player)
 {
 	if (player)
 	{
@@ -72,7 +72,7 @@ void deliverNews(int pawn, bool player)
 	}
 }
 
-void moveCenterInDirection() {}
+void move_center_in_direction() {}
 
 if (movingStatus[i] !=)
 {

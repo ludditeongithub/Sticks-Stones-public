@@ -10,6 +10,8 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/home/logan/gameprogramming/code/CMakeLists.txt"
   "CMakeFiles/4.3.3/CMakeCXXCompiler.cmake"
   "CMakeFiles/4.3.3/CMakeSystem.cmake"
+  "CMakeFiles/VerifyGlobs.cmake"
+  "CMakeFiles/cmake.verify_globs"
   "/usr/share/cmake/Modules/CMakeCXXInformation.cmake"
   "/usr/share/cmake/Modules/CMakeCommonLanguageInclude.cmake"
   "/usr/share/cmake/Modules/CMakeGenericSystem.cmake"
