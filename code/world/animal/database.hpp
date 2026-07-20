@@ -6,7 +6,7 @@
 #include <core/data.hpp>
 #include <core/random.hpp>
 #include <cstdint>
-#include <systems/find_nearest.hpp>
+
 #include <world/world.hpp>
 #include <world/variant_item/database.hpp>
 #include <cereal/types/vector.hpp>

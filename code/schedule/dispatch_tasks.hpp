@@ -26,8 +26,8 @@ struct Task
 };
 
 // TASK Dispatch
-void createTaskPriorityBoard(Array<Coord> destinations, Array<Task> tasks, Array<uint16_t> resourceUnits,
-		   Array<uint16_t> productionUnits, Array<uint16_t>)
+void create_task_priority_board(Array<Coord> destinations, Array<Task> tasks, Array<uint16_t> resource_units,
+		   Array<uint16_t> production_units, Array<uint16_t>)
 {
 	for (int i = 0; i < tasks.size(); i++)
 	{
@@ -43,43 +43,43 @@ void createTaskPriorityBoard(Array<Coord> destinations, Array<Task> tasks, Array
 //  change to assumming that the pawn is valid --> invalid pawns should never have been given this
 //  task in the first place gets resource at certain tile, when pawn is adjacent to it, by
 //  confirming action.
-void collectResource(Item item)
+void collect_resource(Item item)
 {
 	if (item < Item::RESOURCEMAX)
 		return;
 	Source resource = resources[item];
 	// find available pawns who can perform actions (On^3)
-	bool foundPawn = false;
-	int pawnIndex;
-	int actionIndex;
+	bool found_pawn = false;
+	int pawn_index;
+	int action_index;
 	Role role;
 	for (int i = 0; i < roles.size(); i++)
 	{ // check each pawn
-		if (!checkOccuppied(i))
+		if (!check_occuppied(i))
 		{
 			for (int j = 0; j < roles[i].size(); j++)
 			{
 				for (int k = 0; k < resources.action.size(); k++)
 				{
-					if (actionToRoles[resources.action[k]] == roles[i][j])
+					if (action_to_roles[resources.action[k]] == roles[i][j])
 					{
-						pawnIndex = i;
-						actionIndex = k;
+						pawn_index = i;
+						action_index = k;
 						role = roles[i][j];
-						foundPawn = true;
+						found_pawn = true;
 					}
-					if (foundPawn)
+					if (found_pawn)
 						break;
 				}
-				if (foundPawn)
+				if (found_pawn)
 					break;
 			}
-			if (foundPawn)
+			if (found_pawn)
 				break;
 		}
 		// get compatible SourceVariant (Tile, Plant, Animal, Scavengeable, or Item)
-		SourceVariant source = resource.source[actionIndex];
-		std::pair<int, int> coords = findNearestSource(source);
+		SourceVariant source = resource.source[action_index];
+		std::pair<int, int> coords = find_nearest_source(source);
 		// SHORTEST PATH ALGORITHM
 	}
 }

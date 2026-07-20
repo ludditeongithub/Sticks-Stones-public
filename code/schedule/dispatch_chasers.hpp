@@ -8,7 +8,7 @@
 
 struct ChaserDispatch
 {
-	void dispatchAnimalHunters(DispatchData<Animal> &dd) {}
+	void dispatch_animal_hunters(DispatchData<Animal> &dd) {}
 
-	void dispatchUnitChasers(DispatchData<>) {}
+	void dispatch_unit_chasers(DispatchData<>) {}
 };

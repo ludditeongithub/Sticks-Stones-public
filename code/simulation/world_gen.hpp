@@ -1,6 +1,6 @@
 #pragma once
 
-#include "systems/find_nearest.hpp"
+
 #include "world/world.hpp"
 #include <core/random.hpp>
 #include <cstdint>

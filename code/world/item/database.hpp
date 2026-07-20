@@ -1,7 +1,7 @@
 #include <stack>
 #include <core/packed_enum.hpp>
 #include <macros/database.hpp>
-#include "systems/find_nearest.hpp"
+
 #include "world/tile/database.hpp"
 #include <core/hash.hpp>
 #include <extern/cereal/binary_archive.hpp>

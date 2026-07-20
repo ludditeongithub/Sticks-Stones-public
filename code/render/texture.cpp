@@ -4,9 +4,9 @@
 LTexture::LTexture()
 {
 	// Initialize
-	mTexture = NULL;
-	mWidth = 0;
-	mHeight = 0;
+	m_texture = NULL;
+	m_width = 0;
+	m_height = 0;
 }
 
 LTexture::~LTexture()
@@ -37,7 +37,7 @@ bool LTexture::load_from_file(std::string path)
 				SDL_MapRGB(loaded_surface->format, 0, 0xFF, 0xFF));
 
 		// Create texture from surface pixels
-		new_texture = SDL_CreateTextureFromSurface(gRenderer, loaded_surface);
+		new_texture = SDL_CreateTextureFromSurface(g_renderer, loaded_surface);
 		if (new_texture == NULL)
 		{
 			printf("Unable to create texture from %s! SDL Error: %s\n", path.c_str(),
@@ -46,8 +46,8 @@ bool LTexture::load_from_file(std::string path)
 		else
 		{
 			// Get image dimensions
-			mWidth = loadedSurface->w;
-			mHeight = loadedSurface->h;
+			m_width = loaded_surface->w;
+			m_height = loaded_surface->h;
 		}
 
 		// Get rid of old loaded surface
@@ -55,19 +55,19 @@ bool LTexture::load_from_file(std::string path)
 	}
 
 	// Return success
-	mTexture = newTexture;
-	return mTexture != NULL;
+	m_texture = new_texture;
+	return m_texture != NULL;
 }
 
 void LTexture::free()
 {
 	// Free texture if it exists
-	if (mTexture != NULL)
+	if (m_texture != NULL)
 	{
-		SDL_DestroyTexture(mTexture);
-		mTexture = NULL;
-		mWidth = 0;
-		mHeight = 0;
+		SDL_DestroyTexture(m_texture);
+		m_texture = NULL;
+		m_width = 0;
+		m_height = 0;
 	}
 }
 
@@ -82,9 +82,9 @@ void LTexture::render(int x, int y, SDL_Rect *clip, SDL_Rect *viewport)
 	}
 
 	// Render to screen
-	SDL_RenderCopy(gRenderer, mTexture, clip, viewport);
+	SDL_RenderCopy(g_renderer, m_texture, clip, viewport);
 }
 
-int LTexture::get_width() { return mWidth; }
+int LTexture::get_width() { return m_width; }
 
-int LTexture::get_height() { return mHeight; }
+int LTexture::get_height() { return m_height; }

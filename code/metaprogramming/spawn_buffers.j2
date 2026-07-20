@@ -1,25 +1,35 @@
-struct {{ Entity_name}}SpawnBuffer {
-  std::vector<{{ Entity_name }}> {{ entity_name }}s;
-	std::vector<Coord> coords; 
-	size_t size;
-{{ Entity_name }}SpawnBuffer(size_t capacity) 
-	{
-		reserve(capacity);                
-        }
-  void reserve(size_t cap) {
+struct {{ entity_name }}_spawn_buffer {
+  std::vector<{{ entity_name }}> {{ entity_name }}s;
+  std::vector<Coord> coords;
+  size_t size;
+
+  {{ entity_name }}_spawn_buffer(size_t capacity)
+  {
+    reserve(capacity);
+  }
+
+  void reserve(size_t cap)
+  {
     {{ entity_name }}s.reserve(cap);
     coords.reserve(cap);
   }
-  inline void add(WorldSpawner& worldSpawner, TileSpawnBuffer& tileSpawnBuffer, {{ Entity_name }} {{ entity_name }}, Coord coord)
-	{
-		{{ entity_name }}s[size++] = {{ entity_name }};
-		coords[size] = coord;                   tileSpawnBuffer.occupieds[worldSpawner.getTileIndexFromCoord(coord)] = true;
-	}
+
+  inline void add(
+      WorldSpawner& world_spawner,
+      TileSpawnBuffer& tile_spawn_buffer,
+      {{ entity_name }} {{ entity_name }},
+      Coord coord)
+  {
+    {{ entity_name }}s[size++] = {{ entity_name }};
+    coords[size] = coord;
+    tile_spawn_buffer.occupieds[world_spawner.get_tile_index_from_coord(coord)] = true;
+  }
+
   void shrink_to_size()
-	{
-		{{ entity_name }}s.resize(size);
-                coords.resize(size);
-		{{ entity_name }}s.shrink_to_fit();
-                coords.shrink_to_fit();
-        }
+  {
+    {{ entity_name }}s.resize(size);
+    coords.resize(size);
+    {{ entity_name }}s.shrink_to_fit();
+    coords.shrink_to_fit();
+  }
 };

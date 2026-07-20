@@ -1,4 +1,4 @@
-{{ Specialization }} convert{{ Specialization }}To{{ Entity_name }}({{ Specialization }} {{ specialization }}) {
+{{ Specialization }} convert{{ specialization }}_to_{{ entity_name }}({{ Specialization }} {{ specialization }}) {
 switch (variable) {
 {% for s in specialization_entity_map %}
   case {{ Specialization }}::{{ x.specialization }}:
@@ -11,7 +11,7 @@ return {{ Specialization }}::MAX;
 }
 }
 
-{{ Entity_name }} convert{{ Entity_name }}To{{ Specialization }}({{ Entity_name }} {{ entity_name }}) {
+{{ Entity_name }} convert_{{ entity_name }}_to_{{ specialization }}({{ Entity_name }} {{ entity_name }}) {
 switch (variable) {
 {% for x in specialization_entity_map %}
   case {{ Entity_name }}::{{ x.entity }}:

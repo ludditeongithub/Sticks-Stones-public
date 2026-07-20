@@ -5,7 +5,7 @@
 #include <core/memory_control.hpp>
 #include <simulation/first_spawn.hpp>
 #include <simulation/world_gen.hpp>
-#include <systems/find_nearest.hpp>
+
 #include <world/animal/database.hpp>
 #include <world/plant/database.hpp>
 #include <world/tile/data.hpp>

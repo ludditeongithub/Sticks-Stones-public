@@ -59,14 +59,14 @@ void load_one_type_sprites(const json& sheet) {
 
         for (const auto& item : sheet) {
             if (item.contains("filename") &&
-                item["filename"] == getSpriteName(sprite)) { 
+                item["filename"] == get_sprite_name(sprite)) { 
 
                 positions = {item["frame"]["x"], item["frame"]["y"]};
                 dimensions = {item["frame"]["w"], item["frame"]["h"]};
             }
         }
 
-        saveSprite(i, sprite, positions, dimensions);
+        save_sprite(i, sprite, positions, dimensions);
     }
 }
 
@@ -76,12 +76,12 @@ void load_type_sprites() {
 
 	json sheet;
 	file >> sheet;
-	(loadOneTypeSprites<Enums>(sheet), ...);
+	(load_one_type_sprites<Enums>(sheet), ...);
 }
 
 void load_sprites()
 {
-	loadTypeSprites<Animal, Plant, Item, Tile, Grass, Buildable,  ButtonSprite, UISprite>();
+	load_type_sprites<Animal, Plant, Item, Tile, Grass, Buildable,  ButtonSprite, UISprite>();
 }	
 
 };

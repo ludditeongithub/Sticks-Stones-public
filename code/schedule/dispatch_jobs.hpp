@@ -1,5 +1,5 @@
 #include <core/memory.hpp>
-#include <world/unit/rolesAndActions.hpp>
+#include <world/unit/roles_and_actions.hpp>
 
 // all possible tasks
 AutoEnum<>
@@ -15,16 +15,16 @@ struct PlayerJobOrder
 struct JobData
 {
 	uint32_t amount;
-	uint8_t skillReq;
+	uint8_t skill_req;
 };
 
-void addPlayerOrder();
+void add_player_order();
 
 
 
 // binary tree by Task ID, to ensure that if player changes amount or priority a new Task Job isn't
 // created. Check if easier to remake pq every time
-void updateJobPriorities(std::unordered_map<Task, JobData> &hm,
+void update_job_priorities(std::unordered_map<Task, JobData> &hm,
 			     std::priority_queue<std::pair<uint8_t, Task>>& pq,
 			     PlayerJobOrder pt)
 {

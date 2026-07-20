@@ -12,7 +12,7 @@
 #include <core/packed_enum.hpp>
 #include <core/tables.hpp>
 #include <cstdint>
-#include <systems/find_nearest.hpp>
+
 #include <systems/perishables_manager.hpp>
 #include <world/animal/enum.hpp>
 #include <world/item/database.hpp>
@@ -38,7 +38,7 @@ inline void copy_tiles(SDL_Texture* chunk_texture, World& world, Array<TileData>
 			uint16_t ti = world.get_tile_index_from_coord({i, j});
 			// draw tiles
 			Tile t = tiles[ti].first();
-			SDL_Rect sd = SpriteSheet::tileSprites[static_cast<int>(t)];
+			SDL_Rect sd = SpriteSheet::tile_sprites[static_cast<int>(t)];
 			sprite_sheet_texture.render(j * TILE_LENGTH, i * TILE_LENGTH, &sd,
 						   &main_screen_viewport);
 
@@ -46,7 +46,7 @@ inline void copy_tiles(SDL_Texture* chunk_texture, World& world, Array<TileData>
 			Grass g = tiles[ti].second();
 			if (g != Grass::NONE)
 			{
-				sd = SpriteSheet::grassSprites[static_cast<int>(g)];
+				sd = SpriteSheet::grass_sprites[static_cast<int>(g)];
 				sprite_sheet_texture.render(i * TILE_LENGTH, j * TILE_LENGTH, &sd, &main_screen_viewport);
 		}
 	}
@@ -59,7 +59,7 @@ void copy_plants(EntityRenderBuffer &erd)
 	{
 		EntitySearchData esd = {erd.plants[i].index, erd.plants[i].position};
 		
-		SDL_Rect sr = plantSpriteDimensions[erd.plants[i].plant];
+		SDL_Rect sr = plant_sprite_dimensions[erd.plants[i].plant];
 		Coord lc = get_left_corner_tile(
 		    esd.position, {static_cast<uint32_t>(sr.w), static_cast<uint32_t>(sr.y)});
 		sprite_sheet_texture.render(lc.x, lc.y, &sr, &main_screen_viewport);
@@ -71,7 +71,7 @@ void copy_items(EntityRenderBuffer &erd)
 	for (uint16_t i = 0; i < erd.item_amount; i++)
 	{
 		EntitySearchData esd = {erd.items[i].index, erd.plants[i].position};
-		SDL_Rect sr = itemSpriteDimensions[erd.items[i].item];
+		SDL_Rect sr = item_sprite_dimensions[erd.items[i].item];
 		Coord lc = get_left_corner_tile(
 		    esd.position, {static_cast<uint32_t>(sr.w), static_cast<uint32_t>(sr.y)});
 		sprite_sheet_texture.render(lc.x, lc.y, &sr, &main_screen_viewport);
@@ -89,7 +89,7 @@ void render_moving_entities(World& world, Coord left_corner, Array<TileData> &ti
 
 	update_animal_animations(left_corner, entity_render_buffer, animal_frames, animal_ages, animal_states);
 
-	updateUnitAnimations(left_corner, entity_render_buffer, unit_ages, unitFrameData);
+	update_unit_animations(left_corner, entity_render_buffer, unit_ages, unit_frame_data);
 
 	// draw equippables
 

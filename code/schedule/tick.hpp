@@ -7,17 +7,17 @@ void tick()
 		timers[i]--;
 
 	// these are hot loops, fix if necessary
-	updatePositions(rpd, positions, timers, actions);
-	animalActions();
-	assignTasks(pq, timers, tasks, skills);
-	assignAnimalTasks(animals, actions, positions, hungers);
-	updateAttack(chances, weapons, stats, positions, healths, targets, actions);
-	updatePlants(nextGrowth, plantList, coords, chunkTemps, tileWater, lastFullyWatered,
-		     dailyInsolations, cloudCovers, dead);
+	update_positions(rpd, positions, timers, actions);
+	animal_actions();
+	assign_tasks(pq, timers, tasks, skills);
+	assign_animal_tasks(animals, actions, positions, hungers);
+	update_attack(chances, weapons, stats, positions, healths, targets, actions);
+	update_plants(next_growth, plant_list, coords, chunk_temps, tile_water, last_fully_watered,
+		     daily_insolations, cloud_covers, dead);
 }
 
-void onPlayerOrder()
+void on_player_order()
 {
 	// change this: does not need to be so hot
-	updateTaskJobPriorities(hm, pq, pt);
+	update_task_job_priorities(hm, pq, pt);
 }

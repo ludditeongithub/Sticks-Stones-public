@@ -5,67 +5,67 @@
 #include <systems/destinations.hpp>
 #include <systems/pathfinding.hpp>
 #include <world/animal/enum.hpp>
-#include <world/unit/rolesAndActions.hpp>
+#include <world/unit/roles_and_actions.hpp>
 
-// Dispatch relies on updateAnimalTasks which gives all unassigned animals a target and
-// updatePositions, which gives animals who
+// Dispatch relies on update_animal_tasks which gives all unassigned animals a target and
+// update_positions, which gives animals who
 
 struct AnimalDispatcher
 {
 
 	struct DispatchCollection
 	{
-		PathDispatchData newPathDispatch;
-		DispatchData assignDispatch;
-		DispatchData hungryDispatch;
-		DispatchData thirstyDispatch;
-		DispatchData breedingDispatch;
-		DispatchData rejoinPackDispatch;
-		DispatchData migrationDispatch;
+		PathDispatchData new_path_dispatch;
+		DispatchData assign_dispatch;
+		DispatchData hungry_dispatch;
+		DispatchData thirsty_dispatch;
+		DispatchData breeding_dispatch;
+		DispatchData rejoin_pack_dispatch;
+		DispatchData migration_dispatch;
 	};
 
-	DispatchCollection getDispatchCollection(Array<Animal> &animals, Array<Coord> &positions,
+	DispatchCollection get_dispatch_collection(Array<Animal> &animals, Array<Coord> &positions,
 						 Array<Coord> &destinations,
 						 Array<ActionDecisionStatus> &actions)
 	{
-		BucketCounts bc = getBucketCounts(actions);
+		BucketCounts bc = get_bucket_counts(actions);
 		DispatchCollection dc;
-		dc.newPathDispatch = PathDispatchData(bc.newPathCount);
-		dc.assignDispatch = DispatchData(bc.assignCount);
-		dc.hungryDispatch = DispatchData(bc.hungryCount);
-		dc.thirstyDispatch = DispatchData(bc.thirstyCount);
-		dc.breedingDispatch = DispatchData(bc.breedingCount);
-		dc.rejoinPackDispatch = DispatchData(bc.rejoinPackCount);
-		dc.migrationDispatch = DispatchData(bc.migrationCount);
+		dc.new_path_dispatch = PathDispatchData(bc.new_path_count);
+		dc.assign_dispatch = DispatchData(bc.assign_count);
+		dc.hungry_dispatch = DispatchData(bc.hungry_count);
+		dc.thirsty_dispatch = DispatchData(bc.thirsty_count);
+		dc.breeding_dispatch = DispatchData(bc.breeding_count);
+		dc.rejoin_pack_dispatch = DispatchData(bc.rejoin_pack_count);
+		dc.migration_dispatch = DispatchData(bc.migration_count);
 
-		uint16_t newPathCount;
-		uint16_t assignCount;
-		uint16_t hungryCount;
-		uint16_t thirstyCount;
-		uint16_t breedingCount;
-		uint16_t rejoinPackCount;
-		uint16_t migrationCount;
+		uint16_t new_path_count;
+		uint16_t assign_count;
+		uint16_t hungry_count;
+		uint16_t thirsty_count;
+		uint16_t breeding_count;
+		uint16_t rejoin_pack_count;
+		uint16_t migration_count;
 		for (uint16_t i = 0; i < animals.size(); i++)
 		{
 			switch (actions[i])
 			{
 			case ActionDecisionStatus::Assign:
-				dc.assignDispatch.setData(assignCount, i);
+				dc.assign_dispatch.set_data(assign_count, i);
 				break;
 			case ActionDecisionStatus::AnimalFoodSearch:
-				dc.hungryDispatch.setData(hungryCount, i);
+				dc.hungry_dispatch.set_data(hungry_count, i);
 				break;
 			case ActionDecisionStatus::AnimalDrinkSearch:
-				dc.thirstyDispatch.setData(thirstyCount, i);
+				dc.thirsty_dispatch.set_data(thirsty_count, i);
 				break;
 			case ActionDecisionStatus::AnimalBreedSearch:
-				dc.breedingDispatch.setData(breedingCount, i);
+				dc.breeding_dispatch.set_data(breeding_count, i);
 				break;
 			case ActionDecisionStatus::AnimalMigration:
-				dc.migrationDispatch.setData(migrationCount, i);
+				dc.migration_dispatch.set_data(migration_count, i);
 				break;
 			case ActionDecisionStatus::AnimalRejoinPack:
-				dc.rejoinPackDispatch.setData(rejoinPackCount, i);
+				dc.rejoin_pack_dispatch.set_data(rejoin_pack_count, i);
 				break;
 			default:
 				// TODO: error
@@ -74,16 +74,16 @@ struct AnimalDispatcher
 		return dc;
 	}
 
-	void dispatchAnimals(Array<Animal> &animals, Array<Coord> &positions,
+	void dispatch_animals(Array<Animal> &animals, Array<Coord> &positions,
 			     Array<Coord> &destinations, Array<ActionDecisionStatus> &actions)
 	{
 		DispatchCollection dc =
-		    getDispatchCollection(animals, positions, destinations, actions);
+		    get_dispatch_collection(animals, positions, destinations, actions);
 
-		setNewPaths(dc.newPathDispatch);
-		setHungryDestinations(dc.hungryDispatch);
-		setThirstyDestinations(dc.thirstyDispatch);
-		setMigrationDestinations(dc.migrationDispatch);
+		set_new_paths(dc.new_path_dispatch);
+		set_hungry_destinations(dc.hungry_dispatch);
+		set_thirsty_destinations(dc.thirsty_dispatch);
+		set_migration_destinations(dc.migration_dispatch);
 	}
 }
 

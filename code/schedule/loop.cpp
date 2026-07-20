@@ -4,7 +4,7 @@
 #include <world/unit/database.hpp>
 #include <world/world.hpp>
 
-void Game::gameLoop()
+void Game::game_loop()
 {
 	bool quit = false;
 	SDL_Event e;
@@ -12,24 +12,24 @@ void Game::gameLoop()
 	{			
 		while( SDL_PollEvent( &e ) != 0 )
 		{
-			handleEvent(&e);
+			handle_event(&e);
 		}
-		absoluteTime += TIME_PER_FRAME;
-		frameLoop();
-		if (absoluteTime % HOUR_LENGTH) hourlyLoop();
-		if (absoluteTime % DAY_LENGTH) dailyLoop();
+		absolute_time += TIME_PER_FRAME;
+		frame_loop();
+		if (absolute_time % HOUR_LENGTH) hourly_loop();
+		if (absolute_time % DAY_LENGTH) daily_loop();
 	}
 }	
 
-void Game::frameLoop(World& world)
+void Game::frame_loop(World& world)
 {
-		handleActions(this);
+		handle_actions(this);
 		// TODO: set new intertias/actions
 		// Animations
-		drawEntities(world, {0, 0}, tileDatabase->tiles, animalDatabase->ages, animalDatabase->frames, animalDatabase->statuses, unitDatabase->frames, unitDatabase->ages, unitDatabase->frameDatas, search);		
+		draw_entities(world, {0, 0}, tile_database->tiles, animal_database->ages, animal_database->frames, animal_database->statuses, unit_database->frames, unit_database->ages, unit_database->frame_datas, search);		
 }
 
-void Game::hourlyLoop()
+void Game::hourly_loop()
 {
 		
 }

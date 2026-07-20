@@ -1,5 +1,4 @@
 #pragma once
-
 #include <core/data.hpp>
 #include <core/packed_enum.hpp>
 #include <cstdint>

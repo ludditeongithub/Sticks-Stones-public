@@ -41,7 +41,6 @@ set(OLD_GLOB
   "/home/logan/gameprogramming/code/systems/perishables/lazy.cpp"
   "/home/logan/gameprogramming/code/systems/plant/growth.cpp"
   "/home/logan/gameprogramming/code/systems/plant/update.cpp"
-  "/home/logan/gameprogramming/code/systems/search/.#specific_search.cpp"
   "/home/logan/gameprogramming/code/systems/search/entity_search.cpp"
   "/home/logan/gameprogramming/code/systems/search/specific_search.cpp"
   "/home/logan/gameprogramming/code/systems/visibility/lazy.cpp"

@@ -7,7 +7,7 @@
 #include <extern/cereal/types/stack.hpp>
 #include <stack>
 #include <stdint.h>
-#include <systems/find_nearest.hpp>
+
 #include <world/plant/tables.hpp>
 #include <world/animal/database.hpp>
 #include <simulation/world_gen.hpp>

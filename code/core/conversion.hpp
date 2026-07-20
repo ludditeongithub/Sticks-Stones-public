@@ -1,5 +1,5 @@
 #pragma once
-#include <extern/magic_enum/magic_enum.hpp>
+#include <../extern/magic_enum/magic_enum.hpp>
 #include <stdexcept>
 
 template<typename A, typename B>

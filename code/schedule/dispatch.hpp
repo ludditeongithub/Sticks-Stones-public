@@ -19,7 +19,7 @@ struct DispatchData
 		destinations = Array<Coord>(count);
 	}
 
-	inline void setData(uint16_t j, uint16_t i)
+	inline void set_data(uint16_t j, uint16_t i)
 	{
 		indices[j] = i;
 		animals[j] = animals[i];
@@ -41,7 +41,7 @@ struct PathDispatchData
 		destinations = Array<Coord>(count);
 	}
 
-	inline void setData(uint16_t j, uint16_t i)
+	inline void set_data(uint16_t j, uint16_t i)
 	{
 		indices[j] = i;
 		positions[j] = positions[i];

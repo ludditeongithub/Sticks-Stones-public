@@ -1,5 +1,5 @@
 #include "database.hpp"
-#include "systems/find_nearest.hpp"
+
 
 inline void ItemDatabase::add_item(Item item, Coord coord, uint16_t amount = 1)
 {

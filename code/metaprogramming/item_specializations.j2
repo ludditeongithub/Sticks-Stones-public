@@ -13,6 +13,16 @@ LookupTable<{{ Specialization }},{{ f.type }}> lt{};
       lt[{{ item.name }}] = {{ item[f.name] }};
   {% endfor %}
 return lt;
-}();  
+  }();
 {% endfor %}
 
+inline void {{ Specialization }}Database::pick_up(EntityID {{ specialization }}ID, Inventory& inventory) {
+{{ Specialization }}Entity {{ specialization }} = get_entity(index);
+Item item = reflect_enum({{ specialization }}.specialization);
+inventory.add_item(item);
+remove_{{ specialization }}({{ specialization }}ID);
+}
+
+inline void {{ Specialization }}Database::drop(EntityID {{ specialization }}ID, Inventory& inventory) {
+add_entity();
+}

@@ -1,6 +1,6 @@
 #pragma once
 
-void highFidelityLoop() {}
-void mediumFidelityLoop() {}
-void lowFidelityLoop() {}
+void high_fidelity_loop() {}
+void medium_fidelity_loop() {}
+void low_fidelity_loop() {}
 

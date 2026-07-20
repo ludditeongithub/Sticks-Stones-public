@@ -1,0 +1,28 @@
+enum class {{ Specialization }} {
+{% for item in items %}
+  {{ item.name }},
+{% endfor %}
+  MAX
+};
+
+{% for f in fields %}
+inline constexpr LookupTable<{{ Specialization }},{{ f.type }}> {{ f.name }}s = [] {
+LookupTable<{{ Specialization }},{{ f.type }}> lt{};
+  using enum {{ Specialization }};
+  {% for item in items %}
+      lt[{{ item.name }}] = {{ item[f.name] }};
+  {% endfor %}
+return lt;
+  }();
+{% endfor %}
+
+inline void {{ Specialization }}Database::pick_up(EntityID {{ specialization }}ID, Inventory& inventory) {
+{{ Specialization }}Entity {{ specialization }} = get_entity(index);
+Item item = reflect_enum({{ specialization }}.specialization);
+inventory.add_item(item);
+remove_{{ specialization }}({{ specialization }}ID);
+}
+
+inline void {{ Specialization }}Database::drop(EntityID {{ specialization }}ID, Inventory& inventory) {
+attempt_spawn();
+}
