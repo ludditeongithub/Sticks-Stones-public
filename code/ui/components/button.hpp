@@ -29,12 +29,12 @@ enum class ButtonState
 
 inline SCoord get_button_sprite_dimensions(ButtonSprite sprite)
 {
-  return {SpriteSheet::buttonSprites[static_cast<int>(sprite)].w, SpriteSheet::buttonSprites[static_cast<int>(sprite)].h / 3};
+  return {SpriteSheet::button_sprites[static_cast<int>(sprite)].w, SpriteSheet::button_sprites[static_cast<int>(sprite)].h / 3};
 }
 
 inline SDL_Rect get_button_sprite(ButtonSprite sprite, ButtonState state)
 {
-  SDL_Rect button_sheet = SpriteSheet::buttonSprites[static_cast<int>(sprite)];
+  SDL_Rect button_sheet = SpriteSheet::button_sprites[static_cast<int>(sprite)];
   switch (state) {
   case ButtonState::Unpressed:
 		  return {button_sheet.x, button_sheet.y, button_sheet.w, button_sheet.h / 3};
@@ -153,23 +153,23 @@ struct CheckboxUI : public ButtonUI
     CheckboxUI(ButtonFunctionality function, ButtonSprite sprite, const SCoord top_left_corner,
 	       Sound *sound = nullptr)
 	: function(
-	      function, sprite(sprite), topLeftCorner(topLeftCorner),
+	      function, sprite(sprite), top_left_corner(top_left_corner),
 	      sound(sound) {}
 
     void render(SDL_Rect *viewport){
       SDL_Rect rect;
         if (checked)
         {
-				rect = getButtonSprite(sprite, ButtonState::Pressed);
+				rect = get_button_sprite(sprite, ButtonState::Pressed);
         }
         else
 		{
-			rect = getButtonSprite(sprite, state);	
+			rect = get_button_sprite(sprite, state);	
 	}
-        spriteSheetTexture.render(topLeftCorner.x, topLeftCorner.y, &rect, viewport);
+        sprite_sheet_texture.render(top_left_corner.x, top_left_corner.y, &rect, viewport);
     }
 
-    bool handleEvent(SDL_Event* e)
+    bool handle_event(SDL_Event* e)
     {
         if (e->type != SDL_MOUSEBUTTONUP &&
             e->type != SDL_MOUSEMOTION)
@@ -180,7 +180,7 @@ struct CheckboxUI : public ButtonUI
         int mx, my;
         SDL_GetMouseState(&mx, &my);
 
-	if (mouseInside({mx, my}, topLeftCorner, dimensions) && !checked)
+	if (mouse_inside({mx, my}, top_left_corner, dimensions) && !checked)
 			{
 				state = Button::Hovered;	
 			}
@@ -191,9 +191,9 @@ struct CheckboxUI : public ButtonUI
         {
             checked = !checked;
 
-            // if (clickSound)
+            // if (click_sound)
             // {
-            //     playSound(clickSound);
+            //     play_sound(click_sound);
             // }		
             return true;
         }
@@ -217,7 +217,7 @@ public:
   {
 	  if (new_name > max_save_name_size)
 	    {
-	      userError("Name too long! Keep it 24 or less characters.");
+	      user_error("Name too long! Keep it 24 or less characters.");
 	    }
   }	  
 };

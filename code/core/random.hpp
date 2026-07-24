@@ -59,9 +59,9 @@ struct RandomSDLColorMachine
 
   RandomSDLColorMachine(std::pair<uint8_t,uint8_t> red_limits, std::pair<uint8_t, uint8_t> green_limits, std::pair<uint8_t, uint8_t> blue_limits)
   {
-    red = RandomMachine<uint8_t>(redLimits.first, redLimits.second);
-    blue = RandomMachine<uint8_t>(blueLimits.first, blueLimits.second);
-    green = RandomMachine<uint8_t>(greenLimits.first, greenLimits.second);
+    red = RandomMachine<uint8_t>(red_limits.first, red_limits.second);
+    blue = RandomMachine<uint8_t>(blue_limits.first, blue_limits.second);
+    green = RandomMachine<uint8_t>(green_limits.first, green_limits.second);
     alpha = 255;
   }
 

@@ -7,9 +7,9 @@
 // TODO: natural grass reproduction
 Hunger GRASS_HUNGER_VALUE = 300;
 
-inline bool tileGrass(TileData tile) { return (tile.second() != Grass::NONE); }
+inline bool tile_grass(TileData tile) { return (tile.second() != Grass::NONE); }
 
-inline void degrassTile(TileData &tile) { tile.second() = Grass::NONE; }
+inline void degrass_tile(TileData &tile) { tile.second() = Grass::NONE; }
 
 namespace grass
 {
@@ -37,14 +37,14 @@ inline constexpr LookupTable<Biome, float> coverages = []
 		float poorly = 0.125;
 		float rarely = 0.6325;
 
-inline constexpr LookupTable<Biome,float> minimumRoll = [] {
+inline constexpr LookupTable<Biome,float> minimum_roll = [] {
   LookupTable<Biome,float> lt{};
   using enum Biome;
   
   return lt;
  }();  
   
-inline constexpr LookupTable2D<Grass, Tile, float> tileSpawnMultipliers = []
+inline constexpr LookupTable2D<Grass, Tile, float> tile_spawn_multipliers = []
 {
                        	
 	LookupTable2D<Grass, Tile, float> lt{};
@@ -72,7 +72,7 @@ inline constexpr LookupTable2D<Grass, Tile, float> tileSpawnMultipliers = []
 	return lt;
 }();
 
-inline constexpr LookupTable<Grass, Coord> temperaturePenaltyRanges = []
+inline constexpr LookupTable<Grass, Coord> temperature_penalty_ranges = []
 {
 	LookupTable<Grass, Coord> lt{};
 	using enum Grass;
@@ -82,7 +82,7 @@ inline constexpr LookupTable<Grass, Coord> temperaturePenaltyRanges = []
 }();
 
 
-inline constexpr LookupTable<Grass, Coord> humidityPenaltyRanges = []
+inline constexpr LookupTable<Grass, Coord> humidity_penalty_ranges = []
 {
 	LookupTable<Grass, Coord> lt{};
 	using enum Grass;

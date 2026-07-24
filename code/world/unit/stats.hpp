@@ -25,9 +25,9 @@ constexpr float SINGLE_BULK_MAX = 60.0;
 // mas weights pawns can carry
 constexpr float MAX_CARRY = 250.0;
 
-uint8_t humanSight;
-uint16_t nearGatherRange = humanSight; // the farthest a pawn will  go to fetch an item
-uint16_t midGatherRange = humanSight * 2;
+uint8_t human_sight;
+uint16_t near_gather_range = human_sight; // the farthest a pawn will  go to fetch an item
+uint16_t mid_gather_range = human_sight * 2;
 
 // Fine means that only fine objects can be carried, mid means that loose, soft, or solid objects
 // can be carried, single means that only single objects can be carried
@@ -39,7 +39,7 @@ enum class BulkStatus
 	Single
 };
 
-float currentMaxBulk(BulkStatus bs, Strength str)
+float current_max_bulk(BulkStatus bs, Strength str)
 {
 	int s = str.strength;
 	switch (bs)
@@ -54,11 +54,11 @@ float currentMaxBulk(BulkStatus bs, Strength str)
 	return 0.0;
 }
 
-float maxWeight(Strength str) { return str / STAT_MAX * MAX_CARRY; }
+float max_weight(Strength str) { return str / STAT_MAX * MAX_CARRY; }
 
-std::array<uint16_t, 10> sightRanges; // based on perception
+std::array<uint16_t, 10> sight_ranges; // based on perception
 
-inline uint16_t getSightRange(Perception perception) {
+inline uint16_t get_sight_range(Perception perception) {
 	return 10 + (perception / 3);
 }
 

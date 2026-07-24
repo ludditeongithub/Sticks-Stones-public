@@ -1,92 +1,104 @@
 #include <world/action/enum.hpp>
 #include <world/unit/roles_and_actions.hpp>
 #include <world/unit/database.hpp>
+#include <world/buildable/defaults.hpp>
 #include <systems/search/entity_search.hpp>
 #include "core/entity.hpp"
 #include "inventory.hpp"
 #include "world/buildable/enum.hpp"
 
-inline bool check_action_requirement_in_inventory(ActionRequirement& actionReqs, Inventory& inventory, EntityID unitIndex, Coord coord)
+inline bool check_action_requirement_in_inventory(ActionRequirement& action_reqs, Inventory& inventory, EntityID unit_index, Coord coord)
 {
-  bool found = false;
-  if (auto* entity = std::get_if<Item>(&actionReqs.requirement)) found = removeItem(inventory, unitIndex, *entity, true); // TODO: investigate why not checkItem?
-else //buildable
+	bool found = false;
+        if (auto *entity = std::get_if<Item>(&action_reqs.requirement)) {
+	  uint16_t amount_found = remove_item(inventory, *entity, 1, true);
+  
+  found = amount_found == action_reqs.amount;
+	}
+	else //buildable
 {
 // TODO: certain mode can be on, which allows pawns to move movable
 // buildables next to each other to accompish their job
-Buildable buildable = std::get<Buildable>(actionReqs.requirement);
+Buildable buildable = std::get<Buildable>(action_reqs.requirement);
 // TODO: different buildables have a different valid distance for working
-EntitySearchData esd = g_Search->getNearest(buildable, coord);
- if (esd.position.has_value() && manhattanDist(esd.position, coord) < MAX_BUILDABLE_WORK_DIST) 
+EntitySearchData esd = g_search->get_nearest(buildable, coord);
+ found = (esd.position.has_value() && manhattan_dist(esd.position, coord) < buildable::MAX_WORK_DIST);
 }
   return found;
 }
 
-inline void set_action_requirement_target()
+inline ActionRequirementData get_action_requirement_search_data(const ActionRequirement& action_reqs, Coord coord)
 {
+	ActionRequirementData ard;
+        EntitySearchData esd;
+if (auto *entity = std::get_if<Item>(&action_reqs.requirement))
+			  {
+				  esd = g_search->get_nearest(*entity, coord);
+                                  if (esd.position.has_value) ard.type = TargetType::Item;                                        
+                          }
+				else
+				{
+					Buildable buildable = std::get<Buildable>(action_reqs.requirement);
+					esd = g_search->get_nearest(buildable, coord);
+					if (esd.position.has_value) ard.type = TargetType::Buildable;
+				}
 
+				ard.esd = esd;
+                                return ard;
 }
 
-NecessaryActionRequirementsBuffer check_necessary_action_requirements(UnitDatabase& database, Action action, Inventory& inventory, EntityID unitIndex, Coord coord)
+inline bool set_requirement_as_unit_target(UnitDatabase& database, EntityID index, ActionRequirementData& ard)
+{
+	if (ard.esd.position.has_value)
+	{
+          database.target_type(index) = ard.type;
+          database.target(index) = ard.esd.index;
+          return true;
+        } else return false;
+}
+
+NecessaryActionRequirementsBuffer check_necessary_action_requirements(UnitDatabase& database, Action action, Inventory& inventory, EntityID unit_index, Coord coord)
 {
 	NecessaryActionRequirementsBuffer buffer;
 
 	// get inputs from recipe		
-                int action_reqs_amount= actionToTools.get(action).size();                
+                int action_reqs_amount= action_to_tools.get(action).size();                
 		int found_tools = 0;
 		int currently_searched = 0;
-                std::vector<size_t> foundToolsReplaceables(actionReqsAmount);
+                std::vector<size_t> found_tools_replaceables(action_reqs_amount);
 
 			for (int i = 0; i < action_reqs_amount; i++)
 			{
-                          const ActionRequirement action_reqs  = actionToTools.get(action)[i];
-                          size_t requirement_slot = actionReqs.index;
+                          const ActionRequirement action_reqs  = action_to_tools.get(action)[i];
+                          size_t requirement_slot = action_reqs.index;
 			// skip if replaceable equivalent has already been found
 			for (int j = 0; j < currently_searched; j++)
-				if (foundToolsReplaceables[j] == requirementSlot) continue;                        
+				if (found_tools_replaceables[j] == requirement_slot) continue;                        
 			// skip if tool is optional TODO: have bonus written to buffer if found
 			if (requirement_slot < 0) continue;
                         
-                        bool found = checkActionRequirementInInventory(actionReqs, Inventory& inventory, EntityID unitIndex, Coord coord);
-                        
-			if (!found)
+                        bool found = check_action_requirement_in_inventory(action_reqs, inventory, unit_index, coord);
+
+			if (found)
 			{
-                          EntitySearchData esd;
-			  if (auto *entity = std::get_if<Item>(&actionReqs.requirement))
-			  {
-				  esd = g_Search->getNearest(*entity, coord);
-                                  if (esd.position.has_value)
-					{
-						database.targets(unitIndex) = esd.index;						database.target_types(unitIndex) = TargetType::Item;
-                                        }
-                          }
-				else
-				{
-					Buildable buildable =
-					    std::get<Buildable>(actionReqs.requirement);
-					esd = g_Search->getNearest(buildable, coord);
-					if (esd.position.has_value)
-					{
-						database.targets(unitIndex) = esd.index;
-                                                database.target_types(unitIndex) = TargetType::Buildable;
-                                        }
+                          found_tools_replaceables[found_tools++] = requirement_slot;
+                          continue;
+                        } else
+			{
+                          ActionRequirementData ard = get_action_requirement_data(action_reqs, coord);
+                          bool valid_target = set_requirement_as_unit_target(database, unit_index, ard);  
+			  
+			if (valid_target) buffer.tools_state = ToolsFoundState::Finding;
                         }
-			if (esd.position.has_value) buffer.toolsState = ToolsFoundState::Finding;
-                        }
-							  // TODO: add to list
-			
-				if (found) {
-				    foundToolsReplaceables[foundTools++] = requirementSlot;
-				    found = true;
-				    break;
-				    } 
+		
 
 			    if (!found) {
-			    data = search.getNearest(tool, coord.first, coord.second);
-			    if (manDist(coord, newDest) > MID_GATHER_RANGE) {
+			    data = search.get_nearest(tool, coord.first, coord.second);
+			    if (man_dist(coord, new_dest) > MID_GATHER_RANGE) {
 				    buffer.state = ToolsState::Finding;
-				    buffer.destination.value() = NewDest;				    // buffer.missingToolType.value() = tool;
+				    buffer.destination.value() = NewDest;				    // buffer.missing_tool_type.value() = tool;
 				    return buffer;
+                            }
 			}
 			else
 			{

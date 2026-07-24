@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = 
+CXX_INCLUDES = -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern
 
 CXX_FLAGS = -std=gnu++23
 

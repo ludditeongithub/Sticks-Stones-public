@@ -1,4 +1,4 @@
-#include "packMovementPatterns.h"
+#include "pack_movement_patterns.h"
 
 MovingStatus::PackRegroup MovingStatus::PackFollow
     // valid pack movingstatuses:
@@ -7,8 +7,8 @@ MovingStatus::PackRegroup MovingStatus::PackFollow
 
     struct PackCenter
 {
-	Animal packType;
-	int currentSize;
+	Animal pack_type;
+	int current_size;
 	Direction direction;
 }
 // add PackCenter to object
@@ -17,22 +17,22 @@ MovingStatus::PackRegroup MovingStatus::PackFollow
 
 uint8_t pack_sizes[static_cast<int>(Animal::MAX)];
 vector<PackCenter> pack_centers;
-vector<std::pair<int, int>> packCoords;
+vector<std::pair<int, int>> pack_coords;
 
-void return_to_pack(int animalIndex)
+void return_to_pack(int animal_index)
 {
-	movingStatus[animalIndex] = MovingStatus::PackRegroup;
+	moving_status[animal_index] = MovingStatus::PackRegroup;
 	int i = 0;
 	bool found = false;
 	while (!found)
 	{
-		int pack = getNthNearestPack(PackCenter[animalIndex].packType,
-					     animalCoords[animalIndex].first,
-					     animalCoords[animalIndex].second, i);
-		if (packCenters[pack].currentSize < packSizes[animals[animalIndex]] - rint(-1, 1))
+		int pack = get_nth_nearest_pack(PackCenter[animal_index].pack_type,
+					     animal_coords[animal_index].first,
+					     animal_coords[animal_index].second, i);
+		if (pack_centers[pack].current_size < pack_sizes[animals[animal_index]] - rint(-1, 1))
 		{
 			found = true;
-			currentDest[i] = pack;
+			current_dest[i] = pack;
 		}
 		i++;
 	}
@@ -40,11 +40,11 @@ void return_to_pack(int animalIndex)
 
 void check_pack_distance(int animal)
 {
-	if (movingStatus[animalIndex] == MovingStatus::PackProwl ||
-	    movingStatus[animalIndex] == MovingStatus::PackWander ||
-	    movingStatus[animalIndex] == MovingStatus::PackIdle)
+	if (moving_status[animal_index] == MovingStatus::PackProwl ||
+	    moving_status[animal_index] == MovingStatus::PackWander ||
+	    moving_status[animal_index] == MovingStatus::PackIdle)
 	{
-		manDist(animalCoords, packCoords[animalTarget[animalIndex]]);
+		man_dist(animal_coords, pack_coords[animal_target[animal_index]]);
 	}
 }
 
@@ -52,14 +52,14 @@ void move_pack_center() {}
 
 void notify_squad(int notifier, bool grouped)
 {
-	Squad &squad = playerSquads[pawn];
+	Squad &squad = player_squads[pawn];
 	for (int i = 0; i < squad.pawns.size(); i++)
 	{
-		currentDest[squad.pawns[i]] = currentDest[notifier];
+		current_dest[squad.pawns[i]] = current_dest[notifier];
 		if (grouped)
-			movingStatus[i] = MovingStatus::BlobMarch;
+			moving_status[i] = MovingStatus::BlobMarch;
 		else
-			movingStatus[i] = MovingStatus::March;
+			moving_status[i] = MovingStatus::March;
 	}
 }
 
@@ -67,105 +67,105 @@ void deliver_news(int pawn, bool player)
 {
 	if (player)
 	{
-		int squad = playerSquads[pawn];
-		notifySquad(pawn);
+		int squad = player_squads[pawn];
+		notify_squad(pawn);
 	}
 }
 
 void move_center_in_direction() {}
 
-if (movingStatus[i] !=)
+if (moving_status[i] !=)
 {
 	if (inertia[i] == 0)
 	{
-		movement(movingStatus[i]);
-		inertia[i] = calcSpeed(animal, movingStatus[i], animalCoords[i]);
+		movement(moving_status[i]);
+		inertia[i] = calc_speed(animal, moving_status[i], animal_coords[i]);
 	}
 	else
 		inertia--;
 }
 
-if (movingStatus[i] = MovingStatus::PackFollow)
+if (moving_status[i] = MovingStatus::PackFollow)
 {
-	if (checkPackDistance(animal) > 1)
+	if (check_pack_distance(animal) > 1)
 		// NOTE: bad
-		moveInDirection(findNextDirection(animalCoords[animal]),
-				packCoords[animalTarget[animalIndex]]);
-	if (checkPackDistance(animal) > packMax[static_cast<int>(animal)])
-		movingStatus[i] = MovingStatus::PackRegroup;
+		move_in_direction(find_next_direction(animal_coords[animal]),
+				pack_coords[animal_target[animal_index]]);
+	if (check_pack_distance(animal) > pack_max[static_cast<int>(animal)])
+		moving_status[i] = MovingStatus::PackRegroup;
 }
-if (movingStatus[i] == MovingStatus::PackRegroup)
+if (moving_status[i] == MovingStatus::PackRegroup)
 {
-	moveInDirection(pawn, findNextDirection(animalCoords[animal]),
-			packCoords[animalTarget[animalIndex]]);
-	if (checkPackDistance(animal) < packMax[static_cast<int>(animal)])
-		movingStatus[i] = MovingStatus::PackFollow;
+	move_in_direction(pawn, find_next_direction(animal_coords[animal]),
+			pack_coords[animal_target[animal_index]]);
+	if (check_pack_distance(animal) < pack_max[static_cast<int>(animal)])
+		moving_status[i] = MovingStatus::PackFollow;
 }
-if (movingStatus[i] == MovingStatus::Raid)
+if (moving_status[i] == MovingStatus::Raid)
 {
 }
 // brigade + squad specific moving statuses
-if (movingStatus[i] == MovingStatus::FanOut)
+if (moving_status[i] == MovingStatus::FanOut)
 {
 	if (squads[pawn].organizing)
-		directions[pawn] = getRandomDirection();
+		directions[pawn] = get_random_direction();
 	else
 	{
-    if (rint(0,3 == 3) Direction direction = justNotBackwards(directions[pawn]);
+    if (rint(0,3 == 3) Direction direction = just_not_backwards(directions[pawn]);
 	else Direction direction = directions[pawn];
-    moveInDirection(pawn, direction);
-	if (checkEnemySettlement()) notifySquad(pawn);
+    move_in_direction(pawn, direction);
+	if (check_enemy_settlement()) notify_squad(pawn);
 	}
 }
-if (movingStatus[i] == MovingStatus::ScoutAndRegroup)
+if (moving_status[i] == MovingStatus::ScoutAndRegroup)
 {
-	if (timeTillChangeOperation == 0)
+	if (time_till_change_operation == 0)
 	{
-		if (manDist(currentCoords[pawn, squads[playerSquads[pawn]].center] <
-			    (int)(log(2, currentSize))))
+		if (man_dist(current_coords[pawn, squads[player_squads[pawn]].center] <
+			    (int)(log(2, current_size))))
 		{
-			moveInDirection(currentCoords[pawn],
-					findNextDirection(squads[pawn].center));
+			move_in_direction(current_coords[pawn],
+					find_next_direction(squads[pawn].center));
 		}
 		else
-			movingStatus[i] == MovingStatus::Idle;
+			moving_status[i] == MovingStatus::Idle;
 	}
-	if (checkEnemySettlement())
+	if (check_enemy_settlement())
 	{
-		currentDest[i] = movingStatus[i] = MovingStatus::ReturnWithNews;
+		current_dest[i] = moving_status[i] = MovingStatus::ReturnWithNews;
 	}
 }
 
-if (movingStatus[i] == MovingStatus::ReturnWithNews)
+if (moving_status[i] == MovingStatus::ReturnWithNews)
 {
 	// Make this a pointer
-	if (manDist(currentCoords[pawn, squads[pawn].center] < (int)(log(2, currentSize))))
+	if (man_dist(current_coords[pawn, squads[pawn].center] < (int)(log(2, current_size))))
 	{
-		moveInDirection(currentCoords[pawn], findNextDirection(squads[pawn].center));
+		move_in_direction(current_coords[pawn], find_next_direction(squads[pawn].center));
 	}
 	else
 	{
-		if (allWithinSuitableDistance)
-			deliverNews(pawn);
+		if (all_within_suitable_distance)
+			deliver_news(pawn);
 	}
 }
 
-if (movingStatus[i] == MovingStatus::BlobMarch)
+if (moving_status[i] == MovingStatus::BlobMarch)
 {
-	if (allWithinSuitableDistance) attemptMoveInDirection(currentCoords[pawn], currentDest[i]));
+	if (all_within_suitable_distance) attempt_move_in_direction(current_coords[pawn], current_dest[i]));
 }
 
 struct Squad
 {
 	bool player;
-	bool allWithinSuitableDistance;
+	bool all_within_suitable_distance;
 	vector<int> pawns;
-	vector<bool> withinSuitableDistance;
+	vector<bool> within_suitable_distance;
 	Direction direction;
 	std::pair<int, int> center;
 	bool organizing;
-	bool inBrigade;
-	uint16_t timeTillChangeOperation;
+	bool in_brigade;
+	uint16_t time_till_change_operation;
 }
 
 struct Brigade

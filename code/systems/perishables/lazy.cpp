@@ -1,26 +1,26 @@
 #include <world/item/enum.hpp>
 #include <core/data.hpp>
 
-inline bool check_rotten(Item perishable, Time livingTime);
+inline bool check_rotten(Item perishable, Time living_time);
 
-inline Time get_perishable_time(Item item, Time timePassed, Temp temperature)
+inline Time get_perishable_time(Item item, Time time_passed, Temp temperature)
 {
-	// TODO: error checking if (!isPerishable(item)) {
+	// TODO: error checking if (!is_perishable(item)) {
 	//   }
-	if (temperature < frozenTemps[item])
+	if (temperature < frozen_temps[item])
 	{
-		return timePassed * FROZEN_TIME_MULT;
+		return time_passed * FROZEN_TIME_MULT;
 	}
-	else if (temperature < fridgeTemps[item])
+	else if (temperature < fridge_temps[item])
 	{
-		return timePassed * FRIDGE_TIME_MULT;
+		return time_passed * FRIDGE_TIME_MULT;
 	}
-	else if (temperature < standardTemps[item])
+	else if (temperature < standard_temps[item])
 	{
-		return timePassed * STANDARD_TIME_MULT;
+		return time_passed * STANDARD_TIME_MULT;
 	}
 	else
 	{
-		return timePassed * HOT_TIME_MULT;
+		return time_passed * HOT_TIME_MULT;
 	}
 }

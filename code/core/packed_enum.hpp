@@ -49,11 +49,11 @@ template<typename... Fs>
 class PackedEnum
 {
 private:
-    static constexpr unsigned TOTAL_BITS = (Fs::bits + ... + 0);
+    static constexpr unsigned TOTAL_BITS = (Fs::BITS + ... + 0);
     static_assert(TOTAL_BITS <= 64);
 
 public:
-    using Storage = smallest_uint_t<total_bits>;
+    using Storage = smallest_uint_t<TOTAL_BITS>;
     Storage raw{};
 
     template<typename T>
@@ -65,7 +65,7 @@ public:
             [&]
             {
                 if constexpr (std::is_same_v<T, typename Fs::value_type>)
-                    result = Fs::bits;
+                    result = Fs::BITS;
             }(),
             ...
         );
@@ -91,7 +91,7 @@ public:
                 }
                 else
                 {
-                    offset += F::bits;
+                    offset += F::BITS;
                 }
             }
         };
@@ -103,7 +103,7 @@ public:
 
     template<typename T>
     static constexpr Storage FIELD_MASK =
-        bitmask<Storage>(field_bits<T>) << field_offset<T>;
+        bitmask<Storage>(FIELD_BITS<T>) << FIELD_OFFSET<T>;
 
     constexpr PackedEnum() = default;
 
@@ -119,7 +119,7 @@ public:
 
         return static_cast<T>(
             static_cast<U>(
-                (raw & field_mask<T>) >> field_offset<T>));
+                (raw & FIELD_MASK<T>) >> FIELD_OFFSET<T>));
     }
 
     template<typename T>
@@ -130,7 +130,7 @@ public:
         Storage v = static_cast<Storage>(static_cast<U>(value));
 
         raw =
-            (raw & ~field_mask<T>) |
-            ((v << field_offset<T>) & field_mask<T>);
+            (raw & ~FIELD_MASK<T>) |
+            ((v << FIELD_OFFSET<T>) & FIELD_MASK<T>);
     }
 };

@@ -130,78 +130,6 @@ main_exe/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/build
 .PHONY : main_exe/fast
 
-CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.o: CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o
-.PHONY : CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.o
-
-# target to build an object file
-CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o
-.PHONY : CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o
-
-CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.i: CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.i
-.PHONY : CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.i
-
-# target to preprocess a source file
-CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.i
-.PHONY : CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.i
-
-CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.s: CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.s
-.PHONY : CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.s
-
-# target to generate assembly for a file
-CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.s
-.PHONY : CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.s
-
-CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.o: CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.o
-.PHONY : CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.o
-
-# target to build an object file
-CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.o
-.PHONY : CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.o
-
-CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.i: CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.i
-.PHONY : CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.i
-
-# target to preprocess a source file
-CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.i
-.PHONY : CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.i
-
-CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.s: CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.s
-.PHONY : CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.s
-
-# target to generate assembly for a file
-CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.s
-.PHONY : CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.s
-
-CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.o: CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o
-.PHONY : CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.o
-
-# target to build an object file
-CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o
-.PHONY : CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o
-
-CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.i: CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.i
-.PHONY : CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.i
-
-# target to preprocess a source file
-CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.i
-.PHONY : CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.i
-
-CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.s: CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.s
-.PHONY : CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.s
-
-# target to generate assembly for a file
-CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.s
-.PHONY : CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.s
-
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -274,30 +202,6 @@ schedule/loop.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/schedule/loop.cpp.s
 .PHONY : schedule/loop.cpp.s
 
-scratch.o: scratch.cpp.o
-.PHONY : scratch.o
-
-# target to build an object file
-scratch.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/scratch.cpp.o
-.PHONY : scratch.cpp.o
-
-scratch.i: scratch.cpp.i
-.PHONY : scratch.i
-
-# target to preprocess a source file
-scratch.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/scratch.cpp.i
-.PHONY : scratch.cpp.i
-
-scratch.s: scratch.cpp.s
-.PHONY : scratch.s
-
-# target to generate assembly for a file
-scratch.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/scratch.cpp.s
-.PHONY : scratch.cpp.s
-
 simulation/first_spawn.o: simulation/first_spawn.cpp.o
 .PHONY : simulation/first_spawn.o
 
@@ -345,6 +249,30 @@ simulation/game.s: simulation/game.cpp.s
 simulation/game.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/simulation/game.cpp.s
 .PHONY : simulation/game.cpp.s
+
+simulation/test.o: simulation/test.cpp.o
+.PHONY : simulation/test.o
+
+# target to build an object file
+simulation/test.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/simulation/test.cpp.o
+.PHONY : simulation/test.cpp.o
+
+simulation/test.i: simulation/test.cpp.i
+.PHONY : simulation/test.i
+
+# target to preprocess a source file
+simulation/test.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/simulation/test.cpp.i
+.PHONY : simulation/test.cpp.i
+
+simulation/test.s: simulation/test.cpp.s
+.PHONY : simulation/test.s
+
+# target to generate assembly for a file
+simulation/test.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/simulation/test.cpp.s
+.PHONY : simulation/test.cpp.s
 
 simulation/weather_calculations.o: simulation/weather_calculations.cpp.o
 .PHONY : simulation/weather_calculations.o
@@ -1411,15 +1339,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... main_exe"
-	@echo "... CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.o"
-	@echo "... CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.i"
-	@echo "... CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.s"
-	@echo "... CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.o"
-	@echo "... CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.i"
-	@echo "... CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.s"
-	@echo "... CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.o"
-	@echo "... CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.i"
-	@echo "... CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
@@ -1429,15 +1348,15 @@ help:
 	@echo "... schedule/loop.o"
 	@echo "... schedule/loop.i"
 	@echo "... schedule/loop.s"
-	@echo "... scratch.o"
-	@echo "... scratch.i"
-	@echo "... scratch.s"
 	@echo "... simulation/first_spawn.o"
 	@echo "... simulation/first_spawn.i"
 	@echo "... simulation/first_spawn.s"
 	@echo "... simulation/game.o"
 	@echo "... simulation/game.i"
 	@echo "... simulation/game.s"
+	@echo "... simulation/test.o"
+	@echo "... simulation/test.i"
+	@echo "... simulation/test.s"
 	@echo "... simulation/weather_calculations.o"
 	@echo "... simulation/weather_calculations.i"
 	@echo "... simulation/weather_calculations.s"

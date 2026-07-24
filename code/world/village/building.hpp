@@ -2,8 +2,8 @@
 
 struct Building
 {
-	Buildable wallMaterial;
-	Buildable roofMaterial;
+	Buildable wall_material;
+	Buildable roof_material;
 	vector<std : pair<int, int>> tiles;
 }
 
@@ -16,15 +16,15 @@ struct Workshop : Building
 struct House : Building
 {
 	Buildable beds;
-	int numBeds;
+	int num_beds;
 	vector<Container> container;
 	vector<Decor> decors;
 }
 
 struct Tent : House
 {
-	wallMaterial = Buildable::TentSticks;
-	roofMaterial = Buildable::TentCover;
+	wall_material = Buildable::TentSticks;
+	roof_material = Buildable::TentCover;
 }
 
 struct MainTent : AncientTent

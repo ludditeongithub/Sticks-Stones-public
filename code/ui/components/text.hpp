@@ -2,7 +2,7 @@
 #include <core/data.hpp>
 #include <string>
 #include <cstdint>
-#include <extern/SDL_FontCache.h>
+#include <SDL_FontCache.h>
 #include <SDL2/SDL_pixels.h>
 
 struct PositionedText

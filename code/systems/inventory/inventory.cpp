@@ -2,15 +2,16 @@
 #include "world/item/enum.hpp"
 #include "world/item/tags.hpp"
 #include "world/unit/database.hpp"
+#include <world/item/container.hpp>
 #include <array>
 #include <cstdint>
 #include <optional>
 #include <variant>
 // OPTI: stop runtime dispatch (std::variant)
 // TODO: change to work for tools/variants of different weights
-inline float calculateRemainingBulk(BulkStatus bulkStatus, float bulk)
+inline float calculate_remaining_bulk(BulkStatus bulk_status, float bulk)
 {
-	switch (bulkStatus)
+	switch (bulk_status)
 	{
 	case BulkStatus::Fine:
 		return FINE_BULK_MAX - bulk;
@@ -27,55 +28,55 @@ inline float calculateRemainingBulk(BulkStatus bulkStatus, float bulk)
 	}
 }
 
-inline float calculateRemainingBulk(ContainerType type, float bulk)
+inline float calculate_remaining_bulk(ContainerType type, float bulk)
 {
-	return containerBulkCapacities[type] - bulk;
+	return container_bulk_capacities[type] - bulk;
 }
 
-inline float calculateRemainingWeight(ContainerType type, float weight)
+inline float calculate_remaining_weight(ContainerType type, float weight)
 {
-	return containerWeightCapacities[type] - weight;
+	return container_weight_capacities[type] - weight;
 }
 
-inline ContainerStorageData getRemainingStorage(Inventory &inventory, Container &container)
+inline ContainerStorageData get_remaining_storage(Inventory &inventory, Container &container)
 {
 	ContainerStorageData csd;
 	// OPTI: extra check here
 	if (container.type == ContainerType::Hands)
 	{
-		csd.remainingBulk = calculateRemainingBulk(inventory.bulkStatus, container.bulk);
+		csd.remaining_bulk = calculate_remaining_bulk(inventory.bulk_status, container.bulk);
 	}
 	else
 	{
-		csd.remainingBulk = calculateRemainingBulk(container.type, container.bulk);
+		csd.remaining_bulk = calculate_remaining_bulk(container.type, container.bulk);
 	}
-	csd.remainingWeight = calculateRemainingWeight(container.type, inventory.weight);
+	csd.remaining_weight = calculate_remaining_weight(container.type, inventory.weight);
 	return csd;
 }
 
 // TODO: redo all these functions to also work for Tools, VariantItems
-inline uint16_t getMaxItemsStored(Item holdable, ContainerStorage storage)
+inline uint16_t get_max_items_stored(Item holdable, ContainerStorage storage)
 {
-	StorageData sd = itemBulkAndWeights[holdable];
-	return min(storage.remainingWeight / sd.weight, storage.remainingBulk / sd.bulk);
+	StorageData sd = item_bulk_and_weights[holdable];
+	return min(storage.remaining_weight / sd.weight, storage.remaining_bulk / sd.bulk);
 }
 
-inline uint16_t getMaxWeight(Strength strength) { return 40 + (strength * 30); }
+inline uint16_t get_max_weight(Strength strength) { return 40 + (strength * 30); }
 
 struct InventoryAddBuffer
 {
 	Item holdable;
-	SpecialItemData specialData;
+	SpecialItemData special_data;
 	uint8_t variant;
-	uint16_t containerAmount;
-	std::array<uint16_t, 8> amountsPerContainer;
+	uint16_t container_amount;
+	std::array<uint16_t, 8> amounts_per_container;
 	std::array<bool, 8> overflow;
 };
 
 template <typename Slots>
-void addItemOverflow(OverflowHashMap &overflows, Slots &slots, HoldableSlot holdable,
-		     std::optional<uint16_t> unitIndex = std::nullopt,
-		     std::optional<uint16_t> containerIndex = std::nullopt)
+void add_item_overflow(Slots &slots, HoldableSlot holdable,
+		     std::optional<uint16_t> unit_index = std::nullopt,
+		     std::optional<uint16_t> container_index = std::nullopt)
 {
 	if constexpr (std::is_same_v<Slots, std::vector<ItemSlot>>)
 	{
@@ -84,60 +85,55 @@ void addItemOverflow(OverflowHashMap &overflows, Slots &slots, HoldableSlot hold
 	else if constexpr (std::is_same_v<Slots,
 					  std::array<ItemSlot, HOLDABLE_UNDERFLOW_LIMIT>>)
 	{
-		overflows[overflow_hash(unitIndex.value(), containerIndex.value())].push_back(
+		g_overflow_hash_map[overflow_hash(unit_index.value(), container_index.value())].push_back(
 		    holdable);
 	}
 }
 
-void addItem(OverflowHashMap &overflows, std::vector<HoldableSlot> &holdables,
+void add_item(std::vector<HoldableSlot> &holdables,
 	     InventoryAddBuffer &buffer, std::optional<uint8_t> amount = std::nullopt)
 {
-	Item itemToAdd = buffer.holdable;
+	Item item_to_add = buffer.holdable;
 
 	bool found = false;
-	if (hasTag(ItemTags::Tool, itemTags[itemToAdd]))
+	if (has_tag(ItemTags::OneHandedTool, item::TAGS[item_to_add]) || has_tag(ItemTags::TwoHandedTool, item::TAGS[item_to_add]))
 	{
 			for (size_t i = 0; i < holdables.size(); i++)
-			{
-				if (holdables[i] == nullptr) {
-					holdables[i] = ToolSlot(itemToAdd,
-								       buffer.specialData);
-					return;
-				}
+			{                          
 				if (auto* content = std::get_if<ToolSlot>(&holdables[i]))
 				{
-				if (content->isEmpty())
+				if (content->is_empty())
 				{
-					holdables[i] = ToolSlot(itemToAdd,
-								       buffer.specialData);
+					holdables[i] = ToolSlot(item_to_add, buffer.special_data);
+                                        HoldableSlot h = ToolSlot(item_to_add, buffer.special_data);
 					return;
 				}	
 				}										
 			}
-		addItemOverflow(overflows, holdables, ToolSlot(itemToAdd, buffer.specialData));
+		add_item_overflow(overflows, holdables, ToolSlot(item_to_add, buffer.special_data));
 	}
 	else 
 	{
-		if (hasTag(ItemTags::Variant, itemTags[itemToAdd]))
+          if (has_tag(ItemTags::Variant, item::TAGS[item_to_add]))
 		{
 			for (size_t i = 0; i < holdables.size(); i++)
 			{
 				if (found)
 					break;
 				if (holdables[i] == nullptr) {
-					holdables[i] = VariantItemSlot(itemToAdd, amount.value(), buffer.variant));
+					holdables[i] = VariantItemSlot(item_to_add, amount.value(), buffer.variant);
 					return;
 				}
 				
 				if (auto* content = std::get_if<VariantItemSlot>(&holdables[i]))
 				{
-				if (content->isEmpty())
+				if (content->is_empty())
 				{
-					holdables[i] = VariantItemSlot(itemToAdd, amount.value(),
+					holdables[i] = VariantItemSlot(item_to_add, amount.value(),
 								       buffer.variant);
 					return;
 				}	
-				if (content->item == itemToAdd && buffer.variant == content->variant) 
+				if (content->item == item_to_add && buffer.variant == content->variant) 
 				{
 					content->amount += amount.value();
 					found = true;
@@ -145,9 +141,9 @@ void addItem(OverflowHashMap &overflows, std::vector<HoldableSlot> &holdables,
 				}										
 			}
 			if (!found)
-				addItemOverflow(
+				add_item_overflow(
 				    overflows, holdables,
-				    VariantItemSlot(itemToAdd, amount.value(), buffer.variant));
+				    VariantItemSlot(item_to_add, amount.value(), buffer.variant));
 		}
 		else
 		{
@@ -156,18 +152,18 @@ void addItem(OverflowHashMap &overflows, std::vector<HoldableSlot> &holdables,
 				if (found)
 					break;
 				if (holdables[i] == nullptr) {
-					holdables[i] = ItemSlot(itemToAdd, amount.value());
+					holdables[i] = ItemSlot(item_to_add, amount.value());
 					return;
 				}
 
 				if (auto* content = std::get_if<ItemSlot>(&holdables[i]))
 				{
-				if (content->isEmpty())
+				if (content->is_empty())
 				{
-					holdables[i] = ItemSlot(itemToAdd, amount.value());
+					holdables[i] = ItemSlot(item_to_add, amount.value());
 					return;
 				}	
-				if (content->item == itemToAdd) 
+				if (content->item == item_to_add) 
 				{
 					content->amount += amount.value();
 					found = true;
@@ -175,35 +171,35 @@ void addItem(OverflowHashMap &overflows, std::vector<HoldableSlot> &holdables,
 				}
 			}
 			if (!found)
-				addItemOverflow(overflows, holdables,
-						ItemSlot(itemToAdd, amount.value()));
+				add_item_overflow(overflows, holdables,
+						ItemSlot(item_to_add, amount.value()));
 		}
 	}
 }
 
-void addItemsToInventory(OverflowHashMap &holdableOverflows,
-			 OverflowContainerMap &overflowContainers, uint16_t unitIndex,
+void add_items_to_inventory(
+			 uint16_t unit_index,
 			 Inventory &inventory, InventoryAddBuffer &buffer)
 {
 
-	bool isTool = hasTags(ItemTags::Tool, itemTags[buffer.holdable]);
+	bool is_tool = has_tags(ItemTags::Tool, item::TAGS[buffer.holdable]);
 
-	for (size_t i = 0; i < buffer.containerAmount; i++)
+	for (size_t i = 0; i < buffer.container_amount; i++)
 	{
-		uint16_t amount = buffer.amountsPerContainer[i];
+		uint16_t amount = buffer.amounts_per_container[i];
 		if (amount == 0)
 			continue;
 
-		inventory.weight += itemBulkAndWeights[buffer.holdable].weight;
+		inventory.weight += item_bulk_and_weights[buffer.holdable].weight;
 
 		if (buffer.overflow[i])
 		{
-			if (isTool)
-				addItem(holdableOverflows,
-					holdableOverflows.get(overflow_hash(unitIndex, i)), buffer);
+			if (is_tool)
+				add_item(holdable_overflows,
+					holdable_overflows.get(overflow_hash(unit_index, i)), buffer);
 			else
-				addItem(holdableOverflows,
-					holdableOverflows.get(overflow_hash(unitIndex, i)), buffer,
+				add_item(holdable_overflows,
+					holdable_overflows.get(overflow_hash(unit_index, i)), buffer,
 					std::optional<uint16_t>(amount));
 		}
 		else
@@ -212,74 +208,73 @@ void addItemsToInventory(OverflowHashMap &holdableOverflows,
 			if (i < CONTAINER_UNDERFLOW_LIMIT)
 				container = inventory.containers[i];
 			else
-				container = overflowContainers.get(unitIndex)[i];
-			if (isTool)
+				container = overflow_containers.get(unit_index)[i];
+			if (is_tool)
 			{
-				addItem(holdableOverflows, container->holdables, buffer);
+				add_item(holdable_overflows, container->holdables, buffer);
 			}
 			else
-				addItem(holdableOverflows, container->holdables, buffer,
+				add_item(holdable_overflows, container->holdables, buffer,
 					std::optional<uint16_t>(amount));
 		}
 	}
 }
 
-inline SizeData getBulkAndWeight(Item holdable, uint16_t amount)
+inline SizeData get_bulk_and_weight(Item holdable, uint16_t amount)
 {
-	SizeData sd = itemBulkAndWeights[holdable];
+	SizeData sd = item_bulk_and_weights[holdable];
 	sd.bulk *= amount;
 	sd.weight *= amount;
 	return sd;
 }
 
 // adds weight and bulk of items to be added, but does not add them to containers yet
-inline void tabulateItemAddContainerData(Inventory &inventory, InventoryAddBuffer &buffer,
-					 Container &container, uint16_t &itemAmount,
-					 bool &foundSpace, bool &unsearchedInventory,
-					 int containerIndex, Item holdable,
-					 uint16_t &addedAmount)
+inline void tabulate_item_add_container_data(Inventory &inventory, InventoryAddBuffer &buffer,
+					 Container &container, uint16_t &item_amount,
+					 bool &found_space, bool &unsearched_inventory,
+					 int container_index, Item holdable,
+					 uint16_t &added_amount)
 {
-	ContainerStorageData csd = getRemainingStorage(inventory, container);
-	uint16_t storageCapacity = (uint16_t)fmin(itemAmount, getMaxItemsStored(holdable, csd));
-	if (storageCapacity > 0)
+	ContainerStorageData csd = get_remaining_storage(inventory, container);
+	uint16_t storage_capacity = (uint16_t)fmin(item_amount, get_max_items_stored(holdable, csd));
+	if (storage_capacity > 0)
 	{
-		buffer.containerAmount += 1;
-		itemAmount -= storageCapacity;
-		addedAmount += storageCapacity;
-		buffer.amountsPerContainer[containerIndex] = storageCapacity;
+		buffer.container_amount += 1;
+		item_amount -= storage_capacity;
+		added_amount += storage_capacity;
+		buffer.amounts_per_container[container_index] = storage_capacity;
 		// change container stats
-		SizeData sd = getBulkAndWeight(holdable, storageCapacity).;
+		SizeData sd = get_bulk_and_weight(holdable, storage_capacity).;
 		container.weight += sd.weight;
 		container.bulk += sd.bulk;
 	}
 
 	// TODO: different checks for different categories
-	hasTag(ContainerFullTags::ItemOverflow, container.tags)
-	    ? buffer.overflow[containerIndex] = true
-	    : buffer.overflow[containerIndex] = false;
-	foundSpace = (itemAmount <= 0);
-	unsearchedInventory = hasTag(ContainerFullTags::NextContainer, container.tags);
+	has_tag(ContainerFullTags::ItemOverflow, container.tags)
+	    ? buffer.overflow[container_index] = true
+	    : buffer.overflow[container_index] = false;
+	found_space = (item_amount <= 0);
+	unsearched_inventory = has_tag(ContainerFullTags::NextContainer, container.tags);
 }
 
-void clearNecessarySpace(Inventory &ivnentory, OverflowHashMap &overflows,
-			 OverflowContainerMap &overflowContainers, )
+void clear_necessary_space(Inventory &inventory)
 {
 }
 
 // returns amount of items successfully added
-uint16_t addItemsForce(Inventory &inventory, OverflowHashMap &overflows,
-		       OverflowContainerMap &overflowContainers, Item holdable,
-		       std::variant<uint16_t, Material> itemAmountOrMaterial,
+uint16_t add_items_force(Inventory &inventory, 
+		       Item holdable,
+		       std::variant<uint16_t, Material> item_amount_or_material,
 		       std::optional<uint8_t> variant = std::nullopt)
 {
-	uint16_t amountLeft = 1;
-	if (std::holds_alternative<uint16_t>(itemAmountOrMaterial))
-		amountLeft = itemAmountOrMaterial;
+	uint16_t amount_left = 1;
+	if (std::holds_alternative<uint16_t>(item_amount_or_material))
+		amount_left = item_amount_or_material;
 	if (variant.has_value())
 	{
-		while (amountLeft >= 0)
+		while (amount_left >= 0)
 		{
-			SizeData sd = getBulkAndWeight(holdable, amountLeft);
+			SizeData sd = get_bulk_and_weight(holdable, amount_left);
 		}
 	}
 }
@@ -287,72 +282,72 @@ uint16_t addItemsForce(Inventory &inventory, OverflowHashMap &overflows,
 // TODO: add 'ContainerFull' tag to make things easier.
 // returns amount of items successfully added
 template <typename T>
-uint16_t attemptAddItems(OverflowHashMap &overflows, OverflowContainerMap &overflowContainers,
-			 Inventory &inventory, uint16_t unitIndex, Strength strength,
-			 Item holdable, T itemAmountOrMaterial,
+uint16_t attempt_add_items( 
+			 Inventory &inventory, uint16_t unit_index, Strength strength,
+			 Item holdable, T item_amount_or_material,
 			 std::optional<uint8_t> variant = std::nullopt, bool force)
 {
 	InventoryAddBuffer buffer;
-	bool foundSpace = false;
-	bool unsearchedInventory = true;
-	uint16_t containerIndex = 0;
-	uint16_t addedAmount = 0;
+	bool found_space = false;
+	bool unsearched_inventory = true;
+	uint16_t container_index = 0;
+	uint16_t added_amount = 0;
 
-	uint16_t maxAmount =
-	    (getMaxWeight(strength) - inventory.weight) / itemBulkAndWeights[holdable].weight;
+	uint16_t max_amount =
+	    (get_max_weight(strength) - inventory.weight) / item_bulk_and_weights[holdable].weight;
 
-	if (maxAmount < 1 && !force && getMaxWeight(strength) < itemBulkAndWeights[holdable].weight)
+	if (max_amount < 1 && !force && get_max_weight(strength) < item_bulk_and_weights[holdable].weight)
 		return 0;
 
-	uint16_t requiredAmount = itemAmountOrMaterial;
-	if (std::holds_alternative<Material>(itemAmountOrMaterial))
+	uint16_t required_amount = item_amount_or_material;
+	if (std::holds_alternative<Material>(item_amount_or_material))
 	{
-		requiredAmount = 1;
-		buffer.material = std::optional<Material>(itemAmountOrMaterial);
+		required_amount = 1;
+		buffer.material = std::optional<Material>(item_amount_or_material);
 	}
 
 	if (variant.has_value())
 		buffer.variant = variant;
 
 	// containers in main inventory
-	while (!foundSpace && unsearchedInventory)
+	while (!found_space && unsearched_inventory)
 	{
-		Container &container = inventory.containers[containerIndex];
-		tabulateItemAddContainerData(inventory, buffer, container, requiredAmount,
-					     foundSpace, unsearchedInventory, containerIndex,
-					     holdable, addedAmount);
+		Container &container = inventory.containers[container_index];
+		tabulate_item_add_container_data(inventory, buffer, container, required_amount,
+					     found_space, unsearched_inventory, container_index,
+					     holdable, added_amount);
 	}
 	// overflow containers
-	if (!foundSpace && unsearchedInventory)
-		containerIndex = 0;
-	while (!foundSpace && unsearchedInventory)
+	if (!found_space && unsearched_inventory)
+		container_index = 0;
+	while (!found_space && unsearched_inventory)
 	{
-		std::vector<Container> &unitOverflowContainers = overflowContainers[unitIndex];
-		Container &container = unitOverflowContainers[containerIndex];
-		tabulateItemAddContainerData(inventory, buffer, container, requiredAmount,
-					     foundSpace, unsearchedInventory, containerIndex,
-					     holdable, addedAmount);
+		std::vector<Container> &unit_overflow_containers = overflow_containers[unit_index];
+		Container &container = unit_overflow_containers[container_index];
+		tabulate_item_add_container_data(inventory, buffer, container, required_amount,
+					     found_space, unsearched_inventory, container_index,
+					     holdable, added_amount);
 	}
 
-	if (addedAmount > 0)
-		addItemsToInventory(overflows, overflowContainers, unitIndex, inventory, buffer);
-	if (force && requiredAmount < addedAmount)
+	if (added_amount > 0)
+		add_items_to_inventory(overflows, overflow_containers, unit_index, inventory, buffer);
+	if (force && required_amount < added_amount)
 	{
 		if (std::holds_alternative<Item>(holdable))
 		{
-			addItemsForce(inventory, overflows, overflowContainers, holdable,
-				      requiredAmount - addedAmount, variant);
+			add_items_force(inventory, overflows, overflow_containers, holdable,
+				      required_amount - added_amount, variant);
 		}
 		else if (std::holds_alternative<Tool>(holdable))
-			addItemsForce(inventory, overflows, overflowContainers, holdable,
-				      std::get<Material>(itemAmountOrMaterial));
+			add_items_force(inventory, overflows, overflow_containers, holdable,
+				      std::get<Material>(item_amount_or_material));
 	}
 }
-return addedAmount;
+return added_amount;
 }
 
 //right now does NOT check for material match
-inline bool removeArtOrTool(Inventory& inventory, Item item, //std::optional<SpecialItemData> specialData, 
+inline bool remove_art_or_tool(Inventory& inventory, Item item, //std::optional<SpecialItemData> special_data, 
 bool check = false)
 {
 	for (size_t i = 0; i < inventory.containers.size(); i++)
@@ -362,7 +357,7 @@ bool check = false)
 				if (std::holds_alternative<ArtSlot>(content) || std::holds_alternative<ToolSlot>(content))
 				{
 					Item item;
-					std::visit([&](auto &obj) { item = obj.getType(); },
+					std::visit([&](auto &obj) { item = obj.get_type(); },
 						   content);
 					if (item == content)
 					{
@@ -375,9 +370,9 @@ bool check = false)
 	return false;
 }
 
-inline uint16_t removeItem(Inventory& inventory, Item item, uint16_t amount, std::optional<uint8_t> variant = std::nullopt, bool check = false)
+inline uint16_t remove_item(Inventory& inventory, Item item, uint16_t amount, bool check = false, std::optional<uint8_t> variant = std::nullopt)
 {
-	uint16_t removedAmount = 0;
+	uint16_t removed_amount = 0;
 	for (size_t i = 0; i < inventory.containers.size(); i++)
 		{
 			for (auto content : inventory.containers[i])
@@ -385,92 +380,90 @@ inline uint16_t removeItem(Inventory& inventory, Item item, uint16_t amount, std
 				if (variant == std::nullopt)
 				{
 					if (std::holds_alternative<ItemSlot>(content)) {
-					Item contentItem;
-					std::visit([&](auto &obj) { contentItem = obj.getType(); },
+					Item content_item;
+					std::visit([&](auto &obj) { content_item = obj.get_type(); },
 						   content);
-					if (item == contentItem)
+					if (item == content_item)
 					{
-						removedAmount = min(amount, content.amount);
-						if (!check) content.amount -= removedAmount;
+						removed_amount = min(amount, content.amount);
+						if (!check) content.amount -= removed_amount;
 					}
 					}
 				}
 				else
 				{
 					if (std::holds_alternative<VariantItemSlot>(content)) {
-						Item contentItem;
-					std::visit([&](auto &obj) { contentItem = obj.getType(); },
+						Item content_item;
+					std::visit([&](auto &obj) { content_item = obj.get_type(); },
 						   content);
-					if (item == contentItem && content.variant = variant)
+					if (item == content_item && content.variant = variant)
 					{
-						removedAmount = min(amount, content.amount);
-						if (!check) content.amount -= removedAmount;
+						removed_amount = min(amount, content.amount);
+						if (!check) content.amount -= removed_amount;
 					}
 					}
 				}
 			}
 		}
-	return removedAmount;
+	return removed_amount;
 }
 
 // check means won' actually remove, just see amount
 //returns amount removed
-uint16_t removeItem(OverflowHashMap &overflows,
-					  OverflowContainerMap &overflowContainers,
-					  Inventory &inventory, uint16_t unitIndex,
+uint16_t remove_item(Inventory &inventory, uint16_t unit_index,
 					  Item item,
-				      std::optional<uint16_t> itemAmountOrMaterial = std::nullopt, std::optional<uint8_t> variant = std::nullopt, bool check = false)
+				      std::optional<uint16_t> item_amount_or_material = std::nullopt, std::optional<uint8_t> variant = std::nullopt, bool check = false)
 {
-	if !(hasTags(ItemTags::Tool, itemTags[item]))
+	if !(has_tags(ItemTags::Tool, item::TAGS[item]))
 	{
 	if (variant == std::nullopt) {
-		return removeItem(inventory, item, std::get<uint16_t>(itemAmountOrMaterial), check);
-	} else removeItem(inventory, item, std::get<uint16_t>(itemAmountOrMaterial), variant, check);
+		return remove_item(inventory, item, std::get<uint16_t>(item_amount_or_material), check);
+	} else remove_item(inventory, item, std::get<uint16_t>(item_amount_or_material), variant, check);
 	} else {
-		removeArtOrTool(inventory, tool, //std::get<Material>(itemAmountOrMaterial), 
+		remove_art_or_tool(inventory, tool, //std::get<Material>(item_amount_or_material), 
 check) ? return 1 : return 0;
 	}
 }	
 
-NecessaryToolsBuffer ensureNecessaryTools(OverflowHashMap &overflows, OverflowContainerMap &overflowContainers, SearchGrid& search, Action action, Inventory& inventory, uint16_t unitIndex, Coord coord)
+NecessaryToolsBuffer ensure_necessary_tools(SearchGrid& search, Action action, Inventory& inventory, uint16_t unit_index, Coord coord)
 {
 	NecessaryToolsBuffer buffer;
 	
-		constexpr int toolAmount= actionToTools[static_cast<uint16_t>(action)].size();
-		std::array<int, toolAmount> foundToolReplaceables;
-		int foundTools = 0;
-		int currentlySearched = 0;
+		constexpr int tool_amount= action_to_tools[static_cast<uint16_t>(action)].size();
+		std::array<int, tool_amount> found_tool_replaceables;
+		int found_tools = 0;
+		int currently_searched = 0;
 
-			for (int i = 0; i < toolAmount; i++)
+			for (int i = 0; i < tool_amount; i++)
 		{
-			Item tool = actionToTools[action][i].tool;
-			int requirementSlot = actionToTools[action]
+			Item tool = action_to_tools[action][i].tool;
+			int requirement_slot = action_to_tools[action]
 					[i].second();
 			// skip if replaceable equivalent has already been found,
-			for (int j = 0; j < currentlySearched; j++)
-				if (foundToolReplaceables[j] == requirementSlot)
+			for (int j = 0; j < currently_searched; j++)
+				if (found_tool_replaceables[j] == requirement_slot)
 					continue;
 				
 			// skip if tool is optional
-			    if (requirementSlot < 0) continue;
+			    if (requirement_slot < 0) continue;
 
-			    found = removeItem(overflows,
-					  overflowContainers,
-					  inventory, unitIndex,
+			    found = remove_item(overflows,
+					  overflow_containers,
+					  inventory, unit_index,
 					  tool, true);
 				
 			
 if (found) {
-				    foundToolsReplaceables[foundTools++] = requirementSlot;
+				    found_tools_replaceables[found_tools++] = requirement_slot;
 				    found = true;
 				    break;
 				    } 
 
 			    if (!found) {
-			    data = search.getNearest(tool, coord.first, coord.second);
-			    if (manDist(coord, newDest) > MID_GATHER_RANGE) {
+			    data = search.get_nearest(tool, coord.first, coord.second);
+			    if (man_dist(coord, new_dest) > MID_GATHER_RANGE) {
 				    buffer.state = ToolsState::Finding;
-				    buffer.destination.value() = NewDest;				    // buffer.missingToolType.value() = tool;
+				    buffer.destination.value() = NewDest;				    // buffer.missing_tool_type.value() = tool;
 				    return buffer;
 			}
 			else
@@ -482,7 +475,7 @@ if (found) {
 				
 			// TODO:: "search home function", which checks if a pawn's home/workplace
 			// contains the necessary tools, giving user warning if not
-			    currentlySearched++;
+			    currently_searched++;
 		}
 		buffer.state = ToolsState::FoundAll;
 		return buffer;

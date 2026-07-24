@@ -5,19 +5,19 @@ struct UnitData
 	std::vector<Item> equipment;
 	std::vector<std::vector<Item>> inventories;
 	std::vector<std::vector<int>> amounts;
-	std::vector<int> workLeft;
+	std::vector<int> work_left;
 
-	uint16_t size() const { return workLeft.size(); }
+	uint16_t size() const { return work_left.size(); }
 
 	void resize(uint16_t n)
 	{
 		inventories.resize(n);
 		amounts.resize(n);
-		workLeft.resize(n, 0);
+		work_left.resize(n, 0);
 	}
 };
 
-void produceItems(std::vector<Item> &queue, std::vector<int> &amount, UnitData &units)
+void produce_items(std::vector<Item> &queue, std::vector<int> &amount, UnitData &units)
 {
 	for (uint16_t q = 0; q < queue.size(); ++q)
 	{
@@ -29,15 +29,15 @@ void produceItems(std::vector<Item> &queue, std::vector<int> &amount, UnitData &
 
 		for (uint16_t i = 0; i < units.size(); ++i)
 		{
-			if (units.workLeft[i] != 0)
+			if (units.work_left[i] != 0)
 				continue;
 
 			auto &inventory = units.inventories[i];
-			auto &invAmounts = units.amounts[i];
+			auto &inv_amounts = units.amounts[i];
 
-			std::vector<std::pair<int, int>> productIngredients(
+			std::vector<std::pair<int, int>> product_ingredients(
 			    recipe.ingredients.size(), {-1, 0});
-			bool missingIngredients = false;
+			bool missing_ingredients = false;
 
 			for (uint16_t j = 0; j < recipe.ingredients.size(); ++j)
 			{
@@ -45,27 +45,27 @@ void produceItems(std::vector<Item> &queue, std::vector<int> &amount, UnitData &
 				if (ingredient == Item::EMPTY)
 					continue;
 
-				int requiredAmount = recipe.amounts[j];
-				int slotType = recipe.replaceable[j];
+				int required_amount = recipe.amounts[j];
+				int slot_type = recipe.replaceable[j];
 
 				bool found = false;
 
-				if (slotType != 0)
+				if (slot_type != 0)
 				{ // not optional
 					for (uint16_t k = 0; k < inventory.size(); ++k)
 					{
 						if (inventory[k] == ingredient &&
-						    invAmounts[k] >= requiredAmount)
+						    inv_amounts[k] >= required_amount)
 						{
-							productIngredients[j] = {
-							    static_cast<int>(k), requiredAmount};
+							product_ingredients[j] = {
+							    static_cast<int>(k), required_amount};
 							found = true;
 
 							// skip other replaceables with same slot
 							// type
 							while (j + 1 < recipe.replaceable.size() &&
 							       recipe.replaceable[j + 1] ==
-								   slotType)
+								   slot_type)
 								++j;
 
 							break;
@@ -75,7 +75,7 @@ void produceItems(std::vector<Item> &queue, std::vector<int> &amount, UnitData &
 					if (!found)
 					{
 						// missing mandatory ingredient
-						missingIngredients = true;
+						missing_ingredients = true;
 						break;
 					}
 				}
@@ -83,28 +83,28 @@ void produceItems(std::vector<Item> &queue, std::vector<int> &amount, UnitData &
 				// If optional and not found — we just skip
 			}
 
-			if (missingIngredients)
+			if (missing_ingredients)
 			{
 				// Future: search surroundings, idle, etc.
 				continue;
 			}
 
 			// All ingredients found — deduct from inventory
-			for (const auto &[index, amt] : productIngredients)
+			for (const auto &[index, amt] : product_ingredients)
 			{
 				if (index >= 0)
 				{
-					invAmounts[index] -= amt;
+					inv_amounts[index] -= amt;
 					// Optional: remove item if amount is now 0
-					if (invAmounts[index] == 0)
+					if (inv_amounts[index] == 0)
 					{
 						inventory.erase(inventory.begin() + index);
-						invAmounts.erase(invAmounts.begin() + index);
+						inv_amounts.erase(inv_amounts.begin() + index);
 					}
 				}
 			}
 
-			units.workLeft[i] = recipe.workTime;
+			units.work_left[i] = recipe.work_time;
 		}
 	}
 }
@@ -120,7 +120,7 @@ enum EquipmentTag : uint8_t
 
 enum NumItemTraits
 {
-	AmtMadeOf, // creates array itemType
+	AmtMadeOf, // creates array item_type
 	Size,	   // ltf
 	Weight,	   // ltf
 	Beauty,	   // ltf
@@ -131,7 +131,7 @@ enum class PlaceableItemTraits
 	SupportsRoof, // links to int, higher int means heavier roof, 0 for none
 	Floor,
 	Transport,
-	Holds,		 // links to array itemType
+	Holds,		 // links to array item_type
 	SecondDimension, // links to int which is its length
 	Durability,	 // ltf
 };
@@ -347,18 +347,18 @@ enum class SiegeTraits
 };
 
 /* UNIT TRAITS */
-enum unitTraits
+enum unit_traits
 {
 	// linked arrays are small int arrays
 	IsAdult,
-	CanCraft,	     // linked to array productType
-	ProducesIntangibles, // linked to arrayIntangibleType
-	CanGather,	     // linked to array blockType
-	CanBuff,	     // linked to array unitType
-	CanTrain,	     // linked to array unitType
-	HasAbilities,	     // linked to array abilityType
-	CanMount,	     // linked to array animalType
-		  //  array equipmentType
+	CanCraft,	     // linked to array product_type
+	ProducesIntangibles, // linked to array_intangible_type
+	CanGather,	     // linked to array block_type
+	CanBuff,	     // linked to array unit_type
+	CanTrain,	     // linked to array unit_type
+	HasAbilities,	     // linked to array ability_type
+	CanMount,	     // linked to array animal_type
+		  //  array equipment_type
 };
 
 /* ITEMS */

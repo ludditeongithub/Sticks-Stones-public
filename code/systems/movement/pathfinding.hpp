@@ -9,7 +9,7 @@
 #include <stdexcept>
 #include <vector>
 #include <world/tile/data.hpp>
-#include <world/unit/rolesAndActions.hpp>
+#include <world/unit/roles_and_actions.hpp>
 
 // CONSTANTS
 constexpr int MAX_PATH_SIZE = 45;
@@ -23,7 +23,7 @@ struct Entity
 	Direction d;
 };
 
-// RIGHT NOW: PATHS BUFFER currently holds ALL current paths being executed, maintained across frames. however it is fed a NEW 1-1 from newPaths right now. this should not be the case. newPaths should only add NEW things to the path buffer (small subset). path buffer cannot be global. must be same size (and probably owned) by databases. also ensure and consider: aStar is not finding the FINAL destination, but only an intermittent one (unless it happens to be final). the MAX_PATH_SIZE may need to be reduced. checks for final destination need to be done too!
+// RIGHT NOW: PATHS BUFFER currently holds ALL current paths being executed, maintained across frames. however it is fed a NEW 1-1 from new_paths right now. this should not be the case. new_paths should only add NEW things to the path buffer (small subset). path buffer cannot be global. must be same size (and probably owned) by databases. also ensure and consider: a_star is not finding the FINAL destination, but only an intermittent one (unless it happens to be final). the MAX_PATH_SIZE may need to be reduced. checks for final destination need to be done too!
 struct PathsBuffer
 {
 static constexpr size_t ELEMENT_SIZE = sizeof(uint8_t) + sizeof(uint8_t) + sizeof(Coord) + sizeof(PathData);
@@ -55,19 +55,19 @@ static constexpr size_t ELEMENT_SIZE = sizeof(uint8_t) + sizeof(uint8_t) + sizeo
 
 struct PathExecution
 {
-	size_t startIndex;
+	size_t start_index;
 	Coord start;
 	uint8_t length;
 };
 
 struct NodeData
 {
-	float gCost = FLT_MAX;
-	float fCost = FLT_MAX;
+	float g_cost = FLT_MAX;
+	float f_cost = FLT_MAX;
 
-	Direction cameDirection = Direction::North;
-	uint32_t searchID = 0;
-	bool closedFlag = false;
+	Direction came_direction = Direction::North;
+	uint32_t search_id = 0;
+	bool closed_flag = false;
 };
 
 std::vector<NodeData> node_data;
@@ -89,20 +89,20 @@ struct PathData
 
 struct NodeData
 {
-	float gCost = FLT_MAX;
-	float fCost = FLT_MAX;
+	float g_cost = FLT_MAX;
+	float f_cost = FLT_MAX;
 
-	Direction cameDirection;
+	Direction came_direction;
 
-	uint32_t searchID = 0;
-	bool closedFlag = false;
+	uint32_t search_id = 0;
+	bool closed_flag = false;
 };
 
 PathData a_star(Coord start, Coord goal, int width, int height);
 
-PathData reconstruct_path(int startIndex, int goalIndex);
+PathData reconstruct_path(int start_index, int goal_index);
 
-std::vector<EntityID> mark_new_path_entities(std::vector<EntityID> &actingEntities,
-								Array<FrameData> &frameDatas);
+std::vector<EntityID> mark_new_path_entities(std::vector<EntityID> &acting_entities,
+								Array<FrameData> &frame_datas);
 
-void set_new_paths(std::vector<EntityID>& pathDispatchBuffer, Array<Coord>& coords, Array<Target>& targets, PathsBuffer& pb);
+void set_new_paths(std::vector<EntityID>& path_dispatch_buffer, Array<Coord>& coords, Array<Target>& targets, PathsBuffer& pb);

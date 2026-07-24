@@ -19,21 +19,22 @@ struct RoleData
 {
 	uint8_t cost;
 	Time age;
-	std::vector<std::vector<Role>> validPrerequisiteRole;
-	std::vector<std::vector<Role>> requisitesOf;
+	std::vector<std::vector<Role>> valid_prerequisite_role;
+	std::vector<std::vector<Role>> requisites_of;
 	std::vector<std::pair<Role, uint8_t>> reductions;
-	std::vector<int> apprenticeTime;
+	std::vector<int> apprentice_time;
 };
 
-RoleData roleDatas[static_cast<int>(Role::MAX)];
+RoleData role_datas[static_cast<int>(Role::MAX)];
 
 struct ActionRequirement
 {
-		std::variant<Buildable, Item> requirement;
-		int8_t index; // negatives are unnecessary.
+	std::variant<Buildable, Item> requirement;
+	uint8_t index;
+        uint8_t amount;
 };
 
-inline RaggedLookupTable<Action, ActionRequirement> actionToTools = [] {
+inline RaggedLookupTable<Action, ActionRequirement> action_to_tools = [] {
 	RaggedLookupTable<Action, ActionRequirement> lt{};
 	using enum Action;
 	lt.set(Action::Pott, {
@@ -191,7 +192,7 @@ lt.set(Action::Sculpt, {
 	return lt;
 	    }();
 
-inline const RaggedLookupTable<Action, Role> actionToRoles = []
+inline const RaggedLookupTable<Action, Role> action_to_roles = []
 	    {		    
 		    RaggedLookupTable<Action, Role> lt{};
   			using enum Action;   

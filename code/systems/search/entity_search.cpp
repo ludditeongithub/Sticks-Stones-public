@@ -15,24 +15,24 @@
 SearchGrid::SearchGrid(World& world, TileDatabase& tiles) :  world(world), tiles(tiles)
 {	
 	uint16_t chunk_amount = world.CHUNK_AMOUNT;
-	chunkBucketArena = new Arena((chunkAmount * NATURAL_CHUNK_SEARCH_SIZE));
+	chunk_bucket_arena = new Arena((chunk_amount * NATURAL_CHUNK_SEARCH_SIZE));
 
-	activeBucketArena =
-	    new Arena((chunkAmount * NATURAL_CHUNK_SEARCH_SIZE) +
-		      (estimatedActiveChunkAmount(chunkAmount) * ACTIVE_CHUNK_SEARCH_SIZE));
+	active_bucket_arena =
+	    new Arena((chunk_amount * NATURAL_CHUNK_SEARCH_SIZE) +
+		      (estimated_active_chunk_amount(chunk_amount) * ACTIVE_CHUNK_SEARCH_SIZE));
 
 	for (uint16_t i = 0; i < chunk_amount; i++)
 	{
-		chunkBuckets[i] =
-		   arena_make_array<ChunkBucket*>(chunkBucketArena, NATURAL_CHUNK_SEARCH_SIZE);
-		activeChunks[i] = false;
+		chunk_buckets[i] =
+		   arena_make_array<ChunkBucket*>(chunk_bucket_arena, NATURAL_CHUNK_SEARCH_SIZE);
+		active_chunks[i] = false;
 	}
     
 }
 
 inline GridInfo SearchGrid::get_nth_nearest_chunk(Coord c, uint16_t n)
 {
-		const uint16_t center = getChunkIndexFromTile(c);
+		const uint16_t center = get_chunk_index_from_tile(c);
 	const int ha = c.x % CHUNK_SIZE;
 	const int va = c.y % CHUNK_SIZE;
 	const int dist_n = va;
@@ -74,31 +74,31 @@ inline GridInfo SearchGrid::get_nth_nearest_chunk(Coord c, uint16_t n)
 
 void SearchGrid::add_active_chunk(uint16_t index)
 {
-	activeChunks[index] = true;
+	active_chunks[index] = true;
 	uint16_t active_index;
-	if (freeIndices.empty())
-		active_index = activeCount;
+	if (free_indices.empty())
+		active_index = active_count;
 	else
 	{
-		activeIndex = freeIndices.top();
-		freeIndices.pop();
+		active_index = free_indices.top();
+		free_indices.pop();
 	}
-	activeChunkBuckets[activeIndex] = chunkBuckets[index];
-	chunkToActiveChunks[index] = activeIndex;
+	active_chunk_buckets[active_index] = chunk_buckets[index];
+	chunk_to_active_chunks[index] = active_index;
 }
 
 inline void SearchGrid::insert_entity(Entity type, EntitySearchData data)
 {
-	uint16_t gc = getChunkIndexFromTile(data.position);
-	uint16_t i = getTileIndexChunkRelative(data.position);
-	if (!(tiles->occupiedTiles[gc])[i])
+	uint16_t gc = get_chunk_index_from_tile(data.position);
+	uint16_t i = get_tile_index_chunk_relative(data.position);
+	if (!(tiles->occupied_tiles[gc])[i])
 	{
-		if (activeChunks[gc])
-		{			activeChunkBuckets[gc]->at(type).push_back(data);
+		if (active_chunks[gc])
+		{			active_chunk_buckets[gc]->at(type).push_back(data);
 		}
 		else
 		{
-			chunkBuckets[gc]->at(type).push_back(data);
+			chunk_buckets[gc]->at(type).push_back(data);
 		}
 	} // TODO: error
 }
@@ -108,17 +108,17 @@ inline void SearchGrid::remove_entity(Entity type, EntitySearchData data)
   
 }
 
-inline bool SearchGrid::check_collision(Coord tileCoord)
+inline bool SearchGrid::check_collision(Coord tile_coord)
 {	
-	return tiles->occupieds[world.getTileIndexFromCoord(tileCoord)];
+	return tiles->occupieds[world.get_tile_index_from_coord(tile_coord)];
 }
 
 inline EntitySearchData SearchGrid::get_nearest(Entity e, Coord c)
 {
 	// search per chunk, starting with nearest
-	uint16_t ci = getChunkIndexFromTile(c);
-	Array<SearchGrid::ChunkBucket *> &buckets = activeChunks[ci] ? activeChunkBuckets : chunkBuckets;
-	uint16_t cbi = activeChunks[ci] ? chunkToActiveChunks[ci] : ci;
+	uint16_t ci = get_chunk_index_from_tile(c);
+	Array<SearchGrid::ChunkBucket *> &buckets = active_chunks[ci] ? active_chunk_buckets : chunk_buckets;
+	uint16_t cbi = active_chunks[ci] ? chunk_to_active_chunks[ci] : ci;
 	auto &&es = buckets[cbi]->find(e);
 
 	if (es != buckets[cbi]->end())
@@ -129,7 +129,7 @@ inline EntitySearchData SearchGrid::get_nearest(Entity e, Coord c)
 		for (uint16_t i = 0; i < es->second.size(); i++)
 		{
 			Coord tc = es->second[i].position;
-			uint32_t td = manhattanDist(c, tc);
+			uint32_t td = manhattan_dist(c, tc);
 			if (td < ld)
 			{
 				ld = td;
@@ -151,11 +151,11 @@ inline bool check_adjacent(Entity entity, Coord coord)
 
 inline EntitySearchData SearchGrid::get_nth_nearest(uint16_t nearest, Entity e, Coord c)
 {
-	uint16_t ci = getChunkIndexFromTile(c);
+	uint16_t ci = get_chunk_index_from_tile(c);
 	Array<SearchGrid::ChunkBucket *> &buckets =
-		activeChunks[ci] ? activeChunkBuckets : chunkBuckets;
+		active_chunks[ci] ? active_chunk_buckets : chunk_buckets;
 
-	uint16_t cbi = activeChunks[ci] ? chunkToActiveChunks[ci] : ci;
+	uint16_t cbi = active_chunks[ci] ? chunk_to_active_chunks[ci] : ci;
 	auto &&es = buckets[cbi]->find(e);
 
 	if (es == buckets[cbi]->end())
@@ -196,7 +196,7 @@ inline EntitySearchData SearchGrid::get_nth_nearest(uint16_t nearest, Entity e, 
 		{
 			if (used[i]) continue;
 
-			uint32_t d = manhattanDist(c, list[i].position);
+			uint32_t d = manhattan_dist(c, list[i].position);
 
 			if (!found || d < best_dist)
 			{
@@ -215,10 +215,10 @@ inline EntitySearchData SearchGrid::get_nth_nearest(uint16_t nearest, Entity e, 
 EntityRenderBuffer SearchGrid::get_all_in_range(Coord origin, Coord dimensions)
 {
 	EntityRenderBuffer erd;
-	std::vector<uint16_t> chunks_on_screen = getChunksFromArea(origin, dimensions);
-	for (auto i: chunksOnScreen) {
-			Array<SearchGrid::ChunkBucket *> &cb = activeChunks[i] ? activeChunkBuckets : chunkBuckets;
-	uint16_t cbi = activeChunks[i] ? chunkToActiveChunks[i] : i;
+	std::vector<uint16_t> chunks_on_screen = get_chunks_from_area(origin, dimensions);
+	for (auto i: chunks_on_screen) {
+			Array<SearchGrid::ChunkBucket *> &cb = active_chunks[i] ? active_chunk_buckets : chunk_buckets;
+	uint16_t cbi = active_chunks[i] ? chunk_to_active_chunks[i] : i;
 	// iterate through unordered map, get all entities
 	for (auto x : *cb[cbi])
 	{
@@ -228,28 +228,28 @@ std::visit([&](auto&& arg) {
     if constexpr (std::is_same_v<T, Plant>)
     {
 	    for (size_t j = 0; j < objects.size(); j++) {
-		            erd.plants[erd.plantAmount++] = {objects[j].index, objects[j].position, std::move(arg)};
+		            erd.plants[erd.plant_amount++] = {objects[j].index, objects[j].position, std::move(arg)};
 	    }
     }
     else if constexpr (std::is_same_v<T, Animal>)
     {
 	    for (size_t j = 0; j < objects.size(); j++) {
-		            erd.animals[erd.animalAmount++] = {objects[j].index, objects[j].position, std::move(arg)};
+		            erd.animals[erd.animal_amount++] = {objects[j].index, objects[j].position, std::move(arg)};
 	    }        
     }
     else if constexpr (std::is_same_v<T, Item>) {
 	    for (size_t j = 0; j < objects.size(); j++) {
-		            erd.items[erd.itemAmount++] = {objects[j].index, objects[j].position, std::move(arg)};
+		            erd.items[erd.item_amount++] = {objects[j].index, objects[j].position, std::move(arg)};
 	    }
     }
     else if constexpr (std::is_same_v<T, Unit>) {
 	    for (size_t j = 0; j < objects.size(); j++) {
-		            erd.items[erd.itemAmount++] = {objects[j].index, objects[j].position, std::move(arg)};
+		            erd.items[erd.item_amount++] = {objects[j].index, objects[j].position, std::move(arg)};
 	    }
     }
     else if constexpr (std::is_same_v<T, Tool>) {
 	    for (size_t j = 0; j < objects.size(); j++) {
-		            erd.tools[erd.toolAmount++] = {objects[j].index, objects[j].position, std::move(arg)};
+		            erd.tools[erd.tool_amount++] = {objects[j].index, objects[j].position, std::move(arg)};
 	    }
     } 
 }, x.first);
@@ -259,22 +259,22 @@ std::visit([&](auto&& arg) {
 }
 
 
-std::pair<int, int> ObjectDatabase::findNearestLiquidContainer(int x, int y)
+std::pair<int, int> ObjectDatabase::find_nearest_liquid_container(int x, int y)
 {
 	std::pair<int, int> subject = {x, y};
-	std::pair<int, int> closest = findNearestObject(Container::Pot, x, y);
-	if (manDist(subject, closest) <
-	    manDist(findNearestObject(subject, Container::Bucket, x, y)))
-		closest = findNearestObject(subject, Container::Bucket, x, y);
-	if (manDist(subject, closest) <
-	    manDist(findNearestObject(subject, Container::LargePot, x, y)))
-		closest = findNearestObject(subject, Container::LargePot, x, y);
-	if (manDist(subject, closest) <
-	    manDist(findNearestObject(subject, Container::Kettle, x, y)))
-		closest = findNearestObject(subject, Container::Kettle, x, y);
-	if (manDist(subject, closest) < manDist(findNearestObject(subject, Container::Keg, x, y)))
-		closest = findNearestObject(subject, Container::Keg, x, y);
-	if (manDist(subject, closest) < manDist(findNearestObject(subject, Container::Jar, x, y)))
-		closest = findNearestObject(subject, Container::Jar, x, y);
+	std::pair<int, int> closest = find_nearest_object(Container::Pot, x, y);
+	if (man_dist(subject, closest) <
+	    man_dist(find_nearest_object(subject, Container::Bucket, x, y)))
+		closest = find_nearest_object(subject, Container::Bucket, x, y);
+	if (man_dist(subject, closest) <
+	    man_dist(find_nearest_object(subject, Container::LargePot, x, y)))
+		closest = find_nearest_object(subject, Container::LargePot, x, y);
+	if (man_dist(subject, closest) <
+	    man_dist(find_nearest_object(subject, Container::Kettle, x, y)))
+		closest = find_nearest_object(subject, Container::Kettle, x, y);
+	if (man_dist(subject, closest) < man_dist(find_nearest_object(subject, Container::Keg, x, y)))
+		closest = find_nearest_object(subject, Container::Keg, x, y);
+	if (man_dist(subject, closest) < man_dist(find_nearest_object(subject, Container::Jar, x, y)))
+		closest = find_nearest_object(subject, Container::Jar, x, y);
 	return closest;
 }

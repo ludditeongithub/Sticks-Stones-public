@@ -3,14 +3,14 @@
 #include <core/tables.hpp>
 #include <core/data.hpp>
 
-inline constexpr BitsetTable<Item> itemAscendingVersions = []
+inline constexpr BitsetTable<Item> item_ascending_versions = []
 	{
 		BitsetTable<Item> t{};
 		
 		return t;
 	}();
 
-inline constexpr LookupTable<Item,uint8_t> itemPixelTranslations = [] {
+inline constexpr LookupTable<Item,uint8_t> item_pixel_translations = [] {
 	LookupTable<Item,uint8_t> lt{};
 	using enum Item;
 	
@@ -18,7 +18,7 @@ inline constexpr LookupTable<Item,uint8_t> itemPixelTranslations = [] {
 }();
 
 //items which can be stacked. need multiple layered versions.
-inline constexpr LookupTable<Item, Coord> itemSpriteDimensions = []
+inline constexpr LookupTable<Item, Coord> item_sprite_dimensions = []
 {
 	LookupTable<Item, Coord> lt{};
 
@@ -37,7 +37,7 @@ inline constexpr LookupTable<Item, Coord> itemSpriteDimensions = []
 }();
 
 
-inline constexpr LookupTable<Item, uint8_t> itemSpriteVariants = []
+inline constexpr LookupTable<Item, uint8_t> item_sprite_variants = []
 {
 	LookupTable<Item,uint8_t> lt{};
 	using enum Item;

@@ -35,7 +35,7 @@ namespace plant
     return lt;
   }();
 
-  inline constexpr LookupTable2D<Biome, PlantCategory, float> categorySpawnChances = [] {
+  inline constexpr LookupTable2D<Biome, PlantCategory, float> category_spawn_chances = [] {
     LookupTable2D<Biome, PlantCategory, float> lt{};
   using enum PlantCategory;
    	lt[Biome::HotDesert][Tree] = 0.04; // acacia
@@ -201,7 +201,7 @@ namespace plant
   return lt;
  }();
 
-inline constexpr LookupTable<Plant, Coord> temperaturePenaltyRanges = []
+inline constexpr LookupTable<Plant, Coord> temperature_penalty_ranges = []
 {
 	LookupTable<Plant, Coord> lt{};
 	using enum Plant;
@@ -246,7 +246,7 @@ inline constexpr LookupTable<Plant, Coord> temperaturePenaltyRanges = []
 }();
 
 
-inline constexpr LookupTable<Plant, Coord> humidityPenaltyRanges = []
+inline constexpr LookupTable<Plant, Coord> humidity_penalty_ranges = []
 {
 	LookupTable<Plant, Coord> lt{};
 	using enum Plant;
@@ -305,7 +305,7 @@ inline constexpr LookupTable<Plant, Coord> humidityPenaltyRanges = []
 		float rarely = 0.6325;
 
 
-inline LookupTable2D<Plant, Tile, float> tileSpawnMultipliers = []
+inline LookupTable2D<Plant, Tile, float> tile_spawn_multipliers = []
 {
 	LookupTable2D<Plant, Tile, float> lt{};
 	using enum Tile;

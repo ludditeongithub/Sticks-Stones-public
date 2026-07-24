@@ -3,28 +3,33 @@ databases:
         name: animal
         traits: [health, hunger, sex, age, targeting, movable, positional, searchable, transferable, generated]
         structs:
-               main: [health, sex, age, targeting, animal_status]               
+               main: [health, sex, age, animal_status]
+               target: [targeting]
         extra_arrays: [hunger, positional, movable]
         database_references: [items, variant_items]
     buildable:
         name: buildable
         traits: [health, positional]
-        main_struct: [health, positional]
+        structs:
+                main: [health, positional]
     item:
         name: item
         traits: [positional, searchable, transferable]
-        main_struct: [positional]
+        extra_arrays: [positional]
         specializations: [clothing, weapon, tool, scavengeable]
     variant_item:
         name: variant_item
-        traits: [positional, searachable, transferable, foreign_enum, variant]
-        main_struct: [positional, variant]
+        traits: [positional, searchable, transferable, foreign_enum, variant]
+        structs:
+                main: [positional, variant]
         foreign_enum: [item]
     unit:
         name: unit
         traits: [health, hunger, sex, age, targeting, movable, positional, searchable, transferable]
-        main_struct: [health, sex, age, targeting]        
-        extra_arrays: [role_mana, role_list, skin_data, skill, inventory, place]
+        structs:
+                main: [sex, age]
+                targeting: [targeting]
+        extra_arrays: [health, role_mana, role_list, skin_data, skill, inventory, place, movable]
     tile:
         name: tile
         traits: [immortal, foreign_enum]
@@ -33,14 +38,17 @@ databases:
     plant:
         name: plant
         traits: [positional, age, searchable, transferable, generated]
+        extra_arrays: [positional, age]
         database_references: [seed, tile, animal]
     seed:
         name: seed
         traits: [positional, age, foreign_enum]
+        extra_arrays: [positional, age]
         foreign_enum: [plant]
     vehicle:
         name: vehicle
         traits: [health, movable, positional, seats]
+        extra_arrays: [health, movable, positional]
         database_references: [unit]
 
 trait_data:

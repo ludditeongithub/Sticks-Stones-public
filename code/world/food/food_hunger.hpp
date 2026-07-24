@@ -6,7 +6,7 @@
 #include <core/tables.hpp>
 #include <world/plant/enum.hpp>
 
-inline constexpr LookupTable<Plant, Hunger> fruitHunger = []
+inline constexpr LookupTable<Plant, Hunger> fruit_hunger = []
 {
 	LookupTable<Plant, Hunger> arr{};
 	using enum Plant;
@@ -24,7 +24,7 @@ inline constexpr LookupTable<Plant, Hunger> fruitHunger = []
 	return arr;
 }();
 
-inline constexpr LookupTable<Plant, Hunger> plantHunger = []
+inline constexpr LookupTable<Plant, Hunger> plant_hunger = []
 {
 	LookupTable<Plant, Hunger> arr{};
 	using enum Plant;
@@ -72,12 +72,12 @@ inline constexpr LookupTable<Plant, Hunger> plantHunger = []
 // The hunger values above are for fully edible portions.
 // For plants, you could scale hunger by the "health" or "regrowth factor" of the plant.
 // Example:
-//    actualHunger = plantHunger * (currentHealth / maxHealth)
+//    actual_hunger = plant_hunger * (current_health / max_health)
 // This allows animals to eat partially regrown leaves realistically.
 //
 // 3. Meat and corpse chunks
-// The `meatAmount` array defines how many "game pieces" the corpse can be divided into.
-// Each piece satisfies a fraction of the total `corpseHunger`.
+// The `meat_amount` array defines how many "game pieces" the corpse can be divided into.
+// Each piece satisfies a fraction of the total `corpse_hunger`.
 */
 
 #endif

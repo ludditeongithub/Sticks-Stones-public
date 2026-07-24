@@ -13,40 +13,40 @@
 // function
 void process_eating_animals(Array<Animal> &animals, Array<Hunger> &hungers, Array<Time> &timers,
 			  Array<Coord> &coords, Array<uint16_t> &targets,
-			  Array<TargetType> &targetTypes,
+			  Array<TargetType> &target_types,
 			  // plant info
-			  Array<Plant> &plants, Array<Health> &plantHealths,
-			  Array<Coord> &plantCoords,
+			  Array<Plant> &plants, Array<Health> &plant_healths,
+			  Array<Coord> &plant_coords,
 			  // item info
 			  Array<Item> &items,
 			  // corpse info
-			  Array<Coord> &perishableCoords, Array<Time> &perishableTimes,
-			  Array<Hunger> &perishableHungers,
+			  Array<Coord> &perishable_coords, Array<Time> &perishable_times,
+			  Array<Hunger> &perishable_hungers,
 			  // tile info
 			  Array<TileData> &tiles)
 {
 	for (uint16_t i = 0; i < hungers.capacity; i++)
 	{
 		bool ate = false;
-		switch (targetTypes[i])
+		switch (target_types[i])
 		{
 		case TargetType::Plant:
-			ate = eatPlant(animals, hungers, timers, coords, i, plants, plantHealths,
-				       plantCoords, targets[i]);
+			ate = eat_plant(animals, hungers, timers, coords, i, plants, plant_healths,
+				       plant_coords, targets[i]);
 			break;
 		case TargetType::Item: // fruit, eggs, human meals, corpse
-			ate = eatPerishable(animals, hungers, coords, timers, i, perishableHungers,
-					    perishableTimes, perishableCoords, targets[i]);
+			ate = eat_perishable(animals, hungers, coords, timers, i, perishable_hungers,
+					    perishable_times, perishable_coords, targets[i]);
 			break;
 			// case TargetType::Item:
-			//   ate = eatCorpse(animals, hungers,
+			//   ate = eat_corpse(animals, hungers,
 			//                   coords, timers,
-			//                   i, corpseHungers,
-			//                   corpseTimes, corpseCoords,
+			//                   i, corpse_hungers,
+			//                   corpse_times, corpse_coords,
 			// 			 targets[i]);
 			//  break;
 		default: // grass
-			ate = eatGrass(animals, hungers, timers, i, tiles);
+			ate = eat_grass(animals, hungers, timers, i, tiles);
 		}
 		if (ate)
 		{
@@ -54,90 +54,90 @@ void process_eating_animals(Array<Animal> &animals, Array<Hunger> &hungers, Arra
 	}
 }
 
-inline Time eating_timer(Hunger eatingAmount, Animal eater)
+inline Time eating_timer(Hunger eating_amount, Animal eater)
 {
-	return eatingAmount / (eatingSpeeds[eater] / HOUR_LENGTH);
+	return eating_amount / (eating_speeds[eater] / HOUR_LENGTH);
 }
 
 inline bool eat_perishable(Array<Animal> &animals, Array<Hunger> &hungers,
-			  Array<Coord> &animalCoords, Array<Time> &timers, uint16_t animalIndex,
-			  Array<Item> &perishables, Array<Hunger> &perishableHungers,
-			  Array<Time> &perishableTimes, Array<Coord> &perishableCoords,
-			  uint16_t perishableIndex)
+			  Array<Coord> &animal_coords, Array<Time> &timers, uint16_t animal_index,
+			  Array<Item> &perishables, Array<Hunger> &perishable_hungers,
+			  Array<Time> &perishable_times, Array<Coord> &perishable_coords,
+			  uint16_t perishable_index)
 {
-	Animal a = animals[animalIndex];
-	if (checkRotten(perishables[perishableIndex], perishableTimes[perishableIndex]) ||
-	    !adjacentCoords(perishableCoords[perishableIndex], animalCoords[animalIndex]))
+	Animal a = animals[animal_index];
+	if (check_rotten(perishables[perishable_index], perishable_times[perishable_index]) ||
+	    !adjacent_coords(perishable_coords[perishable_index], animal_coords[animal_index]))
 	{
 		return false;
 	}
 	else
 	{
-		Hunger &ch = perishableHungers[perishableIndex];
-		Hunger &h = hungers[animalIndex];
-		if (maxHungers[animals[animalIndex]] > ch + h)
+		Hunger &ch = perishable_hungers[perishable_index];
+		Hunger &h = hungers[animal_index];
+		if (max_hungers[animals[animal_index]] > ch + h)
 		{
-			timers[animalIndex] = eatingTimer(ch, a);
+			timers[animal_index] = eating_timer(ch, a);
 			h += ch;
 			ch = 0;
 		}
 		else
 		{
-			Hunger hd = maxHungers[a] - h;
+			Hunger hd = max_hungers[a] - h;
 			ch -= hd;
 			h += hd;
-			timers[animalIndex] = eatingTimer(hd, a);
+			timers[animal_index] = eating_timer(hd, a);
 		}
 	}
 	return true;
 }
 
 // lacks verification if animal can eat current plant
-inline bool eat_plant(Array<Animal> &animals, Array<Hunger> &hungers, Array<Time> &timers, Array<Coord> &animalCoords, uint16_t animalIndex, Array<Health> &plantHealths, Array<Coord> &plantCoords, uint16_t plantIndex)
+inline bool eat_plant(Array<Animal> &animals, Array<Hunger> &hungers, Array<Time> &timers, Array<Coord> &animal_coords, uint16_t animal_index, Array<Health> &plant_healths, Array<Coord> &plant_coords, uint16_t plant_index)
 {
-	if (adjacentCoords(plantCoords[plantIndex], animalCoords[animalIndex])) return false;
-	Animal a = animals[animalIndex];
-	Health &h = plantHealths[plantIndex];
-	Hunger mh = maxHungers[a];
-	Hunger &hv = hungers[animalIndex];
+	if (adjacent_coords(plant_coords[plant_index], animal_coords[animal_index])) return false;
+	Animal a = animals[animal_index];
+	Health &h = plant_healths[plant_index];
+	Hunger mh = max_hungers[a];
+	Hunger &hv = hungers[animal_index];
 	if (mh < hv + static_cast<Hunger>(h))
 	{
 		Hunger rh = mh - hv;
 		h -= static_cast<Health>(rh);
 		hv = mh;
-		timers[animalIndex] = eatingTimer(rh, a);
+		timers[animal_index] = eating_timer(rh, a);
 	}
 	else
 	{
 		Hunger ah = h;
 		h = 0;
 		hv += ah;
-		timers[animalIndex] = eatingTimer(ah, a);
+		timers[animal_index] = eating_timer(ah, a);
 	}
 	return true;
 }
 
 // TODO: events like these, what happesn to the grass tile is
 inline bool eat_grass(Array<Animal> &animals, Array<Hunger> &hungers, Array<Coord> &coords,
-		     Array<Time> &timers, uint16_t animalIndex, Array<TileData> &tiles)
+		     Array<Time> &timers, uint16_t animal_index, Array<TileData> &tiles)
 {
-	uint16_t ti = coordToIndex(coords[animalIndex], TILE_AMOUNT);
+	uint16_t ti = coord_to_index(coords[animal_index], TILE_AMOUNT);
 	TileData &tile = tiles[ti];
-	if (tileGrass(tile))
+	if (tile_grass(tile))
 	{
-		Animal a = animals[animalIndex];
-		Hunger mh = maxHungers[a];
-		Hunger &hv = hungers[animalIndex];
+		Animal a = animals[animal_index];
+		Hunger mh = max_hungers[a];
+		Hunger &hv = hungers[animal_index];
 		hv = fmin(mh, hv + GRASS_HUNGER_VALUE);
-		degrassTile(tile);
-		timers[animalIndex] = eatingTimer(GRASS_HUNGER_VALUE, a);
+		degrass_tile(tile);
+		timers[animal_index] = eating_timer(GRASS_HUNGER_VALUE, a);
 		return true;
 	}
 	return false;
 }
 
 // for both Hunters and Herbivores
-// TODO: perhaps have two levels of scanFood, one for within sight, first
+// TODO: perhaps have two levels of scan_food, one for within sight, first
 // triggered, one for a search, like this
 void scan_food(entt::registry &reg, entt::entity &e)
 {
@@ -145,27 +145,27 @@ void scan_food(entt::registry &reg, entt::entity &e)
 	auto index = entt::to_entity(e);
 	uint16_t lowest = 0;
 	// TODO
-	auto rt = roamThreshold[t];
+	auto rt = roam_threshold[t];
 	if (carnivores[t])
 	{
 		uint32_t prey_index;
-		BitsetTable bt = food::carnivoreDiets[t];
+		BitsetTable bt = food::carnivore_diets[t];
 		for (Type prey : bt)
 		{
 			// TODO
-			tpi = getNearest(e, prey);
+			tpi = get_nearest(e, prey);
 			// possible improvement/alternate method: do not search for plants and
 			// animals in non-native biomes!
-			auto d = getDistance(index, tpi);
-			if (d < roamThreshold)
+			auto d = get_distance(index, tpi);
+			if (d < roam_threshold)
 			{
-				setHuntTarget(reg, e, tpi);
+				set_hunt_target(reg, e, tpi);
 				return;
 			}
 			if (d < lowest)
 			{
 				lowest = d;
-				preyIndex = tpi;
+				prey_index = tpi;
 			}
 			// END TODO
 		}
@@ -178,56 +178,56 @@ void scan_food(entt::registry &reg, entt::entity &e)
 	if (herbivores[t])
 	{
 		uint32_t forage_index;
-		BitsetTable bt = food::getHerbivoreDiet(t);
+		BitsetTable bt = food::get_herbivore_diet(t);
 		for (Type fd : bt)
 		{
 			// TODO
-			tpi = getNearest(e, fd);
-			auto d = getDistance(index, forageIndex);
-			if (d < roamThreshold)
+			tpi = get_nearest(e, fd);
+			auto d = get_distance(index, forage_index);
+			if (d < roam_threshold)
 			{
-				setForageTarget(reg, e, tfi);
+				set_forage_target(reg, e, tfi);
 
 				return;
 			}
 			if (d < lowest)
 			{
 				lowest = d;
-				forageIndex = tfi;
+				forage_index = tfi;
 			}
 			// END TODO
 		}
 		if (carnivores[t])
 		{
-			setHuntTarget(reg, e, preyIndex);
+			set_hunt_target(reg, e, prey_index);
 			return;
 		}
-		setForageTarget(reg, e, forageIndex);
+		set_forage_target(reg, e, forage_index);
 	}
 }
 
 // in ticks
-int calculate_time_till_feed(int hungerAmount, Animal animal)
+int calculate_time_till_feed(int hunger_amount, Animal animal)
 {
 	float max_hunger;
 	float tick_burn_rate;
 	int time_till_feed;
 
 	int eating_threshold = max_hunger / 2;
-	if (hungerAmount < eating_threshold)
+	if (hunger_amount < eating_threshold)
 		return 0;
 	else
-		return static_cast<int>((hungerAmount - EatingThreshold) / burnRate);
+		return static_cast<int>((hunger_amount - EatingThreshold) / burn_rate);
 }
 
-// void preparePreyFeed(int animalIndex) {
-// 	addEvent(calculateTimeTillFeed(hunger[animalIndex] + futureConsumption,
-// feeder), EventType::PreyFeed, static_cast<int>(feeder), animalIndex);
+// void prepare_prey_feed(int animal_index) {
+// 	add_event(calculate_time_till_feed(hunger[animal_index] + future_consumption,
+// feeder), EventType::PreyFeed, static_cast<int>(feeder), animal_index);
 // }
 
-// //TODO: if outDistSqr not required, do not do it
-// void preparePredatorFeed(int animalIndex) {
+// //TODO: if out_dist_sqr not required, do not do it
+// void prepare_predator_feed(int animal_index) {
 
-// 	addEvent(calculateTimeTillFeed(hunger[animalIndex] + futureConsumption,
-// feeder), EventType::PredatorFeed, animalType, animalIndex);
+// 	add_event(calculate_time_till_feed(hunger[animal_index] + future_consumption,
+// feeder), EventType::PredatorFeed, animal_type, animal_index);
 // }

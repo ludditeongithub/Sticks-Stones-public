@@ -1,24 +1,24 @@
 
-inline void TileDatabase::updateTotalRevealedBox() 
+inline void TileDatabase::update_total_revealed_box() 
 {
-	uint32_t highestX, highestY = std::numeric_limits<uint32_t>::min();
-	uint32_t lowestX, lowestY = std::numeric_limits<uint32_t>::max();
+	uint32_t highest_x, highest_y = std::numeric_limits<uint32_t>::min();
+	uint32_t lowest_x, lowest_y = std::numeric_limits<uint32_t>::max();
 	for (size_t i = 0; i < tiles.size(); i++) {
-		if (visionStatuses[i] == VisionStatus::Hidden)
+		if (vision_statuses[i] == VisionStatus::Hidden)
 			continue;
-		Coord current = world->getTileCoordFromIndex(index);
-		if (current.x < lowestX)
-			lowestX = current.x;
-		else if (current.x > highestX) highestX = current.x;
+		Coord current = world->get_tile_coord_from_index(index);
+		if (current.x < lowest_x)
+			lowest_x = current.x;
+		else if (current.x > highest_x) highest_x = current.x;
 		
-		if (current.y < lowestY)
-			lowestY = current.y;
-		else if (current.y > highestY) highestY = current.y;
+		if (current.y < lowest_y)
+			lowest_y = current.y;
+		else if (current.y > highest_y) highest_y = current.y;
 	}
-	totalRevealedBoxTopLeftCorner = {lowestX, lowestY};
-	totalRevealedBoxDimensions = {highestX - lowestX, highestY - lowestY};
+	total_revealed_box_top_left_corner = {lowest_x, lowest_y};
+	total_revealed_box_dimensions = {highest_x - lowest_x, highest_y - lowest_y};
 }
 
-inline void Game::updatePlayerScrollableBorders() {
+inline void Game::update_player_scrollable_borders() {
 	
 }

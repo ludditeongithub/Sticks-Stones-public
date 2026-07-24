@@ -34,7 +34,7 @@ struct UISystem
 		init_window();
 		set_display_settings(user_screen_width, user_screen_height);
 		SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0"); //use nearest-neighbor
-		mainMenu = new MainMenu();
+		main_menu = new MainMenu();
 	}
 
 //TODO: check if manually adjusting display viewport is necessary with SDL's scaling	

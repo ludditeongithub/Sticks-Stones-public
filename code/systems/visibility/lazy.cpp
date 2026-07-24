@@ -7,19 +7,19 @@
 #include <simulation/game.hpp>
 #include <world/tile/database.hpp>
 
-inline void TileDatabase::manageFogPerMovement(World* world, UnitDatabase* units, Coord destination, bool explorer)
+inline void TileDatabase::manage_fog_per_movement(World* world, UnitDatabase* units, Coord destination, bool explorer)
 {
-	if (within(destination, totalRevealedBoxTopLeftCorner, totalRevealedBoxDimensions))
+	if (within(destination, total_revealed_box_top_left_corner, total_revealed_box_dimensions))
 	{
 	}
 	else
 	{
-		getNewDiamondEdge(edgeBuffer, destination.x, destination.y,
-				  getSightRange(units->skills.perception), );
-		for (size_t i = 0; i < edgeBuffer.size(); i++)
+		get_new_diamond_edge(edge_buffer, destination.x, destination.y,
+				  get_sight_range(units->skills.perception), );
+		for (size_t i = 0; i < edge_buffer.size(); i++)
 		{
-			uint32_t index = world->getTileIndexFromCoord(edgeBuffer[i]);
-			VisionStatus& vs = visionStatuses[index];
+			uint32_t index = world->get_tile_index_from_coord(edge_buffer[i]);
+			VisionStatus& vs = vision_statuses[index];
 			if (explorer)
 			{				
 				if (vs == VisionStatus::Hidden || vs == VisionStatus::Revealed) vs = VisionStatus::Explored;

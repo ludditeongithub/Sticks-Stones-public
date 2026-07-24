@@ -8,7 +8,7 @@
 
 // NOTE: may not work
 /*
-Direction checkIfAdjTarget(int pawn)
+Direction check_if_adj_target(int pawn)
 {
 	std::pair<int, int> coords = coords[pawn];
 	Object obj;
@@ -17,23 +17,23 @@ Direction checkIfAdjTarget(int pawn)
 		switch (i)
 		{
 		case 0:
-			obj = tileObject[tileIndices[{coords.x + 1, coords.y}]];
+			obj = tile_object[tile_indices[{coords.x + 1, coords.y}]];
 			d = Direction::East;
 			break;
 		case 1:
-			obj = tileObject[tileIndices[{coords.x - 1, coords.y}]];
+			obj = tile_object[tile_indices[{coords.x - 1, coords.y}]];
 			d = Direction::West;
 			break;
 		case 2:
-			obj = tileObject[tileIndices[{coords.x, coords.y + 1}]];
+			obj = tile_object[tile_indices[{coords.x, coords.y + 1}]];
 			d = Direction::North;
 			break;
 		case 3:
-			obj = tileObject[tileIndices[{coords.x, coords.y - 1}]];
+			obj = tile_object[tile_indices[{coords.x, coords.y - 1}]];
 			d = Direction::South;
 		}
 		std::visit([](const auto &left, const auto &right) { return left == right; },
-			   currentTarget[index], obj)
+			   current_target[index], obj)
 		{
 			return d;
 		}
@@ -42,22 +42,22 @@ Direction checkIfAdjTarget(int pawn)
 }
 
 
-void moveInDirection(int pawn, bool animal)
+void move_in_direction(int pawn, bool animal)
 {
-	Direction direction = currentDirection[pawn];
+	Direction direction = current_direction[pawn];
 	if (animal)
 	{
 		Animal entity = animals[pawn];
-		deleteObject(entity, animalCoords[pawn].first, animalCoords[pawn].second);
+		delete_object(entity, animal_coords[pawn].first, animal_coords[pawn].second);
 		if (direction == Direction::North)
-			animalCoords[pawn].second += 1;
+			animal_coords[pawn].second += 1;
 		else if (direction == Direction::South)
-			animalCoords[pawn].second -= 1;
+			animal_coords[pawn].second -= 1;
 		if (direction == Direction::East)
-			animalCoords[pawn].first += 1;
+			animal_coords[pawn].first += 1;
 		else if (direction == Direction::West)
-			animalCoords[pawn].first -= 1;
-		insertObject(entity, animalCoords[pawn].first, animalCoords[pawn].second);
+			animal_coords[pawn].first -= 1;
+		insert_object(entity, animal_coords[pawn].first, animal_coords[pawn].second);
 	}
 	else
 	{
@@ -69,7 +69,7 @@ void moveInDirection(int pawn, bool animal)
 			coords[pawn].first += 1;
 		else if (direction == Direction::West)
 			coords[pawn].first -= 1;
-		currentIndices[coords[pawn]] = pawn;
+		current_indices[coords[pawn]] = pawn;
 	}
 }
  */
@@ -80,13 +80,13 @@ void moveInDirection(int pawn, bool animal)
 // right now, tells you direction and if you should move (if you have reached target)
 //  for when dest is tile
 /*
-std::pair<Direction, bool> nextDirectionToTarget(int pawnIndex)
+std::pair<Direction, bool> next_direction_to_target(int pawn_index)
 {
-	if (adjCheckTile(coords[pawnIndex], dest[pawnIndex]) != Direction::NONE)
-		return {adjCheckTile(coords[pawnIndex], dest[pawnIndex]), false};
+	if (adj_check_tile(coords[pawn_index], dest[pawn_index]) != Direction::NONE)
+		return {adj_check_tile(coords[pawn_index], dest[pawn_index]), false};
 	Direction direction = Direction::NONE;
-	int dx = tileCoords[dest[pawnIndex]].first - coords[pawnIndex].first;
-	int dy = tileCoords[dest[pawnIndex]].second - coords[pawnIndex].second;
+	int dx = tile_coords[dest[pawn_index]].first - coords[pawn_index].first;
+	int dy = tile_coords[dest[pawn_index]].second - coords[pawn_index].second;
 	if (dx > 0)
 	{
 		direction = Direction::West;
@@ -97,12 +97,12 @@ std::pair<Direction, bool> nextDirectionToTarget(int pawnIndex)
 	}
 	else if (dy > 0)
 	{
-		if (getInertia(coords, Direcion::North) < getInertia(coords, direction))
+		if (get_inertia(coords, Direcion::North) < get_inertia(coords, direction))
 			direction = Direction::North;
 	}
 	else
 	{
-		if (getInertia(coords, Direcion::South) < getInertia(coords, direction))
+		if (get_inertia(coords, Direcion::South) < get_inertia(coords, direction))
 			direction = Direction::South;
 	}
 	return {direction, true};
@@ -111,21 +111,21 @@ std::pair<Direction, bool> nextDirectionToTarget(int pawnIndex)
 
 /*
 // for when dest is animal or human
-std::pair<Direction, bool> nextDirectionToMovingTarget(int pawnIndex, bool animal)
+std::pair<Direction, bool> next_direction_to_moving_target(int pawn_index, bool animal)
 {
 	if (animal)
 	{
-		int targetIndex = tileIndices[animalCoords[dest[i]]];
+		int target_index = tile_indices[animal_coords[dest[i]]];
 	}
 	else
-		int targetIndex = tileIndices[coords[dest[i]]];
+		int target_index = tile_indices[coords[dest[i]]];
 
-	if (adjCheckTile(coords[pawnIndex], targetIndex) != Direction::NONE)
-		return {adjCheckTile(coords[pawnIndex], targetIndex), false};
+	if (adj_check_tile(coords[pawn_index], target_index) != Direction::NONE)
+		return {adj_check_tile(coords[pawn_index], target_index), false};
 
 	Direction direction = Direction::NONE;
-	int dx = dest[pawnIndex].first - coords[pawnIndex].first;
-	int dy = dest[pawnIndex].second - coords[pawnIndex].second;
+	int dx = dest[pawn_index].first - coords[pawn_index].first;
+	int dy = dest[pawn_index].second - coords[pawn_index].second;
 	if (dx > 0)
 	{
 		direction = Direction::West;
@@ -136,25 +136,25 @@ std::pair<Direction, bool> nextDirectionToMovingTarget(int pawnIndex, bool anima
 	}
 	else if (dy > 0)
 	{
-		if (getInertia(coords, Direcion::North) < getInertia(coords, direction))
+		if (get_inertia(coords, Direcion::North) < get_inertia(coords, direction))
 			direction = Direction::North;
 	}
 	else
 	{
-		if (getInertia(coords, Direcion::South) < getInertia(coords, direction))
+		if (get_inertia(coords, Direcion::South) < get_inertia(coords, direction))
 			direction = Direction::South;
 	}
 	return {direction, true};
 }
 */
-std::vector<std::pair<int, int>> getDiamond(int cx, int cy, int radius)
+std::vector<std::pair<int, int>> get_diamond(int cx, int cy, int radius)
 {
 	std::vector<std::pair<int, int>> result;
 
 	for (int dx = -radius; dx <= radius; ++dx)
 	{
-		int maxDy = radius - std::abs(dx);
-		for (int dy = -maxDy; dy <= maxDy; ++dy)
+		int max_dy = radius - std::abs(dx);
+		for (int dy = -max_dy; dy <= max_dy; ++dy)
 		{
 			int x = cx + dx;
 			int y = cy + dy;
@@ -165,8 +165,8 @@ std::vector<std::pair<int, int>> getDiamond(int cx, int cy, int radius)
 	return result;
 }
 
-//returns size of edgeBuffer
-inline int getNewDiamondEdge(Array<Coord>& edgeBuffer, uint32_t cx, uint32_t cy, int radius, Direction direction)
+//returns size of edge_buffer
+inline int get_new_diamond_edge(Array<Coord>& edge_buffer, uint32_t cx, uint32_t cy, int radius, Direction direction)
 {
 		int edge = 0;
 	// LAYER 1 to LAYER 2
@@ -195,7 +195,7 @@ inline int getNewDiamondEdge(Array<Coord>& edgeBuffer, uint32_t cx, uint32_t cy,
 			default:
 				break;
 			}
-			edgeBuffer[i] = {x, y};
+			edge_buffer[i] = {x, y};
 			edge++;
 		}
 	}
@@ -203,57 +203,57 @@ inline int getNewDiamondEdge(Array<Coord>& edgeBuffer, uint32_t cx, uint32_t cy,
 }
 
 // NOTE: maybe change this to be able to work for both males and females
-void breedCheck(Animal animal, int maleIndex, Direction direction, bool total)
+void breed_check(Animal animal, int male_index, Direction direction, bool total)
 {
 	if (total)
-		std::vector < std::pair<int, int> de = getDiamond(x, y, , direction);
+		std::vector < std::pair<int, int> de = get_diamond(x, y, , direction);
 	else
 		std::vector < std::pair<int, int> de =
-		    getNewDiamondEdge(x, y, sightRanges[animal], direction);
+		    get_new_diamond_edge(x, y, sight_ranges[animal], direction);
 	for (int x = 0; x < de.size(); x++)
 	{
-		if (animalIndices.find(de[x]) != animalIndices.end())
+		if (animal_indices.find(de[x]) != animal_indices.end())
 		{
-			int femaleIndex = animalIndices(de[x]);
-			if (animals[femaleIndex] == animal && !animalSex[femaleIndex])
+			int female_index = animal_indices(de[x]);
+			if (animals[female_index] == animal && !animal_sex[female_index])
 			{
-				animalDest[maleIndex] = femaleIndex;
-				animalMovingStatus[pawnIndex] = MovingStatus::BreedPursuit;
+				animal_dest[male_index] = female_index;
+				animal_moving_status[pawn_index] = MovingStatus::BreedPursuit;
 			}
 		}
 	}
 }
 
 // NOTE: consider corpse for animals
-void huntCheck(Animal &huntList[], int pawnIndex, Direction direction, bool animal, bool total)
+void hunt_check(Animal &hunt_list[], int pawn_index, Direction direction, bool animal, bool total)
 {
 	if (animal)
-		int sightRange = sightRanges[Animal[pawnIndex]];
+		int sight_range = sight_ranges[Animal[pawn_index]];
 	else
-		int sightRange = humanSight;
+		int sight_range = human_sight;
 	if (total)
-		std::vector < std::pair<int, int> de = getDiamond(x, y, , direction);
+		std::vector < std::pair<int, int> de = get_diamond(x, y, , direction);
 	else
-		std::vector < std::pair<int, int> de = getNewDiamondEdge(x, y, , direction);
+		std::vector < std::pair<int, int> de = get_new_diamond_edge(x, y, , direction);
 	for (int x = 0; x < de.size(); x++)
 	{
-		for (int i = 0; i < huntList.size(); i++)
+		for (int i = 0; i < hunt_list.size(); i++)
 		{
-			if (animalIndices.find(de[x]) != animalIndices.end())
+			if (animal_indices.find(de[x]) != animal_indices.end())
 			{
-				int animalIndex = animalIndices(de[x]);
-				if (animals[animalIndex] == huntList[i])
+				int animal_index = animal_indices(de[x]);
+				if (animals[animal_index] == hunt_list[i])
 				{
 					if (animal)
 					{
-						animalDest[pawnIndex] = animalIndex;
-						animalMovingStatus[pawnIndex] =
+						animal_dest[pawn_index] = animal_index;
+						animal_moving_status[pawn_index] =
 						    MovingStatus::AnimalPursuit;
 					}
 					else
 					{
-						dest[pawnIndex] = animalIndex;
-						movingStatus[pawnIndex] =
+						dest[pawn_index] = animal_index;
+						moving_status[pawn_index] =
 						    MovingStatus::AnimalPursuit;
 					}
 				}
@@ -262,68 +262,68 @@ void huntCheck(Animal &huntList[], int pawnIndex, Direction direction, bool anim
 	}
 }
 
-void ediblePlantCheck(int animalIndex, Direction direction, bool total)
+void edible_plant_check(int animal_index, Direction direction, bool total)
 {
 	if (total)
-		std::vector < std::pair<int, int> de = getDiamond(x, y, , direction);
+		std::vector < std::pair<int, int> de = get_diamond(x, y, , direction);
 	std::vector < std::pair<int, int> de =
-	    getNewDiamondEdge(x, y, sightRanges[animals[animalIndex]], direction);
+	    get_new_diamond_edge(x, y, sight_ranges[animals[animal_index]], direction);
 	for (int x = 0; x < de.size(); x++)
 	{
-		int index = tileIndices(de[x]);
-		if !(isPlant(tileObject[index]))
+		int index = tile_indices(de[x]);
+		if !(is_plant(tile_object[index]))
 			continue;
-		for (int i = 0; i < herbivoreDiet.size(); i++)
+		for (int i = 0; i < herbivore_diet.size(); i++)
 		{
-			if (tileObject[index] == herbivoreDiet[i])
+			if (tile_object[index] == herbivore_diet[i])
 			{
-				animalDest[animalIndex] = index;
-				animalMovingStatus[animalIndex] = MovingStatus::ApproachPlant;
+				animal_dest[animal_index] = index;
+				animal_moving_status[animal_index] = MovingStatus::ApproachPlant;
 			}
 		}
 	}
 }
 
-void fruitCheck(int animalIndex, Direction direction, bool total)
+void fruit_check(int animal_index, Direction direction, bool total)
 {
 	if (total)
-		std::vector < std::pair<int, int> de = getDiamond(x, y, , direction);
+		std::vector < std::pair<int, int> de = get_diamond(x, y, , direction);
 	std::vector < std::pair<int, int> de =
-	    getNewDiamondEdge(x, y, sightRanges[animals[animalIndex]], direction);
+	    get_new_diamond_edge(x, y, sight_ranges[animals[animal_index]], direction);
 	for (int x = 0; x < de.size(); x++)
 	{
-		int index = tileIndices(de[x]);
-		if !(isFruit(tileObject[index]))
+		int index = tile_indices(de[x]);
+		if !(is_fruit(tile_object[index]))
 			continue;
 		for (int i = 0; i < static_cast<int>(Fruit::MAX); i++)
 		{
-			if (tileObject[index] == static_cast<Fruit>(i))
+			if (tile_object[index] == static_cast<Fruit>(i))
 			{
-				animalDest[animalIndex] = index;
-				animalMovingStatus[animalIndex] = MovingStatus::ApproachFruit;
+				animal_dest[animal_index] = index;
+				animal_moving_status[animal_index] = MovingStatus::ApproachFruit;
 			}
 		}
 	}
 }
 
 // TODO: need to finish this
-void searchPlantCheck(int pawn, Direction direction, bool total)
+void search_plant_check(int pawn, Direction direction, bool total)
 {
 	if (total)
-		std::vector < std::pair<int, int> de = getDiamond(x, y, humanSight, direction);
-	std::vector < std::pair<int, int> de = getNewDiamondEdge(x, y, humanSight, direction);
+		std::vector < std::pair<int, int> de = get_diamond(x, y, human_sight, direction);
+	std::vector < std::pair<int, int> de = get_new_diamond_edge(x, y, human_sight, direction);
 
 	for (int x = 0; x < de.size(); x++)
 	{
-		int index = tileIndices(de[x]);
-		if !(isPlant(tileObject[index]))
+		int index = tile_indices(de[x]);
+		if !(is_plant(tile_object[index]))
 			continue;
 		for (int i = 0; i <.size(); i++)
 		{
-			if (tileObject[index] == herbivoreDiet[i])
+			if (tile_object[index] == herbivore_diet[i])
 			{
 				dest[pawn] = index;
-				movingStatus[pawn] = MovingStatus::ApproachPlant;
+				moving_status[pawn] = MovingStatus::ApproachPlant;
 			}
 		}
 	}
@@ -331,34 +331,34 @@ void searchPlantCheck(int pawn, Direction direction, bool total)
 
 // NOTE: this might not work if objects cannot be compared; maybe should have differnt one for
 // approachitem
-void itemCheck(int pawn, Direction direction, bool total)
+void item_check(int pawn, Direction direction, bool total)
 {
 	if (total)
-		std::vector < std::pair<int, int> de = getDiamond(x, y, humanSight, direction);
-	std::vector < std::pair<int, int> de = getNewDiamondEdge(x, y, humanSight, direction);
+		std::vector < std::pair<int, int> de = get_diamond(x, y, human_sight, direction);
+	std::vector < std::pair<int, int> de = get_new_diamond_edge(x, y, human_sight, direction);
 	for (int x = 0; x < de.size(); x++)
 	{
-		int index = tileIndices(de[x]);
-		if (tileObject[index] == currentTarget[pawn])
+		int index = tile_indices(de[x]);
+		if (tile_object[index] == current_target[pawn])
 		{
 			dest[pawn] = index;
-			movingStatus[pawn] = MovingStatus::GetItem;
+			moving_status[pawn] = MovingStatus::GetItem;
 		}
 	}
 }
 
-void scavengeableCheck(int pawn, Direction direction, bool total)
+void scavengeable_check(int pawn, Direction direction, bool total)
 {
 	if (total)
-		std::vector < std::pair<int, int> de = getDiamond(x, y, humanSight, direction);
-	std::vector < std::pair<int, int> de = getNewDiamondEdge(x, y, humanSight, direction);
+		std::vector < std::pair<int, int> de = get_diamond(x, y, human_sight, direction);
+	std::vector < std::pair<int, int> de = get_new_diamond_edge(x, y, human_sight, direction);
 	for (int x = 0; x < de.size(); x++)
 	{
-		int index = tileIndices(de[x]);
-		if (tileObject[index] == currentTarget[pawn])
+		int index = tile_indices(de[x]);
+		if (tile_object[index] == current_target[pawn])
 		{
 			dest[pawn] = index;
-			movingStatus[pawn] = MovingStatus::ApproachScavengeable;
+			moving_status[pawn] = MovingStatus::ApproachScavengeable;
 		}
 	}
 }

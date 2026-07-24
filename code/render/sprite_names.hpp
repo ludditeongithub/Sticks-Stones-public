@@ -7,8 +7,8 @@
 #include <world/item/enum.hpp>
 #include <world/plant/enum.hpp>
 #include <core/tables.hpp>
-#include <extern/magic_enum/magic_enum.hpp>
-#include <extern/magic_enum/magic_enum_utility.hpp>
+#include <magic_enum/magic_enum.hpp>
+#include <magic_enum/magic_enum_utility.hpp>
 #include <string>
 
 namespace sprite {

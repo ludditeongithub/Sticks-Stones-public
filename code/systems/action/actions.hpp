@@ -8,22 +8,23 @@
 struct ActionEventDispatchBuffer
 {
 		bool animals;
-		std::vector<EntityID> movingTiles;
-		std::vector<EntityID> checkNearTargets;
+		std::vector<EntityID> moving_tiles;
+		std::vector<EntityID> check_near_targets;
 		std::vector<EntityID> approachs;
 		std::vector<EntityID> units;
 
 		ActionEventDispatchBuffer(size_t size, bool animals) : animals(animals)
 		{
 			if (animals)
-					{
-					}
-					else
-							{
-									units.reserve(size);
-							}
-			movingTiles.reserve(size);
-			checkNearTargets.reserve(size);
+			{
+                          
+                        }
+                        else
+                          {
+                            units.reserve(size);
+                          }
+			moving_tiles.reserve(size);
+			check_near_targets.reserve(size);
 			approachs.reserve(size);
 		}
 
@@ -36,10 +37,10 @@ struct ActionEventDispatchBuffer
 							{
 									units.shrink_to_fit();
 							}
-			movingTiles.shrink_to_fit();
-			checkNearTargets.shrink_to_fit();
+			moving_tiles.shrink_to_fit();
+			check_near_targets.shrink_to_fit();
 			approachs.shrink_to_fit();
 		}			
 };
 
-ActionEventDispatchBuffer& mark_acting_entities(std::vector<EntityID> &indices, std::optional<Array<Animal>> &animals, Array<Coord> &coords, Array<size_t>& targets, Array<Action>& actions, Array<FrameData>& frameDatas);
+ActionEventDispatchBuffer& mark_acting_entities(std::vector<EntityID> &indices, std::optional<Array<Animal>> &animals, Array<Coord> &coords, Array<size_t>& targets, Array<Action>& actions, Array<FrameData>& frame_datas);

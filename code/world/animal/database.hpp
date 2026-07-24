@@ -25,16 +25,16 @@ struct EggFertilizationHandler {
 		std::queue<size_t> free_indices;
 		void push_back(size_t index)
 		{
-			if (freeIndices.empty())
+			if (free_indices.empty())
 					{
-				fertilizedEggLayers.push_back(index);
+				fertilized_egg_layers.push_back(index);
 				valid.push_back(true);
 					}
 					else
 							{
-									size_t slot = freeIndices.front();
-									freeIndices.pop();
-									fertilizedEggLayers[slot] =
+									size_t slot = free_indices.front();
+									free_indices.pop();
+									fertilized_egg_layers[slot] =
 											index;
 									valid[slot] = true;
 							}
@@ -43,11 +43,11 @@ struct EggFertilizationHandler {
 		void remove(size_t index)
 		{
 				valid[index] = false;
-				freeIndices.push(index);
+				free_indices.push(index);
 		}
 		EggFertilizationHandler(size_t size)
 		{
-				fertilizedEggLayers.reserve(size);
+				fertilized_egg_layers.reserve(size);
 				valid.reserve(size);				
 		}
 };
@@ -116,7 +116,7 @@ search(search)
 this->capacity = capacity;
   this->size = 0;
   this->variant_items = variant_items;
-  fertilizationHandler = EggFertilizationHandler(capacity / 20);  
+  fertilization_handler = EggFertilizationHandler(capacity / 20);  
 
 }
 
@@ -139,47 +139,47 @@ this->capacity = capacity;
         if (size + 1 > capacity)
             return false;
         size_t i;
-        if (freeSlots.empty())
+        if (free_slots.empty())
         {
             i = size;
             size++;
         }
         else
         {
-            i = freeSlots.top();
-            freeSlots.pop();
+            i = free_slots.top();
+            free_slots.pop();
         }
         alives[i] = true;
         if (newborn)
         {
             animals[i] = animal;
-            healths[i] = animal::maxHealths[animal] * INFANT_HEALTH_MODIFIER;
-            hungers[i] = animal::maxHungers[animal] * INFANT_HUNGER_MODIFIER;
+            healths[i] = animal::max_healths[animal] * INFANT_HEALTH_MODIFIER;
+            hungers[i] = animal::max_hungers[animal] * INFANT_HUNGER_MODIFIER;
             sexes[i] = random_bool->next();
             ages[i] = 0;
             targets[i] = std::numeric_limits<size_t>::max();
-            targetTypes[i] = TargetType::NONE;
+            target_types[i] = TargetType::NONE;
             actions[i] = Action::NONE;
-            frameDatas[i] = FrameData{ActState::NewPath, Direction::South, Frame::F0};
+            frame_datas[i] = FrameData{ActState::NewPath, Direction::South, Frame::F0};
             coords[i] = coord;
-            animalStatuses[i] = AnimalStatus{Direction::North, ActionStatus::Idle, MatingStatus::Idle};
+            animal_statuses[i] = AnimalStatus{Direction::North, ActionStatus::Idle, MatingStatus::Idle};
         }
         else
         {
         Time age = random_bool->next();
             animals[i] = animal;
-            healths[i] = getMaxHealth(animal, age);
-            hungers[i] = getMaxHunger(animal, age);
+            healths[i] = get_max_health(animal, age);
+            hungers[i] = get_max_hunger(animal, age);
             sexes[i] = random_bool->next();
             ages[i] = age;
             targets[i] = std::numeric_limits<size_t>::max();
-            targetTypes[i] = TargetType::NONE;
+            target_types[i] = TargetType::NONE;
             actions[i] = Action::NONE;
-            frameDatas[i] = FrameData{ActState::NewPath, Direction::South, Frame::F0};
+            frame_datas[i] = FrameData{ActState::NewPath, Direction::South, Frame::F0};
             coords[i] = coord;
-            animalStatuses[i] = AnimalStatus{Direction::North, ActionStatus::Idle, MatingStatus::Idle};
+            animal_statuses[i] = AnimalStatus{Direction::North, ActionStatus::Idle, MatingStatus::Idle};
         }
-            search.insertEntity(animal, {i, coords[i]});
+            search.insert_entity(animal, {i, coords[i]});
         return true;
           }
           bool spawn(Animal animal, bool newborn, Coord origin) {
@@ -197,17 +197,17 @@ this->capacity = capacity;
         if (!alives[i])
             return false;
 
-        freeSlots.push(i);
+        free_slots.push(i);
         alives[i] = false;
         Animal animal = animals[i];
-            search.removeEntity(animal, {i, coords[i]});
+            search.remove_entity(animal, {i, coords[i]});
         return true;
   }
 
   void free_unused_entity()
   {
     for (size_t i = 0; i < coords.size; i++) {
-    if (tiles.tileStatuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
+    if (tiles.tile_statuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
     }
   }
     
@@ -219,10 +219,10 @@ this->capacity = capacity;
     inline bool attempt_move_entity(size_t index)
     {
         Coord& pos = coords[index];
-        Coord new_pos = getPos(frameDatas[index].get<Direction>(), pos);
+        Coord new_pos = get_pos(frame_datas[index].get<Direction>(), pos);
         size_t ti = world.get_tile_index_from_coord(new_pos);
 
-        if (search.tiles.tileStatuses.get<OccupiedStatus>()[ti] == false)
+        if (search.tiles.tile_statuses.get<OccupiedStatus>()[ti] == false)
         {
             pos = new_pos;
             return true;
@@ -240,7 +240,7 @@ this->capacity = capacity;
     {
     archive(capacity);
         archive(size);
-        archive(freeSlots);
+        archive(free_slots);
         archive(alives);
    
 
@@ -250,11 +250,11 @@ this->capacity = capacity;
         sexes.save(archive);
         ages.save(archive);
         targets.save(archive);
-        targetTypes.save(archive);
+        target_types.save(archive);
         actions.save(archive);
-        frameDatas.save(archive);
+        frame_datas.save(archive);
         coords.save(archive);
-        animalStatuses.save(archive);
+        animal_statuses.save(archive);
     }
 
     template <class Archive>
@@ -262,7 +262,7 @@ this->capacity = capacity;
     {
         archive(capacity);
         archive(size);
-        archive(freeSlots);
+        archive(free_slots);
         archive(alives);
         
         animals.load(archive);
@@ -271,11 +271,11 @@ this->capacity = capacity;
         sexes.load(archive);
         ages.load(archive);
         targets.load(archive);
-        targetTypes.load(archive);
+        target_types.load(archive);
         actions.load(archive);
-        frameDatas.load(archive);
+        frame_datas.load(archive);
         coords.load(archive);
-        animalStatuses.load(archive);
+        animal_statuses.load(archive);
     }
 
 
@@ -287,14 +287,14 @@ inline bool transfer_animal(size_t i, AnimalDatabase &old_db, AnimalDatabase &ne
   {
   if (new_db.size >= new_db.capacity) return false;
   int index;  
-  if (new_db.freeSlots.empty())
+  if (new_db.free_slots.empty())
   {
   index = ++size;
 	}
 	else
 	{
-		index = new_db.freeSlots.top();
-		new_db.freeSlots.pop();			
+		index = new_db.free_slots.top();
+		new_db.free_slots.pop();			
   }
     new_db.animals[index] = old_db.animals[i];
     new_db.healths[index] = old_db.healths[i];
@@ -302,13 +302,13 @@ inline bool transfer_animal(size_t i, AnimalDatabase &old_db, AnimalDatabase &ne
     new_db.sexes[index] = old_db.sexes[i];
     new_db.ages[index] = old_db.ages[i];
     new_db.targets[index] = old_db.targets[i];
-    new_db.targetTypes[index] = old_db.targetTypes[i];
+    new_db.target_types[index] = old_db.target_types[i];
     new_db.actions[index] = old_db.actions[i];
-    new_db.frameDatas[index] = old_db.frameDatas[i];
+    new_db.frame_datas[index] = old_db.frame_datas[i];
     new_db.coords[index] = old_db.coords[i];
-    new_db.animalStatuses[index] = old_db.animalStatuses[i];
+    new_db.animal_statuses[index] = old_db.animal_statuses[i];
   new_db.alives[index] = true;
-  old_db.freeSlots.push(i);
+  old_db.free_slots.push(i);
   old_db.alives[index] = false;
   return true;
   }

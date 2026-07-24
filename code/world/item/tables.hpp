@@ -1,7 +1,7 @@
 #include "enum.hpp"
 #include <core/tables.hpp>
 
-inline constexpr LookupTable<ContainerType, float> containerWeightCapacities = []
+inline constexpr LookupTable<ContainerType, float> container_weight_capacities = []
 {
 	LookupTable<ContainerType, float> lt{};
 	using enum ContainerType;
@@ -9,7 +9,7 @@ inline constexpr LookupTable<ContainerType, float> containerWeightCapacities = [
 	return lt;
 }();
 
-inline constexpr LookupTable<ContainerType, float> containerBulkCapacities = []
+inline constexpr LookupTable<ContainerType, float> container_bulk_capacities = []
 {
 	LookupTable<ContainerType, float> lt{};
 	using enum ContainerType;

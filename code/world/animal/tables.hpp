@@ -28,8 +28,8 @@ inline constexpr LookupTable<Animal, Frame> RUNNING_FRAME_PER_TILES = []
 LookupTable<Animal, Frame> get_frame_per_tiles_table(bool running)
 {
 	if (running)
-			return runningFramePerTiles;
-	else return walkingFramePerTiles;
+			return running_frame_per_tiles;
+	else return walking_frame_per_tiles;
 }
 
 inline constexpr LookupTable<Animal, Time> BREEDING_INTERVALS = []
@@ -208,7 +208,7 @@ inline constexpr LookupTable<Animal, Time> FERTILITY_AGES = []
 	lt[Animal::Fish] = 0.08f;
         for (size_t i = 0; i < static_cast<size_t>(Animal::MAX); i++)
 	{
-		lt[static_cast<Animal>(i)] *= maxAges[static_cast<Animal>(i)];
+		lt[static_cast<Animal>(i)] *= max_ages[static_cast<Animal>(i)];
         }
 	return lt;
 }();
@@ -242,7 +242,7 @@ inline constexpr LookupTable<Animal, Time> SENESCENCE_AGES = [] {
 	lt[Caribou]       = 0.75f;
 	lt[Fish]          = 0.85f;
         for (size_t i = 0; i < static_cast<size_t>(Animal::MAX); i++) {
-          lt[static_cast<Animal>(i)] *= maxAges[static_cast<Animal>(i)];
+          lt[static_cast<Animal>(i)] *= max_ages[static_cast<Animal>(i)];
         }
 	return lt;
 }();

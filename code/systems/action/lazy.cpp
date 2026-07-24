@@ -2,7 +2,7 @@
 #include <core/data.hpp>
 #include <world/unit/database.hpp>
 
-void UnitDatabase::setNewAction(EntityID i)
+void UnitDatabase::set_new_action(EntityID i)
 {
 		if (health(i) <= 0) action(i) = Action::Dead;
 
@@ -14,14 +14,14 @@ void UnitDatabase::setNewAction(EntityID i)
 			for (int j = 0; j < rd[i].size(); j++)
 			{
 				// TODO: precompute all scores for all roles
-				float t = getJobScore(rd[i][j]);
+				float t = get_job_score(rd[i][j]);
 				if (t > highest)
 				{
 					highest = t;
 					ji = j;
 				}
 			}
-			action(i) = roleToAction[rd[i][ji]];
+			action(i) = role_to_action[rd[i][ji]];
 		}
 }
 
@@ -54,34 +54,34 @@ void UnitDatabase::setNewAction(EntityID i)
 // and sell goods among each other. Resource Estimates are decent, but true
 // bureaucratic recording is impossible
 
-inline bool attempt_resource_assignment(EntityID pawnIndex, size_t taskPriorityQueueIndex, Role role) {
+inline bool attempt_resource_assignment(EntityID pawn_index, size_t task_priority_queue_index, Role role) {
 					for (int k = 0;
-					     k < resourcerResources[(role)].size;
+					     k < resourcer_resources[(role)].size;
 					     k++)
 					{
-						if (resourcerResources[(role)]
+						if (resourcer_resources[(role)]
 								      [k] ==
-						    resourcePriorityQueue[taskPriorityQueueIndex].first)
+						    resource_priority_queue[task_priority_queue_index].first)
 						{
-								attemptResource(pawnIndex, role);
+								attempt_resource(pawn_index, role);
 								return true;
 						}
 					}
 				return false;
 }
 
-inline bool attempt_products_assignment(EntityID pawnIndex, TaskPriorityQueue& pq, size_t taskPriorityQueueIndex, Role role)
+inline bool attempt_products_assignment(EntityID pawn_index, TaskPriorityQueue& pq, size_t task_priority_queue_index, Role role)
 {
 					// PRODUCTS
 					for (int k = 0;
-					     k < producerProducts[(role)].size;
+					     k < producer_products[(role)].size;
 					     k++)
-							if (producerProducts[(role)][k] == static_cast<Item>(pq[taskPriorityQueueIndex].task)) attemptProduction(pawnIndex);					
+							if (producer_products[(role)][k] == static_cast<Item>(pq[task_priority_queue_index].task)) attempt_production(pawn_index);					
 }
 
 /* Get jobs from  */
 // NOTE: can implement jump table. this is for authority command structure
-void decide_task(EntityID pawnIndex, UnitDatabase& database)
+void decide_task(EntityID pawn_index, UnitDatabase& database)
 {
 	int task_index = -1;
 	TaskType type = TaskType::NONE;
@@ -91,15 +91,15 @@ void decide_task(EntityID pawnIndex, UnitDatabase& database)
 		// TODO: check if role is producer vs resource vs etc on lookup table
 		if (g_TaskPriorityQueue[i].priority < highest)
 		{
-			for (EntityID j = 0; j < roles[pawnIndex].size; j++)
+			for (EntityID j = 0; j < roles[pawn_index].size; j++)
 			{
 				Role t_role = g_TaskPriorityQueue[i].role;
 
-				if (tRole < Role::RESOURCEMAX && tRole > Role::SUPPORTMAX)
+				if (t_role < Role::RESOURCEMAX && t_role > Role::SUPPORTMAX)
 				{
 					
 				}
-				else if (tRole < Role::PRODUCTSMAX && tRole > Role::RESOURCEMAX)
+				else if (t_role < Role::PRODUCTSMAX && t_role > Role::RESOURCEMAX)
 				{
 
 				}
@@ -109,40 +109,40 @@ void decide_task(EntityID pawnIndex, UnitDatabase& database)
 
 	if (highest == 1)
 	{
-		attemptProduction(pawnIndex, producerProducts[static_cast<int>(tRole)][taskIndex]);
+		attempt_production(pawn_index, producer_products[static_cast<int>(t_role)][task_index]);
 		return;
 	}
 }
 }
 
-for (int i = 0; i < supportPriorityQueue.size; i++)
+for (int i = 0; i < support_priority_queue.size; i++)
 {
-	if (supportPriorityQueue[i].second < highest)
+	if (support_priority_queue[i].second < highest)
 	{
-		for (int j = 0; j < roles[pawnIndex].size; j++)
+		for (int j = 0; j < roles[pawn_index].size; j++)
 		{
-			Role tRole = roles[pawnIndex][j];
-			if (tRole == supportPriorityQueue[i])
-				(producerProducts[static_cast<int>(tRole)][k] ==
-				 productsPriorityQueue[i].first)
+			Role t_role = roles[pawn_index][j];
+			if (t_role == support_priority_queue[i])
+				(producer_products[static_cast<int>(t_role)][k] ==
+				 products_priority_queue[i].first)
 				{
 					type = TaskType::Suppot highest =
-					    productsPriorityQueue[i].second;
-					taskIndex = i;
+					    products_priority_queue[i].second;
+					task_index = i;
 				}
 		}
 	}
 }
 if (highest == 1)
 {
-	attemptProduct(pawnIndex, role);
+	attempt_product(pawn_index, role);
 	return;
 }
 }
 }
 
-if (movingStatus[pawnIndex] != MovingStatus::Production)
+if (moving_status[pawn_index] != MovingStatus::Production)
 {
-	attemptProduction(pawnIndex, producerProducts[static_cast<int>(roles[pawnIndex[i]])]);
+	attempt_production(pawn_index, producer_products[static_cast<int>(roles[pawn_index[i]])]);
 }
 }

@@ -19,7 +19,7 @@ struct ItemSlot
 
 	ItemSlot(Item item, uint16_t amount) : item(item), amount(amount)
 	{
-		assert(!hasTag(ItemTags::Variant | ItemTags::Tool | ItemTags::Art, itemTags[item]));
+		assert(!has_tag(ItemTags::Variant | ItemTags::Tool | ItemTags::Art, item::TAGS[item]));
 	}
 
 	inline bool is_empty()
@@ -43,7 +43,7 @@ struct VariantItemSlot
 	VariantItemSlot(Item item, uint16_t amount, uint8_t variant)
 	    : item(item), amount(amount), variant(variant)
 	{
-		assert(hasTag(ItemTags::Variant, itemTags[item]));
+		assert(has_tag(ItemTags::Variant, item::TAGS[item]));
 	}
 
 	inline bool is_empty()
@@ -63,9 +63,9 @@ struct ToolSlot
 	Item item;
 	SpecialItemData special_data;
 
-	ToolSlot(Item item, SpecialItemData special_data) : item(item), specialData(specialData)
+	ToolSlot(Item item, SpecialItemData special_data) : item(item), special_data(special_data)
 	{
-		assert(hasTag(ItemTags::OneHandedTool, itemTags[item]));
+		assert(has_tag(ItemTags::OneHandedTool, item::TAGS[item]));
 	}
 
 	inline bool is_empty()
@@ -81,9 +81,9 @@ struct ArtSlot {
 	Item item;
 	SpecialItemData special_data;
 
-	ArtSlot(Item item, SpecialItemData special_data) : item(item), specialData(specialData)
+	ArtSlot(Item item, SpecialItemData special_data) : item(item), special_data(special_data)
 	{
-		assert(hasTag(ItemTags::Art, itemTags[item]));
+		assert(has_tag(ItemTags::Art, item::TAGS[item]));
 	}
 
 	inline bool is_empty()
@@ -100,7 +100,11 @@ struct MealSlot {
 	Quality quality;
 };
 
-using HoldableSlot = std::variant<ItemSlot, VariantItemSlot, ToolSlot, ArtSlot, MealSlot>;
+struct NullSlot {
+  
+};
+
+using HoldableSlot = std::variant<NullSlot, ItemSlot, VariantItemSlot, ToolSlot, ArtSlot, MealSlot>;
 
 enum class ContainerFullTags : uint8_t
 {
@@ -124,12 +128,12 @@ struct Container
 	std::array<HoldableSlot, HOLDABLE_UNDERFLOW_LIMIT> holdables;
 	// OPTI: can go back and optimize? this into 3 seperate fields
 	//  std::array<ItemSlot, 3> items;
-	//  VariantItemSlot variantItem;
+	//  VariantItemSlot variant_item;
 	//  std::array<ToolSlot, 2> tools;
 
 	Container(Item type, ContainerFullTags tags, float bulk, float weight) : type(type), tags(tags), bulk(bulk), weight(weight)
 	{
-			assert(hasTag(ItemTags::Container, itemTags[type]));	
+			assert(has_tag(ItemTags::Container, item::TAGS[type]));	
 	}
 };
 
@@ -211,16 +215,16 @@ bool valid_container(Container container, Item new_item)
 	switch (bulk_and_weights[static_cast<int>(new_item)].bulklevel)
 	{
 	case BulkLevel::Liquid:
-		if (!container.liquidMode)
+		if (!container.liquid_mode)
 			return false;
-		if (container.containerType == ContainerType::Basket)
+		if (container.container_type == ContainerType::Basket)
 			return false;
 	case BulkLevel::Fine:
-		if (container.containerType == ContainerType::Basket)
+		if (container.container_type == ContainerType::Basket)
 			return false;
 	}
-	if (container.currentBulk + bulkAndWeights[static_cast<int>(new_item)].bulk >
-	    getContainerCapacity(container.containerType))
+	if (container.current_bulk + bulk_and_weights[static_cast<int>(new_item)].bulk >
+	    get_container_capacity(container.container_type))
 		return false;
 	return true;
 }

@@ -8,14 +8,14 @@ struct StatusBar
 {
 	int max;
 	int current;
-	const SDL_Rect *fullBar;
-	const SDL_Rect *emptyBar;
+	const SDL_Rect *full_bar;
+	const SDL_Rect *empty_bar;
 	const SCoord position; // left corner
 	bool horizontal;
 
-	StatusBar(SCoord position, const SDL_Rect *fullBar, const SDL_Rect *emptyBar,
+	StatusBar(SCoord position, const SDL_Rect *full_bar, const SDL_Rect *empty_bar,
 		  bool horizontal)
-	    : fullBar(fullBar), emptyBar(emptyBar), position(position), horizontal(horizontal)
+	    : full_bar(full_bar), empty_bar(empty_bar), position(position), horizontal(horizontal)
 	{
 	}
 
@@ -26,37 +26,37 @@ struct StatusBar
 
 		if (horizontal)
 		{
-			int fullLength = fullBar->w;
-			int unfixed = fullBar->h;
+			int full_length = full_bar->w;
+			int unfixed = full_bar->h;
 		}
 		else
 		{
-			int fullLength = fullBar->h;
-			int unfixed = fullBar->w;
+			int full_length = full_bar->h;
+			int unfixed = full_bar->w;
 		}
 
-		int filledLength = portion * fullLength;
-		int unfilledLength = fullLength - filledLength;
+		int filled_length = portion * full_length;
+		int unfilled_length = full_length - filled_length;
 
 		if (horizontal)
 		{
-			SDL_Rect unfilledClip = {emptyBar->x, emptyBar->y, filledLength, unfixed};
-			SDL_Rect filledClip = {fullBar->x, fullBar->y, filledLength, unfixed};
+			SDL_Rect unfilled_clip = {empty_bar->x, empty_bar->y, filled_length, unfixed};
+			SDL_Rect filled_clip = {full_bar->x, full_bar->y, filled_length, unfixed};
 
-			spriteSheetTexture.render(position.x, position.y, &unfilledClip,
+			sprite_sheet_texture.render(position.x, position.y, &unfilled_clip,
 						   &viewport);
-			spriteSheetTexture.render(position.x + unfilledLength, position.y,
-						   &filledClip, &viewport);
+			sprite_sheet_texture.render(position.x + unfilled_length, position.y,
+						   &filled_clip, &viewport);
 		}
 		else
 		{
-			SDL_Rect unfilledClip = {emptyBar->x, emptyBar->y, unfixed, filledLength};
-			SDL_Rect filledClip = {fullBar->x, fullBar->y, unfixed, filledLength};
+			SDL_Rect unfilled_clip = {empty_bar->x, empty_bar->y, unfixed, filled_length};
+			SDL_Rect filled_clip = {full_bar->x, full_bar->y, unfixed, filled_length};
 
-			spriteSheetTexture.render(position.x, position.y, &unfilledClip,
+			sprite_sheet_texture.render(position.x, position.y, &unfilled_clip,
 						   &viewport);
-			spriteSheetTexture.render(position.x, position.y + unfilledLength,
-						   &filledClip, &viewport);
+			sprite_sheet_texture.render(position.x, position.y + unfilled_length,
+						   &filled_clip, &viewport);
 		}
 	}
 };

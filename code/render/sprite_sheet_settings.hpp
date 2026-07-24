@@ -1,5 +1,5 @@
 #pragma once
-#include <extern/json.hpp>
+#include <json.hpp>
 #include <fstream>
 #include "sprite.hpp"
 #include "sprite_names.hpp"

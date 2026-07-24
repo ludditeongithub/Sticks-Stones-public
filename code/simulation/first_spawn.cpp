@@ -63,24 +63,24 @@ Grass grass = Grass::NONE;
 float roll = random_chance->next() * 0.4;
 for (size_t j = 0; j < static_cast<size_t>(Tile::MAX); j++) { //3
 if (tile == static_cast<Tile>(j)) { //4
-float multiplied_roll = grass::tileSpawnMultipliers[grass][static_cast<Tile>(j)] * roll;
+float multiplied_roll = grass::tile_spawn_multipliers[grass][static_cast<Tile>(j)] * roll;
 
-const Coord tpr = grass::temperaturePenaltyRanges[grass];
-float adj_temp_roll = rangePenalty(temperature, tpr.x, tpr.y, multiplied_roll);
-const Coord hpr = grass::humidityPenaltyRanges[grass];
-float adj_final_roll = rangePenalty(humidity, hpr.x, hpr.y, adj_temp_roll);
+const Coord tpr = grass::temperature_penalty_ranges[grass];
+float adj_temp_roll = range_penalty(temperature, tpr.x, tpr.y, multiplied_roll);
+const Coord hpr = grass::humidity_penalty_ranges[grass];
+float adj_final_roll = range_penalty(humidity, hpr.x, hpr.y, adj_temp_roll);
   
 
 if (adj_final_roll > highest_roll) { //5
 highest_roll = adj_final_roll;
-grass = selectedGrass;
+grass = selected_grass;
 } //5
   } //4
 } //3
 } //2
 
 if (grass != Grass::NONE)
-  if (highestRoll > grass::minimumRoll[biome]) tileSpawnBuffer.add(*this, grass, coord);
+  if (highest_roll > grass::minimum_roll[biome]) tile_spawn_buffer.add(*this, grass, coord);
 
 }
 
@@ -97,30 +97,30 @@ Plant plant = Plant::NONE;
 
   for (size_t i = 0; i < static_cast<size_t>(PlantCategory::MAX); i++) { // 1
   float category_roll = random_chance->next();
-  if (categoryRoll < plant::categorySpawnChances[static_cast<PlantCategory>(i)][biome]) for (size_t j = 0; j < plant::categories[static_cast<PlantCategory>(i)].size(); j++) { //2
+  if (category_roll < plant::category_spawn_chances[static_cast<PlantCategory>(i)][biome]) for (size_t j = 0; j < plant::categories[static_cast<PlantCategory>(i)].size(); j++) { //2
   Plant selected_plant = plant::categories[static_cast<PlantCategory>(i)][static_cast<Plant>(j)];
 
 float roll = random_chance->next() * 0.4;
 for (size_t j = 0; j < static_cast<size_t>(Tile::MAX); j++) { //3
 if (tile == static_cast<Tile>(j)) { //4
-float multiplied_roll = plant::tileSpawnMultipliers[plant][static_cast<Tile>(j)] * roll;
+float multiplied_roll = plant::tile_spawn_multipliers[plant][static_cast<Tile>(j)] * roll;
 
-const Coord tpr = plant::temperaturePenaltyRanges[plant];
-float adj_temp_roll = rangePenalty(temperature, tpr.x, tpr.y, multiplied_roll);
-const Coord hpr = plant::humidityPenaltyRanges[plant];
-float adj_final_roll = rangePenalty(humidity, hpr.x, hpr.y, adj_temp_roll);
+const Coord tpr = plant::temperature_penalty_ranges[plant];
+float adj_temp_roll = range_penalty(temperature, tpr.x, tpr.y, multiplied_roll);
+const Coord hpr = plant::humidity_penalty_ranges[plant];
+float adj_final_roll = range_penalty(humidity, hpr.x, hpr.y, adj_temp_roll);
   
 
 if (adj_final_roll > highest_roll) { //5
 highest_roll = adj_final_roll;
-plant = selectedPlant;
+plant = selected_plant;
 } //5
   } //4
 } //3
 } //2
 
 if (plant != Plant::NONE)
-  plantSpawnBuffer.add(*this, plant, coord);
+  plant_spawn_buffer.add(*this, plant, coord);
 
   } // 1
 }
@@ -139,19 +139,19 @@ Scavengeable scavengeable = Scavengeable::NONE;
   for (size_t i = 0; i < static_cast<size_t>(Scavengeable::MAX); i++) { //2
   Scavengeable selected_scavengeable = static_cast<Scavengeable>(i);
 
-float multiplied_roll = scavengeable::biomeSpawnChances[biome][scavengeable];
+float multiplied_roll = scavengeable::biome_spawn_chances[biome][scavengeable];
 
 float adj_final_roll = multiplied_roll;
   
 
 if (adj_final_roll > highest_roll) { //5
 highest_roll = adj_final_roll;
-scavengeable = selectedScavengeable;
+scavengeable = selected_scavengeable;
 } //5
 } //2
 
 if (scavengeable != Scavengeable::NONE)
-  scavengeableSpawnBuffer.add(*this, scavengeable, coord);
+  scavengeable_spawn_buffer.add(*this, scavengeable, coord);
 
 }
 
@@ -170,22 +170,22 @@ Animal animal = Animal::NONE;
   for (size_t i = 0; i < static_cast<size_t>(Animal::MAX); i++) { //2
   Animal selected_animal = static_cast<Animal>(i);
 
-float multiplied_roll = animal::biomeSpawnChances[biome][animal];
+float multiplied_roll = animal::biome_spawn_chances[biome][animal];
 
-const Coord tpr = animal::temperaturePenaltyRanges[animal];
-float adj_temp_roll = rangePenalty(temperature, tpr.x, tpr.y, multiplied_roll);
-const Coord hpr = animal::humidityPenaltyRanges[animal];
-float adj_final_roll = rangePenalty(humidity, hpr.x, hpr.y, adj_temp_roll);
+const Coord tpr = animal::temperature_penalty_ranges[animal];
+float adj_temp_roll = range_penalty(temperature, tpr.x, tpr.y, multiplied_roll);
+const Coord hpr = animal::humidity_penalty_ranges[animal];
+float adj_final_roll = range_penalty(humidity, hpr.x, hpr.y, adj_temp_roll);
   
 
 if (adj_final_roll > highest_roll) { //5
 highest_roll = adj_final_roll;
-animal = selectedAnimal;
+animal = selected_animal;
 } //5
 } //2
 
 if (animal != Animal::NONE)
-  animalSpawnBuffer.add(*this, animal, coord);
+  animal_spawn_buffer.add(*this, animal, coord);
 
 }
 
@@ -195,9 +195,9 @@ if (animal != Animal::NONE)
 void WorldSpawner::spawn_entities()
 {
 	// spawn grass and plants
-	spawnGrassAndFirstPlants();
+	spawn_grass_and_first_plants();
 	// spawn scavengeables
-	spawnScavengeables();
+	spawn_scavengeables();
 	// spawn animals
 
 	// spawn tribes
@@ -243,7 +243,7 @@ inline bool skip_unplantable_tiles(Tile tile)
 // TODO: shrink by making lookuptables of spawn chances based on tiles
 void WorldSpawner::spawn_grass_and_first_plants()
 {
-	plantSpawnBuffer.reserve(TILE_AMOUNT);
+	plant_spawn_buffer.reserve(TILE_AMOUNT);
         
 	bool regrowth_plant = false;
 	float chances = 0;
@@ -251,32 +251,32 @@ void WorldSpawner::spawn_grass_and_first_plants()
 	constexpr std::array<Plant, 4> TREES = {Plant::DeciduousTree, Plant::EvergreenTree,
 							Plant::PioneerTree, Plant::TropicalTree};
 
-	for (int i = 0; i < tileSpawnBuffer.tiles.size(); i++)
+	for (int i = 0; i < tile_spawn_buffer.tiles.size(); i++)
 	{
-          Tile tile = tileSpawnBuffer.tiles[i];
-          skipUnplantableTiles(tile);
+          Tile tile = tile_spawn_buffer.tiles[i];
+          skip_unplantable_tiles(tile);
 
 		// TODO: separate mechanism for plants that stay in the same place and
 		// those who do not
 		//  mechanism to only work on some tsb.tiles for subsequent spawns.
-		Coord coord = getTileCoordFromIndex(i);
-		Biome biome = biomeMap[i / CHUNK_LENGTH][i % CHUNK_LENGTH];
-		int temperature = temperatureMap[i / CHUNK_LENGTH][i % CHUNK_LENGTH];
-		int humidity = humidityMap[i / CHUNK_LENGTH][i % CHUNK_LENGTH];
+		Coord coord = get_tile_coord_from_index(i);
+		Biome biome = biome_map[i / CHUNK_LENGTH][i % CHUNK_LENGTH];
+		int temperature = temperature_map[i / CHUNK_LENGTH][i % CHUNK_LENGTH];
+		int humidity = humidity_map[i / CHUNK_LENGTH][i % CHUNK_LENGTH];
 
 		float plant_coverage = plant::coverages[biome];
 		float grass_coverage = grass::coverages[biome];
 
-		if (random_chance->next() < grassCoverage)
+		if (random_chance->next() < grass_coverage)
 		{
-                  rollGrassSpawn(coord, biome, tile, temperature, humidity);                        
+                  roll_grass_spawn(coord, biome, tile, temperature, humidity);                        
                 }
-		if (random_chance->next() < plantCoverage)
+		if (random_chance->next() < plant_coverage)
 		{
-                  rollPlantSpawn(coord, biome, tile, temperature, humidity);
+                  roll_plant_spawn(coord, biome, tile, temperature, humidity);
                 }
 	}
-        plantSpawnBuffer.shrink_to_size();
+        plant_spawn_buffer.shrink_to_size();
 }
 
 // TODO: move data into lookup table. possibly spawn animals per chunk instead
@@ -284,35 +284,35 @@ void WorldSpawner::spawn_grass_and_first_plants()
 //  APPLY ANIMAL SPAWNS
 void WorldSpawner::spawn_animals()
 {
-	animalSpawnBuffer.reserve(TILE_AMOUNT);
+	animal_spawn_buffer.reserve(TILE_AMOUNT);
 
 	for (int i = 0; i < TILE_AMOUNT; i++)
 	{
-          Tile tile = tileSpawnBuffer.tiles[i];
+          Tile tile = tile_spawn_buffer.tiles[i];
 		// TODO: water animals
-            if (isWater(tile)) continue;
-		    Coord coord = getTileCoordFromIndex(i);
-		    Coord chunk_coord = getChunkFromTile(coord);
-		    Biome biome = biomeMap[chunkCoord.x][chunkCoord.y];
-		    Temp temperature = temperatureMap[chunkCoord.x][chunkCoord.y];
-                    Hum humidity = humidityMap[chunkCoord.x][chunkCoord.y];
-        rollAnimalSpawn(coord, biome, tile, temperature, humidity);
+            if (is_water(tile)) continue;
+		    Coord coord = get_tile_coord_from_index(i);
+		    Coord chunk_coord = get_chunk_from_tile(coord);
+		    Biome biome = biome_map[chunk_coord.x][chunk_coord.y];
+		    Temp temperature = temperature_map[chunk_coord.x][chunk_coord.y];
+                    Hum humidity = humidity_map[chunk_coord.x][chunk_coord.y];
+        roll_animal_spawn(coord, biome, tile, temperature, humidity);
          }
-          animalSpawnBuffer.shrink_to_size();
+          animal_spawn_buffer.shrink_to_size();
 }
 
 void WorldSpawner::spawn_scavengeables()
 {	
   for (int i = 0; i < TILE_AMOUNT; i++)
 	{
-		Tile tile = tileSpawnBuffer.tiles[i];
+		Tile tile = tile_spawn_buffer.tiles[i];
                 // TODO: seaweed, lilipads etc
-		Coord coord = getTileCoordFromIndex(i);
-                Coord chunk_coord = getChunkFromTile(coord);
-		Biome biome = biomeMap[chunkCoord.x][chunkCoord.y];
-		Temp temperature = temperatureMap[chunkCoord.x][chunkCoord.y];
-                Hum humidity = humidityMap[chunkCoord.x][chunkCoord.y];
-		rollScavengeableSpawn(coord, biome, tile, temperature, humidity);
+		Coord coord = get_tile_coord_from_index(i);
+                Coord chunk_coord = get_chunk_from_tile(coord);
+		Biome biome = biome_map[chunk_coord.x][chunk_coord.y];
+		Temp temperature = temperature_map[chunk_coord.x][chunk_coord.y];
+                Hum humidity = humidity_map[chunk_coord.x][chunk_coord.y];
+		roll_scavengeable_spawn(coord, biome, tile, temperature, humidity);
 	
 	}
 }

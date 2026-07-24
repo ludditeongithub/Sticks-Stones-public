@@ -5,63 +5,63 @@
 #include <world/chunk/data.hpp>
 #include <world/world.hpp>
 
-void World::calculateChunkTemperatureInputs(Array<int8_t> &waterBodiesDists)
+void World::calculate_chunk_temperature_inputs(Array<int8_t> &water_bodies_dists)
 {
 	// calculate season based on orbit
 	for (int i = 0; i < static_cast<int>(CHUNK_AMOUNT); i++)
 	{
-		float humidityFactor = humidities[i] / MAX_HUMIDITY;
+		float humidity_factor = humidities[i] / MAX_HUMIDITY;
 		// TODO: have hadley cells factor
-		float latitudeFactor = abs(EQUATOR - getChunkHeight(i)) / EQUATOR;
-		float altitudeFactor =
+		float latitude_factor = abs(EQUATOR - get_chunk_height(i)) / EQUATOR;
+		float altitude_factor =
 		    std::fmin(1.0, 1.0 - ((MAX_ALTITUDE - altitudes[i]) / MAX_ALTITUDE));
-		float waterBodiesProximityFactor =
-		    std::fmin(1.0, 1.0 - (MAX_OCEAN_AFFECT_DIST - waterBodiesDists[i] / MAX_OCEAN_AFFECT_DIST));
+		float water_bodies_proximity_factor =
+		    std::fmin(1.0, 1.0 - (MAX_OCEAN_AFFECT_DIST - water_bodies_dists[i] / MAX_OCEAN_AFFECT_DIST));
 
-		float df = std::lerp(humidityFactor, latitudeFactor, 0.4f);
-		float ds = std::lerp(df, altitudeFactor, 0.3f);
-		float dt = std::lerp(ds, waterBodiesProximityFactor, 0.08f);
-		chunkTempData.diurnalTempVariances[i] = MAX_DIURNAL_VAR * dt;
+		float df = std::lerp(humidity_factor, latitude_factor, 0.4f);
+		float ds = std::lerp(df, altitude_factor, 0.3f);
+		float dt = std::lerp(ds, water_bodies_proximity_factor, 0.08f);
+		chunk_temp_data.diurnal_temp_variances[i] = MAX_DIURNAL_VAR * dt;
 
-		float ss = std::lerp(latitudeFactor, waterBodiesProximityFactor, 0.4f);
-		float st = std::lerp(ss, altitudeFactor, 0.08f);
-		chunkTempData.seasonalTempVariances[i] = MAX_SEASONAL_VAR * st;
+		float ss = std::lerp(latitude_factor, water_bodies_proximity_factor, 0.4f);
+		float st = std::lerp(ss, altitude_factor, 0.08f);
+		chunk_temp_data.seasonal_temp_variances[i] = MAX_SEASONAL_VAR * st;
 
 		// TODO: check
-		chunkTempData.minTemps[i] = temperatures[i] - (chunkTempData.seasonalTempVariances[i] + chunkTempData.diurnalTempVariances[i]);
+		chunk_temp_data.min_temps[i] = temperatures[i] - (chunk_temp_data.seasonal_temp_variances[i] + chunk_temp_data.diurnal_temp_variances[i]);
 	}
 }
 
-// Arena<float> calculateSunsetHourAngles(int day365) {
-//   Arena<float> sunsetHourAngles(LATITUDE_TOTAL);
+// Arena<float> calculate_sunset_hour_angles(int day365) {
+//   Arena<float> sunset_hour_angles(LATITUDE_TOTAL);
 
-//  float solarDeclination =
+//  float solar_declination =
 //       23.44f *
 //       std::sin((2 * std::numbers::pi_v<float> / 365.0f) * (day365 - 80));
-//  float solarDeclinationRad =
-//      solarDeclination * std::numbers::pi_v<float> / 180.0f;
+//  float solar_declination_rad =
+//      solar_declination * std::numbers::pi_v<float> / 180.0f;
 
 // for (auto i = LATITUDE_MIN; i < LATITUDE_MAX; i++) {
-//           float latRad = i * std::numbers::pi_v<float> / 180.0f;
-//         float cosH0 = -std::tan(latRad) * std::tan(solarDeclinationRad);
-//         if (cosH0 < -1.0f) cosH0 = -1.0f;
-//         if (cosH0 >  1.0f) cosH0 =  1.0f;
+//           float lat_rad = i * std::numbers::pi_v<float> / 180.0f;
+//         float cos_h0 = -std::tan(lat_rad) * std::tan(solar_declination_rad);
+//         if (cos_h0 < -1.0f) cos_h0 = -1.0f;
+//         if (cos_h0 >  1.0f) cos_h0 =  1.0f;
 
-//         float H0 = std::acosf(cosH0);
+//         float H0 = std::acosf(cos_h0);
 
 //         float H0Deg = H0 * 180.0f / std::numbers::pi_v<float>;
-// 	sunsetHourAngles[i] = H0Deg;
+// 	sunset_hour_angles[i] = H0Deg;
 // }
-//  return sunsetHourAngles;
+//  return sunset_hour_angles;
 // }
 
-// Arena<int> calculateDayLengths(Arena<float>& sunsetHourAngles) {
-//   Arena<int> dayLengths(CHUNK_AMOUNT);
+// Arena<int> calculate_day_lengths(Arena<float>& sunset_hour_angles) {
+//   Arena<int> day_lengths(CHUNK_AMOUNT);
 
 //     for (int i = LATITUDE_MIN; i <= LATITUDE_MAX; i++) {
-//         dayLengths[i] = (2.0f * sunsetHourAngles[i]) / 15.0f;
+//         day_lengths[i] = (2.0f * sunset_hour_angles[i]) / 15.0f;
 //     }
-//     return dayLengths;
+//     return day_lengths;
 // }
 
 // insolations are normalized to be between 0 and 1.
@@ -71,21 +71,21 @@ Array<float> calculate_seasonal_insolations(int day365)
 
 	float solar_declination =
 	    23.44f * std::sin((2 * std::numbers::pi_v<float> / 365.0f) * (day365 - 80));
-	float solar_declination_rad = solarDeclination * std::numbers::pi_v<float> / 180.0f;
+	float solar_declination_rad = solar_declination * std::numbers::pi_v<float> / 180.0f;
 
 	for (auto i = 0; i < LATITUDE_TOTAL; i++)
 	{
 		float latitude = -90.0f + i * (180.0f / (LATITUDE_TOTAL - 1));
 		float latitude_rad = latitude * std::numbers::pi_v<float> / 180.0f;
-		insolations[i] = 2.0f * std::cos(latitudeRad - solarDeclinationRad) - 1.0f;
+		insolations[i] = 2.0f * std::cos(latitude_rad - solar_declination_rad) - 1.0f;
 	}
 	return insolations;
 }
 
 // TODO: ensure that there is some thermal lag (doen't normalize hour angle)
-void World::updateDailyInsolations(uint16_t day365)
+void World::update_daily_insolations(uint16_t day365)
 {
-	float solarDeclination =
+	float solar_declination =
 	    23.44f * std::sin((2 * std::numbers::pi_v<float> / 365.0f) * (day365 - 80));
 
 
@@ -93,31 +93,31 @@ void World::updateDailyInsolations(uint16_t day365)
 	{
 		for (int j = 0; j < TIME_ZONES; j++)
 		{
-			float s = sin(i) * sin(solarDeclination);
-			float c = cos(i) * cos(solarDeclination);
-			float cosTime = s + (c * cos(hourAngles[j]));
-			float cosMax = s + c;
-			dailyInsolations[i][j] = std::fmax(0.0, (cosTime / cosMax));
+			float s = sin(i) * sin(solar_declination);
+			float c = cos(i) * cos(solar_declination);
+			float cos_time = s + (c * cos(hour_angles[j]));
+			float cos_max = s + c;
+			daily_insolations[i][j] = std::fmax(0.0, (cos_time / cos_max));
 		}
 	}
 }
 
-void World::updateChunkTemperature()
+void World::update_chunk_temperature()
 {
 	for (int i = 0; i < CHUNK_AMOUNT; i++)
 	{
-		float latitude = getChunkLatitude(i);
-		float timeZone = getChunkTimeZone(i);
-		float sv = chunkTempData.seasonalTempVariances[i] * seasonalInsolations[latitude];
-		float dv = chunkTempData.diurnalTempVariances[i] * dailyInsolations[latitude][timeZone];
+		float latitude = get_chunk_latitude(i);
+		float time_zone = get_chunk_time_zone(i);
+		float sv = chunk_temp_data.seasonal_temp_variances[i] * seasonal_insolations[latitude];
+		float dv = chunk_temp_data.diurnal_temp_variances[i] * daily_insolations[latitude][time_zone];
 		temperatures[i] =
-		    chunkTempData.minTemps[i] + (sv + dv / 1 + (cloudCovers[i] * MAX_CLOUD_FACTOR));
+		    chunk_temp_data.min_temps[i] + (sv + dv / 1 + (cloud_covers[i] * MAX_CLOUD_FACTOR));
 	}
 }
 
-void World::calculateChunkPrecipitationEquilibrium()
+void World::calculate_chunk_precipitation_equilibrium()
 {
 	for (size_t i = 0; i < CHUNK_AMOUNT; i++) {
-		precipitationCores[i] = humidities[i] * 
+		precipitation_cores[i] = humidities[i] * 
 	}
 }

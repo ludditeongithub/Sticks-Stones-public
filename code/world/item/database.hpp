@@ -1,10 +1,11 @@
+#pragma once
 #include <stack>
 #include <core/packed_enum.hpp>
 #include <macros/database.hpp>
 
 #include "world/tile/database.hpp"
 #include <core/hash.hpp>
-#include <extern/cereal/binary_archive.hpp>
+#include <cereal/binary_archive.hpp>
 #include <world/item/enum.hpp>
 #include <core/data.hpp>
 #include <core/containers.hpp>
@@ -69,15 +70,15 @@ this->capacity = capacity;
         if (size + 1 > capacity)
             return false;
         size_t i;
-        if (freeSlots.empty())
+        if (free_slots.empty())
         {
             i = size;
             size++;
         }
         else
         {
-            i = freeSlots.top();
-            freeSlots.pop();
+            i = free_slots.top();
+            free_slots.pop();
         }
         alives[i] = true;
         if (newborn)
@@ -91,11 +92,11 @@ this->capacity = capacity;
             items[i] = item;
             coords[i] = coord;
         }
-            search.insertEntity(item, {i, coords[i]});
+            search.insert_entity(item, {i, coords[i]});
         return true;
           }
           bool spawn(Item item, bool newborn, Coord origin) {
-          Coord spawn_point = tiles.getNearestEmptyTile(origin);
+          Coord spawn_point = tiles.get_nearest_empty_tile(origin);
           while (!attempt_spawn(item, newborn, spawn_point)) free_unused_entity();                 
           }        
     
@@ -109,17 +110,17 @@ this->capacity = capacity;
         if (!alives[i])
             return false;
 
-        freeSlots.push(i);
+        free_slots.push(i);
         alives[i] = false;
         Item item = items[i];
-            search.removeEntity(item, {i, coords[i]});
+            search.remove_entity(item, {i, coords[i]});
         return true;
   }
 
   void free_unused_entity()
   {
     for (size_t i = 0; i < coords.size; i++) {
-    if (tiles.tileStatuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
+    if (tiles.tile_statuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
     }
   }
     
@@ -134,7 +135,7 @@ this->capacity = capacity;
     {
     archive(capacity);
         archive(size);
-        archive(freeSlots);
+        archive(free_slots);
         archive(alives);
    
 
@@ -147,7 +148,7 @@ this->capacity = capacity;
     {
         archive(capacity);
         archive(size);
-        archive(freeSlots);
+        archive(free_slots);
         archive(alives);
         
         items.load(archive);
@@ -163,19 +164,19 @@ inline bool transfer_item(size_t i, ItemDatabase &old_db, ItemDatabase &new_db)
   {
   if (new_db.size >= new_db.capacity) return false;
   int index;  
-  if (new_db.freeSlots.empty())
+  if (new_db.free_slots.empty())
   {
   index = ++size;
 	}
 	else
 	{
-		index = new_db.freeSlots.top();
-		new_db.freeSlots.pop();			
+		index = new_db.free_slots.top();
+		new_db.free_slots.pop();			
   }
     new_db.items[index] = old_db.items[i];
     new_db.coords[index] = old_db.coords[i];
   new_db.alives[index] = true;
-  old_db.freeSlots.push(i);
+  old_db.free_slots.push(i);
   old_db.alives[index] = false;
   return true;
   }

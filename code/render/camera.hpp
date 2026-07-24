@@ -1,3 +1,4 @@
+#pragma once
 #include <core/data.hpp>
 
 class Camera

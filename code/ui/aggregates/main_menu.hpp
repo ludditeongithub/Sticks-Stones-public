@@ -8,10 +8,10 @@
 #include <render/sprite_sheet_settings.hpp>
 #include <simulation/launch_game.hpp>
 
-// TODO: loadGameButton
+// TODO: load_game_button
 
 struct MainButtonUI : public ButtonUI {
-  MainButtonUI(const ButtonFunctionality function, const SCoord left_corner) : ButtonUI(function, ButtonSprite::MainButton, leftCorner)
+  MainButtonUI(const ButtonFunctionality function, const SCoord left_corner) : ButtonUI(function, ButtonSprite::MainButton, left_corner)
 	{
           
         }
@@ -26,12 +26,12 @@ struct MainMenu
 	SCoord background = {}; //TODO
 	int button_left_alignment =
 	    SCREEN_WIDTH / 2 -
-	    (SpriteSheet::buttonSprites[static_cast<int>(ButtonSprite::MainButton)].w / 2);
+	    (SpriteSheet::button_sprites[static_cast<int>(ButtonSprite::MainButton)].w / 2);
 	
-	SCoord new_left_corner = {buttonLeftAlignment, 2 * SCREEN_HEIGHT / 6};
-	SCoord load_left_corner = {buttonLeftAlignment / 2, 3 * SCREEN_HEIGHT / 6};
-	SCoord options_left_corner = {buttonLeftAlignment / 2, 4 * SCREEN_HEIGHT / 6};
-	SCoord about_left_corner = {buttonLeftAlignment / 2, 5 * SCREEN_HEIGHT / 6};
+	SCoord new_left_corner = {button_left_alignment, 2 * SCREEN_HEIGHT / 6};
+	SCoord load_left_corner = {button_left_alignment / 2, 3 * SCREEN_HEIGHT / 6};
+	SCoord options_left_corner = {button_left_alignment / 2, 4 * SCREEN_HEIGHT / 6};
+	SCoord about_left_corner = {button_left_alignment / 2, 5 * SCREEN_HEIGHT / 6};
 	MainButtonUI new_game_button;
 	MainButtonUI load_game_button;
 	MainButtonUI about_button;
@@ -59,14 +59,14 @@ struct MainMenu
 
 	MainMenu() 
 	{		
-          newGameButton = MainButtonUI(NewGameBF(this), newLeftCorner);
-          loadGameButton = MainButtonUI(LoadMenuBF(), loadLeftCorner);
-          aboutButton = MainButtonUI(AboutBF(), aboutLeftCorner);
-          optionsButton = MainButtonUI(OptionsBF(), optionsLeftCorner);
+          new_game_button = MainButtonUI(NewGameBF(this), new_left_corner);
+          load_game_button = MainButtonUI(LoadMenuBF(), load_left_corner);
+          about_button = MainButtonUI(AboutBF(), about_left_corner);
+          options_button = MainButtonUI(OptionsBF(), options_left_corner);
 
-          videoLeftCorner = {buttonLeftAlignment, 2 * SCREEN_HEIGHT / 6};
-          audioLeftCorner = {buttonLeftAlignment / 2, 3 * SCREEN_HEIGHT / 6};
-          keybindingsLeftCorner = {buttonLeftAlignment / 2, 4 * SCREEN_HEIGHT / 6};
+          video_left_corner = {button_left_alignment, 2 * SCREEN_HEIGHT / 6};
+          audio_left_corner = {button_left_alignment / 2, 3 * SCREEN_HEIGHT / 6};
+          keybindings_left_corner = {button_left_alignment / 2, 4 * SCREEN_HEIGHT / 6};
 
           video_button = ButtonUI(VideoBF(), video_left_corner);
           audio_button = ButtonUI(AudioBF(), audio_left_corner);
@@ -117,21 +117,21 @@ struct MainMenu
 	{
 		//TODO: finish UI element ScrollableList. saves are ScrollableList.
 		if (e->type == SDL_MOUSEBUTTONUP) {
-			if (mouseInside(mouse_position, newLeftCorner, buttonDimensions)) {
-				startGame();
+			if (mouse_inside(mouse_position, new_left_corner, button_dimensions)) {
+				start_game();
 			}
-			else if (mouseInside(mouse_position, loadLeftCorner, buttonDimensions))
+			else if (mouse_inside(mouse_position, load_left_corner, button_dimensions))
 			{
 				mode = Mode::Load;
-			} else if (mouseInside(mouse_position, optionsLeftCorner, buttonDimensions)) mode = Mode::Options;
+			} else if (mouse_inside(mouse_position, options_left_corner, button_dimensions)) mode = Mode::Options;
 		}
 	}		
 
 	void options_handle(SDL_Event *e, SCoord mouse_position)
 	{
 		if (e->type == SDL_MOUSEBUTTONUP) {
-			if (mouseInside(mouse_position, audio_left_corner, buttonDimensions)) mode = Mode::Audio;
-			else if (mouseInside(mouse_position, video_left_corner, buttonDimensions)) mode = Mode::Video;
+			if (mouse_inside(mouse_position, audio_left_corner, button_dimensions)) mode = Mode::Audio;
+			else if (mouse_inside(mouse_position, video_left_corner, button_dimensions)) mode = Mode::Video;
 		}
 	}
 	void audio_handle(SDL_Event *e, SCoord mouse_position);

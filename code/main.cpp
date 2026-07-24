@@ -20,10 +20,10 @@
 // 		printf("TTF_Init failed: %s\n", TTF_GetError());
 // 	}
 
-// 	// SDL_GetRendererOutputSize(window, userScreenWidth, userScreenHeight);
-// 	// int factor = std::min((int)(userScreenWidth/SCREEN_WIDTH), (int)(userScreenHeight/SCREEN_HEIGHT));
+// 	// SDL_GetRendererOutputSize(window, user_screen_width, user_screen_height);
+// 	// int factor = std::min((int)(user_screen_width/SCREEN_WIDTH), (int)(user_screen_height/SCREEN_HEIGHT));
 //         launch();
-// 	// SDL_RenderSetScale(gRenderer, factor);	
+// 	// SDL_RenderSetScale(g_renderer, factor);	
 // }
 
 int main()

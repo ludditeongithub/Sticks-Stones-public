@@ -1,9 +1,9 @@
 #pragma once
-#include <../extern/magic_enum/magic_enum.hpp>
+#include <magic_enum/magic_enum.hpp>
 #include <stdexcept>
 
 template<typename A, typename B>
-B reflectEnum(A a) {
+B reflect_enum(A a) {
 auto name = magic_enum::enum_name(a);
 
 auto b_opt = magic_enum::enum_cast<B>(name);

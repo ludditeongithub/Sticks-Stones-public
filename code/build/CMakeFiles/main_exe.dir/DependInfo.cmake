@@ -8,15 +8,12 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/logan/gameprogramming/code/build/CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp" "CMakeFiles/main_exe.dir/CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o" "gcc" "CMakeFiles/main_exe.dir/CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o.d"
-  "/home/logan/gameprogramming/code/build/CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp" "CMakeFiles/main_exe.dir/CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.o" "gcc" "CMakeFiles/main_exe.dir/CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.o.d"
-  "/home/logan/gameprogramming/code/build/CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp" "CMakeFiles/main_exe.dir/CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o" "gcc" "CMakeFiles/main_exe.dir/CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o.d"
   "/home/logan/gameprogramming/code/main.cpp" "CMakeFiles/main_exe.dir/main.cpp.o" "gcc" "CMakeFiles/main_exe.dir/main.cpp.o.d"
   "/home/logan/gameprogramming/code/render/texture.cpp" "CMakeFiles/main_exe.dir/render/texture.cpp.o" "gcc" "CMakeFiles/main_exe.dir/render/texture.cpp.o.d"
   "/home/logan/gameprogramming/code/schedule/loop.cpp" "CMakeFiles/main_exe.dir/schedule/loop.cpp.o" "gcc" "CMakeFiles/main_exe.dir/schedule/loop.cpp.o.d"
-  "/home/logan/gameprogramming/code/scratch.cpp" "CMakeFiles/main_exe.dir/scratch.cpp.o" "gcc" "CMakeFiles/main_exe.dir/scratch.cpp.o.d"
   "/home/logan/gameprogramming/code/simulation/first_spawn.cpp" "CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.o" "gcc" "CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.o.d"
   "/home/logan/gameprogramming/code/simulation/game.cpp" "CMakeFiles/main_exe.dir/simulation/game.cpp.o" "gcc" "CMakeFiles/main_exe.dir/simulation/game.cpp.o.d"
+  "/home/logan/gameprogramming/code/simulation/test.cpp" "CMakeFiles/main_exe.dir/simulation/test.cpp.o" "gcc" "CMakeFiles/main_exe.dir/simulation/test.cpp.o.d"
   "/home/logan/gameprogramming/code/simulation/weather_calculations.cpp" "CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.o" "gcc" "CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.o.d"
   "/home/logan/gameprogramming/code/simulation/world_gen.cpp" "CMakeFiles/main_exe.dir/simulation/world_gen.cpp.o" "gcc" "CMakeFiles/main_exe.dir/simulation/world_gen.cpp.o.d"
   "/home/logan/gameprogramming/code/simulation/world_gen_helpers.cpp" "CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.o" "gcc" "CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.o.d"

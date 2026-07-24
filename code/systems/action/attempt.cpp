@@ -29,9 +29,9 @@
 
 /* Get jobs from  */
 // NOTE: can implement jump table. this is for authority command structure
-void decideTask(EntityID pawnIndex, UnitDatabase& database)
+void decide_task(EntityID pawn_index, UnitDatabase& database)
 {
-	int taskIndex = -1;
+	int task_index = -1;
 	TaskType type = TaskType::NONE;
 	Role role;
 	for (size_t i = 0; i < g_TaskPriorityQueue.size; i++)
@@ -39,15 +39,15 @@ void decideTask(EntityID pawnIndex, UnitDatabase& database)
 		// TODO: check if role is producer vs resource vs etc on lookup table
 		if (g_TaskPriorityQueue[i].priority < highest)
 		{
-			for (EntityID j = 0; j < roles[pawnIndex].size; j++)
+			for (EntityID j = 0; j < roles[pawn_index].size; j++)
 			{
-				Role tRole = g_TaskPriorityQueue[i].role;
+				Role t_role = g_TaskPriorityQueue[i].role;
 
-				if (tRole < Role::RESOURCEMAX && tRole > Role::SUPPORTMAX)
+				if (t_role < Role::RESOURCEMAX && t_role > Role::SUPPORTMAX)
 				{
 					
 				}
-				else if (tRole < Role::PRODUCTSMAX && tRole > Role::RESOURCEMAX)
+				else if (t_role < Role::PRODUCTSMAX && t_role > Role::RESOURCEMAX)
 				{
 
 				}
@@ -57,53 +57,53 @@ void decideTask(EntityID pawnIndex, UnitDatabase& database)
 
 	if (highest == 1)
 	{
-		attemptProduction(pawnIndex, producerProducts[static_cast<int>(tRole)][taskIndex]);
+		attempt_production(pawn_index, producer_products[static_cast<int>(t_role)][task_index]);
 		return;
 	}
 }
 }
 
-for (int i = 0; i < supportPriorityQueue.size; i++)
+for (int i = 0; i < support_priority_queue.size; i++)
 {
-	if (supportPriorityQueue[i].second < highest)
+	if (support_priority_queue[i].second < highest)
 	{
-		for (int j = 0; j < roles[pawnIndex].size; j++)
+		for (int j = 0; j < roles[pawn_index].size; j++)
 		{
-			Role tRole = roles[pawnIndex][j];
-			if (tRole == supportPriorityQueue[i])
-				(producerProducts[static_cast<int>(tRole)][k] ==
-				 productsPriorityQueue[i].first)
+			Role t_role = roles[pawn_index][j];
+			if (t_role == support_priority_queue[i])
+				(producer_products[static_cast<int>(t_role)][k] ==
+				 products_priority_queue[i].first)
 				{
 					type = TaskType::Suppot highest =
-					    productsPriorityQueue[i].second;
-					taskIndex = i;
+					    products_priority_queue[i].second;
+					task_index = i;
 				}
 		}
 	}
 }
 if (highest == 1)
 {
-	attemptProduct(pawnIndex, role);
+	attempt_product(pawn_index, role);
 	return;
 }
 }
 }
 
-if (movingStatus[pawnIndex] != MovingStatus::Production)
+if (moving_status[pawn_index] != MovingStatus::Production)
 {
-	attemptProduction(pawnIndex, producerProducts[static_cast<int>(roles[pawnIndex[i]])]);
+	attempt_production(pawn_index, producer_products[static_cast<int>(roles[pawn_index[i]])]);
 }
 }
 
 
-// variantIndex superfluous for non-variant items
-void getResourceAction(int pawn, Item item, int sourceIndex, int variantIndex)
+// variant_index superfluous for non-variant items
+void get_resource_action(int pawn, Item item, int source_index, int variant_index)
 {
 	Resource resource = resources[item];
-	Action action = resource.action[sourceVariantIndex];
-	SourceVariant source = resource.source[sourceIndex];
+	Action action = resource.action[source_variant_index];
+	SourceVariant source = resource.source[source_index];
 	// see if Object should be removed from tile
-	bool removeObject = true;
+	bool remove_object = true;
 	if (action == Actions::Collect)
 	{
 		if (source == Tile::ShallowWater || source == Tile::FlowingWater ||
@@ -111,40 +111,40 @@ void getResourceAction(int pawn, Item item, int sourceIndex, int variantIndex)
 		    source == Tile::Sand || source == Scavengeable::Beehive ||
 		    source == Scavengeable::ArtificialBeehive)
 		{
-			removeObject = false;
+			remove_object = false;
 		}
 	}
-	if (removeObject)
+	if (remove_object)
 	{
 		if (action == Actions::Milk)
-			removeObject = false;
+			remove_object = false;
 		else if (action == Actions::Fish)
-			removeObject = false;
+			remove_object = false;
 		else if (action == Actions::Shear)
-			removeObject = false;
+			remove_object = false;
 		else
-			for (int i = 0; i < regrowthCrops.size(); i++)
+			for (int i = 0; i < regrowth_crops.size(); i++)
 			{
-				if (item == regrowthCrops[i])
+				if (item == regrowth_crops[i])
 				{
-					removeObject = false;
+					remove_object = false;
 				}
 			}
 	}
 	// Get amount of item to put into inventory
 	if (action == Action::Lift)
 	{
-		Inventories[pawn].leftHand == Tool::Log;
-		Inventories[pawn].rightHand == Tool::Log;
+		Inventories[pawn].left_hand == Tool::Log;
+		Inventories[pawn].right_hand == Tool::Log;
 	}
 	else
 	{
-		int amt = resources[item].amount[sourceIndex];
+		int amt = resources[item].amount[source_index];
 		// if item in question is an item with variants
 		if (static_cast<int>(item) < static_cast<int>(Item::VARIANTSMAX))
 		{
-			Inventories[pawn].variantItems.push_back({item, amt});
-			Inventories[pawn].variantItemTypes.push_back(variantIndex);
+			Inventories[pawn].variant_items.push_back({item, amt});
+			Inventories[pawn].variant_item_types.push_back(variant_index);
 		}
 		else
 		{

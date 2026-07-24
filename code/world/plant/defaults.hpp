@@ -4,7 +4,7 @@
 
 Time random_plant_age(Plant plant)
 {
-		return maxAges[plant] * random_bool->next();
+		return max_ages[plant] * random_bool->next();
 }
 
 void get_random_plant_starting_tile_water()

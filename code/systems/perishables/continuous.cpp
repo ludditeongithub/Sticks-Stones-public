@@ -5,19 +5,19 @@
 #include <world/item/perishables.hpp>
 #include <world/tile/data.hpp>
 
-void process_perishables(LifetimeManager &lm, ChunkManager &cm, Array<uint16_t> &perishableIndices,
-			Array<Item> &perishables, Array<Time> &livingTimes, Time timePassed,
-			Array<Coord> &perishableCoords)
+void process_perishables(LifetimeManager &lm, ChunkManager &cm, Array<uint16_t> &perishable_indices,
+			Array<Item> &perishables, Array<Time> &living_times, Time time_passed,
+			Array<Coord> &perishable_coords)
 {
-	for (uint16_t i = 0; i < livingTimes.capacity; i++)
+	for (uint16_t i = 0; i < living_times.capacity; i++)
 	{
-		uint16_t pi = perishableIndices[i];
-		uint16_t c = getChunkIndexFromTile(perishableCoords[pi]);
-		Temp temp = cm.getChunkTemperature(c);
-		livingTimes[i] += getPerishableTime(perishables[i], timePassed, temp);
+		uint16_t pi = perishable_indices[i];
+		uint16_t c = get_chunk_index_from_tile(perishable_coords[pi]);
+		Temp temp = cm.get_chunk_temperature(c);
+		living_times[i] += get_perishable_time(perishables[i], time_passed, temp);
 		Item p = perishables[i];
-		if (livingTimes[i] > perishableDestructionTimes[p])
-			lm.markDestroyed(pi);
+		if (living_times[i] > perishable_destruction_times[p])
+			lm.mark_destroyed(pi);
 	}
 }
 

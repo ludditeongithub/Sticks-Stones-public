@@ -7,17 +7,17 @@
 // also build buildings in one go, if necessary.
 struct GroupData
 {
-	GroupType groupType;
+	GroupType group_type;
 	uint16_t size;
-	uint16_t maxSize;
+	uint16_t max_size;
 	Age age;
 	int opinion;
-	std::pair<int, int> foundingTile;
-	vector<std::pair<int, int>> memberCoords;
-	vector<Role> memberRoles;
-	vector<uint16_t> roleAmounts;		       // indices link to indices of relevant role
+	std::pair<int, int> founding_tile;
+	vector<std::pair<int, int>> member_coords;
+	vector<Role> member_roles;
+	vector<uint16_t> role_amounts;		       // indices link to indices of relevant role
 						       // vector, not all Roles.
-	vector<std::pair<int, int>> claimedTileCoords; // maybe unnecessary, especially with areas?
+	vector<std::pair<int, int>> claimed_tile_coords; // maybe unnecessary, especially with areas?
 	vector<Item, uint16_t> items;
 	vector<Areas> areas;
 	vector<Station> stations;
@@ -36,15 +36,15 @@ std::tuple<Role, uint16_t, uint16_t> large_tribe_roles[];
 std::tuple<Role, uint16_t, uint16_t> small_warband_roles[];
 std::tuple<Role, uint16_t, uint16_t> medium_warband_roles[];
 std::tuple<Role, uint16_t, uint16_t> large_warband_roles[];
-// hordeRoles;
+// horde_roles;
 
-// princedomRoles;
-// kingdomRoles;
-// empireRoles;
+// princedom_roles;
+// kingdom_roles;
+// empire_roles;
 
-// smallMultiplier;
-// mediumMultiplier;
-// largeMultiplier;
+// small_multiplier;
+// medium_multiplier;
+// large_multiplier;
 
 void initialize_group_roles()
 {
@@ -84,48 +84,48 @@ void initialize_group_roles()
 bool role_in_age(Role role, Age age)
 {
 	// if role is a predecessor, making it obsolete
-  for (int i = 0; i < roleDatas[static_cast<int>([roleDatas[static_cast<int>(role)].requisitesOf.size(); i++) {
-		if (roleDatas[static_cast<int>(roleDatas[static_cast<int>(role)].requisitesOf[i])]
+  for (int i = 0; i < role_datas[static_cast<int>([role_datas[static_cast<int>(role)].requisites_of.size(); i++) {
+		if (role_datas[static_cast<int>(role_datas[static_cast<int>(role)].requisites_of[i])]
 			.age >= age)
 			return false;
   }
-  return roleDatas[static_cast<int>(role)].age <= age;
+  return role_datas[static_cast<int>(role)].age <= age;
 }
 
-bool attempt_add_group_member(GroupData &group, std::tuple<Role, uint16_t, uint16_t> &groupRoles,
-			   int roleIndex, bool min)
+bool attempt_add_group_member(GroupData &group, std::tuple<Role, uint16_t, uint16_t> &group_roles,
+			   int role_index, bool min)
 {
-	if !(roleInAge(groupRoles[roleIndex].get<0>, group.age))
+	if !(role_in_age(group_roles[role_index].get<0>, group.age))
 		return false;
 	if (min)
-		bool met = groupRoles[roleIndex].get<1> > group.roleAmounts[roleIndex];
+		bool met = group_roles[role_index].get<1> > group.role_amounts[role_index];
 	else
-		bool met = group.roleAmounts[roleIndex] < groupRoles[roleIndex].get<2>;
+		bool met = group.role_amounts[role_index] < group_roles[role_index].get<2>;
 	if (met)
 	{
-		group.memberRoles.push_back(groupRoles[roleIndex].get<0>);
-		group.roleAmounts[static_cast<int>(groupRoles[roleIndex].get<0>)]++;
+		group.member_roles.push_back(group_roles[role_index].get<0>);
+		group.role_amounts[static_cast<int>(group_roles[role_index].get<0>)]++;
 		return true;
 	}
 }
 
 void add_group_member(uint16_t group)
 {
-	if (groups[group].size == groups[group].maxSize)
+	if (groups[group].size == groups[group].max_size)
 		return;
-	vector<Role, uint16_t, uint16_t> &group_roles = getGroupRoles(groups[group].groupType);
+	vector<Role, uint16_t, uint16_t> &group_roles = get_group_roles(groups[group].group_type);
 	Group &group = groups[group];
 	bool found = false;
 	for (int i = 0; i < group_roles.size(); i++)
 	{
-		if (attemptAddGroupMember(group, groupRoles, i))
+		if (attempt_add_group_member(group, group_roles, i))
 		{
 			found = true;
 			break;
 		}
 	}
-	while (!found) found = attemptAddGroupMember(group, groupRoles, rint(0, groupRoles.size());
-					       groups[i].memberCoords.push_back(getNearestAdjacentCoord(group.foundingTile.first + rint(- group.size / (group.size/9), group.size / (group.size / 9)) , group.foundingTile.second + rint(- group.size / (group.size/9), group.size / (group.size / 9))));
+	while (!found) found = attempt_add_group_member(group, group_roles, rint(0, group_roles.size());
+					       groups[i].member_coords.push_back(get_nearest_adjacent_coord(group.founding_tile.first + rint(- group.size / (group.size/9), group.size / (group.size / 9)) , group.founding_tile.second + rint(- group.size / (group.size/9), group.size / (group.size / 9))));
 }
 
 void generate_tribe(uint16_t group)
@@ -143,7 +143,7 @@ void generate_small_tribe()
 
 	groups.push_back();
 	// NOTE: may be size - 1
-	generateTribe(groups.size());
+	generate_tribe(groups.size());
 }
 
 // medium tribe
@@ -154,7 +154,7 @@ void generate_medium_tribe()
 
 	groups.push_back();
 	// NOTE: may be size - 1
-	generateTribe(groups.size());
+	generate_tribe(groups.size());
 }
 
 // large tribe
@@ -165,7 +165,7 @@ void generate_large_tribe()
 
 	groups.push_back();
 	// NOTE: may be size - 1
-	generateTribe(groups.size());
+	generate_tribe(groups.size());
 }
 
 // warbands
@@ -176,7 +176,7 @@ void generate_mini_warband()
 
 	groups.push_back();
 	// NOTE: may be size - 1
-	generateTribe(groups.size());
+	generate_tribe(groups.size());
 }
 
 void generate_small_warband()
@@ -186,7 +186,7 @@ void generate_small_warband()
 
 	groups.push_back();
 	// NOTE: may be size - 1
-	generateTribe(groups.size());
+	generate_tribe(groups.size());
 }
 
 void generate_medium_warband()
@@ -196,7 +196,7 @@ void generate_medium_warband()
 
 	groups.push_back();
 	// NOTE: may be size - 1
-	generateTribe(groups.size());
+	generate_tribe(groups.size());
 }
 
 // kingdoms

@@ -4,20 +4,20 @@
 #include <simulation/game.hpp>
 #include <simulation/weather.cpp>
 
-void Game::processWorldDaily() { updateDailyInsolations(getDay()); }
+void Game::process_world_daily() { update_daily_insolations(get_day()); }
 
-void Game::processWorldHourly(World* world)
+void Game::process_world_hourly(World* world)
 {
-	world->updateChunkTemperature();
-	//world->updateChunkWeather();
+	world->update_chunk_temperature();
+	//world->update_chunk_weather();
 }	
 
 //every tick
-void Game::processWorld(World* world)
+void Game::process_world(World* world)
 {	
-	Array<float> cloudCovers; //TODO
-	plantDatabase->updatePlants(world->temperatures, world->dailyInsolations, cloudCovers, 1);
+	Array<float> cloud_covers; //TODO
+	plant_database->update_plants(world->temperatures, world->daily_insolations, cloud_covers, 1);
 
-	regrowthPlantDatabases->updateRegrowthPlants(itemDatabase, world, tileDatabase.tileWaters, 1);
+	regrowth_plant_databases->update_regrowth_plants(item_database, world, tile_database.tile_waters, 1);
 
 }	

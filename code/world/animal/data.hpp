@@ -9,16 +9,16 @@ constexpr float INFANT_HUNGER_MODIFIER = 0.2;
 
 constexpr float INFANT_HEALTH_MODIFIER = 0.2;
 
-inline Time random_age(Animal animal) { return animal::maxAges[animal] * random_chance->next(); }
+inline Time random_age(Animal animal) { return animal::max_ages[animal] * random_chance->next(); }
 
 inline Health get_max_health(Animal animal, Time age)
 {
-	return animal::maxHealths[animal] * (age / animal::fertilityAges[animal]);
+	return animal::max_healths[animal] * (age / animal::fertility_ages[animal]);
 }
 
 inline Hunger get_max_hunger(Animal animal, Time age)
 {
-	return animal::maxHungers[animal] * (age / animal::fertilityAges[animal]);
+	return animal::max_hungers[animal] * (age / animal::fertility_ages[animal]);
 }
 
 inline float get_conception_roll()

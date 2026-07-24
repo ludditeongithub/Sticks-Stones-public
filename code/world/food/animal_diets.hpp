@@ -19,7 +19,7 @@ inline constexpr BitsetTable<Animal> carnivores = []
 	return s;
 }();
 
-inline const RaggedLookupTable<Animal, Category> dietCategories = []
+inline const RaggedLookupTable<Animal, Category> diet_categories = []
 {
 	RaggedLookupTable<Animal, Category> lt{};
 	using enum Category;
@@ -51,7 +51,7 @@ inline const RaggedLookupTable<Animal, Category> dietCategories = []
 }();
 
 template <typename E>
-BitsetTable<E> &getFoodTable(const Category c)
+BitsetTable<E> &get_food_table(const Category c)
 {
 	using enum Category;
 	switch (c)
@@ -71,73 +71,73 @@ BitsetTable<E> &getFoodTable(const Category c)
 	case Fish:
 		return fish;
 	case SmallMammals:
-			return smallMammals;
+			return small_mammals;
 	case MediumMammals:
-			return mediumMammals;
+			return medium_mammals;
 	case LargeMammals:
-		return largeMammals;
+		return large_mammals;
 	case SmallReptiles:
-		return smallReptiles;
+		return small_reptiles;
 	case LargeReptiles:
-		return largeReptiles;
+		return large_reptiles;
 	}
 };
 
 
-BitsetTable<Plant> getHerbivoreDiet(Animal a)
+BitsetTable<Plant> get_herbivore_diet(Animal a)
 {
-	std::span<const Category> cats = dietCategories.get(a);
+	std::span<const Category> cats = diet_categories.get(a);
 	BitsetTable<Plant> b;
 	for (const Category x : cats)
-		if (!meatCategories[x])
-			b |= getFoodTable<Plant>(x);
+		if (!meat_categories[x])
+			b |= get_food_table<Plant>(x);
 	return b;
 };
 
-BitsetTable<Animal> getCarnivoreDiet(Animal a)
+BitsetTable<Animal> get_carnivore_diet(Animal a)
 {
-	std::array<Category, 5> &cats = dietCategories[a];
+	std::array<Category, 5> &cats = diet_categories[a];
 	BitsetTable<Animal> b;
 	for (auto x : cats)
-		if (meatCategories[x])
-			b |= getFoodTable<Animal>(x);
+		if (meat_categories[x])
+			b |= get_food_table<Animal>(x);
 	return b;
 };
 
-inline const LookupTable<Animal, BitsetTable<Plant>> herbivoreDiets = []
+inline const LookupTable<Animal, BitsetTable<Plant>> herbivore_diets = []
 {
 	LookupTable<Animal, BitsetTable<Plant>> lt{};
 	using enum Animal;
-	lt[Pig] = getHerbivoreDiet(Pig);
-	lt[Cow] = getHerbivoreDiet(Cow);
-	lt[Chicken] = getHerbivoreDiet(Chicken);
-	lt[Duck] = getHerbivoreDiet(Duck);
-	lt[Sheep] = getHerbivoreDiet(Sheep);
-	lt[Goat] = getHerbivoreDiet(Goat);
-	lt[Horse] = getHerbivoreDiet(Horse);
-	lt[Ox] = getHerbivoreDiet(Ox);
-	lt[Donkey] = getHerbivoreDiet(Donkey);
-	lt[Camel] = getHerbivoreDiet(Camel);
-	lt[WaterBuffalo] = getHerbivoreDiet(WaterBuffalo);
-	lt[Rabbit] = getHerbivoreDiet(Rabbit);
-	lt[Antelope] = getHerbivoreDiet(Antelope);
-	lt[Deer] = getHerbivoreDiet(Deer);
-	lt[Moose] = getHerbivoreDiet(Moose);
-	lt[Capybara] = getHerbivoreDiet(Capybara);
-	lt[Turtle] = getHerbivoreDiet(Turtle);
-	lt[Elephant] = getHerbivoreDiet(Elephant);
-	lt[Bison] = getHerbivoreDiet(Bison);
-	lt[Caribou] = getHerbivoreDiet(Caribou);
+	lt[Pig] = get_herbivore_diet(Pig);
+	lt[Cow] = get_herbivore_diet(Cow);
+	lt[Chicken] = get_herbivore_diet(Chicken);
+	lt[Duck] = get_herbivore_diet(Duck);
+	lt[Sheep] = get_herbivore_diet(Sheep);
+	lt[Goat] = get_herbivore_diet(Goat);
+	lt[Horse] = get_herbivore_diet(Horse);
+	lt[Ox] = get_herbivore_diet(Ox);
+	lt[Donkey] = get_herbivore_diet(Donkey);
+	lt[Camel] = get_herbivore_diet(Camel);
+	lt[WaterBuffalo] = get_herbivore_diet(WaterBuffalo);
+	lt[Rabbit] = get_herbivore_diet(Rabbit);
+	lt[Antelope] = get_herbivore_diet(Antelope);
+	lt[Deer] = get_herbivore_diet(Deer);
+	lt[Moose] = get_herbivore_diet(Moose);
+	lt[Capybara] = get_herbivore_diet(Capybara);
+	lt[Turtle] = get_herbivore_diet(Turtle);
+	lt[Elephant] = get_herbivore_diet(Elephant);
+	lt[Bison] = get_herbivore_diet(Bison);
+	lt[Caribou] = get_herbivore_diet(Caribou);
 	return lt;
 }();
 
-inline const LookupTable<Animal, BitsetTable<Animal>> carnivoreDiets = []
+inline const LookupTable<Animal, BitsetTable<Animal>> carnivore_diets = []
 {
 	LookupTable<Animal, BitsetTable<Animal>> lt{};
     using enum Animal;
-	lt[Pig] = getCarnivoreDiet(Pig);
-	lt[Wolf] = getCarnivoreDiet(Wolf);
-	lt[Bear] = getCarnivoreDiet(Bear);
+	lt[Pig] = get_carnivore_diet(Pig);
+	lt[Wolf] = get_carnivore_diet(Wolf);
+	lt[Bear] = get_carnivore_diet(Bear);
 
 	return lt;
 }();

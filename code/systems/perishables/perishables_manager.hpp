@@ -19,10 +19,10 @@ inline constexpr LookupTable<Item, Time> PERISHABLE_DESTRUCTION_TIMES = []
 	return lt;
 }();
 
-void process_perishable_rots(Array<Item> &perishables, Array<Time> &livingTimes, Time timePassed);
+void process_perishable_rots(Array<Item> &perishables, Array<Time> &living_times, Time time_passed);
 
-inline bool check_rotten(Item perishable, Time livingTime);
+inline bool check_rotten(Item perishable, Time living_time);
 
-inline Time get_perishable_time(Item item, Time timePassed, Temp temperature);
+inline Time get_perishable_time(Item item, Time time_passed, Temp temperature);
 
 #endif

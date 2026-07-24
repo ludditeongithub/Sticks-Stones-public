@@ -74,7 +74,7 @@ namespace scavengeable
 	float legendary = 0.0015;
 	float never = 0.0;
   
-inline LookupTable2D<Biome, Scavengeable, float> biomeSpawnChances = []
+inline LookupTable2D<Biome, Scavengeable, float> biome_spawn_chances = []
 {
 	LookupTable2D<Biome, Scavengeable, float> lt{};
         using enum Scavengeable;

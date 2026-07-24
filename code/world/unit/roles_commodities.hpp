@@ -14,7 +14,7 @@ constexpr uint16_t ROLE_COMMODITY_JOB_AMOUNT = 4000;
 
 //consider putting Material into commodity, which will determine possible material variants for all items if applicable. alternatively, pairs which include item and variant int8_t cast from material
 // important: must be initialized in enum order!
-inline const RaggedLookupTable<Role, Commodity::Variant> rolesToCommodities = []
+inline const RaggedLookupTable<Role, Commodity::Variant> roles_to_commodities = []
 {
 	using enum Role;
 
@@ -237,7 +237,7 @@ lt.set(BronzeSmelter, {Item::Ingot});
 }();
 
 // inline constexpr RaggedLookupTable<Role, Material, total-element-size, max-enum-size>
-// roleToVariants = []
+// role_to_variants = []
 // 	{
 // 		using enum Role;
 

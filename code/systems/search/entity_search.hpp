@@ -49,17 +49,17 @@ struct SearchGrid
 
 	using ChunkBucket = std::unordered_map<Entity, std::vector<EntitySearchData>>;
 
-	// stores unitIndex, if unit is to be wiped later due to not actually being
+	// stores unit_index, if unit is to be wiped later due to not actually being
 	// in bucket anymore
-	Arena *chunkBucketArena;
-	Arena *activeBucketArena;
+	Arena *chunk_bucket_arena;
+	Arena *active_bucket_arena;
 
-	Array<ChunkBucket*> chunkBuckets;
-	Array<ChunkBucket*> activeChunkBuckets;
-	std::unordered_map<uint16_t, uint16_t> chunkToActiveChunks;
-	std::stack<uint16_t> freeIndices;
-	std::vector<bool> activeChunks;
-	uint32_t activeCount;
+	Array<ChunkBucket*> chunk_buckets;
+	Array<ChunkBucket*> active_chunk_buckets;
+	std::unordered_map<uint16_t, uint16_t> chunk_to_active_chunks;
+	std::stack<uint16_t> free_indices;
+	std::vector<bool> active_chunks;
+	uint32_t active_count;
 	TileDatabase& tiles;
 
 	// to begin with, all chunks are given the default amount of memory. active chunks and
@@ -78,37 +78,37 @@ struct SearchGrid
         inline void remove_entity(Entity type, EntitySearchData data);
         inline void move_entity(Entity type, EntitySearchData data, Direction direction);
 
-	inline bool check_collision(Coord tileCoord);
+	inline bool check_collision(Coord tile_coord);
 
 		inline EntitySearchData get_nearest(Entity e, Coord c);
 		inline EntitySearchData get_nth_nearest(uint16_t nearest, Entity e, Coord c);
-	inline EntitySearchData get_nearest_within_range(Entity e, Coord c, uint16_t maxRange);
+	inline EntitySearchData get_nearest_within_range(Entity e, Coord c, uint16_t max_range);
 
 	inline Array<EntitySearchData> get_all_of_type_in_range(Entity e, Coord o, Coord d);
 
 	inline EntityRenderBuffer get_all_in_range(Coord o, Coord d);
-	// inline void setOldEntity(Coord tileCoord, uint16_t index) {
-	//   uint16_t gc = getChunkIndexFromTile(tileCoord);
+	// inline void set_old_entity(Coord tile_coord, uint16_t index) {
+	//   uint16_t gc = get_chunk_index_from_tile(tile_coord);
 
-	//   fchunkBuckets[gc].size(); i++) if (indices[i] == index) old[i] = 1;
+	//   fchunk_buckets[gc].size(); i++) if (indices[i] == index) old[i] = 1;
 	// }
 
-	// inline void removeOldEntities() {
-	//   for (int i = 0; i < chunkBuckets.size(); i++) {
-	//     auto* old = chunkBuckets[i].column<1>();
-	//     auto* indices = chunkBuckets[i].column<0>();
+	// inline void remove_old_entities() {
+	//   for (int i = 0; i < chunk_buckets.size(); i++) {
+	//     auto* old = chunk_buckets[i].column<1>();
+	//     auto* indices = chunk_buckets[i].column<0>();
 
-	//     std::vector<uint16_t> a(chunkBuckets[i].size());
+	//     std::vector<uint16_t> a(chunk_buckets[i].size());
 	//     int k = -1;
-	//     for (int j = 0; j < chunkBuckets[i].size(); j++) {
+	//     for (int j = 0; j < chunk_buckets[i].size(); j++) {
 	//       if (old[j] == 0) a[k++] = indices[j];
 	//     }
-	//     chunkBuckets[i].clear();
-	//     chunkBuckets[i].reserve(k);
-	//     old = chunkBuckets[i].column<1>();
-	//     indices = chunkBuckets[i].column<0>();
+	//     chunk_buckets[i].clear();
+	//     chunk_buckets[i].reserve(k);
+	//     old = chunk_buckets[i].column<1>();
+	//     indices = chunk_buckets[i].column<0>();
 	//     for (int j = 0; j < k; j++) {
-	// 	chunkBuckets[i].emplace_back(a[j], false);
+	// 	chunk_buckets[i].emplace_back(a[j], false);
 	//     }
 	//   }
 	// }

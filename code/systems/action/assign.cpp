@@ -22,8 +22,8 @@ ActionEventDispatchBuffer mark_acting_entities(std::vector<EntityID> &indices, D
 					const Action action = database.action(i);
 					if (action == Action::Idle || action == Action::Sleep) continue;
 					if (action == Action::Prowl || action == Action::CheckProwl)
-							buffer.checkNearTargets.push_back(i);
-					if (action == Action::Wander) {						buffer.movingTiles.push_back(i);											
+							buffer.check_near_targets.push_back(i);
+					if (action == Action::Wander) {						buffer.moving_tiles.push_back(i);											
 					} else if (action > Action::APPROACH_MIN && action < Action::APPROACH_MAX) {
 						buffer.approachs.push_back(i);
 					}
@@ -42,15 +42,15 @@ inline Role get_valid_action_role(UnitDatabase& database, size_t i, Commodity c)
 {
 	Skills skill = database.skill(i);
 	Commodity& commodity = database.commoditys(i);
-	for (int j = 0; j < database.roleData(i).size(); j++)
+	for (int j = 0; j < database.role_data(i).size(); j++)
 			{
-			const Role& role = roleData(i)[j];
-			auto &commodity_list = rolesToCommodities[role];
-					for (auto x: commodityList) {					
+			const Role& role = role_data(i)[j];
+			auto &commodity_list = roles_to_commodities[role];
+					for (auto x: commodity_list) {					
 					// TODO: precompute all scores for all roles
 					uint8_t cs =
-					    getCommodityScore(x, skill); // returns 0 if invalid
-					if (cs > commodityData[x].skillReq)
+					    get_commodity_score(x, skill); // returns 0 if invalid
+					if (cs > commodity_data[x].skill_req)
 					{
 						
 						commodity = c;																	
@@ -64,18 +64,18 @@ inline Role get_valid_action_role(UnitDatabase& database, size_t i, Commodity c)
 
 inline void start_timed_task(Time& inertia, const Task task, const Skills& skill)
 {
-	inertia = getTaskTimer(task, skill);
+	inertia = get_task_timer(task, skill);
 }
 
 void assign_action(Role role, Action action)
 {
-		ActionClass action_class = getActionClass(action);		
+		ActionClass action_class = get_action_class(action);		
 		switch (action_class) {
 		case ActionClass::Resource:
-       			attemptResourceAssignment();
+       			attempt_resource_assignment();
        			break;
 		case ActionClass::Product:
-       			attemptProductsAssignment();
+       			attempt_products_assignment();
 				break;
 		case ActionClass::Support:
        			
@@ -90,7 +90,7 @@ void assign_action(Role role, Action action)
 
 void assign_task(Commodity commodity, size_t amount, Role role, Action action)
 {
-		ActionClass action_class = getActionClass(action);
+		ActionClass action_class = get_action_class(action);
 		switch (action_class) {
 		case ActionClass::Resource:
        			
@@ -125,7 +125,7 @@ void assign_actions(std::vector<EntityID> &indices, PriorityQueue<PlayerTaskJobD
 			Role role = Role::NONE;
 			PlayerTaskJobData td = pq.top();
 			size_t amount = 0;
-			while (role == Role::NONE && !pq.nextEmpty())
+			while (role == Role::NONE && !pq.next_empty())
 			{
 				Commodity c = td.commodity;
 				amount = td.amount;
@@ -137,7 +137,7 @@ void assign_actions(std::vector<EntityID> &indices, PriorityQueue<PlayerTaskJobD
 			pq.snapback();
 			if (role == Role::NONE)
 					database.action(i) = Action::Idle;
-			else assignTask(c, amount); //TODO
+			else assign_task(c, amount); //TODO
 	 }
 }
 
@@ -148,52 +148,52 @@ void assign_animal_tasks(Array<Animal> &animals, Array<ActionDecisionStatus> &ac
 	using enum ActionDecisionStatus;
 	for (int i = 0; i < animals.size; i++)
 	{
-		if (actionDecisionStatus(i) == ActionDecisionStatus::Assign)
+		if (action_decision_status(i) == ActionDecisionStatus::Assign)
 		{
 			Animal a = animal(i);
 
 			// assign hungry animals to hunt/search for food
-			if (hunger(i) <= hungerSearchThreshold[a])
+			if (hunger(i) <= hunger_search_threshold[a])
 			{
-				actionDecisionStatus(i) = AnimalFoodSearch;
+				action_decision_status(i) = AnimalFoodSearch;
 				continue;
 			}
 
 			// TODO: assign thirsty animals to drink
 			// assign animals that need to breed to find mate
 			uint16_t season_time =
-			    getSeasonTime(time, getChunkIndexFromTile(position(i)));
+			    get_season_time(time, get_chunk_index_from_tile(position(i)));
 
-			if (seasonTime <= breedingSeasonStart[a] &&
-			    seasonTime >= breedingSeasonEnd[a])
+			if (season_time <= breeding_season_start[a] &&
+			    season_time >= breeding_season_end[a])
 			{
-				actionDecisionStatus(i) = AnimalBreedSearch;
+				action_decision_status(i) = AnimalBreedSearch;
 			}
-			else if (seasonTime <= migrationSeasonStart[a] &&
-				 seasonTime >= breedingSeasonEnd[a])
+			else if (season_time <= migration_season_start[a] &&
+				 season_time >= breeding_season_end[a])
 			{
-				actionDecisionStatus(i) = AnimalMigration;
+				action_decision_status(i) = AnimalMigration;
 			}
 
 			// TODO: special actions (migrate, search for pack, build
 			// nests/structures, hoard)
 
 			// else wander/TODO: follow pack
-			actionDecisionStatus(i) = AnimalRejoinPack;
+			action_decision_status(i) = AnimalRejoinPack;
 		}
 	}
 }
 
 void handle_actions_and_movement()
 	{
-		UnitDatabase& unit_database = g_Game->unitDatabase;
-        Array<Time>& inertias = unitDatabase.inertias;
-		std::vector<EntityID> ready_actors = getReadyActors(inertias);
-		ActionEventDispatchBuffer action_event_buffer = markActingEntities(
-		    readyActors, nullptr, unitDatabase.coords, unitDatabase.targets,
-																		 unitDatabase.actions, unitDatabase.frameDatas);
+		UnitDatabase& unit_database = g_Game->unit_database;
+        Array<Time>& inertias = unit_database.inertias;
+		std::vector<EntityID> ready_actors = get_ready_actors(inertias);
+		ActionEventDispatchBuffer action_event_buffer = mark_acting_entities(
+		    ready_actors, nullptr, unit_database.coords, unit_database.targets,
+																		 unit_database.actions, unit_database.frame_datas);
 
-		handleMovements();
+		handle_movements();
 	}
 
 std::vector<EntityID> get_ready_actors()

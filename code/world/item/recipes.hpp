@@ -1,7 +1,7 @@
 #ifndef ITEMRECIPES_H_
 #define ITEMRECIPES_H_
 
-//TODO: MAKE TAGS FOR BOTH RESOURCES AND PRODUCTS IN UNITED TABLE itemTags
+//TODO: MAKE TAGS FOR BOTH RESOURCES AND PRODUCTS IN UNITED TABLE item::TAGS
 #include "enum.hpp"
 #include "data.hpp"
 #include "scavengeable.hpp"
@@ -12,7 +12,7 @@
 #include <world/plant/enum.hpp>
 #include <world/scavengeables/enum.hpp>
 #include <world/tile/enum.hpp>
-#include <world/unit/rolesAndActions.hpp>
+#include <world/unit/roles_and_actions.hpp>
 
 using SourceVariant = std::variant<Tile, Plant, Animal, Scavengeable>;
 
@@ -37,7 +37,7 @@ Resource resources[static_cast<int>(Item::BOTHMAX)];
 // 1 Rock Salt averages 100 units of salt
 //
 // TODO: minimize the fruit one
-void intializeResources()
+void intialize_resources()
 {
 	resources[static_cast<int>(Item::SaltWater)] = {{Action::Collect, Action::Collect},
 							10,
@@ -183,138 +183,138 @@ struct ProductRecipe
 				// can fill. so if '1' that means any other replaceable indices
 				// (which correspond to ingredients indices) also having '1' are
 				// swappable with that ingredient.
-	itemTags tags;		// how much of the item is produced.
+	item::TAGS tags;		// how much of the item is produced.
 };
 
 ProductRecipe products[static_cast<int>(Item::MAX) -
 		(static_cast<int>(Item::RESOURCESMAX) - static_cast<int>(Item::VARIANTSMAX))];
 
-void initializeProducts()
+void initialize_products()
 {
 	products[static_cast<int>(Item::Salt)] = {Action::Wait, 21000, {Item::Saltwater},
-						  {20},		 {1},	itemTags::Liquid};
+						  {20},		 {1},	item::TAGS::Liquid};
 	products[static_cast<int>(Item::Grist)] = {
 	    Action::Mill, 1, {Item::Wheat, Item::Oat, Item::Corn}, {8, 4, 1}, {1, 1, 1}};
 	products[static_cast<int>(Item::Flour)] = {
 	    Action::Mill, 1,	{Item::Grist},
-	    {1},	   {1}, itemTags::Perishable | itemTags::Hydrophobic};
+	    {1},	   {1}, item::TAGS::Perishable | item::TAGS::Hydrophobic};
 	products[static_cast<int>(Item::MilledRice)] = {Action::Mill, 1,   {Item::Rice},
-							{1},	       {1}, itemTags::Perishable};
+							{1},	       {1}, item::TAGS::Perishable};
 	products[static_cast<int>(Item::Bread)] = {
-	    Action::Bake, 320, {Item::Flour}, {20}, itemTags::Perishable | itemTags::Hydrophobic};
+	    Action::Bake, 320, {Item::Flour}, {20}, item::TAGS::Perishable | item::TAGS::Hydrophobic};
 	products[static_cast<int>(Item::Pastry)] = {
 	    Action::Bake,
 	    360,
 	    {Item::Flour, Item::Sugar, Item::Fruit, Item::Cocoa},
 	    {2, 1, 1, 1},
 	    {1, 0, 2, 2},
-	    .tags = itemTags::OptionalIngredient | itemTags::Perishable | itemTags::Hydrophobic};
+	    .tags = item::TAGS::OptionalIngredient | item::TAGS::Perishable | item::TAGS::Hydrophobic};
 	products[static_cast<int>(Item::Pie)] = {
 	    Action::Bake,
 	    520,
 	    {Item::Flour, Item::Sugar, Item::Fruit, Item::Milk, Item::DrinkingWater},
 	    {5, 2, 3, 2, 2},
 	    {1, 0, 2, 3, 3},
-	    .tags = itemTags::OptionalIngredient | itemTags::Perishable | itemTags::Hydrophobic};
+	    .tags = item::TAGS::OptionalIngredient | item::TAGS::Perishable | item::TAGS::Hydrophobic};
 	products[static_cast<int>(Item::Porridge)] = {
 	    Action::Cook,
 	    120,
 	    {Item::Grist, Item::DrinkingWater, Item::Milk, Item::Fruit, Item::Honey},
 	    {2, 2, 2, 1, 1},
 	    {1, 2, 2, 0, 0},
-	    .tags = itemTags::OptionalIngredient | itemTags ::Perishable | itemTags::Hydrophobic};
+	    .tags = item::TAGS::OptionalIngredient | item::TAGS ::Perishable | item::TAGS::Hydrophobic};
 	products[static_cast<int>(Item::RawMeat)] = {
-	    Action::Butcher, 0, {Item::Corpse}, {1}, {1}, itemTags::Perishable};
+	    Action::Butcher, 0, {Item::Corpse}, {1}, {1}, item::TAGS::Perishable};
 	products[static_cast<int>(Item::CookedMeat)] = {Action::Cook, 90,  {Item::RawMeat},
-							{1},	       {1}, itemTags::Perishable};
+							{1},	       {1}, item::TAGS::Perishable};
 	products[static_cast<int>(Item::AnimalFat)] = {
-	    Action::Butcher, 0, {Item::Corpse}, {1}, {1}, itemTags::Perishable};
+	    Action::Butcher, 0, {Item::Corpse}, {1}, {1}, item::TAGS::Perishable};
 	products[static_cast<int>(Item::Cheese)] = {
-	    Action::Preserve, 2200, {Item::Milk}, {5}, {1}, itemTags::Perishable};
+	    Action::Preserve, 2200, {Item::Milk}, {5}, {1}, item::TAGS::Perishable};
 	products[static_cast<int>(Item::GoatCheese)] = {
-	    Action::Preserve, 2200, {Item::Milk}, {5}, {1}, itemTags::Perishable};
+	    Action::Preserve, 2200, {Item::Milk}, {5}, {1}, item::TAGS::Perishable};
 	products[static_cast<int>(Item::BlueCheese)] = {
 	    Action::Preserve,	 56000, {Item::Cheese, Item::GoatCheese}, {1, 1}, {1, 1},
-	    itemTags::Perishable};
+	    item::TAGS::Perishable};
 	products[static_cast<int>(Item::Beer)] = {
 	    Action::Preserve, 16000,  {Item::Wheat, Item::DrinkingWater},
-	    {30, 200},	       {1, 1}, .tags = itemTags::Liquid | itemTags::Perishable};
+	    {30, 200},	       {1, 1}, .tags = item::TAGS::Liquid | item::TAGS::Perishable};
 	products[static_cast<int>(Item::Wine)] = {
 	    Action::Preserve,
 	    32000,
 	    {Item::Fruit, Item::DrinkingWater},
 	    {30, 200},
 	    {1, 1},
-	    .tags = itemTags::Liquid | itemTags::RequiresUniqueVariant | itemTags::Perishable};
+	    .tags = item::TAGS::Liquid | item::TAGS::RequiresUniqueVariant | item::TAGS::Perishable};
 	products[static_cast<int>(Item::FruitWine)] = {
 	    Action::Preserve,
 	    22000,
 	    {Item::Fruit, Item::DrinkingWater},
 	    {30, 200},
 	    {1, 1},
-	    .tags = itemTags::Liquid | itemTags::Variant | itemTags::Perishable};
+	    .tags = item::TAGS::Liquid | item::TAGS::Variant | item::TAGS::Perishable};
 	products[static_cast<int>(Item::Mead)] = {
 	    Action::Preserve, 54000,  {Item::Honey, Item::DrinkingWater},
-	    {20, 200},	       {1, 1}, .tags = itemTags::Liquid | itemTags::Perishable};
+	    {20, 200},	       {1, 1}, .tags = item::TAGS::Liquid | item::TAGS::Perishable};
 	products[static_cast<int>(Item::Vinegar)] = {
 	    Action::Preserve, 70000,	  {Item::Beer, Item::Wine, Item::FruitWine},
-	    {1, 1, 1},	       {1, 1, 1}, .tags = itemTags::Liquid | itemTags::Perishable};
+	    {1, 1, 1},	       {1, 1, 1}, .tags = item::TAGS::Liquid | item::TAGS::Perishable};
 	products[static_cast<int>(Item::Butter)] = {
 	    Action::Churn,
 	    300,
 	    {Item::Milk},
 	    {5},
 	    {1},
-	    .tags = itemTags::Liquid | itemTags::Perishable};
+	    .tags = item::TAGS::Liquid | item::TAGS::Perishable};
 	products[static_cast<int>(Item::OliveOil)] = {
 	    Action::Press,
 	    100,
 	    {Item::Olive},
 	    {1},
 	    {1},
-	    .tags = itemTags::Liquid | itemTags::Perishable};
+	    .tags = item::TAGS::Liquid | item::TAGS::Perishable};
 	products[static_cast<int>(Item::CookingOil)] = {
 	    Action::Press,
 	    100,
 	    {Item::Corn, Item::Truffle, Item::Coconut, Item::DrinkingWater},
 	    {1, 2, 1, 10},
 	    {1, 1, 1, 2},
-	    .tags = itemTags::Liquid | itemTags::VariableAmountProduced | itemTags::Perishable};
+	    .tags = item::TAGS::Liquid | item::TAGS::VariableAmountProduced | item::TAGS::Perishable};
 	products[static_cast<int>(Item::DrinkingWater)] = {Action::Boil, 100, {Item::Water},
-							   {1},		  {1}, itemTags::Liquid};
+							   {1},		  {1}, item::TAGS::Liquid};
 	products[static_cast<int>(Item::Juice)] = {Action::Press,
 						   120,
 						   {Item::Fruit},
 						   {1},
 						   {1},
-						   .tags = itemTags::Liquid | itemTags::Perishable};
+						   .tags = item::TAGS::Liquid | item::TAGS::Perishable};
 	products[static_cast<int>(Item::CandiedFruit)] = {
 	    Action::Preserve, 20000,  {Item::Fruit, Item::SugarJuice},
-	    {1, 15},	       {1, 2}, itemTags::Perishable};
+	    {1, 15},	       {1, 2}, item::TAGS::Perishable};
 	products[static_cast<int>(Item::AgedAlcoholicDrink)] = {
-	    Action::Preserve, 140000, {Item::AlcoholicDrink}, {1}, {1}, itemTags::Perishable};
+	    Action::Preserve, 140000, {Item::AlcoholicDrink}, {1}, {1}, item::TAGS::Perishable};
 	products[static_cast<int>(Item::SugarJuice)] = {
 	    Action::Mill, 100, {Item::Sugarcane},
-	    {1},	   {1}, .tags = itemTags::Liquid | itemTags::Perishable};
+	    {1},	   {1}, .tags = item::TAGS::Liquid | item::TAGS::Perishable};
 	products[static_cast<int>(Item::Sugar)] = {
 	    Action::Boil, 400,	   {Item::SugarJuice, Item::Lime},
-	    {20, 1},	   {1, 2}, itemTags::Perishable};
+	    {20, 1},	   {1, 2}, item::TAGS::Perishable};
 	products[static_cast<int>(Item::GroundBlackPepper)] = {
-	    Action::Mill, 100, {Item::BlackPepper}, {1}, {1}, itemTags::Perishable};
+	    Action::Mill, 100, {Item::BlackPepper}, {1}, {1}, item::TAGS::Perishable};
 	products[static_cast<int>(Item::ChiliPowder)] = {Action::Mill, 100, {Item::Pepper},
-							 {1},		{1}, itemTags::Perishable};
+							 {1},		{1}, item::TAGS::Perishable};
 
 	// BASE MATERIALS
 	products[static_cast<int>(Item::Metal)] = {Action::Smelt,
 						   0,
 						   {Item::Ore},
 						   {5},
-						   .tags = itemTags::VariableAmountsRequired |
-							   itemTags::VariableAmountProduced |
-							   itemTags::Perishable};
+						   .tags = item::TAGS::VariableAmountsRequired |
+							   item::TAGS::VariableAmountProduced |
+							   item::TAGS::Perishable};
 	products[static_cast<int>(Item::Wood)] = {Action::Saw, 400, {Item::Log}, {18}};
 	products[static_cast<int>(Item::Timber)] = {
-	    Action::Saw, 400, {Item::Log}, .tags = itemTags::VariableAmountProduced};
+	    Action::Saw, 400, {Item::Log}, .tags = item::TAGS::VariableAmountProduced};
 	products[static_cast<int>(Item::Plank)] = {Action::Saw, 200, {Item::Wood}, {1}};
 	products[static_cast<int>(Item::Stave)] = {Action::Woodwork, 280, {Item::Wood}, {1}, {1}};
 	products[static_cast<int>(Item::LongStave)] = {
@@ -334,56 +334,56 @@ void initializeProducts()
 
 	products[static_cast<int>(Item::Daub)] = {
 	    Action::Mix,    180,	   {Item::ClaySoil, Item::Hay, Item::Sand, Item::Water},
-	    {15, 3, 15, 20}, {1, 2, 3, 4}, itemTags::VariableAmountProduced};
+	    {15, 3, 15, 20}, {1, 2, 3, 4}, item::TAGS::VariableAmountProduced};
 	products[static_cast<int>(Item::Cob)] = {
 	    Action::Mix,
 	    180,
 	    {Item::ClaySoil, Item::Sand, Item::Straw, Item::Water, Item::Gravel},
 	    {10, 30, 2, 20, 8},
 	    {1, 2, 3, 4, 0},
-	    itemTags::VariableAmountProduced};
+	    item::TAGS::VariableAmountProduced};
 	products[static_cast<int>(Item::PackedEarth)] = {
 	    Action::Mix,
 	    40,
 	    {Item::LoamSoil, Item::SiltySoil, Item::ClaySoil, Item::Podzol},
 	    {15, 20, 12, 15},
 	    {1, 1, 1, 1},
-	    itemTags::Alternate};
+	    item::TAGS::Alternate};
 	products[static_cast<int>(Item::Lime)] = {
-	    Action::Fire, 10800, {Item::Stone}, {1}, {1}, .tags = itemTags::RequiresUniqueVariant};
+	    Action::Fire, 10800, {Item::Stone}, {1}, {1}, .tags = item::TAGS::RequiresUniqueVariant};
 	products[static_cast<int>(Item::Plaster)] = {Action::Mix,
 						     380,
 						     {Item::Lime, Item::Water, Item::Sand},
 						     {1, 15, 10},
-						     .tags = itemTags::Liquid};
+						     .tags = item::TAGS::Liquid};
 	products[static_cast<int>(Item::CrushedStone)] = {
 	    Action::Crush,
 	    80,
 	    {Item::Stone, Item::Rock, Item::LargeRock},
 	    {1, 1, 1},
 	    {1, 2, 3},
-	    itemTags::VariableAmountsRequired | itemTags::VariableAmountProduced};
+	    item::TAGS::VariableAmountsRequired | item::TAGS::VariableAmountProduced};
 	products[static_cast<int>(Item::Concrete)] = {
 	    Action::Mix,
 	    120,
 	    {Item::Ash, Item::Lime, Item::Water, Item::CrushedStone, Item::Sand},
 	    {1, 1, 5, 20, 10},
 	    {1, 2, 3, 4, 5},
-	    itemTags::VariableAmountProduced | itemTags::Liquid};
+	    item::TAGS::VariableAmountProduced | item::TAGS::Liquid};
 	products[static_cast<int>(Item::Mortar)] = {
 	    Action::Mix, 140,		{Item::Clay, Item::Lime, Item::Water, Item::Sand},
-	    {1, 1, 1, 1}, {1, 1, 2, 3}, itemTags::Liquid};
+	    {1, 1, 1, 1}, {1, 1, 2, 3}, item::TAGS::Liquid};
 	products[static_cast<int>(Item::Glass)] = {Action::Smelt,
 						   400,
 						   {Item::Sand},
 						   {20},
-						   .tags = itemTags::VariableAmountProduced |
-							   itemTags::VariableAmountsRequired};
+						   .tags = item::TAGS::VariableAmountProduced |
+							   item::TAGS::VariableAmountsRequired};
 	products[static_cast<int>(Item::Pane)] = {Action::Glasswork,
 						  180,
 						  {Item::Glass},
-						  .tags = itemTags::VariableAmountProduced |
-							  itemTags::VariableAmountsRequired};
+						  .tags = item::TAGS::VariableAmountProduced |
+							  item::TAGS::VariableAmountsRequired};
 	products[static_cast<int>(Item::ColoredPane)] = {
 	    Action::Treat,
 	    9000,
@@ -393,27 +393,27 @@ void initializeProducts()
 	products[static_cast<int>(Item::FiredClay)] = {Action::Fire,
 						       150,
 						       {Item::Clay},
-						       .tags = itemTags::Liquid |
-							       itemTags::VariableAmountProduced};
+						       .tags = item::TAGS::Liquid |
+							       item::TAGS::VariableAmountProduced};
 	products[static_cast<int>(Item::Bricks)] = {
 	    Action::Fire, 150, {Item::Clay, Item::BrickMold}};
 	products[static_cast<int>(Item::Charcoal)] = {Action::Fire,
 						      80,
 						      {Item::Wood},
-						      .tags = itemTags::VariableAmountProduced |
-							      itemTags::VariableAmountsRequired};
+						      .tags = item::TAGS::VariableAmountProduced |
+							      item::TAGS::VariableAmountsRequired};
 	products[static_cast<int>(Item::Bone)] = {
-	    Action::Butcher, 0, {Item::Corpse}, .tags = itemTags::FromCorpse};
+	    Action::Butcher, 0, {Item::Corpse}, .tags = item::TAGS::FromCorpse};
 	products[static_cast<int>(Item::AnimalHair)] = {
 	    Action::Butcher,
 	    0,
 	    {Item::Corpse},
-	    .tags = itemTags::FromCorpse | itemTags::VariableAmountProduced | itemTags::Perishable};
+	    .tags = item::TAGS::FromCorpse | item::TAGS::VariableAmountProduced | item::TAGS::Perishable};
 	products[static_cast<int>(Item::AnimalHides)] = {Action::Butcher,
 							 0,
 							 {Item::Corpse},
-							 .tags = itemTags::FromCorpse |
-								 itemTags::VariableAmountProduced};
+							 .tags = item::TAGS::FromCorpse |
+								 item::TAGS::VariableAmountProduced};
 	products[static_cast<int>(Item::Linen)] = {
 	    Action::Treat, 950, {Item::Flax, Item::Water}, {1, 10}, {1, 2}};
 	products[static_cast<int>(Item::Rope)] = {
@@ -422,14 +422,14 @@ void initializeProducts()
 	    Action::Cut, 20, {Item::Flax, Item::Hemp, Item::Papyrus}, {1, 1, 1}, {1, 1, 1}};
 	// TODO: do soot and ash  many items must be viable
 	// products[static_cast<int>(Item::Soot)] = {Action::Burn, 50,  {Item::Wood, Item::Fruit,
-	// Item::Plank}, {1,1,1,1}, {1,1,1,1}, itemTags::VariableAmountsRequired |
-	// itemTags::VariableAmountProduced};
+	// Item::Plank}, {1,1,1,1}, {1,1,1,1}, item::TAGS::VariableAmountsRequired |
+	// item::TAGS::VariableAmountProduced};
 
 	products[static_cast<int>(Item::CuredHide)] = {
 	    Action::Cur, 18000, {Item::Salt, Item::Lime, Item::AnimalHides}, {5, 2, 1}, {1, 1}};
 	products[static_cast<int>(Item::TanningAgent)] = {
 	    Action::Mix, 28000,  {Item::Wood, Item::Water},
-	    {1, 20},	  {1, 2}, itemTags::VariableAmountProduced | itemTags::Perishable};
+	    {1, 20},	  {1, 2}, item::TAGS::VariableAmountProduced | item::TAGS::Perishable};
 	products[static_cast<int>(Item::TannedHide)] = {
 	    Action::Tan, 30000, {Item::CuredHide, Item::TanningAgent}, {1, 10}, {1, 2}};
 	products[static_cast<int>(Item::HeavyTannedHide)] = {
@@ -442,10 +442,10 @@ void initializeProducts()
 						  90,
 						  {Item::Metal, Item::NailHeader},
 						  {1, 0},
-						  .tags = itemTags::OptionalIngredient |
-							  itemTags::VariableAmountProduced};
+						  .tags = item::TAGS::OptionalIngredient |
+							  item::TAGS::VariableAmountProduced};
 	products[static_cast<int>(Item::NailHeader)] = {
-	    Action::Smith, 1200, {Item::Metal}, {2}, {1}, .tags = itemTags::Mould};
+	    Action::Smith, 1200, {Item::Metal}, {2}, {1}, .tags = item::TAGS::Mould};
 	products[static_cast<int>(Item::Lens)] = {Action::Sculpt, 10000, {Item::Pane}};
 	products[static_cast<int>(Item::Wick)] = {Action::Weave, 800, {Item::Cotton, Item::Fiber}};
 	products[static_cast<int>(Item::Glue)] = {
@@ -453,51 +453,51 @@ void initializeProducts()
 	    900,
 	    {Item::AnimalHides, Item::Bone, Item::Flour, Item::Resin, Item::Water},
 	    {1, 1, 1, 1, 2},
-	    itemTags::Hydrophobic};
+	    item::TAGS::Hydrophobic};
 	products[static_cast<int>(Item::String)] = {
 	    Action::Spin,
 	    1000,
 	    {Item::Fiber, Item::AnimalHair, Item::Sinew},
 	    {5, 20, 2},
 	    {1, 1, 1},
-	    itemTags::VariableAmountProduced | itemTags::VariableAmountsRequired};
+	    item::TAGS::VariableAmountProduced | item::TAGS::VariableAmountsRequired};
 	products[static_cast<int>(Item::Axle)] = {
-	    Action::Whittle, 400, {Item::Wood}, .tags = itemTags::Alternate};
+	    Action::Whittle, 400, {Item::Wood}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::LargeAxle)] = {Action::Whittle, 1000, {Item::Log}};
 	products[static_cast<int>(Item::Gear)] = {
-	    Action::Whittle, 2800, {Item::Wood}, .tags = itemTags::Alternate};
+	    Action::Whittle, 2800, {Item::Wood}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::SolidWheel)] = {
-	    Action::Chisel, 48000, {Item::Stone}, .tags = itemTags::Alternate};
+	    Action::Chisel, 48000, {Item::Stone}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::Wheel)] = {
 	    Action::WheelCraft, 4800, {Item::Stave, Item::Peg, Item::Nail, Item::Beam}, {1, 2, 2}};
 	products[static_cast<int>(Item::Sail)] = {Action::Sew, 3300, {Item::Cloth, Item::String}};
 	products[static_cast<int>(Item::Tube)] = {
-	    Action::Pott, 7400, {Item::Clay}, .tags = itemTags::Alternate};
+	    Action::Pott, 7400, {Item::Clay}, .tags = item::TAGS::Alternate};
 
 	// CONTINUED ITEMS
 	products[static_cast<int>(Item::Peg)] = {
-	    Action::Whittle, 200, {Item::Wood}, .tags = itemTags::Alternate};
+	    Action::Whittle, 200, {Item::Wood}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::Wedge)] = {
-	    Action::Whittle, 250, {Item::Wood}, .tags = itemTags::VariableAmountProduced};
+	    Action::Whittle, 250, {Item::Wood}, .tags = item::TAGS::VariableAmountProduced};
 	products[static_cast<int>(Item::Rivet)] = {Action::Smith, 300, {Item::Metal}};
 	products[static_cast<int>(Item::SmallHandle)] = {Action::Whittle,
 							 200,
 							 {Item::Beam},
-							 .tags = itemTags::VariableAmountProduced |
-								 itemTags::Alternate};
+							 .tags = item::TAGS::VariableAmountProduced |
+								 item::TAGS::Alternate};
 	products[static_cast<int>(Item::LargeHandle)] = {
-	    Action::Whittle, 200, {Item::Beam}, .tags = itemTags::Alternate};
+	    Action::Whittle, 200, {Item::Beam}, .tags = item::TAGS::Alternate};
 	// products[static_cast<int>(Item::SocketedLargeHandle)] = {Action::Whittle, 200,
 	// {Item::Beam}};
 	products[static_cast<int>(Item::BrickMold)] = {
-	    Action::Woodwork, 750, {Item::Wood}, .tags = itemTags::Mould};
+	    Action::Woodwork, 750, {Item::Wood}, .tags = item::TAGS::Mould};
 	products[static_cast<int>(Item::Arrowhead)] = {
 	    Action::Knapp, 80, {Item::Rock, Item::Bone}};
 	products[static_cast<int>(Item::MetalArrowhead)] = {
-	    Action::Smith, 80, {Item::Metal}, .tags = itemTags::Alternate};
+	    Action::Smith, 80, {Item::Metal}, .tags = item::TAGS::Alternate};
 
 	products[static_cast<int>(Item::ArrowShaft)] = {
-	    Action::Fletch, 150, {Item::Beam}, .tags = itemTags::Alternate};
+	    Action::Fletch, 150, {Item::Beam}, .tags = item::TAGS::Alternate};
 
 	products[static_cast<int>(Item::Arrow)] = {
 	    Action::Fletch,
@@ -505,12 +505,12 @@ void initializeProducts()
 	    {Item::Arrowhead, Item::MetalArrowhead, Item::ArrowShaft, Item::Feather},
 	    {1, 1, 2, 0}};
 	products[static_cast<int>(Item::Trigger)] = {
-	    Action::Smith, 770, {Item::Metal}, .tags = itemTags::VariableAmountsRequired};
+	    Action::Smith, 770, {Item::Metal}, .tags = item::TAGS::VariableAmountsRequired};
 	products[static_cast<int>(Item::Yarn)] = {
 	    Action::Spin, 120, {Item::Flax, Item::Wool, Item::Cotton}};
 	products[static_cast<int>(Item::Thread)] = {Action::Spin, 40, {Item::Yarn}};
 	products[static_cast<int>(Item::PrimitiveString)] = {
-	    Action::Craft, 220, {Item::Fiber, Item::Sinew}, {2, 1}, {1, 2}, itemTags::Hydrophobic};
+	    Action::Craft, 220, {Item::Fiber, Item::Sinew}, {2, 1}, {1, 2}, item::TAGS::Hydrophobic};
 	products[static_cast<int>(Item::PrimitiveRope)] = {
 	    Action::Craft, 1200, {Item::Fiber, Item::AnimalHair}, {2, 1}};
 	products[static_cast<int>(Item::RopemakingFrame)] = {Action::Woodwork, 750, {Item::Wood}};
@@ -526,31 +526,31 @@ void initializeProducts()
 						    1780,
 						    {Item::Madder, Item::Water},
 						    {1, 2},
-						    .tags = itemTags::Alternate | itemTags::Liquid};
+						    .tags = item::TAGS::Alternate | item::TAGS::Liquid};
 	products[static_cast<int>(Item::YellowDye)] = {Action::Treat,
 						       1780,
 						       {Item::Saffron, Item::Water},
 						       {1, 2},
 						       .tags =
-							   itemTags::Alternate | itemTags::Liquid};
+							   item::TAGS::Alternate | item::TAGS::Liquid};
 	products[static_cast<int>(Item::BlueDye)] = {Action::Treat,
 						     1780,
 						     {Item::Indigo, Item::Water},
 						     {1, 2},
 						     .tags =
-							 itemTags::Alternate | itemTags::Liquid};
+							 item::TAGS::Alternate | item::TAGS::Liquid};
 	products[static_cast<int>(Item::Bleach)] = {
 	    Action::Treat, 1780,   {Item::Lime, Item::Water},
-	    {1, 20},	    {1, 2}, .tags = itemTags::Liquid};
+	    {1, 20},	    {1, 2}, .tags = item::TAGS::Liquid};
 	products[static_cast<int>(Item::Ink)] = {
-	    Action::Treat, 1780, {Item::Soot, Item::Water}, .tags = itemTags::Liquid};
+	    Action::Treat, 1780, {Item::Soot, Item::Water}, .tags = item::TAGS::Liquid};
 	products[static_cast<int>(Item::Incense)] = {
 	    Action::Burn, 1580,      {Item::Resin, Item::Lavender, Item::Honey},
-	    {3, 3, 4},	   {1, 1, 2}, itemTags::Perishable};
+	    {3, 3, 4},	   {1, 1, 2}, item::TAGS::Perishable};
 	products[static_cast<int>(Item::StoneTablet)] = {Action::Chisel, 390, {Item::CutStone}};
 	products[static_cast<int>(Item::Paper)] = {
 	    Action::Treat, 13000,     {Item::Papyrus, Item::CuredHide, Item::Bleach},
-	    {1, 1, 4},	    {1, 1, 2}, itemTags::Hydrophobic};
+	    {1, 1, 4},	    {1, 1, 2}, item::TAGS::Hydrophobic};
 	products[static_cast<int>(Item::TemporaryTablet)] = {
 	    Action::Sculpt, 170, {Item::Wax, Item::Clay}, {5, 5}};
 	products[static_cast<int>(Item::Theriac)] = {
@@ -580,11 +580,11 @@ void initializeProducts()
 	    {1, 2, 3, 4, 4}};
 	products[static_cast<int>(Item::Laxative)] = {
 	    Action::Compound, 350,	  {Item::Water, Item::Rhubarb, Item::Senna},
-	    {4, 2, 2},	       {1, 2, 3}, .tags = itemTags::Alternate};
+	    {4, 2, 2},	       {1, 2, 3}, .tags = item::TAGS::Alternate};
 
 	products[static_cast<int>(Item::Tonic)] = {
 	    Action::Compound, 350,	  {Item::DrinkingWater, Item::Honey, Item::Ginseng},
-	    {3, 3, 2},	       {1, 2, 3}, itemTags::Alternate | itemTags::Liquid};
+	    {3, 3, 2},	       {1, 2, 3}, item::TAGS::Alternate | item::TAGS::Liquid};
 	products[static_cast<int>(Item::Bandage)] = {Action::Cut, 60, {Item::Cloth}};
 	products[static_cast<int>(Item::Poison)] = {
 	    Action::Compound,
@@ -595,9 +595,9 @@ void initializeProducts()
 	products[static_cast<int>(Item::Arsenic)] = {Action::Smelt, 320, {Item::ArsenicOre}};
 	products[static_cast<int>(Item::Cyanide)] = {Action::Grind, 200, {Item::FruitPit}, {10}};
 	products[static_cast<int>(Item::BoneMeal)] = {
-	    Action::Grind, 100, {Item::Bone}, itemTags::Perishable};
+	    Action::Grind, 100, {Item::Bone}, item::TAGS::Perishable};
 	products[static_cast<int>(Item::FishMeal)] = {
-	    Action::Grind, 100, {Item::Fish}, itemTags::Perishable};
+	    Action::Grind, 100, {Item::Fish}, item::TAGS::Perishable};
 	// TODO: fix fertilizer, allow any of these products to be combined together into fertilizer
 	products[static_cast<int>(Item::Fertilizer)] = {
 	    Action::Mix,
@@ -605,10 +605,10 @@ void initializeProducts()
 	    {Item::BoneMeal, Item::FishMeal, Item::Peat, Item::Ash, Item::Lime},
 	    {1, 1, 4, 3, 2},
 	    {1, 1, 1, 1, 1},
-	    itemTags::Perishable};
+	    item::TAGS::Perishable};
 	products[static_cast<int>(Item::Die)] = {Action::Woodwork, 630, {Item::Wood}};
 	products[static_cast<int>(Item::CoinMould)] = {
-	    Action::Smith, 730, {Item::Metal}, {1}, {1}, .tags = itemTags::Alternate};
+	    Action::Smith, 730, {Item::Metal}, {1}, {1}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::CoinBlank)] = {
 	    Action::Cast, 190, {Item::Metal, Item::CoinMould}, {1, 1}, {1, 2}};
 	products[static_cast<int>(Item::Coins)] = {Action::Mint, 20, {Item::CoinBlank}};
@@ -631,7 +631,7 @@ void initializeProducts()
 
 	// Carved Tools and Art
 	products[static_cast<int>(Item::PrimitiveSpearHead)] = {
-	    Action::Knapp, 2000, {Item::Rock, Item::Bone}, .tags = itemTags::Alternate};
+	    Action::Knapp, 2000, {Item::Rock, Item::Bone}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::PrimitiveAxeHead)] = {Action::Knapp, 2000, {Item::Rock}};
 	products[static_cast<int>(Item::BoneArtifact)] = {Action::Carve, 4800, {Item::Bone}};
 	products[static_cast<int>(Item::WoodArtifact)] = {Action::WoodCarve, 4800, {Item::Wood}};
@@ -642,203 +642,203 @@ void initializeProducts()
 	// TODO: alternate tool head making
 	// short handle
 	products[static_cast<int>(Item::KnifeHead)] = {
-	    Action::Smith, 2900, {Item::Metal}, {2}, .tags = itemTags::Alternate};
+	    Action::Smith, 2900, {Item::Metal}, {2}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::SickleHead)] = {
-	    Action::Smith, 2900, {Item::Metal}, {4}, .tags = itemTags::Alternate};
+	    Action::Smith, 2900, {Item::Metal}, {4}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::AwlHead)] = {
-	    Action::Smith, 4800, {Item::Metal}, {6}, .tags = itemTags::Alternate};
+	    Action::Smith, 4800, {Item::Metal}, {6}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::AdzeHead)] = {
-	    Action::Smith, 3200, {Item::Metal}, {5}, .tags = itemTags::Alternate};
+	    Action::Smith, 3200, {Item::Metal}, {5}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::MalletHead)] = {
-	    Action::Smith, 3200, {Item::Metal}, {6}, .tags = itemTags::Alternate};
+	    Action::Smith, 3200, {Item::Metal}, {6}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::ScalpelHead)] = {
-	    Action::Smith, 3200, {Item::Metal}, {2}, .tags = itemTags::Alternate};
+	    Action::Smith, 3200, {Item::Metal}, {2}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::HammerHead)] = {
-	    Action::Smith, 3200, {Item::Metal}, {11}, .tags = itemTags::Alternate};
+	    Action::Smith, 3200, {Item::Metal}, {11}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::ChiselHead)] = {
-	    Action::Smith, 3200, {Item::Metal}, {3}, .tags = itemTags::Alternate};
+	    Action::Smith, 3200, {Item::Metal}, {3}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::TrowelHead)] = {
-	    Action::Smith, 3200, {Item::Metal}, {3}, .tags = itemTags::Alternate};
+	    Action::Smith, 3200, {Item::Metal}, {3}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::CleaverHead)] = {
-	    Action::Smith, 3200, {Item::Metal}, {4}, .tags = itemTags::Alternate};
+	    Action::Smith, 3200, {Item::Metal}, {4}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::MacheteHead)] = {
-	    Action::Smith, 3200, {Item::Metal}, {5}, .tags = itemTags::Alternate};
+	    Action::Smith, 3200, {Item::Metal}, {5}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::SwordHead)] = {
-	    Action::Smith, 3200, {Item::Metal}, {7}, .tags = itemTags::Alternate};
+	    Action::Smith, 3200, {Item::Metal}, {7}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::HandaxeHead)] = {
-	    Action::Smith, 3200, {Item::Metal}, {4}, .tags = itemTags::Alternate};
+	    Action::Smith, 3200, {Item::Metal}, {4}, .tags = item::TAGS::Alternate};
 
 	products[static_cast<int>(Item::KnifeHeadMould)] = {
 	    Action::Sculpt, 520, {Item::Clay, Item::Sand}, {1, 1}};
 	products[static_cast<int>(Item::PermanentKnifeHeadMould)] = {
-	    Action::Smith, 560, {Item::Metal}, .tags = itemTags::Alternate | itemTags::Mould};
+	    Action::Smith, 560, {Item::Metal}, .tags = item::TAGS::Alternate | item::TAGS::Mould};
 	products[static_cast<int>(Item::PermanentSickleHeadMould)] = {
-	    Action::Smith, 6200, {Item::Metal}, .tags = itemTags::Alternate | itemTags::Mould};
+	    Action::Smith, 6200, {Item::Metal}, .tags = item::TAGS::Alternate | item::TAGS::Mould};
 	products[static_cast<int>(Item::SickleHeadMould)] = {
 	    Action::Sculpt, 520, {Item::Clay, Item::Sand}, {1, 1}};
 	products[static_cast<int>(Item::PermanentAwlHeadMould)] = {
-	    Action::Smith, 6200, {Item::Metal}, .tags = itemTags::Alternate | itemTags::Mould};
+	    Action::Smith, 6200, {Item::Metal}, .tags = item::TAGS::Alternate | item::TAGS::Mould};
 	products[static_cast<int>(Item::AwlHeadMould)] = {
 	    Action::Sculpt, 520, {Item::Clay, Item::Sand}, {1, 1}};
 	products[static_cast<int>(Item::PermanentAdzeHeadMould)] = {
-	    Action::Smith, 6200, {Item::Metal}, .tags = itemTags::Alternate | itemTags::Mould};
+	    Action::Smith, 6200, {Item::Metal}, .tags = item::TAGS::Alternate | item::TAGS::Mould};
 	products[static_cast<int>(Item::AdzeHeadMould)] = {
 	    Action::Sculpt, 520, {Item::Clay, Item::Sand}, {1, 1}};
 	products[static_cast<int>(Item::PermanentMalletHeadMould)] = {
-	    Action::Smith, 6200, {Item::Metal}, .tags = itemTags::Alternate | itemTags::Mould};
+	    Action::Smith, 6200, {Item::Metal}, .tags = item::TAGS::Alternate | item::TAGS::Mould};
 	products[static_cast<int>(Item::MalletHeadMould)] = {
 	    Action::Sculpt, 520, {Item::Clay, Item::Sand}, {1, 1}};
 	products[static_cast<int>(Item::PermanentScalpelHeadMould)] = {
-	    Action::Smith, 6200, {Item::Metal}, .tags = itemTags::Alternate | itemTags::Mould};
+	    Action::Smith, 6200, {Item::Metal}, .tags = item::TAGS::Alternate | item::TAGS::Mould};
 	products[static_cast<int>(Item::ScalpelHeadMould)] = {
 	    Action::Sculpt, 520, {Item::Clay, Item::Sand}, {1, 1}};
 	products[static_cast<int>(Item::HammerHeadMould)] = {
 	    Action::Sculpt, 520, {Item::Clay, Item::Sand}, {1, 1}};
 	products[static_cast<int>(Item::PermanentHammerHeadMould)] = {
-	    Action::Smith, 6200, {Item::Metal}, .tags = itemTags::Alternate | itemTags::Mould};
+	    Action::Smith, 6200, {Item::Metal}, .tags = item::TAGS::Alternate | item::TAGS::Mould};
 	products[static_cast<int>(Item::ChiselHeadMould)] = {
 	    Action::Sculpt, 520, {Item::Clay, Item::Sand}, {1, 1}};
 	products[static_cast<int>(Item::PermanentChiselHeadMould)] = {
-	    Action::Smith, 6200, {Item::Metal}, .tags = itemTags::Alternate | itemTags::Mould};
+	    Action::Smith, 6200, {Item::Metal}, .tags = item::TAGS::Alternate | item::TAGS::Mould};
 	products[static_cast<int>(Item::TrowelHeadMould)] = {
 	    Action::Sculpt, 520, {Item::Clay, Item::Sand}, {1, 1}};
 	products[static_cast<int>(Item::PermanentTrowelHeadMould)] = {
-	    Action::Smith, 6200, {Item::Metal}, .tags = itemTags::Alternate | itemTags::Mould};
+	    Action::Smith, 6200, {Item::Metal}, .tags = item::TAGS::Alternate | item::TAGS::Mould};
 	products[static_cast<int>(Item::CleaverHeadMould)] = {
 	    Action::Sculpt, 520, {Item::Clay, Item::Sand}, {1, 1}};
 	products[static_cast<int>(Item::PermanentCleaverHeadMould)] = {
-	    Action::Smith, 6200, {Item::Metal}, .tags = itemTags::Alternate | itemTags::Mould};
+	    Action::Smith, 6200, {Item::Metal}, .tags = item::TAGS::Alternate | item::TAGS::Mould};
 	products[static_cast<int>(Item::MacheteHeadMould)] = {
 	    Action::Sculpt, 520, {Item::Clay, Item::Sand}, {1, 1}};
 	products[static_cast<int>(Item::PermanentMacheteHeadMould)] = {
-	    Action::Smith, 6200, {Item::Metal}, .tags = itemTags::Alternate | itemTags::Mould};
+	    Action::Smith, 6200, {Item::Metal}, .tags = item::TAGS::Alternate | item::TAGS::Mould};
 	products[static_cast<int>(Item::SwordHeadMould)] = {
 	    Action::Sculpt, 520, {Item::Clay, Item::Sand}, {1, 1}};
 	products[static_cast<int>(Item::PermanentSwordHeadMould)] = {
-	    Action::Smith, 6200, {Item::Metal}, .tags = itemTags::Alternate | itemTags::Mould};
+	    Action::Smith, 6200, {Item::Metal}, .tags = item::TAGS::Alternate | item::TAGS::Mould};
 	products[static_cast<int>(Item::HandaxeHeadMould)] = {
 	    Action::Sculpt, 520, {Item::Clay, Item::Sand}, {1, 1}};
 	products[static_cast<int>(Item::PermanentHandaxeHeadMould)] = {
-	    Action::Smith, 6200, {Item::Metal}, .tags = itemTags::Alternate | itemTags::Mould};
+	    Action::Smith, 6200, {Item::Metal}, .tags = item::TAGS::Alternate | item::TAGS::Mould};
 
 	// long handle
 	products[static_cast<int>(Item::PrimitiveSpearHead)] = {
-	    Action::Knapp, 1800, {Item::Rock}, {1}, .tags = itemTags::Alternate};
+	    Action::Knapp, 1800, {Item::Rock}, {1}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::ScytheHead)] = {
-	    Action::Smith, 3200, {Item::Metal}, {6}, .tags = itemTags::Alternate};
+	    Action::Smith, 3200, {Item::Metal}, {6}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::ScytheHeadMould)] = {
 	    Action::Sculpt, 520, {Item::Clay, Item::Sand}, {1, 1}};
 	products[static_cast<int>(Item::PermanentScytheHeadMould)] = {
-	    Action::Smith, 6200, {Item::Metal}, .tags = itemTags::Alternate | itemTags::Mould};
+	    Action::Smith, 6200, {Item::Metal}, .tags = item::TAGS::Alternate | item::TAGS::Mould};
 	products[static_cast<int>(Item::ArdHead)] = {
-	    Action::Smith, 3200, {Item::Metal}, {7}, .tags = itemTags::Alternate};
+	    Action::Smith, 3200, {Item::Metal}, {7}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::ArdHeadMould)] = {
 	    Action::Sculpt, 520, {Item::Clay, Item::Sand}, {1, 1}};
 	products[static_cast<int>(Item::PermanentArdHeadMould)] = {
-	    Action::Smith, 6200, {Item::Metal}, .tags = itemTags::Alternate | itemTags::Mould};
+	    Action::Smith, 6200, {Item::Metal}, .tags = item::TAGS::Alternate | item::TAGS::Mould};
 	products[static_cast<int>(Item::HeavySawHead)] = {
-	    Action::Smith, 3200, {Item::Metal}, {8}, .tags = itemTags::Alternate};
+	    Action::Smith, 3200, {Item::Metal}, {8}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::HeavySawHeadMould)] = {
 	    Action::Sculpt, 520, {Item::Clay, Item::Sand}, {1, 1}};
 	products[static_cast<int>(Item::PermanentHeavySawHeadMould)] = {
-	    Action::Smith, 6200, {Item::Metal}, .tags = itemTags::Alternate | itemTags::Mould};
+	    Action::Smith, 6200, {Item::Metal}, .tags = item::TAGS::Alternate | item::TAGS::Mould};
 	products[static_cast<int>(Item::SawHead)] = {
-	    Action::Smith, 3200, {Item::Metal}, {6}, .tags = itemTags::Alternate};
+	    Action::Smith, 3200, {Item::Metal}, {6}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::SawHeadMould)] = {
 	    Action::Sculpt, 520, {Item::Clay, Item::Sand}, {1, 1}};
 	products[static_cast<int>(Item::PermanentSawHeadMould)] = {
-	    Action::Smith, 6200, {Item::Metal}, .tags = itemTags::Alternate | itemTags::Mould};
+	    Action::Smith, 6200, {Item::Metal}, .tags = item::TAGS::Alternate | item::TAGS::Mould};
 	products[static_cast<int>(Item::ShovelHead)] = {
-	    Action::Smith, 3200, {Item::Metal}, {9}, .tags = itemTags::Alternate};
+	    Action::Smith, 3200, {Item::Metal}, {9}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::ShovelHeadMould)] = {
 	    Action::Sculpt, 520, {Item::Clay, Item::Sand}, {1, 1}};
 	products[static_cast<int>(Item::PermanentShovelHeadMould)] = {
-	    Action::Smith, 6200, {Item::Metal}, .tags = itemTags::Alternate | itemTags::Mould};
+	    Action::Smith, 6200, {Item::Metal}, .tags = item::TAGS::Alternate | item::TAGS::Mould};
 	products[static_cast<int>(Item::AxeHead)] = {
-	    Action::Smith, 3200, {Item::Metal}, {5}, .tags = itemTags::Alternate};
+	    Action::Smith, 3200, {Item::Metal}, {5}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::AxeHeadMould)] = {
 	    Action::Sculpt, 520, {Item::Clay, Item::Sand}, {1, 1}};
 	products[static_cast<int>(Item::PermanentAxeHeadMould)] = {
-	    Action::Smith, 6200, {Item::Metal}, .tags = itemTags::Alternate | itemTags::Mould};
+	    Action::Smith, 6200, {Item::Metal}, .tags = item::TAGS::Alternate | item::TAGS::Mould};
 	products[static_cast<int>(Item::PickaxeHead)] = {
-	    Action::Smith, 3200, {Item::Metal}, {5}, .tags = itemTags::Alternate};
+	    Action::Smith, 3200, {Item::Metal}, {5}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::PickaxeHeadMould)] = {
 	    Action::Sculpt, 520, {Item::Clay, Item::Sand}, {1, 1}};
 	products[static_cast<int>(Item::PermanentPickaxeHeadMould)] = {
-	    Action::Smith, 6200, {Item::Metal}, .tags = itemTags::Alternate | itemTags::Mould};
+	    Action::Smith, 6200, {Item::Metal}, .tags = item::TAGS::Alternate | item::TAGS::Mould};
 	products[static_cast<int>(Item::GreatswordHead)] = {
-	    Action::Smith, 3200, {Item::Metal}, {12}, .tags = itemTags::Alternate};
+	    Action::Smith, 3200, {Item::Metal}, {12}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::GreatswordHeadMould)] = {
 	    Action::Sculpt, 520, {Item::Clay, Item::Sand}, {1, 1}};
 	products[static_cast<int>(Item::PermanentGreatswordHeadMould)] = {
-	    Action::Smith, 6200, {Item::Metal}, .tags = itemTags::Alternate | itemTags::Mould};
+	    Action::Smith, 6200, {Item::Metal}, .tags = item::TAGS::Alternate | item::TAGS::Mould};
 	products[static_cast<int>(Item::GreataxeHead)] = {
-	    Action::Smith, 3200, {Item::Metal}, {10}, .tags = itemTags::Alternate};
+	    Action::Smith, 3200, {Item::Metal}, {10}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::GreataxeHeadMould)] = {
 	    Action::Sculpt, 520, {Item::Clay, Item::Sand}, {1, 1}};
 	products[static_cast<int>(Item::PermanentGreataxeHeadMould)] = {
-	    Action::Smith, 6200, {Item::Metal}, .tags = itemTags::Alternate | itemTags::Mould};
+	    Action::Smith, 6200, {Item::Metal}, .tags = item::TAGS::Alternate | item::TAGS::Mould};
 	products[static_cast<int>(Item::HalberdHead)] = {
-	    Action::Smith, 3200, {Item::Metal}, {8}, .tags = itemTags::Alternate};
+	    Action::Smith, 3200, {Item::Metal}, {8}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::HalberdHeadMould)] = {
 	    Action::Sculpt, 520, {Item::Clay, Item::Sand}, {1, 1}};
 	products[static_cast<int>(Item::PermanentHalberdHeadMould)] = {
-	    Action::Smith, 6200, {Item::Metal}, .tags = itemTags::Alternate | itemTags::Mould};
+	    Action::Smith, 6200, {Item::Metal}, .tags = item::TAGS::Alternate | item::TAGS::Mould};
 	products[static_cast<int>(Item::PikeHead)] = {
-	    Action::Smith, 3200, {Item::Metal}, {10}, .tags = itemTags::Alternate};
+	    Action::Smith, 3200, {Item::Metal}, {10}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::PikeHeadMould)] = {
 	    Action::Sculpt, 520, {Item::Clay, Item::Sand}, {1, 1}};
 	products[static_cast<int>(Item::PermanentPikeHeadMould)] = {
-	    Action::Smith, 6200, {Item::Metal}, .tags = itemTags::Alternate | itemTags::Mould};
+	    Action::Smith, 6200, {Item::Metal}, .tags = item::TAGS::Alternate | item::TAGS::Mould};
 	products[static_cast<int>(Item::SpearHead)] = {
-	    Action::Smith, 3200, {Item::Metal}, {4}, .tags = itemTags::Alternate};
+	    Action::Smith, 3200, {Item::Metal}, {4}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::SpearHeadMould)] = {
 	    Action::Sculpt, 520, {Item::Clay, Item::Sand}, {1, 1}};
 	products[static_cast<int>(Item::PermanentSpearHeadMould)] = {
-	    Action::Smith, 6200, {Item::Metal}, .tags = itemTags::Alternate | itemTags::Mould};
+	    Action::Smith, 6200, {Item::Metal}, .tags = item::TAGS::Alternate | item::TAGS::Mould};
 	// non-handle tool
 
 	// products[static_cast<int>(Item::Yarn)] = {Action::Weave, 750, {Item::Flax, Item::Cotton,
 	// Item::Wool, Item::Silk}, {1,1,1,1}};
 	products[static_cast<int>(Item::Cloth)] = {
-	    Action::Weave, 1450, {Item::Yarn}, itemTags::Hydrophobic};
+	    Action::Weave, 1450, {Item::Yarn}, item::TAGS::Hydrophobic};
 	products[static_cast<int>(Item::DyedCloth)] = {
 	    Action::Treat,
 	    960,
 	    {Item::BlueDye, Item::RedDye, Item::YellowDye, Item::Cloth, Item::DyedCloth},
 	    {1, 1, 1, 1, 1},
 	    {1, 1, 1, 2, 2},
-	    itemTags::Hydrophobic};
+	    item::TAGS::Hydrophobic};
 	products[static_cast<int>(Item::Carpet)] = {
 	    Action::Weave, 2000, {Item::Yarn}, {40, 60, 120}, {1, 1, 1}};
 	products[static_cast<int>(Item::Tribalwear)] = {
 	    Action::LeatherCraft, 6500, {Item::CuredHide, Item::PrimitiveString}, {1, 5}, {1, 2},
-	    itemTags::Wearable};
+	    item::TAGS::Wearable};
 	// TODO: different things for tops and bottoms
 	products[static_cast<int>(Item::BasicClothes)] = {
 	    Action::Sew, 9800,	     {Item::Cloth, Item::DyedCloth, Item::Thread},
-	    {1, 1, 1},	  {1, 1, 2}, .tags = itemTags::Wearable};
+	    {1, 1, 1},	  {1, 1, 2}, .tags = item::TAGS::Wearable};
 	products[static_cast<int>(Item::FormalClothes)] = {
 	    Action::Sew,
 	    19400,
 	    {Item::Cloth, Item::DyedCloth, Item::DyedCloth, Item::Thread},
 	    {10, 10, 10, 20},
 	    {1, 1, 2, 3},
-	    .tags = itemTags::VariableAmountRequired | itemTags::Wearable};
+	    .tags = item::TAGS::VariableAmountRequired | item::TAGS::Wearable};
 	products[static_cast<int>(Item::FancyClothes)] = {
 	    Action::Sew,
 	    32000,
 	    {Item::DyedCloth, Item::DyedCloth, Item::DyedCloth, Item::Thread},
 	    {10, 10, 10, 20},
 	    {1, 2, 3, 4},
-	    .tags = itemTags::VariableAmountRequired | itemTags::Wearable};
+	    .tags = item::TAGS::VariableAmountRequired | item::TAGS::Wearable};
 	products[static_cast<int>(Item::WoodCrown)] = {Action::Whittle, 10800, {Item::Wood}, {2}};
 	// TODO: have it so gold crown, emperor's staff, can only be made of gold
 	products[static_cast<int>(Item::GoldCrown)] = {
-	    Action::Smith, 39000, {Item::Metal}, {4}, itemTags::Wearable};
+	    Action::Smith, 39000, {Item::Metal}, {4}, item::TAGS::Wearable};
 	products[static_cast<int>(Item::RoyalCrown)] = {
 	    Action::Smith, 23000,  {Item::GoldCrown, Item::GreaterGem},
-	    {1, 5},	    {1, 2}, itemTags::Wearable};
+	    {1, 5},	    {1, 2}, item::TAGS::Wearable};
 	products[static_cast<int>(Item::EmperorsStaff)] = {
 	    Action::Craft,
 	    34000,
@@ -847,65 +847,65 @@ void initializeProducts()
 	    {1, 2, 3}};
 	products[static_cast<int>(Item::Necklace)] = {
 	    Action::Craft, 3500,	  {Item::String, Item::Bone, Item::Gold, Item::Silver},
-	    {1, 4, 2, 2},   {1, 2, 2, 2}, itemTags::Wearable};
+	    {1, 4, 2, 2},   {1, 2, 2, 2}, item::TAGS::Wearable};
 	products[static_cast<int>(Item::Ring)] = {
-	    Action::Smith, 5200, {Item::Metal}, .tags = itemTags::Alternate | itemTags::Wearable};
+	    Action::Smith, 5200, {Item::Metal}, .tags = item::TAGS::Alternate | item::TAGS::Wearable};
 	products[static_cast<int>(Item::Earring)] = {
-	    Action::Smith, 4800, {Item::Metal}, .tags = itemTags::Alternate | itemTags::Wearable};
+	    Action::Smith, 4800, {Item::Metal}, .tags = item::TAGS::Alternate | item::TAGS::Wearable};
 	products[static_cast<int>(Item::Gambeson)] = {
 	    Action::LeatherCraft, 8800, {Item::Leather, Item::Thread}, {14, 20}, {1, 2},
-	    itemTags::Wearable};
+	    item::TAGS::Wearable};
 	products[static_cast<int>(Item::DrawPlate)] = {
-	    Action::Smith, 5400, {Item::Metal}, {6}, .tags = itemTags::Mould};
+	    Action::Smith, 5400, {Item::Metal}, {6}, .tags = item::TAGS::Mould};
 	products[static_cast<int>(Item::Wire)] = {
 	    Action::WireDraw, 750, {Item::Metal, Item::DrawPlate}, {1, 1}, {1, 2}};
 	products[static_cast<int>(Item::Chainmail)] = {
-	    Action::Smith, 72000, {Item::Wire}, {45}, itemTags::Wearable};
+	    Action::Smith, 72000, {Item::Wire}, {45}, item::TAGS::Wearable};
 	products[static_cast<int>(Item::Helmet)] = {Action::Smith,
 						    10400,
 						    {Item::Metal},
 						    {18},
 						    .tags =
-							itemTags::Alternate | itemTags::Wearable};
+							item::TAGS::Alternate | item::TAGS::Wearable};
 	products[static_cast<int>(Item::Breastplate)] = {Action::Smith,
 							 44000,
 							 {Item::Metal},
 							 {55},
-							 .tags = itemTags::Alternate |
-								 itemTags::Wearable};
+							 .tags = item::TAGS::Alternate |
+								 item::TAGS::Wearable};
 	products[static_cast<int>(Item::Guards)] = {Action::Smith,
 						    12500,
 						    {Item::Metal},
 						    {14},
 						    .tags =
-							itemTags::Alternate | itemTags::Wearable};
+							item::TAGS::Alternate | item::TAGS::Wearable};
 	products[static_cast<int>(Item::Bracers)] = {Action::Smith,
 						     12500,
 						     {Item::Metal},
 						     {14},
 						     .tags =
-							 itemTags::Alternate | itemTags::Wearable};
+							 item::TAGS::Alternate | item::TAGS::Wearable};
 	products[static_cast<int>(Item::Gloves)] = {
 	    Action::LeatherCraft, 5600, {Item::TannedHide, Item::Thread}, {1, 3}, {1, 2},
-	    itemTags::Wearable};
+	    item::TAGS::Wearable};
 	products[static_cast<int>(Item::Apron)] = {
 	    Action::LeatherCraft, 3000, {Item::TannedHide, Item::Thread}, {3, 6}, {1, 2},
-	    itemTags::Wearable};
+	    item::TAGS::Wearable};
 	products[static_cast<int>(Item::Sandals)] = {Action::LeatherCraft,
 						     8500,
 						     {Item::TannedHide, Item::Thread},
 						     {1, 2},
-						     itemTags::Wearable};
+						     item::TAGS::Wearable};
 	products[static_cast<int>(Item::Boots)] = {Action::LeatherCraft,
 						   12000,
 						   {Item::TannedHide, Item::Thread},
 						   {1, 2},
-						   itemTags::Wearable};
+						   item::TAGS::Wearable};
 	products[static_cast<int>(Item::Cape)] = {Action::LeatherCraft,
 						  9300,
 						  {Item::TannedHide, Item::Thread},
 						  {1, 2},
-						  itemTags::Wearable};
+						  item::TAGS::Wearable};
 	products[static_cast<int>(Item::Slingstone)] = {Action::Knapp, 130, {Item::Pebble}};
 	products[static_cast<int>(Item::Javelin)] = {
 	    Action::Craft,
@@ -913,7 +913,7 @@ void initializeProducts()
 	    {Item::PrimitiveSpearhead, Item::Handle, Item::PrimitiveString},
 	    {1, 1, 2},
 	    {1, 2, 3},
-	    itemTags::Alternate};
+	    item::TAGS::Alternate};
 	products[static_cast<int>(Item::Saddle)] = {
 	    Action::LeatherCraft, 20800, {Item::Leather, Item::Wood}, {4, 2}, {1, 2}};
 	products[static_cast<int>(Item::Whip)] = {
@@ -928,21 +928,21 @@ void initializeProducts()
 	    40,
 	    {Item::Stick, Item::Beam, Item::Wood, Item::Plank},
 	    {1, 1, 1, 1},
-	    .tags = itemTags::VariableAmountRequired | itemTags::Hydrophobic};
+	    .tags = item::TAGS::VariableAmountRequired | item::TAGS::Hydrophobic};
 	products[static_cast<int>(Item::Torch)] = {
-	    Action::Light, 40, {Item::Beam, Item::Stick}, .tags = itemTags::Hydrophobic};
+	    Action::Light, 40, {Item::Beam, Item::Stick}, .tags = item::TAGS::Hydrophobic};
 	products[static_cast<int>(Item::CandleMould)] = {
-	    Action::Smith, 2380, {Item::Metal}, {4}, .tags = itemTags::Alternate};
+	    Action::Smith, 2380, {Item::Metal}, {4}, .tags = item::TAGS::Alternate};
 	products[static_cast<int>(Item::Candle)] = {
 	    Action::Dip,
 	    1080,
 	    {Item::Wax, Item::AnimalFat Item::Wick},
 	    {8, 6, 1},
 	    {1, 1, 2},
-	    .tags = itemTags::Alternate | itemTags::Wearable | itemTags::Hydrophobic};
+	    .tags = item::TAGS::Alternate | item::TAGS::Wearable | item::TAGS::Hydrophobic};
 	products[static_cast<int>(Item::OilLamp)] = {
 	    Action::Pott, 680,	   {Item::Clay, Item::Wick},
-	    {8, 1},	   {1, 2}, .tags = itemTags::Alternate | itemTags::Hydrophobic};
+	    {8, 1},	   {1, 2}, .tags = item::TAGS::Alternate | item::TAGS::Hydrophobic};
 	// CONTAINERS
 
 	// stone
@@ -958,21 +958,21 @@ void initializeProducts()
 		if (/* logic to detect uninitialized recipe */)
 			continue;
 		// Default to all ones if replaceable is still zero
-		bool allZero = std::all_of(std::begin(r.replaceable), std::end(r.replaceable),
+		bool all_zero = std::all_of(std::begin(r.replaceable), std::end(r.replaceable),
 					   [](uint8_t v) { return v == 0; });
-		if (allZero)
+		if (all_zero)
 		{
 			r.replaceable[0] = 1;
 		}
-		bool amountsZero = std::all_of(std::begin(r.amounts), std::end(r.replaceable),
+		bool amounts_zero = std::all_of(std::begin(r.amounts), std::end(r.replaceable),
 					       [](uint8_t v) { return v == 0; });
 	}
 }
 
-ProductRecipe alternateInterpreter(Item product)
+ProductRecipe alternate_interpreter(Item product)
 {
 	ProductRecipe recipe = products[static_cast<int>(Item::product)];
-	if (static_cast<int>(recipe.tags) & static_cast<int>(itemTags::Alternate))
+	if (static_cast<int>(recipe.tags) & static_cast<int>(item::TAGS::Alternate))
 	{
 		switch (product)
 		{
@@ -995,13 +995,13 @@ ProductRecipe alternateInterpreter(Item product)
 			return {Action::Whittle, 70, {Item::Beam}};
 		case Item::RedDye:
 			return {Action::Treat, 1480,	{Item::RedOchre, Item::Water},
-				{1, 10},	{1, 2}, .tags = itemTags::Liquid};
+				{1, 10},	{1, 2}, .tags = item::TAGS::Liquid};
 		case Item::YellowDye:
 			return {Action::Treat, 1480,	{Item::YellowOchre, Item::Water},
-				{1, 10},	{1, 2}, .tags = itemTags::Liquid};
+				{1, 10},	{1, 2}, .tags = item::TAGS::Liquid};
 		case Item::BlueDye:
 			return {Action::Treat, 1480,	{Item::LapisLazuli, Item::Water},
-				{1, 10},	{1, 2}, .tags = itemTags::Liquid};
+				{1, 10},	{1, 2}, .tags = item::TAGS::Liquid};
 		case Item::Laxative:
 			return {Action::Grind, 150, {Item::AloeVera}, {3}};
 		case Item::Tonic:
@@ -1010,7 +1010,7 @@ ProductRecipe alternateInterpreter(Item product)
 				{Item::DrinkingWater, Item::Salt, Item::Sugar, Item::Vinegar},
 				{3, 2, 2, 1},
 				{1, 2, 3, 4},
-				itemTags::Liquid};
+				item::TAGS::Liquid};
 		case Item::PrimitiveSpearhead:
 			return {Action::Carve, 300, {Item::Bone}};
 		case Item::SickleHead:
@@ -1257,7 +1257,7 @@ ProductRecipe alternateInterpreter(Item product)
 	}
 
 	CorpseData
-	corpseInterpreter(Station corpse)
+	corpse_interpreter(Station corpse)
 	{
 		switch (corpse)
 		{
@@ -1415,7 +1415,7 @@ ProductRecipe alternateInterpreter(Item product)
 
 		ToolRecipe tools[Tool::MAX];
 
-		void initializeTools()
+		void initialize_tools()
 		{
 			// SHORT HANDLE
 			tools[static_cast<int>(Tools::DiggingStick)] = {
@@ -1634,7 +1634,7 @@ ProductRecipe alternateInterpreter(Item product)
 			    {1, 2, 2}};
 		}
 
-		uint32_t liquidCapacityInterpreter(Item container)
+		uint32_t liquid_capacity_interpreter(Item container)
 		{
 			switch (container)
 			{
@@ -1654,20 +1654,20 @@ ProductRecipe alternateInterpreter(Item product)
 				return 0;
 			}
 		}
-		// TODO: containers can just be items. liquidCapacity should go into its own table.
+		// TODO: containers can just be items. liquid_capacity should go into its own table.
 		struct ContainerRecipe()
 		{
 			Action action;
 			uint16_t time;
 			Item ingredients[7];
 			uint8_t amounts[7];
-			uint16_t liquidCapacity;
+			uint16_t liquid_capacity;
 		};
 
 		ContainerRecipe containers[Container::MAX];
-		ContainerRecipe containersAlternate[Container::MAX];
+		ContainerRecipe containers_alternate[Container::MAX];
 
-		void initializeContainers()
+		void initialize_containers()
 		{
 			containers[static_cast<int>(Container::Pot)] = {
 				{Action::Smith, {Item::Metal}};
@@ -1718,7 +1718,7 @@ ProductRecipe alternateInterpreter(Item product)
 
 		BuildableRecipe buidables[Buildable::MAX];
 
-		void intiailizeBuildables()
+		void intiailize_buildables()
 		{
 			// WALLS AND ROOFS
 			buildables[static_cast<int>(Buildable::TentSticks)] = {
@@ -1767,13 +1767,13 @@ ProductRecipe alternateInterpreter(Item product)
 			     Item::JoinedBeam},
 			    {1, 1, 1, 1, 6},
 			    {1, 1, 2, 2, 0},
-			    .tags = itemTags::OptionalIngredient};
+			    .tags = item::TAGS::OptionalIngredient};
 			buildables[static_cast<int>(Buildable::Anvil)] = {
 			    Action::Smith,
 			    14700,
 			    {Item::Metal},
 			    {90},
-			    .tags = itemTags::OptionalIngredient};
+			    .tags = item::TAGS::OptionalIngredient};
 			buildables[static_cast<int>(Buildable::PitKiln)] = {Action::Dig,
 									    680}; // possible edit
 			buildables[static_cast<int>(Buildable::EarthMoundKiln)] = {
@@ -1812,7 +1812,7 @@ ProductRecipe alternateInterpreter(Item product)
 			    {Item::Airbag, Item::FootPedal, Item::Hinge, Item::Piston, Item::Tube},
 			    {4, 2, 12, 4, 6},
 			    {1, 2, 3, 4, 5},
-			    .tags = itemTags::Alternate};
+			    .tags = item::TAGS::Alternate};
 			buildables[static_cast<int>(Buildable::WaterPoweredBellows)] = {
 			    Action::Build,
 			    1400,
@@ -1888,24 +1888,24 @@ ProductRecipe alternateInterpreter(Item product)
 			    2300,
 			    {Item::Plank, Item::CutStone, Item::Beam, Item::Peg, Item::Nail},
 			    {8, 3, 4, 8, 8} {1, 1, 2, 3, 3},
-			    .tags = itemTags::Alternate};
+			    .tags = item::TAGS::Alternate};
 			buildables[static_cast<int>(Buildable::Stool)] = {
 			    Action::WoodCraft,
 			    900,
 			    {Item::Plank, Item::Beam, Item::Peg, Item::Nail},
 			    {8, 4, 4, 4},
 			    {1, 2, 3, 3},
-			    .tags = itemTags::Alternate};
+			    .tags = item::TAGS::Alternate};
 			buildables[static_cast<int>(Buildable::PrimitiveStool)] = {
 			    Action::Chisel, 6200,   {Item::LargeRock, Item::Boulder},
-			    {2, 1},	     {1, 1}, .tags = itemTags::Alternate};
+			    {2, 1},	     {1, 1}, .tags = item::TAGS::Alternate};
 			buildables[static_cast<int>(Buildable::Chair)] = {
 			    Action::Craft,
 			    1300,
 			    {Item::Plank, Item::Beam, Item::Peg, Item::Nail},
 			    {3, 4, 8, 8},
 			    {1, 2, 3, 3},
-			    .tags = itemTags::Alternate};
+			    .tags = item::TAGS::Alternate};
 			buildables[static_cast<int>(Buildable::Waterwheel)] = {
 			    Action::Engineer,
 			    5400,
@@ -1944,34 +1944,34 @@ ProductRecipe alternateInterpreter(Item product)
 			    21600,
 			    {Item::Clay},
 			    {250},
-			    itemTags::VariableAmountRequired};
+			    item::TAGS::VariableAmountRequired};
 			buildables[static_cast<int>(Buildable::SculptMould)] = {
 			    Action::SculptMould,
 			    820,
 			    {Item::Plaster},
 			    {20},
-			    itemTags::VariableAmountRequired};
+			    item::TAGS::VariableAmountRequired};
 			buildables[static_cast<int>(Buildable::WoodSculpture)] = {
 			    Action::WoodCarve,
 			    56800,
 			    {Item::Log},
 			    {1},
-			    itemTags::VariableAmountRequired};
+			    item::TAGS::VariableAmountRequired};
 			buildables[static_cast<int>(Buildable::StoneSculpture)] = {
 			    Action::StoneCarve,
 			    104890,
 			    {Item::Stone},
 			    {70},
-			    itemTags::VariableAmountRequired};
+			    item::TAGS::VariableAmountRequired};
 			buildables[static_cast<int>(Buildable::MetalSculpture)] = {
 			    Action::Cast, 4500,   {Item::Metal, Item::SculptMould},
-			    {250, 1},	   {1, 2}, itemTags::VariableAmountRequired};
+			    {250, 1},	   {1, 2}, item::TAGS::VariableAmountRequired};
 		}
 
-		BuildableRecipe buildableAlternateInterpreter(Buildable building)
+		BuildableRecipe buildable_alternate_interpreter(Buildable building)
 		{
 			BuildableRecipe recipe = buildables[static_cast<int>(Item::building)];
-			if (static_cast<int>(recipe.tags) & static_cast<int>(itemTags::Alternate))
+			if (static_cast<int>(recipe.tags) & static_cast<int>(item::TAGS::Alternate))
 			{
 				switch (building)
 				{
@@ -2012,12 +2012,12 @@ ProductRecipe alternateInterpreter(Item product)
 			Action action;
 			Item ingredients[10];
 			uint_8 slots[10];
-			uint_8 maximumWorkers;
+			uint_8 maximum_workers;
 		};
 
 		VehicleRecipe vehicles[1000];
 
-		void intializeVehicles()
+		void intialize_vehicles()
 		{
 			// VEHICLES
 			vehicles[static_cast<int>(Vehicle::WheeledCart)] = {

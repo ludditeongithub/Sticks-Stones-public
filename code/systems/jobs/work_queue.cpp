@@ -6,37 +6,37 @@
 #include <variant>
 #include "inventory_manager.hpp"
 
-void set_unit_job(UnitDatabase &database, CommodityDispatcher& dispatcher, uint16_t unitIndex) {
-	Commodity::underlying commodity = getUnitNextCommodity(database, dispatcher, unitIndex);
+void set_unit_job(UnitDatabase &database, CommodityDispatcher& dispatcher, uint16_t unit_index) {
+	Commodity::underlying commodity = get_unit_next_commodity(database, dispatcher, unit_index);
 	auto commodity_variant = Commodity::cast(commodity);
-	if (auto ptr = std::get_if<Item>( &commodityVariant )) {
-		attempt_production(unitIndex);
+	if (auto ptr = std::get_if<Item>( &commodity_variant )) {
+		attempt_production(unit_index);
 	}
-	else if (auto ptr = std::get_if<Buildable>( &commodityVariant )) {
+	else if (auto ptr = std::get_if<Buildable>( &commodity_variant )) {
 		
 	}
-	else if (auto ptr = std::get_if<Order>( &commodityVariant )) {
+	else if (auto ptr = std::get_if<Order>( &commodity_variant )) {
 
 	}
-	else if (auto ptr = std::get_if<Knowledge>( &commodityVariant )) {
+	else if (auto ptr = std::get_if<Knowledge>( &commodity_variant )) {
 
 	}
-	else if (auto ptr = std::get_if<Ritual>( &commodityVariant )) {
+	else if (auto ptr = std::get_if<Ritual>( &commodity_variant )) {
 	}
 }
 
 
-Commodity::underlying get_unit_next_commodity(UnitDatabase& database, CommodityDispatcher& dispatcher, uint16_t unitIndex)
+Commodity::underlying get_unit_next_commodity(UnitDatabase& database, CommodityDispatcher& dispatcher, uint16_t unit_index)
 {
-	assert(unitIndex < database.size);
+	assert(unit_index < database.size);
 	int highest = std::numeric_limits<int>::min();
 	int role_index = std::numeric_limits<int>::max();
 	int commodity_index =  std::numeric_limits<int>::max();
 	
 
-	for (size_t i = 0; i < database.roles[unitIndex].size(); i++) {
-		Role role = database.roles[unitIndex][i];
-		auto range = CommodityDispatcher::getPriorityRange(role);
+	for (size_t i = 0; i < database.roles[unit_index].size(); i++) {
+		Role role = database.roles[unit_index][i];
+		auto range = CommodityDispatcher::get_priority_range(role);
 
 		for (int j = 0; j < range.second(); j++) {
 			if (dispatcher.priorities[j] > highest) 
@@ -47,13 +47,13 @@ Commodity::underlying get_unit_next_commodity(UnitDatabase& database, CommodityD
 			}
 		}
 	}
-	return rolesToCommodities.get(static_cast<Role>(roleIndex), commodityIndex);
+	return roles_to_commodities.get(static_cast<Role>(role_index), commodity_index);
 }	
 
-bool continue_or_find_tools_or_quit(OverflowHashMap &overflows,
-					  OverflowContainerMap &overflowContainers, Action& action, Target& target, Inventory& inventory, NecessaryToolsBuffer& buffer, Coord coord, uint16_t unitIndex)
+bool continue_or_find_tools_or_quit(
+					  Action& action, Target& target, Inventory& inventory, NecessaryToolsBuffer& buffer, Coord coord, uint16_t unit_index)
 {
-	buffer = ensureNecessaryTools(overflows, overflowContainers, action, inventory, unitIndex, coord);
+	buffer = ensure_necessary_tools(overflows, overflow_containers, action, inventory, unit_index, coord);
 	switch (buffer.state) {
 	case ToolsState::FoundAll:
 		return true;
@@ -76,47 +76,47 @@ bool attempt_recipe(bool alternate) {
 
 }
 
-// TODO: processes basic productions that do not include liquids, buildables. Break this function down into an 'attemptRecipe' function, which all attempt work fucntions that consume inputs can use.
+// TODO: processes basic productions that do not include liquids, buildables. Break this function down into an 'attempt_recipe' function, which all attempt work fucntions that consume inputs can use.
 // variant items
 bool attempt_production(int pawn)
 {
-	// TODO: get type of product variant to deterine itemType
+	// TODO: get type of product variant to deterine item_type
 	bool attempt_alternate_recipe = false;
 	for (int i = 0; i < 2; i++)
 	{
-		if (itemType == ItemType::Item)
+		if (item_type == ItemType::Item)
 		{
-			attemptAltenateRecipe ? return
+			attempt_altenate_recipe ? return
 					      : Recipe recipe = products[static_cast<int>(product)];
 		}
-		else if (itemType == ItemType::Tool)
+		else if (item_type == ItemType::Tool)
 		{
-			attemptAlternateRecipe
+			attempt_alternate_recipe
 			    ? return
 			    : ToolRecipe recipe = tools[static_cast<int>(product)];
 		}
-		else if (itemType == ItemType::Buildable)
+		else if (item_type == ItemType::Buildable)
 		{
-			attemptAlternateRecipe
-			    ? BuildableRecipe recipe = buildablesAlternateInterpreter(product)
+			attempt_alternate_recipe
+			    ? BuildableRecipe recipe = buildables_alternate_interpreter(product)
 			    : BuildableRecipe recipe = buildables[static_cast<int>(product)];
 		}
-		else if (itemType == ItemType::Container)
+		else if (item_type == ItemType::Container)
 		{
-			attemptAlternateRecipe
+			attempt_alternate_recipe
 			    ? return
 			    : ContainerRecipe recipe = containers[static_cast<int>(product)];
 		}
-		else if (itemType == ItemType::Vehicle)
+		else if (item_type == ItemType::Vehicle)
 		{
-			attemptAltenateRecipe
+			attempt_altenate_recipe
 			    ? return
 			    : VehicleRecipe recipe = vehicles[static_cast<int>(product)];
 		}
 		
 		bool tools_found = false;
 		while (!tools_found) {
-		NecessaryToolsBuffer buffer = ensureNecessaryTools(pawn, action, miniActions, items, dests);
+		NecessaryToolsBuffer buffer = ensure_necessary_tools(pawn, action, mini_actions, items, dests);
 
 		switch (buffer.state) {
 		case ToolsState::FoundAll:			
@@ -133,20 +133,20 @@ bool attempt_production(int pawn)
 		}
 		}
 
-		vector<std::pair<int, int>> ingredientsFound;
-		vector<std::pair<int, int>> variantIngredientsFound;
+		vector<std::pair<int, int>> ingredients_found;
+		vector<std::pair<int, int>> variant_ingredients_found;
 
 		// FOR LIQUIDS
-		if (recipe.itemTags.hasTag(itemTags::Liquid))
+		if (recipe.item::TAGS.has_tag(item::TAGS::Liquid))
 		{
 			// TODO: find nearest unprocessing liquid vessel, or get from inventory if
 			// none
 			bool found = false;
 			while (!found)
 			{
-				if (filledLiquidContainers.find(findNearestLiquidContainer(
+				if (filled_liquid_containers.find(find_nearest_liquid_container(
 					coords[pawn].first, coords[pawn] second)) !=
-				    filledLiquidContainers.end())
+				    filled_liquid_containers.end())
 			}
 			int max_amount = 99999;
 			for (int i = 0; i < recipe.ingredients.size(); i++)
@@ -161,49 +161,49 @@ bool attempt_production(int pawn)
 						// find which recipe item is the bottleneck for
 						// mixing the liquid, or if the amount of water in
 						// container is the factor
-						if (maxAmount >
+						if (max_amount >
 						    (int)(inventories[pawn] recipe.amounts[j] /
 							  recipe.ingredients[i]))
-							maxAmount = (int)(inventories[pawn] recipe
+							max_amount = (int)(inventories[pawn] recipe
 									      .amounts[j] /
 									  recipe.ingredients[i]);
 
 						// add the right amount of the type of item in
 						// inventory
-						ingredientsFound.push_back({i, recipe.amounts[i]});
-						foundIngredient = true;
+						ingredients_found.push_back({i, recipe.amounts[i]});
+						found_ingredient = true;
 						while (recipe.replaceables[i] ==
 						       recipe.replaceables[i + 1])
 							i++;
 						break;
 					}
 				}
-				for (int j = 0; j < inventories[pawn].variantItems.size(); j++)
+				for (int j = 0; j < inventories[pawn].variant_items.size(); j++)
 				{
-					if (inventories[pawn].variantItems[j].first ==
+					if (inventories[pawn].variant_items[j].first ==
 						recipe.ingredients[i] &&
-					    inventories[pawn].variantItems[j].second >=
+					    inventories[pawn].variant_items[j].second >=
 						recipe.amounts[i])
 					{
 						// find which recipe item is the bottleneck for
 						// mixing the liquid, or if the amount of water in
 						// container is the factor
-						if (maxAmount >
+						if (max_amount >
 						    (int)(inventories[pawn] recipe.amounts[j] /
 							  recipe.ingredients[i]))
-							maxAmount = (int)(inventories[pawn] recipe
+							max_amount = (int)(inventories[pawn] recipe
 									      .amounts[j] /
 									  recipe.ingredients[i]);
 
 						// add the right amount of the type of item in
 						// inventory
-						variantIngredientsFound.push_back(
+						variant_ingredients_found.push_back(
 						    {i, recipe.amounts[i]});
-						foundIngredient = true;
+						found_ingredient = true;
 						break;
 					}
 				}
-				if (!foundIngredient)
+				if (!found_ingredient)
 				{
 					if (!attempt_alternate_recipe)
 					{
@@ -219,21 +219,21 @@ bool attempt_production(int pawn)
 					uint16_t time = 0;
 					if (products[static_cast<int>(product)].time == 0)
 					{
-						time = getVariableProductTime(pawn, product);
+						time = get_variable_product_time(pawn, product);
 					}
 					else
 						time = products[static_cast<int>(product)].time;
-					addEvent(time, EventType::ProductComplete, product, pawn,
+					add_event(time, EventType::ProductComplete, product, pawn,
 						 static_cast<Actions>(recipe.action));
-					for (int i = 0; i < ingredientsFound.size(); i++)
+					for (int i = 0; i < ingredients_found.size(); i++)
 					{
-						removeItem(pawn, ingredientsFound.first,
-							   ingredientsFound.second);
+						remove_item(pawn, ingredients_found.first,
+							   ingredients_found.second);
 					}
-					for (int i = 0; i < variantIngredientsFound.size(); i++)
+					for (int i = 0; i < variant_ingredients_found.size(); i++)
 					{
-						removeItem(pawn, variantIngredientsFound.first,
-							   variantIngredientsFound.second);
+						remove_item(pawn, variant_ingredients_found.first,
+							   variant_ingredients_found.second);
 					}
 					return true;
 				}
@@ -241,7 +241,7 @@ bool attempt_production(int pawn)
 		}
 
 		// CORPSE
-		else if (recipe.itemTags.hasTag(itemTags::Corpse))
+		else if (recipe.item::TAGS.has_tag(item::TAGS::Corpse))
 		{
 			// TODO: determine how pawn focuses on station, on when it lets go, go
 			// find corpse if needed
@@ -267,7 +267,7 @@ bool attempt_production(int pawn)
 					{
 						// add the right amount of the type of item in
 						// inventory
-						ingredientsFound.push_back({i, recipe.amounts[i]});
+						ingredients_found.push_back({i, recipe.amounts[i]});
 						found_ingredient = true;
 						while (recipe.replaceables[i] ==
 						       recipe.replaceables[i + 1])
@@ -277,16 +277,16 @@ bool attempt_production(int pawn)
 						break;
 				}
 				// loop through variant items
-				for (int j = 0; j < inventories[pawn].variantItems.size(); j++)
+				for (int j = 0; j < inventories[pawn].variant_items.size(); j++)
 				{
-					if (inventories[pawn].variantItems[j].first ==
+					if (inventories[pawn].variant_items[j].first ==
 						recipe.ingredients[i] &&
-					    inventories[pawn].variantItems[j].second >=
+					    inventories[pawn].variant_items[j].second >=
 						recipe.amounts[i])
 					{
 						// add the right amount of the type of item in
 						// inventory
-						variantIngredientsFound.push_back(
+						variant_ingredients_found.push_back(
 						    {i, recipe.amounts[i]});
 						found_ingredient = true;
 					}
@@ -304,20 +304,20 @@ bool attempt_production(int pawn)
 						// try to find nearest ingredient
 						// TODO: create nearest with lower man dist, also do
 						// for non-alternate recipe
-						std::pair<int, int> itemCoord = findNearestObject(
+						std::pair<int, int> item_coord = find_nearest_object(
 						    recipe.ingredients[i], coords[pawn].first,
 						    coords[pawn] second);
-						if (itemCoord != {-1, -1} &&
-						    manDist(coords[pawn], itemCoord) <
-							nearGatherRange)
+						if (item_coord != {-1, -1} &&
+						    man_dist(coords[pawn], item_coord) <
+							near_gather_range)
 						{
-							dests[pawn] = tileIndices[itemCoord];
-							movingStatus[pawn] =
+							dests[pawn] = tile_indices[item_coord];
+							moving_status[pawn] =
 							    MovingStatus::ApproachItem;
 							// NOTE: async logic here?
-							findPromise[pawn] = std::promise<void>();
-							findFuture[pawn] =
-							    findPromise[pawn].get_future();
+							find_promise[pawn] = std::promise<void>();
+							find_future[pawn] =
+							    find_promise[pawn].get_future();
 						}
 					}
 				}
@@ -328,28 +328,28 @@ bool attempt_production(int pawn)
 			// make pawn perform task, and add event to complete
 			// TODO: Possible error here, if cast to product variant is not cast to
 			// underlying type
-			addEvent(products[static_cast<int>(product)].time,
+			add_event(products[static_cast<int>(product)].time,
 				 EventType::ProductComplete, static_cast<int>(product), pawn,
 				 static_cast<int>());
-			for (int i = 0; i < ingredientsFound.size(); i++)
+			for (int i = 0; i < ingredients_found.size(); i++)
 			{
-				removeItem(pawn, ingredientsFound.first, ingredientsFound.second);
+				remove_item(pawn, ingredients_found.first, ingredients_found.second);
 			}
-			for (int i = 0; i < variantIngredientsFound.size(); i++)
+			for (int i = 0; i < variant_ingredients_found.size(); i++)
 			{
-				removeItem(pawn, variantIngredientsFound.first,
-					   variantIngredientsFound.second);
+				remove_item(pawn, variant_ingredients_found.first,
+					   variant_ingredients_found.second);
 			}
 		}
 	}
 }
 
-// variantIndex superfluous for non-variant items
-void get_resource_action(int pawn, Item item, int sourceIndex, int variantIndex)
+// variant_index superfluous for non-variant items
+void get_resource_action(int pawn, Item item, int source_index, int variant_index)
 {
 	Resource resource = resources[item];
-	Action action = resource.action[sourceVariantIndex];
-	SourceVariant source = resource.source[sourceIndex];
+	Action action = resource.action[source_variant_index];
+	SourceVariant source = resource.source[source_index];
 	// see if Object should be removed from tile
 	bool remove_object = true;
 	if (action == Actions::Collect)
@@ -371,9 +371,9 @@ void get_resource_action(int pawn, Item item, int sourceIndex, int variantIndex)
 		else if (action == Actions::Shear)
 			remove_object = false;
 		else
-			for (int i = 0; i < regrowthCrops.size(); i++)
+			for (int i = 0; i < regrowth_crops.size(); i++)
 			{
-				if (item == regrowthCrops[i])
+				if (item == regrowth_crops[i])
 				{
 					remove_object = false;
 				}
@@ -382,17 +382,17 @@ void get_resource_action(int pawn, Item item, int sourceIndex, int variantIndex)
 	// Get amount of item to put into inventory
 	if (action == Action::Lift)
 	{
-		Inventories[pawn].leftHand == Tool::Log;
-		Inventories[pawn].rightHand == Tool::Log;
+		Inventories[pawn].left_hand == Tool::Log;
+		Inventories[pawn].right_hand == Tool::Log;
 	}
 	else
 	{
-		int amt = resources[item].amount[sourceIndex];
+		int amt = resources[item].amount[source_index];
 		// if item in question is an item with variants
 		if (static_cast<int>(item) < static_cast<int>(Item::VARIANTSMAX))
 		{
-			Inventories[pawn].variantItems.push_back({item, amt});
-			Inventories[pawn].variantItemTypes.push_back(variantIndex);
+			Inventories[pawn].variant_items.push_back({item, amt});
+			Inventories[pawn].variant_item_types.push_back(variant_index);
 		}
 		else
 		{
@@ -421,7 +421,7 @@ void collect_resource(Item item)
 		{
 			for (int k = 0; k < resources.action.size(); k++)
 			{
-				if (actionToRoles[resources.action[k]] == roles[i][j])
+				if (action_to_roles[resources.action[k]] == roles[i][j])
 				{
 					pawn_index = i;
 					action_index = k;
@@ -438,7 +438,7 @@ void collect_resource(Item item)
 			break;
 		// get compatible SourceVariant (Tile, Plant, Animal, Scavengeable, or Item)
 		SourceVariant source = resource.source[action_index];
-		std::pair<int, int> coords = findNearestSource(source);
+		std::pair<int, int> coords = find_nearest_source(source);
 		// SHORTEST PATH ALGORITHM
 	}
 }
@@ -452,11 +452,11 @@ bool check_action_requisites(Resource resource, int pawn)
 		if (action == Actions::NONE)
 			continue;
 		bool found_role = false;
-		for (int j = 0; j < actionToRoles[static_cast<int>(action)].size(); j++)
+		for (int j = 0; j < action_to_roles[static_cast<int>(action)].size(); j++)
 		{
 			for (int k = 0; k < roles[pawn].size; k++)
 			{
-				if (actionToRoles[action][j] == roles[pawn][k])
+				if (action_to_roles[action][j] == roles[pawn][k])
 				{
 					found_role = true;
 					break;
@@ -467,17 +467,17 @@ bool check_action_requisites(Resource resource, int pawn)
 		}
 		if (!found_role)
 			continue;
-		int tool_replaceable_list = actionToToolsReplaceables[static_cast<int>(action)];
-		for (int j = 0; j < actionToTools[static_cast<int>(action)].size(); j++)
+		int tool_replaceable_list = action_to_tools_replaceables[static_cast<int>(action)];
+		for (int j = 0; j < action_to_tools[static_cast<int>(action)].size(); j++)
 		{
 			bool found_tool = false;
-			if (toolReplaceableList[j] < 0)
+			if (tool_replaceable_list[j] < 0)
 				continue; // optional tools
 			for (int k = 0; k < tools[pawn].size; k++)
 			{
-				if (actionToTools[action][j] == tools[pawn][k])
+				if (action_to_tools[action][j] == tools[pawn][k])
 				{
-					while (toolReplaceableList[j] == toolReplaceableList[j + 1])
+					while (tool_replaceable_list[j] == tool_replaceable_list[j + 1])
 						j++;
 					found_tool = true;
 				}
@@ -485,7 +485,7 @@ bool check_action_requisites(Resource resource, int pawn)
 			if (!found_tool)
 				continue;
 		}
-		if (foundTool && foundRole)
+		if (found_tool && found_role)
 			return true;
 	}
 	return false;
@@ -498,34 +498,34 @@ Array<bool> check_action_requisites(Recipe recipe, Array<Role> roles)
 	{
 		// confirm pawn can perform action necessary to produce product
 		Actions action = recipe.action;
-		bool foundRole = false;
-		for (int j = 0; j < actionToRoles[static_cast<int>(action)].size(); j++)
+		bool found_role = false;
+		for (int j = 0; j < action_to_roles[static_cast<int>(action)].size(); j++)
 		{
 			for (int k = 0; k < roles[pawn].size; k++)
 			{
-				if (actionToRoles[static_cast<int>(action)][j] == roles[pawn][k])
+				if (action_to_roles[static_cast<int>(action)][j] == roles[pawn][k])
 				{
-					foundRole = true;
+					found_role = true;
 					break;
 				}
 			}
-			if (foundRole)
+			if (found_role)
 				break;
 		}
-		if (!foundRole)
+		if (!found_role)
 			return false;
 	}
-	int toolReplaceableList = actionToToolsReplaceables[action];
-	for (int j = 0; j < actionToTools[static_cast<int>(action)].size(); j++)
+	int tool_replaceable_list = action_to_tools_replaceables[action];
+	for (int j = 0; j < action_to_tools[static_cast<int>(action)].size(); j++)
 	{
 		bool found_tool = false;
-		if (toolReplaceableList[j] < 0)
+		if (tool_replaceable_list[j] < 0)
 			continue; // optional tools
 		for (int k = 0; k < tools[pawn].size; k++)
 		{
-			if (actionToTools[static_cast<int>(action)][j] == tools[pawn][k])
+			if (action_to_tools[static_cast<int>(action)][j] == tools[pawn][k])
 			{
-				while (toolReplaceableList[j] == toolReplaceableList[j + 1])
+				while (tool_replaceable_list[j] == tool_replaceable_list[j + 1])
 					j++;
 				found_tool = true;
 			}
@@ -545,48 +545,48 @@ bool check_action_requisites(Resource resource, int pawn)
 		{
 			// confirm pawn can perform action
 			Actions action = resource.actions[i];
-			for (int j = 0; j < actionToRoles[static_cast<int>(action)].size(); j++)
+			for (int j = 0; j < action_to_roles[static_cast<int>(action)].size(); j++)
 			{
 				for (int k = 0; k < roles[pawn].size; k++)
 				{
-					if (actionToRoles[static_cast<int>(action)][j] ==
+					if (action_to_roles[static_cast<int>(action)][j] ==
 					    roles[pawn][k])
 					{
-						foundRole = true;
+						found_role = true;
 						break;
 					}
 				}
-				if (foundRole)
+				if (found_role)
 					break;
 			}
-			if !(foundRole)
+			if !(found_role)
 				continue;
 			// find tools if role has been found
-			int toolReplaceableList = actionToToolsReplaceables[action];
-			bool missingTool = false;
-			for (int j = 0; j < actionToTools[static_cast<int>(action)].size(); j++)
+			int tool_replaceable_list = action_to_tools_replaceables[action];
+			bool missing_tool = false;
+			for (int j = 0; j < action_to_tools[static_cast<int>(action)].size(); j++)
 			{
-				bool foundTool = false;
-				if (toolReplaceableList[j] < 0)
+				bool found_tool = false;
+				if (tool_replaceable_list[j] < 0)
 					continue; // optional tools
 				for (int k = 0; k < tools[pawn].size; k++)
 				{
-					if (actionToTools[static_cast<int>(action)][j] ==
+					if (action_to_tools[static_cast<int>(action)][j] ==
 					    tools[pawn][k])
 					{
-						while (toolReplaceableList[j] ==
-						       toolReplaceableList[j + 1])
+						while (tool_replaceable_list[j] ==
+						       tool_replaceable_list[j + 1])
 							j++;
-						foundTool = true;
+						found_tool = true;
 					}
 				}
-				if (!foundTool)
+				if (!found_tool)
 				{
-					missingTool = true;
+					missing_tool = true;
 					break;
 				}
 			}
-			if !(missingTool)
+			if !(missing_tool)
 				return true;
 		}
 	}
@@ -594,26 +594,26 @@ bool check_action_requisites(Resource resource, int pawn)
 }
 
 // TODO: check if item or fruit object is removed, if amt 0, remove from
-// objectLocation
+// object_location
 
 // RESOURCE PAWN MANAGEMENT
 void set_target_resource(int pawn, Role role)
 {
 	if !(role < Role : RESOURCEMAX)
 		return;
-	for (int i = 0; i < resourceUnitResources[static_cat<int>(role)].size(); i++)
+	for (int i = 0; i < resource_unit_resources[static_cat<int>(role)].size(); i++)
 	{
-		Item item = resourceUnitResources[static_cast<int>(role)][i];
-		Resource resource = itemToResource(item);
-		if !(checkActionRequisites(resource, pawn))
+		Item item = resource_unit_resources[static_cast<int>(role)][i];
+		Resource resource = item_to_resource(item);
+		if !(check_action_requisites(resource, pawn))
 			return;
 		/* TODO: max man dist, nearest search logic for known areas
-		dests[pawn] = findNearestObjectIndex(item, pawnCoords[pawn].first,
-		pawnCoords[pawn].second);
+		dests[pawn] = find_nearest_object_index(item, pawn_coords[pawn].first,
+		pawn_coords[pawn].second);
 		*/
 		// method 2 (unpreferred): prowl for resource
-		currentTarget[pawn] = item;
-		movingStatus[pawn] = MovingStatus::CheckProwl;
+		current_target[pawn] = item;
+		moving_status[pawn] = MovingStatus::CheckProwl;
 	}
 }
 
@@ -629,71 +629,71 @@ void product_finish(ProductVariant product, int pawn, Actions action, uint16_t v
 	if (std::holds_alternative<Item>(products))
 	{
 		Recipe p = products[static_cast<int>(product)];
-		bool child = childStatus[pawn];
+		bool child = child_status[pawn];
 		// CORPSE
-		if (p.tags.hasTag(itemTags::Corpse))
+		if (p.tags.has_tag(item::TAGS::Corpse))
 		{
-			CorpseData corpse = corpseInterpreter(inventories[pawn].focusStation);
+			CorpseData corpse = corpse_interpreter(inventories[pawn].focus_station);
 			for (int i = 0; i < corpse.products.size(); i++)
 			{
 				// for each of the products made by butchering corpse, check if it
 				// fits in inventory, then containers
-				//  if (currentBulk +
-				//  bulkAndWeights[static_cast<int>(currentProducts[pawn])].bulk >
-				//  currentMaxBulk(currentBulkStatus, false) || currentWeight +
-				//  bulkAndWeights[static_cast<int>(currentProducts[pawn])].weight >
-				//  maxWeight(false))  {
+				//  if (current_bulk +
+				//  bulk_and_weights[static_cast<int>(current_products[pawn])].bulk >
+				//  current_max_bulk(current_bulk_status, false) || current_weight +
+				//  bulk_and_weights[static_cast<int>(current_products[pawn])].weight >
+				//  max_weight(false))  {
 				float product_amount = corpse.amounts[i];
 				float remaining_space =
-				    min(currentMaxBulk(inventories[pawn].currentBulkStatus, child) -
-					    inventories[pawn].totalBulk,
+				    min(current_max_bulk(inventories[pawn].current_bulk_status, child) -
+					    inventories[pawn].total_bulk,
 					0);
-				if (remainingSpace > bulksAndWeights[corpse.products[i]].bulk)
+				if (remaining_space > bulks_and_weights[corpse.products[i]].bulk)
 				{
 					if (corpse.products[i] == Item::RawMeat)
 					{
 						uint16_t var = static_cast<uint16_t>(corpse.meat);
-						fullAddVariantItem(pawn, corpse.products[i],
+						full_add_variant_item(pawn, corpse.products[i],
 								   product_amount, var);
 					}
 					else if (corpse.products[i] == Item::AnimaHides)
 					{
 						uint16_t var = static_cast<uint16_t>(corpse.hide);
-						fullAddVariantItem(pawn, corpse.products[i],
+						full_add_variant_item(pawn, corpse.products[i],
 								   product_amount, var);
 					}
 					else
-						fullAddItem(pawn, corpse.products[i],
+						full_add_item(pawn, corpse.products[i],
 							    product_amount);
 				}
 			}
 		}
 		// CONTAINER
-		else if (recipe.itemTags.hasTag(itemTags::Container))
-			addContainer(pawn, product, child);
+		else if (recipe.item::TAGS.has_tag(item::TAGS::Container))
+			add_container(pawn, product, child);
 		// TODO: deal with if container doesnt fit
 		// BUILDABLE
 	}
-	else if (std::holds_alternative<Buildable>(currentProducts[pawn]))
+	else if (std::holds_alternative<Buildable>(current_products[pawn]))
 	{
-		std::pair<int, int> itemCoords = coordsFromFacing(coords[pawn], directions[pawn]);
-		tileObject[tileIndex[itemCoords]] = currentProducts[pawn];
+		std::pair<int, int> item_coords = coords_from_facing(coords[pawn], directions[pawn]);
+		tile_object[tile_index[item_coords]] = current_products[pawn];
 		// VEHICLE
 	}
-	else if (std::holds_alternative<Vehicle>(currentProducts[pawn]))
+	else if (std::holds_alternative<Vehicle>(current_products[pawn]))
 	{
-		std::pair<int, int> itemCoords = coordsFromFacing(coords[pawn], directions[pawn]);
-		tileObject[tileIndex[itemCoords]] = currentProducts[pawn];
+		std::pair<int, int> item_coords = coords_from_facing(coords[pawn], directions[pawn]);
+		tile_object[tile_index[item_coords]] = current_products[pawn];
 	} // OTHER ITEMS
 	else
 	{
 		if (static_cast<int>(product) < static_cast<int>(VARIANTSMAX))
 		{
-			fullAddVariantItem(pawn, product, variant, p.amount);
+			full_add_variant_item(pawn, product, variant, p.amount);
 		}
 		else
 		{
-			fullAddItem(pawn, product, p.amount);
+			full_add_item(pawn, product, p.amount);
 		}
 	}
 }
@@ -709,7 +709,7 @@ void attempt_support(int pawn, Role role)
 		bool plowable;
 		for (int j = 0; j < plowables.size(); j++)
 		{
-			if (tileCoords[index] == plowables[j])
+			if (tile_coords[index] == plowables[j])
 			{
 				plowable = true;
 				break;
@@ -721,26 +721,26 @@ void attempt_support(int pawn, Role role)
 		}
 		break;
 	case Role::Planter:
-		if (&outDistSqr[i] > threshold)
+		if (&out_dist_sqr[i] > threshold)
 		{
 			// second plant in plowed soil
-			plowedSoil.knnSearch(&queryPoint[0], numResults, &retIndex[0],
-					     &outDistSqr[0]);
-			nearestIndex = retIndex[i];
+			plowed_soil.knn_search(&query_point[0], num_results, &ret_index[0],
+					     &out_dist_sqr[0]);
+			nearest_index = ret_index[i];
 			break;
 			// third plant in unplowed but exposed soil
-			if (&outDistSqr[i] > threshold)
+			if (&out_dist_sqr[i] > threshold)
 			{
-				soil.knnSearch(&queryPoint[0], numResults, &retIndex[0],
-					       &outDistSqr[0]);
-				nearestIndex = retIndex[i];
+				soil.knn_search(&query_point[0], num_results, &ret_index[0],
+					       &out_dist_sqr[0]);
+				nearest_index = ret_index[i];
 				break;
 				// fourth search for weeds
-				if (&outDistSqr[i] > threshold)
+				if (&out_dist_sqr[i] > threshold)
 				{
-					weed.knnSearch(&queryPoint[0], numResults, &retIndex[0],
-						       &outDistSqr[0]);
-					nearestIndex = retIndex[i];
+					weed.knn_search(&query_point[0], num_results, &ret_index[0],
+						       &out_dist_sqr[0]);
+					nearest_index = ret_index[i];
 					break;
 				}
 			}
@@ -748,19 +748,19 @@ void attempt_support(int pawn, Role role)
 		break;
 	}
 
-	void variantItemInterpreter() {}
+	void variant_item_interpreter() {}
 
 	// NOTE: bad
-	void nextRole(int pawn, int roleIndex)
+	void next_role(int pawn, int role_index)
 	{
-		std::swap(roles[pawn][roleIndex], roles[pawn][roles[pawn].size()]);
+		std::swap(roles[pawn][role_index], roles[pawn][roles[pawn].size()]);
 	}
 
 	// // TODO
-	// void processVariantProductions() {}
+	// void process_variant_productions() {}
 
 	// // TODO
-	// void processCustomProductions() {}
+	// void process_custom_productions() {}
 
 
 

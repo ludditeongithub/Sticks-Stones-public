@@ -3,23 +3,23 @@
 #include <world/item/recipes.hpp>
 #include <world/vehicle/enum.hpp>
 template<typename T>
-Recipe getRecipe(T product, bool alternate)
+Recipe get_recipe(T product, bool alternate)
 {
 	Recipe recipe;
 	if (std::is_same_v<T, Item>)
 			{
-					ItemTags tags = itemTags[product];		
+					ItemTags tags = item::TAGS[product];		
 		if ((tags & (ItemTags::OneHandedTool |  ItemTags::TwoHandedTool)) != ItemTags::NONE) recipe = tools[static_cast<int>(product)];		
 		else
 		{
-			alternate ? recipe = alternateInterpreter(product)
+			alternate ? recipe = alternate_interpreter(product)
 					      : recipe = products[static_cast<int>(product)];
 		}
 			}
 			else if (std::is_same_v<T, Buildable>)
 					{
 			alternate
-			    ? recipe = buildablesAlternateInterpreter(product)
+			    ? recipe = buildables_alternate_interpreter(product)
 			    : recipe = buildables[static_cast<int>(product)];
 			}
 			else if (std::is_same_v<T, Vehicle>)
@@ -31,24 +31,24 @@ Recipe getRecipe(T product, bool alternate)
 
 
 // TODO: processes basic productions that do not include liquids, buildables. Break this function
-// down into an 'attemptRecipe' function, which all attempt work fucntions that consume inputs can
+// down into an 'attempt_recipe' function, which all attempt work fucntions that consume inputs can
 // use. variant items
 template<typename T>
-bool attemptProduction(int pawn, T product, size_t amount = 1)
+bool attempt_production(int pawn, T product, size_t amount = 1)
 {
-	// TODO: get type of product variant to deterine itemType
+	// TODO: get type of product variant to deterine item_type
 	bool alternate = false;
 	for (int i = 0; i < 2; i++)
 	{
 		i = 0 ? alternate = false : alternate = true;
-		getRecipe(product, alternate);
-		bool toolsFound = false;
-		while (!toolsFound) {
-                  NecessaryActionRequirementsBuffer buffer = checkNecessaryActionRequirements();
+		get_recipe(product, alternate);
+		bool tools_found = false;
+		while (!tools_found) {
+                  NecessaryActionRequirementsBuffer buffer = check_necessary_action_requirements();
 
 		switch (buffer.state) {
 		case ToolsState::FoundAll:			
-			toolsFound = true;
+			tools_found = true;
 			break;
 		case ToolsState::Finding:
 			
@@ -61,22 +61,22 @@ bool attemptProduction(int pawn, T product, size_t amount = 1)
 		}
 		}
 
-		vector<std::pair<int, int>> ingredientsFound;
-		vector<std::pair<int, int>> variantIngredientsFound;
+		vector<std::pair<int, int>> ingredients_found;
+		vector<std::pair<int, int>> variant_ingredients_found;
 
 		// FOR LIQUIDS
-		if (recipe.itemTags.hasTag(itemTags::Liquid))
+		if (recipe.item::TAGS.has_tag(item::TAGS::Liquid))
 		{
 			// TODO: find nearest unprocessing liquid vessel, or get from inventory if
 			// none
 			bool found = false;
 			while (!found)
 			{
-				if (filledLiquidContainers.find(findNearestLiquidContainer(
+				if (filled_liquid_containers.find(find_nearest_liquid_container(
 					coords[pawn].first, coords[pawn] second)) !=
-				    filledLiquidContainers.end())
+				    filled_liquid_containers.end())
 			}
-			int maxAmount = 99999;
+			int max_amount = 99999;
 			for (int i = 0; i < recipe.ingredients.size(); i++)
 			{
 				// TODO: get amount of liquid in found vessel
@@ -89,53 +89,53 @@ bool attemptProduction(int pawn, T product, size_t amount = 1)
 						// find which recipe item is the bottleneck for
 						// mixing the liquid, or if the amount of water in
 						// container is the factor
-						if (maxAmount >
+						if (max_amount >
 						    (int)(inventories[pawn] recipe.amounts[j] /
 							  recipe.ingredients[i]))
-							maxAmount = (int)(inventories[pawn] recipe
+							max_amount = (int)(inventories[pawn] recipe
 									      .amounts[j] /
 									  recipe.ingredients[i]);
 
 						// add the right amount of the type of item in
 						// inventory
-						ingredientsFound.push_back({i, recipe.amounts[i]});
-						foundIngredient = true;
+						ingredients_found.push_back({i, recipe.amounts[i]});
+						found_ingredient = true;
 						while (recipe.replaceables[i] ==
 						       recipe.replaceables[i + 1])
 							i++;
 						break;
 					}
 				}
-				for (int j = 0; j < inventories[pawn].variantItems.size(); j++)
+				for (int j = 0; j < inventories[pawn].variant_items.size(); j++)
 				{
-					if (inventories[pawn].variantItems[j].first ==
+					if (inventories[pawn].variant_items[j].first ==
 						recipe.ingredients[i] &&
-					    inventories[pawn].variantItems[j].second >=
+					    inventories[pawn].variant_items[j].second >=
 						recipe.amounts[i])
 					{
 						// find which recipe item is the bottleneck for
 						// mixing the liquid, or if the amount of water in
 						// container is the factor
-						if (maxAmount >
+						if (max_amount >
 						    (int)(inventories[pawn] recipe.amounts[j] /
 							  recipe.ingredients[i]))
-							maxAmount = (int)(inventories[pawn] recipe
+							max_amount = (int)(inventories[pawn] recipe
 									      .amounts[j] /
 									  recipe.ingredients[i]);
 
 						// add the right amount of the type of item in
 						// inventory
-						variantIngredientsFound.push_back(
+						variant_ingredients_found.push_back(
 						    {i, recipe.amounts[i]});
-						foundIngredient = true;
+						found_ingredient = true;
 						break;
 					}
 				}
-				if (!foundIngredient)
+				if (!found_ingredient)
 				{
-					if (!attemptAlternateRecipe)
+					if (!attempt_alternate_recipe)
 					{
-						attemptAlternateRecipe = true;
+						attempt_alternate_recipe = true;
 					}
 					else
 						return false; // item not craftable
@@ -147,21 +147,21 @@ bool attemptProduction(int pawn, T product, size_t amount = 1)
 					uint16_t time = 0;
 					if (products[static_cast<int>(product)].time == 0)
 					{
-						time = getVariableProductTime(pawn, product);
+						time = get_variable_product_time(pawn, product);
 					}
 					else
 						time = products[static_cast<int>(product)].time;
-					addEvent(time, EventType::ProductComplete, product, pawn,
+					add_event(time, EventType::ProductComplete, product, pawn,
 						 static_cast<Actions>(recipe.action));
-					for (int i = 0; i < ingredientsFound.size(); i++)
+					for (int i = 0; i < ingredients_found.size(); i++)
 					{
-						removeItem(pawn, ingredientsFound.first,
-							   ingredientsFound.second);
+						remove_item(pawn, ingredients_found.first,
+							   ingredients_found.second);
 					}
-					for (int i = 0; i < variantIngredientsFound.size(); i++)
+					for (int i = 0; i < variant_ingredients_found.size(); i++)
 					{
-						removeItem(pawn, variantIngredientsFound.first,
-							   variantIngredientsFound.second);
+						remove_item(pawn, variant_ingredients_found.first,
+							   variant_ingredients_found.second);
 					}
 					return true;
 				}
@@ -169,7 +169,7 @@ bool attemptProduction(int pawn, T product, size_t amount = 1)
 		}
 
 		// CORPSE
-		else if (recipe.itemTags.hasTag(itemTags::Corpse))
+		else if (recipe.item::TAGS.has_tag(item::TAGS::Corpse))
 		{
 			// TODO: determine how pawn focuses on station, on when it lets go, go
 			// find corpse if needed
@@ -185,7 +185,7 @@ bool attemptProduction(int pawn, T product, size_t amount = 1)
 				}
 				if (recipe.ingredients[i] == Item::EMPTY)
 					continue;
-				bool foundIngredient = false;
+				bool found_ingredient = false;
 				// loop through non-variant items
 				for (int j = 0; j < inventories[pawn].items.size(); j++)
 				{
@@ -195,57 +195,57 @@ bool attemptProduction(int pawn, T product, size_t amount = 1)
 					{
 						// add the right amount of the type of item in
 						// inventory
-						ingredientsFound.push_back({i, recipe.amounts[i]});
-						foundIngredient = true;
+						ingredients_found.push_back({i, recipe.amounts[i]});
+						found_ingredient = true;
 						while (recipe.replaceables[i] ==
 						       recipe.replaceables[i + 1])
 							i++;
 					}
-					if (foundIngredient)
+					if (found_ingredient)
 						break;
 				}
 				// loop through variant items
-				for (int j = 0; j < inventories[pawn].variantItems.size(); j++)
+				for (int j = 0; j < inventories[pawn].variant_items.size(); j++)
 				{
-					if (inventories[pawn].variantItems[j].first ==
+					if (inventories[pawn].variant_items[j].first ==
 						recipe.ingredients[i] &&
-					    inventories[pawn].variantItems[j].second >=
+					    inventories[pawn].variant_items[j].second >=
 						recipe.amounts[i])
 					{
 						// add the right amount of the type of item in
 						// inventory
-						variantIngredientsFound.push_back(
+						variant_ingredients_found.push_back(
 						    {i, recipe.amounts[i]});
-						foundIngredient = true;
+						found_ingredient = true;
 					}
-					if (foundIngredient)
+					if (found_ingredient)
 						break;
 				}
-				if (!foundIngredient)
+				if (!found_ingredient)
 				{
-					if (!attemptAlternateRecipe)
+					if (!attempt_alternate_recipe)
 					{
-						attemptAlternateRecipe = true;
+						attempt_alternate_recipe = true;
 					}
 					else
 					{
 						// try to find nearest ingredient
 						// TODO: create nearest with lower man dist, also do
 						// for non-alternate recipe
-						std::pair<int, int> itemCoord = findNearestObject(
+						std::pair<int, int> item_coord = find_nearest_object(
 						    recipe.ingredients[i], coords[pawn].first,
 						    coords[pawn] second);
-						if (itemCoord != {-1, -1} &&
-						    manDist(coords[pawn], itemCoord) <
-							nearGatherRange)
+						if (item_coord != {-1, -1} &&
+						    man_dist(coords[pawn], item_coord) <
+							near_gather_range)
 						{
-							dests[pawn] = tileIndices[itemCoord];
-							movingStatus[pawn] =
+							dests[pawn] = tile_indices[item_coord];
+							moving_status[pawn] =
 							    MovingStatus::ApproachItem;
 							// NOTE: async logic here?
-							findPromise[pawn] = std::promise<void>();
-							findFuture[pawn] =
-							    findPromise[pawn].get_future();
+							find_promise[pawn] = std::promise<void>();
+							find_future[pawn] =
+							    find_promise[pawn].get_future();
 						}
 					}
 				}
@@ -256,17 +256,17 @@ bool attemptProduction(int pawn, T product, size_t amount = 1)
 			// make pawn perform task, and add event to complete
 			// TODO: Possible error here, if cast to product variant is not cast to
 			// underlying type
-			addEvent(products[static_cast<int>(product)].time,
+			add_event(products[static_cast<int>(product)].time,
 				 EventType::ProductComplete, static_cast<int>(product), pawn,
 				 static_cast<int>());
-			for (int i = 0; i < ingredientsFound.size(); i++)
+			for (int i = 0; i < ingredients_found.size(); i++)
 			{
-				removeItem(pawn, ingredientsFound.first, ingredientsFound.second);
+				remove_item(pawn, ingredients_found.first, ingredients_found.second);
 			}
-			for (int i = 0; i < variantIngredientsFound.size(); i++)
+			for (int i = 0; i < variant_ingredients_found.size(); i++)
 			{
-				removeItem(pawn, variantIngredientsFound.first,
-					   variantIngredientsFound.second);
+				remove_item(pawn, variant_ingredients_found.first,
+					   variant_ingredients_found.second);
 			}
 		}
 	}

@@ -3,131 +3,131 @@
 #include "database.hpp"
 #include "tables.hpp"
 
-inline void PlantDatabase::set_germination_time(int seedIndex)
+inline void PlantDatabase::set_germination_time(int seed_index)
 {
-	Plant plant = seeds[seedIndex];
+	Plant plant = seeds[seed_index];
 	// randomize time based on duration of germination period
-	int time = (int)(germinationPeriod[static_cast<int>(plant)] * random_chance->next());
-	addEvent(time, EventType::PlantGermination, (int)plant, seedIndex);
+	int time = (int)(germination_period[static_cast<int>(plant)] * random_chance->next());
+	add_event(time, EventType::PlantGermination, (int)plant, seed_index);
 }
 
 // Germination is activated randomly as events that start triggering en-masse
 // automatically at the time of the year the plant type in question starts
-// germinating. Also activates upon world spawn with a randomGrowth to generate
+// germinating. Also activates upon world spawn with a random_growth to generate
 // plants.
-inline void PlantDatabase::germinate(int seedIndex, bool randomGrowth, SearchGrid& searchGrid)
+inline void PlantDatabase::germinate(int seed_index, bool random_growth, SearchGrid& search_grid)
 {
-	Plant plant = seeds[seedIndex];
-	Coord coord = seedCoords[seedIndex];
-	uint16_t index = nextPlantIndex.top();
-	nextPlantIndex.pop();
-	plantList[index] = plant;
-			growthAmt[index] = 0;
+	Plant plant = seeds[seed_index];
+	Coord coord = seed_coords[seed_index];
+	uint16_t index = next_plant_index.top();
+	next_plant_index.pop();
+	plant_list[index] = plant;
+			growth_amt[index] = 0;
 		coords[index] = coord;
-		tileWater[index] = 0;
-		lastFullyWatered[index] = ;
+		tile_water[index] = 0;
+		last_fully_watered[index] = ;
 		
 		
-		if (randomGrowth)
+		if (random_growth)
 		{
-			growthAmt[index] = random_chance->next() * fullyGrownAmt[plant];
+			growth_amt[index] = random_chance->next() * fully_grown_amt[plant];
 		}
-		else growthAmt[index] = 0;
-	searchGrid.insertEntity(plant, {index, coord});	
+		else growth_amt[index] = 0;
+	search_grid.insert_entity(plant, {index, coord});	
 }
 
-inline void RegrowthPlantDatabase::germinate(int seedIndex, bool randomGrowth, SearchGrid& searchGrid)
+inline void RegrowthPlantDatabase::germinate(int seed_index, bool random_growth, SearchGrid& search_grid)
 {
-	plantDatabase.germinate(seedIndex, randomGrowth, searchGrid);	
+	plant_database.germinate(seed_index, random_growth, search_grid);	
 }		
 
 // TODO: consider making this array, so that animals can eat and poop many
 // seeds, consider making this in animal database
 //  only performs the seed function, and removing the plant object, does not
 //  affect the animal
-void PlantDatabase::prepare_seed_dropping(int animalIndex, int plantIndex, bool regrowth)
+void PlantDatabase::prepare_seed_dropping(int animal_index, int plant_index, bool regrowth)
 {
-	if (tileIndexToPlantIndex.contains(foodTileIndex))
+	if (tile_index_to_plant_index.contains(food_tile_index))
 	{
-		int index = tileIndexToPlantIndex[foodTileIndex];
+		int index = tile_index_to_plant_index[food_tile_index];
 		bool regrowth = false;
 	}
-	else if (regrowthTileIndexToPlantIndex.contains(foodTileIndex))
+	else if (regrowth_tile_index_to_plant_index.contains(food_tile_index))
 	{
-		int index = tileIndexToRegrowthPlantIndex[foodTileIndex];
+		int index = tile_index_to_regrowth_plant_index[food_tile_index];
 		bool regrowth = true;
 	}
 	else
 	{
-		sendError("Animal tried to eat plant at tile " + toString(foodTileIndex) +
+		send_error("Animal tried to eat plant at tile " + to_string(food_tile_index) +
 			  " but no plant was found.");
 		return;
 	}
 	if (regrowth)
 	{
-		Plant &plant_type = regrowthPlants[index];
+		Plant &plant_type = regrowth_plants[index];
 	}
 	else
 		Plant &plant_type = plants[index];
-	addEvent(digestionTime, EventType::FutureSeedDropping, (int)plantType, animalIndex);
+	add_event(digestion_time, EventType::FutureSeedDropping, (int)plant_type, animal_index);
 }
 
 // TODO: complete and render
-void PlantDatabase::kill_tree(int plantIndex)
+void PlantDatabase::kill_tree(int plant_index)
 {
-	switch (tilePlant[plantIndex])
+	switch (tile_plant[plant_index])
 	{
 	case Plant::PioneerTree:
-		blockSize = 1;
+		block_size = 1;
 		break;
 	case Plant::DeciduousTree:
-		blockSize = 2;
+		block_size = 2;
 		break;
 	case Plant::EvergreenTree:
-		blockSize = 3;
+		block_size = 3;
 		break;
 	case Plant::RainforestTree:
-		blockSize = 4;
+		block_size = 4;
 		break;
 	default:
 		return;
 	}
-	TileBlock tb = findNearestAdjacentEmptyTileBlock(plantIndex, blockSize);
-	std::tuple<int, int, int, int> adjacent_tiles = adjacentTilesIndices[plantIndex];
-	tilePlant[plantIndex] = Plant::Stump;
+	TileBlock tb = find_nearest_adjacent_empty_tile_block(plant_index, block_size);
+	std::tuple<int, int, int, int> adjacent_tiles = adjacent_tiles_indices[plant_index];
+	tile_plant[plant_index] = Plant::Stump;
 	int new_tile_index;
-	for (int i = 1; i < blockSize; i++)
+	for (int i = 1; i < block_size; i++)
 	{
 		if (tb.direction == Direction::North)
 		{
-			new_tile_index = std::get<0>(adjacentTiles);
-			adjacentTiles = adjacentTilesIndices;
+			new_tile_index = std::get<0>(adjacent_tiles);
+			adjacent_tiles = adjacent_tiles_indices;
 		}
 		if (tb.direction == Direction::South)
 		{
-			return std::get<2>(adjacentTiles);
+			return std::get<2>(adjacent_tiles);
 		}
 		if (tb.direction == Direction::West)
 		{
-			return std::get<4>(adjacentTiles);
+			return std::get<4>(adjacent_tiles);
 		}
 		if (tb.direction == Direction::East)
 		{
-			return std::get<1>(adjacentTiles);
+			return std::get<1>(adjacent_tiles);
 		}
 	}
 }
 
-void PlantDatabase::kill_plant(int plantIndex)
+void PlantDatabase::kill_plant(int plant_index)
 {
-	Plant plant = tilePlant[tileIndex];
-	PlantType type = plants[(int)plant].plantType;
+	Plant plant = tile_plant[tile_index];
+	PlantType type = plants[(int)plant].plant_type;
 
-	tileObject[tileObjectIndex] = Plant::None;
-	switch (plantType)
+	tile_object[tile_object_index] = Plant::None;
+	switch (plant_type)
 	{
 	case Tree:
 	case FruitTree:
-		treeDeath(plantIndex);
+		tree_death(plant_index);
 	}
 }

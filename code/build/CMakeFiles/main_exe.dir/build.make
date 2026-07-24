@@ -72,52 +72,10 @@ include CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/codegen:
 .PHONY : CMakeFiles/main_exe.dir/codegen
 
-CMakeFiles/main_exe.dir/CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o: CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp
-CMakeFiles/main_exe.dir/CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/main_exe.dir/CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o -MF CMakeFiles/main_exe.dir/CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o.d -o CMakeFiles/main_exe.dir/CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o -c /home/logan/gameprogramming/code/build/CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp
-
-CMakeFiles/main_exe.dir/CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/build/CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp > CMakeFiles/main_exe.dir/CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.i
-
-CMakeFiles/main_exe.dir/CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/build/CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp -o CMakeFiles/main_exe.dir/CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.s
-
-CMakeFiles/main_exe.dir/CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.o: CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp
-CMakeFiles/main_exe.dir/CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main_exe.dir/CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.o -MF CMakeFiles/main_exe.dir/CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.o.d -o CMakeFiles/main_exe.dir/CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.o -c /home/logan/gameprogramming/code/build/CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp
-
-CMakeFiles/main_exe.dir/CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/build/CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp > CMakeFiles/main_exe.dir/CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.i
-
-CMakeFiles/main_exe.dir/CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/build/CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp -o CMakeFiles/main_exe.dir/CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.s
-
-CMakeFiles/main_exe.dir/CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o: CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp
-CMakeFiles/main_exe.dir/CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/main_exe.dir/CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o -MF CMakeFiles/main_exe.dir/CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o.d -o CMakeFiles/main_exe.dir/CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o -c /home/logan/gameprogramming/code/build/CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp
-
-CMakeFiles/main_exe.dir/CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/build/CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp > CMakeFiles/main_exe.dir/CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.i
-
-CMakeFiles/main_exe.dir/CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/build/CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp -o CMakeFiles/main_exe.dir/CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.s
-
 CMakeFiles/main_exe.dir/main.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/main.cpp.o: /home/logan/gameprogramming/code/main.cpp
 CMakeFiles/main_exe.dir/main.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/main_exe.dir/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/main_exe.dir/main.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/main.cpp.o -MF CMakeFiles/main_exe.dir/main.cpp.o.d -o CMakeFiles/main_exe.dir/main.cpp.o -c /home/logan/gameprogramming/code/main.cpp
 
 CMakeFiles/main_exe.dir/main.cpp.i: cmake_force
@@ -131,7 +89,7 @@ CMakeFiles/main_exe.dir/main.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/render/texture.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/render/texture.cpp.o: /home/logan/gameprogramming/code/render/texture.cpp
 CMakeFiles/main_exe.dir/render/texture.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/main_exe.dir/render/texture.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main_exe.dir/render/texture.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/render/texture.cpp.o -MF CMakeFiles/main_exe.dir/render/texture.cpp.o.d -o CMakeFiles/main_exe.dir/render/texture.cpp.o -c /home/logan/gameprogramming/code/render/texture.cpp
 
 CMakeFiles/main_exe.dir/render/texture.cpp.i: cmake_force
@@ -145,7 +103,7 @@ CMakeFiles/main_exe.dir/render/texture.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/schedule/loop.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/schedule/loop.cpp.o: /home/logan/gameprogramming/code/schedule/loop.cpp
 CMakeFiles/main_exe.dir/schedule/loop.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/main_exe.dir/schedule/loop.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/main_exe.dir/schedule/loop.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/schedule/loop.cpp.o -MF CMakeFiles/main_exe.dir/schedule/loop.cpp.o.d -o CMakeFiles/main_exe.dir/schedule/loop.cpp.o -c /home/logan/gameprogramming/code/schedule/loop.cpp
 
 CMakeFiles/main_exe.dir/schedule/loop.cpp.i: cmake_force
@@ -156,24 +114,10 @@ CMakeFiles/main_exe.dir/schedule/loop.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/schedule/loop.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/schedule/loop.cpp -o CMakeFiles/main_exe.dir/schedule/loop.cpp.s
 
-CMakeFiles/main_exe.dir/scratch.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/scratch.cpp.o: /home/logan/gameprogramming/code/scratch.cpp
-CMakeFiles/main_exe.dir/scratch.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/main_exe.dir/scratch.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/scratch.cpp.o -MF CMakeFiles/main_exe.dir/scratch.cpp.o.d -o CMakeFiles/main_exe.dir/scratch.cpp.o -c /home/logan/gameprogramming/code/scratch.cpp
-
-CMakeFiles/main_exe.dir/scratch.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/scratch.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/scratch.cpp > CMakeFiles/main_exe.dir/scratch.cpp.i
-
-CMakeFiles/main_exe.dir/scratch.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/scratch.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/scratch.cpp -o CMakeFiles/main_exe.dir/scratch.cpp.s
-
 CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.o: /home/logan/gameprogramming/code/simulation/first_spawn.cpp
 CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.o -MF CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.o.d -o CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.o -c /home/logan/gameprogramming/code/simulation/first_spawn.cpp
 
 CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.i: cmake_force
@@ -187,7 +131,7 @@ CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/simulation/game.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/simulation/game.cpp.o: /home/logan/gameprogramming/code/simulation/game.cpp
 CMakeFiles/main_exe.dir/simulation/game.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/main_exe.dir/simulation/game.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/main_exe.dir/simulation/game.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/simulation/game.cpp.o -MF CMakeFiles/main_exe.dir/simulation/game.cpp.o.d -o CMakeFiles/main_exe.dir/simulation/game.cpp.o -c /home/logan/gameprogramming/code/simulation/game.cpp
 
 CMakeFiles/main_exe.dir/simulation/game.cpp.i: cmake_force
@@ -198,10 +142,24 @@ CMakeFiles/main_exe.dir/simulation/game.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/simulation/game.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/simulation/game.cpp -o CMakeFiles/main_exe.dir/simulation/game.cpp.s
 
+CMakeFiles/main_exe.dir/simulation/test.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/simulation/test.cpp.o: /home/logan/gameprogramming/code/simulation/test.cpp
+CMakeFiles/main_exe.dir/simulation/test.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/main_exe.dir/simulation/test.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/simulation/test.cpp.o -MF CMakeFiles/main_exe.dir/simulation/test.cpp.o.d -o CMakeFiles/main_exe.dir/simulation/test.cpp.o -c /home/logan/gameprogramming/code/simulation/test.cpp
+
+CMakeFiles/main_exe.dir/simulation/test.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/simulation/test.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/simulation/test.cpp > CMakeFiles/main_exe.dir/simulation/test.cpp.i
+
+CMakeFiles/main_exe.dir/simulation/test.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/simulation/test.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/simulation/test.cpp -o CMakeFiles/main_exe.dir/simulation/test.cpp.s
+
 CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.o: /home/logan/gameprogramming/code/simulation/weather_calculations.cpp
 CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.o -MF CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.o.d -o CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.o -c /home/logan/gameprogramming/code/simulation/weather_calculations.cpp
 
 CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.i: cmake_force
@@ -215,7 +173,7 @@ CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/simulation/world_gen.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/simulation/world_gen.cpp.o: /home/logan/gameprogramming/code/simulation/world_gen.cpp
 CMakeFiles/main_exe.dir/simulation/world_gen.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/main_exe.dir/simulation/world_gen.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/main_exe.dir/simulation/world_gen.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/simulation/world_gen.cpp.o -MF CMakeFiles/main_exe.dir/simulation/world_gen.cpp.o.d -o CMakeFiles/main_exe.dir/simulation/world_gen.cpp.o -c /home/logan/gameprogramming/code/simulation/world_gen.cpp
 
 CMakeFiles/main_exe.dir/simulation/world_gen.cpp.i: cmake_force
@@ -229,7 +187,7 @@ CMakeFiles/main_exe.dir/simulation/world_gen.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.o: /home/logan/gameprogramming/code/simulation/world_gen_helpers.cpp
 CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.o -MF CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.o.d -o CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.o -c /home/logan/gameprogramming/code/simulation/world_gen_helpers.cpp
 
 CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.i: cmake_force
@@ -243,7 +201,7 @@ CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/action/assign.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/action/assign.cpp.o: /home/logan/gameprogramming/code/systems/action/assign.cpp
 CMakeFiles/main_exe.dir/systems/action/assign.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/main_exe.dir/systems/action/assign.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/main_exe.dir/systems/action/assign.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/action/assign.cpp.o -MF CMakeFiles/main_exe.dir/systems/action/assign.cpp.o.d -o CMakeFiles/main_exe.dir/systems/action/assign.cpp.o -c /home/logan/gameprogramming/code/systems/action/assign.cpp
 
 CMakeFiles/main_exe.dir/systems/action/assign.cpp.i: cmake_force
@@ -257,7 +215,7 @@ CMakeFiles/main_exe.dir/systems/action/assign.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/action/attempt.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/action/attempt.cpp.o: /home/logan/gameprogramming/code/systems/action/attempt.cpp
 CMakeFiles/main_exe.dir/systems/action/attempt.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/main_exe.dir/systems/action/attempt.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/main_exe.dir/systems/action/attempt.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/action/attempt.cpp.o -MF CMakeFiles/main_exe.dir/systems/action/attempt.cpp.o.d -o CMakeFiles/main_exe.dir/systems/action/attempt.cpp.o -c /home/logan/gameprogramming/code/systems/action/attempt.cpp
 
 CMakeFiles/main_exe.dir/systems/action/attempt.cpp.i: cmake_force
@@ -271,7 +229,7 @@ CMakeFiles/main_exe.dir/systems/action/attempt.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/action/lazy.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/action/lazy.cpp.o: /home/logan/gameprogramming/code/systems/action/lazy.cpp
 CMakeFiles/main_exe.dir/systems/action/lazy.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/main_exe.dir/systems/action/lazy.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/main_exe.dir/systems/action/lazy.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/action/lazy.cpp.o -MF CMakeFiles/main_exe.dir/systems/action/lazy.cpp.o.d -o CMakeFiles/main_exe.dir/systems/action/lazy.cpp.o -c /home/logan/gameprogramming/code/systems/action/lazy.cpp
 
 CMakeFiles/main_exe.dir/systems/action/lazy.cpp.i: cmake_force
@@ -285,7 +243,7 @@ CMakeFiles/main_exe.dir/systems/action/lazy.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/action/prioirities.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/action/prioirities.cpp.o: /home/logan/gameprogramming/code/systems/action/prioirities.cpp
 CMakeFiles/main_exe.dir/systems/action/prioirities.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/main_exe.dir/systems/action/prioirities.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/main_exe.dir/systems/action/prioirities.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/action/prioirities.cpp.o -MF CMakeFiles/main_exe.dir/systems/action/prioirities.cpp.o.d -o CMakeFiles/main_exe.dir/systems/action/prioirities.cpp.o -c /home/logan/gameprogramming/code/systems/action/prioirities.cpp
 
 CMakeFiles/main_exe.dir/systems/action/prioirities.cpp.i: cmake_force
@@ -299,7 +257,7 @@ CMakeFiles/main_exe.dir/systems/action/prioirities.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/action/product.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/action/product.cpp.o: /home/logan/gameprogramming/code/systems/action/product.cpp
 CMakeFiles/main_exe.dir/systems/action/product.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/main_exe.dir/systems/action/product.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/main_exe.dir/systems/action/product.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/action/product.cpp.o -MF CMakeFiles/main_exe.dir/systems/action/product.cpp.o.d -o CMakeFiles/main_exe.dir/systems/action/product.cpp.o -c /home/logan/gameprogramming/code/systems/action/product.cpp
 
 CMakeFiles/main_exe.dir/systems/action/product.cpp.i: cmake_force
@@ -313,7 +271,7 @@ CMakeFiles/main_exe.dir/systems/action/product.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/birth_death/animal.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/birth_death/animal.cpp.o: /home/logan/gameprogramming/code/systems/birth_death/animal.cpp
 CMakeFiles/main_exe.dir/systems/birth_death/animal.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/main_exe.dir/systems/birth_death/animal.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/main_exe.dir/systems/birth_death/animal.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/birth_death/animal.cpp.o -MF CMakeFiles/main_exe.dir/systems/birth_death/animal.cpp.o.d -o CMakeFiles/main_exe.dir/systems/birth_death/animal.cpp.o -c /home/logan/gameprogramming/code/systems/birth_death/animal.cpp
 
 CMakeFiles/main_exe.dir/systems/birth_death/animal.cpp.i: cmake_force
@@ -327,7 +285,7 @@ CMakeFiles/main_exe.dir/systems/birth_death/animal.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/birth_death/plant.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/birth_death/plant.cpp.o: /home/logan/gameprogramming/code/systems/birth_death/plant.cpp
 CMakeFiles/main_exe.dir/systems/birth_death/plant.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/main_exe.dir/systems/birth_death/plant.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/main_exe.dir/systems/birth_death/plant.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/birth_death/plant.cpp.o -MF CMakeFiles/main_exe.dir/systems/birth_death/plant.cpp.o.d -o CMakeFiles/main_exe.dir/systems/birth_death/plant.cpp.o -c /home/logan/gameprogramming/code/systems/birth_death/plant.cpp
 
 CMakeFiles/main_exe.dir/systems/birth_death/plant.cpp.i: cmake_force
@@ -341,7 +299,7 @@ CMakeFiles/main_exe.dir/systems/birth_death/plant.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/birth_death/scheduled.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/birth_death/scheduled.cpp.o: /home/logan/gameprogramming/code/systems/birth_death/scheduled.cpp
 CMakeFiles/main_exe.dir/systems/birth_death/scheduled.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/main_exe.dir/systems/birth_death/scheduled.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/main_exe.dir/systems/birth_death/scheduled.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/birth_death/scheduled.cpp.o -MF CMakeFiles/main_exe.dir/systems/birth_death/scheduled.cpp.o.d -o CMakeFiles/main_exe.dir/systems/birth_death/scheduled.cpp.o -c /home/logan/gameprogramming/code/systems/birth_death/scheduled.cpp
 
 CMakeFiles/main_exe.dir/systems/birth_death/scheduled.cpp.i: cmake_force
@@ -355,7 +313,7 @@ CMakeFiles/main_exe.dir/systems/birth_death/scheduled.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/birth_death/unit.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/birth_death/unit.cpp.o: /home/logan/gameprogramming/code/systems/birth_death/unit.cpp
 CMakeFiles/main_exe.dir/systems/birth_death/unit.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/main_exe.dir/systems/birth_death/unit.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/main_exe.dir/systems/birth_death/unit.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/birth_death/unit.cpp.o -MF CMakeFiles/main_exe.dir/systems/birth_death/unit.cpp.o.d -o CMakeFiles/main_exe.dir/systems/birth_death/unit.cpp.o -c /home/logan/gameprogramming/code/systems/birth_death/unit.cpp
 
 CMakeFiles/main_exe.dir/systems/birth_death/unit.cpp.i: cmake_force
@@ -369,7 +327,7 @@ CMakeFiles/main_exe.dir/systems/birth_death/unit.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/combat/combat.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/combat/combat.cpp.o: /home/logan/gameprogramming/code/systems/combat/combat.cpp
 CMakeFiles/main_exe.dir/systems/combat/combat.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/main_exe.dir/systems/combat/combat.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/main_exe.dir/systems/combat/combat.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/combat/combat.cpp.o -MF CMakeFiles/main_exe.dir/systems/combat/combat.cpp.o.d -o CMakeFiles/main_exe.dir/systems/combat/combat.cpp.o -c /home/logan/gameprogramming/code/systems/combat/combat.cpp
 
 CMakeFiles/main_exe.dir/systems/combat/combat.cpp.i: cmake_force
@@ -383,7 +341,7 @@ CMakeFiles/main_exe.dir/systems/combat/combat.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/feeding/feeding.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/feeding/feeding.cpp.o: /home/logan/gameprogramming/code/systems/feeding/feeding.cpp
 CMakeFiles/main_exe.dir/systems/feeding/feeding.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/main_exe.dir/systems/feeding/feeding.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/main_exe.dir/systems/feeding/feeding.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/feeding/feeding.cpp.o -MF CMakeFiles/main_exe.dir/systems/feeding/feeding.cpp.o.d -o CMakeFiles/main_exe.dir/systems/feeding/feeding.cpp.o -c /home/logan/gameprogramming/code/systems/feeding/feeding.cpp
 
 CMakeFiles/main_exe.dir/systems/feeding/feeding.cpp.i: cmake_force
@@ -397,7 +355,7 @@ CMakeFiles/main_exe.dir/systems/feeding/feeding.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/feeding/hunger.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/feeding/hunger.cpp.o: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
 CMakeFiles/main_exe.dir/systems/feeding/hunger.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/main_exe.dir/systems/feeding/hunger.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/main_exe.dir/systems/feeding/hunger.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/feeding/hunger.cpp.o -MF CMakeFiles/main_exe.dir/systems/feeding/hunger.cpp.o.d -o CMakeFiles/main_exe.dir/systems/feeding/hunger.cpp.o -c /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
 
 CMakeFiles/main_exe.dir/systems/feeding/hunger.cpp.i: cmake_force
@@ -411,7 +369,7 @@ CMakeFiles/main_exe.dir/systems/feeding/hunger.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/inventory/check.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/inventory/check.cpp.o: /home/logan/gameprogramming/code/systems/inventory/check.cpp
 CMakeFiles/main_exe.dir/systems/inventory/check.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/main_exe.dir/systems/inventory/check.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/main_exe.dir/systems/inventory/check.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/inventory/check.cpp.o -MF CMakeFiles/main_exe.dir/systems/inventory/check.cpp.o.d -o CMakeFiles/main_exe.dir/systems/inventory/check.cpp.o -c /home/logan/gameprogramming/code/systems/inventory/check.cpp
 
 CMakeFiles/main_exe.dir/systems/inventory/check.cpp.i: cmake_force
@@ -425,7 +383,7 @@ CMakeFiles/main_exe.dir/systems/inventory/check.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/inventory/inventory.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/inventory/inventory.cpp.o: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
 CMakeFiles/main_exe.dir/systems/inventory/inventory.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/main_exe.dir/systems/inventory/inventory.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/main_exe.dir/systems/inventory/inventory.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/inventory/inventory.cpp.o -MF CMakeFiles/main_exe.dir/systems/inventory/inventory.cpp.o.d -o CMakeFiles/main_exe.dir/systems/inventory/inventory.cpp.o -c /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
 
 CMakeFiles/main_exe.dir/systems/inventory/inventory.cpp.i: cmake_force
@@ -439,7 +397,7 @@ CMakeFiles/main_exe.dir/systems/inventory/inventory.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/jobs/work_queue.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/jobs/work_queue.cpp.o: /home/logan/gameprogramming/code/systems/jobs/work_queue.cpp
 CMakeFiles/main_exe.dir/systems/jobs/work_queue.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/main_exe.dir/systems/jobs/work_queue.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/main_exe.dir/systems/jobs/work_queue.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/jobs/work_queue.cpp.o -MF CMakeFiles/main_exe.dir/systems/jobs/work_queue.cpp.o.d -o CMakeFiles/main_exe.dir/systems/jobs/work_queue.cpp.o -c /home/logan/gameprogramming/code/systems/jobs/work_queue.cpp
 
 CMakeFiles/main_exe.dir/systems/jobs/work_queue.cpp.i: cmake_force
@@ -453,7 +411,7 @@ CMakeFiles/main_exe.dir/systems/jobs/work_queue.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.o: /home/logan/gameprogramming/code/systems/movement/lazy.cpp
 CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.o -MF CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.o.d -o CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.o -c /home/logan/gameprogramming/code/systems/movement/lazy.cpp
 
 CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.i: cmake_force
@@ -467,7 +425,7 @@ CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/movement/movement.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/movement/movement.cpp.o: /home/logan/gameprogramming/code/systems/movement/movement.cpp
 CMakeFiles/main_exe.dir/systems/movement/movement.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/main_exe.dir/systems/movement/movement.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/main_exe.dir/systems/movement/movement.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/movement/movement.cpp.o -MF CMakeFiles/main_exe.dir/systems/movement/movement.cpp.o.d -o CMakeFiles/main_exe.dir/systems/movement/movement.cpp.o -c /home/logan/gameprogramming/code/systems/movement/movement.cpp
 
 CMakeFiles/main_exe.dir/systems/movement/movement.cpp.i: cmake_force
@@ -481,7 +439,7 @@ CMakeFiles/main_exe.dir/systems/movement/movement.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.o: /home/logan/gameprogramming/code/systems/movement/pathfinding.cpp
 CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.o -MF CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.o.d -o CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.o -c /home/logan/gameprogramming/code/systems/movement/pathfinding.cpp
 
 CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.i: cmake_force
@@ -495,7 +453,7 @@ CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/movement/position.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/movement/position.cpp.o: /home/logan/gameprogramming/code/systems/movement/position.cpp
 CMakeFiles/main_exe.dir/systems/movement/position.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/main_exe.dir/systems/movement/position.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/main_exe.dir/systems/movement/position.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/movement/position.cpp.o -MF CMakeFiles/main_exe.dir/systems/movement/position.cpp.o.d -o CMakeFiles/main_exe.dir/systems/movement/position.cpp.o -c /home/logan/gameprogramming/code/systems/movement/position.cpp
 
 CMakeFiles/main_exe.dir/systems/movement/position.cpp.i: cmake_force
@@ -509,7 +467,7 @@ CMakeFiles/main_exe.dir/systems/movement/position.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/movement/queue_actions.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/movement/queue_actions.cpp.o: /home/logan/gameprogramming/code/systems/movement/queue_actions.cpp
 CMakeFiles/main_exe.dir/systems/movement/queue_actions.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building CXX object CMakeFiles/main_exe.dir/systems/movement/queue_actions.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/main_exe.dir/systems/movement/queue_actions.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/movement/queue_actions.cpp.o -MF CMakeFiles/main_exe.dir/systems/movement/queue_actions.cpp.o.d -o CMakeFiles/main_exe.dir/systems/movement/queue_actions.cpp.o -c /home/logan/gameprogramming/code/systems/movement/queue_actions.cpp
 
 CMakeFiles/main_exe.dir/systems/movement/queue_actions.cpp.i: cmake_force
@@ -523,7 +481,7 @@ CMakeFiles/main_exe.dir/systems/movement/queue_actions.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/pack/packMovementPatterns.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/pack/packMovementPatterns.cpp.o: /home/logan/gameprogramming/code/systems/pack/packMovementPatterns.cpp
 CMakeFiles/main_exe.dir/systems/pack/packMovementPatterns.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building CXX object CMakeFiles/main_exe.dir/systems/pack/packMovementPatterns.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/main_exe.dir/systems/pack/packMovementPatterns.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/pack/packMovementPatterns.cpp.o -MF CMakeFiles/main_exe.dir/systems/pack/packMovementPatterns.cpp.o.d -o CMakeFiles/main_exe.dir/systems/pack/packMovementPatterns.cpp.o -c /home/logan/gameprogramming/code/systems/pack/packMovementPatterns.cpp
 
 CMakeFiles/main_exe.dir/systems/pack/packMovementPatterns.cpp.i: cmake_force
@@ -537,7 +495,7 @@ CMakeFiles/main_exe.dir/systems/pack/packMovementPatterns.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/perishables/continuous.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/perishables/continuous.cpp.o: /home/logan/gameprogramming/code/systems/perishables/continuous.cpp
 CMakeFiles/main_exe.dir/systems/perishables/continuous.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building CXX object CMakeFiles/main_exe.dir/systems/perishables/continuous.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/main_exe.dir/systems/perishables/continuous.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/perishables/continuous.cpp.o -MF CMakeFiles/main_exe.dir/systems/perishables/continuous.cpp.o.d -o CMakeFiles/main_exe.dir/systems/perishables/continuous.cpp.o -c /home/logan/gameprogramming/code/systems/perishables/continuous.cpp
 
 CMakeFiles/main_exe.dir/systems/perishables/continuous.cpp.i: cmake_force
@@ -551,7 +509,7 @@ CMakeFiles/main_exe.dir/systems/perishables/continuous.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/perishables/lazy.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/perishables/lazy.cpp.o: /home/logan/gameprogramming/code/systems/perishables/lazy.cpp
 CMakeFiles/main_exe.dir/systems/perishables/lazy.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building CXX object CMakeFiles/main_exe.dir/systems/perishables/lazy.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building CXX object CMakeFiles/main_exe.dir/systems/perishables/lazy.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/perishables/lazy.cpp.o -MF CMakeFiles/main_exe.dir/systems/perishables/lazy.cpp.o.d -o CMakeFiles/main_exe.dir/systems/perishables/lazy.cpp.o -c /home/logan/gameprogramming/code/systems/perishables/lazy.cpp
 
 CMakeFiles/main_exe.dir/systems/perishables/lazy.cpp.i: cmake_force
@@ -565,7 +523,7 @@ CMakeFiles/main_exe.dir/systems/perishables/lazy.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/plant/growth.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/plant/growth.cpp.o: /home/logan/gameprogramming/code/systems/plant/growth.cpp
 CMakeFiles/main_exe.dir/systems/plant/growth.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building CXX object CMakeFiles/main_exe.dir/systems/plant/growth.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building CXX object CMakeFiles/main_exe.dir/systems/plant/growth.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/plant/growth.cpp.o -MF CMakeFiles/main_exe.dir/systems/plant/growth.cpp.o.d -o CMakeFiles/main_exe.dir/systems/plant/growth.cpp.o -c /home/logan/gameprogramming/code/systems/plant/growth.cpp
 
 CMakeFiles/main_exe.dir/systems/plant/growth.cpp.i: cmake_force
@@ -579,7 +537,7 @@ CMakeFiles/main_exe.dir/systems/plant/growth.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/plant/update.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/plant/update.cpp.o: /home/logan/gameprogramming/code/systems/plant/update.cpp
 CMakeFiles/main_exe.dir/systems/plant/update.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building CXX object CMakeFiles/main_exe.dir/systems/plant/update.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building CXX object CMakeFiles/main_exe.dir/systems/plant/update.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/plant/update.cpp.o -MF CMakeFiles/main_exe.dir/systems/plant/update.cpp.o.d -o CMakeFiles/main_exe.dir/systems/plant/update.cpp.o -c /home/logan/gameprogramming/code/systems/plant/update.cpp
 
 CMakeFiles/main_exe.dir/systems/plant/update.cpp.i: cmake_force
@@ -593,7 +551,7 @@ CMakeFiles/main_exe.dir/systems/plant/update.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/search/entity_search.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/search/entity_search.cpp.o: /home/logan/gameprogramming/code/systems/search/entity_search.cpp
 CMakeFiles/main_exe.dir/systems/search/entity_search.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building CXX object CMakeFiles/main_exe.dir/systems/search/entity_search.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building CXX object CMakeFiles/main_exe.dir/systems/search/entity_search.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/search/entity_search.cpp.o -MF CMakeFiles/main_exe.dir/systems/search/entity_search.cpp.o.d -o CMakeFiles/main_exe.dir/systems/search/entity_search.cpp.o -c /home/logan/gameprogramming/code/systems/search/entity_search.cpp
 
 CMakeFiles/main_exe.dir/systems/search/entity_search.cpp.i: cmake_force
@@ -607,7 +565,7 @@ CMakeFiles/main_exe.dir/systems/search/entity_search.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/search/specific_search.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/search/specific_search.cpp.o: /home/logan/gameprogramming/code/systems/search/specific_search.cpp
 CMakeFiles/main_exe.dir/systems/search/specific_search.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building CXX object CMakeFiles/main_exe.dir/systems/search/specific_search.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building CXX object CMakeFiles/main_exe.dir/systems/search/specific_search.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/search/specific_search.cpp.o -MF CMakeFiles/main_exe.dir/systems/search/specific_search.cpp.o.d -o CMakeFiles/main_exe.dir/systems/search/specific_search.cpp.o -c /home/logan/gameprogramming/code/systems/search/specific_search.cpp
 
 CMakeFiles/main_exe.dir/systems/search/specific_search.cpp.i: cmake_force
@@ -621,7 +579,7 @@ CMakeFiles/main_exe.dir/systems/search/specific_search.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.o: /home/logan/gameprogramming/code/systems/visibility/lazy.cpp
 CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building CXX object CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building CXX object CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.o -MF CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.o.d -o CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.o -c /home/logan/gameprogramming/code/systems/visibility/lazy.cpp
 
 CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.i: cmake_force
@@ -635,7 +593,7 @@ CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.o: /home/logan/gameprogramming/code/systems/visibility/scheduled.cpp
 CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building CXX object CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building CXX object CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.o -MF CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.o.d -o CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.o -c /home/logan/gameprogramming/code/systems/visibility/scheduled.cpp
 
 CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.i: cmake_force
@@ -649,7 +607,7 @@ CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/world/animal/breeding.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/world/animal/breeding.cpp.o: /home/logan/gameprogramming/code/world/animal/breeding.cpp
 CMakeFiles/main_exe.dir/world/animal/breeding.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Building CXX object CMakeFiles/main_exe.dir/world/animal/breeding.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building CXX object CMakeFiles/main_exe.dir/world/animal/breeding.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/animal/breeding.cpp.o -MF CMakeFiles/main_exe.dir/world/animal/breeding.cpp.o.d -o CMakeFiles/main_exe.dir/world/animal/breeding.cpp.o -c /home/logan/gameprogramming/code/world/animal/breeding.cpp
 
 CMakeFiles/main_exe.dir/world/animal/breeding.cpp.i: cmake_force
@@ -663,7 +621,7 @@ CMakeFiles/main_exe.dir/world/animal/breeding.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/world/animal/database.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/world/animal/database.cpp.o: /home/logan/gameprogramming/code/world/animal/database.cpp
 CMakeFiles/main_exe.dir/world/animal/database.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_43) "Building CXX object CMakeFiles/main_exe.dir/world/animal/database.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building CXX object CMakeFiles/main_exe.dir/world/animal/database.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/animal/database.cpp.o -MF CMakeFiles/main_exe.dir/world/animal/database.cpp.o.d -o CMakeFiles/main_exe.dir/world/animal/database.cpp.o -c /home/logan/gameprogramming/code/world/animal/database.cpp
 
 CMakeFiles/main_exe.dir/world/animal/database.cpp.i: cmake_force
@@ -677,7 +635,7 @@ CMakeFiles/main_exe.dir/world/animal/database.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/world/animal/events.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/world/animal/events.cpp.o: /home/logan/gameprogramming/code/world/animal/events.cpp
 CMakeFiles/main_exe.dir/world/animal/events.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building CXX object CMakeFiles/main_exe.dir/world/animal/events.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building CXX object CMakeFiles/main_exe.dir/world/animal/events.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/animal/events.cpp.o -MF CMakeFiles/main_exe.dir/world/animal/events.cpp.o.d -o CMakeFiles/main_exe.dir/world/animal/events.cpp.o -c /home/logan/gameprogramming/code/world/animal/events.cpp
 
 CMakeFiles/main_exe.dir/world/animal/events.cpp.i: cmake_force
@@ -691,7 +649,7 @@ CMakeFiles/main_exe.dir/world/animal/events.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/world/item/operations.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/world/item/operations.cpp.o: /home/logan/gameprogramming/code/world/item/operations.cpp
 CMakeFiles/main_exe.dir/world/item/operations.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object CMakeFiles/main_exe.dir/world/item/operations.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Building CXX object CMakeFiles/main_exe.dir/world/item/operations.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/item/operations.cpp.o -MF CMakeFiles/main_exe.dir/world/item/operations.cpp.o.d -o CMakeFiles/main_exe.dir/world/item/operations.cpp.o -c /home/logan/gameprogramming/code/world/item/operations.cpp
 
 CMakeFiles/main_exe.dir/world/item/operations.cpp.i: cmake_force
@@ -705,7 +663,7 @@ CMakeFiles/main_exe.dir/world/item/operations.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
 CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_43) "Building CXX object CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o -MF CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o.d -o CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o -c /home/logan/gameprogramming/code/world/plant/birth_death.cpp
 
 CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.i: cmake_force
@@ -719,7 +677,7 @@ CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/world/plant/operations.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/world/plant/operations.cpp.o: /home/logan/gameprogramming/code/world/plant/operations.cpp
 CMakeFiles/main_exe.dir/world/plant/operations.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building CXX object CMakeFiles/main_exe.dir/world/plant/operations.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building CXX object CMakeFiles/main_exe.dir/world/plant/operations.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/plant/operations.cpp.o -MF CMakeFiles/main_exe.dir/world/plant/operations.cpp.o.d -o CMakeFiles/main_exe.dir/world/plant/operations.cpp.o -c /home/logan/gameprogramming/code/world/plant/operations.cpp
 
 CMakeFiles/main_exe.dir/world/plant/operations.cpp.i: cmake_force
@@ -733,7 +691,7 @@ CMakeFiles/main_exe.dir/world/plant/operations.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/world/policies.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/world/policies.cpp.o: /home/logan/gameprogramming/code/world/policies.cpp
 CMakeFiles/main_exe.dir/world/policies.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Building CXX object CMakeFiles/main_exe.dir/world/policies.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object CMakeFiles/main_exe.dir/world/policies.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/policies.cpp.o -MF CMakeFiles/main_exe.dir/world/policies.cpp.o.d -o CMakeFiles/main_exe.dir/world/policies.cpp.o -c /home/logan/gameprogramming/code/world/policies.cpp
 
 CMakeFiles/main_exe.dir/world/policies.cpp.i: cmake_force
@@ -747,7 +705,7 @@ CMakeFiles/main_exe.dir/world/policies.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/world/roles.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/world/roles.cpp.o: /home/logan/gameprogramming/code/world/roles.cpp
 CMakeFiles/main_exe.dir/world/roles.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Building CXX object CMakeFiles/main_exe.dir/world/roles.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object CMakeFiles/main_exe.dir/world/roles.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/roles.cpp.o -MF CMakeFiles/main_exe.dir/world/roles.cpp.o.d -o CMakeFiles/main_exe.dir/world/roles.cpp.o -c /home/logan/gameprogramming/code/world/roles.cpp
 
 CMakeFiles/main_exe.dir/world/roles.cpp.i: cmake_force
@@ -761,7 +719,7 @@ CMakeFiles/main_exe.dir/world/roles.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/world/tile/database.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/world/tile/database.cpp.o: /home/logan/gameprogramming/code/world/tile/database.cpp
 CMakeFiles/main_exe.dir/world/tile/database.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_50) "Building CXX object CMakeFiles/main_exe.dir/world/tile/database.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building CXX object CMakeFiles/main_exe.dir/world/tile/database.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/tile/database.cpp.o -MF CMakeFiles/main_exe.dir/world/tile/database.cpp.o.d -o CMakeFiles/main_exe.dir/world/tile/database.cpp.o -c /home/logan/gameprogramming/code/world/tile/database.cpp
 
 CMakeFiles/main_exe.dir/world/tile/database.cpp.i: cmake_force
@@ -775,7 +733,7 @@ CMakeFiles/main_exe.dir/world/tile/database.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/world/tribeEvents.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/world/tribeEvents.cpp.o: /home/logan/gameprogramming/code/world/tribeEvents.cpp
 CMakeFiles/main_exe.dir/world/tribeEvents.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_51) "Building CXX object CMakeFiles/main_exe.dir/world/tribeEvents.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Building CXX object CMakeFiles/main_exe.dir/world/tribeEvents.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/tribeEvents.cpp.o -MF CMakeFiles/main_exe.dir/world/tribeEvents.cpp.o.d -o CMakeFiles/main_exe.dir/world/tribeEvents.cpp.o -c /home/logan/gameprogramming/code/world/tribeEvents.cpp
 
 CMakeFiles/main_exe.dir/world/tribeEvents.cpp.i: cmake_force
@@ -789,7 +747,7 @@ CMakeFiles/main_exe.dir/world/tribeEvents.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/world/tribes.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/world/tribes.cpp.o: /home/logan/gameprogramming/code/world/tribes.cpp
 CMakeFiles/main_exe.dir/world/tribes.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_52) "Building CXX object CMakeFiles/main_exe.dir/world/tribes.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Building CXX object CMakeFiles/main_exe.dir/world/tribes.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/tribes.cpp.o -MF CMakeFiles/main_exe.dir/world/tribes.cpp.o.d -o CMakeFiles/main_exe.dir/world/tribes.cpp.o -c /home/logan/gameprogramming/code/world/tribes.cpp
 
 CMakeFiles/main_exe.dir/world/tribes.cpp.i: cmake_force
@@ -803,7 +761,7 @@ CMakeFiles/main_exe.dir/world/tribes.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o: /home/logan/gameprogramming/code/world/unit/OLD_resouceUnits.cpp
 CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_53) "Building CXX object CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_50) "Building CXX object CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o -MF CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o.d -o CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o -c /home/logan/gameprogramming/code/world/unit/OLD_resouceUnits.cpp
 
 CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.i: cmake_force
@@ -816,15 +774,12 @@ CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.s: cmake_force
 
 # Object files for target main_exe
 main_exe_OBJECTS = \
-"CMakeFiles/main_exe.dir/CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o" \
-"CMakeFiles/main_exe.dir/CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.o" \
-"CMakeFiles/main_exe.dir/CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o" \
 "CMakeFiles/main_exe.dir/main.cpp.o" \
 "CMakeFiles/main_exe.dir/render/texture.cpp.o" \
 "CMakeFiles/main_exe.dir/schedule/loop.cpp.o" \
-"CMakeFiles/main_exe.dir/scratch.cpp.o" \
 "CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.o" \
 "CMakeFiles/main_exe.dir/simulation/game.cpp.o" \
+"CMakeFiles/main_exe.dir/simulation/test.cpp.o" \
 "CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.o" \
 "CMakeFiles/main_exe.dir/simulation/world_gen.cpp.o" \
 "CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.o" \
@@ -873,15 +828,12 @@ main_exe_OBJECTS = \
 # External object files for target main_exe
 main_exe_EXTERNAL_OBJECTS =
 
-main_exe: CMakeFiles/main_exe.dir/CMakeFiles/4.2.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o
-main_exe: CMakeFiles/main_exe.dir/CMakeFiles/4.3.2/CompilerIdCXX/CMakeCXXCompilerId.cpp.o
-main_exe: CMakeFiles/main_exe.dir/CMakeFiles/4.3.3/CompilerIdCXX/CMakeCXXCompilerId.cpp.o
 main_exe: CMakeFiles/main_exe.dir/main.cpp.o
 main_exe: CMakeFiles/main_exe.dir/render/texture.cpp.o
 main_exe: CMakeFiles/main_exe.dir/schedule/loop.cpp.o
-main_exe: CMakeFiles/main_exe.dir/scratch.cpp.o
 main_exe: CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.o
 main_exe: CMakeFiles/main_exe.dir/simulation/game.cpp.o
+main_exe: CMakeFiles/main_exe.dir/simulation/test.cpp.o
 main_exe: CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.o
 main_exe: CMakeFiles/main_exe.dir/simulation/world_gen.cpp.o
 main_exe: CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.o
@@ -929,7 +881,7 @@ main_exe: CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o
 main_exe: CMakeFiles/main_exe.dir/build.make
 main_exe: CMakeFiles/main_exe.dir/compiler_depend.ts
 main_exe: CMakeFiles/main_exe.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_54) "Linking CXX executable main_exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_51) "Linking CXX executable main_exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/main_exe.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

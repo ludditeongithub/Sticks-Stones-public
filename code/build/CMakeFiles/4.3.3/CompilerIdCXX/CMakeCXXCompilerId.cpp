@@ -166,7 +166,7 @@
 # define COMPILER_VERSION_PATCH DEC(__DECCXX_VER         % 10000)
 
 #elif defined(__IBMCPP__) && defined(__COMPILER_VER__)
-# define COMPILER_ID "zOS"
+# define COMPILER_ID "z_os"
   /* __IBMCPP__ = VRP */
 # define COMPILER_VERSION_MAJOR DEC(__IBMCPP__/100)
 # define COMPILER_VERSION_MINOR DEC(__IBMCPP__/10 % 10)

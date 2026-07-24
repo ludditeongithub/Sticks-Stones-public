@@ -1,8 +1,7 @@
 #pragma once
 #include "memory.hpp"
-#include <extern/nameof.hpp>
 #include <cassert>
-#include <extern/cereal/archives/binary.hpp>
+#include <cereal/archives/binary.hpp>
 #include <stdexcept>
 #include <typeinfo>
 #include <vector>
@@ -276,8 +275,8 @@ template <typename T, typename P = uint8_t, typename I = uint16_t> struct Priori
 		std::vector<std::pair<T, P>> data;
 		I capacity;
 		I size = 0;
-		I topIndex = 0;
-		I endIndex = 0;
+		I top_index = 0;
+		I end_index = 0;
 		I current = 0;
 
 		PriorityQueue<T>(I capacity) : capacity(capacity)
@@ -287,11 +286,11 @@ template <typename T, typename P = uint8_t, typename I = uint16_t> struct Priori
 
 		T top()
 		{
-				return data[topIndex];
+				return data[top_index];
 		}
 		void pop()
 		{
-				topIndex++;
+				top_index++;
 				size--;
 		}
 
@@ -303,8 +302,8 @@ template <typename T, typename P = uint8_t, typename I = uint16_t> struct Priori
 							I half_range = range / 2;
 							if (half_range > end)
 							{
-									middle = first + halfRange;
-							} else middle = end - halfRange;
+									middle = first + half_range;
+							} else middle = end - half_range;
 					} else middle = (end - first) / 2;	
 			return middle;
 		}
@@ -313,7 +312,7 @@ template <typename T, typename P = uint8_t, typename I = uint16_t> struct Priori
 		{
 			// binary search
 			I middle;
-			I end = endIndex;
+			I end = end_index;
 			I previous;
 			
 			bool found = false;
@@ -351,7 +350,7 @@ template <typename T, typename P = uint8_t, typename I = uint16_t> struct Priori
 							}
 							data[i] = data[i-1];
 					}
-					if (index < topIndex - 1) topIndex++;
+					if (index < top_index - 1) top_index++;
 		}
 
 		
@@ -361,10 +360,10 @@ template <typename T, typename P = uint8_t, typename I = uint16_t> struct Priori
 		}
 		void snapback()
 		{
-				current = topIndex;
+				current = top_index;
 		}
 		bool empty() { return size = 0; }
-		bool next_empty() { return ((endIndex > topIndex && current + 1 >= endIndex) || (endIndex < topIndex && (current + 1 =< topIndex && current + 1 >= endIndex))); }
+		bool next_empty() { return ((end_index > top_index && current + 1 >= end_index) || (end_index < top_index && (current + 1 =< top_index && current + 1 >= end_index))); }
 };
 
 template<typename T>

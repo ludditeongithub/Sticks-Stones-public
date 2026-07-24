@@ -9,13 +9,13 @@
 #include <algorithm>
 #include <limits>
 
-std::vector<EntityID> mark_new_path_entities(std::vector<EntityID>& actingEntities, Array<FrameData>& frameDatas)
+std::vector<EntityID> mark_new_path_entities(std::vector<EntityID>& acting_entities, Array<FrameData>& frame_datas)
 {
 		std::vector<EntityID> indices;
-		indices.reserve(actingEntities.size());		
-		for (int i = 0; i < actingEntities.size(); i++) {
-				EntityID j = actingEntities[i];
-				if (frameDatas[j].get<ActState>() == ActState::NewPath) indices.emplace_back();
+		indices.reserve(acting_entities.size());		
+		for (int i = 0; i < acting_entities.size(); i++) {
+				EntityID j = acting_entities[i];
+				if (frame_datas[j].get<ActState>() == ActState::NewPath) indices.emplace_back();
 		}
 		indices.shrink_to_fit();
 		return indices;
@@ -23,34 +23,34 @@ std::vector<EntityID> mark_new_path_entities(std::vector<EntityID>& actingEntiti
 
 // sets start and end, inputted from all types of jobs, of only entity indices that have been chosen
 // to need new paths
-PathsBuffer get_new_paths(std::vector<EntityID>& pathDispatchBuffer, Array<Coord>& coords, Array<Target>& targets)
+PathsBuffer get_new_paths(std::vector<EntityID>& path_dispatch_buffer, Array<Coord>& coords, Array<Target>& targets)
 {	
 		PathsBuffer pb = PathsBuffer();
-		for (size_t i = 0; i < pathDispatchBuffer.size(); i++)
+		for (size_t i = 0; i < path_dispatch_buffer.size(); i++)
 		{
-				EntityID j = pathDispatchBuffer[i];
+				EntityID j = path_dispatch_buffer[i];
 						
 						#if !SHIPPING_BUILD
 						assert(targets[j].type == TargetType::Tile);
 						#endif
 						
-		Coord dest = g_Tiles->getCoordFromIndex(targets[j].index);
-		PathData pd = aStar(coords[j], dest);
+		Coord dest = g_Tiles->get_coord_from_index(targets[j].index);
+		PathData pd = a_star(coords[j], dest);
 		pb.currents[i] = 0;
 		pb.ends[i] = pd.end;
 		pb.datas[i] = pd.data;
-		pb.destinations[i] = pathDispatchBuffer.destinations[i];
+		pb.destinations[i] = path_dispatch_buffer.destinations[i];
 	}
 }
 
 struct OpenNode
 {
 	size_t index;
-	float fCost;
+	float f_cost;
 
 	bool operator>(const OpenNode& other) const
 	{
-		return fCost > other.fCost;
+		return f_cost > other.f_cost;
 	}
 };
 
@@ -59,9 +59,9 @@ static uint32_t current_search_id = 0;
 
 static void initialize_node(NodeData& node)
 {
-	node.gCost = FLT_MAX;
-	node.fCost = FLT_MAX;
-	node.closedFlag = false;
+	node.g_cost = FLT_MAX;
+	node.f_cost = FLT_MAX;
+	node.closed_flag = false;
 }
 
 
@@ -87,25 +87,25 @@ static Direction direction_from_to(size_t from, size_t to)
 
 
 static PathData reconstruct_path(
-	size_t startIndex,
-	size_t goalIndex)
+	size_t start_index,
+	size_t goal_index)
 {
 	PathData path;
 
 	path.start =
-		g_World->getTileCoordFromIndex(startIndex);
+		g_World->get_tile_coord_from_index(start_index);
 
 	path.end =
-		g_World->getTileCoordFromIndex(goalIndex);
+		g_World->get_tile_coord_from_index(goal_index);
 
 
-	size_t current = goalIndex;
+	size_t current = goal_index;
 
 
-	while (current != startIndex)
+	while (current != start_index)
 	{
 		Direction dir =
-			nodeData[current].cameDirection;
+			node_data[current].came_direction;
 
 
 		path.directions.push_back(dir);
@@ -154,51 +154,51 @@ PathData a_star(Coord start, Coord goal)
 		g_World->WORLD_TILE_LENGTH;
 
 	const size_t start_index =
-		g_World->getTileIndexFromCoord(start);
+		g_World->get_tile_index_from_coord(start);
 
 	const size_t goal_index =
-		g_World->getTileIndexFromCoord(goal);
+		g_World->get_tile_index_from_coord(goal);
 
 	std::priority_queue<
 		OpenNode,
 		std::vector<OpenNode>,
 		std::greater<OpenNode>
-	> openSet;
+	> open_set;
 
 
 	NodeData& start_node =
-		nodeData[start_index];
+		node_data[start_index];
 
 
-	start_node.searchID = current_search_id;
+	start_node.search_id = current_search_id;
 	initialize_node(start_node);
 
 
-	start_node.gCost = 0;
+	start_node.g_cost = 0;
 
-	startNode.fCost =
+	start_node.f_cost =
 		heuristic(start, goal);
 
 
-	openSet.push(
+	open_set.push(
 		{
-			startIndex,
-			startNode.fCost
+			start_index,
+			start_node.f_cost
 		}
 	);
 
 
 
-	while (!openSet.empty())
+	while (!open_set.empty())
 	{
-		size_t current_index = openSet.top().index;
+		size_t current_index = open_set.top().index;
 			
-		openSet.pop();
+		open_set.pop();
 
 		NodeData& current_node =
-			nodeData[current_index];
+			node_data[current_index];
 
-		if (current_node.closedFlag)
+		if (current_node.closed_flag)
 			continue;
 
 		if (current_index == goal_index)
@@ -211,7 +211,7 @@ PathData a_star(Coord start, Coord goal)
 
 
 
-		current_node.closedFlag = true;
+		current_node.closed_flag = true;
 
 
 
@@ -244,40 +244,40 @@ PathData a_star(Coord start, Coord goal)
 		for (size_t neighbor : neighbors)
 		{
 			if (neighbor == current_index)continue;
-			NodeData& neighbor_node = nodeData[neighbor];
+			NodeData& neighbor_node = node_data[neighbor];
 
-			if (neighbor_node.searchID != current_search_id)
+			if (neighbor_node.search_id != current_search_id)
 			{
-				neighbor_node.searchID = current_search_id;
+				neighbor_node.search_id = current_search_id;
 				initialize_node(neighbor_node);
 			}
 
-			if (neighbor_node.closedFlag)
+			if (neighbor_node.closed_flag)
 				continue;kxs
-			float tentative_g = current_node.gCost + tileMoveCosts[neighbor];
+			float tentative_g = current_node.g_cost + tile_move_costs[neighbor];
 
-			if (tentativeG < neighbor_node.gCost)
+			if (tentative_g < neighbor_node.g_cost)
 			{
-				neighbor_node.gCost =
-					tentativeG;
+				neighbor_node.g_cost =
+					tentative_g;
 
-				neighborNode.fCost =
-					tentativeG +
+				neighbor_node.f_cost =
+					tentative_g +
 					heuristic(
-						g_World->getTileCoordFromIndex(neighbor),
+						g_World->get_tile_coord_from_index(neighbor),
 						goal
 					);
 
-				neighborNode.cameDirection =
-					directionFromTo(
-						currentIndex,
+				neighbor_node.came_direction =
+					direction_from_to(
+						current_index,
 						neighbor
 					);
 
-				openSet.push(
+				open_set.push(
 					{
 						neighbor,
-						neighborNode.fCost
+						neighbor_node.f_cost
 					}
 				);
 			}

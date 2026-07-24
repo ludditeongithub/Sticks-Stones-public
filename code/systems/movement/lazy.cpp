@@ -5,16 +5,16 @@
 #include "world/animal/database.hpp"
 #include "world/animal/tables.hpp"
 // raw inertia value
-inline Frame TileDatabase::calcInertia(Frame entityBaseFrames, const Coord coord)
+inline Frame TileDatabase::calc_inertia(Frame entity_base_frames, const Coord coord)
 {
-	return static_cast<Frame>(entityBaseFrames * tileFrameMultiplier[tileDatas[getIndex(coord)]]);
+	return static_cast<Frame>(entity_base_frames * tile_frame_multiplier[tile_datas[get_index(coord)]]);
 }
 
-inline Frame TileDatabase::calcInertia(const Coord coord, bool running)
+inline Frame TileDatabase::calc_inertia(const Coord coord, bool running)
 {
 		Frame base;
 		running ? base = BASE_RUNNING_FRAMES : base = BASE_WALKING_FRAMES;
-		return static_cast<Frame>( * tileFrameMultiplier[tileDatas[getIndex(coord)].get<Tile>()]);
+		return static_cast<Frame>( * tile_frame_multiplier[tile_datas[get_index(coord)].get<Tile>()]);
 }
 
 template <typename DB>
@@ -29,13 +29,13 @@ inline void set_next_move_inertia(DB& database, TileDatabase& tiles, EntityID i,
 {
 if (typeid(database) == AnimalDatabase)
 		{
-	LookupTable<Animal, Frame> frame_per_tiles_table = animal::getFramePerTilesTable(running);
+	LookupTable<Animal, Frame> frame_per_tiles_table = animal::get_frame_per_tiles_table(running);
 		  
     Animal animal = database.animals[i];
-    database.inertias[i] = tiles.calcInertia(framePerTilesTable[animal], coord);
+    database.inertias[i] = tiles.calc_inertia(frame_per_tiles_table[animal], coord);
   }
   else
-		  database.inertias[i] = tiles.calcInertia(coord, running);
+		  database.inertias[i] = tiles.calc_inertia(coord, running);
   // TODO: speed for different units
 }
 
@@ -45,88 +45,88 @@ else if (actions[i] == Action::Prowl ||
 			 actions[i] == Action::CheckProwl)
 		{ // TODO: ProwlTile
 			if (rint(0, 50) < 50)
-				directions[i] = getRandomAdjDirection(directions[i]);
-			moveInDirection(i, false);
+				directions[i] = get_random_adj_direction(directions[i]);
+			move_in_direction(i, false);
 			// check surroundings, if target is now seen
-			Object obj = currentTarget[i];
+			Object obj = current_target[i];
 			if (actions[i] = Action::CheckProwl)
 				ran = true;
-			if (isItem(obj))
-				itemCheck(pawn, directions[i], ran);
-			else if (isPlant(obj))
-				searchPlantCheck(pawn, directions[i], ran);
-			else if (isScavengeable(obj))
-				scavengeableCheck(pawn, directions[i], ran);
+			if (is_item(obj))
+				item_check(pawn, directions[i], ran);
+			else if (is_plant(obj))
+				search_plant_check(pawn, directions[i], ran);
+			else if (is_scavengeable(obj))
+				scavengeable_check(pawn, directions[i], ran);
 			// TODO:: Fruit
 			// TODO:: animal
-			else if (isTools(obj))
-				toolCheck(pawn);
-			inertias[i] = calcSpeed(midSpeedPawn, coords[i]);
+			else if (is_tools(obj))
+				tool_check(pawn);
+			inertias[i] = calc_speed(mid_speed_pawn, coords[i]);
 		}
 		else if (actions[i] == Action::ApproachPlant ||
 			 actions[i] == Action::ApproachTile ||
 			 actions[i] == Action::ApproachTool ||
 			 actions[i] == Action::ApproachItem)
 		{
-			std::pair<Direction, bool> next = nextDirectionToTarget(i);
+			std::pair<Direction, bool> next = next_direction_to_target(i);
 			direction[i] = next.first;
 			if (next.second)
 			{
-				moveInDirection(i, false);
-				inertias[i] = calcSpeed(minSpeedPawn, coords[i]);
+				move_in_direction(i, false);
+				inertias[i] = calc_speed(min_speed_pawn, coords[i]);
 			}
 			else
 			{
 				if (actions[i] == Action::ApproachItem)
-					takeItem(i, coords[i]);
+					take_item(i, coords[i]);
 				else if (actions[i] == Action::ApproachPlant)
-					harvestPlant(i, coords[i]);
+					harvest_plant(i, coords[i]);
 				else if (actions[i] == Action::ApproachTile)
-					harvestTile(i, coords[i]);
+					harvest_tile(i, coords[i]);
 				else if (actions[i] == Action::ApproachScavengeable)
-					harvestScavengeable(i, coords[i]);
+					harvest_scavengeable(i, coords[i]);
 				else if (actions[i] == Action::ApproachTool)
-					takeTool(i, coords[i]);
+					take_tool(i, coords[i]);
 				actions[i] = Action::Idle;
-				decideTask(i);
+				decide_task(i);
 			}
 		} else if (actions[i] == Action::GetTool ||
 			 actions[i] == Action::GetItem)
 		{
-			std::pair<Direction, bool> next = nextDirectionToTarget(i);
+			std::pair<Direction, bool> next = next_direction_to_target(i);
 			direction[i] = next.first;
 			if (next.second)
 			{
-				moveInDirection(i, false);
-				inertias[i] = calcSpeed(midSpeedPawn, coords[i]);
+				move_in_direction(i, false);
+				inertias[i] = calc_speed(mid_speed_pawn, coords[i]);
 				// promised versions, while approach is non-promise
 				if (actions[i] == Action::GetItem)
-					takeItem(i, coords[i]);
+					take_item(i, coords[i]);
 				else
-					takeTool(i, coords[i]);
+					take_tool(i, coords[i]);
 				actions[i] = Action::Idle;
-				findPromise.set();
+				find_promise.set();
 			}
 			else if (actions[i] == Action::Pursuit ||
 				 actions[i] == Action::AnimalPursuit)
 			{
-				std::pair<Direction, bool> next = nextDirectionToMovingTarget(i);
+				std::pair<Direction, bool> next = next_direction_to_moving_target(i);
 				direction[i] = next.first;
 				if (next.second)
-					moveInDirection(i, false);
+					move_in_direction(i, false);
 				else
 				{
 					if (actions[i] == Action::Pursuit)
 					{
 						// TODO: get new military target
-						if (attack(i, currentDest[i], false, false))
-							getNewTarget();
+						if (attack(i, current_dest[i], false, false))
+							get_new_target();
 					}
 					// TODO: do this
 					if (actions[i] == Action::AnimalPursuit)
-						if (attack(i, currentDest[i], false, true))
-							dealWithGame();
+						if (attack(i, current_dest[i], false, true))
+							deal_with_game();
 				}
-				inertias[i] = calcSpeed(maxSpeedPawn, coords[i]);
+				inertias[i] = calc_speed(max_speed_pawn, coords[i]);
 			}
 		}

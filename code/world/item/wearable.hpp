@@ -17,9 +17,9 @@ struct ClothingData
 	float durability;
 	float bulk;
 	float weight;
-	BulkLevel bulkLevel;
-	float minTemp;
-	float maxTemp;
+	BulkLevel bulk_level;
+	float min_temp;
+	float max_temp;
 	BitsetTable<BodyArea> covers;
 };
 
@@ -326,7 +326,7 @@ struct WeaponData
 	float speed;
 	float durability;
 	bool sharp;	     // whether it needs to be sharp, or if it is purely a smasher
-	float pierceOrSmash; // pierce/smash value
+	float pierce_or_smash; // pierce/smash value
 };
 
 constexpr float SLOW = 0.4;
@@ -336,13 +336,13 @@ constexpr float FAST = 1.6;
 struct ToolData
 {
 	vector<std::pair<Actions, float>>
-	    actionData; // last float takes speed from action data lookup table that says whether
+	    action_data; // last float takes speed from action data lookup table that says whether
 			// tool is SLOW MEDIUM or FAST at that particular task, multiples that value
 			// by time. Can override time instead of multiplying by making it a negative
 	uint16_t durability; // how many times it can perform tasks before wearing out/breaking
 	float bulk;
 	float weight;
-	BulkLevel bulkLevel = BulkLevel::Solid;
+	BulkLevel bulk_level = BulkLevel::Solid;
 	std::optional<uint16_t> sharpness;
 };
 
@@ -353,7 +353,7 @@ struct VariableGearData
 };
 
 // only values other than MEDIUM are listed, MEDIUM is default and assummed if not found
-void initToolData()
+void init_tool_data()
 {
 	// TODO: find actions for handaxe
 	Handaxe
@@ -404,48 +404,48 @@ void initToolData()
 	    {},
 	}
 
-	bulkAndWeights[static_cast<int>(Item::SimpleLoom)] = {34.0f, 8.5f, BulkLevel::Single};
-	bulkAndWeights[static_cast<int>(Item::Blowpipe)] = {0.5f, 1.0f, BulkLevel::Solid};
-	bulkAndWeights[static_cast<int>(Container::Crucible) + static_cast<int>(Item::MAX)] = {
+	bulk_and_weights[static_cast<int>(Item::SimpleLoom)] = {34.0f, 8.5f, BulkLevel::Single};
+	bulk_and_weights[static_cast<int>(Item::Blowpipe)] = {0.5f, 1.0f, BulkLevel::Solid};
+	bulk_and_weights[static_cast<int>(Container::Crucible) + static_cast<int>(Item::MAX)] = {
 	    0.5f, 2.5f, BulkLevel::Solid};
-	bulkAndWeights[static_cast<int>(Item::Whip)] = {1.8f, 0.5f, BulkLevel::Soft};
-	bulkAndWeights[static_cast<int>(Item::HandheldBellows)] = {0.6f, 1.2f, BulkLevel::Soft};
+	bulk_and_weights[static_cast<int>(Item::Whip)] = {1.8f, 0.5f, BulkLevel::Soft};
+	bulk_and_weights[static_cast<int>(Item::HandheldBellows)] = {0.6f, 1.2f, BulkLevel::Soft};
 }
 
-void initWeaponData()
+void init_weapon_data()
 {
 
-	bulkAndWeights[static_cast<int>(Item::Shortbow)] = {15.5f, 0.8f, BulkLevel::Solid};
-	bulkAndWeights[static_cast<int>(Item::Bow)] = {20.6f, 1.0f, BulkLevel::Solid};
-	bulkAndWeights[static_cast<int>(Item::Crossbow)] = {25.8f, 2.5f, BulkLevel::Solid};
-	bulkAndWeights[static_cast<int>(Item::Longbow)] = {28.9f, 1.5f, BulkLevel::Solid};
-	bulkAndWeights[static_cast<int>(Item::Spear)] = {19.9f, 2.0f, BulkLevel::Solid};
-	bulkAndWeights[static_cast<int>(Item::Axe)] = {17.0f, 2.5f, BulkLevel::Solid};
-	bulkAndWeights[static_cast<int>(Item::Sword)] = {18.0f, 3.0f, BulkLevel::Solid};
-	bulkAndWeights[static_cast<int>(Item::Greataxe)] = {28.2f, 7.5f, BulkLevel::Solid};
-	bulkAndWeights[static_cast<int>(Item::Halberd)] = {24.3f, 5.0f, BulkLevel::Solid};
-	bulkAndWeights[static_cast<int>(Item::Pike)] = {43.0f, 4.0f, BulkLevel::Single};
+	bulk_and_weights[static_cast<int>(Item::Shortbow)] = {15.5f, 0.8f, BulkLevel::Solid};
+	bulk_and_weights[static_cast<int>(Item::Bow)] = {20.6f, 1.0f, BulkLevel::Solid};
+	bulk_and_weights[static_cast<int>(Item::Crossbow)] = {25.8f, 2.5f, BulkLevel::Solid};
+	bulk_and_weights[static_cast<int>(Item::Longbow)] = {28.9f, 1.5f, BulkLevel::Solid};
+	bulk_and_weights[static_cast<int>(Item::Spear)] = {19.9f, 2.0f, BulkLevel::Solid};
+	bulk_and_weights[static_cast<int>(Item::Axe)] = {17.0f, 2.5f, BulkLevel::Solid};
+	bulk_and_weights[static_cast<int>(Item::Sword)] = {18.0f, 3.0f, BulkLevel::Solid};
+	bulk_and_weights[static_cast<int>(Item::Greataxe)] = {28.2f, 7.5f, BulkLevel::Solid};
+	bulk_and_weights[static_cast<int>(Item::Halberd)] = {24.3f, 5.0f, BulkLevel::Solid};
+	bulk_and_weights[static_cast<int>(Item::Pike)] = {43.0f, 4.0f, BulkLevel::Single};
 }
 
-void initContainerData()
+void init_container_data()
 {
-	bulkAndWeights[static_cast<int>(Container::Pot) + static_cast<int>(Item::MAX)] = {
+	bulk_and_weights[static_cast<int>(Container::Pot) + static_cast<int>(Item::MAX)] = {
 	    5.7f, 2.0f, BulkLevel::Solid};
-	bulkAndWeights[static_cast<int>(Container::LargePot) + static_cast<int>(Item::MAX)] = {
+	bulk_and_weights[static_cast<int>(Container::LargePot) + static_cast<int>(Item::MAX)] = {
 	    20.7f, 8.0f, BulkLevel::Solid};
-	bulkAndWeights[static_cast<int>(Container::Kettle) + static_cast<int>(Item::MAX)] = {
+	bulk_and_weights[static_cast<int>(Container::Kettle) + static_cast<int>(Item::MAX)] = {
 	    3.8f, 2.5f, BulkLevel::Solid};
-	bulkAndWeights[static_cast<int>(Container::Jar) + static_cast<int>(Item::MAX)] = {
+	bulk_and_weights[static_cast<int>(Container::Jar) + static_cast<int>(Item::MAX)] = {
 	    0.8f, 1.0f, BulkLevel::Solid};
-	bulkAndWeights[static_cast<int>(Container::Bucket) + static_cast<int>(Item::MAX)] = {
+	bulk_and_weights[static_cast<int>(Container::Bucket) + static_cast<int>(Item::MAX)] = {
 	    14.6f, 2.5f, BulkLevel::Solid};
-	bulkAndWeights[static_cast<int>(Container::Basket) + static_cast<int>(Item::MAX)] = {
+	bulk_and_weights[static_cast<int>(Container::Basket) + static_cast<int>(Item::MAX)] = {
 	    10.4f, 0.70f, BulkLevel::Solid};
-	bulkAndWeights[static_cast<int>(Container::Satchel) + static_cast<int>(Item::MAX)] = {
+	bulk_and_weights[static_cast<int>(Container::Satchel) + static_cast<int>(Item::MAX)] = {
 	    0.6f, 0.30f, BulkLevel::Solid};
-	bulkAndWeights[static_cast<int>(Container::Bottle) + static_cast<int>(Item::MAX)] = {
+	bulk_and_weights[static_cast<int>(Container::Bottle) + static_cast<int>(Item::MAX)] = {
 	    0.4f, 0.10f, BulkLevel::Solid};
-	bulkAndWeights[static_cast<int>(Container::LargeSatchel) + static_cast<int>(Item::MAX)] = {
+	bulk_and_weights[static_cast<int>(Container::LargeSatchel) + static_cast<int>(Item::MAX)] = {
 	    1.2f, 0.20f, BulkLevel::Solid};
 }
 #endif // GEAR_H_

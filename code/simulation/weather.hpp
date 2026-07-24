@@ -8,46 +8,46 @@
 #include "world/chunk/data.hpp"
 #include "world/tile/database.hpp"
 
-void World::updateWeather()
+void World::update_weather()
 {
 	for (size_t i = 0; i < CHUNK_AMOUNT; i++)
 	{
-		cloudValues[i] += nextCloudChanges.next();
-		precipitationValues[i] += nextPrecipitationChanges.next();
+		cloud_values[i] += next_cloud_changes.next();
+		precipitation_values[i] += next_precipitation_changes.next();
 	}
 }
 
-inline void applyHeavyCloudEffects(uint16_t chunk)
+inline void apply_heavy_cloud_effects(uint16_t chunk)
 {
 	//TODO: rendering
 }
 
-inline void applyLightCloudEffects(uint16_t chunk)
+inline void apply_light_cloud_effects(uint16_t chunk)
 {
 	//TODO: rendering
 }
 
-inline void World::applyPrecipitation(TileDatabase* tileDB, uint16_t chunk, bool heavy)
+inline void World::apply_precipitation(TileDatabase* tile_db, uint16_t chunk, bool heavy)
 {
-	Array<Liquid> &waters = tileDB->waters;
-	Liquid amount = (precipitationCores[chunk] + (precipitationCores[chunk] * precipitationVariance.next() * PRECIPITATION_VARIANCE_FACTOR)) * MM_PER_PRECIPITATION;
+	Array<Liquid> &waters = tile_db->waters;
+	Liquid amount = (precipitation_cores[chunk] + (precipitation_cores[chunk] * precipitation_variance.next() * PRECIPITATION_VARIANCE_FACTOR)) * MM_PER_PRECIPITATION;
 	if (heavy) amount *= HEAVY_PRECIPITATION_FACTOR;
 	for (size_t i = chunk * CHUNK_SIZE; i < chunk * CHUNK_SIZE + CHUNK_SIZE; i++) waters[i] += amount;	
 }	
 
-void World::applyWeather(TileDatabase* tileDB)
+void World::apply_weather(TileDatabase* tile_db)
 {
 	for (size_t i = 0; i < CHUNK_AMOUNT; i++) {
-		if (cloudValues[i] > MIN_HEAVY_CLOUDS)
+		if (cloud_values[i] > MIN_HEAVY_CLOUDS)
 		{
-			applyHeavyCloudEffects(i);
-					if (precipitationValues[i] > PRECIPITATION_MIN) applyPrecipitation(tileDB, i, true);
+			apply_heavy_cloud_effects(i);
+					if (precipitation_values[i] > PRECIPITATION_MIN) apply_precipitation(tile_db, i, true);
 					
 		}
-		else if (cloudValues[i] > MIN_LIGHT_CLOUDS)
+		else if (cloud_values[i] > MIN_LIGHT_CLOUDS)
 		{
-			applyLightCloudEffects(i);
-			if (precipitationValues[i] > PRECIPITATION_MIN) applyPrecipitation(tileDB, i, true);
+			apply_light_cloud_effects(i);
+			if (precipitation_values[i] > PRECIPITATION_MIN) apply_precipitation(tile_db, i, true);
 		}
 
 	}

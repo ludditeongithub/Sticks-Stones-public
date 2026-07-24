@@ -6,7 +6,7 @@ struct GameOptions
 	int height;
 };
 
-GameOptions selectGameOptions()
+GameOptions select_game_options()
 {
 	GameOptions go;
 	go.width = 200;

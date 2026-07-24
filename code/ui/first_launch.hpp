@@ -5,7 +5,7 @@
 #include "ui/components/button_functionality.hpp"
 #include "ui/components/drop_down_menu.hpp"
 #include <cereal/details/helpers.hpp>
-#include <extern/SDL_FontCache.h>
+#include <SDL_FontCache.h>
 #include <core/SDL_FontCache.h>
 #include <render/screen.hpp>
 #include <string>
@@ -84,7 +84,7 @@ struct FirstLaunchBuffer
 
 		PositionedText fullscreen = {amble20, "Fullscreen: ", {30, 30}};
 		int text_width = fc_get_width(amble20, fullscreen.text);
-		CheckboxUI cb = CheckboxUI({textWidth + 8,30}, {30,30}, SpriteSheet::buttonSprites[ButtonSprite::Checkbox].unpressed, SpriteSheet::buttonSprites[ButtonSprite::Checkbox].pressed);
+		CheckboxUI cb = CheckboxUI({text_width + 8,30}, {30,30}, SpriteSheet::button_sprites[ButtonSprite::Checkbox].unpressed, SpriteSheet::button_sprites[ButtonSprite::Checkbox].pressed);
 		Text text = {amble20, "Click to Select Window Dimensions"};
 		TextButtonUI header_button = TextButtonUI(text, NullBF(), ButtonSprite::FirstLaunchButton, {30, static_cast<int>(fullscreen.position.y) + 50});
 
@@ -93,7 +93,7 @@ struct FirstLaunchBuffer
 		int accum = header_button.top_left_corner.y + header_button.dimensions.y;
 		for (auto sd : screen_dimensions)
 		{		  
-		  ddm.addItem(TextButtonUI({amble20, std::to_string(sd.x) + " x " + std::to_string(sd.y)},                                           ChangeScreenDimensionsBF(sd), ButtonSprite::FirstLaunchButton, {headerButton.topLeftCorner.x, accum}));
+		  ddm.add_item(TextButtonUI({amble20, std::to_string(sd.x) + " x " + std::to_string(sd.y)},                                           ChangeScreenDimensionsBF(sd), ButtonSprite::FirstLaunchButton, {header_button.top_left_corner.x, accum}));
 		}
 
                 Text lbt = {amble20, "Launch"};

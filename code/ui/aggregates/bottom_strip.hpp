@@ -20,18 +20,18 @@ constexpr SCoord equipment = {96, 9};
 using Subject = std::variant<Animal, Unit>;
 
 // TODO: add animation to subject display
-void renderSubjectDisplay(Time age, EntityRenderData renderData)
+void render_subject_display(Time age, EntityRenderData render_data)
 {
 	SDL_Rect* subject;
-	if (auto animalData = std::get_if<AnimalRenderData>(&renderData))
+	if (auto animal_data = std::get_if<AnimalRenderData>(&render_data))
 	{
-		subject = getAnimalRect(animalData->animal, {Direction::South, ActionStatus::Idle, MatingStatus::Infertile}, age, 0, animalSpriteInfos[animalData->animal]);
+		subject = get_animal_rect(animal_data->animal, {Direction::South, ActionStatus::Idle, MatingStatus::Infertile}, age, 0, animal_sprite_infos[animal_data->animal]);
 	}
-	else if (auto unitData = std::get_if<UnitRenderData>(&renderData))
+	else if (auto unit_data = std::get_if<UnitRenderData>(&render_data))
 	{
-		subject = getUnitRect(unitData->unit, ActionStatus::Idle, Direction::South, 0, age, unitSpriteInfos[unitData->unit]);
+		subject = get_unit_rect(unit_data->unit, ActionStatus::Idle, Direction::South, 0, age, unit_sprite_infos[unit_data->unit]);
 	}
-	spriteSheetTexture.render(display.x, display.y, subject, &bottomBarViewport);
+	sprite_sheet_texture.render(display.x, display.y, subject, &bottom_bar_viewport);
 }
 
 enum class UnitStatusBars
@@ -46,8 +46,8 @@ enum class UnitStatusBars
 class BottomUnitBar
 {
 	StatusBar bars[static_cast<int>(UnitStatusBars::MAX)];
-	TextBox nameTag;
-	TextBox clanTag;
+	TextBox name_tag;
+	TextBox clan_tag;
 
 	BottomUnitBar()
 	{
@@ -56,15 +56,15 @@ class BottomUnitBar
 		bars[static_cast<int>(UnitStatusBars::Thirst)] = StatusBar({16, 320}, , false);
 		bars[static_cast<int>(UnitStatusBars::Satisfaction)] = StatusBar({24, 320}, , false);
 		//    bars[static_cast<int>(UnitStatusBars::Social)] = StatusBar({32, 320}, ,false);
-		nameTag = 
+		name_tag = 
 	}
 
 	void render() {}
 
-	void renderText() {}
+	void render_text() {}
 };
 
-void instantiateBottomUnit(bool alt)
+void instantiate_bottom_unit(bool alt)
 {
 	// render status bars
 

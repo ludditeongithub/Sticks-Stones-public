@@ -1,4 +1,4 @@
-#include "tribeEvents.h"
+#include "tribe_events.h"
 
 void negotiate(){"1. Serve him kind gestures and a nice meal."
 		 "2. (Negotiator) Request to send a delegation to his people."
@@ -9,5 +9,5 @@ void negotiate(){"1. Serve him kind gestures and a nice meal."
 
 void trade_deal()
 {
-	selectResources();
+	select_resources();
 }

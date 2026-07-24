@@ -58,15 +58,15 @@ this->capacity = capacity;
         if (size + 1 > capacity)
             return false;
         size_t i;
-        if (freeSlots.empty())
+        if (free_slots.empty())
         {
             i = size;
             size++;
         }
         else
         {
-            i = freeSlots.top();
-            freeSlots.pop();
+            i = free_slots.top();
+            free_slots.pop();
         }
         alives[i] = true;
         if (newborn)
@@ -99,7 +99,7 @@ this->capacity = capacity;
         if (!alives[i])
             return false;
 
-        freeSlots.push(i);
+        free_slots.push(i);
         alives[i] = false;
         return true;
   }
@@ -107,7 +107,7 @@ this->capacity = capacity;
   void free_unused_entity()
   {
     for (size_t i = 0; i < coords.size; i++) {
-    if (tiles.tileStatuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
+    if (tiles.tile_statuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
     }
   }
     
@@ -122,7 +122,7 @@ this->capacity = capacity;
     {
     archive(capacity);
         archive(size);
-        archive(freeSlots);
+        archive(free_slots);
         archive(alives);
    
 
@@ -136,7 +136,7 @@ this->capacity = capacity;
     {
         archive(capacity);
         archive(size);
-        archive(freeSlots);
+        archive(free_slots);
         archive(alives);
         
         items.load(archive);
@@ -153,20 +153,20 @@ inline bool transfer_variant_item(size_t i, VariantItemDatabase &old_db, Variant
   {
   if (new_db.size >= new_db.capacity) return false;
   int index;  
-  if (new_db.freeSlots.empty())
+  if (new_db.free_slots.empty())
   {
   index = ++size;
 	}
 	else
 	{
-		index = new_db.freeSlots.top();
-		new_db.freeSlots.pop();			
+		index = new_db.free_slots.top();
+		new_db.free_slots.pop();			
   }
     new_db.items[index] = old_db.items[i];
     new_db.coords[index] = old_db.coords[i];
     new_db.variants[index] = old_db.variants[i];
   new_db.alives[index] = true;
-  old_db.freeSlots.push(i);
+  old_db.free_slots.push(i);
   old_db.alives[index] = false;
   return true;
   }

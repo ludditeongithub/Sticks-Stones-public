@@ -153,7 +153,7 @@ inline Tile get_tile_type(int biome, float chance)
 	return Tile::DeepWater;
 }
 
-std::vector<float> WorldSpawner::generateTileChances()
+std::vector<float> WorldSpawner::generate_tile_chances()
 {
 	std::vector<float> chances = std::vector<float>(TILE_AMOUNT);
 	// generate Voronoi Noise
@@ -181,13 +181,13 @@ std::vector<float> WorldSpawner::generateTileChances()
 	return chances;
 }
 
-inline Coord WorldSpawner::getTileCoordFromIndex(size_t i)
+inline Coord WorldSpawner::get_tile_coord_from_index(size_t i)
 {
   return {static_cast<uint32_t>(i % (size_t)WIDTH), static_cast<uint32_t>(i / (size_t)HEIGHT)};
 }
 
 // NOTE: may be wrong, maybe vertical should be multiplication
-inline size_t WorldSpawner::getTileIndexFromCoord(Coord c)
+inline size_t WorldSpawner::get_tile_index_from_coord(Coord c)
 {
   return static_cast<size_t>(c.x) + static_cast<size_t>(c.y * (size_t)WIDTH);
 }

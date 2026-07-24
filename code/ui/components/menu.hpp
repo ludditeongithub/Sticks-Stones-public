@@ -25,15 +25,15 @@ class TextMenu : Menu
 	};
 	Category type;
 	std::vector<Button> buttons;
-	int longestText = 0;
-	int fontSize;
+	int longest_text = 0;
+	int font_size;
 
       public:
-	TextMenu(Category c, int fontSize) {};
+	TextMenu(Category c, int font_size) {};
 	// TODO: consider sorting algorithm to sort by age, alphabetically, etc
-	void addItem(std::string text, SDL_FPoint position, SDL_Color defaultColor,
-		     SDL_Color hoverColor, SDL_Color pressedColor, SDL_Color textColor,
-		     SDL_Color textHoverColor);
+	void add_item(std::string text, SDL_FPoint position, SDL_Color default_color,
+		     SDL_Color hover_color, SDL_Color pressed_color, SDL_Color text_color,
+		     SDL_Color text_hover_color);
 
 	void open();
 };
@@ -66,7 +66,7 @@ class MenuButtonFunc
 
       public:
 	MenuButtonFunc(Menu &m, SDL_FPoint &pos, int &w, int &h);
-	void handleEvent(SDL_Event *e);
+	void handle_event(SDL_Event *e);
 };
 
 class TextMenuButton

@@ -8,7 +8,7 @@
 #include <core/math.hpp>
 #include <core/random.hpp>
 #include <macros/database.hpp>
-#include <extern/cereal/archives/binary.hpp>
+#include <cereal/archives/binary.hpp>
 #include <cstdint>
 #include <stack>
 #include <vector>
@@ -42,8 +42,8 @@ constexpr uint16_t CONTAINER_UNDERFLOW_LIMIT = 3;
 struct Inventory
 {
 	// TODO
-	//  std::variant<ItemSlot, VariantItemSlot, ToolSlot> leftHand;
-	//  std::variant<ItemSlot, VariantItemSlot, ToolSlot> rightHand;
+	//  std::variant<ItemSlot, VariantItemSlot, ToolSlot> left_hand;
+	//  std::variant<ItemSlot, VariantItemSlot, ToolSlot> right_hand;
 	std::array<Container, CONTAINER_UNDERFLOW_LIMIT> containers; // first container is HANDS
 	BulkStatus bulk_status = BulkStatus::NONE;		     // for hands
 	float weight;
@@ -191,32 +191,32 @@ this->capacity = capacity;
         if (size + 1 > capacity)
             return false;
         size_t i;
-        if (freeSlots.empty())
+        if (free_slots.empty())
         {
             i = size;
             size++;
         }
         else
         {
-            i = freeSlots.top();
-            freeSlots.pop();
+            i = free_slots.top();
+            free_slots.pop();
         }
         alives[i] = true;
         if (newborn)
         {
             units[i] = unit;
-            healths[i] = unit::maxHealths[unit] * INFANT_HEALTH_MODIFIER;
-            hungers[i] = unit::maxHungers[unit] * INFANT_HUNGER_MODIFIER;
+            healths[i] = unit::max_healths[unit] * INFANT_HEALTH_MODIFIER;
+            hungers[i] = unit::max_hungers[unit] * INFANT_HUNGER_MODIFIER;
             sexes[i] = random_bool->next();
             ages[i] = 0;
             targets[i] = std::numeric_limits<size_t>::max();
-            targetTypes[i] = TargetType::NONE;
+            target_types[i] = TargetType::NONE;
             actions[i] = Action::NONE;
-            frameDatas[i] = FrameData{ActState::NewPath, Direction::South, Frame::F0};
+            frame_datas[i] = FrameData{ActState::NewPath, Direction::South, Frame::F0};
             coords[i] = coord;
-            roleManas[i] = STARTING_ROLE_MANA;
-            roleLists[i] = std::array<Role, ROLE_MAX>{};
-            skinDatas[i] = {'generateMelanin(parent1': None, 'parent2)': None, 'generateSkinWarmth(parent1': None, 0.5: None, 0.0: None};
+            role_manas[i] = STARTING_ROLE_MANA;
+            role_lists[i] = std::array<Role, ROLE_MAX>{};
+            skin_datas[i] = {'generate_melanin(parent1': None, 'parent2)': None, 'generate_skin_warmth(parent1': None, 0.5: None, 0.0: None};
             skills[i] = Skills{};
             inventories[i] = Inventory{};
             places[i] = Places{};
@@ -225,23 +225,23 @@ this->capacity = capacity;
         {
         Time age = random_bool->next();
             units[i] = unit;
-            healths[i] = getMaxHealth(unit, age);
-            hungers[i] = getMaxHunger(unit, age);
+            healths[i] = get_max_health(unit, age);
+            hungers[i] = get_max_hunger(unit, age);
             sexes[i] = random_bool->next();
             ages[i] = age;
             targets[i] = std::numeric_limits<size_t>::max();
-            targetTypes[i] = TargetType::NONE;
+            target_types[i] = TargetType::NONE;
             actions[i] = Action::NONE;
-            frameDatas[i] = FrameData{ActState::NewPath, Direction::South, Frame::F0};
+            frame_datas[i] = FrameData{ActState::NewPath, Direction::South, Frame::F0};
             coords[i] = coord;
-            roleManas[i] = STARTING_ROLE_MANA;
-            roleLists[i] = std::array<Role, ROLE_MAX>{};
-            skinDatas[i] = {'generateMelanin(world': None, 'coord)': None, 'generateSkinWarmth(world': None, 0.5: None, 0.0: None};
+            role_manas[i] = STARTING_ROLE_MANA;
+            role_lists[i] = std::array<Role, ROLE_MAX>{};
+            skin_datas[i] = {'generate_melanin(world': None, 'coord)': None, 'generate_skin_warmth(world': None, 0.5: None, 0.0: None};
             skills[i] = Skills{};
             inventories[i] = Inventory{};
             places[i] = Places{};
         }
-            search.insertEntity(unit, {i, coords[i]});
+            search.insert_entity(unit, {i, coords[i]});
         return true;
           }
           bool spawn(Unit unit, bool newborn, Coord origin) {
@@ -259,17 +259,17 @@ this->capacity = capacity;
         if (!alives[i])
             return false;
 
-        freeSlots.push(i);
+        free_slots.push(i);
         alives[i] = false;
         Unit unit = units[i];
-            search.removeEntity(unit, {i, coords[i]});
+            search.remove_entity(unit, {i, coords[i]});
         return true;
   }
 
   void free_unused_entity()
   {
     for (size_t i = 0; i < coords.size; i++) {
-    if (tiles.tileStatuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
+    if (tiles.tile_statuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
     }
   }
     
@@ -281,10 +281,10 @@ this->capacity = capacity;
     inline bool attempt_move_entity(size_t index)
     {
         Coord& pos = coords[index];
-        Coord new_pos = getPos(frameDatas[index].get<Direction>(), pos);
+        Coord new_pos = get_pos(frame_datas[index].get<Direction>(), pos);
         size_t ti = world.get_tile_index_from_coord(new_pos);
 
-        if (search.tiles.tileStatuses.get<OccupiedStatus>()[ti] == false)
+        if (search.tiles.tile_statuses.get<OccupiedStatus>()[ti] == false)
         {
             pos = new_pos;
             return true;
@@ -302,7 +302,7 @@ this->capacity = capacity;
     {
     archive(capacity);
         archive(size);
-        archive(freeSlots);
+        archive(free_slots);
         archive(alives);
    
 
@@ -312,13 +312,13 @@ this->capacity = capacity;
         sexes.save(archive);
         ages.save(archive);
         targets.save(archive);
-        targetTypes.save(archive);
+        target_types.save(archive);
         actions.save(archive);
-        frameDatas.save(archive);
+        frame_datas.save(archive);
         coords.save(archive);
-        roleManas.save(archive);
-        roleLists.save(archive);
-        skinDatas.save(archive);
+        role_manas.save(archive);
+        role_lists.save(archive);
+        skin_datas.save(archive);
         skills.save(archive);
         inventories.save(archive);
         places.save(archive);
@@ -329,7 +329,7 @@ this->capacity = capacity;
     {
         archive(capacity);
         archive(size);
-        archive(freeSlots);
+        archive(free_slots);
         archive(alives);
         
         units.load(archive);
@@ -338,13 +338,13 @@ this->capacity = capacity;
         sexes.load(archive);
         ages.load(archive);
         targets.load(archive);
-        targetTypes.load(archive);
+        target_types.load(archive);
         actions.load(archive);
-        frameDatas.load(archive);
+        frame_datas.load(archive);
         coords.load(archive);
-        roleManas.load(archive);
-        roleLists.load(archive);
-        skinDatas.load(archive);
+        role_manas.load(archive);
+        role_lists.load(archive);
+        skin_datas.load(archive);
         skills.load(archive);
         inventories.load(archive);
         places.load(archive);
@@ -359,14 +359,14 @@ inline bool transfer_unit(size_t i, UnitDatabase &old_db, UnitDatabase &new_db)
   {
   if (new_db.size >= new_db.capacity) return false;
   int index;  
-  if (new_db.freeSlots.empty())
+  if (new_db.free_slots.empty())
   {
   index = ++size;
 	}
 	else
 	{
-		index = new_db.freeSlots.top();
-		new_db.freeSlots.pop();			
+		index = new_db.free_slots.top();
+		new_db.free_slots.pop();			
   }
     new_db.units[index] = old_db.units[i];
     new_db.healths[index] = old_db.healths[i];
@@ -374,18 +374,18 @@ inline bool transfer_unit(size_t i, UnitDatabase &old_db, UnitDatabase &new_db)
     new_db.sexes[index] = old_db.sexes[i];
     new_db.ages[index] = old_db.ages[i];
     new_db.targets[index] = old_db.targets[i];
-    new_db.targetTypes[index] = old_db.targetTypes[i];
+    new_db.target_types[index] = old_db.target_types[i];
     new_db.actions[index] = old_db.actions[i];
-    new_db.frameDatas[index] = old_db.frameDatas[i];
+    new_db.frame_datas[index] = old_db.frame_datas[i];
     new_db.coords[index] = old_db.coords[i];
-    new_db.roleManas[index] = old_db.roleManas[i];
-    new_db.roleLists[index] = old_db.roleLists[i];
-    new_db.skinDatas[index] = old_db.skinDatas[i];
+    new_db.role_manas[index] = old_db.role_manas[i];
+    new_db.role_lists[index] = old_db.role_lists[i];
+    new_db.skin_datas[index] = old_db.skin_datas[i];
     new_db.skills[index] = old_db.skills[i];
     new_db.inventories[index] = old_db.inventories[i];
     new_db.places[index] = old_db.places[i];
   new_db.alives[index] = true;
-  old_db.freeSlots.push(i);
+  old_db.free_slots.push(i);
   old_db.alives[index] = false;
   return true;
   }

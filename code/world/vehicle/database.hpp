@@ -17,7 +17,7 @@ constexpr static uint16_t ENTITY_SIZE = sizeof(Vehicle) +
 
 size_t capacity;
     size_t size;
-    Stack<size_t> freeSlots;
+    Stack<size_t> free_slots;
     Array<bool> alives;
   SearchGrid& search;
   World& world;
@@ -28,7 +28,7 @@ size_t capacity;
     // =========================
     Array<Vehicle> vehicles;
     Array<Health> healths;
-    Array<FrameData> frameDatas;
+    Array<FrameData> frame_datas;
     Array<Coord> coords;
     
 
@@ -54,42 +54,42 @@ this->capacity = capacity;
   // =========================
 
  
-  bool attemptSpawn(Vehicle vehicle, bool newborn, Coord coord, )
+  bool attempt_spawn(Vehicle vehicle, bool newborn, Coord coord, )
   {       
         if (size + 1 > capacity)
             return false;
         size_t i;
-        if (freeSlots.empty())
+        if (free_slots.empty())
         {
             i = size;
             size++;
         }
         else
         {
-            i = freeSlots.top();
-            freeSlots.pop();
+            i = free_slots.top();
+            free_slots.pop();
         }
         alives[i] = true;
         if (newborn)
         {
             vehicles[i] = vehicle;
-            healths[i] = vehicle::maxHealths[vehicle] * INFANT_HEALTH_MODIFIER;
-            frameDatas[i] = FrameData{ActState::NewPath, Direction::South, Frame::F0};
+            healths[i] = vehicle::max_healths[vehicle] * INFANT_HEALTH_MODIFIER;
+            frame_datas[i] = FrameData{ActState::NewPath, Direction::South, Frame::F0};
             coords[i] = coord;
         }
         else
         {
         Time age = random_bool->next();
             vehicles[i] = vehicle;
-            healths[i] = getMaxHealth(vehicle, age);
-            frameDatas[i] = FrameData{ActState::NewPath, Direction::South, Frame::F0};
+            healths[i] = get_max_health(vehicle, age);
+            frame_datas[i] = FrameData{ActState::NewPath, Direction::South, Frame::F0};
             coords[i] = coord;
         }
         return true;
           }
           bool spawn(Vehicle vehicle, bool newborn, Coord origin) {
-          Coord spawnPoint = tiles.getNearestEmptyTile(origin);
-          while (!attemptSpawn(vehicle, newborn, spawnPoint)) freeUnusedEntity();                 
+          Coord spawn_point = tiles.get_nearest_empty_tile(origin);
+          while (!attempt_spawn(vehicle, newborn, spawn_point)) free_unused_entity();                 
           }        
     
 
@@ -102,15 +102,15 @@ this->capacity = capacity;
         if (!alives[i])
             return false;
 
-        freeSlots.push(i);
+        free_slots.push(i);
         alives[i] = false;
         return true;
   }
 
-  void freeUnusedEntity()
+  void free_unused_entity()
   {
     for (size_t i = 0; i < coords.size; i++) {
-    if (tiles.tileStatuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
+    if (tiles.tile_statuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
     }
   }
     
@@ -119,15 +119,15 @@ this->capacity = capacity;
   // MOVE
   // =========================
   
-    inline bool attemptMoveEntity(size_t index)
+    inline bool attempt_move_entity(size_t index)
     {
         Coord& pos = coords[index];
-        Coord newPos = getPos(frameDatas[index].get<Direction>(), pos);
-        size_t ti = world.getTileIndexFromCoord(newPos);
+        Coord new_pos = get_pos(frame_datas[index].get<Direction>(), pos);
+        size_t ti = world.get_tile_index_from_coord(new_pos);
 
-        if (search.tiles.tileStatuses.get<OccupiedStatus>()[ti] == false)
+        if (search.tiles.tile_statuses.get<OccupiedStatus>()[ti] == false)
         {
-            pos = newPos;
+            pos = new_pos;
             return true;
         }
 
@@ -143,13 +143,13 @@ this->capacity = capacity;
     {
     archive(capacity);
         archive(size);
-        archive(freeSlots);
+        archive(free_slots);
         archive(alives);
    
 
         vehicles.save(archive);
         healths.save(archive);
-        frameDatas.save(archive);
+        frame_datas.save(archive);
         coords.save(archive);
     }
 
@@ -158,12 +158,12 @@ this->capacity = capacity;
     {
         archive(capacity);
         archive(size);
-        archive(freeSlots);
+        archive(free_slots);
         archive(alives);
         
         vehicles.load(archive);
         healths.load(archive);
-        frameDatas.load(archive);
+        frame_datas.load(archive);
         coords.load(archive);
     }
 

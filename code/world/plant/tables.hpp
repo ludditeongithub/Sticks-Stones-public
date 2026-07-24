@@ -1147,7 +1147,7 @@ inline constexpr BitsetTable<Plant> IS_REGROWTH = []
 	return t;
 }();
 
-//relative to maxAge
+//relative to max_age
 inline constexpr LookupTable<Plant, float> REGROWTH_START_AGE = []
 {
 	LookupTable<Plant, float> lt{};
@@ -1360,9 +1360,9 @@ inline constexpr LookupTable<Plant, int> MAX_PRODUCE = []
 
 inline uint16_t get_produce_current_target(Plant plant, const Time current_regrowth, const Time current_age)
 {
-	Time fma = fullMaturityAges[plant] * maxAge[plant];
+	Time fma = full_maturity_ages[plant] * max_age[plant];
 	float maturity = std::min(current_age, fma)  / fma;
-	float produce_portion = std::min(current_regrowth, regrowthMax[plant]) / regrowthMax[plant];
-	return maxProduce[plant] * maturity * produce_portion;	
+	float produce_portion = std::min(current_regrowth, regrowth_max[plant]) / regrowth_max[plant];
+	return max_produce[plant] * maturity * produce_portion;	
 }
 	

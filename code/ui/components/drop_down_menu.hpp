@@ -49,7 +49,7 @@ public:
             SDL_GetMouseState(&mx, &my);
 
             bool header_clicked =
-                mouseInside(
+                mouse_inside(
                     {mx, my},
                     header.top_left_corner,
                     header.dimensions);
@@ -76,7 +76,7 @@ public:
                 SDL_GetMouseState(&mx, &my);
 
                 bool clicked =
-                    mouseInside(
+                    mouse_inside(
                         {mx, my},
                         item.top_left_corner,
                         item.dimensions);

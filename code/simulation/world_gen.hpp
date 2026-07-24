@@ -233,22 +233,22 @@ ScavengeableSpawnBuffer(size_t capacity)
 	{
 		rcx = RandomMachine<int>(WIDTH / 8, 7 * WIDTH / 8);
 		rcy = RandomMachine<int>(HEIGHT / 8, 7 * HEIGHT / 8);
-		mapReserveRows(width, height, altitudeMap);
-		mapReserveRows(width, height, temperatureMap);
-		mapReserveRows(width, height, humidityMap);
-		mapReserveRows(width, height, biomeMap);
-		mapReserveRows(width, height, oceanMap);
-		mapReserveRows(width, height, landsMap);
-		mapReserveRows(width, height, waterMap);
-		mapReserveRows(width, height, potentialHumidityMap);
-		mapReserveRows(width, height, createdHumidityMap);
-		mapReserveRows(width, height, instantiatedWaterMap);
-		mapReserveRows(width, height, oceanDistance);
-		mapReserveRows(width, height, rVisited);
-                tileSpawnBuffer = TileSpawnBuffer(width * height);
-		plantSpawnBuffer = PlantSpawnBuffer(width * height);
-                scavengeableSpawnBuffer = ScavengeableSpawnBuffer(width * height);
-                animalSpawnBuffer = AnimalSpawnBuffer(width * height);
+		map_reserve_rows(width, height, altitude_map);
+		map_reserve_rows(width, height, temperature_map);
+		map_reserve_rows(width, height, humidity_map);
+		map_reserve_rows(width, height, biome_map);
+		map_reserve_rows(width, height, ocean_map);
+		map_reserve_rows(width, height, lands_map);
+		map_reserve_rows(width, height, water_map);
+		map_reserve_rows(width, height, potential_humidity_map);
+		map_reserve_rows(width, height, created_humidity_map);
+		map_reserve_rows(width, height, instantiated_water_map);
+		map_reserve_rows(width, height, ocean_distance);
+		map_reserve_rows(width, height, r_visited);
+                tile_spawn_buffer = TileSpawnBuffer(width * height);
+		plant_spawn_buffer = PlantSpawnBuffer(width * height);
+                scavengeable_spawn_buffer = ScavengeableSpawnBuffer(width * height);
+                animal_spawn_buffer = AnimalSpawnBuffer(width * height);
 	}
 
 	void generate_world();

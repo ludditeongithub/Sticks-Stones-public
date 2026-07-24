@@ -20,7 +20,7 @@ void set_hungry_destinations(DispatchData<Animal> &dispatch)
 	Array<Coord> &positions = dispatch.positions;
 	Array<Coord> &destinations = dispatch.destinations;	
 		
-	for (EntityID i = 0; i < animals.size; i++) determineFeedingTarget(animals[i], i, positions, destinations);
+	for (EntityID i = 0; i < animals.size; i++) determine_feeding_target(animals[i], i, positions, destinations);
 }
 
 
@@ -28,21 +28,21 @@ void determine_feeding_target(Animal a, EntityID i, Array<Coord>& positions, Arr
 {
         uint16_t lowest = 0;
 		Coord nearest;
-		auto rt = roamThreshold[a];
+		auto rt = roam_threshold[a];
 		auto pos = positions[i];
 		Coord loc;
 		bool found = false;
 		GeneralFeedingCategory t = GeneralFeedingCategory::Herbivore;
 		if (herbivores[a])
 		{
-			BitsetTable bt = herbivoreDiets[a];
+			BitsetTable bt = herbivore_diets[a];
 			for (Food fd : bt)
 			{
-				loc = getNearestFood(fd);
-				auto d = getDistance(pos, loc);
+				loc = get_nearest_food(fd);
+				auto d = get_distance(pos, loc);
 				if (d < rt)
 				{
-					setForageTarget(loc, destinations);
+					set_forage_target(loc, destinations);
 					continue;
 				}
 				if (d < lowest)
@@ -57,17 +57,17 @@ void determine_feeding_target(Animal a, EntityID i, Array<Coord>& positions, Arr
 		if (carnivores[a])
 		{
 			uint32_t prey_index;
-			BitsetTable bt = carnivoreDiets[a];
+			BitsetTable bt = carnivore_diets[a];
 			for (Animal prey : bt)
 			{
-				loc = getNearestAnimal(prey);
+				loc = get_nearest_animal(prey);
 				// possible improvement/alternate method: do not search for plants
 				// and animals in non-native biomes!
-				auto d = getDistance(pos, loc);
-				auto rt = roamThreshold[a];
+				auto d = get_distance(pos, loc);
+				auto rt = roam_threshold[a];
 				if (d < rt)
 				{
-					setHuntTarget(loc, destinations);
+					set_hunt_target(loc, destinations);
 					continue;
 				}
 				if (d < lowest)
@@ -83,17 +83,17 @@ void determine_feeding_target(Animal a, EntityID i, Array<Coord>& positions, Arr
 		{
 		}
 
-		// TODO: SET action to SEARCH if not in roamThreshold
+		// TODO: SET action to SEARCH if not in roam_threshold
 		switch (t)
 		{
 		case GeneralFeedingCategory::Herbivore:
-			setForageTarget(i, loc, destinations);
+			set_forage_target(i, loc, destinations);
 			break;
 		case GeneralFeedingCategory::Carnivore:
-			setHuntTarget(i, loc, destinations);
+			set_hunt_target(i, loc, destinations);
 			break;
 		case GeneralFeedingCategory::Scavenger:
-			setScavengeTarget(i, loc, destinations);
+			set_scavenge_target(i, loc, destinations);
 			break;
 		}
 }

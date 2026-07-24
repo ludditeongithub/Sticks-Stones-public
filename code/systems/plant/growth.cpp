@@ -14,34 +14,34 @@
 
 // TODO: eval water
 	// Water
-		// float wr = waterRequired[p];
-		// uint16_t wd = waterDeath[p];
-		// if (tileWater[i] > wr) {
-		//   lastFullyWatered[i] = time;
-		// } else if (time - lastFullyWatered[i] > wd) {
+		// float wr = water_required[p];
+		// uint16_t wd = water_death[p];
+		// if (tile_water[i] > wr) {
+		//   last_fully_watered[i] = time;
+		// } else if (time - last_fully_watered[i] > wd) {
 		//   alive[i] = true;
 		//   continue;
-		// } else nextGrowth *= LOW_WATER_MULT;
+		// } else next_growth *= LOW_WATER_MULT;
 		
 
-inline void eval_temperature(World& world, int chunkIndex, Plant p, float& nextGrowth, auto&& alive, bool regrowth = false)
+inline void eval_temperature(World& world, int chunk_index, Plant p, float& next_growth, auto&& alive, bool regrowth = false)
 {
-	float dmin = tempDeathMin[p];
-		Temp dmax = tempDeathMax[p];
-		Temp ngmin = tempGrowthMin[p];
-		Temp ngmax = tempGrowthMax[p];
-		Temp omin = tempOptimalMin[p];
-		Temp omax = tempOptimalMax[p];
+	float dmin = temp_death_min[p];
+		Temp dmax = temp_death_max[p];
+		Temp ngmin = temp_growth_min[p];
+		Temp ngmax = temp_growth_max[p];
+		Temp omin = temp_optimal_min[p];
+		Temp omax = temp_optimal_max[p];
 
-		Temp temp = world.temperatures[chunkIndex];		
+		Temp temp = world.temperatures[chunk_index];		
 		
 		if (temp < omax && temp > omin)
 		{
 		}
 		else if (temp > ngmin && temp < ngmax)
 		{
-			nextGrowth = 0.0;
-			if (regrowth) nextGrowth = -1.0;
+			next_growth = 0.0;
+			if (regrowth) next_growth = -1.0;
 		}
 		else if (temp < dmin || temp > dmax)
 		{
@@ -49,89 +49,89 @@ inline void eval_temperature(World& world, int chunkIndex, Plant p, float& nextG
 		}
 		else
 		{
-			nextGrowth *= UNOPTIMAL_TEMP_MULT;
+			next_growth *= UNOPTIMAL_TEMP_MULT;
 		}
 }
 
-inline void eval_sunlight(World& world, int chunkIndex, float& nextGrowth, Array2D<float>& dailyInsolations, Array<float>& cloudCovers, Plant p, bool regrowth = false)
+inline void eval_sunlight(World& world, int chunk_index, float& next_growth, Array2D<float>& daily_insolations, Array<float>& cloud_covers, Plant p, bool regrowth = false)
 {
-		uint16_t latitude = world.getChunkLatitude(chunkIndex);
-		uint16_t time_zone = world.getChunkTimeZone(chunkIndex);
-		float is = dailyInsolations[latitude][timeZone];
-		float psun = perfectSunlight[p];
+		uint16_t latitude = world.get_chunk_latitude(chunk_index);
+		uint16_t time_zone = world.get_chunk_time_zone(chunk_index);
+		float is = daily_insolations[latitude][time_zone];
+		float psun = perfect_sunlight[p];
 		// sunlight (from 0.0 to 1.0)
 		if (is <= 0.0)
 		{
-			nextGrowth = 0.0; 
+			next_growth = 0.0; 
 		}
 		else
 		{
 			// factor cloud cover
-			float ccf = cloudCovers[chunkIndex] * MAX_CLOUD_FACTOR;
+			float ccf = cloud_covers[chunk_index] * MAX_CLOUD_FACTOR;
 			float sunlight = is / (1 + ccf);
 			float sf = 1.0;
 			if (sunlight < psun)
 				sf = normalize(sunlight, 0, psun);
-			nextGrowth *= sf;
+			next_growth *= sf;
 		}
 }
 
 // OPTI: have plant temp values be precalcuated so chunk temps is accessed
 // faster
-void PlantDatabase::updatePlants(World& world, Array2D<float> &dailyInsolations, Array<float> &cloudCovers, Time timePassed)
+void PlantDatabase::update_plants(World& world, Array2D<float> &daily_insolations, Array<float> &cloud_covers, Time time_passed)
 {
-	for (uint32_t i = 0; i < plantList.size(); i++)
+	for (uint32_t i = 0; i < plant_list.size(); i++)
 	{
-		Plant p = plantList[i];		
+		Plant p = plant_list[i];		
 		
-		if (plantList[i] == Plant::NONE)
+		if (plant_list[i] == Plant::NONE)
 			continue;
-		float nextGrowth = 1.0;
+		float next_growth = 1.0;
 		const Coord pos = coords[i];
-		uint32_t chunkIndex = getChunkIndexFromTile(pos);
-		evalSunlight(world, chunkIndex, nextGrowth, world.dailyInsolations, world.cloudCovers, p);
-		evalTemperature(world, chunkIndex, p, nextGrowth, alive[i]);
+		uint32_t chunk_index = get_chunk_index_from_tile(pos);
+		eval_sunlight(world, chunk_index, next_growth, world.daily_insolations, world.cloud_covers, p);
+		eval_temperature(world, chunk_index, p, next_growth, alive[i]);
 		if (!alive[i]) continue;		
 
-		growths[i] += nextGrowth * timePassed;
+		growths[i] += next_growth * time_passed;
 	}
 }
 
-void RegrowthPlantDatabase::updateRegrowthPlants(ItemDatabase& itemDatabase, World& world, Array<float> &tileWater, Time timePassed)
+void RegrowthPlantDatabase::update_regrowth_plants(ItemDatabase& item_database, World& world, Array<float> &tile_water, Time time_passed)
 {
-	Array<Plant> &plantList = plantDatabase.plantList;
+	Array<Plant> &plant_list = plant_database.plant_list;
 	
-		for (uint32_t i = 0; i < plantList.size(); i++)
+		for (uint32_t i = 0; i < plant_list.size(); i++)
 	{
-		Plant p = plantList[i];		
+		Plant p = plant_list[i];		
 		
-		if (plantList[i] == Plant::NONE) continue;
-		float nextGrowth = 1.0;
-		const Coord pos = plantDatabase.coords[i];
-		uint32_t chunkIndex = getChunkIndexFromTile(pos);
+		if (plant_list[i] == Plant::NONE) continue;
+		float next_growth = 1.0;
+		const Coord pos = plant_database.coords[i];
+		uint32_t chunk_index = get_chunk_index_from_tile(pos);
 
-		evalSunlight(world, chunkIndex, nextGrowth, world.dailyInsolations, world.cloudCovers, p);
-		// sunlight must come before temp, because temp sets nextGrowth to negative
+		eval_sunlight(world, chunk_index, next_growth, world.daily_insolations, world.cloud_covers, p);
+		// sunlight must come before temp, because temp sets next_growth to negative
 		// sometimes for regrowth
-		evalTemperature(world, chunkIndex, p, nextGrowth, plantDatabase.alive[i], true);
-		if (!plantDatabase.alive[i]) continue;
+		eval_temperature(world, chunk_index, p, next_growth, plant_database.alive[i], true);
+		if (!plant_database.alive[i]) continue;
 
-		Time& growth = plantDatabase.growths[i];
-		growth += std::fmin(nextGrowth * timePassed, 0);
-		if (growth > maxAge[p]) plantDatabase.alive[i] = false;
-		else if (growth > regrowthStartAge[p]) {
+		Time& growth = plant_database.growths[i];
+		growth += std::fmin(next_growth * time_passed, 0);
+		if (growth > max_age[p]) plant_database.alive[i] = false;
+		else if (growth > regrowth_start_age[p]) {
 			Time &regrowth = regrowths[i];
-		if (regrowth <= regrowthMax[p])
-			regrowth += nextGrowth * timePassed;
-		uint16_t produceTarget = getProduceCurrentTarget(p, regrowths[i], ages[i]);
-		uint16_t currentProduce = produces[i];
-		if (produceTarget < currentProduce)
+		if (regrowth <= regrowth_max[p])
+			regrowth += next_growth * time_passed;
+		uint16_t produce_target = get_produce_current_target(p, regrowths[i], ages[i]);
+		uint16_t current_produce = produces[i];
+		if (produce_target < current_produce)
 		{
-			if (fruitsFall[p])
-				itemDatabase.dropFruit(p, pos, currentProduce - produceTarget);
-			regrowths[i] -= regrowths[i] *  static_cast<float>(static_cast<int>(produces[i] - produceTarget) / produceTarget);
+			if (fruits_fall[p])
+				item_database.drop_fruit(p, pos, current_produce - produce_target);
+			regrowths[i] -= regrowths[i] *  static_cast<float>(static_cast<int>(produces[i] - produce_target) / produce_target);
 		}		
-		produces[i] = produceTarget;
+		produces[i] = produce_target;
 		}
 	}						
 }

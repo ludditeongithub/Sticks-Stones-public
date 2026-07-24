@@ -33,8 +33,9 @@ enum class ItemTags : uint32_t
         VisibleInHand = 1 << 19,
 };
 
+namespace item {
 
-inline constexpr LookupTable<Item, ItemTags> ITEM_TAGS = []
+inline constexpr LookupTable<Item, ItemTags> TAGS = []
 {	
 	LookupTable<Item,ItemTags> lt{};
 	using enum Item;
@@ -91,9 +92,8 @@ inline constexpr LookupTable<Item, ItemTags> ITEM_TAGS = []
 	    ItemTags::FromCorpse | ItemTags::VariableAmountProduced | ItemTags::Perishable;
 	lt[Item::AnimalHides] = ItemTags::FromCorpse | ItemTags::VariableAmountProduced;
 	lt[Item::Soot] = ItemTags::VariableAmountsRequired;
-			 // ItemTags::VariableAmountProduced;
-			 lt[Item::TanningAgent] =
-			     ItemTags::VariableAmountProduced | ItemTags::Perishable;
+	// ItemTags::VariableAmountProduced;
+	lt[Item::TanningAgent] = ItemTags::VariableAmountProduced | ItemTags::Perishable;
 	lt[Item::Nail] = ItemTags::OptionalIngredient | ItemTags::VariableAmountProduced;
 	lt[Item::NailHeader] = ItemTags::Mould;
 	lt[Item::Glue] = ItemTags::WaterDamage;
@@ -205,4 +205,5 @@ inline constexpr LookupTable<Item, ItemTags> ITEM_TAGS = []
 	lt[Item::OilLamp] = ItemTags::Alternate | ItemTags::WaterDamage;
 	return lt;
 }();
+} // namespace item
 #endif

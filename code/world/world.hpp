@@ -3,10 +3,10 @@
 #include "core/random.hpp"
 #include <cstdint>
 
-#include <extern/FastNoiseLite.h>
+#include <FastNoiseLite.h>
 #include <core/containers.hpp>
 #include <core/memory.hpp>
-#include <extern/nanoflann.hpp>
+#include <nanoflann.hpp>
 #include <simulation/world_gen.hpp>
 
 #include <world/tile/database.hpp>
@@ -109,9 +109,9 @@ struct World
 
     ChunkTempData(World* world)
     {
-        minTemps.reserve(world->CHUNK_AMOUNT);
-        diurnalTempVariances.reserve(world->CHUNK_AMOUNT);
-        seasonalTempVariances.reserve(world->CHUNK_AMOUNT);
+        min_temps.reserve(world->CHUNK_AMOUNT);
+        diurnal_temp_variances.reserve(world->CHUNK_AMOUNT);
+        seasonal_temp_variances.reserve(world->CHUNK_AMOUNT);
     }
 };
 	ChunkTempData chunk_temp_data;
@@ -120,14 +120,14 @@ struct World
 	    : length_chunks(width), height_chunks(height),
 	      equator(height / 2),
       chunk_amount(width * height),      
-      chunkTempData(this) 
+      chunk_temp_data(this) 
 {
     humidities = arena_make_array<Hum>(arena, width * height);
     temperatures = arena_make_array<Temp>(arena, width * height);
     altitudes = arena_make_array<Alt>(arena, width * height);
-    dailyInsolations = arena_make_2d_array<float>(arena, width, height);
-    seasonalInsolations = arena_make_array<float>(arena, width * height);
-    cloudCovers = arena_make_array<float>(arena, width * height);
+    daily_insolations = arena_make_2d_array<float>(arena, width, height);
+    seasonal_insolations = arena_make_array<float>(arena, width * height);
+    cloud_covers = arena_make_array<float>(arena, width * height);
 }
 
 	inline uint16_t get_chunk_height(int i) { return i / height_chunks; }

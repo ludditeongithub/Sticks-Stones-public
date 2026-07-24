@@ -64,28 +64,28 @@ this->capacity = capacity;
         if (size + 1 > capacity)
             return false;
         size_t i;
-        if (freeSlots.empty())
+        if (free_slots.empty())
         {
             i = size;
             size++;
         }
         else
         {
-            i = freeSlots.top();
-            freeSlots.pop();
+            i = free_slots.top();
+            free_slots.pop();
         }
         alives[i] = true;
         if (newborn)
         {
             buildables[i] = buildable;
-            healths[i] = buildable::maxHealths[buildable] * INFANT_HEALTH_MODIFIER;
+            healths[i] = buildable::max_healths[buildable] * INFANT_HEALTH_MODIFIER;
             coords[i] = coord;
         }
         else
         {
         Time age = random_bool->next();
             buildables[i] = buildable;
-            healths[i] = getMaxHealth(buildable, age);
+            healths[i] = get_max_health(buildable, age);
             coords[i] = coord;
         }
         return true;
@@ -105,7 +105,7 @@ this->capacity = capacity;
         if (!alives[i])
             return false;
 
-        freeSlots.push(i);
+        free_slots.push(i);
         alives[i] = false;
         return true;
   }
@@ -113,7 +113,7 @@ this->capacity = capacity;
   void free_unused_entity()
   {
     for (size_t i = 0; i < coords.size; i++) {
-    if (tiles.tileStatuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
+    if (tiles.tile_statuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
     }
   }
     
@@ -128,7 +128,7 @@ this->capacity = capacity;
     {
     archive(capacity);
         archive(size);
-        archive(freeSlots);
+        archive(free_slots);
         archive(alives);
    
 
@@ -142,7 +142,7 @@ this->capacity = capacity;
     {
         archive(capacity);
         archive(size);
-        archive(freeSlots);
+        archive(free_slots);
         archive(alives);
         
         buildables.load(archive);

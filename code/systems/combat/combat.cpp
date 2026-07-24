@@ -23,7 +23,7 @@ void update_attacks(float *chances, Weapon* weapons, Stats *stats, Coord *positi
 		{
 			auto ti = target(i);
 			float &h = health(ti);
-			if (attackSuccess[j++])
+			if (attack_success[j++])
 				h -= damage[j];
 			if (h <= 0.0)
 				action(i) = Action::Assign;

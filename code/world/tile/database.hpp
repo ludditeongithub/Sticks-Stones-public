@@ -71,7 +71,7 @@ this->capacity = capacity;
         tiledatas.save(archive);
         altitudes.save(archive);
         waters.save(archive);
-        tileStatuses.save(archive);
+        tile_statuses.save(archive);
     }
 
     template <class Archive>
@@ -82,7 +82,7 @@ this->capacity = capacity;
         tiledatas.load(archive);
         altitudes.load(archive);
         waters.load(archive);
-        tileStatuses.load(archive);
+        tile_statuses.load(archive);
     }
 
 // @codegen:end database_generation

@@ -12,7 +12,7 @@ void set_positions_and_queue_next_actions(PathsBuffer& rpd, std::vector<EntityID
 					
             #if !SHIPPING_BUILD
 			assert(
-			    manhattanDist(c, p) > 1 &&
+			    manhattan_dist(c, p) > 1 &&
 			    "Tile movement must be between tiles 1 distance away from each other.");
 			if (animal) assert(action > Action::ANIMAL_MIN && action < Action::ANIMAL_MAX || action == Action::Wander);
 #endif
@@ -23,14 +23,14 @@ void set_positions_and_queue_next_actions(PathsBuffer& rpd, std::vector<EntityID
 			// than x tiles
 			if (rpd.currents[i] >= rpd.ends[i] - NEW_PATH_DIST)
 			{
-				if (manhattanDist(rpd.destinations[i], p) >= NEW_PATH_DIST)
+				if (manhattan_dist(rpd.destinations[i], p) >= NEW_PATH_DIST)
 				{
 					action = Action::NewPath;
 				}
 				else
 						{
-								if (animal) handleAnimalNewAction(database, i);
-								else handleUnitNewAction(database, i);
+								if (animal) handle_animal_new_action(database, i);
+								else handle_unit_new_action(database, i);
 						}
 			}
 		}

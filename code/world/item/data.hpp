@@ -43,7 +43,7 @@ enum class BulkStatus
 	Single
 };
 
-float currentMaxBulk(BulkStatus bs, Strength str)
+float current_max_bulk(BulkStatus bs, Strength str)
 {
 	switch (bs)
 	{
@@ -57,7 +57,7 @@ float currentMaxBulk(BulkStatus bs, Strength str)
 	return 0.0;
 }
 
-float maxWeight(Strength str) { return str / STAT_MAX * MAX_CARRY; }
+float max_weight(Strength str) { return str / STAT_MAX * MAX_CARRY; }
 
 enum class ContainerType
 {
@@ -74,7 +74,7 @@ enum class ContainerType
 	Bucket,
 };
 
-ContainerType itemToContainer(Item c)
+ContainerType item_to_container(Item c)
 {
 	switch (c)
 	{
@@ -103,7 +103,7 @@ ContainerType itemToContainer(Item c)
 	}
 }
 
-float getContainerCapacity(ContainerType c)
+float get_container_capacity(ContainerType c)
 {
 	float capacity;
 	switch (c)
@@ -133,23 +133,23 @@ float getContainerCapacity(ContainerType c)
 	}
 }
 
-SizeData bulkAndWeights[Item::MAX + Container::MAX];
+SizeData bulk_and_weights[Item::MAX + Container::MAX];
 
-bool validContainer(Container container, Item newItem)
+bool valid_container(Container container, Item new_item)
 {
-	switch (bulkAndWeights[static_cast<int>(newItem)].bulklevel)
+	switch (bulk_and_weights[static_cast<int>(new_item)].bulklevel)
 	{
 	case BulkLevel::Liquid:
-		if (!container.liquidMode)
+		if (!container.liquid_mode)
 			return false;
-		if (container.containerType == ContainerType::Basket)
+		if (container.container_type == ContainerType::Basket)
 			return false;
 	case BulkLevel::Fine:
-		if (container.containerType == ContainerType::Basket)
+		if (container.container_type == ContainerType::Basket)
 			return false;
 	}
-	if (container.currentBulk + bulkAndWeights[static_cast<int>(newItem)].bulk >
-	    getContainerCapacity(container.containerType))
+	if (container.current_bulk + bulk_and_weights[static_cast<int>(new_item)].bulk >
+	    get_container_capacity(container.container_type))
 		return false;
 	return true;
 }
@@ -161,7 +161,7 @@ struct SizeData
 	BulkLevel bulklevel = BulkLevel::Solid;
 };
 
-inline constexpr LookupTable<SizeData> itemSizeData = []
+inline constexpr LookupTable<SizeData> item_size_data = []
 {
 	LookupTable<SizeData> lt{};
 	using enum item::Type;
@@ -323,7 +323,7 @@ inline constexpr LookupTable<SizeData> itemSizeData = []
 
 	// SINGLE
 	lt[ArtificialBeehive] = {40.0f, 8.0f, BulkLevel::Single};
-	// bulkAndWeights[static_cast<int>(Container::Keg) + static_cast<int>(Item::MAX)] =
+	// bulk_and_weights[static_cast<int>(Container::Keg) + static_cast<int>(Item::MAX)] =
 	// {48.8f, 14.2f, BulkLevel::Single};
 	lt[SolidWheel] = {55.70f, 25.5f, BulkLevel::Single};
 	return lt;

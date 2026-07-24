@@ -19,30 +19,30 @@
 
 struct Game
 {
-  bool firstSave = false;
-  bool unsavedChanges = true;
+  bool first_save = false;
+  bool unsaved_changes = true;
 
-  Time absoluteTime;
-  SDL_Rect playerBounds;      
+  Time absolute_time;
+  SDL_Rect player_bounds;      
 		
-  Arena chunkArena;
+  Arena chunk_arena;
   World world;
   SearchGrid search;
 
-Arena plantArena;
-PlantDatabase plantDatabase;
-Arena regrowthPlantArena;
-RegrowthPlantDatabase regrowthPlantDatabase;
-Arena animalArena;
-AnimalDatabase animalDatabase;
-Arena unitArena;
-UnitDatabase unitDatabase;
+Arena plant_arena;
+PlantDatabase plant_database;
+Arena regrowth_plant_arena;
+RegrowthPlantDatabase regrowth_plant_database;
+Arena animal_arena;
+AnimalDatabase animal_database;
+Arena unit_arena;
+UnitDatabase unit_database;
 // Arena NPCUnitArena;  
 // UnitDatabase NPCUnitDatabase;
-Arena itemArena;
-ItemDatabase itemDatabase;
-BuildableDatabase buildableDatabase;
-Arena buildableArena;  
+Arena item_arena;
+ItemDatabase item_database;
+BuildableDatabase buildable_database;
+Arena buildable_arena;  
 
 void init_new_world();
 

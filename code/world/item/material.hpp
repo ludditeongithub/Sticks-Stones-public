@@ -4,7 +4,7 @@
 #include <world/item/enum.hpp>
 #include <core/tables.hpp>
 
-inline constexpr LookupTable<Material,float>  weightMultiplier = [] {
+inline constexpr LookupTable<Material,float>  weight_multiplier = [] {
   LookupTable<Material,float> lt{};
   using enum Material;
   	lt[static_cast<int>(Material::Wood)] = 0.7;
@@ -20,7 +20,7 @@ inline constexpr LookupTable<Material,float>  weightMultiplier = [] {
   return lt;
  }();
 
-inline constexpr LookupTable<Material,float> toughnessMultiplier = [] {
+inline constexpr LookupTable<Material,float> toughness_multiplier = [] {
   LookupTable<Material,float> lt{};
   using enum Material;
         lt[static_cast<int>(Material::Wood)] = 4.0;
@@ -38,14 +38,14 @@ inline constexpr LookupTable<Material,float> toughnessMultiplier = [] {
 
 float lt[static_cast<int>(Material::MAX)];
 
-void intializeToughnessMultipliers()
+void intialize_toughness_multipliers()
 {
 	
 }
 
-// float durabilityMultiplier[static_cast<int>(Material::MAX)];
+// float durability_multiplier[static_cast<int>(Material::MAX)];
 
-// void initializeDurabilityMultipliers() {
+// void initialize_durability_multipliers() {
 //     Wood 0.4
 //     Bone 0.6
 //     Stone 0.8
@@ -57,53 +57,53 @@ void intializeToughnessMultipliers()
 //     Gold 0.2
 //  }
 
-float hardnessMultiplier[static_cast<int>(Material::MAX)];
+float hardness_multiplier[static_cast<int>(Material::MAX)];
 
-void initializeHardnessMultipliers()
+void initialize_hardness_multipliers()
 {
-	hardnessMultiplier[static_cast<int>(Material::Wood)] = 1.2;
-	hardnessMultiplier[static_cast<int>(Material::Bone)] = 5.0;
-	hardnessMultiplier[static_cast<int>(Material::Stone)] = 3.5;
-	hardnessMultiplier[static_cast<int>(Material::Copper)] = 3;
-	hardnessMultiplier[static_cast<int>(Material::Bronze)] = 3;
-	hardnessMultiplier[static_cast<int>(Material::Iron)] = 4.2;
-	hardnessMultiplier[static_cast<int>(Material::Steel)] = 4.5;
-	hardnessMultiplier[static_cast<int>(Material::Silver)] = 2.5;
-	hardnessMultiplier[static_cast<int>(Material::Gold)] = 2.5;
+	hardness_multiplier[static_cast<int>(Material::Wood)] = 1.2;
+	hardness_multiplier[static_cast<int>(Material::Bone)] = 5.0;
+	hardness_multiplier[static_cast<int>(Material::Stone)] = 3.5;
+	hardness_multiplier[static_cast<int>(Material::Copper)] = 3;
+	hardness_multiplier[static_cast<int>(Material::Bronze)] = 3;
+	hardness_multiplier[static_cast<int>(Material::Iron)] = 4.2;
+	hardness_multiplier[static_cast<int>(Material::Steel)] = 4.5;
+	hardness_multiplier[static_cast<int>(Material::Silver)] = 2.5;
+	hardness_multiplier[static_cast<int>(Material::Gold)] = 2.5;
 }
 
-float brittlenessMultiplier[static_cast<int>(Material::MAX)];
+float brittleness_multiplier[static_cast<int>(Material::MAX)];
 
-void initializeBrittlenessMultipliers()
+void initialize_brittleness_multipliers()
 {
-	brittlenessMultiplier[static_cast<int>(Material::Wood)] = 3.2;
-	brittlenessMultiplier[static_cast<int>(Material::Bone)] = 6.0;
-	brittlenessMultiplier[static_cast<int>(Material::Stone)] = 4.5;
-	brittlenessMultiplier[static_cast<int>(Material::Copper)] = 0.15;
-	brittlenessMultiplier[static_cast<int>(Material::Bronze)] = 0.3;
-	brittlenessMultiplier[static_cast<int>(Material::Iron)] = 0.5;
-	brittlenessMultiplier[static_cast<int>(Material::Steel)] = 0.4;
-	brittlenessMultiplier[static_cast<int>(Material::Silver)] = 0.4;
-	brittlenessMultiplier[static_cast<int>(Material::Gold)] = 0.8;
+	brittleness_multiplier[static_cast<int>(Material::Wood)] = 3.2;
+	brittleness_multiplier[static_cast<int>(Material::Bone)] = 6.0;
+	brittleness_multiplier[static_cast<int>(Material::Stone)] = 4.5;
+	brittleness_multiplier[static_cast<int>(Material::Copper)] = 0.15;
+	brittleness_multiplier[static_cast<int>(Material::Bronze)] = 0.3;
+	brittleness_multiplier[static_cast<int>(Material::Iron)] = 0.5;
+	brittleness_multiplier[static_cast<int>(Material::Steel)] = 0.4;
+	brittleness_multiplier[static_cast<int>(Material::Silver)] = 0.4;
+	brittleness_multiplier[static_cast<int>(Material::Gold)] = 0.8;
 }
 
 // TODO: custom durability multipliers for some items
 
-float sharpnessMultiplier[static_cast<int>(Material::MAX)];
+float sharpness_multiplier[static_cast<int>(Material::MAX)];
 
-void initializeSharpnessMultipliers()
+void initialize_sharpness_multipliers()
 {
-	sharpnessMultiplier[static_cast<int>(Material::Wood)] = 0.5;
-	sharpnessMultiplier[static_cast<int>(Material::Bone)] = 0.7;
-	sharpnessMultiplier[static_cast<int>(Material::Stone)] = 0.8;
-	sharpnessMultiplier[static_cast<int>(Material::Copper)] = 0.65;
-	sharpnessMultiplier[static_cast<int>(Material::Bronze)] = 1.55;
-	sharpnessMultiplier[static_cast<int>(Material::Iron)] = 1.15;
-	sharpnessMultiplier[static_cast<int>(Material::Steel)] = 2.2;
-	sharpnessMultiplier[static_cast<int>(Material::Silver)] = 0.25;
-	sharpnessMultiplier[static_cast<int>(Material::Gold)] = 0.25;
+	sharpness_multiplier[static_cast<int>(Material::Wood)] = 0.5;
+	sharpness_multiplier[static_cast<int>(Material::Bone)] = 0.7;
+	sharpness_multiplier[static_cast<int>(Material::Stone)] = 0.8;
+	sharpness_multiplier[static_cast<int>(Material::Copper)] = 0.65;
+	sharpness_multiplier[static_cast<int>(Material::Bronze)] = 1.55;
+	sharpness_multiplier[static_cast<int>(Material::Iron)] = 1.15;
+	sharpness_multiplier[static_cast<int>(Material::Steel)] = 2.2;
+	sharpness_multiplier[static_cast<int>(Material::Silver)] = 0.25;
+	sharpness_multiplier[static_cast<int>(Material::Gold)] = 0.25;
 }
 
-beautyMultiplier
+beauty_multiplier
 
 #endif // MATERIALS_H_
