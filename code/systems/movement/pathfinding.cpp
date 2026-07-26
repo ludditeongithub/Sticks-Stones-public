@@ -3,6 +3,7 @@
 #include "core/containers.hpp"
 #include "schedule/dispatch.hpp"
 #include "world/action/enum.hpp"
+#include "world/tile/database.hpp"
 #include "world/world.hpp"
 #include <queue>
 #include <vector>
@@ -21,20 +22,17 @@ std::vector<EntityID> mark_new_path_entities(std::vector<EntityID>& acting_entit
 		return indices;
 }
 
-// sets start and end, inputted from all types of jobs, of only entity indices that have been chosen
-// to need new paths
-PathsBuffer get_new_paths(std::vector<EntityID>& path_dispatch_buffer, Array<Coord>& coords, Array<Target>& targets)
-{	
-		PathsBuffer pb = PathsBuffer();
-		for (size_t i = 0; i < path_dispatch_buffer.size(); i++)
+template<typename DB>
+PathsBuffer get_new_paths(DB& database, std::vector<EntityID> &no_inertia_entities, TileDatabase& tiles)
+{
+	std::vector<EntityID> new_path_entities =
+	    mark_new_path_entities(no_inertia_entities, database.frame_datas);
+        	
+		for (size_t i = 0; i < new_path_entities.size(); i++)
 		{
-				EntityID j = path_dispatch_buffer[i];
+                EntityID j = new_path_entities[i];
 						
-						#if !SHIPPING_BUILD
-						assert(targets[j].type == TargetType::Tile);
-						#endif
-						
-		Coord dest = g_Tiles->get_coord_from_index(targets[j].index);
+		Coord dest = tiles.get_coord(targets[j].index);
 		PathData pd = a_star(coords[j], dest);
 		pb.currents[i] = 0;
 		pb.ends[i] = pd.end;
@@ -42,6 +40,7 @@ PathsBuffer get_new_paths(std::vector<EntityID>& path_dispatch_buffer, Array<Coo
 		pb.destinations[i] = path_dispatch_buffer.destinations[i];
 	}
 }
+
 
 struct OpenNode
 {

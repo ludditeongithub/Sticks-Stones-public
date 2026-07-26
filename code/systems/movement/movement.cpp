@@ -2,15 +2,6 @@
 #include "core/data.hpp"
 #include <optional>
 
-
-template<typename DB>
-void handle_pathsfinding_and_movement(DB& database, std::vector<EntityID> &acting_entities)
-{
-	std::vector<EntityID> new_path_entities =
-			mark_new_path_entities(acting_entities, database.frame_datas);
-	set_new_paths(new_path_entities, database.coords, database.targets);
-}
-
 bool check_tile_movement(EntityID i, Array<FrameData>& frame_datas)
 {
 const ActState act_state = frame_datas[i].get<ActState>();

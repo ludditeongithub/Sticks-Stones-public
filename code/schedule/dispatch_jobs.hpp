@@ -1,11 +1,6 @@
 #include <core/memory.hpp>
 #include <world/unit/roles_and_actions.hpp>
 
-// all possible tasks
-AutoEnum<>
-    Tasks; // this needs to be automatically filled, using Items + Variants other actions, probably
-	   // think of other way to make variants optional because there are just too many
-
 struct PlayerJobOrder
 {
 	Action action;
@@ -21,12 +16,9 @@ struct JobData
 void add_player_order();
 
 
-
 // binary tree by Task ID, to ensure that if player changes amount or priority a new Task Job isn't
 // created. Check if easier to remake pq every time
-void update_job_priorities(std::unordered_map<Task, JobData> &hm,
-			     std::priority_queue<std::pair<uint8_t, Task>>& pq,
-			     PlayerJobOrder pt)
+void update_task_priorities(std::unordered_map<Task, JobData> &hm, PlayerJobOrder pt)
 {
 
 	for (int i = 0; i < pt.size(); i++)
@@ -40,8 +32,8 @@ void update_job_priorities(std::unordered_map<Task, JobData> &hm,
 			uint8_t &p = hm[task].second().priority;
 			if (np != p)
 			{
-				// TODO: check if you are able to get a specific priority from a pq
-				pq[p].set(np);
+				// TODO: check if you are able to get a specific priority from g_task_priority_queue
+				g_task_priority_queue[p].set(np);
 				p = np;
 			}
 
@@ -55,6 +47,6 @@ void update_job_priorities(std::unordered_map<Task, JobData> &hm,
 	else
 	{
 		hm[task] = {np, na};
-		pq.push(np, t);
+		g_task_priority_queue.push(np, t);
 	}
 }

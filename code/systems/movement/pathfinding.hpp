@@ -23,6 +23,14 @@ struct Entity
 	Direction d;
 };
 
+struct PathData
+{
+	Coord start;
+	Coord end;
+
+	std::vector<Direction> directions;
+};
+
 // RIGHT NOW: PATHS BUFFER currently holds ALL current paths being executed, maintained across frames. however it is fed a NEW 1-1 from new_paths right now. this should not be the case. new_paths should only add NEW things to the path buffer (small subset). path buffer cannot be global. must be same size (and probably owned) by databases. also ensure and consider: a_star is not finding the FINAL destination, but only an intermittent one (unless it happens to be final). the MAX_PATH_SIZE may need to be reduced. checks for final destination need to be done too!
 struct PathsBuffer
 {
@@ -33,25 +41,25 @@ static constexpr size_t ELEMENT_SIZE = sizeof(uint8_t) + sizeof(uint8_t) + sizeo
 //	Array<Coord> destinations; taken from targets in database
 	Array<PathData> datas; // currently processed paths up to this point
 
-	Coord pop(size_t i)
+	Direction pop(size_t i)
 	{
 		int c = currents[i];
 		currents[i]++;
-		
-		#if !SHIPPING_BUILD
-			assert(datas.end < c)
-        #endif
-		return datas[i].data[c];
+		return datas[i].directions[c];
 	}
 
-		PathsBuffer(Arena* arena, size_t size)
+		PathsBuffer(Arena& arena, size_t size)
 	{
 			currents = arena_make_array<uint8_t>(arena, size);
 			ends = arena_make_array<uint8_t>(arena, size);
-			destinations = arena_make_array<Coord>(arena, size);
 			datas = arena_make_array<PathData>(arena, size);
 	}
 };
+
+Arena g_paths_buffer_arena = Arena(PathsBuffer::ELEMENT_SIZE * PATH_QUEUE_SIZE);
+Arena* g_paths_buffer_pointer = &g_paths_buffer_arena;
+PathsBuffer g_paths_buffer = PathsBuffer(*g_paths_buffer_pointer, PATH_QUEUE_SIZE);
+
 
 struct PathExecution
 {
@@ -75,29 +83,6 @@ std::vector<float> tile_move_costs;
 
 float heuristic(Coord a, Coord b) { return std::abs(a.x - b.x) + std::abs(a.y - b.y); }
 
-struct PathDispatchData {
-	   
-};
-
-struct PathData
-{
-	Coord start;
-	Coord end;
-
-	std::vector<Direction> directions;
-};
-
-struct NodeData
-{
-	float g_cost = FLT_MAX;
-	float f_cost = FLT_MAX;
-
-	Direction came_direction;
-
-	uint32_t search_id = 0;
-	bool closed_flag = false;
-};
-
 PathData a_star(Coord start, Coord goal, int width, int height);
 
 PathData reconstruct_path(int start_index, int goal_index);
@@ -106,3 +91,6 @@ std::vector<EntityID> mark_new_path_entities(std::vector<EntityID> &acting_entit
 								Array<FrameData> &frame_datas);
 
 void set_new_paths(std::vector<EntityID>& path_dispatch_buffer, Array<Coord>& coords, Array<Target>& targets, PathsBuffer& pb);
+
+template<typename DB>
+void get_new_paths(DB& database, std::vector<EntityID> &no_inertia_entities);

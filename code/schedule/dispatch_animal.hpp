@@ -26,7 +26,7 @@ struct AnimalDispatcher
 
 	DispatchCollection get_dispatch_collection(Array<Animal> &animals, Array<Coord> &positions,
 						 Array<Coord> &destinations,
-						 Array<ActionDecisionStatus> &actions)
+						 Array<ActState> &actions)
 	{
 		BucketCounts bc = get_bucket_counts(actions);
 		DispatchCollection dc;
@@ -49,22 +49,22 @@ struct AnimalDispatcher
 		{
 			switch (actions[i])
 			{
-			case ActionDecisionStatus::Assign:
+			case ActState::Assign:
 				dc.assign_dispatch.set_data(assign_count, i);
 				break;
-			case ActionDecisionStatus::AnimalFoodSearch:
+			case ActState::AnimalFoodSearch:
 				dc.hungry_dispatch.set_data(hungry_count, i);
 				break;
-			case ActionDecisionStatus::AnimalDrinkSearch:
+			case ActState::AnimalDrinkSearch:
 				dc.thirsty_dispatch.set_data(thirsty_count, i);
 				break;
-			case ActionDecisionStatus::AnimalBreedSearch:
+			case ActState::AnimalBreedSearch:
 				dc.breeding_dispatch.set_data(breeding_count, i);
 				break;
-			case ActionDecisionStatus::AnimalMigration:
+			case ActState::AnimalMigration:
 				dc.migration_dispatch.set_data(migration_count, i);
 				break;
-			case ActionDecisionStatus::AnimalRejoinPack:
+			case ActState::AnimalRejoinPack:
 				dc.rejoin_pack_dispatch.set_data(rejoin_pack_count, i);
 				break;
 			default:
@@ -75,7 +75,7 @@ struct AnimalDispatcher
 	}
 
 	void dispatch_animals(Array<Animal> &animals, Array<Coord> &positions,
-			     Array<Coord> &destinations, Array<ActionDecisionStatus> &actions)
+			     Array<Coord> &destinations, Array<ActState> &actions)
 	{
 		DispatchCollection dc =
 		    get_dispatch_collection(animals, positions, destinations, actions);

@@ -1,4 +1,4 @@
-#include "actions.hpp"
+#include "action.hpp"
 #include "simulation/game_time.hpp"
 #include "world/action/enum.hpp"
 #include "world/animal/database.hpp"
@@ -11,10 +11,10 @@
 // items etc, when pawn goes to grab items
 // may only be
 template <typename DB>
-ActionEventDispatchBuffer mark_acting_entities(std::vector<EntityID> &indices, DB& database)
+MovingStateDispatchBuffer mark_entities_moving_state(std::vector<EntityID> &indices, DB& database)
 {
 		bool if_animals = typeof(database) == AnimalDatabase;
-		ActionEventDispatchBuffer buffer = ActionEventDispatchBuffer(indices.size(), if_animals);
+		MovingStateDispatchBuffer buffer = MovingStateDispatchBuffer(indices.size(), if_animals);
 	
 	for (int j = 0; j < indices.size(); j++)
 			{
@@ -67,27 +67,6 @@ inline void start_timed_task(Time& inertia, const Task task, const Skills& skill
 	inertia = get_task_timer(task, skill);
 }
 
-void assign_action(Role role, Action action)
-{
-		ActionClass action_class = get_action_class(action);		
-		switch (action_class) {
-		case ActionClass::Resource:
-       			attempt_resource_assignment();
-       			break;
-		case ActionClass::Product:
-       			attempt_products_assignment();
-				break;
-		case ActionClass::Support:
-       			
-       			break;
-		case ActionClass::Researcher:
-       			
-				break;
-		default:
-				
-		}
-}
-
 void assign_task(Commodity commodity, size_t amount, Role role, Action action)
 {
 		ActionClass action_class = get_action_class(action);
@@ -115,26 +94,26 @@ void assign_task(Commodity commodity, size_t amount, Role role, Action action)
 // implemented)-- timers will skip most pawns repeatedly, maybe need bool for
 // whether job has just started
 // only send alive and timer up units
-void assign_actions(std::vector<EntityID> &indices, PriorityQueue<PlayerTaskJobData> &pq, UnitDatabase& database)
+void assign_tasks(std::vector<EntityID> &indices, UnitDatabase& database)
 {
-		if (pq.empty()) return;
+		if (g_task_priority_queue.empty()) return;
 		for (int i = 0; i < indices.size(); i++)
 		{						
 			if (database.action(i) != Action::Assign || database.action(i) != Action::Idle) continue;
 			// get valid task for selected pawn
 			Role role = Role::NONE;
-			PlayerTaskJobData td = pq.top();
+			PlayerTaskJobData td = g_task_priority_queue.top();
 			size_t amount = 0;
-			while (role == Role::NONE && !pq.next_empty())
+			while (role == Role::NONE && !g_task_priority_queue.next_empty())
 			{
 				Commodity c = td.commodity;
 				amount = td.amount;
 				if (amount <= 0)
 					continue;
 				role = (database, i, c);
-				td = pq.next();
+				td = g_task_priority_queue.next();
 			}
-			pq.snapback();
+			g_task_priority_queue.snapback();
 			if (role == Role::NONE)
 					database.action(i) = Action::Idle;
 			else assign_task(c, amount); //TODO
@@ -142,13 +121,13 @@ void assign_actions(std::vector<EntityID> &indices, PriorityQueue<PlayerTaskJobD
 }
 
 // only for idle animals
-void assign_animal_tasks(Array<Animal> &animals, Array<ActionDecisionStatus> &actions,
+void assign_animal_tasks(Array<Animal> &animals, Array<ActState> &actions,
 		       Array<Coord> &positions, Array<Hunger> hungers)
 {
-	using enum ActionDecisionStatus;
+	using enum ActState;
 	for (int i = 0; i < animals.size; i++)
 	{
-		if (action_decision_status(i) == ActionDecisionStatus::Assign)
+		if (action_decision_status(i) == ActState::Assign)
 		{
 			Animal a = animal(i);
 
@@ -184,18 +163,6 @@ void assign_animal_tasks(Array<Animal> &animals, Array<ActionDecisionStatus> &ac
 	}
 }
 
-void handle_actions_and_movement()
-	{
-		UnitDatabase& unit_database = g_Game->unit_database;
-        Array<Time>& inertias = unit_database.inertias;
-		std::vector<EntityID> ready_actors = get_ready_actors(inertias);
-		ActionEventDispatchBuffer action_event_buffer = mark_acting_entities(
-		    ready_actors, nullptr, unit_database.coords, unit_database.targets,
-																		 unit_database.actions, unit_database.frame_datas);
-
-		handle_movements();
-	}
-
 std::vector<EntityID> get_ready_actors()
 {
 		size_t size = ;
@@ -209,3 +176,15 @@ std::vector<EntityID> get_ready_actors()
 		buffer.shrink_to_fit();
 		return buffer;
 }
+
+void handle_actions_and_movement()
+	{
+		UnitDatabase& unit_database = g_Game->unit_database;
+        Array<Time>& inertias = unit_database.inertias;
+		std::vector<EntityID> ready_actors = get_ready_actors(inertias);
+		ActionInProgressDispatchBuffer action_event_buffer = mark_acting_entities(ready_actors, nullptr, unit_database.coords, unit_database.targets,
+																		 unit_database.actions, unit_database.frame_datas);
+
+		handle_movements();
+	}
+

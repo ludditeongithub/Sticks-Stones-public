@@ -76,6 +76,7 @@ trait_data:
     newborn_default: FrameData{ActState::NewPath, Direction::South, Frame::F0}
     random_age_default: FrameData{ActState::NewPath, Direction::South, Frame::F0}
 
+# doubles for unit and animal action timer
   - trait_name: movable
     name: inertias
     type: Frame
@@ -95,7 +96,7 @@ trait_data:
     random_age_default: std::numeric_limits<size_t>::max()
 
   - trait_name: targeting
-    name: targetTypes
+    name: target_types
     type: TargetType
     newborn_default: TargetType::NONE
     random_age_default: TargetType::NONE

@@ -12,10 +12,10 @@
 
 // TODO: finding mechanisms for bonus reqs
 enum class ToolsFoundState
-	{
+{
 		FoundAll = 0,
-		Finding = 1,
-		CannotFind = 2
+		Finding,
+		CannotFind
 	};
 
 enum class BuildablesFoundState
@@ -36,6 +36,7 @@ struct NecessaryActionRequirementsBuffer
 struct ActionRequirementData {
 	EntitySearchData esd;
 	TargetType type;
+        uint16_t missing = 1;
 };
 
 // INVENTORY OPERATIONS

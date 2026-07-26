@@ -7,13 +7,12 @@
 #include "inventory.hpp"
 #include "world/buildable/enum.hpp"
 
-inline bool check_action_requirement_in_inventory(ActionRequirement& action_reqs, Inventory& inventory, EntityID unit_index, Coord coord)
+inline bool check_action_requirement_status(ActionRequirement action_reqs, Inventory& inventory, EntityID unit_index, Coord coord)
 {
 	bool found = false;
         if (auto *entity = std::get_if<Item>(&action_reqs.requirement)) {
 	  uint16_t amount_found = remove_item(inventory, *entity, 1, true);
-  
-  found = amount_found == action_reqs.amount;
+          found = amount_found >= action_reqs.amount;
 	}
 	else //buildable
 {
@@ -69,48 +68,54 @@ NecessaryActionRequirementsBuffer check_necessary_action_requirements(UnitDataba
 
 			for (int i = 0; i < action_reqs_amount; i++)
 			{
-                          const ActionRequirement action_reqs  = action_to_tools.get(action)[i];
-                          size_t requirement_slot = action_reqs.index;
+			  ActionRequirement action_req = action_to_tools.get(action)[i];
+			  bool requirement_is_tool = std::holds_alternative<Tool>(action_req);
+                          size_t requirement_slot = action_req.index;
 			// skip if replaceable equivalent has already been found
-			for (int j = 0; j < currently_searched; j++)
+                          for (int j = 0; j < currently_searched; j++) {
 				if (found_tools_replaceables[j] == requirement_slot) continue;                        
 			// skip if tool is optional TODO: have bonus written to buffer if found
 			if (requirement_slot < 0) continue;
                         
-                        bool found = check_action_requirement_in_inventory(action_reqs, inventory, unit_index, coord);
+                        bool found = check_action_requirement_status(action_req, inventory, unit_index, coord);
 
 			if (found)
 			{
                           found_tools_replaceables[found_tools++] = requirement_slot;
                           continue;
-                        } else
+			}
+			else
 			{
-                          ActionRequirementData ard = get_action_requirement_data(action_reqs, coord);
-                          bool valid_target = set_requirement_as_unit_target(database, unit_index, ard);  
-			  
-			if (valid_target) buffer.tools_state = ToolsFoundState::Finding;
-                        }
-		
+                          ActionRequirementData ard = get_action_requirement_search_data(action_req, coord);
+			  bool valid_target =
+			      set_requirement_as_unit_target(database, unit_index, ard);
 
-			    if (!found) {
-			    data = search.get_nearest(tool, coord.first, coord.second);
+			  if (valid_target)
+			  {		   	  
+			    requirement_is_tool ? buffer.tools_state = ToolsFoundState::Finding : buffer.buildables_state = BuildablesFoundState::Finding;
+			  }
+                        } 
+		
+			if (!found) {
+			    EntitySearchData data = search.get_nearest(tool, coord.first, coord.second);
 			    if (man_dist(coord, new_dest) > MID_GATHER_RANGE) {
-				    buffer.state = ToolsState::Finding;
+				    buffer.tools_state = ToolsFoundState::Finding;
 				    buffer.destination.value() = NewDest;				    // buffer.missing_tool_type.value() = tool;
 				    return buffer;
                             }
 			}
 			else
 			{
-				buffer.state = ToolsState::CannotFind;
+			        requirement_is_tool ? buffer.tools_state = ToolsFoundState::CannotFind : buffer.buildables_state = BuildablesFoundState::CannotFind;
 				return buffer;
-			}
-			    }				
-				
+                        }
+
 			// TODO:: "search home function", which checks if a pawn's home/workplace
 			// contains the necessary tools, giving user warning if not
+                          }
 			    currently_searched++;
 		}
-		buffer.state = ToolsState::FoundAll;
 		return buffer;
 	}
+
+

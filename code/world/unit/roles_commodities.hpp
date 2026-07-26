@@ -1,6 +1,6 @@
 #pragma once
 #include "core/tables.hpp"
-#include "world/plant/enum.hpp"
+#include <world/plant/enum.hpp>
 #include <world/animal/enum.hpp>
 #include "world/unit/enum.hpp"
 #include <world/buildable/enum.hpp>

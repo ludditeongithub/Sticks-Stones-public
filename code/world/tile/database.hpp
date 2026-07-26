@@ -89,10 +89,8 @@ this->capacity = capacity;
 	
 	Coord get_nearest_empty_tile(Coord coord);
 		Coord get_nearest_empty_tile_block(Coord coord, size_t length, size_t width = 1);
-		inline size_t get_index(const Coord coord)
-		{
-return coord.y * 
-		}
-		inline Frame calc_inertia(const Coord coord, bool running);
+  inline size_t get_index(const Coord coord){return (coord.y * world.height_chunks) + (coord.x * world.length_chunks);}
+  inline Coord get_coord(const size_t index){}
+  inline Frame calc_inertia(const Coord coord, bool running);
 		inline Frame calc_inertia(Frame entity_base_frames, const Coord coord);
 };

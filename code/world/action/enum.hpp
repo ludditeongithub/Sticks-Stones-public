@@ -169,8 +169,8 @@ enum class ActState : uint8_t
 	Walk = 0,
 	Run = 1,
 	Act = 2,
-	NewPath = 3
+        NewPath = 3
 };
 
 //TODO: ensure Frame can be properly packed
-using FrameData = PackedEnum<Field<ActState, 2>, Field<Direction, 2>, Field<Frame, 4>>;
+using FrameData = PackedEnum<Field<ActState, 2>, Field<Direction, 2>, Field<Frame, 12>>;

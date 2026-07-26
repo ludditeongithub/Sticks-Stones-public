@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include "world/world.hpp"
 #include <core/random.hpp>
 #include <cstdint>
@@ -10,7 +9,7 @@
 #include <world/plant/enum.hpp>
 #include <world/chunk/data.hpp>
 #include <world/tile/enum.hpp>
-#include <world/scavengeable/enum.hpp>
+#include <world/item/scavengeable.hpp>
 
 
 float range_penalty(float original_value, float min_value, float max_value, float adjusted_value);

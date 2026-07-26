@@ -1,3 +1,4 @@
+#include "action.hpp"
 #include <world/buildable/enum.hpp>
 #include <world/item/tags.hpp>
 #include <world/item/recipes.hpp>
