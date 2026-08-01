@@ -13,8 +13,11 @@
 
 
 // using Entity = PackedEnum4_32<Role, 8, Animal, 6, Plant, 6, Item, 10>;
+enum class NullEntity : uint8_t {
+Null
+};
 
-using Entity = std::variant<Unit, Animal, Plant, Item, Buildable>;
+using Entity = std::variant<Unit, Animal, Plant, Item, Buildable, NullEntity>;
 
 struct EntitySearchData {
    size_t index;
@@ -30,7 +33,7 @@ struct AnimalRenderData {
 struct PlantRenderData {
   size_t index;
   Coord position;
-	Plant plant;
+  Plant plant;
 };
 
 struct ItemRenderData {

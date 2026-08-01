@@ -1,6 +1,7 @@
 * REMEMBER
 ** boost.preprocessor enum to string
 * NOW
+** Possibly: change Specialization metaprogram to work for animals, units, plants, of certain types instead of just Items
 ** Algorithm, scheduling and dispatch general plan
 First, inertiaLoop goes through and inertia[i]--. if inertia[i] == 0, checks actions[i] and then marks correct flag in the dispatch buffer.
 

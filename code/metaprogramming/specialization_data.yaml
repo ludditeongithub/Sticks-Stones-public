@@ -270,13 +270,304 @@ data:
           bulk_level: BulkLevel::Solid
           min_temp: _100.0
           max_temp: 60.0
-          covers: []
-          
-     perishables:
-        flour:
-                base_enjoyment: Horrid
-                base_nutrition: 0.0005
-                fridge_temp: 15
-                frozen_temp: 4
-                decay_period: YEAR_LENGTH * 0.4
-                disease_risk:        
+          covers: []          
+    perishable:
+      flour:
+            enjoyment: Trash
+            nutrition: 3.6
+            fridge_temp: 10
+            decay_period: YEAR_LENGTH * 2.30
+            disease_risk: 0.05
+            cooling_effect: 0.98
+            fermentable: false
+
+      milled_rice:
+            enjoyment: Poor
+            nutrition: 3.8
+            fridge_temp: 10
+            decay_period: YEAR_LENGTH * 6.00
+            disease_risk: 0.02
+            cooling_effect: 0.99
+            fermentable: false
+
+      bread:
+            enjoyment: Good
+            nutrition: 4.2
+            fridge_temp: 8
+            decay_period: DAY_LENGTH * 6
+            disease_risk: 0.20
+            cooling_effect: 0.45
+            fermentable: true
+
+      pastry:
+            enjoyment: Great
+            nutrition: 5.8
+            fridge_temp: 8
+            decay_period: DAY_LENGTH * 4
+            disease_risk: 0.10
+            cooling_effect: 0.35
+            fermentable: false
+
+      pie:
+            enjoyment: Great
+            nutrition: 6.2
+            fridge_temp: 8
+            decay_period: DAY_LENGTH * 5
+            disease_risk: 0.08
+            cooling_effect: 0.35
+            fermentable: false
+
+      porridge:
+            enjoyment: Good
+            nutrition: 3.4
+            fridge_temp: 8
+            decay_period: DAY_LENGTH * 2
+            disease_risk: 0.40
+            cooling_effect: 0.22
+            fermentable: true
+
+      raw_meat:
+            enjoyment: Horrid
+            nutrition: 7.8
+            fridge_temp: 4
+            decay_period: DAY_LENGTH * 2
+            disease_risk: 0.95
+            cooling_effect: 0.18
+            fermentable: false
+
+      cooked_meat:
+            enjoyment: Great
+            nutrition: 7.6
+            fridge_temp: 4
+            decay_period: DAY_LENGTH * 4
+            disease_risk: 0.35
+            cooling_effect: 0.25
+            fermentable: false
+
+      animal_fat:
+            enjoyment: Poor
+            nutrition: 9.8
+            fridge_temp: 8
+            decay_period: DAY_LENGTH * 60
+            disease_risk: 0.10
+            cooling_effect: 0.65
+            fermentable: false
+
+      cheese:
+            enjoyment: Great
+            nutrition: 7.2
+            fridge_temp: 8
+            decay_period: DAY_LENGTH * 30
+            disease_risk: 0.08
+            cooling_effect: 0.70
+            fermentable: false
+
+      goat_cheese:
+            enjoyment: Good
+            nutrition: 6.8
+            fridge_temp: 8
+            decay_period: DAY_LENGTH * 25
+            disease_risk: 0.10
+            cooling_effect: 0.65
+            fermentable: false
+
+      blue_cheese:
+            enjoyment: Good
+            nutrition: 7.0
+            fridge_temp: 8
+            decay_period: DAY_LENGTH * 40
+            disease_risk: 0.05
+            cooling_effect: 0.85
+            fermentable: false
+
+      beer:
+            enjoyment: Good
+            nutrition: 1.6
+            fridge_temp: 12
+            decay_period: YEAR_LENGTH * 1.50
+            disease_risk: 0.00
+            cooling_effect: 0.98
+            fermentable: true
+
+      wine:
+            enjoyment: Great
+            nutrition: 1.4
+            fridge_temp: 14
+            decay_period: YEAR_LENGTH * 12.00
+            disease_risk: 0.00
+            cooling_effect: 0.99
+            fermentable: true
+
+      fruit_wine:
+            enjoyment: Good
+            nutrition: 1.5
+            fridge_temp: 14
+            decay_period: YEAR_LENGTH * 5.00
+            disease_risk: 0.00
+            cooling_effect: 0.98
+            fermentable: true
+
+      mead:
+            enjoyment: Great
+            nutrition: 2.2
+            fridge_temp: 14
+            decay_period: YEAR_LENGTH * 15.00
+            disease_risk: 0.00
+            cooling_effect: 0.99
+            fermentable: true
+
+      vinegar:
+            enjoyment: Trash
+            nutrition: 0.1
+            fridge_temp: 20
+            decay_period: YEAR_LENGTH * 100.00
+            disease_risk: 0.00
+            cooling_effect: 1.00
+            fermentable: true
+
+      butter:
+            enjoyment: Good
+            nutrition: 9.2
+            fridge_temp: 6
+            decay_period: DAY_LENGTH * 30
+            disease_risk: 0.08
+            cooling_effect: 0.40
+            fermentable: false
+
+      olive_oil:
+            enjoyment: Poor
+            nutrition: 8.8
+            fridge_temp: 20
+            decay_period: YEAR_LENGTH * 2.00
+            disease_risk: 0.01
+            cooling_effect: 0.98
+            fermentable: false
+
+      cooking_oil:
+            enjoyment: Poor
+            nutrition: 8.8
+            fridge_temp: 20
+            decay_period: YEAR_LENGTH * 1.25
+            disease_risk: 0.02
+            cooling_effect: 0.98
+            fermentable: false
+
+      juice:
+            enjoyment: Great
+            nutrition: 2.4
+            fridge_temp: 4
+            decay_period: DAY_LENGTH * 5
+            disease_risk: 0.20
+            cooling_effect: 0.25
+            fermentable: true
+
+      candied_fruit:
+            enjoyment: Great
+            nutrition: 5.0
+            fridge_temp: 15
+            decay_period: YEAR_LENGTH * 2.00
+            disease_risk: 0.03
+            cooling_effect: 0.90
+            fermentable: true
+
+      aged_alcoholic_drink:
+            enjoyment: Legendary
+            nutrition: 1.5
+            fridge_temp: 15
+            decay_period: YEAR_LENGTH * 30.00
+            disease_risk: 0.00
+            cooling_effect: 1.00
+            fermentable: false
+
+      sugar_juice:
+            enjoyment: Good
+            nutrition: 2.8
+            fridge_temp: 4
+            decay_period: DAY_LENGTH * 3
+            disease_risk: 0.25
+            cooling_effect: 0.20
+            fermentable: true
+
+      sugar:
+            enjoyment: Poor
+            nutrition: 4.0
+            fridge_temp: 20
+            decay_period: YEAR_LENGTH * 100.00
+            disease_risk: 0.00
+            cooling_effect: 1.00
+            fermentable: false
+
+      ground_black_pepper:
+            enjoyment: Trash
+            nutrition: 0.2
+            fridge_temp: 20
+            decay_period: YEAR_LENGTH * 3.00
+            disease_risk: 0.00
+            cooling_effect: 1.00
+            fermentable: false
+
+      chili_powder:
+            enjoyment: Trash
+            nutrition: 0.3
+            fridge_temp: 20
+            decay_period: YEAR_LENGTH * 2.00
+            disease_risk: 0.00
+            cooling_effect: 1.00
+            fermentable: false
+
+      animal_hair:
+            enjoyment: Trash
+            nutrition: 0.1
+            fridge_temp: 20
+            decay_period: YEAR_LENGTH * 20.00
+            disease_risk: 1.00
+            cooling_effect: 0.95
+            fermentable: false
+
+      tanning_agent:
+            enjoyment: Trash
+            nutrition: 0.1
+            fridge_temp: 10
+            decay_period: DAY_LENGTH * 90
+            disease_risk: 1.00
+            cooling_effect: 0.75
+            fermentable: true
+
+      incense:
+            enjoyment: Trash
+            nutrition: 0.1
+            fridge_temp: 20
+            decay_period: YEAR_LENGTH * 10.00
+            disease_risk: 1.00
+            cooling_effect: 0.98
+            fermentable: false
+
+      bone_meal:
+            enjoyment: Trash
+            nutrition: 0.2
+            fridge_temp: 20
+            decay_period: YEAR_LENGTH * 5.00
+            disease_risk: 0.90
+            cooling_effect: 0.95
+            fermentable: false
+
+      fish_meal:
+            enjoyment: Horrid
+            nutrition: 2.5
+            fridge_temp: 10
+            decay_period: DAY_LENGTH * 180
+            disease_risk: 0.80
+            cooling_effect: 0.60
+            fermentable: false
+
+      fertilizer:
+            enjoyment: Trash
+            nutrition: 0.1
+            fridge_temp: 20
+            decay_period: YEAR_LENGTH * 3.00
+            disease_risk: 1.00
+            cooling_effect: 0.80
+            fermentable: true
+    container:
+        jar:
+                

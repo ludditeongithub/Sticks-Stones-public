@@ -247,7 +247,7 @@ inline constexpr LookupTable<Animal, Time> SENESCENCE_AGES = [] {
 	return lt;
 }();
 
-inline LookupTable<Animal, uint16_t> hunger_search_threshold = []
+inline constexpr LookupTable<Animal, uint16_t> hunger_search_threshold = []
 {
 	LookupTable<Animal, uint16_t> lt;
 	using enum Animal;
@@ -376,15 +376,47 @@ inline constexpr const BitsetTable<Animal> IS_EGG_LAYER = []
 	return t;
 }();
 
-inline constexpr LookupTable<Animal,Time> HATCH_TIMES = [] {
-		LookupTable<Animal,Time> lt{};
-		using enum Animal;
-		lt[Chicken] = DAY_LENGTH * 23;
-		lt[Duck] = DAY_LENGTH * 29;
-		lt[Turtle] = DAY_LENGTH * 99;
-		// TODO: fish
-		return lt;
+inline constexpr LookupTable<Animal, Time> HATCH_TIMES = []
+{
+	LookupTable<Animal, Time> lt{};
+	using enum Animal;
+	lt[Chicken] = DAY_LENGTH * 23;
+	lt[Duck] = DAY_LENGTH * 29;
+	lt[Turtle] = DAY_LENGTH * 99;
+	// TODO: fish
+	return lt;
 }();
+
+inline constexpr LookupTable<Animal, Time> breeding_season_start = []
+{
+	LookupTable<Animal, Time> lt{};
+	using enum Animal;
+
+	return lt;
+}();
+
+inline constexpr LookupTable<Animal, Time> breeding_season_end = []
+{
+	LookupTable<Animal, Time> lt{};
+	using enum Animal;
+
+	return lt;
+}();
+
+inline constexpr LookupTable<Animal, Time> migration_season_start = []
+{
+	LookupTable<Animal, Time> lt{};
+	using enum Animal;
+
+	return lt;
+}();
+
+  inline constexpr LookupTable<Animal,Time> migration_season_end = [] {
+    LookupTable<Animal,Time> lt{};
+    using enum Animal;
+    
+    return lt;
+  }();
 
 }//namespace animal
 

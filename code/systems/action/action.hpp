@@ -61,13 +61,12 @@ struct MovingStateDispatchBuffer
 // ASSIGN
 // =========================
 
+std::vector<EntityID> mark_unassigned_and_no_inertia_entities();
 void assign_unassigned_entities();
 template <typename DB>
 MovingStateDispatchBuffer mark_entities_moving_state(std::vector<EntityID> &indices, DB& database);
-inline Role get_valid_action_role(UnitDatabase& database, size_t i, Commodity c);
-void assign_tasks(std::vector<EntityID> &indices, PriorityQueue<PlayerTaskJobData> &pq,
-		  UnitDatabase &database);
-
+inline Role get_valid_action_role(unit::Database& database, size_t i, Commodity c);
+void assign_tasks(std::vector<EntityID> &indices, PriorityQueue<PlayerTaskJobData> &pq, unit::Database &database);
 void assign_animal_tasks(Array<Animal> &animals, Array<ActState> &actions, Array<Coord> &positions, Array<Hunger> hungers);
 void handle_actions_and_movement();
 std::vector<EntityID> get_ready_actors();
@@ -76,7 +75,7 @@ std::vector<EntityID> get_ready_actors();
 // ATTEMPT
 // =========================
 
-void decide_task(EntityID pawn_index, UnitDatabase& database);
+void decide_task(EntityID pawn_index, unit::Database& database);
 
 // =========================
 // RESOURCE

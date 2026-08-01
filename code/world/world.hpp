@@ -163,9 +163,9 @@ struct World
 
 	void update_weather();
 
-	void apply_weather(TileDatabase* tile_db);
+	void apply_weather(tile::Database* tile_db);
 
-	void apply_precipitation(TileDatabase *tile_db, uint16_t chunk, bool heavy);
+	void apply_precipitation(tile::Database *tile_db, uint16_t chunk, bool heavy);
 	
 };
 

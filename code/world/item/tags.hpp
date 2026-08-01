@@ -32,7 +32,6 @@ enum class ItemTags : uint32_t
 	TwoHandedTool = 1 << 18,
         VisibleInHand = 1 << 19,
 };
-
 namespace item {
 
 inline constexpr LookupTable<Item, ItemTags> TAGS = []
@@ -203,6 +202,16 @@ inline constexpr LookupTable<Item, ItemTags> TAGS = []
 	lt[Item::CandleMould] = ItemTags::Alternate;
 	lt[Item::Candle] = ItemTags::Alternate | ItemTags::Wearable | ItemTags::WaterDamage;
 	lt[Item::OilLamp] = ItemTags::Alternate | ItemTags::WaterDamage;
+	lt[Item::Jar] = ItemTags::Container;
+	lt[Item::Pot] = ItemTags::Container;
+	lt[Item::Keg] = ItemTags::Container;
+	lt[Item::Bottle] = ItemTags::Container;
+	lt[Item::Kettle] = ItemTags::Container;
+	lt[Item::Waterskin] = ItemTags::Container;
+	lt[Item::Satchel] = ItemTags::Container;
+	lt[Item::LargeSatchel] = ItemTags::Container;
+	lt[Item::Bucket] = ItemTags::Container;
+	lt[Item::Basket] = ItemTags::Container;
 	return lt;
 }();
 } // namespace item

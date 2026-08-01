@@ -2,7 +2,7 @@
 #include <world/unit/roles_and_actions.hpp>
 #include <world/unit/database.hpp>
 #include <world/buildable/defaults.hpp>
-#include <systems/search/entity_search.hpp>
+#include <systems/search/search.hpp>
 #include "core/entity.hpp"
 #include "inventory.hpp"
 #include "world/buildable/enum.hpp"
@@ -46,7 +46,7 @@ if (auto *entity = std::get_if<Item>(&action_reqs.requirement))
                                 return ard;
 }
 
-inline bool set_requirement_as_unit_target(UnitDatabase& database, EntityID index, ActionRequirementData& ard)
+inline bool set_requirement_as_unit_target(unit::Database& database, EntityID index, ActionRequirementData& ard)
 {
 	if (ard.esd.position.has_value)
 	{
@@ -56,7 +56,7 @@ inline bool set_requirement_as_unit_target(UnitDatabase& database, EntityID inde
         } else return false;
 }
 
-NecessaryActionRequirementsBuffer check_necessary_action_requirements(UnitDatabase& database, Action action, Inventory& inventory, EntityID unit_index, Coord coord)
+NecessaryActionRequirementsBuffer check_necessary_action_requirements(unit::Database& database, Action action, Inventory& inventory, EntityID unit_index, Coord coord)
 {
 	NecessaryActionRequirementsBuffer buffer;
 

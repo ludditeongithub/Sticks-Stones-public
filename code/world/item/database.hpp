@@ -1,8 +1,6 @@
 #pragma once
 #include <stack>
 #include <core/packed_enum.hpp>
-#include <macros/database.hpp>
-
 #include "world/tile/database.hpp"
 #include <core/hash.hpp>
 #include <cereal/binary_archive.hpp>
@@ -10,16 +8,17 @@
 #include <core/data.hpp>
 #include <core/containers.hpp>
 
+namespace item {
 // for items in the world, not in inventory
-struct ItemDatabase
+struct Database
 {
 
   // @codegen:begin database_generation
-    // =========================
-    // BASE DATABASE MEMBERS
-    // =========================
+// =========================
+// BASE DATABASE MEMBERS
+// =========================
 
-constexpr static uint16_t ENTITY_SIZE = sizeof(Item) +
+constexpr static uint16_t entity_size = sizeof(Item) +
 + sizeof(bool)
   
  +  sizeof(Item) 
@@ -32,6 +31,11 @@ size_t capacity;
     Array<bool> alives;
   SearchGrid& search;
   World& world;
+  
+  std::vector<EntityID>& no_inertia_buffer; // size is amount of no inertias this loop
+  
+  std::vector<EntityID>& unassigned_buffer; // size is amount of unassigned this loop
+
   TileDatabase& tiles;
 
     // =========================
@@ -39,13 +43,14 @@ size_t capacity;
     // =========================
     Array<Item> items;
     Array<Coord> coords;
-    
+
+
 
 // =========================
-    // CONSTRUCTOR
-    // =========================
+// CONSTRUCTOR
+// =========================
 
-ItemDatabase(Arena *arena, size_t capacity
+Database(Arena *arena, size_t capacity
   , World& world
  
   , SearchGrid& search
@@ -56,16 +61,29 @@ ItemDatabase(Arena *arena, size_t capacity
 search(search),
 {
 this->capacity = capacity;
+
   this->size = 0;
 
 }
+
+// =========================
+// GETTERS
+// =========================
+
+  inline Item& items(size_t index) {
+return itemss[index];
+  }
+  inline Coord& coords(size_t index) {
+return coordss[index];
+  }
+
 
   // =========================
   // SPAWN
   // =========================
 
  
-  bool attempt_spawn(Item item, bool newborn, Coord coord )
+  bool attempt_spawn(Item item, bool newborn, Coord coord, )
   {       
         if (size + 1 > capacity)
             return false;
@@ -125,8 +143,8 @@ this->capacity = capacity;
   }
     
 
-      
-    // =========================
+
+      // =========================
     // SERIALIZATION
     // =========================
 
@@ -160,7 +178,7 @@ this->capacity = capacity;
 // TRANSFER
 // =========================
 
-inline bool transfer_item(size_t i, ItemDatabase &old_db, ItemDatabase &new_db)
+inline bool transferItem(size_t i, ItemDatabase &old_db, ItemDatabase &new_db)
   {
   if (new_db.size >= new_db.capacity) return false;
   int index;  
@@ -185,4 +203,4 @@ inline bool transfer_item(size_t i, ItemDatabase &old_db, ItemDatabase &new_db)
 	inline void add_item(Item item, Coord coord);
 	inline void drop_fruit(Plant plant, Coord coord, uint16_t amount);
 };
-
+}

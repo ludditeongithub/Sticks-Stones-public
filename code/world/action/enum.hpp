@@ -146,9 +146,9 @@ enum class Action : uint8_t
 	AnimalFoodSearch,  // TODO
 	AnimalBreedSearch, // TODO
 	AnimalDrinkSearch, // TODO
-	RejoinPack,	   // wanders if animal is not a pack animal, possibly change
+	AnimalFollowPack,	   // wanders if animal is not a pack animal, possibly change
 			   // to wander
-	Migration,	   // TODO
+	AnimalMigration,	   // TODO
 	ANIMAL_MAX,
 	MAX
 };

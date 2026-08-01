@@ -9,8 +9,9 @@
 #include <vector>
 #include <world/world.hpp>
 
+namespace tile {
 // TODO: enforce occupied on other databses
-class TileDatabase
+class Database
 {
       public:
 	World& world;
@@ -43,7 +44,7 @@ size_t capacity;
     // CONSTRUCTOR
     // =========================
 
-TileDatabase(Arena *arena, size_t capacity
+tile::Database(Arena *arena, size_t capacity
   , World& world
  
 ) :
@@ -90,7 +91,8 @@ this->capacity = capacity;
 	Coord get_nearest_empty_tile(Coord coord);
 		Coord get_nearest_empty_tile_block(Coord coord, size_t length, size_t width = 1);
   inline size_t get_index(const Coord coord){return (coord.y * world.height_chunks) + (coord.x * world.length_chunks);}
-  inline Coord get_coord(const size_t index){}
+  inline Coord get_coord(const size_t index){return {(index % world.length_chunks), (index / world.height_chunks)};}
   inline Frame calc_inertia(const Coord coord, bool running);
 		inline Frame calc_inertia(Frame entity_base_frames, const Coord coord);
 };
+}

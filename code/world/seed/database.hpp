@@ -3,14 +3,14 @@
 #include "../plant/enum.hpp"
 #include "macros/database.hpp"
 #include <core/data.hpp>
-
-struct SeedDatabase {
+namespace seed {
+struct Database {
 	// @codegen:begin database_generation
-    // =========================
-    // BASE DATABASE MEMBERS
-    // =========================
+// =========================
+// BASE DATABASE MEMBERS
+// =========================
 
-constexpr static uint16_t ENTITY_SIZE = sizeof(Plant) +
+constexpr static uint16_t entity_size = sizeof(Plant) +
 + sizeof(bool)
   
  +  sizeof(Plant) 
@@ -19,10 +19,9 @@ constexpr static uint16_t ENTITY_SIZE = sizeof(Plant) +
 ;
 
 size_t capacity;
-    size_t size;
+    size_t size = 1; // 0 is placeholder
     Stack<size_t> free_slots;
     Array<bool> alives;
-  World& world;
   TileDatabase& tiles;
 
     // =========================
@@ -31,13 +30,14 @@ size_t capacity;
     Array<Plant> plants;
     Array<Coord> coords;
     Array<Time> ages;
-    
+
+
 
 // =========================
-    // CONSTRUCTOR
-    // =========================
+// CONSTRUCTOR
+// =========================
 
-SeedDatabase(Arena *arena, size_t capacity
+Database(Arena *arena, size_t capacity
   , World& world
  
   , TileDatabase& tiles
@@ -46,19 +46,36 @@ SeedDatabase(Arena *arena, size_t capacity
   tiles(tiles),
 {
 this->capacity = capacity;
+
   this->size = 0;
 
 }
+
+// =========================
+// GETTERS
+// =========================
+
+  inline Plant& plants(size_t index) {
+return plantss[index];
+  }
+  inline Coord& coords(size_t index) {
+return coordss[index];
+  }
+  inline Time& ages(size_t index) {
+return agess[index];
+  }
+
 
   // =========================
   // SPAWN
   // =========================
 
- 
-  bool attempt_spawn(Plant plant, bool newborn, Coord coord, )
+
+// returns 0 if failed
+  size_t attempt_spawn(Plant plant, bool newborn, Coord coord  )
   {       
         if (size + 1 > capacity)
-            return false;
+            return 0;
         size_t i;
         if (free_slots.empty())
         {
@@ -73,30 +90,37 @@ this->capacity = capacity;
         alives[i] = true;
         if (newborn)
         {
-            plants[i] = plant;
-            coords[i] = coord;
-            ages[i] = 0;
+            plants(i) = plant;
+            coords(i) = coord;
+            ages(i) = 0;
         }
         else
         {
         Time age = random_bool->next();
-            plants[i] = plant;
-            coords[i] = coord;
-            ages[i] = age;
+            plants(i) = plant;
+            coords(i) = coord;
+            ages(i) = age;
         }
-        return true;
+        return i;
           }
-          bool spawn(Plant plant, bool newborn, Coord origin) {
-          Coord spawn_point = tiles.get_nearest_empty_tile(origin);
-          while (!attempt_spawn(plant, newborn, spawn_point)) free_unused_entity();                 
-          }        
+          
+          size_t spawn(Plant plant, bool newborn, Coord origin
+bool insert_search = true) {
+Coord spawn_point = tiles.get_nearest_empty_tile(origin);
+size_t result = 0;
+while (result == 0) {
+result = attempt_spawn(plant, newborn, spawn_point
+, insert_search);
+if (result == 0) free_unused_entity();
+}
+}        
     
 
   // =========================
   // REMOVE
   // =========================
   
-  bool remove(size_t i)
+  inline bool remove(size_t i)
   {
         if (!alives[i])
             return false;
@@ -106,7 +130,7 @@ this->capacity = capacity;
         return true;
   }
 
-  void free_unused_entity()
+  inline void free_unused_entity()
   {
     for (size_t i = 0; i < coords.size; i++) {
     if (tiles.tile_statuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
@@ -114,7 +138,7 @@ this->capacity = capacity;
   }
     
 
-      
+
     // =========================
     // SERIALIZATION
     // =========================
@@ -148,3 +172,5 @@ this->capacity = capacity;
 
 // @codegen:end database_generation
 };
+
+}

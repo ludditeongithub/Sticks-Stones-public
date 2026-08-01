@@ -6,7 +6,7 @@
 #include <variant>
 #include "inventory_manager.hpp"
 
-void set_unit_job(UnitDatabase &database, CommodityDispatcher& dispatcher, uint16_t unit_index) {
+void set_unit_job(unit::Database &database, CommodityDispatcher& dispatcher, uint16_t unit_index) {
 	Commodity::underlying commodity = get_unit_next_commodity(database, dispatcher, unit_index);
 	auto commodity_variant = Commodity::cast(commodity);
 	if (auto ptr = std::get_if<Item>( &commodity_variant )) {
@@ -26,7 +26,7 @@ void set_unit_job(UnitDatabase &database, CommodityDispatcher& dispatcher, uint1
 }
 
 
-Commodity::underlying get_unit_next_commodity(UnitDatabase& database, CommodityDispatcher& dispatcher, uint16_t unit_index)
+Commodity::underlying get_unit_next_commodity(unit::Database& database, CommodityDispatcher& dispatcher, uint16_t unit_index)
 {
 	assert(unit_index < database.size);
 	int highest = std::numeric_limits<int>::min();

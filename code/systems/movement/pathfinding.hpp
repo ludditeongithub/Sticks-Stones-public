@@ -1,6 +1,7 @@
 #include "core/data.hpp"
 #include "core/memory.hpp"
 #include "schedule/dispatch.hpp"
+#include "world/action/enum.hpp"
 #include <core/containers.hpp>
 #include <core/math.hpp>
 #include <cstdint>
@@ -39,26 +40,34 @@ static constexpr size_t ELEMENT_SIZE = sizeof(uint8_t) + sizeof(uint8_t) + sizeo
 	Array<uint8_t> currents; // current index in path
 	Array<uint8_t> ends; // index end to intermittent path
 //	Array<Coord> destinations; taken from targets in database
-	Array<PathData> datas; // currently processed paths up to this point
+	Array<std::array<Direction, MAX_PATH_SIZE>> directions; // currently processed paths up to this point
 
 	Direction pop(size_t i)
 	{
 		int c = currents[i];
 		currents[i]++;
-		return datas[i].directions[c];
+		return directions[i][c];
 	}
 
 		PathsBuffer(Arena& arena, size_t size)
 	{
 			currents = arena_make_array<uint8_t>(arena, size);
 			ends = arena_make_array<uint8_t>(arena, size);
-			datas = arena_make_array<PathData>(arena, size);
+			directions = arena_make_array<std::array<Direction, MAX_PATH_SIZE>>(arena, size);
 	}
+	template <typename DB>
+	void get_new_paths(DB &database, std::vector<EntityID>& no_inertia_entities, tile::Database &tiles);
+
+  void set_new_paths(std::vector<EntityID>& path_dispatch_buffer, Array<Coord>& coords, Array<Target>& targets);
 };
 
-Arena g_paths_buffer_arena = Arena(PathsBuffer::ELEMENT_SIZE * PATH_QUEUE_SIZE);
-Arena* g_paths_buffer_pointer = &g_paths_buffer_arena;
-PathsBuffer g_paths_buffer = PathsBuffer(*g_paths_buffer_pointer, PATH_QUEUE_SIZE);
+Arena g_unit_paths_buffer_arena = Arena(PathsBuffer::ELEMENT_SIZE * PATH_QUEUE_SIZE);
+Arena* g_unit_paths_buffer_pointer = &g_unit_paths_buffer_arena;
+PathsBuffer g_unit_paths_buffer = PathsBuffer(*g_unit_paths_buffer_pointer, PATH_QUEUE_SIZE);
+
+Arena g_animal_paths_buffer_arena = Arena(PathsBuffer::ELEMENT_SIZE * PATH_QUEUE_SIZE);
+Arena* g_animal_paths_buffer_pointer = &g_unit_paths_buffer_arena;
+PathsBuffer g_animal_paths_buffer = PathsBuffer(*g_unit_paths_buffer_pointer, PATH_QUEUE_SIZE);
 
 
 struct PathExecution
@@ -87,10 +96,4 @@ PathData a_star(Coord start, Coord goal, int width, int height);
 
 PathData reconstruct_path(int start_index, int goal_index);
 
-std::vector<EntityID> mark_new_path_entities(std::vector<EntityID> &acting_entities,
-								Array<FrameData> &frame_datas);
-
-void set_new_paths(std::vector<EntityID>& path_dispatch_buffer, Array<Coord>& coords, Array<Target>& targets, PathsBuffer& pb);
-
-template<typename DB>
-void get_new_paths(DB& database, std::vector<EntityID> &no_inertia_entities);
+std::vector<EntityID> mark_new_path_entities(std::vector<EntityID> &acting_entities, Array<FrameData> &frame_datas);

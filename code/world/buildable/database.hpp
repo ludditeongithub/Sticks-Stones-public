@@ -7,14 +7,15 @@
 #include <world/world.hpp>
 #include <world/tile/database.hpp>
 
-struct BuildableDatabase
+namespace buildable {
+struct Database
 {
   	// @codegen:begin database_generation
-    // =========================
-    // BASE DATABASE MEMBERS
-    // =========================
+// =========================
+// BASE DATABASE MEMBERS
+// =========================
 
-constexpr static uint16_t ENTITY_SIZE = sizeof(Buildable) +
+constexpr static uint16_t entity_size = sizeof(Buildable) +
 + sizeof(bool)
   
  +  sizeof(Buildable) 
@@ -23,10 +24,9 @@ constexpr static uint16_t ENTITY_SIZE = sizeof(Buildable) +
 ;
 
 size_t capacity;
-    size_t size;
+    size_t size = 1; // 0 is placeholder
     Stack<size_t> free_slots;
     Array<bool> alives;
-  World& world;
   TileDatabase& tiles;
 
     // =========================
@@ -35,13 +35,18 @@ size_t capacity;
     Array<Buildable> buildables;
     Array<Health> healths;
     Array<Coord> coords;
+
+    struct main {
     
+    
+    }
+
 
 // =========================
-    // CONSTRUCTOR
-    // =========================
+// CONSTRUCTOR
+// =========================
 
-BuildableDatabase(Arena *arena, size_t capacity
+Database(Arena *arena, size_t capacity
   , World& world
  
   , TileDatabase& tiles
@@ -50,19 +55,42 @@ BuildableDatabase(Arena *arena, size_t capacity
   tiles(tiles),
 {
 this->capacity = capacity;
+
   this->size = 0;
 
 }
+
+// =========================
+// GETTERS
+// =========================
+
+  inline Buildable& buildables(size_t index) {
+return buildabless[index];
+  }
+  inline Health& healths(size_t index) {
+return healthss[index];
+  }
+  inline Coord& coords(size_t index) {
+return coordss[index];
+  }
+
+    inline Health& healths(size_t index) {    
+return main[index].healths;
+    }
+    inline Coord& coords(size_t index) {    
+return main[index].coords;
+    }
 
   // =========================
   // SPAWN
   // =========================
 
- 
-  bool attempt_spawn(Buildable buildable, bool newborn, Coord coord )
+
+// returns 0 if failed
+  size_t attempt_spawn(Buildable buildable, bool newborn, Coord coord  )
   {       
         if (size + 1 > capacity)
-            return false;
+            return 0;
         size_t i;
         if (free_slots.empty())
         {
@@ -77,30 +105,37 @@ this->capacity = capacity;
         alives[i] = true;
         if (newborn)
         {
-            buildables[i] = buildable;
-            healths[i] = buildable::max_healths[buildable] * INFANT_HEALTH_MODIFIER;
-            coords[i] = coord;
+            buildables(i) = buildable;
+            healths(i) = buildable::maxHealths[buildable] * INFANT_HEALTH_MODIFIER;
+            coords(i) = coord;
         }
         else
         {
         Time age = random_bool->next();
-            buildables[i] = buildable;
-            healths[i] = get_max_health(buildable, age);
-            coords[i] = coord;
+            buildables(i) = buildable;
+            healths(i) = getMaxHealth(buildable, age);
+            coords(i) = coord;
         }
-        return true;
+        return i;
           }
-          bool spawn(Buildable buildable, bool newborn, Coord origin) {
-          Coord spawn_point = tiles.get_nearest_empty_tile(origin);
-          while (!attempt_spawn(buildable, newborn, spawn_point)) free_unused_entity();                 
-          }        
+          
+          size_t spawn(Buildable buildable, bool newborn, Coord origin
+bool insert_search = true) {
+Coord spawn_point = tiles.get_nearest_empty_tile(origin);
+size_t result = 0;
+while (result == 0) {
+result = attempt_spawn(buildable, newborn, spawn_point
+, insert_search);
+if (result == 0) free_unused_entity();
+}
+}        
     
 
   // =========================
   // REMOVE
   // =========================
   
-  bool remove(size_t i)
+  inline bool remove(size_t i)
   {
         if (!alives[i])
             return false;
@@ -110,7 +145,7 @@ this->capacity = capacity;
         return true;
   }
 
-  void free_unused_entity()
+  inline void free_unused_entity()
   {
     for (size_t i = 0; i < coords.size; i++) {
     if (tiles.tile_statuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
@@ -118,7 +153,7 @@ this->capacity = capacity;
   }
     
 
-      
+
     // =========================
     // SERIALIZATION
     // =========================
@@ -152,3 +187,5 @@ this->capacity = capacity;
 
 // @codegen:end database_generation
 };
+
+}

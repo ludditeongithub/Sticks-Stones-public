@@ -9,8 +9,8 @@
 #include <world/unit/database.hpp>
 #include <world/unit/roles_commodities.hpp>
 
-void set_unit_job(UnitDatabase& database, CommodityDispatcher& dispatcher, uint16_t unit_index);
-Commodity::underlying get_unit_next_commodity(UnitDatabase& database, CommodityDispatcher& dispatcher, uint16_t unit_index);
+void set_unit_job(unit::Database& database, CommodityDispatcher& dispatcher, uint16_t unit_index);
+Commodity::underlying get_unit_next_commodity(unit::Database& database, CommodityDispatcher& dispatcher, uint16_t unit_index);
 
 void get_resource_action(int pawn, Item item, int source_index, int variant_index);
 // Get amount of item to put into inventory ();

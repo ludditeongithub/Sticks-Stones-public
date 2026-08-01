@@ -33,8 +33,8 @@ databases:
     tile:
         name: tile
         traits: [immortal, foreign_enum]
-        extra_arrays: [altitude, water, tile_status]
-        foreign_enum: [tileData]
+        extra_arrays: [altitude, water, tile_status, entity]
+        foreign_enum: [tile_data]
     plant:
         name: plant
         traits: [positional, age, searchable, transferable, generated]
@@ -147,7 +147,7 @@ extra_arrays:
     random_age_default: Inventory{}
   - id: skill
     name: skills
-    type: Skills{}
+    type: Skills
     newborn_default: Skills{}
     random_age_default: Skills{}
   - id: place
@@ -156,7 +156,7 @@ extra_arrays:
     newborn_default: Places{}
     random_age_default: Places{}
   - id: tile_status
-    name: tileStatuses
+    name: tile_statuses
     type: TileStatus
     newborn_default: TileStatus{OccupiedStatus::Vacant, VisionStatus::Hidden}
     random_age_default: TileStatus{OccupiedStatus::Vacant, VisionStatus::Hidden}
@@ -170,4 +170,8 @@ extra_arrays:
     type: Alt
     newborn_default: 0
     random_age_default: 0
-    
+  - id: entity
+    name: entities
+    type: Entity
+    newborn_default: NullEntity::Null
+    random_age_default: NullEntity:Null

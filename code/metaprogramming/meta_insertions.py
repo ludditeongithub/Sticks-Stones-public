@@ -81,7 +81,7 @@ def create_databases():
 
     trait_data = config["trait_data"]
     extra_arrays = config["extra_arrays"]
-
+    
     for _, database in config["databases"].items():
         generated_code = create_database(
             database,
@@ -128,7 +128,7 @@ def make_entity_yaml(main_enum: str) -> dict:
 def uncapitalize(s: str) -> str:
     return s[:1].lower() + s[1:]
 
-def create_database(database, trait_data, structs, extra_arrays):
+def create_database(database, trait_data, extra_arrays):
     main_enum = database["name"].capitalize()
     if "foreign_enum" in database:
         main_enum = database["foreign_enum"][0].capitalize()
@@ -138,11 +138,11 @@ def create_database(database, trait_data, structs, extra_arrays):
         main_enum,
         trait_data,
         extra_arrays,
-    )
+    )    
+    struct_list = database.get("structs", {})
     structs = create_structs(
-        database,
         trait_data,
-        structs
+        struct_list
     )
     context = {
         "Entity_name": snake_to_camel(database["name"].capitalize()),
@@ -207,14 +207,13 @@ def create_specializations():
             generated_code,
         )        
         
-def create_runtime_arrays(database, main_enum, trait_info, extra_arrays):
+def create_runtime_arrays(database, main_enum, trait_data, extra_arrays):
     runtime_arrays = []
 
     runtime_arrays.append(make_entity_yaml(main_enum))
     
     for trait in database.get("traits", []):
-        for trait_info in trait_data:
-            
+        for trait_info in trait_data:            
             if trait_info["trait_name"] == trait:                
                 runtime_arrays.append(trait_info)
 
@@ -222,16 +221,21 @@ def create_runtime_arrays(database, main_enum, trait_info, extra_arrays):
         for extra in extra_arrays:
             if extra["id"] == array_id:
                 runtime_arrays.append(extra)
-
     return runtime_arrays
 
-def create_structs(database, trait_data, structs):
+def create_structs(trait_data, struct_defs):
     structs = []
-    for struct in database.get("structs", []):
-        for trait_info in trait_data:
-            if trait_info["trait_name"] == trait:   
-                structs.append(trait_info)
-
+    for struct_name, field_names in struct_defs.items():
+        struct = {
+            "name": struct_name,
+            "fields": []
+        }
+        for field_name in field_names:
+            for trait_info in trait_data:
+                if trait_info["trait_name"] == field_name:
+                    struct["fields"].append(trait_info)
+                    break
+        structs.append(struct)
     return structs
 
 def main():
