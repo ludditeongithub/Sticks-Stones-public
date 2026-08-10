@@ -135,8 +135,7 @@ public:
   AudioBF() {};
 };
 
-class KeybindingsBF : public ButtonFunctionality
-{
+class KeybindingsBF : public ButtonFunctionality {
 private:
 public:
   KeybindingsBF() {};
@@ -149,6 +148,16 @@ public:
   ChangeEquipmentViewBF() {};
   
 };
+
+class OpenMenuBF : public ButtonFunctionality
+{
+private:
+public:
+  OpenMenuBF() {};
+  
+};
+
+
 
 
 // IN GAME

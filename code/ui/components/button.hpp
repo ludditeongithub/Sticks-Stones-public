@@ -24,7 +24,9 @@ enum class ButtonSprite : uint8_t
 
 enum class ButtonDecoration : uint8_t
 {
-        
+  ProductionMenu,
+  BuildingMenu,  
+  NeedsMenu,
         MAX
 };
 

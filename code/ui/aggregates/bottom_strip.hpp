@@ -255,20 +255,20 @@ void change_role(size_t i, Role role)
 
 struct MenuButtons
 {
+	Array<ButtonDecoration> menu_button_decorations
+	{
+          
+	};
 	ElementTable element_table
 	{
-          297, 19, 23,                   
+          297, 19, 23, 25, 2, 0, 7, 7 
 	};
 	Array<ButtonUI, 7> buttons;
-  
-};
+	MenuButtons()
+	{
+          for (size_t i = 0; i < 7; i++) menu_buttons.[i] = ButtonUI(OpenMenuBF(), ButtonSprite::OpenMenuButton, element_table.get_position(i), menu_button_decorations[i]);            
+        }
+;
 
-
-void init_menu_buttons()
-{
-  for (size_t i = 0; i < 7; i++) {
-    menu_buttons.[i] = ButtonUI();
-  }
-}
 
 } // namespace bottom_bar
