@@ -216,6 +216,9 @@ or consider bitmaks depending on use case
 ** audio functionality
 ** chunked rendering
 * AFTER ALPHA
+** languages!
+*** language concepts can be taken from other languages.
+language concepts allow faster unlock, as well as individual training, of certain roles/skills
 ** actually implement NPC tribes
 ** automatic 'greedy' and 'hungry' interest
 ** change globals to fit some convention, maybe namespaces

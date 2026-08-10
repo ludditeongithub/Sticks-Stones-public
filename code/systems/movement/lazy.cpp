@@ -5,12 +5,12 @@
 #include "world/animal/database.hpp"
 #include "world/animal/tables.hpp"
 // raw inertia value
-inline Frame TileDatabase::calc_inertia(Frame entity_base_frames, const Coord coord)
+inline Frame tile::Database::calc_inertia(Frame entity_base_frames, const Coord coord)
 {
 	return static_cast<Frame>(entity_base_frames * tile_frame_multiplier[tile_datas[get_index(coord)]]);
 }
 
-inline Frame TileDatabase::calc_inertia(const Coord coord, bool running)
+inline Frame tile::Database::calc_inertia(const Coord coord, bool running)
 {
 		Frame base;
 		running ? base = BASE_RUNNING_FRAMES : base = BASE_WALKING_FRAMES;
@@ -25,9 +25,9 @@ inline void move(DB& database, EntityID i, const Direction direction)
 }
 
 template <typename DB>
-inline void set_next_move_inertia(DB& database, TileDatabase& tiles, EntityID i, const Coord coord, bool running)
+inline void set_next_move_inertia(DB& database, tile::Database& tiles, EntityID i, const Coord coord, bool running)
 {
-if (typeid(database) == AnimalDatabase)
+if (typeid(database) == animal::Database)
 		{
 	LookupTable<Animal, Frame> frame_per_tiles_table = animal::get_frame_per_tiles_table(running);
 		  

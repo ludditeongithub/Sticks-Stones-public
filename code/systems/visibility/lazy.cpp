@@ -7,7 +7,7 @@
 #include <simulation/game.hpp>
 #include <world/tile/database.hpp>
 
-inline void TileDatabase::manage_fog_per_movement(World* world, UnitDatabase* units, Coord destination, bool explorer)
+inline void tile::Database::manage_fog_per_movement(World* world, unit::Database* units, Coord destination, bool explorer)
 {
 	if (within(destination, total_revealed_box_top_left_corner, total_revealed_box_dimensions))
 	{

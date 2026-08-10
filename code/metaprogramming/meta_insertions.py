@@ -2,12 +2,32 @@ import yaml
 from jinja2 import Environment, FileSystemLoader, StrictUndefined
 import re
 
+def snake_to_camel(s: str) -> str:
+    parts = s.split("_")
+    return parts[0] + "".join(word.capitalize() for word in parts[1:])
+
+def snake_to_pascal(s: str) -> str:
+    return "".join(word.capitalize() for word in s.split("_"))
+
+def words(value):
+    return re.findall(
+        r'[A-Z]?[a-z]+|[A-Z]+(?=[A-Z]|$)|\d+',
+        value
+    )
+
+def camelcase(value):
+    parts = words(value)
+    if not parts:
+        return ""
+    return parts[0].lower() + ''.join(x.capitalize() for x in parts[1:])
+
 env = Environment(
     loader=FileSystemLoader("."),
     undefined=StrictUndefined,
     trim_blocks=True,
     lstrip_blocks=True
 )
+env.globals["PascalCase"] = snake_to_pascal
 database_template = env.get_template("database.j2")
 spawn_entity_template = env.get_template("entity_spawn.j2")
 spawn_buffer_template = env.get_template("spawn_buffers.j2")
@@ -81,7 +101,7 @@ def create_databases():
 
     trait_data = config["trait_data"]
     extra_arrays = config["extra_arrays"]
-
+    
     for _, database in config["databases"].items():
         generated_code = create_database(
             database,
@@ -97,25 +117,6 @@ def create_databases():
             generated_code,
         )
 
-def snake_to_camel(s: str) -> str:
-    parts = s.split("_")
-    return parts[0] + "".join(word.capitalize() for word in parts[1:])
-
-def snake_to_pascal(s: str) -> str:
-    return "".join(word.capitalize() for word in s.split("_"))
-
-def words(value):
-    return re.findall(
-        r'[A-Z]?[a-z]+|[A-Z]+(?=[A-Z]|$)|\d+',
-        value
-    )
-
-def camelcase(value):
-    parts = words(value)
-    if not parts:
-        return ""
-    return parts[0].lower() + ''.join(x.capitalize() for x in parts[1:])
-
 def make_entity_yaml(main_enum: str) -> dict:
     entity_name = main_enum[0].lower() + main_enum[1:]
     return {
@@ -128,7 +129,7 @@ def make_entity_yaml(main_enum: str) -> dict:
 def uncapitalize(s: str) -> str:
     return s[:1].lower() + s[1:]
 
-def create_database(database, trait_data, structs, extra_arrays):
+def create_database(database, trait_data, extra_arrays):
     main_enum = database["name"].capitalize()
     if "foreign_enum" in database:
         main_enum = database["foreign_enum"][0].capitalize()
@@ -138,17 +139,17 @@ def create_database(database, trait_data, structs, extra_arrays):
         main_enum,
         trait_data,
         extra_arrays,
-    )
+    )    
+    struct_list = database.get("structs", {})
     structs = create_structs(
-        database,
         trait_data,
-        structs
+        struct_list
     )
     context = {
         "Entity_name": snake_to_camel(database["name"].capitalize()),
         "entity_name": uncapitalize(snake_to_camel(main_enum)),
         "folder_name": database["name"],
-        "Main_enum": main_enum,        
+        "main_enum": main_enum,        
         "runtime_arrays": runtime_arrays,
         "structs": structs,
         "database": database,
@@ -207,14 +208,13 @@ def create_specializations():
             generated_code,
         )        
         
-def create_runtime_arrays(database, main_enum, trait_info, extra_arrays):
+def create_runtime_arrays(database, main_enum, trait_data, extra_arrays):
     runtime_arrays = []
 
     runtime_arrays.append(make_entity_yaml(main_enum))
     
     for trait in database.get("traits", []):
-        for trait_info in trait_data:
-            
+        for trait_info in trait_data:            
             if trait_info["trait_name"] == trait:                
                 runtime_arrays.append(trait_info)
 
@@ -222,15 +222,22 @@ def create_runtime_arrays(database, main_enum, trait_info, extra_arrays):
         for extra in extra_arrays:
             if extra["id"] == array_id:
                 runtime_arrays.append(extra)
-
     return runtime_arrays
 
-def create_structs(database, trait_data, structs):
+def create_structs(trait_data, struct_defs):
     structs = []
-    for struct in database.get("structs", []):
-        for trait_info in trait_data:
-            if trait_info["trait_name"] == trait:   
-                structs.append(trait_info)
+
+    for struct_name, field_names in struct_defs.items():
+        struct = {
+            "name": struct_name,
+            "fields": []
+        }
+
+        for field_name in field_names:
+            for trait_info in trait_data:
+                if trait_info["trait_name"] == field_name:
+                    struct["fields"].append(trait_info)
+        structs.append(struct)
 
     return structs
 

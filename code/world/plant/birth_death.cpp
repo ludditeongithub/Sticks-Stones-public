@@ -3,7 +3,7 @@
 #include "database.hpp"
 #include "tables.hpp"
 
-inline void PlantDatabase::set_germination_time(int seed_index)
+inline void plant::Database::set_germination_time(int seed_index)
 {
 	Plant plant = seeds[seed_index];
 	// randomize time based on duration of germination period
@@ -15,7 +15,7 @@ inline void PlantDatabase::set_germination_time(int seed_index)
 // automatically at the time of the year the plant type in question starts
 // germinating. Also activates upon world spawn with a random_growth to generate
 // plants.
-inline void PlantDatabase::germinate(int seed_index, bool random_growth, SearchGrid& search_grid)
+inline void plant::Database::germinate(int seed_index, bool random_growth, SearchGrid& search_grid)
 {
 	Plant plant = seeds[seed_index];
 	Coord coord = seed_coords[seed_index];
@@ -36,7 +36,7 @@ inline void PlantDatabase::germinate(int seed_index, bool random_growth, SearchG
 	search_grid.insert_entity(plant, {index, coord});	
 }
 
-inline void RegrowthPlantDatabase::germinate(int seed_index, bool random_growth, SearchGrid& search_grid)
+inline void regrowth_plant::Database::germinate(int seed_index, bool random_growth, SearchGrid& search_grid)
 {
 	plant_database.germinate(seed_index, random_growth, search_grid);	
 }		
@@ -45,7 +45,7 @@ inline void RegrowthPlantDatabase::germinate(int seed_index, bool random_growth,
 // seeds, consider making this in animal database
 //  only performs the seed function, and removing the plant object, does not
 //  affect the animal
-void PlantDatabase::prepare_seed_dropping(int animal_index, int plant_index, bool regrowth)
+void plant::Database::prepare_seed_dropping(int animal_index, int plant_index, bool regrowth)
 {
 	if (tile_index_to_plant_index.contains(food_tile_index))
 	{
@@ -73,7 +73,7 @@ void PlantDatabase::prepare_seed_dropping(int animal_index, int plant_index, boo
 }
 
 // TODO: complete and render
-void PlantDatabase::kill_tree(int plant_index)
+void plant::Database::kill_tree(int plant_index)
 {
 	switch (tile_plant[plant_index])
 	{
@@ -118,7 +118,7 @@ void PlantDatabase::kill_tree(int plant_index)
 	}
 }
 
-void PlantDatabase::kill_plant(int plant_index)
+void plant::Database::kill_plant(int plant_index)
 {
 	Plant plant = tile_plant[tile_index];
 	PlantType type = plants[(int)plant].plant_type;

@@ -78,7 +78,7 @@ inline void eval_sunlight(World& world, int chunk_index, float& next_growth, Arr
 
 // OPTI: have plant temp values be precalcuated so chunk temps is accessed
 // faster
-void PlantDatabase::update_plants(World& world, Array2D<float> &daily_insolations, Array<float> &cloud_covers, Time time_passed)
+void plant::Database::update_plants(World& world, Array2D<float> &daily_insolations, Array<float> &cloud_covers, Time time_passed)
 {
 	for (uint32_t i = 0; i < plant_list.size(); i++)
 	{
@@ -97,7 +97,7 @@ void PlantDatabase::update_plants(World& world, Array2D<float> &daily_insolation
 	}
 }
 
-void RegrowthPlantDatabase::update_regrowth_plants(ItemDatabase& item_database, World& world, Array<float> &tile_water, Time time_passed)
+void Regrowthplant::Database::update_regrowth_plants(item::Database& item_database, World& world, Array<float> &tile_water, Time time_passed)
 {
 	Array<Plant> &plant_list = plant_database.plant_list;
 	
@@ -136,7 +136,7 @@ void RegrowthPlantDatabase::update_regrowth_plants(ItemDatabase& item_database, 
 	}						
 }
 
-void update_alive_plants(PlantDatabase& database)
+void update_alive_plants(plant::Database& database)
 {
 	for (size_t i = 0; i < database.alive.size(); i++) {
 		

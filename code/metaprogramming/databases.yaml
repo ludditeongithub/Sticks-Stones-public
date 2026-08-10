@@ -33,8 +33,8 @@ databases:
     tile:
         name: tile
         traits: [immortal, foreign_enum]
-        extra_arrays: [altitude, water, tile_status]
-        foreign_enum: [tileData]
+        extra_arrays: [altitude, water, tile_status, entity]
+        foreign_enum: [tile_data]
     plant:
         name: plant
         traits: [positional, age, searchable, transferable, generated]
@@ -53,80 +53,80 @@ databases:
 
 trait_data:
   - trait_name: age
-    name: ages
+    name: age
     type: Time
     newborn_default: 0
     random_age_default: age
 
   - trait_name: health
-    name: healths
+    name: health
     type: Health
     newborn_default: "{{ entity_name }}::maxHealths[{{ entity_name }}] * INFANT_HEALTH_MODIFIER"
     random_age_default: getMaxHealth({{ entity_name }}, age)
 
   - trait_name: hunger
-    name: hungers
+    name: hunger
     type: Hunger
     newborn_default: "{{ entity_name }}::maxHungers[{{ entity_name }}] * INFANT_HUNGER_MODIFIER"
     random_age_default: getMaxHunger({{ entity_name }}, age)
 
   - trait_name: movable
-    name: frameDatas
+    name: frame_data
     type: FrameData
     newborn_default: FrameData{ActState::NewPath, Direction::South, Frame::F0}
     random_age_default: FrameData{ActState::NewPath, Direction::South, Frame::F0}
 
 # doubles for unit and animal action timer
   - trait_name: movable
-    name: inertias
+    name: inertia
     type: Frame
     newborn_default: 0
     random_age_default: 0
 
   - trait_name: positional
-    name: coords
+    name: coord
     type: Coord
     newborn_default: coord
     random_age_default: coord
 
   - trait_name: targeting
-    name: targets
+    name: target
     type: size_t
     newborn_default: std::numeric_limits<size_t>::max()
     random_age_default: std::numeric_limits<size_t>::max()
 
   - trait_name: targeting
-    name: target_types
+    name: target_type
     type: TargetType
     newborn_default: TargetType::NONE
     random_age_default: TargetType::NONE
 
   - trait_name: targeting
-    name: actions
+    name: action
     type: Action
     newborn_default: Action::NONE
     random_age_default: Action::NONE
 
   - trait_name: sex
-    name: sexes
+    name: sex
     type: Sex
     newborn_default: random_bool->next()
     random_age_default: random_bool->next()
 
   - trait_name: variant
-    name: variants
+    name: variant
     type: Variant
     newborn_default: variant
     random_age_default: variant
 
 extra_arrays:
   - id: animal_status
-    name: animalStatuses
+    name: animal_status
     type: AnimalStatus
     newborn_default: AnimalStatus{Direction::North, MatingStatus::Idle}
     random_age_default: AnimalStatus{Direction::North, MatingStatus::Idle}
   - id: skin_data
-    name: skinDatas
+    name: skin_data
     type: SkinData
     newborn_default: {generateMelanin(parent1, parent2), generateSkinWarmth(parent1, parent2), 0.5, 0.0}
     random_age_default: {generateMelanin(world, coord), generateSkinWarmth(world, coord), 0.5, 0.0}
@@ -136,38 +136,42 @@ extra_arrays:
     newborn_default: std::array<Role, ROLE_MAX>{}
     random_age_default: std::array<Role, ROLE_MAX>{} # TODO: maybe function to generate Role from list of unlocked roles
   - id: role_mana # OPTI: can be just deduced from role list
-    name: roleManas
+    name: role_mana
     type: RoleMana
     newborn_default: STARTING_ROLE_MANA
     random_age_default: STARTING_ROLE_MANA    
   - id: inventory
-    name: inventories
+    name: inventory
     type: Inventory
     newborn_default: Inventory{}
     random_age_default: Inventory{}
   - id: skill
-    name: skills
-    type: Skills{}
+    name: skill
+    type: Skills
     newborn_default: Skills{}
     random_age_default: Skills{}
   - id: place
-    name: places
-    type: Places
+    name: place
+    type: Place
     newborn_default: Places{}
     random_age_default: Places{}
   - id: tile_status
-    name: tileStatuses
+    name: tile_status
     type: TileStatus
     newborn_default: TileStatus{OccupiedStatus::Vacant, VisionStatus::Hidden}
     random_age_default: TileStatus{OccupiedStatus::Vacant, VisionStatus::Hidden}
   - id: water
-    name: waters
+    name: water
     type: Liquid
     newborn_default: tile::waterDefaults[tile]
     random_age_default: tile::waterDefaults[tile]
   - id: altitude
-    name: altitudes
+    name: altitude
     type: Alt
     newborn_default: 0
     random_age_default: 0
-    
+  - id: entity
+    name: entity
+    type: Entity
+    newborn_default: NullEntity::Null
+    random_age_default: NullEntity:Null

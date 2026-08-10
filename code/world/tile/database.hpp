@@ -9,41 +9,45 @@
 #include <vector>
 #include <world/world.hpp>
 
+namespace tile {
+// TODO: whenever a tile is interacted with, notify all 
 // TODO: enforce occupied on other databses
-class TileDatabase
+class Database
 {
       public:
 	World& world;
   	// @codegen:begin database_generation
-    // =========================
-    // BASE DATABASE MEMBERS
-    // =========================
+// =========================
+// BASE DATABASE MEMBERS
+// =========================
 
-constexpr static uint16_t ENTITY_SIZE = sizeof(Tiledata) +
+constexpr static uint16_t entity_size = sizeof(Tile_data) +
   
- +  sizeof(Tiledata) 
+ +  sizeof(Tile_data) 
  +  sizeof(Alt) 
  +  sizeof(Liquid) 
  +  sizeof(TileStatus) 
+ +  sizeof(Entity) 
 ;
 
 size_t capacity;
-  World& world;
 
     // =========================
     // ENTITY-SPECIFIC MEMBERS
     // =========================
-    Array<Tiledata> tiledatas;
-    Array<Alt> altitudes;
-    Array<Liquid> waters;
-    Array<TileStatus> tile_statuses;
-    
+    Array<Tile_data> tile_datas;
+    Array<Alt> altitude;
+    Array<Liquid> water;
+    Array<TileStatus> tile_status;
+    Array<Entity> entity;
+
+
 
 // =========================
-    // CONSTRUCTOR
-    // =========================
+// CONSTRUCTOR
+// =========================
 
-TileDatabase(Arena *arena, size_t capacity
+Database(Arena *arena, size_t capacity
   , World& world
  
 ) :
@@ -51,13 +55,35 @@ TileDatabase(Arena *arena, size_t capacity
 {
 this->capacity = capacity;
 
+
 }
 
-    
+// =========================
+// GETTERS
+// =========================
+
+  inline Tile_data& tile_datas(size_t index) {
+return tile_datas[index];
+  }
+  inline Alt& altitude(size_t index) {
+return altitude[index];
+  }
+  inline Liquid& water(size_t index) {
+return water[index];
+  }
+  inline TileStatus& tile_status(size_t index) {
+return tile_status[index];
+  }
+  inline Entity& entity(size_t index) {
+return entity[index];
+  }
+
 
     
 
-      
+    
+
+
     // =========================
     // SERIALIZATION
     // =========================
@@ -68,10 +94,11 @@ this->capacity = capacity;
     archive(capacity);
    
 
-        tiledatas.save(archive);
-        altitudes.save(archive);
-        waters.save(archive);
-        tile_statuses.save(archive);
+        tile_datas.save(archive);
+        altitude.save(archive);
+        water.save(archive);
+        tile_status.save(archive);
+        entity.save(archive);
     }
 
     template <class Archive>
@@ -79,10 +106,11 @@ this->capacity = capacity;
     {
         archive(capacity);
         
-        tiledatas.load(archive);
-        altitudes.load(archive);
-        waters.load(archive);
-        tile_statuses.load(archive);
+        tile_datas.load(archive);
+        altitude.load(archive);
+        water.load(archive);
+        tile_status.load(archive);
+        entity.load(archive);
     }
 
 // @codegen:end database_generation
@@ -90,7 +118,8 @@ this->capacity = capacity;
 	Coord get_nearest_empty_tile(Coord coord);
 		Coord get_nearest_empty_tile_block(Coord coord, size_t length, size_t width = 1);
   inline size_t get_index(const Coord coord){return (coord.y * world.height_chunks) + (coord.x * world.length_chunks);}
-  inline Coord get_coord(const size_t index){}
+  inline Coord get_coord(const size_t index){return {(index % world.length_chunks), (index / world.height_chunks)};}
   inline Frame calc_inertia(const Coord coord, bool running);
 		inline Frame calc_inertia(Frame entity_base_frames, const Coord coord);
 };
+}

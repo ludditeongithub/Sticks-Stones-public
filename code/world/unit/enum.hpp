@@ -108,7 +108,7 @@ enum class Role : uint8_t
 	Herbalist,
 	Planter, // farmer is combination of planter and plower
 	Harvester,
-	// copper 
+	// copper
 	CopperMiner,
 	Fisherman,
 	Beekeeper,
@@ -117,7 +117,7 @@ enum class Role : uint8_t
 	FlaxFarmer,
 	HerbFarmer,
 	Horticulturalist,
-	TextileFarmer,	
+	TextileFarmer,
 	HorseBreeder,
 	// iron, no fishmonger, no rancher, no vineyard worker,
 	PapyrusHarvester,
@@ -298,6 +298,8 @@ enum class Role : uint8_t
 	WagonMaster,
 	MAX
 };
+
+constexpr size_t ROLE_MAX = static_cast<size_t>(Role::MAX);
 
 float sunburn_level1_threshold = 0.3;
 float sunburn_level2_threshold = 0.75;

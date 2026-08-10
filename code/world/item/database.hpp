@@ -1,8 +1,6 @@
 #pragma once
 #include <stack>
 #include <core/packed_enum.hpp>
-#include <macros/database.hpp>
-
 #include "world/tile/database.hpp"
 #include <core/hash.hpp>
 #include <cereal/binary_archive.hpp>
@@ -10,16 +8,17 @@
 #include <core/data.hpp>
 #include <core/containers.hpp>
 
+namespace item {
 // for items in the world, not in inventory
-struct ItemDatabase
+struct Database
 {
 
   // @codegen:begin database_generation
-    // =========================
-    // BASE DATABASE MEMBERS
-    // =========================
+// =========================
+// BASE DATABASE MEMBERS
+// =========================
 
-constexpr static uint16_t ENTITY_SIZE = sizeof(Item) +
+constexpr static uint16_t entity_size = sizeof(Item) +
 + sizeof(bool)
   
  +  sizeof(Item) 
@@ -32,40 +31,59 @@ size_t capacity;
     Array<bool> alives;
   SearchGrid& search;
   World& world;
-  TileDatabase& tiles;
+  
+  std::vector<EntityID>& no_inertia_buffer; // size is amount of no inertias this loop
+  
+  std::vector<EntityID>& unassigned_buffer; // size is amount of unassigned this loop
+  tile::Database& tiles;
 
     // =========================
     // ENTITY-SPECIFIC MEMBERS
     // =========================
     Array<Item> items;
-    Array<Coord> coords;
-    
+    Array<Coord> coord;
+
+
 
 // =========================
-    // CONSTRUCTOR
-    // =========================
+// CONSTRUCTOR
+// =========================
 
-ItemDatabase(Arena *arena, size_t capacity
+Database(Arena *arena, size_t capacity
   , World& world
  
   , SearchGrid& search
-  , TileDatabase& tiles
+  , tile::Database& tiles
 ) :
   world(world),
   tiles(tiles),
 search(search),
 {
 this->capacity = capacity;
+
   this->size = 0;
 
 }
+
+// =========================
+// GETTERS
+// =========================
+
+  inline Item& items(size_t index) {
+return items[index];
+  }
+  inline Coord& coord(size_t index) {
+return coord[index];
+  }
+
 
   // =========================
   // SPAWN
   // =========================
 
  
-  bool attempt_spawn(Item item, bool newborn, Coord coord )
+  bool attempt_spawn(Item item, bool newborn, Coord coord  , bool insert_search = true
+)
   {       
         if (size + 1 > capacity)
             return false;
@@ -83,18 +101,19 @@ this->capacity = capacity;
         alives[i] = true;
         if (newborn)
         {
-            items[i] = item;
-            coords[i] = coord;
+            items(i) = item;
+            coord(i) = coord;
         }
         else
         {
         Time age = random_bool->next();
-            items[i] = item;
-            coords[i] = coord;
+            items(i) = item;
+            coord(i) = coord;
         }
-            search.insert_entity(item, {i, coords[i]});
+            if (insert_search) search.insert_entity(item, {i, coord(i)});
         return true;
           }
+          
           bool spawn(Item item, bool newborn, Coord origin) {
           Coord spawn_point = tiles.get_nearest_empty_tile(origin);
           while (!attempt_spawn(item, newborn, spawn_point)) free_unused_entity();                 
@@ -107,25 +126,25 @@ this->capacity = capacity;
   
   bool remove(size_t i)
   {
-        if (!alives[i])
+        if (!alive(i))
             return false;
 
         free_slots.push(i);
-        alives[i] = false;
-        Item item = items[i];
-            search.remove_entity(item, {i, coords[i]});
+        alive(i) = false;
+        Item item = item(i);
+            search.remove_entity(item, {i, coord(i)});
         return true;
   }
 
   void free_unused_entity()
   {
     for (size_t i = 0; i < coords.size; i++) {
-    if (tiles.tile_statuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
+    if (tiles.tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
     }
   }
     
 
-      
+
     // =========================
     // SERIALIZATION
     // =========================
@@ -140,7 +159,7 @@ this->capacity = capacity;
    
 
         items.save(archive);
-        coords.save(archive);
+        coord.save(archive);
     }
 
     template <class Archive>
@@ -152,7 +171,7 @@ this->capacity = capacity;
         archive(alives);
         
         items.load(archive);
-        coords.load(archive);
+        coord.load(archive);
     }
 
 
@@ -160,7 +179,7 @@ this->capacity = capacity;
 // TRANSFER
 // =========================
 
-inline bool transfer_item(size_t i, ItemDatabase &old_db, ItemDatabase &new_db)
+inline bool transferItem(size_t i, ItemDatabase &old_db, ItemDatabase &new_db)
   {
   if (new_db.size >= new_db.capacity) return false;
   int index;  
@@ -173,11 +192,11 @@ inline bool transfer_item(size_t i, ItemDatabase &old_db, ItemDatabase &new_db)
 		index = new_db.free_slots.top();
 		new_db.free_slots.pop();			
   }
-    new_db.items[index] = old_db.items[i];
-    new_db.coords[index] = old_db.coords[i];
-  new_db.alives[index] = true;
+    new_db.items(index) = old_db.items(i);
+    new_db.coord(index) = old_db.coord(i);
+  new_db.alive(index) = true;
   old_db.free_slots.push(i);
-  old_db.alives[index] = false;
+  old_db.alive(index) = false;
   return true;
   }
 // @codegen:end database_generation
@@ -186,3 +205,10 @@ inline bool transfer_item(size_t i, ItemDatabase &old_db, ItemDatabase &new_db)
 	inline void drop_fruit(Plant plant, Coord coord, uint16_t amount);
 };
 
+struct PerishableDatabase
+{
+	Database database;
+              
+};
+  
+}

@@ -1,7 +1,7 @@
 #include "database.hpp"
 #include "world/tile/enum.hpp"
 
-Coord TileDatabase::get_nearest_empty_tile_block(Coord coord, size_t length, size_t width = 1)
+Coord tile::Database::get_nearest_empty_tile_block(Coord coord, size_t length, size_t width = 1)
 {
 		bool found_width = 0;
 		bool found = false;
@@ -27,7 +27,7 @@ enum class Adjacency {
 		Vertical
 };
 
-bool TileDatabase::adjacent(Coord start, Coord next, Adjacency adjacency = Adjacency::Any) {
+bool tile::Database::adjacent(Coord start, Coord next, Adjacency adjacency = Adjacency::Any) {
 		switch (adjacency) {
 		case Adjacency::Horizontal:
        			if (std::abs(start.x - next.x) == 1 && std::abs(start.y - next.y) == 0) return true;
@@ -41,7 +41,7 @@ bool TileDatabase::adjacent(Coord start, Coord next, Adjacency adjacency = Adjac
 		return false;
 }
 
-Coord TileDatabase::get_nearest_empty_tile(Coord coord, Adjacency adjacency = Adjacency::Any)
+Coord tile::Database::get_nearest_empty_tile(Coord coord, Adjacency adjacency = Adjacency::Any)
 	{
 		int index = world.get_tile_index_from_coord(coord);
 		if (adjacency == Adjacency::Any) SCoord vectors[4] = {{0, 1}, {1, 0}, {-1, 0}, {1, 0}};

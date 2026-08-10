@@ -58,10 +58,10 @@ struct NewGameBF : public ButtonFunctionality
 
 	void trigger() override
 	{
-		g_Game = new Game();
+		g_game = Game();
 		// TODO: player can adjust world gen settings
-                g_Game->init_new_world();
-		g_Game->new_game();
+                g_game->init_new_world();
+		g_game->new_game();
         }
 };
 
@@ -139,8 +139,17 @@ class KeybindingsBF : public ButtonFunctionality
 {
 private:
 public:
-  KeybindingsBF() {};  
+  KeybindingsBF() {};
 };
+
+class ChangeEquipmentViewBF : public ButtonFunctionality
+{
+private:
+public:
+  ChangeEquipmentViewBF() {};
+  
+};
+
 
 // IN GAME
 

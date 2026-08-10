@@ -29,7 +29,7 @@
 
 /* Get jobs from  */
 // NOTE: can implement jump table. this is for authority command structure
-void decide_task(EntityID pawn_index, UnitDatabase& database)
+void decide_task(EntityID pawn_index, unit::Database& database)
 {
 	int task_index = -1;
 	TaskType type = TaskType::NONE;

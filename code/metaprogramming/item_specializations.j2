@@ -1,3 +1,4 @@
+{# MTODO: specializations for more than items #}
 enum class {{ Specialization }} {
 {% for item in items %}
   {{ item.name }},
@@ -6,23 +7,120 @@ enum class {{ Specialization }} {
 };
 
 {% for f in fields %}
-inline constexpr LookupTable<{{ Specialization }},{{ f.type }}> {{ f.name }}s = [] {
-LookupTable<{{ Specialization }},{{ f.type }}> lt{};
+inline constexpr LookupTable<{{ Specialization }}, {{ f.type }}> {{ f.name }}s = [] {
+LookupTable<{{ Specialization }}, {{ f.type }}> lt{};
   using enum {{ Specialization }};
-  {% for item in items %}
-      lt[{{ item.name }}] = {{ item[f.name] }};
-  {% endfor %}
+{% for item in items %}
+{% if f.name in item %}
+lt[{{ item.name }}] = {{ item[f.name] }};
+{% endif %}
+{% endfor %}
 return lt;
-  }();
+}();
 {% endfor %}
 
-inline void {{ Specialization }}Database::pick_up(EntityID {{ specialization }}ID, Inventory& inventory) {
+struct {{ Specialization }}Database {
+Database database;
+{% for f in fields %}
+  Array<{{f.type}}> {{f.name}};
+{% endfor %}
+
+// =========================
+// CONSTRUCTOR
+// =========================
+
+{{ Specialization }}Database(Arena *arena, size_t capacity
+  , World& world
+  , SearchGrid& search
+  , tile::Database& tiles
+) :
+  world(world),
+  tiles(tiles),
+search(search)
+{
+database = Database(arena, capacity, world, search, tiles);
+{% for f in fields %}
+  {{ f.name }} = arena_make_array<{{  f.type }}>(capacity);
+{% endfor %}
+}
+
+// =========================
+// GETTERS
+// =========================
+
+{% for f in fields %}
+  inline {{ f.type }}& {{ f.name }}(size_t index) {
+return {{ f.name }}s[index];
+  }
+{% endfor %}
+
+// =========================
+// SPAWN
+// =========================
+
+bool attempt_spawn({{ Specialization }} {{ specialization }}, bool newborn, Coord coord, Variant variant {% for f in fields %}
+, {{ f.type }} {{ f.name}}
+{% endfor %}
+)
+{
+Item item = item_to_{{ specialization }}({{ specialization }});
+if (database.attempt_spawn(item, newborn, coord, variant, true)) {
+{% for f in fields %}
+  {{ f.name }}(i) = {{ f.name }};
+{% endfor %}
+} else return false;
+}
+
+// =========================
+// REMOVE
+// =========================
+
+inline bool remove(size_t i) {
+database.remove(i);
+}
+
+// =========================
+// SERIALIZATION
+// =========================
+
+    template <class Archive>
+    void save(Archive &archive) const
+    {
+      database.save(archive);
+      {% for f in fields %}
+        {{ f.name }}.save(archive);
+      {% endfor %}     
+    }
+
+    template <class Archive>
+    void load(Archive &archive)
+      {
+      database.load(archive);      
+      {% for f in fields %}
+        {{ f.name }}.load(archive);
+      {% endfor %}     
+    }
+
+// =========================
+// TRANSFER
+// =========================
+
+inline bool transfer_{{ Specialization }}(size_t i, {{ Specialization }}Database &old_db)
+{
+  return database.transfer_item(i, old_db);
+  }
+
+// =========================
+// INVENTORY MANAGEMENT
+// =========================
+
+inline void pick_up(EntityID {{ specialization }}ID, Inventory& inventory) {
 {{ Specialization }}Entity {{ specialization }} = get_entity(index);
 Item item = reflect_enum({{ specialization }}.specialization);
 inventory.add_item(item);
 remove_{{ specialization }}({{ specialization }}ID);
 }
 
-inline void {{ Specialization }}Database::drop(EntityID {{ specialization }}ID, Inventory& inventory) {
+inline void drop(EntityID {{ specialization }}ID, Inventory& inventory) {
 add_entity();
 }

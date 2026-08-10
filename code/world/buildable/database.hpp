@@ -7,14 +7,15 @@
 #include <world/world.hpp>
 #include <world/tile/database.hpp>
 
-struct BuildableDatabase
+namespace buildable {
+struct Database
 {
   	// @codegen:begin database_generation
-    // =========================
-    // BASE DATABASE MEMBERS
-    // =========================
+// =========================
+// BASE DATABASE MEMBERS
+// =========================
 
-constexpr static uint16_t ENTITY_SIZE = sizeof(Buildable) +
+constexpr static uint16_t entity_size = sizeof(Buildable) +
 + sizeof(bool)
   
  +  sizeof(Buildable) 
@@ -26,40 +27,66 @@ size_t capacity;
     size_t size;
     Stack<size_t> free_slots;
     Array<bool> alives;
-  World& world;
-  TileDatabase& tiles;
+  tile::Database& tiles;
 
     // =========================
     // ENTITY-SPECIFIC MEMBERS
     // =========================
     Array<Buildable> buildables;
-    Array<Health> healths;
-    Array<Coord> coords;
-    
+    Array<Health> health;
+    Array<Coord> coord;
+
+struct Main {
+    Array<Health> health;
+    Array<Coord> coord;
+};
+
 
 // =========================
-    // CONSTRUCTOR
-    // =========================
+// CONSTRUCTOR
+// =========================
 
-BuildableDatabase(Arena *arena, size_t capacity
+Database(Arena *arena, size_t capacity
   , World& world
  
-  , TileDatabase& tiles
+  , tile::Database& tiles
 ) :
   world(world),
   tiles(tiles),
 {
 this->capacity = capacity;
+
   this->size = 0;
 
 }
+
+// =========================
+// GETTERS
+// =========================
+
+  inline Buildable& buildables(size_t index) {
+return buildables[index];
+  }
+  inline Health& health(size_t index) {
+return health[index];
+  }
+  inline Coord& coord(size_t index) {
+return coord[index];
+  }
+
+    inline Health& health(size_t index) {    
+return main[index].health;
+    }
+    inline Coord& coord(size_t index) {    
+return main[index].coord;
+    }
 
   // =========================
   // SPAWN
   // =========================
 
  
-  bool attempt_spawn(Buildable buildable, bool newborn, Coord coord )
+  bool attempt_spawn(Buildable buildable, bool newborn, Coord coord  )
   {       
         if (size + 1 > capacity)
             return false;
@@ -77,19 +104,20 @@ this->capacity = capacity;
         alives[i] = true;
         if (newborn)
         {
-            buildables[i] = buildable;
-            healths[i] = buildable::max_healths[buildable] * INFANT_HEALTH_MODIFIER;
-            coords[i] = coord;
+            buildables(i) = buildable;
+            health(i) = buildable::maxHealths[buildable] * INFANT_HEALTH_MODIFIER;
+            coord(i) = coord;
         }
         else
         {
         Time age = random_bool->next();
-            buildables[i] = buildable;
-            healths[i] = get_max_health(buildable, age);
-            coords[i] = coord;
+            buildables(i) = buildable;
+            health(i) = getMaxHealth(buildable, age);
+            coord(i) = coord;
         }
         return true;
           }
+          
           bool spawn(Buildable buildable, bool newborn, Coord origin) {
           Coord spawn_point = tiles.get_nearest_empty_tile(origin);
           while (!attempt_spawn(buildable, newborn, spawn_point)) free_unused_entity();                 
@@ -102,23 +130,23 @@ this->capacity = capacity;
   
   bool remove(size_t i)
   {
-        if (!alives[i])
+        if (!alive(i))
             return false;
 
         free_slots.push(i);
-        alives[i] = false;
+        alive(i) = false;
         return true;
   }
 
   void free_unused_entity()
   {
     for (size_t i = 0; i < coords.size; i++) {
-    if (tiles.tile_statuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
+    if (tiles.tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
     }
   }
     
 
-      
+
     // =========================
     // SERIALIZATION
     // =========================
@@ -133,8 +161,8 @@ this->capacity = capacity;
    
 
         buildables.save(archive);
-        healths.save(archive);
-        coords.save(archive);
+        health.save(archive);
+        coord.save(archive);
     }
 
     template <class Archive>
@@ -146,9 +174,11 @@ this->capacity = capacity;
         archive(alives);
         
         buildables.load(archive);
-        healths.load(archive);
-        coords.load(archive);
+        health.load(archive);
+        coord.load(archive);
     }
 
 // @codegen:end database_generation
 };
+
+}

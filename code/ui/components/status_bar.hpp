@@ -1,38 +1,97 @@
 #include <SDL2/SDL_rect.h>
 #include <core/data.hpp>
 #include <render/texture.hpp>
+#include <variant>
+
+struct UnitStatusBar
+{
+	enum class Value
+	{
+		Health,
+		Hunger,
+		Thirst,
+		Satisfaction,
+		MAX
+	};
+  Value value = Value::Health;
+
+  SDL_Rect get_full_sprite() { return unit_status_bars[value].full; }
+  SDL_Rect get_empty_sprite() { return unit_status_bars[value].full; }
+};
+
+struct AnimalStatusBar
+{
+	enum class Value
+	{
+		Health,
+		Hunger,
+		Thirst,
+		MAX
+	};
+  Value value = Value::Health;
+
+  SDL_Rect get_full_sprite() { return animal_status_bars[value].full; }
+  SDL_Rect get_empty_sprite() { return animal_status_bars[value].full; }
+};
+
+struct PlantStatusBar
+{
+	enum class Value
+	{
+		Health,
+		Water,
+                Sunlight,
+		MAX
+	};
+  Value value = Value::Health;
+
+  SDL_Rect get_full_sprite() { return plant_status_bars[value].full; }
+  SDL_Rect get_empty_sprite() { return plant_status_bars[value].full; }
+};
+
 
 // TODO
+using StatusBarVariant = std::variant<UnitStatusBar, AnimalStatusBar, PlantStatusBar>;
 
 struct StatusBar
 {
+        
+	SDL_Rect full_bar;
+        SDL_Rect empty_bar;
 	int max;
 	int current;
-	const SDL_Rect *full_bar;
-	const SDL_Rect *empty_bar;
 	const SCoord position; // left corner
-	bool horizontal;
+	const bool horizontal;
 
-	StatusBar(SCoord position, const SDL_Rect *full_bar, const SDL_Rect *empty_bar,
-		  bool horizontal)
-	    : full_bar(full_bar), empty_bar(empty_bar), position(position), horizontal(horizontal)
-	{
+  SDL_Rect& viewport;
+
+        StatusBar(StatusBarVariant variant, const SCoord position, const bool horizontal, SDL_Rect& viewport)
+          : position(position), horizontal(horizontal), viewport(viewport)
+	{          
+          std::visit([this](auto& bar)
+		{
+			full_bar = bar.get_full_sprite();
+                        empty_bar = bar.get_empty_sprite();
+                },
+            variant);    
 	}
 
 	void render(SDL_Rect viewport)
 	{
 		// TODO: error
 		float portion = current / max;
+		int full_length;
+                int unfixed;
 
 		if (horizontal)
 		{
-			int full_length = full_bar->w;
-			int unfixed = full_bar->h;
+			full_length = full_bar.w;
+			unfixed = full_bar.h;
 		}
 		else
 		{
-			int full_length = full_bar->h;
-			int unfixed = full_bar->w;
+			full_length = full_bar.h;
+			unfixed = full_bar.w;
 		}
 
 		int filled_length = portion * full_length;
@@ -40,23 +99,23 @@ struct StatusBar
 
 		if (horizontal)
 		{
-			SDL_Rect unfilled_clip = {empty_bar->x, empty_bar->y, filled_length, unfixed};
-			SDL_Rect filled_clip = {full_bar->x, full_bar->y, filled_length, unfixed};
+			SDL_Rect unfilled_clip = {empty_bar.x, empty_bar.y, filled_length, unfixed};
+			SDL_Rect filled_clip = {full_bar.x, full_bar.y, filled_length, unfixed};
 
 			sprite_sheet_texture.render(position.x, position.y, &unfilled_clip,
-						   &viewport);
+						   viewport);
 			sprite_sheet_texture.render(position.x + unfilled_length, position.y,
-						   &filled_clip, &viewport);
+						   &filled_clip, viewport);
 		}
 		else
 		{
-			SDL_Rect unfilled_clip = {empty_bar->x, empty_bar->y, unfixed, filled_length};
-			SDL_Rect filled_clip = {full_bar->x, full_bar->y, unfixed, filled_length};
+			SDL_Rect unfilled_clip = {empty_bar.x, empty_bar.y, unfixed, filled_length};
+			SDL_Rect filled_clip = {full_bar.x, full_bar.y, unfixed, filled_length};
 
 			sprite_sheet_texture.render(position.x, position.y, &unfilled_clip,
-						   &viewport);
+						   viewport);
 			sprite_sheet_texture.render(position.x, position.y + unfilled_length,
-						   &filled_clip, &viewport);
+						   &filled_clip, viewport);
 		}
 	}
 };

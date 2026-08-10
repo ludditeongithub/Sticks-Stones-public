@@ -7,7 +7,7 @@
 #include <vector>
 #include <optional>
 enum class BodyArea {
-		Head, Shoulders, Arms, Chest, Belly, Thighs, Shins, Feet, MAX
+Head, Shoulders, Arms, Chest, Belly, Thighs, Shins, Feet, MAX
 };
 
 // at base material, cloth for underlayers and bronze for armor,  and average quality.
@@ -25,293 +25,62 @@ struct ClothingData
 
 // @codegen:begin specialization
 enum class Wearable {
-  PART,
-  TRIBALWEAR,
-  ROBE,
-  TUNIC,
-  PANTS,
-  DRESS,
-  SANDLES,
-  BOOTS,
-  SCARF,
-  HEADWRAP,
-  MITTS,
-  GLOVES,
-  APRON,
-  HELMET,
-  BRACERS,
-  GUARDS,
-  CAPE,
-  HEAVY,
-  HEAVY,
-  GAMBESON,
-  CHAINMAIL,
-  BREASTPLATE,
-  PLATE,
-  WOOD,
-  GOLD,
-  ROYAL,
-  NECKLACE,
+  PartTribalwear,
+  Tribalwear,
+  Robe,
+  Tunic,
+  Pants,
+  Dress,
+  Sandles,
+  Boots,
+  Scarf,
+  Headwrap,
+  Mitts,
+  Gloves,
+  Apron,
+  Helmet,
+  Bracers,
+  Guards,
+  Cape,
+  HeavyShirt,
+  HeavyPants,
+  Gambeson,
+  Chainmail,
+  Breastplate,
+  Plate,
+  WoodCrown,
+  GoldCrown,
+  RoyalCrown,
+  Necklace,
   MAX
 };
 
+inline constexpr LookupTable<Wearable, Health> healths = [] {
+LookupTable<Wearable, Health> lt{};
+  using enum Wearable;
+return lt;
+}();
+inline constexpr LookupTable<Wearable, Quality> qualitys = [] {
+LookupTable<Wearable, Quality> lt{};
+  using enum Wearable;
+return lt;
+}();
+inline constexpr LookupTable<Wearable, bool> equippeds = [] {
+LookupTable<Wearable, bool> lt{};
+  using enum Wearable;
+return lt;
+}();
 
-inline constexpr LookupTable<Wearable,float> toughnesss = [] {
-LookupTable<Wearable,float> lt{};
-  using enum Wearable;
-      lt[PART] = 8.0;
-      lt[TRIBALWEAR] = 8.0;
-      lt[ROBE] = 3.0;
-      lt[TUNIC] = 4.0;
-      lt[PANTS] = 4.5;
-      lt[DRESS] = 4.5;
-      lt[SANDLES] = 0.0;
-      lt[BOOTS] = 33.0;
-      lt[SCARF] = 6.0;
-      lt[HEADWRAP] = 4.0;
-      lt[MITTS] = 3.0;
-      lt[GLOVES] = 29.0;
-      lt[APRON] = 3.0;
-      lt[HELMET] = 36.0;
-      lt[BRACERS] = 35.0;
-      lt[GUARDS] = 26.0;
-      lt[CAPE] = 2.0;
-      lt[HEAVY] = 9.0;
-      lt[HEAVY] = 9.5;
-      lt[GAMBESON] = 18.0;
-      lt[CHAINMAIL] = 34.0;
-      lt[BREASTPLATE] = 32.0;
-      lt[PLATE] = 49.0;
-      lt[WOOD] = 0.0;
-      lt[GOLD] = 0.0;
-      lt[ROYAL] = 0.0;
-      lt[NECKLACE] = 1.0;
-return lt;
-}();  
-inline constexpr LookupTable<Wearable,float> durabilitys = [] {
-LookupTable<Wearable,float> lt{};
-  using enum Wearable;
-      lt[PART] = 250.0;
-      lt[TRIBALWEAR] = 250.0;
-      lt[ROBE] = 120.0;
-      lt[TUNIC] = 120.0;
-      lt[PANTS] = 200.0;
-      lt[DRESS] = 120.0;
-      lt[SANDLES] = 320.0;
-      lt[BOOTS] = 650.0;
-      lt[SCARF] = 450.0;
-      lt[HEADWRAP] = 450.0;
-      lt[MITTS] = 200.0;
-      lt[GLOVES] = 300.0;
-      lt[APRON] = 250.0;
-      lt[HELMET] = 450.0;
-      lt[BRACERS] = 400.0;
-      lt[GUARDS] = 400.0;
-      lt[CAPE] = 80.0;
-      lt[HEAVY] = 300.0;
-      lt[HEAVY] = 300.0;
-      lt[GAMBESON] = 400.0;
-      lt[CHAINMAIL] = 280.0;
-      lt[BREASTPLATE] = 500.0;
-      lt[PLATE] = 500.0;
-      lt[WOOD] = 100.0;
-      lt[GOLD] = 100.0;
-      lt[ROYAL] = 100.0;
-      lt[NECKLACE] = 100.0;
-return lt;
-}();  
-inline constexpr LookupTable<Wearable,float> bulks = [] {
-LookupTable<Wearable,float> lt{};
-  using enum Wearable;
-      lt[PART] = 5.2;
-      lt[TRIBALWEAR] = 9.2;
-      lt[ROBE] = 2.8;
-      lt[TUNIC] = 1.6;
-      lt[PANTS] = 1.5;
-      lt[DRESS] = 1.5;
-      lt[SANDLES] = 6.2;
-      lt[BOOTS] = 11.5;
-      lt[SCARF] = 0.9;
-      lt[HEADWRAP] = 1.4;
-      lt[MITTS] = 0.3;
-      lt[GLOVES] = 1.0;
-      lt[APRON] = 0.2;
-      lt[HELMET] = 5.5;
-      lt[BRACERS] = 4.5;
-      lt[GUARDS] = 6.5;
-      lt[CAPE] = 1.2;
-      lt[HEAVY] = 3.5;
-      lt[HEAVY] = 3.8;
-      lt[GAMBESON] = 12.1;
-      lt[CHAINMAIL] = 25.0;
-      lt[BREASTPLATE] = 16.8;
-      lt[PLATE] = 120.0;
-      lt[WOOD] = 5.0;
-      lt[GOLD] = 4.0;
-      lt[ROYAL] = 4.0;
-      lt[NECKLACE] = 0.1;
-return lt;
-}();  
-inline constexpr LookupTable<Wearable,Weight> weights = [] {
-LookupTable<Wearable,Weight> lt{};
-  using enum Wearable;
-      lt[PART] = 5.2;
-      lt[TRIBALWEAR] = 8.4;
-      lt[ROBE] = 2.2;
-      lt[TUNIC] = 1.5;
-      lt[PANTS] = 1.9;
-      lt[DRESS] = 1.9;
-      lt[SANDLES] = 2.2;
-      lt[BOOTS] = 5.5;
-      lt[SCARF] = 1.4;
-      lt[HEADWRAP] = 1.3;
-      lt[MITTS] = 0.5;
-      lt[GLOVES] = 1.2;
-      lt[APRON] = 0.3;
-      lt[HELMET] = 3.5;
-      lt[BRACERS] = 2.4;
-      lt[GUARDS] = 4.5;
-      lt[CAPE] = 0.9;
-      lt[HEAVY] = 5.5;
-      lt[HEAVY] = 6.2;
-      lt[GAMBESON] = 12.1;
-      lt[CHAINMAIL] = 8.8;
-      lt[BREASTPLATE] = 32.2;
-      lt[PLATE] = 130.0;
-      lt[WOOD] = 3.3;
-      lt[GOLD] = 4.3;
-      lt[ROYAL] = 4.3;
-      lt[NECKLACE] = 0.2;
-return lt;
-}();  
-inline constexpr LookupTable<Wearable,BulkLevel::Solid> bulk_levels = [] {
-LookupTable<Wearable,BulkLevel::Solid> lt{};
-  using enum Wearable;
-      lt[PART] = BulkLevel::Solid;
-      lt[TRIBALWEAR] = BulkLevel::Solid;
-      lt[ROBE] = BulkLevel::Soft;
-      lt[TUNIC] = BulkLevel::Soft;
-      lt[PANTS] = BulkLevel::Soft;
-      lt[DRESS] = BulkLevel::Soft;
-      lt[SANDLES] = BulkLevel::Solid;
-      lt[BOOTS] = BulkLevel::Solid;
-      lt[SCARF] = BulkLevel::Soft;
-      lt[HEADWRAP] = BulkLevel::Soft;
-      lt[MITTS] = BulkLevel::Soft;
-      lt[GLOVES] = BulkLevel::Solid;
-      lt[APRON] = BulkLevel::Soft;
-      lt[HELMET] = BulkLevel::Solid;
-      lt[BRACERS] = BulkLevel::Solid;
-      lt[GUARDS] = BulkLevel::Solid;
-      lt[CAPE] = BulkLevel::Soft;
-      lt[HEAVY] = BulkLevel::Soft;
-      lt[HEAVY] = BulkLevel::Soft;
-      lt[GAMBESON] = BulkLevel::Solid;
-      lt[CHAINMAIL] = BulkLevel::Single;
-      lt[BREASTPLATE] = BulkLevel::Single;
-      lt[PLATE] = BulkLevel::Single;
-      lt[WOOD] = BulkLevel::Solid;
-      lt[GOLD] = BulkLevel::Solid;
-      lt[ROYAL] = BulkLevel::Solid;
-      lt[NECKLACE] = BulkLevel::Solid;
-return lt;
-}();  
-inline constexpr LookupTable<Wearable,Temp> min_temps = [] {
-LookupTable<Wearable,Temp> lt{};
-  using enum Wearable;
-      lt[PART] = _8.0;
-      lt[TRIBALWEAR] = _16.0;
-      lt[ROBE] = _6.0;
-      lt[TUNIC] = _10.0;
-      lt[PANTS] = _8.0;
-      lt[DRESS] = _4.0;
-      lt[SANDLES] = _1.0;
-      lt[BOOTS] = _15.0;
-      lt[SCARF] = _30.0;
-      lt[HEADWRAP] = _18.0;
-      lt[MITTS] = _20.0;
-      lt[GLOVES] = _5.0;
-      lt[APRON] = _1.0;
-      lt[HELMET] = _5.0;
-      lt[BRACERS] = _5.0;
-      lt[GUARDS] = _5.0;
-      lt[CAPE] = _1.0;
-      lt[HEAVY] = _18.0;
-      lt[HEAVY] = _18.0;
-      lt[GAMBESON] = _18.0;
-      lt[CHAINMAIL] = _1.0;
-      lt[BREASTPLATE] = _6.0;
-      lt[PLATE] = _6.0;
-      lt[WOOD] = _1.0;
-      lt[GOLD] = _1.0;
-      lt[ROYAL] = _1.0;
-      lt[NECKLACE] = _100.0;
-return lt;
-}();  
-inline constexpr LookupTable<Wearable,Temp> max_temps = [] {
-LookupTable<Wearable,Temp> lt{};
-  using enum Wearable;
-      lt[PART] = 50.0;
-      lt[TRIBALWEAR] = 50.0;
-      lt[ROBE] = 58.0;
-      lt[TUNIC] = 54.0;
-      lt[PANTS] = 50.0;
-      lt[DRESS] = 60.0;
-      lt[SANDLES] = 60.0;
-      lt[BOOTS] = 50.0;
-      lt[SCARF] = 60.0;
-      lt[HEADWRAP] = 58.0;
-      lt[MITTS] = 35.0;
-      lt[GLOVES] = 50.0;
-      lt[APRON] = 40.0;
-      lt[HELMET] = 35.0;
-      lt[BRACERS] = 35.0;
-      lt[GUARDS] = 25.0;
-      lt[CAPE] = 40.0;
-      lt[HEAVY] = 25.0;
-      lt[HEAVY] = 25.0;
-      lt[GAMBESON] = 25.0;
-      lt[CHAINMAIL] = 40.0;
-      lt[BREASTPLATE] = 40.0;
-      lt[PLATE] = 35.0;
-      lt[WOOD] = 40.0;
-      lt[GOLD] = 40.0;
-      lt[ROYAL] = 50.0;
-      lt[NECKLACE] = 60.0;
-return lt;
-}();  
-inline constexpr LookupTable<Wearable,BitsetTable<BodyArea>> coverss = [] {
-LookupTable<Wearable,BitsetTable<BodyArea>> lt{};
-  using enum Wearable;
-      lt[PART] = _ BodyArea::LeftLeg _ BodyArea::RightLeg;
-      lt[TRIBALWEAR] = ['BodyArea::Chest', 'BodyArea::RightShoulder', 'BodyArea::LeftShoulder', 'BodyArea::RightArm', 'BodyArea::RightArm', 'BodyArea::RightLeg', 'BodyArea::LeftLeg'];
-      lt[ROBE] = ['BodyArea::Chest', 'BodyArea::RightShoulder', 'BodyArea::LeftShoulder', 'BodyArea::RightArm', 'BodyArea::RightArm', 'BodyArea::RightLeg', 'BodyArea::LeftLeg'];
-      lt[TUNIC] = ['BodyArea::Chest', 'BodyArea::RightShoulder', 'BodyArea::LeftShoulder', 'BodyArea::RightArm', 'BodyArea::LeftArm'];
-      lt[PANTS] = ['BodyArea::LeftLeg', 'BodyArea::RightLeg'];
-      lt[DRESS] = ['BodyArea::LeftLeg', 'BodyArea::RightLeg'];
-      lt[SANDLES] = ['BodyArea::LeftFoot', 'BodyArea::RightFoot'];
-      lt[BOOTS] = ['BodyArea::LeftFoot', 'BodyArea::RightFoot'];
-      lt[SCARF] = ['BodyArea::Neck'];
-      lt[HEADWRAP] = ['BodyArea::Neck', 'BodyArea::Head', 'BodyArea::Face'];
-      lt[MITTS] = ['BodyArea::LeftHand', 'BodyArea::RightHand'];
-      lt[GLOVES] = ['BodyArea::LeftHand', 'BodyArea::RightHand'];
-      lt[APRON] = ['BodyArea::Chest'];
-      lt[HELMET] = ['BodyArea::Head'];
-      lt[BRACERS] = ['BodyArea::LeftArm', 'BodyArea::RightArm'];
-      lt[GUARDS] = ['BodyArea::LeftLeg', 'BodyArea::RightLeg'];
-      lt[CAPE] = [];
-      lt[HEAVY] = ['BodyArea::Chest', 'BodyArea::LeftArm', 'BodyArea::RightArm', 'BodyArea::LeftShoulder', 'BodyArea::RightShoulder'];
-      lt[HEAVY] = ['BodyArea::LeftLeg', 'BodyArea::RightLeg'];
-      lt[GAMBESON] = ['BodyArea::Chest', 'BodyArea::LeftShoulder', 'BodyArea::RightShoulder'];
-      lt[CHAINMAIL] = ['BodyArea::Chest', 'BodyArea::RightShoulder', 'BodyArea::LeftShoulder', 'BodyArea::RightArm', 'BodyArea::RightArm', 'BodyArea::RightLeg', 'BodyArea::LeftLeg'];
-      lt[BREASTPLATE] = ['BodyArea::Chest', 'BodyArea::RightShoulder', 'BodyArea::LeftShoulder'];
-      lt[PLATE] = ['BodyArea::Chest', 'BodyArea::RightShoulder', 'BodyArea::LeftShoulder', 'BodyArea::RightArm', 'BodyArea::RightArm', 'BodyArea::RightLeg', 'BodyArea::LeftLeg'];
-      lt[WOOD] = ['BodyArea::Head'];
-      lt[GOLD] = ['BodyArea::Head'];
-      lt[ROYAL] = ['BodyArea::Head'];
-      lt[NECKLACE] = [];
-return lt;
-}();  
+inline void WearableDatabase::pick_up(EntityID wearableID, Inventory& inventory) {
+WearableEntity wearable = get_entity(index);
+Item item = reflect_enum(wearable.specialization);
+inventory.add_item(item);
+remove_wearable(wearableID);
+}
+
+inline void WearableDatabase::drop(EntityID wearableID, Inventory& inventory) {
+add_entity();
+}
 // @codegen:end specialization
 
 

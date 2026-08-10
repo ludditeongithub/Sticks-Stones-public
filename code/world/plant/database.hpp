@@ -13,15 +13,15 @@
 #include <simulation/world_gen.hpp>
 #include <simulation/game_time.hpp>
 
-
-struct PlantDatabase
+namespace plant {
+struct Database
 {
 	// @codegen:begin database_generation
-    // =========================
-    // BASE DATABASE MEMBERS
-    // =========================
+// =========================
+// BASE DATABASE MEMBERS
+// =========================
 
-constexpr static uint16_t ENTITY_SIZE = sizeof(Plant) +
+constexpr static uint16_t entity_size = sizeof(Plant) +
 + sizeof(bool)
   
  +  sizeof(Plant) 
@@ -35,34 +35,55 @@ size_t capacity;
     Array<bool> alives;
   SearchGrid& search;
   World& world;
-  TileDatabase& tiles;
+  
+  std::vector<EntityID>& no_inertia_buffer; // size is amount of no inertias this loop
+  
+  std::vector<EntityID>& unassigned_buffer; // size is amount of unassigned this loop
+  tile::Database& tiles;
 
     // =========================
     // ENTITY-SPECIFIC MEMBERS
     // =========================
     Array<Plant> plants;
-    Array<Coord> coords;
-    Array<Time> ages;
-    
+    Array<Coord> coord;
+    Array<Time> age;
+
+
 
 // =========================
-    // CONSTRUCTOR
-    // =========================
+// CONSTRUCTOR
+// =========================
 
-PlantDatabase(Arena *arena, size_t capacity
+Database(Arena *arena, size_t capacity
   , World& world
  
   , SearchGrid& search
-  , TileDatabase& tiles
+  , tile::Database& tiles
 ) :
   world(world),
   tiles(tiles),
 search(search),
 {
 this->capacity = capacity;
+
   this->size = 0;
 
 }
+
+// =========================
+// GETTERS
+// =========================
+
+  inline Plant& plants(size_t index) {
+return plants[index];
+  }
+  inline Coord& coord(size_t index) {
+return coord[index];
+  }
+  inline Time& age(size_t index) {
+return age[index];
+  }
+
 
   // =========================
   // SPAWN
@@ -71,14 +92,15 @@ this->capacity = capacity;
   void add_plants(WorldSpawner::PlantSpawnBuffer& spawn_buffer)
 {
 	for (size_t i = 0; i < spawn_buffer.size; i++)
-	  if (spawn(spawn_buffer.plants[i], spawn_buffer.coords[i], false)) {}
+	  if (spawn(spawn_buffer.plant(i), spawn_buffer.coord(i), false)) {}
 	  else
 	    {
 	      //TODO: error
 	    }
 }
  
-  bool attempt_spawn(Plant plant, bool newborn, Coord coord )
+  bool attempt_spawn(Plant plant, bool newborn, Coord coord  , bool insert_search = true
+)
   {       
         if (size + 1 > capacity)
             return false;
@@ -96,20 +118,21 @@ this->capacity = capacity;
         alives[i] = true;
         if (newborn)
         {
-            plants[i] = plant;
-            coords[i] = coord;
-            ages[i] = 0;
+            plants(i) = plant;
+            coord(i) = coord;
+            age(i) = 0;
         }
         else
         {
         Time age = random_bool->next();
-            plants[i] = plant;
-            coords[i] = coord;
-            ages[i] = age;
+            plants(i) = plant;
+            coord(i) = coord;
+            age(i) = age;
         }
-            search.insert_entity(plant, {i, coords[i]});
+            if (insert_search) search.insert_entity(plant, {i, coord(i)});
         return true;
           }
+          
           bool spawn(Plant plant, bool newborn, Coord origin) {
           Coord spawn_point = tiles.get_nearest_empty_tile(origin);
           while (!attempt_spawn(plant, newborn, spawn_point)) free_unused_entity();                 
@@ -122,25 +145,25 @@ this->capacity = capacity;
   
   bool remove(size_t i)
   {
-        if (!alives[i])
+        if (!alive(i))
             return false;
 
         free_slots.push(i);
-        alives[i] = false;
-        Plant plant = plants[i];
-            search.remove_entity(plant, {i, coords[i]});
+        alive(i) = false;
+        Plant plant = plant(i);
+            search.remove_entity(plant, {i, coord(i)});
         return true;
   }
 
   void free_unused_entity()
   {
     for (size_t i = 0; i < coords.size; i++) {
-    if (tiles.tile_statuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
+    if (tiles.tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
     }
   }
     
 
-      
+
     // =========================
     // SERIALIZATION
     // =========================
@@ -155,8 +178,8 @@ this->capacity = capacity;
    
 
         plants.save(archive);
-        coords.save(archive);
-        ages.save(archive);
+        coord.save(archive);
+        age.save(archive);
     }
 
     template <class Archive>
@@ -168,8 +191,8 @@ this->capacity = capacity;
         archive(alives);
         
         plants.load(archive);
-        coords.load(archive);
-        ages.load(archive);
+        coord.load(archive);
+        age.load(archive);
     }
 
 
@@ -177,7 +200,7 @@ this->capacity = capacity;
 // TRANSFER
 // =========================
 
-inline bool transfer_plant(size_t i, PlantDatabase &old_db, PlantDatabase &new_db)
+inline bool transferPlant(size_t i, PlantDatabase &old_db, PlantDatabase &new_db)
   {
   if (new_db.size >= new_db.capacity) return false;
   int index;  
@@ -190,12 +213,12 @@ inline bool transfer_plant(size_t i, PlantDatabase &old_db, PlantDatabase &new_d
 		index = new_db.free_slots.top();
 		new_db.free_slots.pop();			
   }
-    new_db.plants[index] = old_db.plants[i];
-    new_db.coords[index] = old_db.coords[i];
-    new_db.ages[index] = old_db.ages[i];
-  new_db.alives[index] = true;
+    new_db.plants(index) = old_db.plants(i);
+    new_db.coord(index) = old_db.coord(i);
+    new_db.age(index) = old_db.age(i);
+  new_db.alive(index) = true;
   old_db.free_slots.push(i);
-  old_db.alives[index] = false;
+  old_db.alive(index) = false;
   return true;
   }
 // @codegen:end database_generation
@@ -206,7 +229,7 @@ inline bool transfer_plant(size_t i, PlantDatabase &old_db, PlantDatabase &new_d
 	inline void spawn_seed(Plant plant, Coord position);
 	inline void prepare_seed_dropping(int animal_index, int plant_index, bool regrowth);
 	inline void attempt_plant_growth(int plant, int time, int biome_index);
-		inline void excrete_seed(AnimalDatabase& database, int animal_index, TileDatabase& tiles, Plant plant);
+        inline void excrete_seed(animal::Database& database, int animal_index, tile::Database& tiles, Plant plant);
 	inline void plant(int unit_index, Plant plant);
 	inline void kill_tree(int plant_index);
 	inline void kill_plant(int plant_index);
@@ -214,15 +237,16 @@ inline bool transfer_plant(size_t i, PlantDatabase &old_db, PlantDatabase &new_d
 	void update_plants(World& world, Time time_passed);
 };
 
-struct RegrowthPlantDatabase
+
+  struct RegrowthDatabase
 {
-	PlantDatabase plant_database;
+	plant::Database plant_database;
 	Array<Time> regrowths;
 	Array<Time> ages;
 	Array<uint16_t> produces;
 	
 	inline void germinate(int seed_index, bool random_growth, SearchGrid &search_grid);
-	inline void attempt_plant_growth(int plant, int time, int biome_index);
-	
+	inline void attempt_plant_growth(int plant, int time, int biome_index);	
 };
 
+}

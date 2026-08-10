@@ -12,7 +12,7 @@ specializations:
                     min_temp: Temp
                     max_temp: Temp                    
                     covers: BitsetTable<BodyArea>
-               fields:
+                fields:
                     health: Health
                     quality: Quality
                     equipped: bool
@@ -20,17 +20,16 @@ specializations:
                 layout: soa
                 special_cases:
                 constants:
-                        base_enjoyment: FoodEnjoyment
-                        base_nutrition: float
+                        enjoyment: FoodEnjoyment
+                        nutrition: float                        
                         fridge_temp: Temp
-                        frozen_temp: Temp
                         cooling_effect: float
                         fermentable: bool
                         decay_period: Time
                         disease_risk: float # higher risk = more serious
                 fields:
                         decay: float
-                        preservation_state: PreservationState PreservationState                        
+                        preservation_state: PreservationState                        
         container:
                 layout: aos
                 special_cases:
@@ -49,4 +48,3 @@ specializations:
                 special_cases:
                 constants:                       
                         variant: Variant
-          

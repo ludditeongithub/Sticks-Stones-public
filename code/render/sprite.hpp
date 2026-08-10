@@ -16,7 +16,50 @@
 // TODO: right now this is only fitted for walk animations. need to make sure
 // all the LOGIC is only fitted for walk animations, for now.
 
-struct SpriteInfo
+namespace sprite
+{
+
+SDL_Rect get(Entity entity)
+{
+  if (std::holds_alternative<Item>(entity)) {
+    return item[entity];
+  } else if (std::holds_alternative<Plant>(entity)) {
+    return plant[entity];
+  } else if (std::holds_alternative<Animal>(entity)) {
+    return animal[entity];
+  } else if (std::holds_alternative<Buildable>(entity)) {
+    return buildable[entity];
+  } else if (std::holds_alternative<Unit>(entity)) {
+    return unit[entity];
+  } else { // NullEntity
+    // TODO: throw error
+  }
+}
+
+ // TODO: add animation to subject display
+SDL_Rect get_subject_display(Time age, EntityRenderData render_data)
+{
+	SDL_Rect* subject;
+	if (auto animal_data = std::get_if<AnimalRenderData>(&render_data))
+	{
+	       return get_animal_rect(animal_data->animal, {Direction::South, ActionStatus::Idle, MatingStatus::Infertile}, age, 0, animal_infos[animal_data->animal]);
+	}
+	else if (auto unit_data = std::get_if<UnitRenderData>(&render_data))
+	{
+	       return get_unit_rect(unit_data->unit, ActionStatus::Idle, Direction::South, 0, age, unit_info);
+	}
+	else if (auto plant_data = std::get_if<PlantRenderData>(&render_data))
+	{
+	  sprite::get(plant_data->plant);
+	} else if (auto buildable_data = std::get_if<BuildableRenderData>(&render_data))
+	{
+	  sprite::get(buildable_data->buildable);
+	} else if (auto item_data  = std::get_if<ItemRenderData>(&render_data)) {
+	  sprite::get(item_data->item);
+	}
+}  
+
+struct Info
 {
     uint8_t side_length;
     uint8_t side_height;
@@ -35,9 +78,9 @@ struct SpriteInfo
     uint8_t run_sprite_frame_length{};
     uint8_t act_sprite_frame_length{};
 
-    constexpr SpriteInfo() = default;
+    constexpr Info() = default;
 
-    constexpr SpriteInfo(uint8_t side_length, uint8_t side_height, uint8_t front_length,
+    constexpr Info(uint8_t side_length, uint8_t side_height, uint8_t front_length,
 			 uint8_t front_height, uint8_t child_side_length, uint8_t child_side_height,
 			 uint8_t child_front_length,
 			 uint8_t child_front_height)
@@ -52,36 +95,36 @@ struct SpriteInfo
     {}
 };
 
-constexpr SpriteInfo UNIT_SPRITE_INFO = SpriteInfo(1,2,1,2,1,2,1,2);
+constexpr Info UNIT_SPRITE_INFO = Info(1,2,1,2,1,2,1,2);
 
-inline constexpr LookupTable<Animal, SpriteInfo> ANIMAL_SPRITE_INFOS = []
+inline constexpr LookupTable<Animal, Info> ANIMAL_SPRITE_INFOS = []
 {
-    LookupTable<Animal, SpriteInfo> lt{};
+    LookupTable<Animal, Info> lt{};
 
     using enum Animal;
 
-    lt[Pig]          = SpriteInfo(2,1,1,2,2,1,1,2);
-    lt[Cow]          = SpriteInfo(3,2,1,3,3,2,2,2);
-    lt[Chicken]      = SpriteInfo(1,1,1,1,1,1,1,1);
-    lt[Duck]         = SpriteInfo(1,1,1,1,1,1,1,1);
-    lt[Sheep]        = SpriteInfo(2,1,1,2,2,1,1,1);
-    lt[Goat]         = SpriteInfo(2,1,1,2,2,1,1,1);
-    lt[Horse]        = SpriteInfo(3,2,1,3,3,2,1,3);
-    lt[Ox]           = SpriteInfo(3,2,1,3,3,2,1,3);
-    lt[Donkey]       = SpriteInfo(3,2,1,3,3,2,1,3);
-    lt[Camel]        = SpriteInfo(3,2,1,3,3,2,1,3);
-    lt[WaterBuffalo] = SpriteInfo(3,2,1,3,3,2,1,3);
-    lt[Rabbit]       = SpriteInfo(1,1,1,1,1,1,1,1);
-    lt[Antelope]     = SpriteInfo(3,2,1,2,2,2,1,2);
-    lt[Deer]         = SpriteInfo(2,2,1,2,2,2,1,2);
-    lt[Moose]        = SpriteInfo(4,3,2,3,3,2,2,3);
-    lt[Capybara]     = SpriteInfo(2,1,1,2,2,1,1,1);
-    lt[Turtle]       = SpriteInfo(1,1,1,1,1,1,1,1);
-    lt[Elephant]     = SpriteInfo(5,3,2,3,4,3,2,3);
-    lt[Bison]        = SpriteInfo(3,2,1,3,3,2,1,3);
-    lt[Wolf]         = SpriteInfo(3,2,1,3,3,2,1,3);
-    lt[Bear]         = SpriteInfo(3,2,1,3,2,2,1,2);
-    lt[Caribou]      = SpriteInfo(3,2,1,2,2,2,1,2);
+    lt[Pig]          = Info(2,1,1,2,2,1,1,2);
+    lt[Cow]          = Info(3,2,1,3,3,2,2,2);
+    lt[Chicken]      = Info(1,1,1,1,1,1,1,1);
+    lt[Duck]         = Info(1,1,1,1,1,1,1,1);
+    lt[Sheep]        = Info(2,1,1,2,2,1,1,1);
+    lt[Goat]         = Info(2,1,1,2,2,1,1,1);
+    lt[Horse]        = Info(3,2,1,3,3,2,1,3);
+    lt[Ox]           = Info(3,2,1,3,3,2,1,3);
+    lt[Donkey]       = Info(3,2,1,3,3,2,1,3);
+    lt[Camel]        = Info(3,2,1,3,3,2,1,3);
+    lt[WaterBuffalo] = Info(3,2,1,3,3,2,1,3);
+    lt[Rabbit]       = Info(1,1,1,1,1,1,1,1);
+    lt[Antelope]     = Info(3,2,1,2,2,2,1,2);
+    lt[Deer]         = Info(2,2,1,2,2,2,1,2);
+    lt[Moose]        = Info(4,3,2,3,3,2,2,3);
+    lt[Capybara]     = Info(2,1,1,2,2,1,1,1);
+    lt[Turtle]       = Info(1,1,1,1,1,1,1,1);
+    lt[Elephant]     = Info(5,3,2,3,4,3,2,3);
+    lt[Bison]        = Info(3,2,1,3,3,2,1,3);
+    lt[Wolf]         = Info(3,2,1,3,3,2,1,3);
+    lt[Bear]         = Info(3,2,1,3,2,2,1,2);
+    lt[Caribou]      = Info(3,2,1,2,2,2,1,2);
 
     return lt;
 }();
@@ -225,3 +268,5 @@ inline constexpr LookupTable<Plant, std::array<StageInfo, MAX_STAGES>> PLANT_SPR
 	lt[Strawberry] = {{ StageInfo({1,1},4), StageInfo({2,2},2), StageInfo({2,3},1)}};
 	return lt;
 }();
+
+}

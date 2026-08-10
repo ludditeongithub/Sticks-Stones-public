@@ -27,7 +27,7 @@ inline void apply_light_cloud_effects(uint16_t chunk)
 	//TODO: rendering
 }
 
-inline void World::apply_precipitation(TileDatabase* tile_db, uint16_t chunk, bool heavy)
+inline void World::apply_precipitation(tile::Database* tile_db, uint16_t chunk, bool heavy)
 {
 	Array<Liquid> &waters = tile_db->waters;
 	Liquid amount = (precipitation_cores[chunk] + (precipitation_cores[chunk] * precipitation_variance.next() * PRECIPITATION_VARIANCE_FACTOR)) * MM_PER_PRECIPITATION;
@@ -35,7 +35,7 @@ inline void World::apply_precipitation(TileDatabase* tile_db, uint16_t chunk, bo
 	for (size_t i = chunk * CHUNK_SIZE; i < chunk * CHUNK_SIZE + CHUNK_SIZE; i++) waters[i] += amount;	
 }	
 
-void World::apply_weather(TileDatabase* tile_db)
+void World::apply_weather(tile::Database* tile_db)
 {
 	for (size_t i = 0; i < CHUNK_AMOUNT; i++) {
 		if (cloud_values[i] > MIN_HEAVY_CLOUDS)

@@ -1,5 +1,5 @@
 
-inline void TileDatabase::update_total_revealed_box() 
+inline void tile::Database::update_total_revealed_box() 
 {
 	uint32_t highest_x, highest_y = std::numeric_limits<uint32_t>::min();
 	uint32_t lowest_x, lowest_y = std::numeric_limits<uint32_t>::max();

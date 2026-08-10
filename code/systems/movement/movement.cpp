@@ -26,22 +26,7 @@ default:
 	void move_animals()
 	{
 	
-				if (animal_action[i] = Action::CheckProwl)
-					ran = true;
-				switch (diets[animals[i]])
-				{
-				case Diet::Herbivore:
-				case Diet::Omnivore:
-					edible_plant_check(i, directions[i], ran);
-					fruit_check(i, directions[i], ran);
-				case Diet::Herbivore:
-					break;
-				case Diet::Scavenger:
-					corpse_check(i, directions[i], ran);
-				case Diet::Carnivore:
-					hunt_check(i, directions[i], ran);
-				}
-				inertias[i] = calc_speed(mid_speed[animals[i]], coords[i]);
+				
 				else if (animal_action[i] == Action::ApproachPlant ||
 					 animal_action[i] == Action::ApproachTile ||
 					 animal_action[i] == Action::ApproachGrass ||

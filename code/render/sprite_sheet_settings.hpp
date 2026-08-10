@@ -18,7 +18,7 @@ using json = nlohmann::json;
 // using Sprite = std::variant<Item, Plant, Tile, Grass, Animal, Unit, Buildable, ButtonSprite, UISprite>;
 
 std::array<SDL_Rect, static_cast<size_t>(Animal::MAX)> animal_sprites;
-std::array<SDL_Rect, static_cast<size_t>(Buildable::MAX)> buildable_sprites;
+std::array<SDL_Rect, static_cast<size_t>(Buildable::MAX)> buildable;
 std::array<SDL_Rect, static_cast<size_t>(Plant::MAX)> plant_sprites;
 std::array<SDL_Rect, static_cast<size_t>(Item::MAX)> item_sprites;
 std::array<SDL_Rect, static_cast<size_t>(Tile::MAX)> tile_sprites;
@@ -33,7 +33,7 @@ inline void save_sprite(int index, Sprite sprite, SCoord position, SCoord dimens
 	if (std::is_same<Animal, Sprite>::value) {
 		animal_sprites[index] = SDL_Rect{position.x, position.y, dimension.x, dimension.y};	
 	    } else if (std::is_same<Buildable, Sprite>::value) {
-		buildable_sprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
+		buildable[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
 	} else if (std::is_same<Plant, Sprite>::value) {
 		plant_sprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
 	} else if (std::is_same<Item, Sprite>::value) {

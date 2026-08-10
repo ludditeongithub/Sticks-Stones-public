@@ -23,7 +23,7 @@ std::vector<EntityID> mark_new_path_entities(std::vector<EntityID>& acting_entit
 }
 
 template<typename DB>
-PathsBuffer get_new_paths(DB& database, std::vector<EntityID> &no_inertia_entities, TileDatabase& tiles)
+void PathsBuffer::get_new_paths(DB& database, std::vector<EntityID>& no_inertia_entities, tile::Database& tiles)
 {
 	std::vector<EntityID> new_path_entities =
 	    mark_new_path_entities(no_inertia_entities, database.frame_datas);
@@ -32,12 +32,11 @@ PathsBuffer get_new_paths(DB& database, std::vector<EntityID> &no_inertia_entiti
 		{
                 EntityID j = new_path_entities[i];
 						
-		Coord dest = tiles.get_coord(targets[j].index);
-		PathData pd = a_star(coords[j], dest);
-		pb.currents[i] = 0;
-		pb.ends[i] = pd.end;
-		pb.datas[i] = pd.data;
-		pb.destinations[i] = path_dispatch_buffer.destinations[i];
+		Coord dest = tiles.get_coord(database.targets[j].index);
+		PathData pd = a_star(database.coord(j), dest);
+		currents[i] = 0;
+		ends[i] = pd.end;
+		directions[i] = pd.directions;
 	}
 }
 
@@ -66,7 +65,7 @@ static void initialize_node(NodeData& node)
 
 static Direction direction_from_to(size_t from, size_t to)
 {
-	const size_t width = g_World->WORLD_TILE_LENGTH;
+	const size_t width = g_world->world_tile_length;
 
 	int diff =
 		static_cast<int>(to) -
@@ -92,10 +91,10 @@ static PathData reconstruct_path(
 	PathData path;
 
 	path.start =
-		g_World->get_tile_coord_from_index(start_index);
+		g_world->get_tile_coord_from_index(start_index);
 
 	path.end =
-		g_World->get_tile_coord_from_index(goal_index);
+		g_world->get_tile_coord_from_index(goal_index);
 
 
 	size_t current = goal_index;
@@ -145,18 +144,17 @@ PathData a_star(Coord start, Coord goal)
 {
 	current_search_id++;
 
-
 	const size_t width =
-		g_World->WORLD_TILE_LENGTH;
+		g_world->world_tile_length;
 
 	const size_t height =
-		g_World->WORLD_TILE_LENGTH;
+		g_world->world_tile_length;
 
 	const size_t start_index =
-		g_World->get_tile_index_from_coord(start);
+		g_world->get_tile_index_from_coord(start);
 
 	const size_t goal_index =
-		g_World->get_tile_index_from_coord(goal);
+		g_world->get_tile_index_from_coord(goal);
 
 	std::priority_queue<
 		OpenNode,
@@ -185,8 +183,6 @@ PathData a_star(Coord start, Coord goal)
 			start_node.f_cost
 		}
 	);
-
-
 
 	while (!open_set.empty())
 	{
@@ -251,8 +247,7 @@ PathData a_star(Coord start, Coord goal)
 				initialize_node(neighbor_node);
 			}
 
-			if (neighbor_node.closed_flag)
-				continue;kxs
+			if (neighbor_node.closed_flag) continue;
 			float tentative_g = current_node.g_cost + tile_move_costs[neighbor];
 
 			if (tentative_g < neighbor_node.g_cost)
@@ -282,7 +277,5 @@ PathData a_star(Coord start, Coord goal)
 			}
 		}
 	}
-
-
 	return {};
 }

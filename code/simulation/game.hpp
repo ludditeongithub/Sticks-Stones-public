@@ -1,3 +1,4 @@
+#include "systems/action/action.hpp"
 #include "world/buildable/database.hpp"
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_mouse.h>
@@ -29,19 +30,22 @@ struct Game
   World world;
   SearchGrid search;
 
+  Arena tile_arena;
+  tile::Database tile_database;
+  
 Arena plant_arena;
-PlantDatabase plant_database;
+plant::Database plant_database;
 Arena regrowth_plant_arena;
-RegrowthPlantDatabase regrowth_plant_database;
+plant::RegrowthDatabase regrowth_plant_database;
 Arena animal_arena;
-AnimalDatabase animal_database;
+animal::Database animal_database;
 Arena unit_arena;
-UnitDatabase unit_database;
+unit::Database unit_database;
 // Arena NPCUnitArena;  
-// UnitDatabase NPCUnitDatabase;
+// unit::Database NPCunit::Database;
 Arena item_arena;
-ItemDatabase item_database;
-BuildableDatabase buildable_database;
+item::Database item_database;
+buildable::Database buildable_database;
 Arena buildable_arena;  
 
 void init_new_world();
@@ -62,13 +66,19 @@ void handle_event(SDL_Event *e);
 
 void process_world();
 
+uint32_t get_day();  
+
+// =========================
+// LOOP
+// =========================
+
 void game_loop();
 
 void frame_loop();
 
-void hourly_loop();  
+void hourly_loop();
 
-uint32_t get_day();
+void handle_actions_and_movement_loop();    
 };
 
 Game* g_game;

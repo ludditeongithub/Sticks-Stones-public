@@ -17,23 +17,23 @@ void Game::init_new_world()
 	world = World(chunk_arena, 50, 50);
 	world.load_chunk_data(*ws);
 
-	tile_arena = Arena(TileDatabase::ENTITY_SIZE * world.WORLD_TILE_AMOUNT);
-	tile_database = TileDatabase(tile_arena, ws->tile_spawn_buffer, world);
+	tile_arena = Arena(tile::Database::ENTITY_SIZE * world.WORLD_TILE_AMOUNT);
+	tile_database = tile::Database(tile_arena, ws->tile_spawn_buffer, world);
 
 	search(world);
 	
-	plant_arena = Arena(PlantDatabase::ENTITY_SIZE * PLANT_DATABASE_CAP);
-	plant_database = PlantDatabase(&plant_arena, search, PLANT_DATABASE_CAP);
+	plant_arena = Arena(plant::Database::ENTITY_SIZE * PLANT_DATABASE_CAP);
+	plant_database = plant::Database(&plant_arena, search, PLANT_DATABASE_CAP);
 
-	animal_arena = Arena(AnimalDatabase::ENTITY_SIZE * ANIMAL_DATABASE_CAP);
-	animal_database = AnimalDatabase(&animal_arena, ANIMAL_DATABASE_CAP, search);
+	animal_arena = Arena(animal::Database::ENTITY_SIZE * ANIMAL_DATABASE_CAP);
+	animal_database = animal::Database(&animal_arena, ANIMAL_DATABASE_CAP, search);
 	animal_database->add_animals(ws->animal_spawn_buffer);	
 
-	player_unit_arena = Arena(UnitDatabase::ENTITY_SIZE * UNIT_CAP);
-	player_unit_database = UnitDatabase(player_unit_arena, PLAYER_UNIT_DATABASE_CAP, world, search);
+	player_unit_arena = Arena(unit::Database::ENTITY_SIZE * UNIT_CAP);
+	player_unit_database = unit::Database(player_unit_arena, PLAYER_UNIT_DATABASE_CAP, world, search);
 
-	NPCUnitArena = Arena(UnitDatabase::ENTITY_SIZE * NPC_UNIT_DATABASE_CAP);
-        NPCUnitDatabase = UnitDatabase(NPCUnitArena, NPC_UNIT_DATABASE_CAP, world, search);
+	NPCUnitArena = Arena(unit::Database::ENTITY_SIZE * NPC_UNIT_DATABASE_CAP);
+        NPCunit::Database = unit::Database(NPCUnitArena, NPC_UNIT_DATABASE_CAP, world, search);
 
         sprite_sheet_texture.load_from_file("sprite_sheet.png");
 }

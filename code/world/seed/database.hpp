@@ -3,14 +3,14 @@
 #include "../plant/enum.hpp"
 #include "macros/database.hpp"
 #include <core/data.hpp>
-
-struct SeedDatabase {
+namespace seed {
+struct Database {
 	// @codegen:begin database_generation
-    // =========================
-    // BASE DATABASE MEMBERS
-    // =========================
+// =========================
+// BASE DATABASE MEMBERS
+// =========================
 
-constexpr static uint16_t ENTITY_SIZE = sizeof(Plant) +
+constexpr static uint16_t entity_size = sizeof(Plant) +
 + sizeof(bool)
   
  +  sizeof(Plant) 
@@ -22,40 +22,56 @@ size_t capacity;
     size_t size;
     Stack<size_t> free_slots;
     Array<bool> alives;
-  World& world;
-  TileDatabase& tiles;
+  tile::Database& tiles;
 
     // =========================
     // ENTITY-SPECIFIC MEMBERS
     // =========================
     Array<Plant> plants;
-    Array<Coord> coords;
-    Array<Time> ages;
-    
+    Array<Coord> coord;
+    Array<Time> age;
+
+
 
 // =========================
-    // CONSTRUCTOR
-    // =========================
+// CONSTRUCTOR
+// =========================
 
-SeedDatabase(Arena *arena, size_t capacity
+Database(Arena *arena, size_t capacity
   , World& world
  
-  , TileDatabase& tiles
+  , tile::Database& tiles
 ) :
   world(world),
   tiles(tiles),
 {
 this->capacity = capacity;
+
   this->size = 0;
 
 }
+
+// =========================
+// GETTERS
+// =========================
+
+  inline Plant& plants(size_t index) {
+return plants[index];
+  }
+  inline Coord& coord(size_t index) {
+return coord[index];
+  }
+  inline Time& age(size_t index) {
+return age[index];
+  }
+
 
   // =========================
   // SPAWN
   // =========================
 
  
-  bool attempt_spawn(Plant plant, bool newborn, Coord coord, )
+  bool attempt_spawn(Plant plant, bool newborn, Coord coord  )
   {       
         if (size + 1 > capacity)
             return false;
@@ -73,19 +89,20 @@ this->capacity = capacity;
         alives[i] = true;
         if (newborn)
         {
-            plants[i] = plant;
-            coords[i] = coord;
-            ages[i] = 0;
+            plants(i) = plant;
+            coord(i) = coord;
+            age(i) = 0;
         }
         else
         {
         Time age = random_bool->next();
-            plants[i] = plant;
-            coords[i] = coord;
-            ages[i] = age;
+            plants(i) = plant;
+            coord(i) = coord;
+            age(i) = age;
         }
         return true;
           }
+          
           bool spawn(Plant plant, bool newborn, Coord origin) {
           Coord spawn_point = tiles.get_nearest_empty_tile(origin);
           while (!attempt_spawn(plant, newborn, spawn_point)) free_unused_entity();                 
@@ -98,23 +115,23 @@ this->capacity = capacity;
   
   bool remove(size_t i)
   {
-        if (!alives[i])
+        if (!alive(i))
             return false;
 
         free_slots.push(i);
-        alives[i] = false;
+        alive(i) = false;
         return true;
   }
 
   void free_unused_entity()
   {
     for (size_t i = 0; i < coords.size; i++) {
-    if (tiles.tile_statuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
+    if (tiles.tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
     }
   }
     
 
-      
+
     // =========================
     // SERIALIZATION
     // =========================
@@ -129,8 +146,8 @@ this->capacity = capacity;
    
 
         plants.save(archive);
-        coords.save(archive);
-        ages.save(archive);
+        coord.save(archive);
+        age.save(archive);
     }
 
     template <class Archive>
@@ -142,9 +159,11 @@ this->capacity = capacity;
         archive(alives);
         
         plants.load(archive);
-        coords.load(archive);
-        ages.load(archive);
+        coord.load(archive);
+        age.load(archive);
     }
 
 // @codegen:end database_generation
 };
+
+}

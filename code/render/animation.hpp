@@ -25,7 +25,7 @@ const Frame run_animation_sprite_length = Frame::F8;
 // all the LOGIC is only fitted for walk animations, for now.
 
 
-inline uint16_t get_action_sprite_offset(SpriteInfo &ai, ActionStatus as)
+inline uint16_t get_action_sprite_offset(sprite::Info &ai, ActionStatus as)
 {
 	switch (as)
 	{
@@ -48,7 +48,7 @@ inline uint16_t get_action_sprite_offset(SpriteInfo &ai, ActionStatus as)
 	// TODO: PerformAction, set of actions, be sure to update child sprite offset!
 }
 
-inline uint16_t get_action_sprite_offset(SpriteInfo &info, ActState state) {
+inline uint16_t get_action_sprite_offset(sprite::Info &info, ActState state) {
 	switch (state)
 	{
 		// WALK
@@ -68,12 +68,12 @@ inline uint16_t get_action_sprite_offset(SpriteInfo &info, ActState state) {
 	}
 }
 
-inline uint16_t get_child_sprite_offset(SpriteInfo &ai)
+inline uint16_t get_child_sprite_offset(sprite::Info &ai)
 {
 	return ai.walking_sprite_length + ai.running_sprite_length;
 }
 
-inline uint16_t get_direction_sprite_offset(SpriteInfo &asi, Direction d, bool child)
+inline uint16_t get_direction_sprite_offset(sprite::Info &asi, Direction d, bool child)
 {
 	uint16_t d_offset = 0;
 	if (child)
@@ -115,7 +115,7 @@ inline uint16_t get_direction_sprite_offset(SpriteInfo &asi, Direction d, bool c
 	return d_offset;
 }
 
-inline uint16_t get_frame_sprite_offset(SpriteInfo &asi, ActionStatus as, Frame frame_number, uint16_t sprite_height)
+inline uint16_t get_frame_sprite_offset(sprite::Info &asi, ActionStatus as, Frame frame_number, uint16_t sprite_height)
 {
 	uint8_t frame = static_cast<uint8_t>(frame_number);
 	switch (as)
@@ -136,7 +136,7 @@ inline uint16_t get_frame_sprite_offset(SpriteInfo &asi, ActionStatus as, Frame 
 	}	
 }
 
-inline uint16_t get_frame_sprite_offset(SpriteInfo &asi, ActState as, Frame frame_number,
+inline uint16_t get_frame_sprite_offset(sprite::Info &asi, ActState as, Frame frame_number,
 				     uint16_t sprite_height)
 {
 	uint8_t frame = static_cast<uint8_t>(frame);
@@ -163,7 +163,7 @@ inline uint16_t get_frame_sprite_offset(SpriteInfo &asi, ActState as, Frame fram
 }
 
 
-inline Coord get_sprite_dimensions(SpriteInfo &asi, Direction d, bool child)
+inline Coord get_sprite_dimensions(sprite::Info &asi, Direction d, bool child)
 {
 	uint16_t h = 0;
 	uint16_t w = 0;
@@ -206,7 +206,7 @@ inline Coord get_sprite_dimensions(SpriteInfo &asi, Direction d, bool child)
 	return {w, h};
 }
 
-SDL_Rect get_animal_rect(Animal a, AnimalStatus as, Time age, Frame frame, SpriteInfo& asi)
+SDL_Rect get_animal_rect(Animal a, AnimalStatus as, Time age, Frame frame, sprite::Info& asi)
 {
 	bool child = age < animal::FERTILITY_AGES[a];
 	SDL_Rect sprite_set = sprite::animal_sprites[a];
@@ -224,7 +224,7 @@ SDL_Rect get_animal_rect(Animal a, AnimalStatus as, Time age, Frame frame, Sprit
 	return {x, y, static_cast<int>(c.x), static_cast<int>(c.y)};
 }
 
-inline Frame get_next_animal_frame(Animal a, ActionStatus as, Frame frame_number, SpriteInfo& asi)
+inline Frame get_next_animal_frame(Animal a, ActionStatus as, Frame frame_number, sprite::Info& asi)
 {
 		uint8_t frame = static_cast<uint8_t>(frame_number);
 	switch (as)
@@ -259,7 +259,7 @@ void update_animal_animations(Coord left_corner, EntityRenderBuffer &erd, Array<
 		uint16_t ai = ard.index;
 		Frame &f = frames[ai];
 		AnimalStatus &s = states[ai];
-		SpriteInfo asi = animal_sprite_infos[ard.animal];
+		sprite::Info asi = animal_sprite_infos[ard.animal];
 		SDL_Rect r = get_animal_rect(ard.animal, s, ages[ai], f, asi);
 
 		// TODO: position must be relative to screen
@@ -305,7 +305,7 @@ inline SDL_Rect get_unit_rect(Unit unit, ActState state, Direction direction, Fr
 	bool child = age < MATURITY_AGE;
 	SDL_Rect sprite_set = sprite::unit_sprites[];
 	int x = sprite_set.x;
-	SpriteInfo usi = UNIT_SPRITE_INFO;
+	sprite::Info usi = UNIT_SPRITE_INFO;
 	if (child) x += get_child_sprite_offset(usi);
 	x += get_action_sprite_offset(usi, state);
 	x += get_direction_sprite_offset(usi, direction, child);

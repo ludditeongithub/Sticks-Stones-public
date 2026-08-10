@@ -6,7 +6,7 @@
 #include "world/animal/enum.hpp"
 #include "world/animal/tables.hpp"
 
-void AnimalDatabase::birth_animal(Animal animal, size_t mother_index)
+void animal::Database::birth_animal(Animal animal, size_t mother_index)
 {
 	// TODO: perhaps include age lowering fertility later
 	Coord origin = coords[mother_index];	
@@ -22,7 +22,7 @@ void AnimalDatabase::birth_animal(Animal animal, size_t mother_index)
 }
 
 
-inline bool AnimalDatabase::get_conception_roll(Animal animal, size_t female_index, size_t male_index)
+inline bool animal::Database::get_conception_roll(Animal animal, size_t female_index, size_t male_index)
 {		
 		const Time male_age = ages[male_index];
 		const Time female_age = ages[female_index];
@@ -40,7 +40,7 @@ inline bool AnimalDatabase::get_conception_roll(Animal animal, size_t female_ind
 }
 
 
-void AnimalDatabase::breed(Animal animal, size_t female_index, size_t male_index)
+void animal::Database::breed(Animal animal, size_t female_index, size_t male_index)
 {
 		if (animals[male_index] != animals[female_index])
 		{
@@ -55,7 +55,7 @@ void AnimalDatabase::breed(Animal animal, size_t female_index, size_t male_index
 		}
 }
 
-void AnimalDatabase::set_track_mate_path(Animal animal, size_t index)
+void animal::Database::set_track_mate_path(Animal animal, size_t index)
 {
 		bool found = false;
 		int nearest = 0;
@@ -75,7 +75,7 @@ void AnimalDatabase::set_track_mate_path(Animal animal, size_t index)
 }
 
 // TODO: protective mothers
-void AnimalDatabase::lay_egg(Animal animal, Coord coord, bool fertilized)
+void animal::Database::lay_egg(Animal animal, Coord coord, bool fertilized)
 {
 	
 	Item item;
@@ -99,7 +99,7 @@ void AnimalDatabase::lay_egg(Animal animal, Coord coord, bool fertilized)
 }
 
 
-void AnimalDatabase::make_corpse(const size_t index)
+void animal::Database::make_corpse(const size_t index)
 {
 	const Coord coord = coords[index];
 	const Animal animal = animals[index];
@@ -112,7 +112,7 @@ void AnimalDatabase::make_corpse(const size_t index)
 	variant_items.attempt_spawn(Item::Corpse, false, coord, static_cast<Variant>(animal));
 }
 
-void AnimalDatabase::kill_animal(const size_t index)
+void animal::Database::kill_animal(const size_t index)
 {
 	if (remove(index)) make_corpse(index);
 	else

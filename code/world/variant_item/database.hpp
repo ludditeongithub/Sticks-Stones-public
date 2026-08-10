@@ -1,14 +1,14 @@
 #pragma once
 
 #include <world/item/database.hpp>
-
-struct VariantItemDatabase {
+namespace variant_item {
+struct Database {
 		// @codegen:begin database_generation
-    // =========================
-    // BASE DATABASE MEMBERS
-    // =========================
+// =========================
+// BASE DATABASE MEMBERS
+// =========================
 
-constexpr static uint16_t ENTITY_SIZE = sizeof(Item) +
+constexpr static uint16_t entity_size = sizeof(Item) +
 + sizeof(bool)
   
  +  sizeof(Item) 
@@ -20,40 +20,75 @@ size_t capacity;
     size_t size;
     Stack<size_t> free_slots;
     Array<bool> alives;
+  SearchGrid& search;
   World& world;
-  TileDatabase& tiles;
+  
+  std::vector<EntityID>& no_inertia_buffer; // size is amount of no inertias this loop
+  
+  std::vector<EntityID>& unassigned_buffer; // size is amount of unassigned this loop
+  tile::Database& tiles;
 
     // =========================
     // ENTITY-SPECIFIC MEMBERS
     // =========================
     Array<Item> items;
-    Array<Coord> coords;
-    Array<Variant> variants;
-    
+    Array<Coord> coord;
+    Array<Variant> variant;
+
+struct Main {
+    Array<Coord> coord;
+    Array<Variant> variant;
+};
+
 
 // =========================
-    // CONSTRUCTOR
-    // =========================
+// CONSTRUCTOR
+// =========================
 
-VariantItemDatabase(Arena *arena, size_t capacity
+Database(Arena *arena, size_t capacity
   , World& world
  
-  , TileDatabase& tiles
+  , SearchGrid& search
+  , tile::Database& tiles
 ) :
   world(world),
   tiles(tiles),
+search(search),
 {
 this->capacity = capacity;
+
   this->size = 0;
 
 }
+
+// =========================
+// GETTERS
+// =========================
+
+  inline Item& items(size_t index) {
+return items[index];
+  }
+  inline Coord& coord(size_t index) {
+return coord[index];
+  }
+  inline Variant& variant(size_t index) {
+return variant[index];
+  }
+
+    inline Coord& coord(size_t index) {    
+return main[index].coord;
+    }
+    inline Variant& variant(size_t index) {    
+return main[index].variant;
+    }
 
   // =========================
   // SPAWN
   // =========================
 
  
-  bool attempt_spawn(Item item, bool newborn, Coord coord,  Variant variant )
+  bool attempt_spawn(Item item, bool newborn, Coord coord  , Variant variant  , bool insert_search = true
+)
   {       
         if (size + 1 > capacity)
             return false;
@@ -71,19 +106,21 @@ this->capacity = capacity;
         alives[i] = true;
         if (newborn)
         {
-            items[i] = item;
-            coords[i] = coord;
-            variants[i] = variant;
+            items(i) = item;
+            coord(i) = coord;
+            variant(i) = variant;
         }
         else
         {
         Time age = random_bool->next();
-            items[i] = item;
-            coords[i] = coord;
-            variants[i] = variant;
+            items(i) = item;
+            coord(i) = coord;
+            variant(i) = variant;
         }
+            if (insert_search) search.insert_entity(item, {i, coord(i)});
         return true;
           }
+          
           bool spawn(Item item, bool newborn, Coord origin) {
           Coord spawn_point = tiles.get_nearest_empty_tile(origin);
           while (!attempt_spawn(item, newborn, spawn_point)) free_unused_entity();                 
@@ -96,23 +133,25 @@ this->capacity = capacity;
   
   bool remove(size_t i)
   {
-        if (!alives[i])
+        if (!alive(i))
             return false;
 
         free_slots.push(i);
-        alives[i] = false;
+        alive(i) = false;
+        Item item = item(i);
+            search.remove_entity(item, {i, coord(i)});
         return true;
   }
 
   void free_unused_entity()
   {
     for (size_t i = 0; i < coords.size; i++) {
-    if (tiles.tile_statuses[i].get<VisionStatus>() == VisionStatus::Hidden) remove(i);
+    if (tiles.tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
     }
   }
     
 
-      
+
     // =========================
     // SERIALIZATION
     // =========================
@@ -127,8 +166,8 @@ this->capacity = capacity;
    
 
         items.save(archive);
-        coords.save(archive);
-        variants.save(archive);
+        coord.save(archive);
+        variant.save(archive);
     }
 
     template <class Archive>
@@ -140,8 +179,8 @@ this->capacity = capacity;
         archive(alives);
         
         items.load(archive);
-        coords.load(archive);
-        variants.load(archive);
+        coord.load(archive);
+        variant.load(archive);
     }
 
 
@@ -149,7 +188,7 @@ this->capacity = capacity;
 // TRANSFER
 // =========================
 
-inline bool transfer_variant_item(size_t i, VariantItemDatabase &old_db, VariantItemDatabase &new_db)
+inline bool transferVariantItem(size_t i, VariantItemDatabase &old_db, VariantItemDatabase &new_db)
   {
   if (new_db.size >= new_db.capacity) return false;
   int index;  
@@ -162,13 +201,14 @@ inline bool transfer_variant_item(size_t i, VariantItemDatabase &old_db, Variant
 		index = new_db.free_slots.top();
 		new_db.free_slots.pop();			
   }
-    new_db.items[index] = old_db.items[i];
-    new_db.coords[index] = old_db.coords[i];
-    new_db.variants[index] = old_db.variants[i];
-  new_db.alives[index] = true;
+    new_db.items(index) = old_db.items(i);
+    new_db.coord(index) = old_db.coord(i);
+    new_db.variant(index) = old_db.variant(i);
+  new_db.alive(index) = true;
   old_db.free_slots.push(i);
-  old_db.alives[index] = false;
+  old_db.alive(index) = false;
   return true;
   }
 // @codegen:end database_generation
 };
+}

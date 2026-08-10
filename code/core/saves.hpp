@@ -25,7 +25,7 @@ public:
     game.plant_database.save(archive);
     game.animal_database.save(archive);
     game.player_unit_database.save(archive);
-	game.NPCUnitDatabase.save(archive);
+    game.NPC_unit_database.save(archive);
     game.item_database.save(archive);
     game.buildable_database.save(archive);
   }
@@ -39,7 +39,7 @@ public:
     game.plant_database.load(archive);
     game.animal_database.load(archive);
     game.player_unit_database.load(archive);
-	game.NPCUnitDatabase.load(archive);
+    game.NPC_unit_database.load(archive);
     game.item_database.load(archive);
     game.buildable_database.load(archive);
   }

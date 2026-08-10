@@ -8,33 +8,50 @@
 #include <chrono>
 #include <format>
 #include "button_functionality.hpp"
+#include "render/screen.hpp"
+#include "render/sprite_sheet_settings.hpp"
 #include "text.hpp"
 #include <ui/sound/sound.hpp>
-
 
 enum class ButtonSprite : uint8_t
 {
 	MainButton,
 	FirstLaunchButton,
 	Checkbox,
+	SwipableMenuButton,
 	MAX
+};
+
+enum class ButtonDecoration : uint8_t
+{
+        
+        MAX
 };
 
 enum class ButtonState
 {
 	Unpressed,
 	Hover,
-	Pressed
+	Pressed,
 };
+
+inline constexpr BitsetTable<ButtonSprite> REQUIRES_DECORATION = []
+ {
+   BitsetTable<ButtonSprite> t{};
+   auto add = [&](ButtonSprite e) { t.bitset.set(static_cast<uint16_t>(e)); };
+   using enum ButtonSprite;
+   add(SwipableMenuButton);
+   return t;
+ }();
 
 inline SCoord get_button_sprite_dimensions(ButtonSprite sprite)
 {
-  return {SpriteSheet::button_sprites[static_cast<int>(sprite)].w, SpriteSheet::button_sprites[static_cast<int>(sprite)].h / 3};
+  return {sprite::button_sprites[static_cast<int>(sprite)].w, sprite::button_sprites[static_cast<int>(sprite)].h / 3};
 }
 
 inline SDL_Rect get_button_sprite(ButtonSprite sprite, ButtonState state)
 {
-  SDL_Rect button_sheet = SpriteSheet::button_sprites[static_cast<int>(sprite)];
+   SDL_Rect button_sheet = sprite::button_sprites[static_cast<int>(sprite)];
   switch (state) {
   case ButtonState::Unpressed:
 		  return {button_sheet.x, button_sheet.y, button_sheet.w, button_sheet.h / 3};
@@ -49,29 +66,56 @@ inline SDL_Rect get_button_sprite(ButtonSprite sprite, ButtonState state)
     // TODO: error
     break;
   }
+}
+
+// MTODO: Possibly changes from ButtonState
+inline SDL_Rect get_decoration_sprite(ButtonDecoration decoration)
+{
+
+
 }	
 
 struct ButtonUI
 {
       public:
 	ButtonFunctionality function;
-    ButtonSprite sprite;
+	ButtonSprite sprite;
+        std::optional<ButtonDecoration> decoration;
 	SCoord top_left_corner;
 	Sound* pressed_sound;
 	ButtonState state = ButtonState::Unpressed;
 
-	ButtonUI(ButtonFunctionality function, ButtonSprite sprite, SCoord top_left_corner,
+  ButtonUI(ButtonFunctionality function, ButtonSprite sprite, SCoord top_left_corner, std::optional<ButtonDecoration> decoration = std::nullopt,
 		 Sound *pressed_sound = nullptr)
-	    : function(function), sprite(sprite), top_left_corner(top_left_corner),
+    : function(function), sprite(sprite), top_left_corner(top_left_corner), decoration(decoration),
 	      pressed_sound(pressed_sound)
-	{	
+	{
+	  
 	}
 
-	inline void render(SDL_Rect *viewport)
+	inline void render(const SDL_Rect& viewport)
+	{
+		SDL_Rect rect;
+	        rect = sprite::get_button(sprite, state);
+		
+		sprite_sheet_texture.render(top_left_corner.x, top_left_corner.y, &rect, viewport);
+		//TODO: decoration should appear lower, if button is pressed!
+		if (decoration.has_value()) {
+		  SDL_Rect dec_rect = get_decoration_sprite(decoration);
+		  sprite_sheet_texture.render(top_left_corner.x, top_left_corner.y, &dec_rect, viewport);
+		}		
+	}
+
+        inline void render()
 	{
 		SDL_Rect rect;
 		rect = get_button_sprite(sprite, state);
-		sprite_sheet_texture.render(top_left_corner.x, top_left_corner.y, &rect, viewport);
+		sprite_sheet_texture.render(top_left_corner.x, top_left_corner.y, &rect, g_main_screen_viewport);
+
+		if (decoration.has_value()) {
+		  SDL_Rect dec_rect = get_decoration_sprite(decoration);
+		  sprite_sheet_texture.render(top_left_corner.x, top_left_corner.y, &dec_rect, g_main_screen_viewport);
+		}
 	}
 
 	void handle_event(SDL_Event *e)
