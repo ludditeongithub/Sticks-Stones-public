@@ -12,6 +12,18 @@
 
 constexpr uint16_t HOLDABLE_UNDERFLOW_LIMIT = 6;
 
+struct BulkStatus {
+  
+};
+
+struct ContainerData
+{
+        BulkStatus max_bulk_status;
+	float bulk;
+	float weight;
+  bool liquid;
+};
+
 struct ItemSlot
 {
 	Item item; // HOLDING for hands if hands are holding multiple items instead of using item
@@ -208,7 +220,7 @@ float get_container_capacity(ContainerType c)
 	}
 }
 
-SizeData bulk_and_weights[Item::MAX + Container::MAX];
+ContainerData bulk_and_weights[Item::MAX + Container::MAX];
 
 bool valid_container(Container container, Item new_item)
 {
