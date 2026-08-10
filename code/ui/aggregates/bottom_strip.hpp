@@ -253,6 +253,22 @@ void change_role(size_t i, Role role)
 // MENU BUTTONS
 // =========================
 
+struct MenuButtons
+{
+	ElementTable element_table
+	{
+          297, 19, 23,                   
+	};
+	Array<ButtonUI, 7> buttons;
+  
+};
 
+
+void init_menu_buttons()
+{
+  for (size_t i = 0; i < 7; i++) {
+    menu_buttons.[i] = ButtonUI();
+  }
+}
 
 } // namespace bottom_bar
