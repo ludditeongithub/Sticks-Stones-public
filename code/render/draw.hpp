@@ -38,7 +38,7 @@ inline void copy_tiles(SDL_Texture* chunk_texture, World& world, Array<TileData>
 			uint16_t ti = world.get_tile_index_from_coord({i, j});
 			// draw tiles
 			Tile t = tiles[ti].first();
-			SDL_Rect sd = SpriteSheet::tile_sprites[static_cast<int>(t)];
+			SDL_Rect sd = sprite::tile[static_cast<int>(t)];
 			sprite_sheet_texture.render(j * TILE_LENGTH, i * TILE_LENGTH, &sd,
 						   &main_screen_viewport);
 
@@ -46,7 +46,7 @@ inline void copy_tiles(SDL_Texture* chunk_texture, World& world, Array<TileData>
 			Grass g = tiles[ti].second();
 			if (g != Grass::NONE)
 			{
-				sd = SpriteSheet::grass_sprites[static_cast<int>(g)];
+				sd = SpriteSheet::grass[static_cast<int>(g)];
 				sprite_sheet_texture.render(i * TILE_LENGTH, j * TILE_LENGTH, &sd, &main_screen_viewport);
 		}
 	}

@@ -59,7 +59,7 @@ bool init_first_launch_window()
 			}
 
 			// create raw rendering
-			SDL_RenderSetLogicalSize(renderer, screen_width, screen_height);
+			SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 			
 		}
 	}
@@ -82,7 +82,7 @@ fc_make_color(9, 9, 9, 255), TTF_STYLE_NORMAL);
 
 		PositionedText fullscreen = {amble20, "Fullscreen: ", {30, 30}};
 		int text_width = fc_get_width(amble20, fullscreen.text);
-		CheckboxUI cb = CheckboxUI({text_width + 8,30}, {30,30}, SpriteSheet::button_sprites[ButtonSprite::Checkbox].unpressed, SpriteSheet::button_sprites[ButtonSprite::Checkbox].pressed);
+		CheckboxUI cb = CheckboxUI({text_width + 8,30}, {30,30}, SpriteSheet::button[ButtonSprite::Checkbox].unpressed, SpriteSheet::button[ButtonSprite::Checkbox].pressed);
 		Text text = {amble20, "Click to Select Window Dimensions"};
 		TextButtonUI header_button = TextButtonUI(text, NullBF(), ButtonSprite::FirstLaunchButton, {30, static_cast<int>(fullscreen.position.y) + 50});
 

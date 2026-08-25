@@ -1,8 +1,9 @@
 * REMEMBER
 ** boost.preprocessor enum to string
-* GAME ITEMS TODAY <2026-08-20 Thu>
+* GAME ITEMS TODAY <2026-08-25 Tue>
 - finish production info menu (right side)
 - touch up center production info menu
+- figure out init for UI and rendering 'globals'
 * NOW
 ** Possibly: change Specialization metaprogram to work for animals, units, plants, of certain types instead of just Items
 ** Algorithm, scheduling and dispatch general plan

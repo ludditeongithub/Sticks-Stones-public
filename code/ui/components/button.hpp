@@ -11,6 +11,8 @@
 #include "render/screen.hpp"
 #include "render/sprite_sheet_settings.hpp"
 #include "text.hpp"
+#include "world/buildable/enum.hpp"
+#include "world/plant/enum.hpp"
 #include <ui/sound/sound.hpp>
 
 enum class ButtonSprite : uint8_t
@@ -46,6 +48,7 @@ enum class CustomButtonDecoration : uint8_t
 };
 
 using ButtonDecoration = std::variant<CustomButtonDecoration, Entity>;
+constexpr size_t BUTTON_DECORATION_MAX = static_cast<size_t>(CustomButtonDecoration::MAX) + static_cast<size_t>(Buildable::MAX) + static_cast<size_t>(Item::MAX);
 
 enum class ButtonState
 {
@@ -65,34 +68,8 @@ inline constexpr BitsetTable<ButtonSprite> REQUIRES_DECORATION = []
 
 inline SCoord get_button_sprite_dimensions(ButtonSprite sprite)
 {
-  return {sprite::button_sprites[static_cast<int>(sprite)].w, sprite::button_sprites[static_cast<int>(sprite)].h / 3};
+  return {sprite::button[static_cast<int>(sprite)].w, sprite::button[static_cast<int>(sprite)].h / 3};
 }
-
-inline SDL_Rect get_button_sprite(ButtonSprite sprite, ButtonState state)
-{
-   SDL_Rect button_sheet = sprite::button_sprites[static_cast<int>(sprite)];
-  switch (state) {
-  case ButtonState::Unpressed:
-		  return {button_sheet.x, button_sheet.y, button_sheet.w, button_sheet.h / 3};
-    break;
-  case ButtonState::Hover:
-        return {button_sheet.x, button_sheet.y + button_sheet.h / 3, button_sheet.w, button_sheet.h / 3};
-    break;
-  case ButtonState::Pressed:
-    return {button_sheet.x, button_sheet.y + (2 * button_sheet.h) / 3, button_sheet.w, button_sheet.h / 3};
-    break;
-  default:
-    // TODO: error
-    break;
-  }
-}
-
-// MTODO: Possibly changes from ButtonState
-inline SDL_Rect get_decoration_sprite(ButtonDecoration decoration)
-{
-
-
-}	
 
 struct ButtonUI
 {
@@ -121,7 +98,8 @@ struct ButtonUI
 		sprite_sheet_texture.render(top_left_corner.x, top_left_corner.y, &rect, viewport);
 		//TODO: decoration should appear lower, if button is pressed!
 		if (decoration.has_value()) {
-		  SDL_Rect dec_rect = get_decoration_sprite(decoration);
+			SDL_Rect dec_rect = sprite::get_decoration(decoration);
+			//TODO: the dec should lower by one pixel if the state is PRESSED.
 		  sprite_sheet_texture.render(top_left_corner.x, top_left_corner.y, &dec_rect, viewport);
 		}		
 	}

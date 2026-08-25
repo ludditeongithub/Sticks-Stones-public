@@ -37,12 +37,11 @@ std::string get_sprite_name(S sprite_type)
 
     if constexpr (std::is_same_v<S, Plant>)
     {
-        if (Item item = magic_enum::enum_cast<Item>(name); item.has_value())
+        if (auto item = magic_enum::enum_cast<Item>(name); item.has_value())
         {
             name += "-plant";
         }
     }
     return to_kebab_case(name) + ".aseprite";
 }
-
 };

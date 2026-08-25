@@ -209,7 +209,7 @@ inline Coord get_sprite_dimensions(sprite::Info &asi, Direction d, bool child)
 SDL_Rect get_animal_rect(Animal a, AnimalStatus as, Time age, Frame frame, sprite::Info& asi)
 {
 	bool child = age < animal::FERTILITY_AGES[a];
-	SDL_Rect sprite_set = sprite::animal_sprites[a];
+	SDL_Rect sprite_set = sprite::animal[a];
 	int x = sprite_set.x;
 	ActionStatus ac = as.get<ActionStatus>();
 	if (child)
@@ -303,7 +303,7 @@ inline Frame get_next_unit_frame(Unit u, ActState as, Frame frame_number)
 
 inline SDL_Rect get_unit_rect(Unit unit, ActState state, Direction direction, Frame frame, Time age) {
 	bool child = age < MATURITY_AGE;
-	SDL_Rect sprite_set = sprite::unit_sprites[];
+	SDL_Rect sprite_set = sprite::unit[];
 	int x = sprite_set.x;
 	sprite::Info usi = UNIT_SPRITE_INFO;
 	if (child) x += get_child_sprite_offset(usi);

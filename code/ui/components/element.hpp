@@ -28,11 +28,11 @@ struct UIElement
 {
 	SCoord position; // left corner
 	SDL_Rect source;
-        UIElement(UISprite sprite, SCoord position) : position(position), source(sprite::ui_sprites[sprite])
+        UIElement(UISprite sprite, SCoord position) : position(position), source(sprite::ui[sprite])
 	{}
 
-        void render(SDL_Rect viewport) { renderer->render(position.x, position.y, source, &viewport); }
-        inline void render() { renderer->render(position.x, position.y, source, g_main_screen_viewport); }
+        inline void render(SDL_Rect viewport) { sprite_sheet_texture.render(position.x, position.y, &source, &viewport); }
+        inline void render() { sprite_sheet_texture.render(position.x, position.y, &source, g_main_screen_viewport); }
   
 };
 

@@ -24,7 +24,7 @@ struct MainMenu
 	uint8_t raw_to_user_scalar;
 	// Button Positions
 	SCoord background = {}; //TODO
-	int button_left_alignment = SCREEN_WIDTH / 2 - (SpriteSheet::button_sprites[static_cast<int>(ButtonSprite::MainButton)].w / 2);
+	int button_left_alignment = SCREEN_WIDTH / 2 - (sprite::button[static_cast<int>(ButtonSprite::Main)].w / 2);
 	
 	SCoord new_left_corner = {button_left_alignment, 2 * SCREEN_HEIGHT / 6};
 	SCoord load_left_corner = {button_left_alignment / 2, 3 * SCREEN_HEIGHT / 6};

@@ -1,5 +1,6 @@
 // Stores hot arrays of sprite data (positions, sizes, colors, texture IDs), handles batching logic
 #pragma once
+#include "render/sprite_sheet_settings.hpp"
 #include "ui/components/element.hpp"
 #include <world/item/enum.hpp>
 #include <world/buildable/enum.hpp>
@@ -34,6 +35,35 @@ SDL_Rect get(Entity entity)
   } else { // NullEntity
     // TODO: throw error
   }
+}
+
+  inline SDL_Rect get_button(ButtonSprite sprite, ButtonState state)
+{
+   SDL_Rect button_sheet = button[static_cast<int>(sprite)];
+  switch (state) {
+  case ButtonState::Unpressed:
+		  return {button_sheet.x, button_sheet.y, button_sheet.w, button_sheet.h / 3};
+    break;
+  case ButtonState::Hover:
+        return {button_sheet.x, button_sheet.y + button_sheet.h / 3, button_sheet.w, button_sheet.h / 3};
+    break;
+  case ButtonState::Pressed:
+    return {button_sheet.x, button_sheet.y + (2 * button_sheet.h) / 3, button_sheet.w, button_sheet.h / 3};
+    break;
+  default:
+    // TODO: error
+    break;
+  }
+}
+
+// MTODO: Possibly changes from ButtonState
+inline SDL_Rect get_decoration(ButtonDecoration decoration)
+{
+  if (auto x = get_if<CustomButtonDecoration>(&decoration)) {
+    return custom_decoration[static_cast<size_t>(*x)];
+  } else 
+
+  
 }
 
  // TODO: add animation to subject display

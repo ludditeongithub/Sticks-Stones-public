@@ -16,7 +16,7 @@
 struct InfoSection {
 	static inline SCoord display_pos;
 	static constexpr uint8_t FRAME_BORDER = 1;
-	static inline SDL_Rect frame = sprite::ui_sprites[UISprite::InfoMenuItemFrame];
+	static inline SDL_Rect frame = sprite::ui[UISprite::InfoMenuItemFrame];
   static constexpr SCoord title_pos= {50, 13};
         static constexpr FC_Font** title_font = &cagliostro_4;
   static constexpr SDL_Rect desc_box = {15, 56, 40, 50};
@@ -45,7 +45,7 @@ struct InfoSection {
     //render item
                 SDL_Rect r;
                 if (auto i = get_if<Item>(&display)) {
-                  r = sprite::item_sprites[i];
+                  r = sprite::item[i];
                 } else if (auto i = get_if<Buildable>(&display)) {
                   r =  sprite::buildable[i];
                 }
@@ -61,7 +61,7 @@ struct InfoSection {
 struct RequirementsSection
 {
   static inline SCoord pos;
-  static inline SDL_Rect frame = sprite::ui_sprites[UISprite::RequirementFrame];
+  static inline SDL_Rect frame = sprite::ui[UISprite::RequirementFrame];
   std::vector<RequirementBox> reqs;
 
   RequirementsSection(Displayable display)
@@ -90,7 +90,7 @@ struct RequirementsSection
 
 struct RolesSection {
   static inline SCoord pos;
-  static inline SDL_Rect frame = sprite::ui_sprites[UISprite::RoleFrame];
+  static inline SDL_Rect frame = sprite::ui[UISprite::RoleFrame];
   static inline std::vector<RoleBox> reqs;
 
   RolesSection() {

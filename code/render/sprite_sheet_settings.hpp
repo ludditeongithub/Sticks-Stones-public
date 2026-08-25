@@ -12,49 +12,52 @@
 #include <world/tile/enum.hpp>
 #include <ui/components/button.hpp>
 #include <variant>
+#include <stdexcept>
 
 namespace sprite
 {
 using json = nlohmann::json;
 // using Sprite = std::variant<Item, Plant, Tile, Grass, Animal, Unit, Buildable, ButtonSprite, UISprite>;
 
-std::array<SDL_Rect, static_cast<size_t>(Animal::MAX)> animal_sprites;
+std::array<SDL_Rect, static_cast<size_t>(Animal::MAX)> animal;
 std::array<SDL_Rect, static_cast<size_t>(Buildable::MAX)> buildable;
-std::array<SDL_Rect, static_cast<size_t>(Plant::MAX)> plant_sprites;
-std::array<SDL_Rect, static_cast<size_t>(Item::MAX)> item_sprites;
-std::array<SDL_Rect, static_cast<size_t>(Tile::MAX)> tile_sprites;
-std::array<SDL_Rect, static_cast<size_t>(Grass::MAX)> grass_sprites;
-std::array<SDL_Rect, static_cast<size_t>(Unit::MAX)> unit_sprites;
-std::array<SDL_Rect, static_cast<size_t>(ButtonSprite::MAX)> button_sprites;
-std::array<SDL_Rect, static_cast<size_t>(UISprite::MAX)> ui_sprites;
+std::array<SDL_Rect, static_cast<size_t>(Plant::MAX)> plant;
+std::array<SDL_Rect, static_cast<size_t>(Item::MAX)> item;
+std::array<SDL_Rect, static_cast<size_t>(Tile::MAX)> tile;
+std::array<SDL_Rect, static_cast<size_t>(Grass::MAX)> grass;
+std::array<SDL_Rect, static_cast<size_t>(Unit::MAX)> unit;
+std::array<SDL_Rect, static_cast<size_t>(ButtonSprite::MAX)> button;
+std::array<SDL_Rect, static_cast<size_t>(CustomButtonDecoration::MAX)> custom_decoration;
+std::array<SDL_Rect, static_cast<size_t>(UISprite::MAX)> ui;
 std::array<SDL_Rect, static_cast<size_t>(Role::MAX)> roles;
 
 template<typename Sprite>
 inline void save_sprite(int index, Sprite sprite, SCoord position, SCoord dimension)
 {
 	if (std::is_same<Animal, Sprite>::value) {
-		animal_sprites[index] = SDL_Rect{position.x, position.y, dimension.x, dimension.y};	
+		animal[index] = SDL_Rect{position.x, position.y, dimension.x, dimension.y};	
         } else if (std::is_same<Buildable, Sprite>::value) {
 		buildable[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
 	} else if (std::is_same<Plant, Sprite>::value) {
-		plant_sprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
+		plant[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
 	} else if (std::is_same<Item, Sprite>::value) {
-		item_sprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
+		item[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
 	} else if (std::is_same<Tile, Sprite>::value) {
-		tile_sprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
+		tile[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
 	} else if (std::is_same<Grass, Sprite>::value) {
-		grass_sprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
+		grass[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
 	} else if (std::is_same<ButtonUI, Sprite>::value) {
-          button_sprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y}; // NOTE: since buttons have three states, the dimension is divided by 3.
+          button[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y}; // NOTE: since buttons have three states, the dimension is divided by 3.
 	} else if (std::is_same<UISprite, Sprite>::value) {
-		ui_sprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
+		ui[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
 	}
 	else if (std::is_same<Role, Sprite>::value) {
                 roles[index] = SDL_Rect{position.x, position.y, dimension.x, dimension.y};
-        }
+        } else if (std::is_same<CustomButtonDecoration, Sprite>::value) {
+          custom_decoration[index] = SDL_Rect{position.x, position.y, dimension.x, dimension.y};
+        } else throw std::invalid_argument("Invalid Sprite type.");
 }
 
-// TODO: fix using BetterEnum
 template <typename Enum>
 void load_one_type_sprites(const json& sheet) {
     for (size_t i = 0; i < static_cast<size_t>(Enum::MAX); i++) {

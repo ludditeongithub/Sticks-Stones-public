@@ -24,7 +24,7 @@ struct DoubleDisplayFrame : DisplayFrame
   SDL_Rect second_entity_sprite;
   SDL_Rect second_frame_sprite;
 
-  DoubleDisplayFrame(UISprite first_frame, UISprite second_frame, Entity first_entity, Entity second_entity, SCoord position) : DisplayFrame(first_frame, first_entity, position), second_entity_sprite(sprite::get(second_entity)), second_frame_sprite(sprite::ui_sprites[second_frame])
+  DoubleDisplayFrame(UISprite first_frame, UISprite second_frame, Entity first_entity, Entity second_entity, SCoord position) : DisplayFrame(first_frame, first_entity, position), second_entity_sprite(sprite::get(second_entity)), second_frame_sprite(sprite::ui[second_frame])
   {
     
   }

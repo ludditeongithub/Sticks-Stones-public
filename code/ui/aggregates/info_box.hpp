@@ -30,7 +30,7 @@ struct RequirementBox {
           SDL_Rect source;
 	  if (auto c = std::get_if<ItemRequirement>(&req))
 	  {
-            source = sprite::item_sprites[c->item];
+            source = sprite::item[c->item];
 	  }
 	  else if (auto c = std::get_if<StationRequirement>(&req))
 	  {

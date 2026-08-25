@@ -21,7 +21,7 @@ struct TextBox : UIElement
   
   TextBox(SCoord position, UISprite sprite, const Text& text, Alignment alignment = Alignment::Left) : UIElement(sprite, position), text(text), alignment(alignment)
    {     
-        source = sprite::ui_sprites[sprite];
+        source = sprite::ui[sprite];
     }
 
     void render(const SDL_Rect& viewport)
