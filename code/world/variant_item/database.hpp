@@ -89,20 +89,20 @@ this->capacity = capacity;
 // GETTERS
 // =========================
 
-  inline Item& items(size_t index) {
+  inline Item& items(const EntityID index) {
 return items[index];
   }
-  inline Coord& coord(size_t index) {
+  inline Coord& coord(const EntityID index) {
 return coord[index];
   }
-  inline Variant& variant(size_t index) {
+  inline Variant& variant(const EntityID index) {
 return variant[index];
   }
 
-    inline Coord& coord(size_t index) {    
+    inline Coord& coord(const EntityID index) {    
 return main[index].coord;
     }
-    inline Variant& variant(size_t index) {    
+    inline Variant& variant(const EntityID index) {    
 return main[index].variant;
     }
 
@@ -148,9 +148,9 @@ bool attempt_spawn(Item item, bool newborn, Coord coord  , Variant variant  , bo
           
         
 
-size_t spawn(Item item, bool newborn, Coord origin
-  ,Variant variant
-bool insert_search = true) {
+size_t spawn(const Item item, const bool newborn, const Coord origin
+  , const Variant variant
+const bool insert_search = true) {
 Coord spawn_point = tiles.get_nearest_empty_tile(origin);
 size_t result = 0;
 while (result == 0) {
@@ -166,7 +166,7 @@ if (result == 0) free_unused_entity();
   // REMOVE
   // =========================
   
-  inline bool remove(size_t i)
+  inline bool remove(const EntityID i)
   {
         if (!alive(i))
             return false;
@@ -228,6 +228,10 @@ if (result == 0) free_unused_entity();
 
 inline bool transfer(size_t i, item::Database &old_db)
   {
+  #if !SHIPPING_BUILD
+  assert(i < size);
+  #endif
+  
   if (size >= capacity) return false;
   int index;  
   if (free_slots.empty())

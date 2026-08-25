@@ -1,21 +1,13 @@
 #pragma once
 #include "core/mouse.hpp"
 #include "render/screen.hpp"
-#include "ui/system.hpp"
 #include <SDL2/SDL_events.h>
 #include <core/data.hpp>
 #include <ui/components/button.hpp>
 #include <render/sprite_sheet_settings.hpp>
-#include <simulation/launch_game.hpp>
+#include <simulation/game.hpp>
 
 // TODO: load_game_button
-
-struct MainButtonUI : public ButtonUI {
-  MainButtonUI(const ButtonFunctionality function, const SCoord left_corner) : ButtonUI(function, ButtonSprite::Main, left_corner)
-	{
-          
-        }
-};
 
 struct MainMenu
 {

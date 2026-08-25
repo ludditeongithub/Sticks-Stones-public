@@ -69,19 +69,19 @@ this->capacity = capacity;
 // GETTERS
 // =========================
 
-  inline Vehicle& vehicles(size_t index) {
+  inline Vehicle& vehicles(const EntityID index) {
 return vehicles[index];
   }
-  inline Health& health(size_t index) {
+  inline Health& health(const EntityID index) {
 return health[index];
   }
-  inline FrameData& frame_data(size_t index) {
+  inline FrameData& frame_data(const EntityID index) {
 return frame_data[index];
   }
-  inline Frame& inertia(size_t index) {
+  inline Frame& inertia(const EntityID index) {
 return inertia[index];
   }
-  inline Coord& coord(size_t index) {
+  inline Coord& coord(const EntityID index) {
 return coord[index];
   }
 
@@ -130,8 +130,8 @@ bool attempt_spawn(Vehicle vehicle, bool newborn, Coord coord  )
           
         
 
-size_t spawn(Vehicle vehicle, bool newborn, Coord origin
-bool insert_search = true) {
+size_t spawn(const Vehicle vehicle, const bool newborn, const Coord origin
+const bool insert_search = true) {
 Coord spawn_point = tiles.get_nearest_empty_tile(origin);
 size_t result = 0;
 while (result == 0) {
@@ -146,7 +146,7 @@ if (result == 0) free_unused_entity();
   // REMOVE
   // =========================
   
-  inline bool remove(size_t i)
+  inline bool remove(const EntityID i)
   {
         if (!alive(i))
             return false;
@@ -168,8 +168,12 @@ if (result == 0) free_unused_entity();
   // MOVE
   // =========================
   
-    inline bool attempt_move_entity(size_t index)
-    {
+    inline bool attempt_move_entity(const EntityID index)
+  {
+  #if !SHIPPING_BUILD
+  assert(index < 
+  #endif
+
         Coord& pos = coord(index);
         Coord new_pos = get_pos(frame_data(index).get<Direction>(), pos);
         size_t ti = world.get_tile_index_from_coord(new_pos);

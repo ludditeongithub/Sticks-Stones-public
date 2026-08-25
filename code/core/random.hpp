@@ -50,6 +50,7 @@ template <typename T> struct RandomMachine
 	}
 };
 
+/*
 struct RandomSDLColorMachine
 {
   RandomMachine<uint8_t> red;
@@ -70,7 +71,7 @@ struct RandomSDLColorMachine
     return {red.next(), green.next(), blue.next(), alpha};
   }
 };
-
+*/
 
 template <typename E>
 struct RandomEnumMachine

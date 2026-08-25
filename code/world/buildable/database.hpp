@@ -88,20 +88,20 @@ this->capacity = capacity;
 // GETTERS
 // =========================
 
-  inline Buildable& buildables(size_t index) {
+  inline Buildable& buildables(const EntityID index) {
 return buildables[index];
   }
-  inline Health& health(size_t index) {
+  inline Health& health(const EntityID index) {
 return health[index];
   }
-  inline Coord& coord(size_t index) {
+  inline Coord& coord(const EntityID index) {
 return coord[index];
   }
 
-    inline Health& health(size_t index) {    
+    inline Health& health(const EntityID index) {    
 return main[index].health;
     }
-    inline Coord& coord(size_t index) {    
+    inline Coord& coord(const EntityID index) {    
 return main[index].coord;
     }
 
@@ -145,8 +145,8 @@ bool attempt_spawn(Buildable buildable, bool newborn, Coord coord  )
           
         
 
-size_t spawn(Buildable buildable, bool newborn, Coord origin
-bool insert_search = true) {
+size_t spawn(const Buildable buildable, const bool newborn, const Coord origin
+const bool insert_search = true) {
 Coord spawn_point = tiles.get_nearest_empty_tile(origin);
 size_t result = 0;
 while (result == 0) {
@@ -161,7 +161,7 @@ if (result == 0) free_unused_entity();
   // REMOVE
   // =========================
   
-  inline bool remove(size_t i)
+  inline bool remove(const EntityID i)
   {
         if (!alive(i))
             return false;

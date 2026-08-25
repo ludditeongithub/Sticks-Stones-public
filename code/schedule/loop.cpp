@@ -1,4 +1,3 @@
-#pragma once
 #include <simulation/game.hpp>
 #include <systems/continuous/actions.hpp>
 #include <world/unit/database.hpp>

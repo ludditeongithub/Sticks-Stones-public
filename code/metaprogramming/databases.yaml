@@ -131,7 +131,7 @@ extra_arrays:
     newborn_default: {generateMelanin(parent1, parent2), generateSkinWarmth(parent1, parent2), 0.5, 0.0}
     random_age_default: {generateMelanin(world, coord), generateSkinWarmth(world, coord), 0.5, 0.0}
   - id: role_list
-    name: roleLists
+    name: role_list
     type: std::array<Role, ROLE_MAX>
     newborn_default: std::array<Role, ROLE_MAX>{}
     random_age_default: std::array<Role, ROLE_MAX>{} # TODO: maybe function to generate Role from list of unlocked roles

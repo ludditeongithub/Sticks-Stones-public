@@ -1,5 +1,7 @@
 #pragma once
 #include "core/data.hpp"
+#include "ui/fonts.hpp"
+#include "world/buildable/enum.hpp"
 #include <render/sprite_sheet_settings.hpp>
 #include <world/item/description.hpp>
 #include <world/buildable/description.hpp>
@@ -9,34 +11,36 @@
 
 // info box is all info on one thing that appears in a requirements or roles list.
 
-struct ItemRequirement {
-  Item item;
-  uint16_t amount;
-};
-
-struct StationRequirement {
-  Buildable buildable;
-  uint16_t amount;
-};
+using Displayable = std::variant<Item, Buildable>;
 
 struct RequirementBox {
-  std::variant<ItemRequirement, StationRequirement> req;
+  Displayable req;
+  uint16_t& amount;
+  uint16_t& inventory_total;
   SCoord pos;
+  static inline FC_Font* font = cagliostro_4;
+  constexpr static int FRAME_TEXT_GAP = 2;
 
   inline void render(SDL_Rect& frame, SDL_Rect& viewport)
   {
 	  sprite_sheet_texture.render(pos.x, pos.y, &frame, viewport);
-          
+
+	  // displayable
           SDL_Rect source;
-	  if (auto c = std::get_if<ItemRequirement>(&req))
+	  if (auto c = std::get_if<Item>(&req))
 	  {
-            source = sprite::item[c->item];
+            source = sprite::item[c];
 	  }
-	  else if (auto c = std::get_if<StationRequirement>(&req))
+	  else if (auto c = std::get_if<Buildable>(&req))
 	  {
-            source = sprite::buildable[c->buildable];
+            source = sprite::buildable[c];
           }
-          sprite_sheet_texture.render(pos.x, pos.y, &source, viewport);
+	  sprite_sheet_texture.render(pos.x, pos.y, &source, viewport);
+
+	  // text info
+          std::string text = std::to_string(amount) + " / " + std::to_string(inventory_total);
+	  fc_draw_align(font, renderer, pos.x + frame.x + FRAME_TEXT_GAP, pos.y, cast_align(Alignment::Left), text.c_str());
+	  
   }
 };
 

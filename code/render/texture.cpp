@@ -1,5 +1,6 @@
 #include "texture.hpp"
-#include "window.hpp"
+#include "screen.hpp"
+#include <SDL2/SDL_image.h>
 
 LTexture::LTexture()
 {
@@ -71,14 +72,14 @@ void LTexture::free()
 	}
 }
 
-void LTexture::render(int x, int y, SDL_Rect *clip, SDL_Rect *viewport)
+void LTexture::render(int x, int y, SDL_Rect *clip, SDL_Rect &viewport)
 {
 
 	// Set clip rendering dimensions
 	if (clip != NULL)
 	{
-		viewport->w = clip->w;
-		viewport->h = clip->h;
+		viewport.w = clip->w;
+		viewport.h = clip->h;
 	}
 
 	// Render to screen

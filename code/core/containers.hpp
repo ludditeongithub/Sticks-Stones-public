@@ -270,6 +270,7 @@ struct Stack
     }
 };
 
+/*
 template <typename T, typename P = uint8_t, typename I = uint16_t> struct PriorityQueue
 {
 		std::vector<std::pair<T, P>> data;
@@ -281,7 +282,7 @@ template <typename T, typename P = uint8_t, typename I = uint16_t> struct Priori
 
 		PriorityQueue<T>(I capacity) : capacity(capacity)
 		{
-				
+
 		}
 
 		T top()
@@ -304,7 +305,7 @@ template <typename T, typename P = uint8_t, typename I = uint16_t> struct Priori
 							{
 									middle = first + half_range;
 							} else middle = end - half_range;
-					} else middle = (end - first) / 2;	
+					} else middle = (end - first) / 2;
 			return middle;
 		}
 
@@ -314,10 +315,10 @@ template <typename T, typename P = uint8_t, typename I = uint16_t> struct Priori
 			I middle;
 			I end = end_index;
 			I previous;
-			
+
 			bool found = false;
 			while (!found) {
-					if (priority <= data[middle].second()) 	          	{						
+					if (priority <= data[middle].second()) 	          	{
 					if (middle == 0) I previous = capacity;
 					else I previous = middle - 1;
 						if (priority >= data[previous].second()) {
@@ -325,7 +326,7 @@ template <typename T, typename P = uint8_t, typename I = uint16_t> struct Priori
 								insert(item, priority, middle);
 						}
 						last = middle;
-						middle = get_middle(first, last);					
+						middle = get_middle(first, last);
 					} else {
 					if (middle == capacity) I next = 0;
 					else I next = middle + 1;
@@ -333,7 +334,7 @@ template <typename T, typename P = uint8_t, typename I = uint16_t> struct Priori
 								found = true;
 								insert(item, priority, middle);
 						}
-						first = middle;	
+						first = middle;
 						middle = get_middle(first, last);
 					}
 			}
@@ -341,8 +342,8 @@ template <typename T, typename P = uint8_t, typename I = uint16_t> struct Priori
 
 		void insert(T item, P priority, I index) {
 				if (size++ >= capacity) {
-					data.push_back(data[capacity]);										
-				} 
+					data.push_back(data[capacity]);
+				}
 					for (size_t i = capacity; i > 0; i--) {
 							if (i == index) {
 									data[i] = {item, priority};
@@ -353,8 +354,8 @@ template <typename T, typename P = uint8_t, typename I = uint16_t> struct Priori
 					if (index < top_index - 1) top_index++;
 		}
 
-		
-		T next() 
+
+		T next()
 		{
 				return data[++current];
 		}
@@ -363,8 +364,10 @@ template <typename T, typename P = uint8_t, typename I = uint16_t> struct Priori
 				current = top_index;
 		}
 		bool empty() { return size = 0; }
-		bool next_empty() { return ((end_index > top_index && current + 1 >= end_index) || (end_index < top_index && (current + 1 =< top_index && current + 1 >= end_index))); }
+		bool next_empty() { return ((end_index > top_index && current + 1 >= end_index) ||
+(end_index < top_index && (current + 1 =< top_index && current + 1 >= end_index))); }
 };
+*/
 
 template<typename T>
 Stack<T> arena_make_stack(Arena* arena, uint16_t capacity)

@@ -2,15 +2,17 @@
 #include "element.hpp"
 #include <SDL2/SDL_rect.h>
 #include <SDL2/SDL_events.h>
+#include <stdexcept>
 #include <string>
 #include <core/data.hpp>
 #include <core/mouse.hpp>
 #include <chrono>
 #include <format>
-#include "button_functionality.hpp"
+#include <ui/components/button_functionality.hpp>
 #include "render/screen.hpp"
 #include "render/sprite_sheet_settings.hpp"
 #include "text.hpp"
+#include "ui/components/text.hpp"
 #include "world/buildable/enum.hpp"
 #include "world/plant/enum.hpp"
 #include <ui/sound/sound.hpp>
@@ -237,17 +239,22 @@ public:
   SaveButtonUI() {};
   std::chrono::system_clock::time_point last_saved;
   std::string name;
-  inline static int max_save_name_size = 24;
-  inline static int save_button_size = 8;
+  constexpr static int MAX_SAVE_NAME_SIZE = 24;
+  inline static int SAVE_BUTTON_SIZE = 8;
   void render() {}
 
   void change_name(std::string new_name)
   {
-	  if (new_name > max_save_name_size)
+	  if (new_name.length() > MAX_SAVE_NAME_SIZE)
 	    {
-	      user_error("Name too long! Keep it 24 or less characters.");
+	      throw std::invalid_argument("Name too long! Keep it 24 or less characters.");
 	    }
   }	  
 };
 
-
+class MainButtonUI : public ButtonUI {
+  MainButtonUI(const ButtonFunctionality function, const SCoord left_corner) : ButtonUI(function, ButtonSprite::Main, left_corner)
+	{
+          
+        }
+};

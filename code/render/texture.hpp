@@ -1,6 +1,5 @@
 // Load and manage textures (spritesheets / atlases), GPU handles, UVs
 #pragma once
-#include <SDL2/SDL_image.h>
 #include <SDL2/SDL_render.h>
 #include <string>
 
@@ -39,4 +38,4 @@ class LTexture
 	int m_height;
 };
 
-LTexture sprite_sheet_texture;
+LTexture sprite_sheet_texture = LTexture();

@@ -1,13 +1,10 @@
 #pragma once
-#include "render/sprite_sheet_settings.hpp"
-#include <render/screen.hpp>
-#include <SDL2/SDL_events.h>
 #include <SDL2/SDL_main.h>
 #include <SDL2/SDL_rect.h>
-#include <SDL2/SDL_stdinc.h>
 #include <core/data.hpp>
-#include <render/animation.hpp>
 #include <render/sprite.hpp>
+#include <render/screen.hpp>
+#include <render/texture.hpp>
 
 enum class UISprite
 {
@@ -31,7 +28,7 @@ struct UIElement
         UIElement(UISprite sprite, SCoord position) : position(position), source(sprite::ui[sprite])
 	{}
 
-        inline void render(SDL_Rect viewport) { sprite_sheet_texture.render(position.x, position.y, &source, &viewport); }
+        inline void render(SDL_Rect viewport) { sprite_sheet_texture.render(position.x, position.y, &source, viewport); }
         inline void render() { sprite_sheet_texture.render(position.x, position.y, &source, g_main_screen_viewport); }
   
 };

@@ -69,19 +69,19 @@ this->capacity = capacity;
 // GETTERS
 // =========================
 
-  inline Tile_data& tile_datas(size_t index) {
+  inline Tile_data& tile_datas(const EntityID index) {
 return tile_datas[index];
   }
-  inline Alt& altitude(size_t index) {
+  inline Alt& altitude(const EntityID index) {
 return altitude[index];
   }
-  inline Liquid& water(size_t index) {
+  inline Liquid& water(const EntityID index) {
 return water[index];
   }
-  inline TileStatus& tile_status(size_t index) {
+  inline TileStatus& tile_status(const EntityID index) {
 return tile_status[index];
   }
-  inline Entity& entity(size_t index) {
+  inline Entity& entity(const EntityID index) {
 return entity[index];
   }
 

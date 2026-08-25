@@ -13,6 +13,12 @@
 },
 {
   "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern -std=gnu++23 -o CMakeFiles/main_exe.dir/schedule/action.cpp.o -c /home/logan/gameprogramming/code/schedule/action.cpp",
+  "file": "/home/logan/gameprogramming/code/schedule/action.cpp",
+  "output": "CMakeFiles/main_exe.dir/schedule/action.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
   "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern -std=gnu++23 -o CMakeFiles/main_exe.dir/schedule/loop.cpp.o -c /home/logan/gameprogramming/code/schedule/loop.cpp",
   "file": "/home/logan/gameprogramming/code/schedule/loop.cpp",
   "output": "CMakeFiles/main_exe.dir/schedule/loop.cpp.o"
@@ -67,21 +73,21 @@
 },
 {
   "directory": "/home/logan/gameprogramming/code/build",
-  "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/action/lazy.cpp.o -c /home/logan/gameprogramming/code/systems/action/lazy.cpp",
-  "file": "/home/logan/gameprogramming/code/systems/action/lazy.cpp",
-  "output": "CMakeFiles/main_exe.dir/systems/action/lazy.cpp.o"
-},
-{
-  "directory": "/home/logan/gameprogramming/code/build",
-  "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/action/prioirities.cpp.o -c /home/logan/gameprogramming/code/systems/action/prioirities.cpp",
-  "file": "/home/logan/gameprogramming/code/systems/action/prioirities.cpp",
-  "output": "CMakeFiles/main_exe.dir/systems/action/prioirities.cpp.o"
-},
-{
-  "directory": "/home/logan/gameprogramming/code/build",
   "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/action/product.cpp.o -c /home/logan/gameprogramming/code/systems/action/product.cpp",
   "file": "/home/logan/gameprogramming/code/systems/action/product.cpp",
   "output": "CMakeFiles/main_exe.dir/systems/action/product.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/action/resource.cpp.o -c /home/logan/gameprogramming/code/systems/action/resource.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/action/resource.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/action/resource.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/action/support.cpp.o -c /home/logan/gameprogramming/code/systems/action/support.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/action/support.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/action/support.cpp.o"
 },
 {
   "directory": "/home/logan/gameprogramming/code/build",
@@ -145,6 +151,12 @@
 },
 {
   "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/movement/action_movement.cpp.o -c /home/logan/gameprogramming/code/systems/movement/action_movement.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/movement/action_movement.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/movement/action_movement.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
   "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.o -c /home/logan/gameprogramming/code/systems/movement/lazy.cpp",
   "file": "/home/logan/gameprogramming/code/systems/movement/lazy.cpp",
   "output": "CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.o"
@@ -205,15 +217,33 @@
 },
 {
   "directory": "/home/logan/gameprogramming/code/build",
-  "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/search/entity_search.cpp.o -c /home/logan/gameprogramming/code/systems/search/entity_search.cpp",
-  "file": "/home/logan/gameprogramming/code/systems/search/entity_search.cpp",
-  "output": "CMakeFiles/main_exe.dir/systems/search/entity_search.cpp.o"
+  "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/search/entity_specific_check.cpp.o -c /home/logan/gameprogramming/code/systems/search/entity_specific_check.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/search/entity_specific_check.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/search/entity_specific_check.cpp.o"
 },
 {
   "directory": "/home/logan/gameprogramming/code/build",
-  "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/search/specific_search.cpp.o -c /home/logan/gameprogramming/code/systems/search/specific_search.cpp",
-  "file": "/home/logan/gameprogramming/code/systems/search/specific_search.cpp",
-  "output": "CMakeFiles/main_exe.dir/systems/search/specific_search.cpp.o"
+  "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/search/old.cpp.o -c /home/logan/gameprogramming/code/systems/search/old.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/search/old.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/search/old.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/search/search.cpp.o -c /home/logan/gameprogramming/code/systems/search/search.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/search/search.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/search/search.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/search/sight_check.cpp.o -c /home/logan/gameprogramming/code/systems/search/sight_check.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/search/sight_check.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/search/sight_check.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/search/target_adj_check.cpp.o -c /home/logan/gameprogramming/code/systems/search/target_adj_check.cpp",
+  "file": "/home/logan/gameprogramming/code/systems/search/target_adj_check.cpp",
+  "output": "CMakeFiles/main_exe.dir/systems/search/target_adj_check.cpp.o"
 },
 {
   "directory": "/home/logan/gameprogramming/code/build",
@@ -226,6 +256,12 @@
   "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern -std=gnu++23 -o CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.o -c /home/logan/gameprogramming/code/systems/visibility/scheduled.cpp",
   "file": "/home/logan/gameprogramming/code/systems/visibility/scheduled.cpp",
   "output": "CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern -std=gnu++23 -o CMakeFiles/main_exe.dir/ui/aggregates/swipable_menu.cpp.o -c /home/logan/gameprogramming/code/ui/aggregates/swipable_menu.cpp",
+  "file": "/home/logan/gameprogramming/code/ui/aggregates/swipable_menu.cpp",
+  "output": "CMakeFiles/main_exe.dir/ui/aggregates/swipable_menu.cpp.o"
 },
 {
   "directory": "/home/logan/gameprogramming/code/build",

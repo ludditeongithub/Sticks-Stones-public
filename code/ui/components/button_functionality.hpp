@@ -1,13 +1,14 @@
 #pragma once
-#include "ui/aggregates/main_menu.hpp"
-#include "ui/components/button.hpp"
 #include <ui/aggregates/swipable_menu.hpp>
 #include "ui/system.hpp"
 #include <core/data.hpp>
 #include <cstdint>
 #include <variant>
 #include <core/saves.hpp>
+#include <simulation/game.hpp>
 #include "pop-up_box.hpp"
+
+struct SwipableMenu;
 
 class ButtonFunctionality
 {
@@ -53,10 +54,8 @@ public:
 // MAIN MENU
 struct NewGameBF : public ButtonFunctionality
 {
-      private:
-  MainMenu& main;
       public:
-	NewGameBF(MainMenu &main) : main(main) {}
+	NewGameBF() {}
 
 	void trigger() override
 	{

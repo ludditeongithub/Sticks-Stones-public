@@ -3,7 +3,7 @@
 #include <core/packed_enum.hpp>
 #include "world/tile/database.hpp"
 #include <core/hash.hpp>
-#include <cereal/binary_archive.hpp>
+#include <../extern/cereal/archives/binary.hpp>
 #include <world/item/enum.hpp>
 #include <core/data.hpp>
 #include <core/containers.hpp>
@@ -73,10 +73,10 @@ this->capacity = capacity;
 // GETTERS
 // =========================
 
-  inline Item& items(size_t index) {
+  inline Item& items(const EntityID index) {
 return items[index];
   }
-  inline Coord& coord(size_t index) {
+  inline Coord& coord(const EntityID index) {
 return coord[index];
   }
 
@@ -121,8 +121,8 @@ bool attempt_spawn(Item item, bool newborn, Coord coord  , bool insert_search = 
           
         
 
-size_t spawn(Item item, bool newborn, Coord origin
-bool insert_search = true) {
+size_t spawn(const Item item, const bool newborn, const Coord origin
+const bool insert_search = true) {
 Coord spawn_point = tiles.get_nearest_empty_tile(origin);
 size_t result = 0;
 while (result == 0) {
@@ -137,7 +137,7 @@ if (result == 0) free_unused_entity();
   // REMOVE
   // =========================
   
-  inline bool remove(size_t i)
+  inline bool remove(const EntityID i)
   {
         if (!alive(i))
             return false;
@@ -197,6 +197,10 @@ if (result == 0) free_unused_entity();
 
 inline bool transfer(size_t i, item::Database &old_db)
   {
+  #if !SHIPPING_BUILD
+  assert(i < size);
+  #endif
+  
   if (size >= capacity) return false;
   int index;  
   if (free_slots.empty())

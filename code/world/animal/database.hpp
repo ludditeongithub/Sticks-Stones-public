@@ -1,7 +1,6 @@
 #pragma once
 #include "enum.hpp"
 #include "data.hpp"
-#include "macros/database.hpp"
 #include "systems/action/action.hpp"
 #include <core/containers.hpp>
 #include <core/data.hpp>
@@ -202,56 +201,56 @@ this->capacity = capacity;
 // GETTERS
 // =========================
 
-  inline Animal& animals(size_t index) {
+  inline Animal& animals(const EntityID index) {
 return animals[index];
   }
-  inline Health& health(size_t index) {
+  inline Health& health(const EntityID index) {
 return health[index];
   }
-  inline Hunger& hunger(size_t index) {
+  inline Hunger& hunger(const EntityID index) {
 return hunger[index];
   }
-  inline Sex& sex(size_t index) {
+  inline Sex& sex(const EntityID index) {
 return sex[index];
   }
-  inline Time& age(size_t index) {
+  inline Time& age(const EntityID index) {
 return age[index];
   }
-  inline size_t& target(size_t index) {
+  inline size_t& target(const EntityID index) {
 return target[index];
   }
-  inline TargetType& target_type(size_t index) {
+  inline TargetType& target_type(const EntityID index) {
 return target_type[index];
   }
-  inline Action& action(size_t index) {
+  inline Action& action(const EntityID index) {
 return action[index];
   }
-  inline FrameData& frame_data(size_t index) {
+  inline FrameData& frame_data(const EntityID index) {
 return frame_data[index];
   }
-  inline Frame& inertia(size_t index) {
+  inline Frame& inertia(const EntityID index) {
 return inertia[index];
   }
-  inline Coord& coord(size_t index) {
+  inline Coord& coord(const EntityID index) {
 return coord[index];
   }
 
-    inline Health& health(size_t index) {    
+    inline Health& health(const EntityID index) {    
 return main[index].health;
     }
-    inline Sex& sex(size_t index) {    
+    inline Sex& sex(const EntityID index) {    
 return main[index].sex;
     }
-    inline Time& age(size_t index) {    
+    inline Time& age(const EntityID index) {    
 return main[index].age;
     }
-    inline size_t& target(size_t index) {    
+    inline size_t& target(const EntityID index) {    
 return target[index].target;
     }
-    inline TargetType& target_type(size_t index) {    
+    inline TargetType& target_type(const EntityID index) {    
 return target[index].target_type;
     }
-    inline Action& action(size_t index) {    
+    inline Action& action(const EntityID index) {    
 return target[index].action;
     }
 
@@ -322,8 +321,8 @@ bool attempt_spawn(Animal animal, bool newborn, Coord coord  , bool insert_searc
           
         
 
-size_t spawn(Animal animal, bool newborn, Coord origin
-bool insert_search = true) {
+size_t spawn(const Animal animal, const bool newborn, const Coord origin
+const bool insert_search = true) {
 Coord spawn_point = tiles.get_nearest_empty_tile(origin);
 size_t result = 0;
 while (result == 0) {
@@ -338,7 +337,7 @@ if (result == 0) free_unused_entity();
   // REMOVE
   // =========================
   
-  inline bool remove(size_t i)
+  inline bool remove(const EntityID i)
   {
         if (!alive(i))
             return false;
@@ -362,8 +361,12 @@ if (result == 0) free_unused_entity();
   // MOVE
   // =========================
   
-    inline bool attempt_move_entity(size_t index)
-    {
+    inline bool attempt_move_entity(const EntityID index)
+  {
+  #if !SHIPPING_BUILD
+  assert(index < 
+  #endif
+
         Coord& pos = coord(index);
         Coord new_pos = get_pos(frame_data(index).get<Direction>(), pos);
         size_t ti = world.get_tile_index_from_coord(new_pos);
@@ -434,6 +437,10 @@ if (result == 0) free_unused_entity();
 
 inline bool transfer(size_t i, animal::Database &old_db)
   {
+  #if !SHIPPING_BUILD
+  assert(i < size);
+  #endif
+  
   if (size >= capacity) return false;
   int index;  
   if (free_slots.empty())

@@ -60,13 +60,13 @@ this->capacity = capacity;
 // GETTERS
 // =========================
 
-  inline Plant& plants(size_t index) {
+  inline Plant& plants(const EntityID index) {
 return plants[index];
   }
-  inline Coord& coord(size_t index) {
+  inline Coord& coord(const EntityID index) {
 return coord[index];
   }
-  inline Time& age(size_t index) {
+  inline Time& age(const EntityID index) {
 return age[index];
   }
 
@@ -111,8 +111,8 @@ bool attempt_spawn(Plant plant, bool newborn, Coord coord  )
           
         
 
-size_t spawn(Plant plant, bool newborn, Coord origin
-bool insert_search = true) {
+size_t spawn(const Plant plant, const bool newborn, const Coord origin
+const bool insert_search = true) {
 Coord spawn_point = tiles.get_nearest_empty_tile(origin);
 size_t result = 0;
 while (result == 0) {
@@ -127,7 +127,7 @@ if (result == 0) free_unused_entity();
   // REMOVE
   // =========================
   
-  inline bool remove(size_t i)
+  inline bool remove(const EntityID i)
   {
         if (!alive(i))
             return false;

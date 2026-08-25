@@ -66,9 +66,8 @@ struct RequirementsSection
 
   RequirementsSection(Displayable display)
   {
-    
     if (auto ptr = std::get_if<Item>(&display)) {
-
+     reqs[i].req =  
     }
     else if (auto ptr = std::get_if<Buildable>(&display)) {
 

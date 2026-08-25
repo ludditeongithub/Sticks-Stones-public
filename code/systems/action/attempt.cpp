@@ -1,3 +1,4 @@
+#include "action.hpp"
 // COMMAND
 // The authority (you), oligarchy, or democratic state commands what the pawns produce, and you own all goods.
 // Large Order (Satisfaction) decrease and production decrease. Resource
