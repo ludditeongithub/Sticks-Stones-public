@@ -125,14 +125,14 @@ this->capacity = capacity;
 // =========================
 
 {% for r in runtime_arrays %}
-  inline {{ r.type }}& {{ r.name }}(size_t index) {
+  inline {{ r.type }}& {{ r.name }}(const EntityID index) {
 return {{ r.name }}[index];
   }
 {% endfor %}
 
 {% for s in structs %}
   {% for f in s.fields %}
-    inline {{ f.type }}& {{ f.name }}(size_t index) {    
+    inline {{ f.type }}& {{ f.name }}(const EntityID index) {    
 return {{ s.name }}[index].{{ f.name }};
     }
   {% endfor %}
@@ -197,11 +197,11 @@ bool attempt_spawn({{ main_enum }} {{ entity_name }}, bool newborn, Coord coord 
 {# TODO: error report if it does NOT spawn on passed origin #}
         
 
-size_t spawn({{ Main_enum }} {{ entity_name }}, bool newborn, Coord origin
+size_t spawn(const {{ main_enum }} {{ entity_name }}, const bool newborn, const Coord origin
 {% if 'variant' in traits %}
-  ,Variant variant
+  , const Variant variant
 {% endif %}
-bool insert_search = true) {
+const bool insert_search = true) {
 Coord spawn_point = tiles.get_nearest_empty_tile(origin);
 size_t result = 0;
 while (result == 0) {
@@ -220,7 +220,7 @@ if (result == 0) free_unused_entity();
   // REMOVE
   // =========================
   
-  inline bool remove(size_t i)
+  inline bool remove(const EntityID i)
   {
         if (!alive(i))
             return false;
@@ -250,8 +250,12 @@ if (result == 0) free_unused_entity();
   // MOVE
   // =========================
   
-    inline bool attempt_move_entity(size_t index)
-    {
+    inline bool attempt_move_entity(const EntityID index)
+  {
+  #if !SHIPPING_BUILD
+  assert(index < 
+  #endif
+
         Coord& pos = coord(index);
         Coord new_pos = get_pos(frame_data(index).get<Direction>(), pos);
         size_t ti = world.get_tile_index_from_coord(new_pos);
@@ -313,6 +317,10 @@ if (result == 0) free_unused_entity();
 
 inline bool transfer(size_t i, {{ entity_name }}::Database &old_db)
   {
+  #if !SHIPPING_BUILD
+  assert(i < size);
+  #endif
+  
   if (size >= capacity) return false;
   int index;  
   if (free_slots.empty())

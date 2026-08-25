@@ -1,9 +1,11 @@
 #pragma once
-#include "simulation/launch_game.hpp"
 #include "ui/aggregates/main_menu.hpp"
+#include "ui/components/button.hpp"
+#include <ui/aggregates/swipable_menu.hpp>
 #include "ui/system.hpp"
 #include <core/data.hpp>
 #include <cstdint>
+#include <variant>
 #include <core/saves.hpp>
 #include "pop-up_box.hpp"
 
@@ -79,7 +81,7 @@ struct LoadMenuBF : public ButtonFunctionality {
       public:
 	LoadMenuBF(MainMenu &main) : main(main) {}
 
-	void trigger() override
+	 void trigger() override
 	{
           
         }
@@ -151,23 +153,59 @@ public:
 
 class OpenMenuBF : public ButtonFunctionality
 {
+      private:
+  ButtonDecoration menu;
+public:
+  OpenMenuBF(ButtonDecoration menu) : menu(menu) {};  
+void trigger() override
+{
+  open_menu(menu);
+}
+};
+
+class SlideMenuBF : public ButtonFunctionality
+{
+private:
+  SwipableMenu* menu;
+  bool right;
+public:
+  SlideMenuBF(SwipableMenu* menu, bool right) : menu(menu), right(right) {};
+void trigger() override
+{
+  right ? menu->slide_right() : menu->slide_left(); 
+}
+};
+
+class SubmenuSelectionBF : public ButtonFunctionality
+{
 private:
 public:
-  OpenMenuBF() {};
+  enum class ProductionSubmenu
+  {
+	  MIN,
+          MAX
+  };
+  enum class KnowledgeSubmenu
+  {
+	  MIN,
+          MAX
+  };
+  using SubmenuType = std::variant<ProductionSubmenu, KnowledgeSubmenu>;
+  SubmenuSelectionBF(SubmenuType type) {
+
+  };
   
+};
+
+class CatalogSelectionBF : public ButtonFunctionality
+{
+private:
+public:
+  CatalogSelectionBF(Entity entity) {};
 };
 
 
 
 
+
 // IN GAME
-
-
-
-
-
-
-
-
-
-

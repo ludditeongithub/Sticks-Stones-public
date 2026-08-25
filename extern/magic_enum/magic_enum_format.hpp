@@ -57,15 +57,17 @@ std::string format_as(E e) {
 
 } // namespace magic_enum::detail
 
-#if defined(__cpp_lib_format)
-
 #ifndef MAGIC_ENUM_USE_STD_MODULE
-#include <format>
+#  if __has_include(<format>) && ((defined(_MSVC_LANG) && _MSVC_LANG >= 202002L) || __cplusplus >= 202002L)
+#    include <format>
+#  endif
 #endif
+
+#if defined(__cpp_lib_format) && __cpp_lib_format >= 201907L
 
 template <typename E>
 struct std::formatter<E, std::enable_if_t<std::is_enum_v<std::decay_t<E>>, char>> : std::formatter<std::string_view, char> {
-  template <class FormatContext>
+  template <typename FormatContext>
   auto format(E e, FormatContext& ctx) const {
     return std::formatter<std::string_view, char>::format(magic_enum::detail::format_as<E>(e), ctx);
   }
@@ -77,7 +79,7 @@ struct std::formatter<E, std::enable_if_t<std::is_enum_v<std::decay_t<E>>, char>
 
 template <typename E>
 struct fmt::formatter<E, std::enable_if_t<std::is_enum_v<std::decay_t<E>>, char>> : fmt::formatter<std::string_view, char> {
-  template <class FormatContext>
+  template <typename FormatContext>
   auto format(E e, FormatContext& ctx) const {
     return fmt::formatter<std::string_view, char>::format(magic_enum::detail::format_as<E>(e), ctx);
   }

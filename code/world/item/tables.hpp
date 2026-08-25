@@ -17,12 +17,22 @@ inline constexpr LookupTable<ContainerType, float> container_bulk_capacities = [
 	return lt;
 }();
 
-inline constexpr RaggedLookupTable<Commodity::underlying, Action, COMMODITY_ACTIONS>
-commodity = []
-	{
-		using enum Commodity::underlying;
+inline constexpr RaggedLookupTable<Commodity::underlying, Action, COMMODITY_ACTIONS> commodity =
+    []
+{
+	using enum Commodity::underlying;
 
-		RaggedLookupTable<Commodity::underlying, Action, COMMODITY_ACTIONS, > lt{};
+	RaggedLookupTable<Commodity::underlying, Action, COMMODITY_ACTIONS, > lt{};
 
-		return lt;
-	}
+	return lt;
+}();
+
+namespace item
+{
+  inline constexpr LookupTable<Item,const char*> descriptions = [] {
+    LookupTable<Item,const char*> lt{};
+    using enum Item;
+    
+    return lt;
+  }();
+}  

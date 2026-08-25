@@ -1,0 +1,9 @@
+You are separating all the UI sprite components into individual files. Firstly, all the individual components should NOT be arranged by tiles-- the file should be cropped to the minimum size required to fit the sprite, even if it is not a factor of 16.
+
+Keep the old 'buttonssheetp.aseprite' and 'buttonssheet'. For now, you can also leave the Main Menu buttons alone.
+
+if it is a 'decoration' (an image that goes ATOP a generic frame/button), name it 'x-icon' and put in the 'icons' folder.
+
+if it is a button, name 'x-button'and in 'buttons' folder. Put the 'UNPRESSED' state directly above the 'HOVER' state directly above the 'PRESSED' state-- there should be one button but three states vertically aligned in a single file. Buttons should not have decorations/icons on them, only the plain button should remain.
+
+

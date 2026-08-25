@@ -1,0 +1,7 @@
+#pragma once
+#include "../components/display_frame.hpp"
+
+
+struct InventoryMenu {
+  
+};

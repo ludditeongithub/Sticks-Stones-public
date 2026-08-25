@@ -6,39 +6,36 @@
 #include <world/item/enum.hpp>
 #include <world/plant/enum.hpp>
 #include <world/unit/enum.hpp>
+#include "core/data.hpp"
 #include "element.hpp"
 #include "render/sprite_sheet_settings.hpp"
+#include "ui/components/text.hpp"
+
 
 struct TextBox : UIElement
 {
-	Text text;
+  static constexpr int INDENT_RATIO_DENOM = 7;
+  Text text;
+  Alignment alignment;
+  SCoord relative_text_pos;
   
-TextBox(
-        SCoord position,
-        UISprite sprite,
-        const Text& text
-    )
-        : text(text)
-   {
-     #if !SHIPPING_BUILD
-	   assert(text.position.x >= position.x);
-           assert(text.position.y >= position.y);
-     #endif
-
-        this->position = position;
+  TextBox(SCoord position, UISprite sprite, const Text& text, Alignment alignment = Alignment::Left) : UIElement(sprite, position), text(text), alignment(alignment)
+   {     
         source = sprite::ui_sprites[sprite];
     }
 
     void render(const SDL_Rect& viewport)
     {
-	    UIElement::render(viewport);
-	    text.render(viewport);            
+            UIElement::render(viewport);         
+	    text.render(viewport, {relative_text_pos.x, relative_text_pos.y, source.w, source.h}, alignment);
     }
-	
-	void handle(SDL_Event event)
-	{
-		
-	}		
+
+    void handle(SDL_Event event) {}
+
+  void switch_alignment(Alignment alignment) {
+    this->alignment = alignment;
+    relative_text_pos = get_text_alignment_pos({source.w, source.h}, alignment);
+  }
 };
 
 struct ItemTextBox : TextBox

@@ -1,0 +1,8 @@
+#pragma once
+#include <string>
+#include "enum.hpp"
+
+struct BuildableInfo {
+  Buildable buildable;
+  std::string desc;
+};

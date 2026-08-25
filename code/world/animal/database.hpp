@@ -78,7 +78,7 @@ constexpr static uint16_t entity_size = sizeof(Animal) +
 ;
 
 size_t capacity;
-    size_t size;
+    size_t size = 1; // 0 is placeholder
     Stack<size_t> free_slots;
     Array<bool> alives;
   SearchGrid& search;
@@ -105,15 +105,53 @@ size_t capacity;
     Array<Frame> inertia;
     Array<Coord> coord;
 
-struct Main {
+  struct Main {
     Array<Health> health;
     Array<Sex> sex;
     Array<Time> age;
+
+  // Serialization
+  template <class Archive>
+    void save(Archive &archive) const
+    {
+        health.save(archive);
+        sex.save(archive);
+        age.save(archive);
+     
+      }
+
+  template <class Archive>
+    void load(Archive &archive)
+      {     
+        health.load(archive);
+        sex.load(archive);
+        age.load(archive);
+     
+    }
 };
-struct Target {
+  struct Target {
     Array<size_t> target;
     Array<TargetType> target_type;
     Array<Action> action;
+
+  // Serialization
+  template <class Archive>
+    void save(Archive &archive) const
+    {
+        target.save(archive);
+        target_type.save(archive);
+        action.save(archive);
+     
+      }
+
+  template <class Archive>
+    void load(Archive &archive)
+      {     
+        target.load(archive);
+        target_type.load(archive);
+        action.load(archive);
+     
+    }
 };
 
 
@@ -138,6 +176,25 @@ this->capacity = capacity;
   this->size = 0;
   this->variant_items = variant_items;
   fertilization_handler = EggFertilizationHandler(capacity / 20);  
+
+  main.health = arena_make_array<Health>(capacity);
+  main.sex = arena_make_array<Sex>(capacity);
+  main.age = arena_make_array<Time>(capacity);
+  target.target = arena_make_array<size_t>(capacity);
+  target.target_type = arena_make_array<TargetType>(capacity);
+  target.action = arena_make_array<Action>(capacity);
+
+ animals = arena_make_array<Animal>(capacity);
+ health = arena_make_array<Health>(capacity);
+ hunger = arena_make_array<Hunger>(capacity);
+ sex = arena_make_array<Sex>(capacity);
+ age = arena_make_array<Time>(capacity);
+ target = arena_make_array<size_t>(capacity);
+ target_type = arena_make_array<TargetType>(capacity);
+ action = arena_make_array<Action>(capacity);
+ frame_data = arena_make_array<FrameData>(capacity);
+ inertia = arena_make_array<Frame>(capacity);
+ coord = arena_make_array<Coord>(capacity);
 
 }
 
@@ -198,6 +255,7 @@ return target[index].target_type;
 return target[index].action;
     }
 
+  
   // =========================
   // SPAWN
   // =========================
@@ -211,12 +269,12 @@ return target[index].action;
 	      //TODO: error
 	    }
 }
- 
-  bool attempt_spawn(Animal animal, bool newborn, Coord coord  , bool insert_search = true
+
+bool attempt_spawn(Animal animal, bool newborn, Coord coord  , bool insert_search = true
 )
   {       
         if (size + 1 > capacity)
-            return false;
+            return 0;
         size_t i;
         if (free_slots.empty())
         {
@@ -259,20 +317,28 @@ return target[index].action;
             coord(i) = coord;
         }
             if (insert_search) search.insert_entity(animal, {i, coord(i)});
-        return true;
+        return i;
           }
           
-          bool spawn(Animal animal, bool newborn, Coord origin) {
-          Coord spawn_point = tiles.get_nearest_empty_tile(origin);
-          while (!attempt_spawn(animal, newborn, spawn_point)) free_unused_entity();                 
-          }        
+        
+
+size_t spawn(Animal animal, bool newborn, Coord origin
+bool insert_search = true) {
+Coord spawn_point = tiles.get_nearest_empty_tile(origin);
+size_t result = 0;
+while (result == 0) {
+result = attempt_spawn(animal, newborn, spawn_point
+, insert_search);
+if (result == 0) free_unused_entity();
+}
+}        
     
 
   // =========================
   // REMOVE
   // =========================
   
-  bool remove(size_t i)
+  inline bool remove(size_t i)
   {
         if (!alive(i))
             return false;
@@ -284,7 +350,7 @@ return target[index].action;
         return true;
   }
 
-  void free_unused_entity()
+  inline void free_unused_entity()
   {
     for (size_t i = 0; i < coords.size; i++) {
     if (tiles.tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
@@ -314,6 +380,8 @@ return target[index].action;
     // =========================
     // SERIALIZATION
     // =========================
+
+  // genreal serialization
 
     template <class Archive>
     void save(Archive &archive) const
@@ -363,31 +431,33 @@ return target[index].action;
 // TRANSFER
 // =========================
 
-inline bool transferAnimal(size_t i, AnimalDatabase &old_db, AnimalDatabase &new_db)
+
+inline bool transfer(size_t i, animal::Database &old_db)
   {
-  if (new_db.size >= new_db.capacity) return false;
+  if (size >= capacity) return false;
   int index;  
-  if (new_db.free_slots.empty())
+  if (free_slots.empty())
   {
   index = ++size;
 	}
 	else
 	{
-		index = new_db.free_slots.top();
-		new_db.free_slots.pop();			
+		index = free_slots.top();
+		free_slots.pop();			
   }
-    new_db.animals(index) = old_db.animals(i);
-    new_db.health(index) = old_db.health(i);
-    new_db.hunger(index) = old_db.hunger(i);
-    new_db.sex(index) = old_db.sex(i);
-    new_db.age(index) = old_db.age(i);
-    new_db.target(index) = old_db.target(i);
-    new_db.target_type(index) = old_db.target_type(i);
-    new_db.action(index) = old_db.action(i);
-    new_db.frame_data(index) = old_db.frame_data(i);
-    new_db.inertia(index) = old_db.inertia(i);
-    new_db.coord(index) = old_db.coord(i);
-  new_db.alive(index) = true;
+    animals(index) = old_db.animals(i);
+    health(index) = old_db.health(i);
+    hunger(index) = old_db.hunger(i);
+    sex(index) = old_db.sex(i);
+    age(index) = old_db.age(i);
+    target(index) = old_db.target(i);
+    target_type(index) = old_db.target_type(i);
+    action(index) = old_db.action(i);
+    frame_data(index) = old_db.frame_data(i);
+    inertia(index) = old_db.inertia(i);
+    coord(index) = old_db.coord(i);
+  alive(index) = true;
+
   old_db.free_slots.push(i);
   old_db.alive(index) = false;
   return true;

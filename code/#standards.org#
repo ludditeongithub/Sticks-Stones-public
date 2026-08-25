@@ -1,2 +1,13 @@
-- CAPS is reserved for constants, or pseudo-constants (values set per run of game).
+* File Organization and standards
+- don't make files too long, and try to break up into either repeatable and uniform file names for data/world state (for example: tables.hpp contains tables, database.hpp contains metaprogrammed databases), or very descriptive ones for systems.
+** metaprogramming
+
+** world
+- 'database.hpp' contains the ECS database, most of which is metaprogrammed. The non metaprogrammed part will be 'system' functions that only apply to one entity will be linked here. 
 - 'tables.hpp' contains both lookup tables, constants, and pseudo constants.  
+* Formatting
+- using snake_case functions.
+
+- CAPS is reserved for constants, or pseudo-constants (values set per run of game).
+
+

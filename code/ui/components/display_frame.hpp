@@ -6,12 +6,11 @@ struct DisplayFrame : UIElement {
 	SDL_Rect entity_sprite;
   // frame sprite is source
 
-  DisplayFrame(UISprite frame, Entity entity, SCoord position)
+  DisplayFrame(UISprite frame, Entity entity, SCoord position) : UIElement(frame, position)
   {
-                this->position = position;
-		source = sprite::ui_sprites[frame];
-		entity_sprite = sprite::get(entity);
-	}
+    entity_sprite = sprite::get(entity);
+  }
+  
 	inline void render(const SDL_Rect viewport)
 	{
           sprite_sheet_texture.render(position.x, position.y, source, viewport);		sprite_sheet_texture.render(position.x, position.y, &entity_sprite, viewport);

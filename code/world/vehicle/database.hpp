@@ -17,7 +17,7 @@ constexpr static uint16_t entity_size = sizeof(Vehicle) +
 ;
 
 size_t capacity;
-    size_t size;
+    size_t size = 1; // 0 is placeholder
     Stack<size_t> free_slots;
     Array<bool> alives;
   SearchGrid& search;
@@ -56,6 +56,13 @@ this->capacity = capacity;
 
   this->size = 0;
 
+
+ vehicles = arena_make_array<Vehicle>(capacity);
+ health = arena_make_array<Health>(capacity);
+ frame_data = arena_make_array<FrameData>(capacity);
+ inertia = arena_make_array<Frame>(capacity);
+ coord = arena_make_array<Coord>(capacity);
+
 }
 
 // =========================
@@ -79,15 +86,16 @@ return coord[index];
   }
 
 
+  
   // =========================
   // SPAWN
   // =========================
 
- 
-  bool attempt_spawn(Vehicle vehicle, bool newborn, Coord coord  )
+
+bool attempt_spawn(Vehicle vehicle, bool newborn, Coord coord  )
   {       
         if (size + 1 > capacity)
-            return false;
+            return 0;
         size_t i;
         if (free_slots.empty())
         {
@@ -117,20 +125,28 @@ return coord[index];
             inertia(i) = 0;
             coord(i) = coord;
         }
-        return true;
+        return i;
           }
           
-          bool spawn(Vehicle vehicle, bool newborn, Coord origin) {
-          Coord spawn_point = tiles.get_nearest_empty_tile(origin);
-          while (!attempt_spawn(vehicle, newborn, spawn_point)) free_unused_entity();                 
-          }        
+        
+
+size_t spawn(Vehicle vehicle, bool newborn, Coord origin
+bool insert_search = true) {
+Coord spawn_point = tiles.get_nearest_empty_tile(origin);
+size_t result = 0;
+while (result == 0) {
+result = attempt_spawn(vehicle, newborn, spawn_point
+, insert_search);
+if (result == 0) free_unused_entity();
+}
+}        
     
 
   // =========================
   // REMOVE
   // =========================
   
-  bool remove(size_t i)
+  inline bool remove(size_t i)
   {
         if (!alive(i))
             return false;
@@ -140,7 +156,7 @@ return coord[index];
         return true;
   }
 
-  void free_unused_entity()
+  inline void free_unused_entity()
   {
     for (size_t i = 0; i < coords.size; i++) {
     if (tiles.tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
@@ -170,6 +186,8 @@ return coord[index];
     // =========================
     // SERIALIZATION
     // =========================
+
+  // genreal serialization
 
     template <class Archive>
     void save(Archive &archive) const

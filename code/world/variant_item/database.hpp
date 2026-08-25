@@ -17,7 +17,7 @@ constexpr static uint16_t entity_size = sizeof(Item) +
 ;
 
 size_t capacity;
-    size_t size;
+    size_t size = 1; // 0 is placeholder
     Stack<size_t> free_slots;
     Array<bool> alives;
   SearchGrid& search;
@@ -35,9 +35,26 @@ size_t capacity;
     Array<Coord> coord;
     Array<Variant> variant;
 
-struct Main {
+  struct Main {
     Array<Coord> coord;
     Array<Variant> variant;
+
+  // Serialization
+  template <class Archive>
+    void save(Archive &archive) const
+    {
+        coord.save(archive);
+        variant.save(archive);
+     
+      }
+
+  template <class Archive>
+    void load(Archive &archive)
+      {     
+        coord.load(archive);
+        variant.load(archive);
+     
+    }
 };
 
 
@@ -58,6 +75,13 @@ search(search),
 this->capacity = capacity;
 
   this->size = 0;
+
+  main.coord = arena_make_array<Coord>(capacity);
+  main.variant = arena_make_array<Variant>(capacity);
+
+ items = arena_make_array<Item>(capacity);
+ coord = arena_make_array<Coord>(capacity);
+ variant = arena_make_array<Variant>(capacity);
 
 }
 
@@ -82,16 +106,17 @@ return main[index].coord;
 return main[index].variant;
     }
 
+  
   // =========================
   // SPAWN
   // =========================
 
- 
-  bool attempt_spawn(Item item, bool newborn, Coord coord  , Variant variant  , bool insert_search = true
+
+bool attempt_spawn(Item item, bool newborn, Coord coord  , Variant variant  , bool insert_search = true
 )
   {       
         if (size + 1 > capacity)
-            return false;
+            return 0;
         size_t i;
         if (free_slots.empty())
         {
@@ -118,20 +143,30 @@ return main[index].variant;
             variant(i) = variant;
         }
             if (insert_search) search.insert_entity(item, {i, coord(i)});
-        return true;
+        return i;
           }
           
-          bool spawn(Item item, bool newborn, Coord origin) {
-          Coord spawn_point = tiles.get_nearest_empty_tile(origin);
-          while (!attempt_spawn(item, newborn, spawn_point)) free_unused_entity();                 
-          }        
+        
+
+size_t spawn(Item item, bool newborn, Coord origin
+  ,Variant variant
+bool insert_search = true) {
+Coord spawn_point = tiles.get_nearest_empty_tile(origin);
+size_t result = 0;
+while (result == 0) {
+result = attempt_spawn(item, newborn, spawn_point
+  , Variant variant
+, insert_search);
+if (result == 0) free_unused_entity();
+}
+}        
     
 
   // =========================
   // REMOVE
   // =========================
   
-  bool remove(size_t i)
+  inline bool remove(size_t i)
   {
         if (!alive(i))
             return false;
@@ -143,7 +178,7 @@ return main[index].variant;
         return true;
   }
 
-  void free_unused_entity()
+  inline void free_unused_entity()
   {
     for (size_t i = 0; i < coords.size; i++) {
     if (tiles.tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
@@ -155,6 +190,8 @@ return main[index].variant;
     // =========================
     // SERIALIZATION
     // =========================
+
+  // genreal serialization
 
     template <class Archive>
     void save(Archive &archive) const
@@ -188,23 +225,25 @@ return main[index].variant;
 // TRANSFER
 // =========================
 
-inline bool transferVariantItem(size_t i, VariantItemDatabase &old_db, VariantItemDatabase &new_db)
+
+inline bool transfer(size_t i, item::Database &old_db)
   {
-  if (new_db.size >= new_db.capacity) return false;
+  if (size >= capacity) return false;
   int index;  
-  if (new_db.free_slots.empty())
+  if (free_slots.empty())
   {
   index = ++size;
 	}
 	else
 	{
-		index = new_db.free_slots.top();
-		new_db.free_slots.pop();			
+		index = free_slots.top();
+		free_slots.pop();			
   }
-    new_db.items(index) = old_db.items(i);
-    new_db.coord(index) = old_db.coord(i);
-    new_db.variant(index) = old_db.variant(i);
-  new_db.alive(index) = true;
+    items(index) = old_db.items(i);
+    coord(index) = old_db.coord(i);
+    variant(index) = old_db.variant(i);
+  alive(index) = true;
+
   old_db.free_slots.push(i);
   old_db.alive(index) = false;
   return true;

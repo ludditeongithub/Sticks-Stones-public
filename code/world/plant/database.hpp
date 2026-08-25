@@ -30,7 +30,7 @@ constexpr static uint16_t entity_size = sizeof(Plant) +
 ;
 
 size_t capacity;
-    size_t size;
+    size_t size = 1; // 0 is placeholder
     Stack<size_t> free_slots;
     Array<bool> alives;
   SearchGrid& search;
@@ -68,6 +68,11 @@ this->capacity = capacity;
 
   this->size = 0;
 
+
+ plants = arena_make_array<Plant>(capacity);
+ coord = arena_make_array<Coord>(capacity);
+ age = arena_make_array<Time>(capacity);
+
 }
 
 // =========================
@@ -85,6 +90,7 @@ return age[index];
   }
 
 
+  
   // =========================
   // SPAWN
   // =========================
@@ -98,12 +104,12 @@ return age[index];
 	      //TODO: error
 	    }
 }
- 
-  bool attempt_spawn(Plant plant, bool newborn, Coord coord  , bool insert_search = true
+
+bool attempt_spawn(Plant plant, bool newborn, Coord coord  , bool insert_search = true
 )
   {       
         if (size + 1 > capacity)
-            return false;
+            return 0;
         size_t i;
         if (free_slots.empty())
         {
@@ -130,20 +136,28 @@ return age[index];
             age(i) = age;
         }
             if (insert_search) search.insert_entity(plant, {i, coord(i)});
-        return true;
+        return i;
           }
           
-          bool spawn(Plant plant, bool newborn, Coord origin) {
-          Coord spawn_point = tiles.get_nearest_empty_tile(origin);
-          while (!attempt_spawn(plant, newborn, spawn_point)) free_unused_entity();                 
-          }        
+        
+
+size_t spawn(Plant plant, bool newborn, Coord origin
+bool insert_search = true) {
+Coord spawn_point = tiles.get_nearest_empty_tile(origin);
+size_t result = 0;
+while (result == 0) {
+result = attempt_spawn(plant, newborn, spawn_point
+, insert_search);
+if (result == 0) free_unused_entity();
+}
+}        
     
 
   // =========================
   // REMOVE
   // =========================
   
-  bool remove(size_t i)
+  inline bool remove(size_t i)
   {
         if (!alive(i))
             return false;
@@ -155,7 +169,7 @@ return age[index];
         return true;
   }
 
-  void free_unused_entity()
+  inline void free_unused_entity()
   {
     for (size_t i = 0; i < coords.size; i++) {
     if (tiles.tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
@@ -167,6 +181,8 @@ return age[index];
     // =========================
     // SERIALIZATION
     // =========================
+
+  // genreal serialization
 
     template <class Archive>
     void save(Archive &archive) const
@@ -200,23 +216,25 @@ return age[index];
 // TRANSFER
 // =========================
 
-inline bool transferPlant(size_t i, PlantDatabase &old_db, PlantDatabase &new_db)
+
+inline bool transfer(size_t i, plant::Database &old_db)
   {
-  if (new_db.size >= new_db.capacity) return false;
+  if (size >= capacity) return false;
   int index;  
-  if (new_db.free_slots.empty())
+  if (free_slots.empty())
   {
   index = ++size;
 	}
 	else
 	{
-		index = new_db.free_slots.top();
-		new_db.free_slots.pop();			
+		index = free_slots.top();
+		free_slots.pop();			
   }
-    new_db.plants(index) = old_db.plants(i);
-    new_db.coord(index) = old_db.coord(i);
-    new_db.age(index) = old_db.age(i);
-  new_db.alive(index) = true;
+    plants(index) = old_db.plants(i);
+    coord(index) = old_db.coord(i);
+    age(index) = old_db.age(i);
+  alive(index) = true;
+
   old_db.free_slots.push(i);
   old_db.alive(index) = false;
   return true;

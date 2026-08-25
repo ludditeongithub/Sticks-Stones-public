@@ -15,20 +15,37 @@
 
 enum class ButtonSprite : uint8_t
 {
-	MainButton,
-	FirstLaunchButton,
+	// @codegen:begin button_sprite
+	//
+	// @codegen:end button_sprite
+	Main,
+	FirstLaunch,
 	Checkbox,
-	SwipableMenuButton,
+	SwipableMenu,
+	ChangeEquipmentView,
+	OpenMenu,
+	LeftArrow,
+	RightArrow,
+        ElementFrame,
 	MAX
 };
 
-enum class ButtonDecoration : uint8_t
+enum class CustomButtonDecoration : uint8_t
 {
-  ProductionMenu,
-  BuildingMenu,  
-  NeedsMenu,
-        MAX
+	MENU_MIN,
+	ProductionMenu,
+	BuildingMenu,
+	NeedsMenu,
+	CombatMenu,
+	OrderMenu,
+	KnowledgeMenu,
+	CultureMenu,
+	MENU_MAX,
+        
+	MAX
 };
+
+using ButtonDecoration = std::variant<CustomButtonDecoration, Entity>;
 
 enum class ButtonState
 {
@@ -42,7 +59,7 @@ inline constexpr BitsetTable<ButtonSprite> REQUIRES_DECORATION = []
    BitsetTable<ButtonSprite> t{};
    auto add = [&](ButtonSprite e) { t.bitset.set(static_cast<uint16_t>(e)); };
    using enum ButtonSprite;
-   add(SwipableMenuButton);
+   add(SwipableMenu);
    return t;
  }();
 
@@ -80,23 +97,24 @@ inline SDL_Rect get_decoration_sprite(ButtonDecoration decoration)
 struct ButtonUI
 {
       public:
-	ButtonFunctionality function;
+        SDL_Rect& viewport;
+        std::unique_ptr<ButtonFunctionality> function;
 	ButtonSprite sprite;
         std::optional<ButtonDecoration> decoration;
 	SCoord top_left_corner;
 	Sound* pressed_sound;
 	ButtonState state = ButtonState::Unpressed;
 
-  ButtonUI(ButtonFunctionality function, ButtonSprite sprite, SCoord top_left_corner, std::optional<ButtonDecoration> decoration = std::nullopt,
+  ButtonUI(SDL_Rect& viewport, std::unique_ptr<ButtonFunctionality> function, ButtonSprite sprite, SCoord top_left_corner, std::optional<ButtonDecoration> decoration = std::nullopt,
 		 Sound *pressed_sound = nullptr)
-    : function(function), sprite(sprite), top_left_corner(top_left_corner), decoration(decoration),
-	      pressed_sound(pressed_sound)
+    : viewport(viewport), sprite(sprite), decoration(decoration), top_left_corner(top_left_corner), pressed_sound(pressed_sound)
 	{
-	  
+          this->function = std::move(function);
 	}
 
 	inline void render(const SDL_Rect& viewport)
 	{
+                this->viewport = viewport;
 		SDL_Rect rect;
 	        rect = sprite::get_button(sprite, state);
 		
@@ -108,18 +126,6 @@ struct ButtonUI
 		}		
 	}
 
-        inline void render()
-	{
-		SDL_Rect rect;
-		rect = get_button_sprite(sprite, state);
-		sprite_sheet_texture.render(top_left_corner.x, top_left_corner.y, &rect, g_main_screen_viewport);
-
-		if (decoration.has_value()) {
-		  SDL_Rect dec_rect = get_decoration_sprite(decoration);
-		  sprite_sheet_texture.render(top_left_corner.x, top_left_corner.y, &dec_rect, g_main_screen_viewport);
-		}
-	}
-
 	void handle_event(SDL_Event *e)
 	{
 		if( e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP )
@@ -129,14 +135,12 @@ struct ButtonUI
 		SDL_GetMouseState( &x, &y );
 
 		SCoord dimensions = get_button_sprite_dimensions(sprite);
-		bool inside = mouse_inside({x,y}, top_left_corner, dimensions);
+		bool inside = mouse_inside(viewport, {x,y}, top_left_corner, dimensions);
 
-		//Mouse is outside button
 		if( !inside )
 		{
 			state = ButtonState::Unpressed;
 		}
-		//Mouse is inside button
 		else
 		{
 			//Set mouse over sprite
@@ -149,7 +153,7 @@ struct ButtonUI
 			case SDL_MOUSEBUTTONDOWN:
 			case SDL_MOUSEBUTTONUP:
 				state = ButtonState::Pressed;
-				function.trigger();
+				function->trigger();
 				if (pressed_sound != NULL) play_sound(*pressed_sound);
 				break;
 			}

@@ -1,0 +1,22 @@
+#pragma once
+
+enum class ProductionSubmenu
+{
+	Food,
+	BuildingMaterial,
+        
+	Art,
+        Misc
+};
+
+enum class BuildableSubmenu
+{
+	Plant,
+	Vehicle,
+	Workstation,
+        Art,
+	Wall,
+	Road,
+	Roof,
+	Bridge
+};

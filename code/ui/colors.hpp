@@ -1,0 +1,4 @@
+#pragma once
+#include <SDL2/SDL_pixels.h>
+
+SDL_Color black {15, 15, 15};

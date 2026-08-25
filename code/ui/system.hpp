@@ -1,7 +1,7 @@
 #pragma once
 #include "render/screen.hpp"
 #include <SDL2/SDL_render.h>
-#include <ui/aggregates/main_menu.hpp>
+#include <ui/main/main_menu.hpp>
 #include <cstdint>
 #include <SDL2/SDL_video.h>
 
@@ -9,8 +9,6 @@ Coord g_screen_dimensions = {screen_width, screen_height};
 
 struct UISystem
 {
-	SDL_Window *window = NULL;
-	SDL_Renderer *renderer = NULL;
 	SDL_Rect whole_display_viewport;
 	
 	uint16_t user_screen_width;

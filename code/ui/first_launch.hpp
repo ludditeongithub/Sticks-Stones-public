@@ -77,9 +77,7 @@ struct FirstLaunchBuffer
 
 	void launch_first_launcher(FirstLaunchBuffer flb)
 	{
-	        FC_Font* amble20 = fc_create_font();
-		fc_load_font(amble20, renderer, "../../fonts/Amble-Regular.ttf", 20,
-			    fc_make_color(9, 9, 9, 255), TTF_STYLE_NORMAL);
+fc_make_color(9, 9, 9, 255), TTF_STYLE_NORMAL);
 		
 
 		PositionedText fullscreen = {amble20, "Fullscreen: ", {30, 30}};

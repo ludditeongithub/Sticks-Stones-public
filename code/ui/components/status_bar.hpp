@@ -63,9 +63,9 @@ struct StatusBar
 	const SCoord position; // left corner
 	const bool horizontal;
 
-  SDL_Rect& viewport;
+  const SDL_Rect& viewport;
 
-        StatusBar(StatusBarVariant variant, const SCoord position, const bool horizontal, SDL_Rect& viewport)
+        StatusBar(StatusBarVariant variant, const SCoord position, const bool horizontal, const SDL_Rect& viewport)
           : position(position), horizontal(horizontal), viewport(viewport)
 	{          
           std::visit([this](auto& bar)

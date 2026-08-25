@@ -100,16 +100,11 @@ typedef struct FcEffect
 // Opaque type
 typedef struct FC_Font FC_Font;
 
-
 typedef struct FcGlyphData
 {
     SDL_Rect rect;
     int cache_level;
-
 } FC_GlyphData;
-
-
-
 
 // Object creation
 

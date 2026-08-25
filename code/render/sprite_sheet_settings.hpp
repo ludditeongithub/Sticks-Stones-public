@@ -3,6 +3,7 @@
 #include <fstream>
 #include "sprite.hpp"
 #include "sprite_names.hpp"
+#include "world/unit/enum.hpp"
 #include <SDL2/SDL_rect.h>
 #include <world/animal/enum.hpp>
 #include <world/item/enum.hpp>
@@ -26,13 +27,14 @@ std::array<SDL_Rect, static_cast<size_t>(Grass::MAX)> grass_sprites;
 std::array<SDL_Rect, static_cast<size_t>(Unit::MAX)> unit_sprites;
 std::array<SDL_Rect, static_cast<size_t>(ButtonSprite::MAX)> button_sprites;
 std::array<SDL_Rect, static_cast<size_t>(UISprite::MAX)> ui_sprites;
+std::array<SDL_Rect, static_cast<size_t>(Role::MAX)> roles;
 
 template<typename Sprite>
 inline void save_sprite(int index, Sprite sprite, SCoord position, SCoord dimension)
 {
 	if (std::is_same<Animal, Sprite>::value) {
 		animal_sprites[index] = SDL_Rect{position.x, position.y, dimension.x, dimension.y};	
-	    } else if (std::is_same<Buildable, Sprite>::value) {
+        } else if (std::is_same<Buildable, Sprite>::value) {
 		buildable[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
 	} else if (std::is_same<Plant, Sprite>::value) {
 		plant_sprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
@@ -44,9 +46,12 @@ inline void save_sprite(int index, Sprite sprite, SCoord position, SCoord dimens
 		grass_sprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
 	} else if (std::is_same<ButtonUI, Sprite>::value) {
           button_sprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y}; // NOTE: since buttons have three states, the dimension is divided by 3.
-	} else if (std::is_same<UISprite, Sprite>::value ) {
+	} else if (std::is_same<UISprite, Sprite>::value) {
 		ui_sprites[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
-	} 
+	}
+	else if (std::is_same<Role, Sprite>::value) {
+                roles[index] = SDL_Rect{position.x, position.y, dimension.x, dimension.y};
+        }
 }
 
 // TODO: fix using BetterEnum

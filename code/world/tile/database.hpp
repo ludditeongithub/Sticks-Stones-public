@@ -56,6 +56,13 @@ Database(Arena *arena, size_t capacity
 this->capacity = capacity;
 
 
+
+ tile_datas = arena_make_array<Tile_data>(capacity);
+ altitude = arena_make_array<Alt>(capacity);
+ water = arena_make_array<Liquid>(capacity);
+ tile_status = arena_make_array<TileStatus>(capacity);
+ entity = arena_make_array<Entity>(capacity);
+
 }
 
 // =========================
@@ -87,6 +94,8 @@ return entity[index];
     // =========================
     // SERIALIZATION
     // =========================
+
+  // genreal serialization
 
     template <class Archive>
     void save(Archive &archive) const
