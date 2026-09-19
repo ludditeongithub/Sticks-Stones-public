@@ -1,0 +1,11 @@
+
+
+{% for key, f in fonts.items() %}
+  FC_Font* {{ f.name }};  
+{% endfor %}
+
+void init_fonts(float scale) {
+{% for key, f in fonts.items() %}
+  fc_load_font_from_ttf({{ f.name }}, renderer, TTF_OpenFont("{{ font_path }}/{{ f.ttf }}", {{ f.size }} * scale), {{ f.color }});
+  {% endfor %}
+}

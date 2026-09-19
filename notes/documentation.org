@@ -1,0 +1,70 @@
+* Paradigms
+In general we are using DoD for simplicity and performance. This is not dogmatic. For example many major enitites like animals have their own databases which are fully formed classes, and UI uses full OOP. When using classes we keep class hierarchies minimal and loosely coupled. Two types of functions should be member functions: those which can be performed by passing one or two entity indices and/or an enum value, and those which are using many more member databases and a comparably small number of references to other large modules (coupling). In general if passing too many large references, this should be handled by another system, or broken down into more free functions (procedural).
+* File Organization and Standards
+- don't make files too long, and try to break up into either repeatable and uniform file names for data/world state (for example: tables.hpp contains tables, database.hpp contains metaprogrammed databases), or very descriptive ones for systems.
+** Extern
+** Logic
+*** Code Structures
+*** Core
+**** Math
+**** RNG
+*** Gameplay Generic (pathfinding, 
+*** Gameplay Specific 
+** Data
+*** Types and Aliases
+*** Const Data
+*** Runtime Game Data
+*** Runtime Level Data
+** Display
+*** Render
+*** UI
+*** I/O
+*** DevTools
+* Formatting
+- using snake_case functions.
+
+- CAPS is reserved for constants, or pseudo-constants (values set per run of game).
+
+* Public Pitches
+** Looking for help
+Hi everyone, my name is Logan, I'm an indie developer who has been fully dedicated to a single project I started working on in 03/2025. The project, 'Sticks and Stones', is a 2D Tile deep Colony Simulator, similar to games like 'Rimworld', 'Dwarf Fortress', or 'Song of Syx', but instead meant to mirror the material development of our real world. I have made it and the engine from scratch in C++ (with metaprogramming in Python) and am about 3/5-2/3ths towards an alpha (incuding most of the sprites). I would be looking for someone to collaborate on the code-- the exact nature of compensation is going to be based on how much the candidate is willing to contribute and their experience.
+
+Especially if it is someone in Vancouver who is interested in revshare I am willing to meet up and even teach someone who is willing to learn C++ (or more specifically, how I prefer to use the gargantuan language for this project) if I think they are committed and a good programmer. If it someone who has experience but does not want to be too committed, I may even be willing to pay a small contract depending on the exact terms though I would prefer revshare not just because my funds are extremely limited but since it is a custom engine it fits a longer term commitment. Honestly, I am just one person moreso building a passion project so if anyone would like to DM and discuss terms or even indie gamedev in general I would love that. Thanks for reading!
+
+If you are interested in learning more, here is a README:
+** What is 'Sticks and Stones'? (Long Informal Pitch)
+Have you ever wanted to see, control, and live through the building of human history, from the first firepit to the development of complex, interwoven cultures and empires? That kind of simulation, with just the right amount of simplification so things are comprehensible, manageable, and not overwhelming, is exactly what Sticks and Stones delivers. 
+
+You start with a close-knit tribe of six humans in the paleolithic era, or 'old stone age'. You quickly discover the function of ROLES, which group determined tasks that create new products out of existing resources, or perform essential services for your tribe. Each of your tribe members have roles like 'Knapper', 'Carver', and 'Hunter'-- all Producer Roles which can create new items from simpler items. You'll also discover that each tribe member can achieve multiple roles at a cost. And you'll need them, too, as its not easy to necessarily easy to make anything out of what nature provides. 
+
+Soon enough, as your tribe grows beyond its initial limits, its members will start to grow antsy to go beyond their current potential and conditions. If you manage to develop an excess of resources against the harsh world, you'll be able to support wisened 'Elders' who will be able to train the new generations, and 'Scouts', who can explore to new lands and meet new peoples with new traditions: both of who can push you into further ages.
+
+It isn't long until the overflowing drive of life drives artistic expression: 'Storytellers' collect the tribes' tales of strife and triumph, and 'Ornamenters' turn the previously useless waste from your hunting expeditions into the first jewelry, and with it you witness the power of keeping people together through Culture. 
+
+On the less pretty side, you'll also need to defend your tribe against those who are also developing at a rapid pace, especially after 'Farmer's and 'Herder's hail the turn of the agricultural revolution-- 'Slingers' and 'Skirmishers' able to utilize ordinary, abundant sticks and stones to defend your tribe, and eventually 'Shortbow Hunters' are able to take down both animals and invaders before they even approach. It's a tough world out there, and you need Force to defend yourself.
+
+If you're able to survive the harsh changes of the Neolithic era, whether by the flattery and dealmaking of the 'Negotiator' or the strength of your warriors, a new world of civilization is waiting on the other side: first, the discovery of useful metals by the 'Copper Miner' and 'Coppersmith' allow for the construction of better tools and herald an arms race for ages to come. 
+
+But with the rise of such productive industry and flourshing culture comes the problem of the distribution of its spoils. For their Satisfaction, some will demand more goods than others, while some may be tempered by the wiles of the 'Prostitute'-- or the 'Priest'.
+
+As we dig deeper, sail further, burn hotter fires, and spin prettier artworks, the invention and reinvention of new Roles proliferates throughout society-- and with them, a better grasp of how to continue to push forward in this complex world. Everything falls apart without the maintainence of different kinds of Order-- Culture, Force, and Satisfaction, and in the emerging world, Legal and Administrative. And nothing can be retained and push forward without a vast array of Knowledge-- Exploration of the natural world and its features, ingenious Academic theories, the Technological prowess to change the conditions of the world, the Roles needed to do so, and lastly how those that are Foreign differ-- and our similar-- to ourselves. All of these will have to be managed in some way, decided by your history, and the classes formed by it. Will it be anarchy? Or a massive layer of 'Bureaucrat's? A complex network of competing 'Lawyer's and 'Senators'?  Or one 'King' who's word is law?
+
+No matter what happens, politics and culture, both within and without, explode in complexity. And that's not just for your people as individuals, but for them as a 'people'-- will you join with another peaceful tribe? Or be forced into subjugation by a larger horde? Years later, will your people see themselves as part of the conquerors, or still be secretly fighting for independence? Who you are, where you are, and what your interests are are pushed by forces which in turn are pushed by other forces, not always obvious at first glance-- your people's perception of the neighboring kingdom determines whether they'll perceive cheese as luxurious or commonplace. How long they've settled in an area determines whether they hunger for foreign imports, or are distrustful of anything arriving by sea.  
+
+With over 250 roles from the Paleolithic to the Medieval age, in a Tile-based game with regions, plants, animals, and factions of all types, there is no shortage of what's needed to set out and make your own dynamic history. And whether you develop a famous global cuisine, build the biggest empire, die in a massive war, or rise to unite differing peoples, you'll soon learn first hand it all comes down to what you decide to do with Sticks and Stones. 
+** README
+*** Pitch Line -- What is 'Sticks and Stones'
+'Sticks and Stones' is a 2D Tile Colony Simulator, similar to other indie Colony Simulators like 'Rimworld', 'Dwarf Fortress', and 'Song of Syx.' It is set apart by its realism, extreme detail, and immersion, utilizing real-world technological and cultural development to give the player a realistic yet open-ended experience through a human history of their own. 
+
+*** Technical Specifications 
+It is coded entirely from scratch using C++, with the help of free software libraries SDL2, cereal, magic_enum, SDL_FontCache, DearIMGui and FastNoiseLite, as well as Jinja2. 
+
+*** Project Status
+Currently, Sticks and Stones is roughly 1/2-3/5ths way to an alpha release. The core engine is mostly finished. The rendering, world generation, and systems which keep the world state stable and in motion are mostly finished. Most of the world/state data has been finalized, but still some needs to be moved from spreadsheets into actual implementation, and some of it needs to be refactored. Some of the UI is finished. The largest piece of the programming puzzle (besides the monster that is global debugging) left is the enemy AI, much of which is likely to be completed post-alpha. 
+
+On the non-programming side, most of the sprites are finished but may get a resolution increase post-alpha. We have just begun on the audio and music.
+
+*** Credits and Thanks
+The entirety of the programming and design was done by Logan Yu. A majority of the sprites were done by Tobi Macaulay, and a small amount of sprites done by Logan Yu. The audio was done by Teyah. The game uses a DoD approach, as in the future the game hopes to simulate complex player and AI civilizations of tens or even hundreds of thousands of independent units with complex logic. 
+
+As the founder of this project, I, Logan would like to thank all the developers and maintainers of the free software libraries I used, the developers and maintainers of the C and C++ languages, the developers of all the tools I use daily, namely emacs, the linux kernel and coreutils, developers who share their code and knowledge online for free, and my high school programming teacher Mr. Pelletier without who I would have never discovered game development. On the less technical side, I thank the people who keep me fed and sheltered including my parents and all those who have worked hard and thanklessly to produce the actual things I use to survive. I thank Teyah for enthusiastically helping with both audio and networking in the indie dev world. Most of all my love Tobi both for both her contributions and love in helping me make a project I love.

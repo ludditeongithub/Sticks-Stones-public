@@ -1,0 +1,167 @@
+databases:
+    animal:
+        name: animal
+        traits: [health, hunger, sex, age, targeting, movable, positional, searchable, transferable, generated]
+        extra_arrays: [hunger, positional, movable]
+        database_references: [items, variant_items]
+    buildable:
+        name: buildable
+        traits: [health, positional]
+    item:
+        name: item
+        traits: [positional, searchable, transferable]
+        extra_arrays: [positional]
+        specializations: [clothing, weapon, tool, scavengeable]
+    variant_item:
+        name: variant_item
+        traits: [positional, searchable, transferable, foreign_enum, variant]
+        foreign_enum: [item]
+    unit:
+        name: unit
+        traits: [health, hunger, sex, age, targeting, movable, positional, searchable, transferable]
+        extra_arrays: [health, role_mana, role_list, skin_data, skill, inventory, place, movable]
+    tile:
+        name: tile
+        traits: [immortal, foreign_enum]
+        extra_arrays: [altitude, water, tile_status, entity]
+        foreign_enum: [tileData]
+    plant:
+        name: plant
+        traits: [positional, age, searchable, transferable, generated]
+        extra_arrays: [positional, age]
+        database_references: [seed, tile, animal]
+    seed:
+        name: seed
+        traits: [positional, age, foreign_enum]
+        extra_arrays: [positional, age]
+        foreign_enum: [plant]
+    vehicle:
+        name: vehicle
+        traits: [health, movable, positional, seats]
+        extra_arrays: [health, movable, positional]
+        database_references: [unit]
+
+trait_data:
+  - trait_name: age
+    name: age
+    type: Time
+    newborn_default: 0
+    random_age_default: age
+
+  - trait_name: health
+    name: health
+    type: Health
+    newborn_default: "{{ entity_name }}::MAX_HEALTHS[{{ entity_name }}] * INFANT_HEALTH_MODIFIER"
+    random_age_default: get_max_health({{ entity_name }}, age)
+
+  - trait_name: hunger
+    name: hunger
+    type: Hunger
+    newborn_default: "{{ entity_name }}::MAX_HUNGERS[{{ entity_name }}] * INFANT_HUNGER_MODIFIER"
+    random_age_default: get_max_hunger({{ entity_name }}, age)
+
+  - trait_name: movable
+    name: frame_data
+    type: FrameData
+    newborn_default: FrameData{ActState::NewPath, Direction::South, 0}
+    random_age_default: FrameData{ActState::NewPath, Direction::South, 0}
+
+# doubles for unit and animal action timer
+  - trait_name: movable
+    name: inertia
+    type: Frame
+    newborn_default: 0
+    random_age_default: 0
+
+  - trait_name: positional
+    name: coord
+    type: Coord
+    newborn_default: coord
+    random_age_default: coord
+
+  - trait_name: targeting
+    name: target
+    type: size_t
+    newborn_default: std::numeric_limits<size_t>::max()
+    random_age_default: std::numeric_limits<size_t>::max()
+
+  - trait_name: targeting
+    name: target_type
+    type: TargetType
+    newborn_default: TargetType::NONE
+    random_age_default: TargetType::NONE
+
+  - trait_name: targeting
+    name: action
+    type: Action
+    newborn_default: Action::NONE
+    random_age_default: Action::NONE
+
+  - trait_name: sex
+    name: sex
+    type: Sex
+    newborn_default: random_bool->next()
+    random_age_default: random_bool->next()
+
+  - trait_name: variant
+    name: variant
+    type: Variant
+    newborn_default: variant
+    random_age_default: variant
+
+extra_arrays:
+  - id: animal_status
+    name: animal_status
+    type: AnimalStatus
+    newborn_default: AnimalStatus{Direction::North, MatingStatus::Idle}
+    random_age_default: AnimalStatus{Direction::North, MatingStatus::Idle}
+  - id: skin_data
+    name: skin_data
+    type: SkinData
+    newborn_default: generate_melanin(parent1, parent2), generate_skin_warmth(parent1, parent2), 0.5, 0.0
+    random_age_default: generate_melanin(world, coord), generate_skin_warmth(world, coord), 0.5, 0.0
+  - id: role_list
+    name: role_list
+    type: std::array<Role, ROLE_MAX>
+    newborn_default: std::array<Role, ROLE_MAX>{}
+    random_age_default: std::array<Role, ROLE_MAX>{} # TODO: maybe function to generate Role from list of unlocked roles
+  - id: role_mana # OPTI: can be just deduced from role list
+    name: role_mana
+    type: RoleMana
+    newborn_default: STARTING_ROLE_MANA
+    random_age_default: STARTING_ROLE_MANA    
+  - id: inventory
+    name: inventory
+    type: Inventory
+    newborn_default: Inventory{}
+    random_age_default: Inventory{}
+  - id: skill
+    name: skill
+    type: Skills
+    newborn_default: Skills{}
+    random_age_default: Skills{}
+  - id: place
+    name: place
+    type: Place
+    newborn_default: Places{}
+    random_age_default: Places{}
+  - id: tile_status
+    name: tile_status
+    type: TileStatus
+    newborn_default: TileStatus{OccupiedStatus::Vacant, VisionStatus::Hidden}
+    random_age_default: TileStatus{OccupiedStatus::Vacant, VisionStatus::Hidden}
+  - id: water
+    name: water
+    type: Liquid
+    newborn_default: tile::WATER_DEFAULTS[tile]
+    random_age_default: tile::WATER_DEFAULTs[tile]
+  - id: altitude
+    name: altitude
+    type: Alt
+    newborn_default: 0
+    random_age_default: 0
+  - id: entity
+    name: entity
+    type: Entity
+    newborn_default: NullEntity::Null
+    random_age_default: NullEntity:Null

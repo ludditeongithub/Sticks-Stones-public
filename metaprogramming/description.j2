@@ -1,0 +1,6 @@
+  inline constexpr LookupTable<{{t.type}},const char*> DESCRIPTIONS = [] {
+    LookupTable<{{t.type}},const char*> lt{};
+    using enum ;
+    
+    return lt;
+  }();

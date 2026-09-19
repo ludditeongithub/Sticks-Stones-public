@@ -1,0 +1,2918 @@
+{ "frames": [
+   {
+    "filename": "arid-soil 0.aseprite",
+    "frame": { "x": 1483, "y": 1118, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "arid-soil 1.aseprite",
+    "frame": { "x": 1275, "y": 1097, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "carpet.aseprite",
+    "frame": { "x": 2420, "y": 1097, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "clay-soil.aseprite",
+    "frame": { "x": 2436, "y": 1097, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "clay-soil-red.aseprite",
+    "frame": { "x": 2452, "y": 1097, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "cob.aseprite",
+    "frame": { "x": 2276, "y": 1105, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "concrete-road.aseprite",
+    "frame": { "x": 2292, "y": 1105, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "deep-water.aseprite",
+    "frame": { "x": 769, "y": 726, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "dirt-road.aseprite",
+    "frame": { "x": 2308, "y": 1105, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "frozen-soil.aseprite",
+    "frame": { "x": 2324, "y": 1105, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "gem-ore.aseprite",
+    "frame": { "x": 2340, "y": 1105, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "gleysol.aseprite",
+    "frame": { "x": 1259, "y": 1097, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "grass2.aseprite",
+    "frame": { "x": 2372, "y": 1105, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "grass3.aseprite",
+    "frame": { "x": 2388, "y": 1105, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "grass4.aseprite",
+    "frame": { "x": 2404, "y": 1105, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "grass5.aseprite",
+    "frame": { "x": 2468, "y": 1109, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "grass.aseprite",
+    "frame": { "x": 1313, "y": 714, "w": 256, "h": 256 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 256, "h": 256 },
+    "sourceSize": { "w": 256, "h": 256 },
+    "duration": 100
+   },
+   {
+    "filename": "grass-tiles.aseprite",
+    "frame": { "x": 2420, "y": 1113, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "gravel-mine1.aseprite",
+    "frame": { "x": 2433, "y": 961, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "gravel-mine2.aseprite",
+    "frame": { "x": 2401, "y": 961, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "gravel-path1.aseprite",
+    "frame": { "x": 400, "y": 915, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "gravel-path2.aseprite",
+    "frame": { "x": 2401, "y": 929, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "hard-pan.aseprite",
+    "frame": { "x": 2436, "y": 1113, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "ice.aseprite",
+    "frame": { "x": 2452, "y": 1113, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "iron-ore.aseprite",
+    "frame": { "x": 1451, "y": 1118, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "loam-soil.aseprite",
+    "frame": { "x": 1467, "y": 1118, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "oxisol.aseprite",
+    "frame": { "x": 2276, "y": 1089, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "paved-road.aseprite",
+    "frame": { "x": 2436, "y": 1081, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "peat.aseprite",
+    "frame": { "x": 2452, "y": 1081, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "peat-soil.aseprite",
+    "frame": { "x": 1163, "y": 1089, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "plowed-clay-soil.aseprite",
+    "frame": { "x": 1179, "y": 1089, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "plowed-loam-soil.aseprite",
+    "frame": { "x": 1195, "y": 1089, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "plowed-oxisol.aseprite",
+    "frame": { "x": 1211, "y": 1089, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "plowed-peat-soil.aseprite",
+    "frame": { "x": 1227, "y": 1089, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "plowed-podzol.aseprite",
+    "frame": { "x": 1243, "y": 1089, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "plowed-rocky-soil.aseprite",
+    "frame": { "x": 1291, "y": 1089, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "plowed-sandy-soil.aseprite",
+    "frame": { "x": 2420, "y": 1081, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "plowed-silty-soil.aseprite",
+    "frame": { "x": 2292, "y": 1089, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "podzol.aseprite",
+    "frame": { "x": 2308, "y": 1089, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "rocks.aseprite",
+    "frame": { "x": 1672, "y": 543, "w": 224, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 224, "h": 32 },
+    "sourceSize": { "w": 224, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "rockysoil.aseprite",
+    "frame": { "x": 2324, "y": 1089, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "sand-1 0.aseprite",
+    "frame": { "x": 1483, "y": 1118, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "sand-1 1.aseprite",
+    "frame": { "x": 2340, "y": 1089, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "sand.aseprite",
+    "frame": { "x": 1569, "y": 826, "w": 64, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 16 },
+    "sourceSize": { "w": 64, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "sandy-1 0.aseprite",
+    "frame": { "x": 1483, "y": 1118, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "sandy-1 1.aseprite",
+    "frame": { "x": 2340, "y": 1089, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "sandy-soil 0.aseprite",
+    "frame": { "x": 1483, "y": 1118, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "sandy-soil 1.aseprite",
+    "frame": { "x": 2356, "y": 1089, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "sandysoil.aseprite",
+    "frame": { "x": 2372, "y": 1089, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "shallow-water1.aseprite",
+    "frame": { "x": 1537, "y": 970, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "siltysoil 0.aseprite",
+    "frame": { "x": 2388, "y": 1089, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "siltysoil 1.aseprite",
+    "frame": { "x": 1275, "y": 1097, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "snow.aseprite",
+    "frame": { "x": 2404, "y": 1089, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "stone.aseprite",
+    "frame": { "x": 2468, "y": 1093, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "stoneroad.aseprite",
+    "frame": { "x": 1505, "y": 970, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "sumbrickpath.aseprite",
+    "frame": { "x": 2376, "y": 224, "w": 48, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "sumdirtpath.aseprite",
+    "frame": { "x": 2435, "y": 368, "w": 48, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "wood-floor.aseprite",
+    "frame": { "x": 1473, "y": 970, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "adult-goat.aseprite",
+    "frame": { "x": 1264, "y": 714, "w": 48, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 32 },
+    "sourceSize": { "w": 48, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "antelope.aseprite",
+    "frame": { "x": 1985, "y": 913, "w": 416, "h": 128 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 416, "h": 128 },
+    "sourceSize": { "w": 416, "h": 128 },
+    "duration": 100
+   },
+   {
+    "filename": "bear.aseprite",
+    "frame": { "x": 865, "y": 865, "w": 448, "h": 184 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 448, "h": 184 },
+    "sourceSize": { "w": 448, "h": 184 },
+    "duration": 100
+   },
+   {
+    "filename": "bigfish.aseprite",
+    "frame": { "x": 1649, "y": 798, "w": 16, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 8 },
+    "sourceSize": { "w": 16, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "bison2.aseprite",
+    "frame": { "x": 0, "y": 915, "w": 400, "h": 128 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 400, "h": 128 },
+    "sourceSize": { "w": 400, "h": 128 },
+    "duration": 100
+   },
+   {
+    "filename": "bison.aseprite",
+    "frame": { "x": 2105, "y": 710, "w": 384, "h": 203 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 203 },
+    "sourceSize": { "w": 384, "h": 203 },
+    "duration": 100
+   },
+   {
+    "filename": "camel.aseprite",
+    "frame": { "x": 1672, "y": 710, "w": 433, "h": 200 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 433, "h": 200 },
+    "sourceSize": { "w": 433, "h": 200 },
+    "duration": 100
+   },
+   {
+    "filename": "capybara.aseprite",
+    "frame": { "x": 1163, "y": 1118, "w": 288, "h": 128 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 288, "h": 128 },
+    "sourceSize": { "w": 288, "h": 128 },
+    "duration": 100
+   },
+   {
+    "filename": "caribou.aseprite",
+    "frame": { "x": 1569, "y": 910, "w": 416, "h": 128 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 416, "h": 128 },
+    "sourceSize": { "w": 416, "h": 128 },
+    "duration": 100
+   },
+   {
+    "filename": "chicken.aseprite",
+    "frame": { "x": 1672, "y": 474, "w": 208, "h": 69 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 208, "h": 69 },
+    "sourceSize": { "w": 208, "h": 69 },
+    "duration": 100
+   },
+   {
+    "filename": "cow.aseprite",
+    "frame": { "x": 1912, "y": 0, "w": 464, "h": 276 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 464, "h": 276 },
+    "sourceSize": { "w": 464, "h": 276 },
+    "duration": 100
+   },
+   {
+    "filename": "deer.aseprite",
+    "frame": { "x": 865, "y": 1049, "w": 298, "h": 128 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 298, "h": 128 },
+    "sourceSize": { "w": 298, "h": 128 },
+    "duration": 100
+   },
+   {
+    "filename": "donkey.aseprite",
+    "frame": { "x": 433, "y": 865, "w": 432, "h": 193 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 432, "h": 193 },
+    "sourceSize": { "w": 432, "h": 193 },
+    "duration": 100
+   },
+   {
+    "filename": "duck.aseprite",
+    "frame": { "x": 1752, "y": 607, "w": 80, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 80, "h": 32 },
+    "sourceSize": { "w": 80, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "elephant.aseprite",
+    "frame": { "x": 1272, "y": 0, "w": 640, "h": 208 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 640, "h": 208 },
+    "sourceSize": { "w": 640, "h": 208 },
+    "duration": 100
+   },
+   {
+    "filename": "goat.aseprite",
+    "frame": { "x": 609, "y": 1058, "w": 256, "h": 128 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 256, "h": 128 },
+    "sourceSize": { "w": 256, "h": 128 },
+    "duration": 100
+   },
+   {
+    "filename": "hippo.aseprite",
+    "frame": { "x": 1313, "y": 1038, "w": 640, "h": 80 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 640, "h": 80 },
+    "sourceSize": { "w": 640, "h": 80 },
+    "duration": 100
+   },
+   {
+    "filename": "horse.aseprite",
+    "frame": { "x": 1913, "y": 276, "w": 522, "h": 194 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 522, "h": 194 },
+    "sourceSize": { "w": 522, "h": 194 },
+    "duration": 100
+   },
+   {
+    "filename": "moose.aseprite",
+    "frame": { "x": 1272, "y": 276, "w": 641, "h": 198 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 641, "h": 198 },
+    "sourceSize": { "w": 641, "h": 198 },
+    "duration": 100
+   },
+   {
+    "filename": "ox.aseprite",
+    "frame": { "x": 0, "y": 720, "w": 433, "h": 195 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 433, "h": 195 },
+    "sourceSize": { "w": 433, "h": 195 },
+    "duration": 100
+   },
+   {
+    "filename": "pig.aseprite",
+    "frame": { "x": 0, "y": 1043, "w": 320, "h": 128 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 320, "h": 128 },
+    "sourceSize": { "w": 320, "h": 128 },
+    "duration": 100
+   },
+   {
+    "filename": "rabbit.aseprite",
+    "frame": { "x": 320, "y": 1058, "w": 289, "h": 128 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 289, "h": 128 },
+    "sourceSize": { "w": 289, "h": 128 },
+    "duration": 100
+   },
+   {
+    "filename": "sheep.aseprite",
+    "frame": { "x": 1953, "y": 1041, "w": 323, "h": 128 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 323, "h": 128 },
+    "sourceSize": { "w": 323, "h": 128 },
+    "duration": 100
+   },
+   {
+    "filename": "small-fish.aseprite",
+    "frame": { "x": 2488, "y": 16, "w": 8, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 8, "h": 8 },
+    "sourceSize": { "w": 8, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "turtle.aseprite",
+    "frame": { "x": 433, "y": 694, "w": 336, "h": 128 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 336, "h": 128 },
+    "sourceSize": { "w": 336, "h": 128 },
+    "duration": 100
+   },
+   {
+    "filename": "water-buffalo.aseprite",
+    "frame": { "x": 832, "y": 660, "w": 432, "h": 205 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 432, "h": 205 },
+    "sourceSize": { "w": 432, "h": 205 },
+    "duration": 100
+   },
+   {
+    "filename": "wolf.aseprite",
+    "frame": { "x": 400, "y": 480, "w": 432, "h": 214 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 432, "h": 214 },
+    "sourceSize": { "w": 432, "h": 214 },
+    "duration": 100
+   },
+   {
+    "filename": "aloe-vera.aseprite",
+    "frame": { "x": 1768, "y": 639, "w": 64, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 32 },
+    "sourceSize": { "w": 64, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "appletree2.aseprite",
+    "frame": { "x": 801, "y": 758, "w": 16, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 32 },
+    "sourceSize": { "w": 16, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "appletree3.aseprite",
+    "frame": { "x": 2409, "y": 630, "w": 32, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 64 },
+    "sourceSize": { "w": 32, "h": 64 },
+    "duration": 100
+   },
+   {
+    "filename": "apricottree2.aseprite",
+    "frame": { "x": 2472, "y": 0, "w": 16, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 32 },
+    "sourceSize": { "w": 16, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "apricottree3.aseprite",
+    "frame": { "x": 2345, "y": 630, "w": 32, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 64 },
+    "sourceSize": { "w": 32, "h": 64 },
+    "duration": 100
+   },
+   {
+    "filename": "beetplant.aseprite",
+    "frame": { "x": 1409, "y": 970, "w": 64, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 16 },
+    "sourceSize": { "w": 64, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "birch-tree.aseprite",
+    "frame": { "x": 2435, "y": 416, "w": 48, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 48 },
+    "sourceSize": { "w": 48, "h": 48 },
+    "duration": 100
+   },
+   {
+    "filename": "blueberrybush1.aseprite",
+    "frame": { "x": 1633, "y": 874, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "blueberry-bush.aseprite",
+    "frame": { "x": 1272, "y": 240, "w": 352, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 352, "h": 32 },
+    "sourceSize": { "w": 352, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "broccoli.aseprite",
+    "frame": { "x": 1313, "y": 986, "w": 64, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 16 },
+    "sourceSize": { "w": 64, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "bush-1.aseprite",
+    "frame": { "x": 1672, "y": 575, "w": 208, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 208, "h": 32 },
+    "sourceSize": { "w": 208, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "cabbage-plant.aseprite",
+    "frame": { "x": 1569, "y": 778, "w": 80, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 80, "h": 16 },
+    "sourceSize": { "w": 80, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "cacaonib.aseprite",
+    "frame": { "x": 2488, "y": 8, "w": 8, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 8, "h": 8 },
+    "sourceSize": { "w": 8, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "cacaotree2.aseprite",
+    "frame": { "x": 1896, "y": 240, "w": 16, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 32 },
+    "sourceSize": { "w": 16, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "cacaotree3.aseprite",
+    "frame": { "x": 1864, "y": 639, "w": 32, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 64 },
+    "sourceSize": { "w": 32, "h": 64 },
+    "duration": 100
+   },
+   {
+    "filename": "cactus-1.aseprite",
+    "frame": { "x": 400, "y": 979, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "carrot-plant.aseprite",
+    "frame": { "x": 1672, "y": 639, "w": 64, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 32 },
+    "sourceSize": { "w": 64, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "cherrytree2.aseprite",
+    "frame": { "x": 2473, "y": 464, "w": 16, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 32 },
+    "sourceSize": { "w": 16, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "cherrytree3.aseprite",
+    "frame": { "x": 2441, "y": 630, "w": 32, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 64 },
+    "sourceSize": { "w": 32, "h": 64 },
+    "duration": 100
+   },
+   {
+    "filename": "coniferous-tree2.aseprite",
+    "frame": { "x": 2477, "y": 566, "w": 16, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 32 },
+    "sourceSize": { "w": 16, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "corn-plant.aseprite",
+    "frame": { "x": 1688, "y": 208, "w": 160, "h": 48 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 160, "h": 48 },
+    "sourceSize": { "w": 160, "h": 48 },
+    "duration": 1
+   },
+   {
+    "filename": "cotton-plant.aseprite",
+    "frame": { "x": 2313, "y": 566, "w": 132, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 132, "h": 32 },
+    "sourceSize": { "w": 132, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "cucumber.aseprite",
+    "frame": { "x": 1515, "y": 1118, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "cucumberplant.aseprite",
+    "frame": { "x": 1569, "y": 794, "w": 80, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 80, "h": 16 },
+    "sourceSize": { "w": 80, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "decidious-tree1.aseprite",
+    "frame": { "x": 1896, "y": 538, "w": 16, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 32 },
+    "sourceSize": { "w": 16, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "evergreen.aseprite",
+    "frame": { "x": 2435, "y": 304, "w": 48, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 64 },
+    "sourceSize": { "w": 48, "h": 64 },
+    "duration": 100
+   },
+   {
+    "filename": "fern.aseprite",
+    "frame": { "x": 1163, "y": 1049, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "flax.aseprite",
+    "frame": { "x": 753, "y": 822, "w": 64, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 16 },
+    "sourceSize": { "w": 64, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "fruit-bush-1.aseprite",
+    "frame": { "x": 1264, "y": 746, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "fruit-tree1.aseprite",
+    "frame": { "x": 1896, "y": 208, "w": 16, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 32 },
+    "sourceSize": { "w": 16, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "garlic.aseprite",
+    "frame": { "x": 1569, "y": 810, "w": 64, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 16 },
+    "sourceSize": { "w": 64, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "ginsengplant.aseprite",
+    "frame": { "x": 1688, "y": 256, "w": 96, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 96, "h": 16 },
+    "sourceSize": { "w": 96, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "ginsengroot.aseprite",
+    "frame": { "x": 1707, "y": 1118, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "grape-plant.aseprite",
+    "frame": { "x": 1272, "y": 208, "w": 416, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 416, "h": 32 },
+    "sourceSize": { "w": 416, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "hemp.aseprite",
+    "frame": { "x": 1672, "y": 607, "w": 80, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 80, "h": 32 },
+    "sourceSize": { "w": 80, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "indigo.aseprite",
+    "frame": { "x": 1691, "y": 1118, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "indigoplant.aseprite",
+    "frame": { "x": 1569, "y": 746, "w": 80, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 80, "h": 16 },
+    "sourceSize": { "w": 80, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "joshua-tree1.aseprite",
+    "frame": { "x": 2472, "y": 64, "w": 16, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 32 },
+    "sourceSize": { "w": 16, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "kaleplant.aseprite",
+    "frame": { "x": 1784, "y": 256, "w": 64, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 16 },
+    "sourceSize": { "w": 64, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "lavendar.aseprite",
+    "frame": { "x": 1624, "y": 240, "w": 64, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 32 },
+    "sourceSize": { "w": 64, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "lemontree2.aseprite",
+    "frame": { "x": 2472, "y": 32, "w": 16, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 32 },
+    "sourceSize": { "w": 16, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "lemontree3.aseprite",
+    "frame": { "x": 2377, "y": 630, "w": 32, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 64 },
+    "sourceSize": { "w": 32, "h": 64 },
+    "duration": 100
+   },
+   {
+    "filename": "lettuce.aseprite",
+    "frame": { "x": 2409, "y": 694, "w": 80, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 80, "h": 16 },
+    "sourceSize": { "w": 80, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "limetree2.aseprite",
+    "frame": { "x": 2477, "y": 598, "w": 16, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 32 },
+    "sourceSize": { "w": 16, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "limetree3.aseprite",
+    "frame": { "x": 1736, "y": 639, "w": 32, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 64 },
+    "sourceSize": { "w": 32, "h": 64 },
+    "duration": 100
+   },
+   {
+    "filename": "madder.aseprite",
+    "frame": { "x": 1675, "y": 1118, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "madderplant.aseprite",
+    "frame": { "x": 1569, "y": 842, "w": 64, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 16 },
+    "sourceSize": { "w": 64, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "mangotree2.aseprite",
+    "frame": { "x": 1296, "y": 746, "w": 16, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 32 },
+    "sourceSize": { "w": 16, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "mangotree3.aseprite",
+    "frame": { "x": 1832, "y": 607, "w": 32, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 64 },
+    "sourceSize": { "w": 32, "h": 64 },
+    "duration": 100
+   },
+   {
+    "filename": "mint.aseprite",
+    "frame": { "x": 1659, "y": 1118, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "mintplant.aseprite",
+    "frame": { "x": 2401, "y": 913, "w": 64, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 16 },
+    "sourceSize": { "w": 64, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "moss.aseprite",
+    "frame": { "x": 433, "y": 822, "w": 320, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 320, "h": 16 },
+    "sourceSize": { "w": 320, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "oat-plant.aseprite",
+    "frame": { "x": 2313, "y": 470, "w": 160, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 160, "h": 32 },
+    "sourceSize": { "w": 160, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "olivetree2.aseprite",
+    "frame": { "x": 2473, "y": 630, "w": 16, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 32 },
+    "sourceSize": { "w": 16, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "olivetree3.aseprite",
+    "frame": { "x": 2445, "y": 566, "w": 32, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 64 },
+    "sourceSize": { "w": 32, "h": 64 },
+    "duration": 100
+   },
+   {
+    "filename": "onion-plant.aseprite",
+    "frame": { "x": 433, "y": 854, "w": 48, "h": 10 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 10 },
+    "sourceSize": { "w": 48, "h": 10 },
+    "duration": 100
+   },
+   {
+    "filename": "orangetree2.aseprite",
+    "frame": { "x": 2472, "y": 192, "w": 16, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 32 },
+    "sourceSize": { "w": 16, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "orangetree3.aseprite",
+    "frame": { "x": 1880, "y": 474, "w": 32, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 64 },
+    "sourceSize": { "w": 32, "h": 64 },
+    "duration": 100
+   },
+   {
+    "filename": "peachtree2.aseprite",
+    "frame": { "x": 1896, "y": 639, "w": 16, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 32 },
+    "sourceSize": { "w": 16, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "peachtree3.aseprite",
+    "frame": { "x": 2457, "y": 502, "w": 32, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 64 },
+    "sourceSize": { "w": 32, "h": 64 },
+    "duration": 100
+   },
+   {
+    "filename": "peartree2.aseprite",
+    "frame": { "x": 801, "y": 726, "w": 16, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 32 },
+    "sourceSize": { "w": 16, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "peartree3.aseprite",
+    "frame": { "x": 1880, "y": 575, "w": 32, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 64 },
+    "sourceSize": { "w": 32, "h": 64 },
+    "duration": 100
+   },
+   {
+    "filename": "pepper-plant.aseprite",
+    "frame": { "x": 2313, "y": 502, "w": 144, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 32 },
+    "sourceSize": { "w": 144, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "plantvegetable-rcabbage1.aseprite",
+    "frame": { "x": 1633, "y": 842, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "plumtree2.aseprite",
+    "frame": { "x": 1649, "y": 746, "w": 16, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 32 },
+    "sourceSize": { "w": 16, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "plumtree3.aseprite",
+    "frame": { "x": 2313, "y": 630, "w": 32, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 64 },
+    "sourceSize": { "w": 32, "h": 64 },
+    "duration": 100
+   },
+   {
+    "filename": "poppies.aseprite",
+    "frame": { "x": 1569, "y": 890, "w": 64, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 16 },
+    "sourceSize": { "w": 64, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "potato-plant.aseprite",
+    "frame": { "x": 1569, "y": 874, "w": 64, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 16 },
+    "sourceSize": { "w": 64, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "rawpapyrus.aseprite",
+    "frame": { "x": 1896, "y": 671, "w": 16, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 32 },
+    "sourceSize": { "w": 16, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "redginsengflower.aseprite",
+    "frame": { "x": 1643, "y": 1118, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "reeds-1.aseprite",
+    "frame": { "x": 1633, "y": 810, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "reeds-2.aseprite",
+    "frame": { "x": 1264, "y": 810, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "rice-plant.aseprite",
+    "frame": { "x": 1569, "y": 762, "w": 80, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 80, "h": 16 },
+    "sourceSize": { "w": 80, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "riceplant.aseprite",
+    "frame": { "x": 2313, "y": 694, "w": 96, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 96, "h": 16 },
+    "sourceSize": { "w": 96, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "ricesack.aseprite",
+    "frame": { "x": 1296, "y": 794, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "saffron.aseprite",
+    "frame": { "x": 1569, "y": 858, "w": 64, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 16 },
+    "sourceSize": { "w": 64, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "sage.aseprite",
+    "frame": { "x": 1627, "y": 1118, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "sageplant.aseprite",
+    "frame": { "x": 433, "y": 838, "w": 64, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 16 },
+    "sourceSize": { "w": 64, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "senna.aseprite",
+    "frame": { "x": 2488, "y": 24, "w": 8, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 8, "h": 8 },
+    "sourceSize": { "w": 8, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "sennatree2.aseprite",
+    "frame": { "x": 2472, "y": 96, "w": 16, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 32 },
+    "sourceSize": { "w": 16, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "strawberrybush1.aseprite",
+    "frame": { "x": 769, "y": 790, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "thymeplant.aseprite",
+    "frame": { "x": 753, "y": 838, "w": 64, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 16 },
+    "sourceSize": { "w": 64, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "tomato-plant.aseprite",
+    "frame": { "x": 2313, "y": 534, "w": 144, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 32 },
+    "sourceSize": { "w": 144, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "tree1.aseprite",
+    "frame": { "x": 2472, "y": 128, "w": 16, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 32 },
+    "sourceSize": { "w": 16, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "tree2.aseprite",
+    "frame": { "x": 2472, "y": 160, "w": 16, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 32 },
+    "sourceSize": { "w": 16, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "tree3.aseprite",
+    "frame": { "x": 1848, "y": 208, "w": 48, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 64 },
+    "sourceSize": { "w": 48, "h": 64 },
+    "duration": 100
+   },
+   {
+    "filename": "tropical-tree.aseprite",
+    "frame": { "x": 2435, "y": 224, "w": 48, "h": 80 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 80 },
+    "sourceSize": { "w": 48, "h": 80 },
+    "duration": 100
+   },
+   {
+    "filename": "wheat-plant.aseprite",
+    "frame": { "x": 1672, "y": 671, "w": 64, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 32 },
+    "sourceSize": { "w": 64, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "woad.aseprite",
+    "frame": { "x": 689, "y": 838, "w": 64, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 16 },
+    "sourceSize": { "w": 64, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "human.aseprite",
+    "frame": { "x": 769, "y": 758, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "chicken-eggs.aseprite",
+    "frame": { "x": 416, "y": 1047, "w": 16, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 8 },
+    "sourceSize": { "w": 16, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "duck-egg.aseprite",
+    "frame": { "x": 2488, "y": 40, "w": 8, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 8, "h": 8 },
+    "sourceSize": { "w": 8, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "eggs.aseprite",
+    "frame": { "x": 416, "y": 1047, "w": 16, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 8 },
+    "sourceSize": { "w": 16, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "fiber.aseprite",
+    "frame": { "x": 1563, "y": 1118, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "fruit-pit.aseprite",
+    "frame": { "x": 2488, "y": 112, "w": 8, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 8, "h": 8 },
+    "sourceSize": { "w": 8, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "hay-prototype.aseprite",
+    "frame": { "x": 2449, "y": 1009, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 16 },
+    "sourceSize": { "w": 32, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "turtle-egg.aseprite",
+    "frame": { "x": 2488, "y": 152, "w": 8, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 8, "h": 8 },
+    "sourceSize": { "w": 8, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "basic-tribalwear.aseprite",
+    "frame": { "x": 1499, "y": 1118, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "full-tribalwear 0.aseprite",
+    "frame": { "x": 625, "y": 838, "w": 64, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 16 },
+    "sourceSize": { "w": 64, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "full-tribalwear 1.aseprite",
+    "frame": { "x": 561, "y": 838, "w": 64, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 16 },
+    "sourceSize": { "w": 64, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "full-tribalwear 2.aseprite",
+    "frame": { "x": 497, "y": 838, "w": 64, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 16 },
+    "sourceSize": { "w": 64, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "shaman-headdress.aseprite",
+    "frame": { "x": 2313, "y": 598, "w": 128, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 128, "h": 32 },
+    "sourceSize": { "w": 128, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "wood-crown.aseprite",
+    "frame": { "x": 1361, "y": 1002, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "apple.aseprite",
+    "frame": { "x": 1409, "y": 1002, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "apricot.aseprite",
+    "frame": { "x": 2488, "y": 160, "w": 8, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 8, "h": 8 },
+    "sourceSize": { "w": 8, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "banana.aseprite",
+    "frame": { "x": 1313, "y": 1018, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "beet.aseprite",
+    "frame": { "x": 1505, "y": 1018, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "blueberry.aseprite",
+    "frame": { "x": 2276, "y": 1041, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "broccoli.aseprite",
+    "frame": { "x": 2449, "y": 993, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 16 },
+    "sourceSize": { "w": 32, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "cabbage.aseprite",
+    "frame": { "x": 2401, "y": 1025, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "carrot.aseprite",
+    "frame": { "x": 1457, "y": 1018, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "cherry.aseprite",
+    "frame": { "x": 2488, "y": 144, "w": 8, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 8, "h": 8 },
+    "sourceSize": { "w": 8, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "corn.aseprite",
+    "frame": { "x": 1259, "y": 1049, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "cucumber.aseprite",
+    "frame": { "x": 400, "y": 1011, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 16 },
+    "sourceSize": { "w": 32, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "egg.aseprite",
+    "frame": { "x": 2276, "y": 1057, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "fig.aseprite",
+    "frame": { "x": 2488, "y": 136, "w": 8, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 8, "h": 8 },
+    "sourceSize": { "w": 8, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "garlic.aseprite",
+    "frame": { "x": 2324, "y": 1041, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "ginseng-root.aseprite",
+    "frame": { "x": 1707, "y": 1118, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "grape.aseprite",
+    "frame": { "x": 1211, "y": 1049, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "kale-leaf.aseprite",
+    "frame": { "x": 1531, "y": 1118, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "lemon.aseprite",
+    "frame": { "x": 2372, "y": 1041, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "lettuce.aseprite",
+    "frame": { "x": 400, "y": 694, "w": 32, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 16 },
+    "sourceSize": { "w": 32, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "lettuce-leaf.aseprite",
+    "frame": { "x": 1547, "y": 1118, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "lime.aseprite",
+    "frame": { "x": 1361, "y": 1018, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "mango.aseprite",
+    "frame": { "x": 2420, "y": 1041, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "mint.aseprite",
+    "frame": { "x": 1659, "y": 1118, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "oat.aseprite",
+    "frame": { "x": 2313, "y": 470, "w": 160, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 160, "h": 32 },
+    "sourceSize": { "w": 160, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "oats.aseprite",
+    "frame": { "x": 1313, "y": 1002, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "olive.aseprite",
+    "frame": { "x": 2488, "y": 96, "w": 8, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 8, "h": 8 },
+    "sourceSize": { "w": 8, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "onion.aseprite",
+    "frame": { "x": 1409, "y": 986, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "peach.aseprite",
+    "frame": { "x": 2488, "y": 88, "w": 8, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 8, "h": 8 },
+    "sourceSize": { "w": 8, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "pear.aseprite",
+    "frame": { "x": 2488, "y": 80, "w": 8, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 8, "h": 8 },
+    "sourceSize": { "w": 8, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "pepper.aseprite",
+    "frame": { "x": 2488, "y": 0, "w": 8, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 8, "h": 8 },
+    "sourceSize": { "w": 8, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "plum.aseprite",
+    "frame": { "x": 2488, "y": 64, "w": 8, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 8, "h": 8 },
+    "sourceSize": { "w": 8, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "potato.aseprite",
+    "frame": { "x": 1409, "y": 1018, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "red-ginseng.aseprite",
+    "frame": { "x": 1643, "y": 1118, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "rhubarb.aseprite",
+    "frame": { "x": 2488, "y": 56, "w": 8, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 8, "h": 8 },
+    "sourceSize": { "w": 8, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "ricesack.aseprite",
+    "frame": { "x": 1296, "y": 794, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "sage.aseprite",
+    "frame": { "x": 1627, "y": 1118, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "strawberry.aseprite",
+    "frame": { "x": 2488, "y": 48, "w": 8, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 8, "h": 8 },
+    "sourceSize": { "w": 8, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "thyme.aseprite",
+    "frame": { "x": 1579, "y": 1118, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "tomato.aseprite",
+    "frame": { "x": 1264, "y": 842, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "wheat.aseprite",
+    "frame": { "x": 2401, "y": 1009, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "arsenicore.aseprite",
+    "frame": { "x": 1595, "y": 1118, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "ash.aseprite",
+    "frame": { "x": 2488, "y": 32, "w": 8, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 8, "h": 8 },
+    "sourceSize": { "w": 8, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "pitfire.aseprite",
+    "frame": { "x": 1505, "y": 1002, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "soot.aseprite",
+    "frame": { "x": 1611, "y": 1118, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "straw.aseprite",
+    "frame": { "x": 1723, "y": 1118, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "chisel-head.aseprite",
+    "frame": { "x": 1739, "y": 1118, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "log-beam.aseprite",
+    "frame": { "x": 400, "y": 947, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "plank.aseprite",
+    "frame": { "x": 2433, "y": 929, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "rivet.aseprite",
+    "frame": { "x": 2356, "y": 1105, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "short-shaft.aseprite",
+    "frame": { "x": 1755, "y": 1118, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "short-shaft-tools.aseprite",
+    "frame": { "x": 1755, "y": 1118, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "string.aseprite",
+    "frame": { "x": 769, "y": 854, "w": 48, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 8 },
+    "sourceSize": { "w": 48, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "trowel-shaft.aseprite",
+    "frame": { "x": 2436, "y": 1065, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "wood.aseprite",
+    "frame": { "x": 2483, "y": 224, "w": 12, "h": 6 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 12, "h": 6 },
+    "sourceSize": { "w": 12, "h": 6 },
+    "duration": 100
+   },
+   {
+    "filename": "adze.aseprite",
+    "frame": { "x": 1163, "y": 1073, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "animal-hides.aseprite",
+    "frame": { "x": 1457, "y": 1002, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "ard.aseprite",
+    "frame": { "x": 1179, "y": 1073, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "arrow.aseprite",
+    "frame": { "x": 2468, "y": 1061, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "awl.aseprite",
+    "frame": { "x": 1553, "y": 1018, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "axe.aseprite",
+    "frame": { "x": 1553, "y": 1002, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "basket.aseprite",
+    "frame": { "x": 1457, "y": 986, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "basket-large.aseprite",
+    "frame": { "x": 1296, "y": 810, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "bone.aseprite",
+    "frame": { "x": 673, "y": 854, "w": 48, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 8 },
+    "sourceSize": { "w": 48, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "bone-axe.aseprite",
+    "frame": { "x": 625, "y": 854, "w": 48, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 8 },
+    "sourceSize": { "w": 48, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "brickmold.aseprite",
+    "frame": { "x": 1275, "y": 1081, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "canoe.aseprite",
+    "frame": { "x": 2401, "y": 993, "w": 48, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 16 },
+    "sourceSize": { "w": 48, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "cheese.aseprite",
+    "frame": { "x": 2488, "y": 104, "w": 8, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 8, "h": 8 },
+    "sourceSize": { "w": 8, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "cleaver.aseprite",
+    "frame": { "x": 2388, "y": 1073, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "deer-sinew.aseprite",
+    "frame": { "x": 2488, "y": 120, "w": 8, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 8, "h": 8 },
+    "sourceSize": { "w": 8, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "digging-stick.aseprite",
+    "frame": { "x": 577, "y": 854, "w": 48, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 8 },
+    "sourceSize": { "w": 48, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "feather.aseprite",
+    "frame": { "x": 481, "y": 854, "w": 48, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 8 },
+    "sourceSize": { "w": 48, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "flake.aseprite",
+    "frame": { "x": 721, "y": 854, "w": 48, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 8 },
+    "sourceSize": { "w": 48, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "flint.aseprite",
+    "frame": { "x": 801, "y": 810, "w": 24, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 24, "h": 8 },
+    "sourceSize": { "w": 24, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "flint-drill.aseprite",
+    "frame": { "x": 529, "y": 854, "w": 48, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 8 },
+    "sourceSize": { "w": 48, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "flint-spear-head.aseprite",
+    "frame": { "x": 2372, "y": 1057, "w": 48, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 8 },
+    "sourceSize": { "w": 48, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "goat-cheese.aseprite",
+    "frame": { "x": 2488, "y": 72, "w": 8, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 8, "h": 8 },
+    "sourceSize": { "w": 8, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "hammer.aseprite",
+    "frame": { "x": 1227, "y": 1073, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "hammer-stone2.aseprite",
+    "frame": { "x": 2488, "y": 128, "w": 8, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 8, "h": 8 },
+    "sourceSize": { "w": 8, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "hammer-stone.aseprite",
+    "frame": { "x": 2372, "y": 1065, "w": 48, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 8 },
+    "sourceSize": { "w": 48, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "handaxe.aseprite",
+    "frame": { "x": 1243, "y": 1073, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "hand-chisel.aseprite",
+    "frame": { "x": 1259, "y": 1073, "w": 32, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 8 },
+    "sourceSize": { "w": 32, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "knife.aseprite",
+    "frame": { "x": 1291, "y": 1073, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "large-handle.aseprite",
+    "frame": { "x": 2324, "y": 1065, "w": 48, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 8 },
+    "sourceSize": { "w": 48, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "machete.aseprite",
+    "frame": { "x": 2276, "y": 1073, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "mallet.aseprite",
+    "frame": { "x": 2292, "y": 1073, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "oil-lamp.aseprite",
+    "frame": { "x": 2308, "y": 1073, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "peat.aseprite",
+    "frame": { "x": 2324, "y": 1073, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "primitive-hand-sack.aseprite",
+    "frame": { "x": 1259, "y": 1065, "w": 48, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 8 },
+    "sourceSize": { "w": 48, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "primitive-leather-sack.aseprite",
+    "frame": { "x": 1211, "y": 1065, "w": 48, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 8 },
+    "sourceSize": { "w": 48, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "primitive-rope.aseprite",
+    "frame": { "x": 320, "y": 1043, "w": 48, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 8 },
+    "sourceSize": { "w": 48, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "primitive-spear.aseprite",
+    "frame": { "x": 1163, "y": 1065, "w": 48, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 8 },
+    "sourceSize": { "w": 48, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "primitive-string.aseprite",
+    "frame": { "x": 2420, "y": 1057, "w": 48, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 8 },
+    "sourceSize": { "w": 48, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "saw.aseprite",
+    "frame": { "x": 1211, "y": 1073, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "scalpel.aseprite",
+    "frame": { "x": 2356, "y": 1073, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "scythe.aseprite",
+    "frame": { "x": 2372, "y": 1073, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "shortbow.aseprite",
+    "frame": { "x": 2404, "y": 1073, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "shovel.aseprite",
+    "frame": { "x": 2468, "y": 1077, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "sickle.aseprite",
+    "frame": { "x": 2452, "y": 1065, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "small-handle.aseprite",
+    "frame": { "x": 2324, "y": 1057, "w": 48, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 8 },
+    "sourceSize": { "w": 48, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "stone-tablet.aseprite",
+    "frame": { "x": 1259, "y": 1081, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "string.aseprite",
+    "frame": { "x": 368, "y": 1047, "w": 48, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 8 },
+    "sourceSize": { "w": 48, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "sword.aseprite",
+    "frame": { "x": 2340, "y": 1073, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "trowel.aseprite",
+    "frame": { "x": 2436, "y": 1065, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "wood-artifact.aseprite",
+    "frame": { "x": 1377, "y": 970, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "wood.aseprite",
+    "frame": { "x": 400, "y": 710, "w": 32, "h": 8 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 8 },
+    "sourceSize": { "w": 32, "h": 8 },
+    "duration": 100
+   },
+   {
+    "filename": "wood-bucket.aseprite",
+    "frame": { "x": 2449, "y": 1025, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "wall-floor.aseprite",
+    "frame": { "x": 1313, "y": 970, "w": 64, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 16 },
+    "sourceSize": { "w": 64, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "tent-cover.aseprite",
+    "frame": { "x": 1864, "y": 607, "w": 16, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 32 },
+    "sourceSize": { "w": 16, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "wattle-roof.aseprite",
+    "frame": { "x": 1296, "y": 778, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "wood-roof.aseprite",
+    "frame": { "x": 1195, "y": 1073, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "wattle-wall.aseprite",
+    "frame": { "x": 2468, "y": 1045, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "wood-fence.aseprite",
+    "frame": { "x": 2420, "y": 1065, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "wood-fence-gate.aseprite",
+    "frame": { "x": 1296, "y": 826, "w": 16, "h": 16 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 16 },
+    "sourceSize": { "w": 16, "h": 16 },
+    "duration": 100
+   },
+   {
+    "filename": "wood-wall.aseprite",
+    "frame": { "x": 2473, "y": 662, "w": 16, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 16, "h": 32 },
+    "sourceSize": { "w": 16, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "roleicons.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 832, "h": 480 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 832, "h": 480 },
+    "sourceSize": { "w": 832, "h": 480 },
+    "duration": 100
+   },
+   {
+    "filename": "buttons-sheet.aseprite",
+    "frame": { "x": 2376, "y": 0, "w": 96, "h": 224 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 96, "h": 224 },
+    "sourceSize": { "w": 96, "h": 224 },
+    "duration": 100
+   },
+   {
+    "filename": "buttonssheet.aseprite",
+    "frame": { "x": 832, "y": 0, "w": 440, "h": 660 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 440, "h": 660 },
+    "sourceSize": { "w": 440, "h": 660 },
+    "duration": 100
+   },
+   {
+    "filename": "buttons-sheetp.aseprite",
+    "frame": { "x": 2376, "y": 0, "w": 96, "h": 224 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 96, "h": 224 },
+    "sourceSize": { "w": 96, "h": 224 },
+    "duration": 100
+   },
+   {
+    "filename": "continueb.aseprite",
+    "frame": { "x": 769, "y": 694, "w": 48, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 32 },
+    "sourceSize": { "w": 48, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "loadb.aseprite",
+    "frame": { "x": 1816, "y": 671, "w": 48, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 32 },
+    "sourceSize": { "w": 48, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "newb.aseprite",
+    "frame": { "x": 1569, "y": 714, "w": 48, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 32 },
+    "sourceSize": { "w": 48, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "optionsb.aseprite",
+    "frame": { "x": 1768, "y": 671, "w": 48, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 32 },
+    "sourceSize": { "w": 48, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "order-menu.aseprite",
+    "frame": { "x": 1272, "y": 474, "w": 400, "h": 240 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 400, "h": 240 },
+    "sourceSize": { "w": 400, "h": 240 },
+    "duration": 100
+   },
+   {
+    "filename": "playb.aseprite",
+    "frame": { "x": 1617, "y": 714, "w": 48, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 48, "h": 32 },
+    "sourceSize": { "w": 48, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "build-icon.aseprite",
+    "frame": { "x": 400, "y": 1027, "w": 20, "h": 20 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 20, "h": 20 },
+    "sourceSize": { "w": 20, "h": 20 },
+    "duration": 100
+   },
+   {
+    "filename": "building-icon.aseprite",
+    "frame": { "x": 2468, "y": 1025, "w": 20, "h": 20 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 20, "h": 20 },
+    "sourceSize": { "w": 20, "h": 20 },
+    "duration": 100
+   },
+   {
+    "filename": "flag-icon.aseprite",
+    "frame": { "x": 2465, "y": 973, "w": 20, "h": 20 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 20, "h": 20 },
+    "sourceSize": { "w": 20, "h": 20 },
+    "duration": 100
+   },
+   {
+    "filename": "icon-temp.aseprite",
+    "frame": { "x": 801, "y": 790, "w": 20, "h": 20 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 20, "h": 20 },
+    "sourceSize": { "w": 20, "h": 20 },
+    "duration": 100
+   },
+   {
+    "filename": "inventorytoolbar.aseprite",
+    "frame": { "x": 0, "y": 480, "w": 400, "h": 240 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 400, "h": 240 },
+    "sourceSize": { "w": 400, "h": 240 },
+    "duration": 100
+   },
+   {
+    "filename": "knowledge-icon.aseprite",
+    "frame": { "x": 1649, "y": 778, "w": 20, "h": 20 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 20, "h": 20 },
+    "sourceSize": { "w": 20, "h": 20 },
+    "duration": 100
+   },
+   {
+    "filename": "military-icon.aseprite",
+    "frame": { "x": 2465, "y": 953, "w": 20, "h": 20 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 20, "h": 20 },
+    "sourceSize": { "w": 20, "h": 20 },
+    "duration": 100
+   },
+   {
+    "filename": "needs-icon.aseprite",
+    "frame": { "x": 2465, "y": 913, "w": 20, "h": 20 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 20, "h": 20 },
+    "sourceSize": { "w": 20, "h": 20 },
+    "duration": 100
+   },
+   {
+    "filename": "order-icon.aseprite",
+    "frame": { "x": 2465, "y": 933, "w": 20, "h": 20 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 20, "h": 20 },
+    "sourceSize": { "w": 20, "h": 20 },
+    "duration": 100
+   },
+   {
+    "filename": "prodicons.aseprite",
+    "frame": { "x": 1913, "y": 470, "w": 400, "h": 240 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 400, "h": 240 },
+    "sourceSize": { "w": 400, "h": 240 },
+    "duration": 100
+   },
+   {
+    "filename": "settingsicon.aseprite",
+    "frame": { "x": 1264, "y": 778, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.3.16.1-dev",
+  "image": "game.png",
+  "format": "RGBA8888",
+  "size": { "w": 2496, "h": 1246 },
+  "scale": "1"
+ }
+}

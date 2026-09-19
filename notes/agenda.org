@@ -1,0 +1,384 @@
+* GAME ITEMS TODAY <2026-09-16 Wed>
+- debug 'world'
+- finish production info menu (right side)
+- touch up center production info menu
+- figure out init for UI and rendering 'globals'
+* Pre-Alpha (NOW)
+** TODO Logan
+*** 0 errors
+*** Code Reorganization
+*** 
+*** Launch Program
+*** Spawn a World
+*** Finish UI
+**** functional large menus
+*** Prereq core systems to main loop playable
+**** Pathfinding
+**** 
+*** Main Loop Playable (Paleolithic)
+includes:
+**** Unlocking new units
+**** Finding and harvesting resources
+***** queue production
+**** Making products
+**** Hunting
+**** Building
+**** eating
+**** Combat
+**** inventory
+
+**** check needs- aggregate and individual
+**** receive event warnings
+- death
+- close to deaths
+- attack
+- mental break
+**** messages (tutorials)
+**** farming
+*** Movement + Action + NewPath
+first queueReadyActions sees if sub-action is finished. (inertia 0)
+if sub-action finished, then marked for buffer to processEntityActions.
+
+processEntityActions marks for main actions shared across animals and units. std::optional and bool marker for relevant unit code in the same function. some of the lazy code is just marking for the XBuffer to triggerXFunctions.
+
+triggerXFunctions triggers relevant lazy function for each type, using XBuffer as data.
+*** AttemptProduction and other complete task necessary functions
+**** zeroeth function adds amount of commodity back to queue if first function fails.
+**** first function just iterates through recipe, and sees if pawn can realistically get and reserve all the inputs/requirements. 
+- puts data about to-do list for getting inputs into inventory pickup buffer- this system might also contain all items (can be searchgrid), so pawns can reserve items.
+**** second function assigns pawn path based one targets for each of the items
+*** cleaning up for errors
+*** (maybe) macros regarding simple operations
+*** aseprites for first launch (launching menu)
+*** game_loop
+**** handleEvent
+**** processWorld
+**** cloud covers
+*** upscaling to screen size
+*** Menus
+**** wait for sprites to be done
+*** Inventory and unit tasks
+**** TODO add .replaceable and .tool to actionToTools (also make proper lookup table)
+On event of player affecting tasks:
+**** structures                                                       :FILL:
+each role has a priority list, max size is the number of products (material or non material) that role can possibly make. 
+
+struct that holds priority list. each role also has its minimum priority, and the index to that product.
+**** Event: player affecting tasks directly affects certain roles' priority queues 
+all units currently performing a non-material role, have their min priorities compared against the new order's priority, and switch to that if applicable.
+**** Event: Unit finishes task
+unit checks all its roles, and then selects the task with the lowest priority.
+*** Writing to data to file
+*** option to configure screen size
+** TODO Tobi 
+*** Role icons
+**** Colors
+red-arts
+green-support
+orange-combat
+purple-resources
+blue-production
+yellow-leader 
+**** Missing
+Poet, Factor, Teamster, Herder, StoneMiner, IronMiner, GoldMiner, SaltMiner, SilverMiner, Curaisser, Apothecary
+**** Changes
+Gemstone Miner: change color of gem
+Livestock Farmer: add detail, color
+Papyrus Farmer, Wood farmer, olive farmer papyrus farmer: sort out if it should be a picture of them farming or the actual item
+**** Producers
+Knapper: make it more obvious he has something in his left hand
+Carver: change to look WAY more primitive
+Hidecrafter: make way more primitive: should be just animal skin, not even leather. maybe blood?
+Canoe Carver: make it more obvious he is making rather than paddling canoe
+Basket Weaver: make it more clear it is a basket being made.
+Crafter: way more primitive-- making things out of simple sticks and twine and stone
+Shelter Builder: add that some shelther is already constructed, so he can be distinguihsed from the hauler a bit more, or he is placing things on teh ground.
+Mixer: he is mixing mud and dirt with sticks.
+Clay Worker: make it more clear it is clay, probably grey
+Butcher: too modern, dirty knife,
+Preserver: add preserve vegetable jar as well.
+Woodworker: making primitive planks, plank icon can also be considered
+Spinner: make anatomy more clear
+Mudbrick Maker: make them look a little more clean
+All Smelter: should be ingots
+All smiths: anvil should be present with material, silver and goldsmiths can be rings
+Oil maker: not that kind of oil
+Boat builder: fix his head
+Minter: just a coin
+Siege Engineer: use ancient siege weapon
+Steel smelter: steel ingot bar (make sure it is clear that it is different from silver
+Surgeon: less modern
+Mil leader: is a military leader
+caretaker: use not modern clothes
+hauler: don't do it, need to think
+tailor: not modern, modern top as icon, not too compressed
+*** Renaming Job
+0. for size, use the human (and tree) as comparison (but if it is close enough, let it be.). (most seem fine, rabbit too big maybe elephant can be bigger.)
+0.1. get me to review all the size changes you have made before proceeding to fix the files where you have made size changes.(only make 'down' and 'left').
+
+1. Remove the first column. 
+2. Make sure right vs left, up vs down is consistent: 1: down, 2: left, 3: right, 4: up
+3. make sure that for the adult sizing is consitent across all columns.
+4. make sure that the sprites are consitent in the amount of space they are taking up, and the body is centered across the tile it occupies, and legs are not going over the tiles it should occupy.
+5. only one dead sprite for each Male, female, child, all facing left. 
+6. delete lone baby and dead files.
+** TODO Teyah
+** TODO Abdullah
+** Checks/Debugging
+*** verify that 2d arrays are [y][x] indexed
+*** ensuring searching for any entity actually works!
+* Pre-Beta
+** additional metaprogramming features: crossed enum:
+list = {A, B, C}
+crossedEnum(list) returns:
+
+enum class {
+A,
+B,
+C,
+AB,
+AC,
+BC,
+ABC,
+MAX
+};
+or consider bitmaks depending on use case
+** audio functionality
+** chunked rendering
+** shaders
+glad — loads OpenGL functions
+GLSL — the shader language; comes with OpenGL, no separate library
+A small C++ Shader class that loads .vert / .frag files, compiles them, and reports errors
+* Pre-1.0
+** languages!
+*** language concepts can be taken from other languages.
+language concepts allow faster unlock, as well as individual training, of certain roles/skills
+** actually implement NPC tribes
+** automatic 'greedy' and 'hungry' interest
+** change globals to fit some convention, maybe namespaces
+** Migration Logic
+** better procedural generation: no probabilities
+** bureaucrat can produce reports-- tell player they need more of a certain role, based on automatic analysis 
+** larger simulations
+*** actually manage Separate database for active chunks
+*** better arena management, ALLOC_FACTOR calculations
+*** faux time simulations
+** ERROR HANDLING: separate 'verify data' static assert functions, that only then pass to the actual functions! (at dispatch level
+** Role inventory policies: player can control how much a pawn of a certain role should keep on them at all times (or under certain circumstances), as unit's contents are invisible to all other units (unless asked for) (perhaps shipping roles can have this off)
+** A creature turning takes a second
+** family trees and different appearances, social institutions
+** Branchless programming if further optimization required
+** Keep certain arrays sorted 
+** Custom Temperature Spaces: fires, rooms (in chunk entities grid)
+** Rainfall, weather, humidity effects
+*** tile switches to snow or different water types if more water added, mud if water added to soil
+** Digging below tiles
+generated layer under tiles that is indexed-matched to tile above. replaces tile above if tile above is dug, and then auto-generates a new tile, so that there is always a pre-loaded lazy tile generation.
+** Rivers and lakes
+1. Identify Candidate Basins
+   a. For each tile in the map:
+       - If the tile is a local minimum (all neighbors higher or equal), mark as potential lake.
+   b. Group connected local minima into basins (cluster adjacent low tiles).
+   c. For each basin, compute:
+       - Basin area = number of connected low tiles
+       - Basin depth potential = minimum height difference between basin floor and lowest surrounding rim (lake height is randomized-- stored contiguosly with volume, and actual altitude lowers of volume reaches certain threshold due to player actions or seasons)
+   d. Discard basins with depth < minimum threshold (e.g., 1-2 tiles)
+
+2. Compute Water Input for Each Basin
+   a. River inflow:
+       - Sum volume of all rivers entering the basin (width × flow factor)
+   b. Rainfall contribution:
+       - rainfall_factor × basin_area
+   c. Snowmelt contribution (optional):
+       - Add seasonal snowmelt if basin contains mountain/snow tiles
+   d. Total water input:
+       - water_input = river_inflow + rainfall + snowmelt
+
+3. Determine Lake Surface Area and Depth
+   a. Compare water_input to basin capacity (max depth × basin area)
+   b. Rules of thumb:
+       - Low water_input → lake occupies only deepest tiles → small, deep lake
+       - Medium water_input → lake fills most of basin → medium-sized, moderate depth
+       - High water_input → lake fills basin, may overflow → large, shallow lake or floodplain
+
+4. Connect Lakes to Rivers
+   a. If a river enters the basin:
+       - Add its flow to water_input
+       - If water_input > basin capacity:
+           - Create an outflow river at the lowest rim tile
+   b. Ensure water flows logically downstream
+
+5. Optional Seasonal Variation
+   a. Wet season:
+       - Expand lake into surrounding floodplain tiles
+   b. Dry season:
+       - Shrink lake, leaving only deepest tiles
+   c. Adjust river inflow seasonally if desired
+
+6. Optional Micro-Features
+   a. Floodplains: 1–2 tile buffer around large/high-input lakes that fill in wet season
+   b. Swamps/marshes: low-lying shallow areas with persistent water
+   c. Sediment buildup: edges of lakes can gradually fill over time (optional)
+
+7. Assign Lake Tile Properties
+   a. Mark tiles as lake, floodplain, or wetland
+   b. Assign depth (optional) based on tile elevation relative to lake water level
+   c. Assign micro-features like vegetation, swamps, or marsh tiles
+
+*** 1. Precompute Water Sources
+**** Precipitation Map
+- Assign each tile a base rainfall value.
+- Apply seasonal multipliers:
+  - Spring: 1.0
+  - Summer: 1.1 (rainy regions) or 0.8 (dry regions)
+  - Autumn: 0.6–0.8
+  - Winter: 0.3–0.5
+
+**** Snow/Glacier Map
+- High-elevation tiles accumulate snow in winter.
+- Snowmelt contributes to rivers based on season:
+  - Spring: 100%
+  - Summer: 20–50%
+  - Autumn: 10–20%
+  - Winter: 0–10%
+
+**** Groundwater/Baseflow Map (optional)
+- Slow, steady contribution from precipitation infiltrating soil.
+
+*** 2. Determine River Sources
+- Sources chosen from:
+  - Mountain/high-altitude tiles with snow/glacier or high rainfall.
+  - Groundwater-fed springs.
+- Initial river volume or stage:
+  - initial_flow = rainfall + snowmelt + groundwater
+
+*** 3. River Path Generation
+- Route rivers along lowest altitude / slope.
+- Decide river age:
+  - Young rivers → narrow, steep, greedy paths.
+  - Mature rivers → wider, meandering, widen tiles along the path.
+- Use chunk-based altitude approximation to reduce computation.
+
+*** 4. Volume / Stage Propagation
+**** Water Representation
+- Float volume (continuous) or
+- Discrete stages (integer levels, e.g., 0–10) like Minecraft water blocks.
+  - Each stage corresponds to visual width/depth and flow potential.
+
+**** Tile Update Formula
+- tile_water = inflow_from_upstream + local_tile_input - evaporation - seepage
+- Adjust river width/visuals based on volume/stage.
+
+*** 5. Seasonal Updates
+- Apply seasonal multipliers to water input:
+  - Snowmelt: Spring 100%, Summer 20–50%, Autumn 10–20%, Winter 0–10%
+  - Precipitation: Spring 1.0, Summer 1.1 or 0.8, Autumn 0.6–0.8, Winter 0.3–0.5
+- Global seasonal river flow variation:
+  - Spring: ~1.0× (peak)
+  - Summer: 0.7–0.9×
+  - Autumn: 0.6–0.8×
+  - Winter: 0–0.5× (snow-fed rivers drop dramatically)
+- Snow-fed rivers can vary 2–3× between peak and trough.
+- Rain-fed rivers vary according to rainfall seasonality.
+
+*** 6. Lake Generation
+- Identify local minima in terrain.
+- Determine lake type:
+  - Small/floodplain → wet area, no major river.
+  - Medium → connected to river, not wet area.
+  - Large → connected to river and wet area.
+- Update lake volume per season:
+  - lake_volume_next = lake_volume_prev + inflow_from_rivers + local_tile_input - outflow - evaporation
+- Depth effects:
+  - Shallow lakes → fluctuate more, may dry out in dry season.
+  - Deep lakes → more stable, smaller relative fluctuations.
+
+*** 7. Optimizations for Tile-Based Games
+- Use discrete stages instead of float volumes → reduces computation and simplifies overflow.
+- Chunk-based pathfinding for river routing.
+- Seasonal updates once per season instead of per frame.
+- Overflow/spill: stage exceeds max → spill to adjacent lower tile.
+- Width/visuals derived from volume/stage.
+
+*** 8. Tile Water Inputs
+- tile_water_input = rainfall + snowmelt + groundwater
+- Seasonal multipliers applied.
+- Drives initial river volume, propagation, and lake levels.
+
+*** Outcome
+- Rivers expand and shrink seasonally.
+- Lakes store water and fluctuate realistically.
+- Computation remains lightweight for tile-based games.
+- Discrete stages simplify logic and rendering.
+
+*** Architecture of Game System
+- Cells/regions are spawned by the world spawner, which contain a variable amount of tiles which form various shapes as an entire cell when viewed from a bird's eye view.
+  Each region has a biome, altitude, temperature, lakes, and rivers value. 
+
+  They are deterministically spawned using a seed. The same seed is also used to create the vioronoi 
+*** check to see if Database functions can be instead made to freestanding functions than can be reused
+** first function loops through and gets entities with timers[0], puts their data into new active buffer, update functions only iterate on that (the same for any entity where most are not timers[0]
+** More accurate precipitation prediction per biome/zone
+** Engineers automatically build valid aqueducts (automatically track path of descent), when tasked to build between two points by player.
+** Fully simulate atmospheric latitude effects
+- Ferrel Cells and Hadley Cells, trade winds, etc
+- Affects both generation and diurnal and seasonal temp variance
+** Tile drops display if altitude variation is too high to prevent building contiguously
+** Artificial Selection-- plants and animals can get 'better'
+** get rid of all vectors, standardize overflow/imps
+* Performance
+** Transcendental Function SIMD
+* NOTES
+** Programming
+*** Scheduling and Simulation Precision
+- there are two main divisions: player - active chunks (the player's pawns frequent the area, and non - player - active chunks. PAC and NPAC entity data are stored in different databases, their may also be several different PAC and NPAC databases, with special cases of nearer NPAC databases which contain chunks closer to the player, which they are likely to discover soon.
+
+  All entities in NPACs are processed at a high frequency. There is lower batching, event driven. All entities in non-NPACs are processed at a low frequency. Higher batching, more concurrency of large tasks.
+** Cleaning Up
+*** Checklist
+- [X] Core (scans.hpp needs more cleaning)
+- [ ] World 
+* New Core Ideas
+** More civilizational development
+I have charted the western pathway, chart other possible pathways. perhaps less focus on specialization, more focus on developing each individual even MORE deeply.
+- also sex relations can be different.
+  - but the player can always choose.
+
+   - Memes (symbols, images, ideas) which the player can invest points in, sometimes automatically develop, and can syncretize with other symbols. Many developed memes needed to create a religion.
+
+     - Each pawn's *actual role mana* differs from their *raw role mana* (it can be less or more). The player's system of government determines how much control they have over the pawn's role mana, and also buffs/debuffs on role mana values, as well as assigning
+
+       certain systems of government and culture are better at creating high quality goods, others are good at creating owned quality goods fast.
+
+       player can control multiple tribes/nations/corporations which may also battle with each other, and if too disparate the player may have to choose one or the other to influence. 
+** Complex Roles vs Production roles (Social roles)
+Social roles can be tied to production roles (or not), and also have requirements (property, satisfaction, food) that if not met makes unit with that role unhappy.
+** User-Determined Aesthetic Culture Buffs
+The user can choose certain colours, and certain simple shapes (consider picking common ones from that psychological theorist who posited that our formation of objects is made up of several individual simple shapes, or perhaps it should be angular features (sharpness, curved, etc). The user then is able to get 'inspirations' for that aesthetic-- if a pawn is attacked by a tiger, the user may get an inspiration for the colour orange, with the value 'ferocity'. Every once in a while they may be able to get enough cultural points for a free aesthetic feature -> buff without inspiration points. Whenever the player's tribe builds an artifact or art that has that aesthetic feature, the player's tribe will receive that additional mini-buff. These aesthetic features can be wider kfpmotifs, or materials, as well. 
+* Possible Updates
+- TODO: water-powered hammers
+- add more trainer classes
+- flesh out leader classes, maybe add more leader classes
+- Advanced farming: soil types, fertilizers, waterlogging, diseases, weeding, specific sunlight sensitivity
+- Advanced Cuisine - Food variety, Different meats and cheeses, more spices, berries
+- Rust and decay (entropy update) (buildings and tools naturally wear)
+- Bamboo
+- Advanced Fishing
+- Ores extended: Brass, Lead, Nickel
+- Materials extended: Hardwoods, softwoods, Hardstones, softstones
+- Natural Dangers: disease, workplace injuries
+- Architecture expanded: Domes, Arches
+- Advanced Water: Dry Areas, Qanats, Ice, Distillation, Treatment, Salt/Freshwater
+- Weeds
+- Advanced Clothing - buffs for clothes, clothes wear, etc
+- Winds: Sailing, jfarming, knocking small objects
+* LATER
+- large seas in world gen
+- scouts, watchmen, notify the player and pawns during attacks
+- elevation
+- different logs in aseprite, and log falling animation
+- separate flint and hardstone (possibly granite) tools as early toolheads, one brittle but sharp, other more durable
+- add stats for hardstone as building material
+- coastal mountains, leeway affect on biome generation, and
+- logs collapse against trees if there are trees nearby upon another trees' death instead of finding nearest adjacentemptytile
+- new musical units unlock different soundtracks, or like my singing monsters

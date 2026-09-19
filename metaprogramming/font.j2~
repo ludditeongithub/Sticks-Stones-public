@@ -1,0 +1,4 @@
+{% for f in fonts %}
+  FC_Font* {{ f.name }};  
+  fc_load_font_from_ttf({{ f.name }}, renderer, {{ f.ttf }}, {{ f.color }});
+{% endfor %}

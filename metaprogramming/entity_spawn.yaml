@@ -1,0 +1,9 @@
+generation:
+        animal:
+                name: animal
+        plant:
+                name: plant
+        grass:
+                name: grass
+        scavengeable:
+                name: scavengeable
