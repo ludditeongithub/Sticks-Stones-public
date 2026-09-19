@@ -1,13 +1,17 @@
 #ifndef PERISHABLES_HPP
 #define PERISHABLES_HPP
 #include "enum.hpp"
+#include <world/food/enum.hpp>
+#include <world/unit/enum.hpp>
 #include <core/data.hpp>
 #include <core/tables.hpp>
+#include <world/unit/data.hpp>
+#include <world/item/enum.hpp>
 
-constexpr float FROZEN_TIME_MULT = 0.005;
-constexpr float FRIDGE_TIME_MULT = 0.08;
-constexpr float STANDARD_TIME_MULT = 1.00;
-constexpr float HOT_TIME_MULT = 1.85;
+constexpr float FROZEN_TIME_MULTIPLIER = 0.005;
+constexpr float FRIDGE_TIME_MULTIPLIER = 0.08;
+constexpr float STANDARD_TIME_MULTIPLIER = 1.00;
+constexpr float HOT_TIME_MULTIPLIER = 1.85;
 
 // @codegen:begin specialization
 enum class Perishable {
@@ -15,12 +19,14 @@ enum class Perishable {
   MAX
 };
 
-inline constexpr LookupTable<Perishable, float> decays = [] {
-LookupTable<Perishable, float> lt{};
-  using enum Perishable;
-return lt;
+inline constexpr LookupTable<Perishable, float> DECAYS = []
+{
+	LookupTable<Perishable, float> lt{};
+	using enum Perishable;
+	return lt;
 }();
-inline constexpr LookupTable<Perishable, PreservationState> preservation_states = [] {
+
+inline constexpr LookupTable<Perishable, PreservationState> PRESERVATION_STATES = [] {
 LookupTable<Perishable, PreservationState> lt{};
   using enum Perishable;
 return lt;

@@ -4,7 +4,7 @@
 
 #include "SDL_FontCache.h"
 #include "core/data.hpp"
-#include "render/sprite_sheet_settings.hpp"
+#include "render/sprite.hpp"
 #include "render/texture.hpp"
 #include "ui/aggregates/info_box.hpp"
 #include "ui/components/element.hpp"
@@ -18,21 +18,15 @@ struct InfoSection {
 	static constexpr uint8_t FRAME_BORDER = 1;
 	static inline SDL_Rect frame = sprite::ui[UISprite::InfoMenuItemFrame];
   static constexpr SCoord title_pos= {50, 13};
-        static constexpr FC_Font** title_font = &cagliostro_4;
+        static constexpr FC_Font** title_font = &cagliostro;
   static constexpr SDL_Rect desc_box = {15, 56, 40, 50};
-  static constexpr FC_Font **desc_font = &cagliostro_4;
-  Displayable display;  
+  static constexpr FC_Font **desc_font = &cagliostro;
+  SDL_Rect display; 
 	Text title;
 	Text desc;
 
-  InfoSection(Displayable display, const char* desc) : display(display)
+  InfoSection(SDL_Rect display, const char* title, const char* desc) : 
   {
-	  char *title;
-    if (auto x = std::get_if<Item>(this->display)) {
-                title = magic_enum::enum_name((x)).c_str();
-    } else if (auto x = std::get_if<Buildable>(this->display)) {
-                title = magic_enum::enum_name((x)).c_str();
-    }
 		this->title = Text(*title_font, title);
                 this->desc = Text(*desc_font, desc);
         }
@@ -71,7 +65,11 @@ struct RequirementsSection
     }
     else if (auto ptr = std::get_if<Buildable>(&display)) {
 
-    }
+    } else if (auto ptr = if (get_if<knowledge::Academic>(&display)) {
+        
+      }
+
+
 
     for (size_t i = 0; i < ; i++) {
 	    reqs[i].pos.x = pos.x;

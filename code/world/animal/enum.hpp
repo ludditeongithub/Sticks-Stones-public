@@ -20,7 +20,8 @@ using AnimalStatus = PackedEnum<Field<Direction, 2>, Field<MatingStatus, 2>>;
 // COLD
 
 enum class Animal : uint8_t
-{    NONE,
+{
+        NONE,
 	Pig,
 	Cow,
 	Chicken,
@@ -43,7 +44,7 @@ enum class Animal : uint8_t
 	Wolf,
 	Bear,
 	Caribou,
-	// TODO: fish
+	Fish
 	// lizard
 	// frog
 	// snake

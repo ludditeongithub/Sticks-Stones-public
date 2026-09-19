@@ -271,15 +271,21 @@
 },
 {
   "directory": "/home/logan/gameprogramming/code/build",
-  "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern -std=gnu++23 -o CMakeFiles/main_exe.dir/world/animal/database.cpp.o -c /home/logan/gameprogramming/code/world/animal/database.cpp",
-  "file": "/home/logan/gameprogramming/code/world/animal/database.cpp",
-  "output": "CMakeFiles/main_exe.dir/world/animal/database.cpp.o"
-},
-{
-  "directory": "/home/logan/gameprogramming/code/build",
   "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern -std=gnu++23 -o CMakeFiles/main_exe.dir/world/animal/events.cpp.o -c /home/logan/gameprogramming/code/world/animal/events.cpp",
   "file": "/home/logan/gameprogramming/code/world/animal/events.cpp",
   "output": "CMakeFiles/main_exe.dir/world/animal/events.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern -std=gnu++23 -o CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.o -c /home/logan/gameprogramming/code/world/foreign/tribe_events.cpp",
+  "file": "/home/logan/gameprogramming/code/world/foreign/tribe_events.cpp",
+  "output": "CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern -std=gnu++23 -o CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.o -c /home/logan/gameprogramming/code/world/foreign/tribes.cpp",
+  "file": "/home/logan/gameprogramming/code/world/foreign/tribes.cpp",
+  "output": "CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.o"
 },
 {
   "directory": "/home/logan/gameprogramming/code/build",
@@ -316,18 +322,6 @@
   "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern -std=gnu++23 -o CMakeFiles/main_exe.dir/world/tile/database.cpp.o -c /home/logan/gameprogramming/code/world/tile/database.cpp",
   "file": "/home/logan/gameprogramming/code/world/tile/database.cpp",
   "output": "CMakeFiles/main_exe.dir/world/tile/database.cpp.o"
-},
-{
-  "directory": "/home/logan/gameprogramming/code/build",
-  "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern -std=gnu++23 -o CMakeFiles/main_exe.dir/world/tribeEvents.cpp.o -c /home/logan/gameprogramming/code/world/tribeEvents.cpp",
-  "file": "/home/logan/gameprogramming/code/world/tribeEvents.cpp",
-  "output": "CMakeFiles/main_exe.dir/world/tribeEvents.cpp.o"
-},
-{
-  "directory": "/home/logan/gameprogramming/code/build",
-  "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern -std=gnu++23 -o CMakeFiles/main_exe.dir/world/tribes.cpp.o -c /home/logan/gameprogramming/code/world/tribes.cpp",
-  "file": "/home/logan/gameprogramming/code/world/tribes.cpp",
-  "output": "CMakeFiles/main_exe.dir/world/tribes.cpp.o"
 },
 {
   "directory": "/home/logan/gameprogramming/code/build",

@@ -4,44 +4,44 @@
 #include <world/item/enum.hpp>
 #include <core/tables.hpp>
 
-inline constexpr LookupTable<Material,float>  weight_multiplier = [] {
+inline constexpr LookupTable<Material,float>  WEIGHT_MULTIPLIER = [] {
   LookupTable<Material,float> lt{};
   using enum Material;
-  	lt[static_cast<int>(Material::Wood)] = 0.7;
-	lt[static_cast<int>(Material::Bone)] = 0.8;
-	lt[static_cast<int>(Material::Leather)] = 0.6;
-	lt[static_cast<int>(Material::Stone)] = 1.4;
-	lt[static_cast<int>(Material::Copper)] = 3.8;
-	lt[static_cast<int>(Material::Bronze)] = 3.9;
-	lt[static_cast<int>(Material::Iron)] = 4.4;
-	lt[static_cast<int>(Material::Steel)] = 4.45;
-	lt[static_cast<int>(Material::Silver)] = 5.2;
-	lt[static_cast<int>(Material::Gold)] = 5.7;
+  	lt[Material::Wood] = 0.7;
+	lt[Material::Bone] = 0.8;
+	lt[Material::Leather] = 0.6;
+	lt[Material::Stone] = 1.4;
+	lt[Material::Copper] = 3.8;
+	lt[Material::Bronze] = 3.9;
+	lt[Material::Iron] = 4.4;
+	lt[Material::Steel] = 4.45;
+	lt[Material::Silver] = 5.2;
+	lt[Material::Gold] = 5.7;
   return lt;
  }();
 
 inline constexpr LookupTable<Material,float> toughness_multiplier = [] {
   LookupTable<Material,float> lt{};
   using enum Material;
-        lt[static_cast<int>(Material::Wood)] = 4.0;
-	lt[static_cast<int>(Material::Bone)] = 6.0;
-	lt[static_cast<int>(Material::Leather)] = 14.0;
-	lt[static_cast<int>(Material::Stone)] = 16.0;
-	lt[static_cast<int>(Material::Copper)] = 18.0;
-	lt[static_cast<int>(Material::Bronze)] = 35.0;
-	lt[static_cast<int>(Material::Iron)] = 30.0;
-	lt[static_cast<int>(Material::Steel)] = 52.0;
-	lt[static_cast<int>(Material::Silver)] = 19.0;
-	lt[static_cast<int>(Material::Gold)] = 22.0;
+    lt[Material::Wood] = 4.0;
+	lt[Material::Bone] = 6.0;
+	lt[Material::Leather] = 14.0;
+	lt[Material::Stone] = 16.0;
+	lt[Material::Copper] = 18.0;
+	lt[Material::Bronze] = 35.0;
+	lt[Material::Iron] = 30.0;
+	lt[Material::Steel] = 52.0;
+	lt[Material::Silver] = 19.0;
+	lt[Material::Gold] = 22.0;
   return lt;
  }();
 
-float lt[static_cast<int>(Material::MAX)];
-
-void intialize_toughness_multipliers()
-{
-	
-}
+inline constexpr LookupTable<Material,float> DURABILITY_MULTIPLIERS = [] {
+		LookupTable<Material,float> lt{};
+		using enum Material;
+		
+		return lt;
+}();
 
 // float durability_multiplier[static_cast<int>(Material::MAX)];
 
@@ -57,53 +57,59 @@ void intialize_toughness_multipliers()
 //     Gold 0.2
 //  }
 
-float hardness_multiplier[static_cast<int>(Material::MAX)];
+inline constexpr LookupTable<Material,float> HARDNESS_MULTIPLIERS = [] {
+		LookupTable<Material,float> lt{};
+		using enum Material;
+		lt[(Material::Wood)] = 1.2;
+	lt[(Material::Bone)] = 5.0;
+	lt[(Material::Stone)] = 3.5;
+	lt[(Material::Copper)] = 3;
+	lt[(Material::Bronze)] = 3;
+	lt[(Material::Iron)] = 4.2;
+	lt[(Material::Steel)] = 4.5;
+	lt[(Material::Silver)] = 2.5;
+	lt[(Material::Gold)] = 2.5;
+		return lt;
+}();
 
-void initialize_hardness_multipliers()
-{
-	hardness_multiplier[static_cast<int>(Material::Wood)] = 1.2;
-	hardness_multiplier[static_cast<int>(Material::Bone)] = 5.0;
-	hardness_multiplier[static_cast<int>(Material::Stone)] = 3.5;
-	hardness_multiplier[static_cast<int>(Material::Copper)] = 3;
-	hardness_multiplier[static_cast<int>(Material::Bronze)] = 3;
-	hardness_multiplier[static_cast<int>(Material::Iron)] = 4.2;
-	hardness_multiplier[static_cast<int>(Material::Steel)] = 4.5;
-	hardness_multiplier[static_cast<int>(Material::Silver)] = 2.5;
-	hardness_multiplier[static_cast<int>(Material::Gold)] = 2.5;
-}
+inline constexpr LookupTable<Material,float> BRITTLENESS_MULTIPLIERS = [] {
+		LookupTable<Material,float> lt{};
+		using enum Material;
+		lt[(Material::Wood)] = 3.2;
+	lt[(Material::Bone)] = 6.0;
+	lt[(Material::Stone)] = 4.5;
+	lt[(Material::Copper)] = 0.15;
+	lt[(Material::Bronze)] = 0.3;
+	lt[(Material::Iron)] = 0.5;
+	lt[(Material::Steel)] = 0.4;
+	lt[(Material::Silver)] = 0.4;
+	lt[(Material::Gold)] = 0.8;
+		return lt;
+}();
 
-float brittleness_multiplier[static_cast<int>(Material::MAX)];
-
-void initialize_brittleness_multipliers()
-{
-	brittleness_multiplier[static_cast<int>(Material::Wood)] = 3.2;
-	brittleness_multiplier[static_cast<int>(Material::Bone)] = 6.0;
-	brittleness_multiplier[static_cast<int>(Material::Stone)] = 4.5;
-	brittleness_multiplier[static_cast<int>(Material::Copper)] = 0.15;
-	brittleness_multiplier[static_cast<int>(Material::Bronze)] = 0.3;
-	brittleness_multiplier[static_cast<int>(Material::Iron)] = 0.5;
-	brittleness_multiplier[static_cast<int>(Material::Steel)] = 0.4;
-	brittleness_multiplier[static_cast<int>(Material::Silver)] = 0.4;
-	brittleness_multiplier[static_cast<int>(Material::Gold)] = 0.8;
-}
 
 // TODO: custom durability multipliers for some items
 
-float sharpness_multiplier[static_cast<int>(Material::MAX)];
+inline constexpr LookupTable<Material,float> SHARPNESS_MULTIPLIERS = [] {
+		LookupTable<Material,float> lt{};
+		using enum Material;
+		lt[(Material::Wood)] = 0.5;
+	lt[(Material::Bone)] = 0.7;
+	lt[(Material::Stone)] = 0.8;
+	lt[(Material::Copper)] = 0.65;
+	lt[(Material::Bronze)] = 1.55;
+	lt[(Material::Iron)] = 1.15;
+	lt[(Material::Steel)] = 2.2;
+	lt[(Material::Silver)] = 0.25;
+	lt[(Material::Gold)] = 0.25;
+		return lt;
+}();
 
-void initialize_sharpness_multipliers()
-{
-	sharpness_multiplier[static_cast<int>(Material::Wood)] = 0.5;
-	sharpness_multiplier[static_cast<int>(Material::Bone)] = 0.7;
-	sharpness_multiplier[static_cast<int>(Material::Stone)] = 0.8;
-	sharpness_multiplier[static_cast<int>(Material::Copper)] = 0.65;
-	sharpness_multiplier[static_cast<int>(Material::Bronze)] = 1.55;
-	sharpness_multiplier[static_cast<int>(Material::Iron)] = 1.15;
-	sharpness_multiplier[static_cast<int>(Material::Steel)] = 2.2;
-	sharpness_multiplier[static_cast<int>(Material::Silver)] = 0.25;
-	sharpness_multiplier[static_cast<int>(Material::Gold)] = 0.25;
-}
-
-beauty_multiplier
+inline constexpr LookupTable<Material,float> BEAUTY_MULTIPLIERS = [] {
+		LookupTable<Material,float> lt{};
+		using enum Material;
+		
+		return lt;
+}();
 
 #endif // MATERIALS_H_

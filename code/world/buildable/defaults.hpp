@@ -11,5 +11,5 @@ constexpr uint8_t MAX_WORK_DIST = 4;
 }
 Health get_max_health(Buildable buildable, Time age)
 {
-		return buildable::max_healths[buildable];
+		return buildable::MAX_HEALTHS[buildable];
 }

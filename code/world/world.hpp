@@ -2,13 +2,9 @@
 #include "core/data.hpp"
 #include "core/random.hpp"
 #include <cstdint>
-
-#include <FastNoiseLite.h>
 #include <core/containers.hpp>
 #include <core/memory.hpp>
-#include <nanoflann.hpp>
 #include <simulation/world_gen.hpp>
-
 #include <world/tile/database.hpp>
 
 // Weather
@@ -109,9 +105,9 @@ struct World
 
     ChunkTempData(World* world)
     {
-        min_temps.reserve(world->CHUNK_AMOUNT);
-        diurnal_temp_variances.reserve(world->CHUNK_AMOUNT);
-        seasonal_temp_variances.reserve(world->CHUNK_AMOUNT);
+        min_temps.reserve(world->chunk_amount);
+        diurnal_temp_variances.reserve(world->chunk_amount);
+        seasonal_temp_variances.reserve(world->chunk_amount);
     }
 };
 	ChunkTempData chunk_temp_data;
@@ -130,25 +126,25 @@ struct World
     cloud_covers = arena_make_array<float>(arena, width * height);
 }
 
-	inline uint16_t get_chunk_height(int i) { return i / height_chunks; }
+	uint16_t get_chunk_height(int i) { return i / height_chunks; }
 
-	inline uint16_t get_chunk_width(int i) { return i % height_chunks; }
+	uint16_t get_chunk_width(int i) { return i % height_chunks; }
 
-	inline uint16_t get_chunk_latitude(int i)
+	uint16_t get_chunk_latitude(int i)
 	{
 		return (get_chunk_height(i) / chunk_latitude_height) - (LATITUDE_TOTAL / 2);
 	}
 
-	inline uint16_t get_chunk_time_zone(uint32_t chunk_index);
-        inline uint16_t get_chunk_index_from_coord(Coord c);
-	inline uint32_t get_tile_index_from_coord(Coord c);
-	inline Coord get_tile_coord_from_index(uint32_t i);
-	inline uint32_t get_tile_index_chunk_relative(uint32_t i);
-	inline uint32_t get_tile_index_chunk_relative(Coord c);
+	uint16_t get_chunk_time_zone(uint32_t chunk_index);
+        uint16_t get_chunk_index_from_coord(Coord c);
+	uint32_t get_tile_index_from_coord(Coord c);
+	Coord get_tile_coord_from_index(uint32_t i);
+	uint32_t get_tile_index_chunk_relative(uint32_t i);
+	uint32_t get_tile_index_chunk_relative(Coord c);
 
 	Coord get_random_player_start()
 	{	return{ static_cast<uint32_t>(random_chance->next() * length_chunks) , static_cast<uint32_t>(random_chance->next() * height_chunks)};
-	}		
+	}
 
 	void load_chunk_data(WorldSpawner &ws)
 	{

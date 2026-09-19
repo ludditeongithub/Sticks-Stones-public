@@ -1,6 +1,6 @@
 #include "core/entity.hpp"
 #include "element.hpp"
-#include "render/sprite_sheet_settings.hpp"
+#include "render/sprite.hpp"
 #include <render/screen.hpp>
 struct DisplayFrame : UIElement {
 	SDL_Rect entity_sprite;

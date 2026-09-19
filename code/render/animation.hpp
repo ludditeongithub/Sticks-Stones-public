@@ -3,7 +3,7 @@
 #include "texture.hpp"
 #include <SDL2/SDL_rect.h>
 #include <core/containers.hpp>
-#include <core/data.hpp>
+#include <core/coord.hpp>
 #include <core/entity.hpp>
 #include <cstdint>
 

@@ -1,10 +1,12 @@
+#pragma once
+#include "core/saves.hpp"
 #include "systems/action/action.hpp"
 #include "world/buildable/database.hpp"
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_mouse.h>
+#include <SDL2/SDL_rect.h>
 #include <core/data.hpp>
 #include <core/memory_control.hpp>
-#include <simulation/first_spawn.hpp>
 #include <simulation/world_gen.hpp>
 
 #include <world/animal/database.hpp>
@@ -14,9 +16,11 @@
 #include <world/unit/database.hpp>
 #include <world/world.hpp>
 #include <render/texture.hpp>
-#include <render/window.hpp>
+#include <render/screen.hpp>
 #include <render/camera.hpp>
 #include <render/draw.hpp>
+
+struct GameSave;
 
 struct Game
 {

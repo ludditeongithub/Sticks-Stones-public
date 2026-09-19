@@ -1,11 +1,10 @@
 #+title: Tutorial
-* Intro Firekeeper
-
-* Intro Knapper
+* Unit Intros
+** Knapper
 The KNAPPER is a crafty and determined fellow who makes tools out of bone, rock, and flint just by smashing and scraping bone, rock, and flint together. These tools allow certain tasks that couldn't otherwise to be done to get done, or speed up the process of otherwise arduous tasks.
-** Development Firekeeper
+** Firekeeper
 Looks like your knapper hit a piece of flint hard and fast and started a fire... which has lit a light inside your FIREKEEPER! Now, they're able to start fires on command with a piece of flint and stone.
-* Intro Carver
+** Carver
 Looks like one of your Knapper's friends gave him the idea to make a hand knife, perfect for cutting wood... and go after their lifelong dream of being a CARVER! The Carver is able to use sharp tools like the hand knife and hand axe to make tools, weapons, and fortifications out of wood and bone.
-* Intro Elder
-One of your tribe members have reached a ripe old age... which means that they won't be as good at certain physical tasks anymore. However, this is a cause for celebration, as with all the wisdom they've acquired, they're able to apply that knowledge to the tribe's problems and come up with new creative solutions to combat them if given they time they need to think designated by the ELDER role. By placing different items in your Elder's vicinity, and letting him talk to a variety of different roles, he might find new roles or inventions to help improve your tribe.
+** Elder
+One of your wisest tribe members have reached a ripe old age... which means that they won't be as good at certain physical tasks anymore. However, this is a cause for celebration, as with all the wisdom they've acquired, they're able to apply that knowledge to the tribe's problems and come up with new creative solutions to combat them if given they time they need to think designated by the ELDER role. By placing different items in your Elder's vicinity, and letting him talk to a variety of different roles, he might find new roles or inventions to help improve your tribe.

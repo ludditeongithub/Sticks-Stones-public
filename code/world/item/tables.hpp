@@ -1,7 +1,7 @@
 #include "enum.hpp"
 #include <core/tables.hpp>
 
-inline constexpr LookupTable<ContainerType, float> container_weight_capacities = []
+inline constexpr LookupTable<ContainerType, float> CONTAINER_WEIGHT_CAPACITIES = []
 {
 	LookupTable<ContainerType, float> lt{};
 	using enum ContainerType;
@@ -9,7 +9,7 @@ inline constexpr LookupTable<ContainerType, float> container_weight_capacities =
 	return lt;
 }();
 
-inline constexpr LookupTable<ContainerType, float> container_bulk_capacities = []
+inline constexpr LookupTable<ContainerType, float> CONTAINER_BULK_CAPACITIES = []
 {
 	LookupTable<ContainerType, float> lt{};
 	using enum ContainerType;
@@ -17,7 +17,7 @@ inline constexpr LookupTable<ContainerType, float> container_bulk_capacities = [
 	return lt;
 }();
 
-inline constexpr RaggedLookupTable<Commodity::underlying, Action, COMMODITY_ACTIONS> commodity =
+inline constexpr RaggedLookupTable<Commodity::underlying, Action, COMMODITY_ACTIONS> COMMODITY =
     []
 {
 	using enum Commodity::underlying;
@@ -29,10 +29,9 @@ inline constexpr RaggedLookupTable<Commodity::underlying, Action, COMMODITY_ACTI
 
 namespace item
 {
-  inline constexpr LookupTable<Item,const char*> descriptions = [] {
-    LookupTable<Item,const char*> lt{};
-    using enum Item;
-    
-    return lt;
-  }();
+  // @codegen:begin descriptions
+
+  // @codegen:end descriptions
+
+  
 }  

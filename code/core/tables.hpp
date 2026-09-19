@@ -32,6 +32,31 @@ template <typename T, uint16_t Cols> struct Row : std::array<T, Cols>
 	}
 };
 
+template <typename Enum, typename T, uint16_t N = static_cast<uint16_t>(Enum::MAX)>
+struct RuntimeLookupTable
+{
+	std::array<T, N> data{};
+
+	T &operator[](Enum e) { return data[static_cast<uint16_t>(e)]; }
+
+	const T &operator[](Enum e) const { return data[static_cast<uint16_t>(e)]; }
+};
+
+template <typename T, uint16_t Cols> struct RuntimeRow : std::array<T, Cols>
+{
+	RuntimeRow &operator=(std::initializer_list<T> values)
+	{
+		uint16_t i = 0;
+		for (auto v : values)
+		{
+			if (i >= Cols)
+				break;
+			(*this)[i++] = v;
+		}
+		return *this;
+	}
+};
+
 template <typename T, uint16_t Cols, typename ColEnum>
 struct LookupRow
 {

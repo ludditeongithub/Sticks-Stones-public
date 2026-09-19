@@ -8,7 +8,7 @@
 #include <world/unit/enum.hpp>
 #include "core/data.hpp"
 #include "element.hpp"
-#include "render/sprite_sheet_settings.hpp"
+#include "render/sprite.hpp"
 #include "ui/components/text.hpp"
 
 

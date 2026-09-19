@@ -1,5 +1,5 @@
 #pragma once
-#include <core/data.hpp>
+#include <core/coord.hpp>
 
 class Camera
 {

@@ -6,7 +6,7 @@
 #include <core/tables.hpp>
 #include <world/plant/enum.hpp>
 
-inline constexpr LookupTable<Plant, Hunger> fruit_hunger = []
+inline constexpr LookupTable<Plant, Hunger> FRUIT_HUNGERS = []
 {
 	LookupTable<Plant, Hunger> arr{};
 	using enum Plant;
@@ -24,7 +24,7 @@ inline constexpr LookupTable<Plant, Hunger> fruit_hunger = []
 	return arr;
 }();
 
-inline constexpr LookupTable<Plant, Hunger> plant_hunger = []
+inline constexpr LookupTable<Plant, Hunger> PLANT_HUNGERS = []
 {
 	LookupTable<Plant, Hunger> arr{};
 	using enum Plant;

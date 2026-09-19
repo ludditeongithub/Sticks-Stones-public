@@ -4,7 +4,6 @@
 #include <cereal/archives/binary.hpp>
 #include <stdexcept>
 #include <typeinfo>
-#include <vector>
 
 // right now is really ArrayChunk,which points to next ArrayChunk if applicable
 // TODO: make separate LinkedArray which is really ArrayChunk,

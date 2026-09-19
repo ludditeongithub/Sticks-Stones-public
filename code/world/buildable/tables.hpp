@@ -2,16 +2,23 @@
 
 #include <core/tables.hpp>
 #include <core/data.hpp>
+#include <core/info.hpp>
 #include "enum.hpp"
 
 namespace buildable
-{    
+{
 
-inline constexpr LookupTable<Buildable,Health> MAX_HEALTHS = [] {
-		LookupTable<Buildable,Health> lt{};
-		using enum Buildable;
-		
-		return lt;
+inline constexpr LookupTable<Buildable, Health> MAX_HEALTHS = []
+{
+	LookupTable<Buildable, Health> lt{};
+	using enum Buildable;
+
+	return lt;
 }();
+
+// @codegen:begin description
+//
+// @codegen:end description
+
 
 }

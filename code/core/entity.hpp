@@ -1,6 +1,6 @@
 #pragma once
 #include <cstdint>
-#include "data.hpp"
+#include "coord.hpp"
 #include <optional>
 #include <variant>
 #include <world/chunk/data.hpp>

@@ -25,7 +25,7 @@ struct UIElement
 {
 	SCoord position; // left corner
 	SDL_Rect source;
-        UIElement(UISprite sprite, SCoord position) : position(position), source(sprite::ui[sprite])
+        UIElement(UISprite ui_sprite, SCoord position) : position(position), source(sprite::ui[ui_sprite])
 	{}
 
         inline void render(SDL_Rect viewport) { sprite_sheet_texture.render(position.x, position.y, &source, viewport); }

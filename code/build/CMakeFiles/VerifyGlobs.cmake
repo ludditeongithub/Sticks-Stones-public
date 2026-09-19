@@ -54,16 +54,15 @@ set(OLD_GLOB
   "/home/logan/gameprogramming/code/systems/visibility/scheduled.cpp"
   "/home/logan/gameprogramming/code/ui/aggregates/swipable_menu.cpp"
   "/home/logan/gameprogramming/code/world/animal/breeding.cpp"
-  "/home/logan/gameprogramming/code/world/animal/database.cpp"
   "/home/logan/gameprogramming/code/world/animal/events.cpp"
+  "/home/logan/gameprogramming/code/world/foreign/tribe_events.cpp"
+  "/home/logan/gameprogramming/code/world/foreign/tribes.cpp"
   "/home/logan/gameprogramming/code/world/item/operations.cpp"
   "/home/logan/gameprogramming/code/world/plant/birth_death.cpp"
   "/home/logan/gameprogramming/code/world/plant/operations.cpp"
   "/home/logan/gameprogramming/code/world/policies.cpp"
   "/home/logan/gameprogramming/code/world/roles.cpp"
   "/home/logan/gameprogramming/code/world/tile/database.cpp"
-  "/home/logan/gameprogramming/code/world/tribeEvents.cpp"
-  "/home/logan/gameprogramming/code/world/tribes.cpp"
   "/home/logan/gameprogramming/code/world/unit/OLD_resouceUnits.cpp"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")

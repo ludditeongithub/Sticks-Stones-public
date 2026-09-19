@@ -1,6 +1,4 @@
 #pragma once
-
-#include "world/world.hpp"
 #include <core/random.hpp>
 #include <cstdint>
 #include <vector>
@@ -230,8 +228,8 @@ ScavengeableSpawnBuffer(size_t capacity)
 	    : width(width), height(height),
 	      tile_amount(width * height * CHUNK_SIZE * CHUNKS_PER_REGION)
 	{
-		rcx = RandomMachine<int>(WIDTH / 8, 7 * WIDTH / 8);
-		rcy = RandomMachine<int>(HEIGHT / 8, 7 * HEIGHT / 8);
+		rcx = RandomMachine<int>(height / 8, 7 * width / 8);
+		rcy = RandomMachine<int>(height / 8, 7 * width / 8);
 		map_reserve_rows(width, height, altitude_map);
 		map_reserve_rows(width, height, temperature_map);
 		map_reserve_rows(width, height, humidity_map);

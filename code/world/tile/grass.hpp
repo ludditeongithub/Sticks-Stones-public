@@ -5,11 +5,11 @@
 #include <world/chunk/enum.hpp>
 
 // TODO: natural grass reproduction
-Hunger GRASS_HUNGER_VALUE = 300;
+constexpr Hunger GRASS_HUNGER_VALUE = 300;
 
-inline bool tile_grass(TileData tile) { return (tile.second() != Grass::NONE); }
+inline bool tile_grass(TileData tile) { return (tile.get<Grass>() != Grass::NONE); }
 
-inline void degrass_tile(TileData &tile) { tile.second() = Grass::NONE; }
+inline void degrass_tile(TileData &tile) { tile.set(Grass::NONE); }
 
 namespace grass
 {
@@ -31,11 +31,11 @@ inline constexpr LookupTable<Biome, float> coverages = []
 }();
 
 
-  float optimal = 1.0;
-		float great = 0.5;
-		float good = 0.25;
-		float poorly = 0.125;
-		float rarely = 0.6325;
+  constexpr float OPTIMAL = 1.0;
+  constexpr float GREAT = 0.5;
+  constexpr float GOOD = 0.25;
+  constexpr float POORLY = 0.125;
+ constexpr float RARELY = 0.6325;
 
 inline constexpr LookupTable<Biome,float> minimum_roll = [] {
   LookupTable<Biome,float> lt{};
@@ -49,26 +49,26 @@ inline constexpr LookupTable2D<Grass, Tile, float> tile_spawn_multipliers = []
                        	
 	LookupTable2D<Grass, Tile, float> lt{};
         using enum Tile;
-        lt[Grass::Grass][Podzol] = good;
-        lt[Grass::Grass][LoamSoil] = optimal;
-        lt[Grass::Grass][PeatSoil] = rarely;
-        lt[Grass::Grass][SandySoil] = great;
-        lt[Grass::Grass][ClaySoil] = poorly;
-        lt[Grass::Grass][SiltySoil] = optimal;
-        lt[Grass::Grass][RockySoil] = rarely;
-        lt[Grass::Grass][AridSoil] = good;
-        lt[Grass::Grass][Oxisol] = poorly;
-        lt[Grass::Grass][Gleysol] = poorly;
-        lt[Grass::SavannahGrass][Podzol] = poorly;
-        lt[Grass::SavannahGrass][LoamSoil] = great;
-        lt[Grass::SavannahGrass][PeatSoil] = rarely;
-        lt[Grass::SavannahGrass][SandySoil] = optimal;
-        lt[Grass::SavannahGrass][ClaySoil] = good;
-        lt[Grass::SavannahGrass][SiltySoil] = great;
-        lt[Grass::SavannahGrass][RockySoil] = rarely;
-        lt[Grass::SavannahGrass][AridSoil] = good;
-        lt[Grass::SavannahGrass][Oxisol] = good;
-        lt[Grass::SavannahGrass][Gleysol] = poorly;
+        lt[Grass::Grass][Podzol] = GOOD;
+        lt[Grass::Grass][LoamSoil] = OPTIMAL;
+        lt[Grass::Grass][PeatSoil] = RARELY;
+        lt[Grass::Grass][SandySoil] = GREAT;
+        lt[Grass::Grass][ClaySoil] = POORLY;
+        lt[Grass::Grass][SiltySoil] = OPTIMAL;
+        lt[Grass::Grass][RockySoil] = RARELY;
+        lt[Grass::Grass][AridSoil] = GOOD;
+        lt[Grass::Grass][Oxisol] = POORLY;
+        lt[Grass::Grass][Gleysol] = POORLY;
+        lt[Grass::SavannahGrass][Podzol] = POORLY;
+        lt[Grass::SavannahGrass][LoamSoil] = GREAT;
+        lt[Grass::SavannahGrass][PeatSoil] = RARELY;
+        lt[Grass::SavannahGrass][SandySoil] = OPTIMAL;
+        lt[Grass::SavannahGrass][ClaySoil] = GOOD;
+        lt[Grass::SavannahGrass][SiltySoil] = GREAT;
+        lt[Grass::SavannahGrass][RockySoil] = RARELY;
+        lt[Grass::SavannahGrass][AridSoil] = GOOD;
+        lt[Grass::SavannahGrass][Oxisol] = GOOD;
+        lt[Grass::SavannahGrass][Gleysol] = POORLY;
 	return lt;
 }();
 

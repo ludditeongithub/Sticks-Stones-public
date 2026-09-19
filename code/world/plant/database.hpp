@@ -1,5 +1,4 @@
 #pragma once
-
 #include "enum.hpp"
 #include "defaults.hpp"
 #include "world/tile/database.hpp"
@@ -34,19 +33,19 @@ size_t capacity;
     Stack<size_t> free_slots;
     Array<bool> alives;
   SearchGrid& search;
-  World& world;
   
   std::vector<EntityID>& no_inertia_buffer; // size is amount of no inertias this loop
   
   std::vector<EntityID>& unassigned_buffer; // size is amount of unassigned this loop
+  World& world;
   tile::Database& tiles;
 
     // =========================
     // ENTITY-SPECIFIC MEMBERS
     // =========================
     Array<Plant> plants;
-    Array<Coord> coord;
-    Array<Time> age;
+    Array<Coord> coords;
+    Array<Time> ages;
 
 
 
@@ -54,7 +53,7 @@ size_t capacity;
 // CONSTRUCTOR
 // =========================
 
-Database(Arena *arena, size_t capacity
+Database(Arena& arena, size_t capacity
   , World& world
  
   , SearchGrid& search
@@ -69,9 +68,13 @@ this->capacity = capacity;
   this->size = 0;
 
 
- plants = arena_make_array<Plant>(capacity);
- coord = arena_make_array<Coord>(capacity);
- age = arena_make_array<Time>(capacity);
+ 
+ plants = arena_make_array<Plant>(arena, capacity); 
+ 
+ coords = arena_make_array<Coord>(arena, capacity); 
+ 
+ ages = arena_make_array<Time>(arena, capacity); 
+ 
 
 }
 
@@ -79,14 +82,14 @@ this->capacity = capacity;
 // GETTERS
 // =========================
 
-  inline Plant& plants(const EntityID index) {
+  inline Plant& plant(const EntityID index) {
 return plants[index];
   }
   inline Coord& coord(const EntityID index) {
-return coord[index];
+return coords[index];
   }
   inline Time& age(const EntityID index) {
-return age[index];
+return ages[index];
   }
 
 
@@ -96,18 +99,23 @@ return age[index];
   // =========================
 
   void add_plants(WorldSpawner::PlantSpawnBuffer& spawn_buffer)
-{
+  {
 	for (size_t i = 0; i < spawn_buffer.size; i++)
-	  if (spawn(spawn_buffer.plant(i), spawn_buffer.coord(i), false)) {}
+	  if (spawn(spawn_buffer.plants[i], spawn_buffer.coords[i], false)) {}
 	  else
 	    {
 	      //TODO: error
 	    }
 }
 
-bool attempt_spawn(Plant plant, bool newborn, Coord coord  , bool insert_search = true
+bool attempt_spawn(const Plant plant, const bool newborn, const Coord coord  , const bool insert_search = true
 )
-  {       
+{
+#if !SHIPPING_BUILD
+assert(plant != Plant::NONE && plant != Plant::MAX && "Tried to spawn plant as NONE or MAX.");
+#endif
+
+
         if (size + 1 > capacity)
             return 0;
         size_t i;
@@ -124,30 +132,31 @@ bool attempt_spawn(Plant plant, bool newborn, Coord coord  , bool insert_search 
         alives[i] = true;
         if (newborn)
         {
-            plants(i) = plant;
-            coord(i) = coord;
-            age(i) = 0;
+            this->plant(i) = plant;
+            this->coord(i) = coord;
+            this->age(i) = 0;
         }
         else
         {
         Time age = random_bool->next();
-            plants(i) = plant;
-            coord(i) = coord;
-            age(i) = age;
+            this->plant(i) = plant;
+            this->coord(i) = coord;
+            this->age(i) = age;
         }
-            if (insert_search) search.insert_entity(plant, {i, coord(i)});
+            if (insert_search) search.insert_entity(plant, {i, this->coord(i)});
         return i;
           }
           
         
 
 size_t spawn(const Plant plant, const bool newborn, const Coord origin
-const bool insert_search = true) {
+, const bool insert_search = true) {
 Coord spawn_point = tiles.get_nearest_empty_tile(origin);
 size_t result = 0;
 while (result == 0) {
 result = attempt_spawn(plant, newborn, spawn_point
-, insert_search);
+, insert_search  
+);
 if (result == 0) free_unused_entity();
 }
 }        
@@ -159,12 +168,12 @@ if (result == 0) free_unused_entity();
   
   inline bool remove(const EntityID i)
   {
-        if (!alive(i))
+        if (!alives[i])
             return false;
 
         free_slots.push(i);
-        alive(i) = false;
-        Plant plant = plant(i);
+        alives[i] = false;
+        Plant plant = this->plant(i);
             search.remove_entity(plant, {i, coord(i)});
         return true;
   }
@@ -194,8 +203,8 @@ if (result == 0) free_unused_entity();
    
 
         plants.save(archive);
-        coord.save(archive);
-        age.save(archive);
+        coords.save(archive);
+        ages.save(archive);
     }
 
     template <class Archive>
@@ -207,8 +216,8 @@ if (result == 0) free_unused_entity();
         archive(alives);
         
         plants.load(archive);
-        coord.load(archive);
-        age.load(archive);
+        coords.load(archive);
+        ages.load(archive);
     }
 
 
@@ -234,13 +243,13 @@ inline bool transfer(size_t i, plant::Database &old_db)
 		index = free_slots.top();
 		free_slots.pop();			
   }
-    plants(index) = old_db.plants(i);
+    plant(index) = old_db.plant(i);
     coord(index) = old_db.coord(i);
     age(index) = old_db.age(i);
-  alive(index) = true;
+  alives[index] = true;
 
   old_db.free_slots.push(i);
-  old_db.alive(index) = false;
+  old_db.alives[index] = false;
   return true;
   }
 // @codegen:end database_generation

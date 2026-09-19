@@ -1,13 +1,15 @@
 #ifndef DIETS_HPP
 #define DIETS_HPP
 
+#include <cassert>
 #include <core/containers.hpp>
 #include <world/animal/enum.hpp>
 #include <world/plant/enum.hpp>
 #include "enum.hpp"
 #include "core/tables.hpp"
+#include "animal_diet_categories.hpp"
 
-inline constexpr BitsetTable<Animal> carnivores = []
+inline constexpr BitsetTable<Animal> CARNIVORES = []
 {
 	BitsetTable<Animal> s;
 	using enum Animal;
@@ -19,88 +21,102 @@ inline constexpr BitsetTable<Animal> carnivores = []
 	return s;
 }();
 
-inline const RaggedLookupTable<Animal, Category> diet_categories = []
+inline const RaggedLookupTable<Animal, Category> DIET_CATEGORIES = []
 {
 	RaggedLookupTable<Animal, Category> lt{};
 	using enum Category;
 	lt.set(Animal::NONE, {});
-	lt.set(Animal::Pig, {Grass, Leaves, Fruit, Tuber, SmallMammals, SmallReptiles});
-	lt.set(Animal::Cow, {Grass, Leaves});
-	lt.set(Animal::Chicken, {Leaves, Fruit, Reeds});
-	lt.set(Animal::Duck, {Leaves, Fruit, Fish, Reeds});
+	lt.set(Animal::Pig, {Grasses, Leaves, Fruits, Tubers, SmallMammals, SmallReptiles});
+	lt.set(Animal::Cow, {Grasses, Leaves});
+	lt.set(Animal::Chicken, {Leaves, Fruits, Reeds});
+	lt.set(Animal::Duck, {Leaves, Fruits, Fishes, Reeds});
 	lt.set(Animal::Sheep, {Leaves});
-	lt.set(Animal::Goat, {Leaves, Fruit, Tuber});
-	lt.set(Animal::Horse, {Grass, Leaves});
-	lt.set(Animal::Ox, {Grass, Leaves});
-	lt.set(Animal::Donkey, {Grass, Leaves});
-	lt.set(Animal::Camel, {Grass, Leaves, Fruit});
-	lt.set(Animal::WaterBuffalo, {Grass, Leaves});
-	lt.set(Animal::Rabbit, {Grass, Leaves, Fruit, Tuber});
-	lt.set(Animal::Antelope, {Grass, Leaves, Fruit});
-	lt.set(Animal::Deer, {Grass, Leaves, Fruit, Tuber});
-	lt.set(Animal::Moose, {Grass, Leaves, Fruit});
-	lt.set(Animal::Capybara, {Leaves, Fruit});
-	lt.set(Animal::Turtle, {Leaves, Fruit, Fish});
-	lt.set(Animal::Elephant, {Leaves, Fruit, Tuber});
-	lt.set(Animal::Bison, {Grass, Leaves});
-	lt.set(Animal::Caribou, {Grass, Leaves, Tuber, Fruit});
-	lt.set(Animal::Wolf, {MediumMammals, SmallMammals, Birds, Fish, SmallReptiles});
-	lt.set(Animal::Bear, {Leaves, Fruit, Fish, SmallMammals, MediumMammals, Birds, SmallReptiles});
+	lt.set(Animal::Goat, {Leaves, Fruits, Tubers});
+	lt.set(Animal::Horse, {Grasses, Leaves});
+	lt.set(Animal::Ox, {Grasses, Leaves});
+	lt.set(Animal::Donkey, {Grasses, Leaves});
+	lt.set(Animal::Camel, {Grasses, Leaves, Fruits});
+	lt.set(Animal::WaterBuffalo, {Grasses, Leaves});
+	lt.set(Animal::Rabbit, {Grasses, Leaves, Fruits, Tubers});
+	lt.set(Animal::Antelope, {Grasses, Leaves, Fruits});
+	lt.set(Animal::Deer, {Grasses, Leaves, Fruits, Tubers});
+	lt.set(Animal::Moose, {Grasses, Leaves, Fruits});
+	lt.set(Animal::Capybara, {Leaves, Fruits});
+	lt.set(Animal::Turtle, {Leaves, Fruits, Fishes});
+	lt.set(Animal::Elephant, {Leaves, Fruits, Tubers});
+	lt.set(Animal::Bison, {Grasses, Leaves});
+	lt.set(Animal::Caribou, {Grasses, Leaves, Tubers, Fruits});
+	lt.set(Animal::Wolf, {MediumMammals, SmallMammals, Birds, Fishes, SmallReptiles});
+	lt.set(Animal::Bear, {Leaves, Fruits, Fishes, SmallMammals, MediumMammals, Birds, SmallReptiles});
 
 	return lt;
 }();
 
-template <typename E>
-BitsetTable<E> &get_food_table(const Category c)
+const BitsetTable<Animal> &get_animal_food_table(const Category c)
 {
-	using enum Category;
-	switch (c)
-	{
-	case Leaves:
-		return leaves;
-	case Fruit:
-		return fruits;
-	case Grain:
-		return grains;
-	case Underground:
-		return undergrounds;
-	case Stem:
-		return stems;
-	case Birds:
-		return birds;
-	case Fish:
-		return fish;
+		using enum Category;
+		switch (c) {
+		case Birds:
+		return BIRDS;
+	case Fishes:
+		return FISHES;
 	case SmallMammals:
-			return small_mammals;
+		return SMALL_MAMMALS;
 	case MediumMammals:
-			return medium_mammals;
+		return MEDIUM_MAMMALS;
 	case LargeMammals:
-		return large_mammals;
+		return LARGE_MAMMALS;
 	case SmallReptiles:
-		return small_reptiles;
+		return SMALL_REPTILES;
 	case LargeReptiles:
-		return large_reptiles;
+		return LARGE_REPTILES;
+	default:
+#if !SHIPPING_BUILD
+				assert(true != true && "Tried to get animal food table from non-animal food category.");
+#endif			
 	}
-};
+}
+
+
+const BitsetTable<Plant> &get_plant_food_table(const Category c)
+{
+		using enum Category;
+		switch (c) {
+		case Leaves:
+		return LEAVES;
+	case Fruits:
+		return FRUITS;
+	case Grains:
+		return GRAINS;
+	case Undergrounds:
+		return UNDERGROUNDS;
+	case Stems:
+		return STEMS;
+	default:
+#if !SHIPPING_BUILD
+				assert(true != true && "Tried to get plant food table from non-plant food category.");
+#endif			
+	}
+}
 
 
 BitsetTable<Plant> get_herbivore_diet(Animal a)
 {
-	std::span<const Category> cats = diet_categories.get(a);
+	std::span<const Category> cats = DIET_CATEGORIES.get(a);
 	BitsetTable<Plant> b;
 	for (const Category x : cats)
-		if (!meat_categories[x])
-			b |= get_food_table<Plant>(x);
+		if (!MEAT_CATEGORIES[x])
+			b |= get_plant_food_table(x);
 	return b;
 };
 
 BitsetTable<Animal> get_carnivore_diet(Animal a)
 {
-	std::array<Category, 5> &cats = diet_categories[a];
+	std::span<const Category> cats = DIET_CATEGORIES.get(a);
 	BitsetTable<Animal> b;
 	for (auto x : cats)
-		if (meat_categories[x])
-			b |= get_food_table<Animal>(x);
+		if (MEAT_CATEGORIES[x])
+			b |= get_animal_food_table(x);
 	return b;
 };
 
@@ -138,7 +154,6 @@ inline const LookupTable<Animal, BitsetTable<Animal>> carnivore_diets = []
 	lt[Pig] = get_carnivore_diet(Pig);
 	lt[Wolf] = get_carnivore_diet(Wolf);
 	lt[Bear] = get_carnivore_diet(Bear);
-
 	return lt;
 }();
 

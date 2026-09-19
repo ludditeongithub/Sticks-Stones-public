@@ -21,21 +21,21 @@ size_t capacity;
     Stack<size_t> free_slots;
     Array<bool> alives;
   SearchGrid& search;
-  World& world;
   
   std::vector<EntityID>& no_inertia_buffer; // size is amount of no inertias this loop
   
   std::vector<EntityID>& unassigned_buffer; // size is amount of unassigned this loop
+  World& world;
   tile::Database& tiles;
 
     // =========================
     // ENTITY-SPECIFIC MEMBERS
     // =========================
     Array<Vehicle> vehicles;
-    Array<Health> health;
-    Array<FrameData> frame_data;
-    Array<Frame> inertia;
-    Array<Coord> coord;
+    Array<Health> healths;
+    Array<FrameData> frame_datas;
+    Array<Frame> inertias;
+    Array<Coord> coords;
 
 
 
@@ -43,7 +43,7 @@ size_t capacity;
 // CONSTRUCTOR
 // =========================
 
-Database(Arena *arena, size_t capacity
+Database(Arena& arena, size_t capacity
   , World& world
  
   , tile::Database& tiles
@@ -52,16 +52,22 @@ Database(Arena *arena, size_t capacity
   tiles(tiles),
 {
 this->capacity = capacity;
-  no_inertia_list.reserve(capacity);
+  no_inertia_buffer.reserve(capacity);
 
   this->size = 0;
 
 
- vehicles = arena_make_array<Vehicle>(capacity);
- health = arena_make_array<Health>(capacity);
- frame_data = arena_make_array<FrameData>(capacity);
- inertia = arena_make_array<Frame>(capacity);
- coord = arena_make_array<Coord>(capacity);
+ 
+ vehicles = arena_make_array<Vehicle>(arena, capacity); 
+ 
+ healths = arena_make_array<Health>(arena, capacity); 
+ 
+ frame_datas = arena_make_array<FrameData>(arena, capacity); 
+ 
+ inertias = arena_make_array<Frame>(arena, capacity); 
+ 
+ coords = arena_make_array<Coord>(arena, capacity); 
+ 
 
 }
 
@@ -69,20 +75,20 @@ this->capacity = capacity;
 // GETTERS
 // =========================
 
-  inline Vehicle& vehicles(const EntityID index) {
+  inline Vehicle& vehicle(const EntityID index) {
 return vehicles[index];
   }
   inline Health& health(const EntityID index) {
-return health[index];
+return healths[index];
   }
   inline FrameData& frame_data(const EntityID index) {
-return frame_data[index];
+return frame_datas[index];
   }
   inline Frame& inertia(const EntityID index) {
-return inertia[index];
+return inertias[index];
   }
   inline Coord& coord(const EntityID index) {
-return coord[index];
+return coords[index];
   }
 
 
@@ -92,8 +98,13 @@ return coord[index];
   // =========================
 
 
-bool attempt_spawn(Vehicle vehicle, bool newborn, Coord coord  )
-  {       
+bool attempt_spawn(const Vehicle vehicle, const bool newborn, const Coord coord  )
+{
+#if !SHIPPING_BUILD
+assert(vehicle != Vehicle::NONE && vehicle != Vehicle::MAX && "Tried to spawn vehicle as NONE or MAX.");
+#endif
+
+
         if (size + 1 > capacity)
             return 0;
         size_t i;
@@ -110,20 +121,20 @@ bool attempt_spawn(Vehicle vehicle, bool newborn, Coord coord  )
         alives[i] = true;
         if (newborn)
         {
-            vehicles(i) = vehicle;
-            health(i) = vehicle::maxHealths[vehicle] * INFANT_HEALTH_MODIFIER;
-            frame_data(i) = FrameData{ActState::NewPath, Direction::South, Frame::F0};
-            inertia(i) = 0;
-            coord(i) = coord;
+            this->vehicle(i) = vehicle;
+            this->health(i) = vehicle::MAX_HEALTHS[vehicle] * INFANT_HEALTH_MODIFIER;
+            this->frame_data(i) = FrameData{ActState::NewPath, Direction::South, 0};
+            this->inertia(i) = 0;
+            this->coord(i) = coord;
         }
         else
         {
         Time age = random_bool->next();
-            vehicles(i) = vehicle;
-            health(i) = getMaxHealth(vehicle, age);
-            frame_data(i) = FrameData{ActState::NewPath, Direction::South, Frame::F0};
-            inertia(i) = 0;
-            coord(i) = coord;
+            this->vehicle(i) = vehicle;
+            this->health(i) = get_max_health(vehicle, age);
+            this->frame_data(i) = FrameData{ActState::NewPath, Direction::South, 0};
+            this->inertia(i) = 0;
+            this->coord(i) = coord;
         }
         return i;
           }
@@ -131,12 +142,12 @@ bool attempt_spawn(Vehicle vehicle, bool newborn, Coord coord  )
         
 
 size_t spawn(const Vehicle vehicle, const bool newborn, const Coord origin
-const bool insert_search = true) {
+, const bool insert_search = true) {
 Coord spawn_point = tiles.get_nearest_empty_tile(origin);
 size_t result = 0;
 while (result == 0) {
 result = attempt_spawn(vehicle, newborn, spawn_point
-, insert_search);
+);
 if (result == 0) free_unused_entity();
 }
 }        
@@ -148,11 +159,11 @@ if (result == 0) free_unused_entity();
   
   inline bool remove(const EntityID i)
   {
-        if (!alive(i))
+        if (!alives[i])
             return false;
 
         free_slots.push(i);
-        alive(i) = false;
+        alives[i] = false;
         return true;
   }
 
@@ -171,7 +182,7 @@ if (result == 0) free_unused_entity();
     inline bool attempt_move_entity(const EntityID index)
   {
   #if !SHIPPING_BUILD
-  assert(index < 
+  assert(index <= size);
   #endif
 
         Coord& pos = coord(index);
@@ -203,10 +214,10 @@ if (result == 0) free_unused_entity();
    
 
         vehicles.save(archive);
-        health.save(archive);
-        frame_data.save(archive);
-        inertia.save(archive);
-        coord.save(archive);
+        healths.save(archive);
+        frame_datas.save(archive);
+        inertias.save(archive);
+        coords.save(archive);
     }
 
     template <class Archive>
@@ -218,10 +229,10 @@ if (result == 0) free_unused_entity();
         archive(alives);
         
         vehicles.load(archive);
-        health.load(archive);
-        frame_data.load(archive);
-        inertia.load(archive);
-        coord.load(archive);
+        healths.load(archive);
+        frame_datas.load(archive);
+        inertias.load(archive);
+        coords.load(archive);
     }
 
 // @codegen:end database_generation

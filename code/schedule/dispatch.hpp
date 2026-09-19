@@ -1,6 +1,6 @@
 #pragma once
 #include <core/containers.hpp>
-#include <core/data.hpp>
+#include <core/coord.hpp>
 #include <cstdint>
 #include <world/animal/enum.hpp>
 

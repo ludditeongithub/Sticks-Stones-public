@@ -1,14 +1,15 @@
 #ifndef SCREEN_HPP
 #define SCREEN_HPP
 
+#include "render/texture.hpp"
 #include <core/data.hpp>
 #include <array>
+#include <string>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_render.h>
-#include <ui/main/main_menu.hpp>
 #include <cstdint>
+#include <cassert>
 #include <SDL2/SDL_video.h>
-
 
 // The window we'll be rendering to
 SDL_Window *window = NULL;
@@ -60,9 +61,6 @@ struct WindowSystem
 	};
 	BlackBarStatus black_bars;
 	Coord black_bar_size; //of single side
-	MainMenu *main_menu;
-
-  
 
 	WindowSystem(uint16_t user_screen_width, uint16_t user_screen_height, bool fullscreen) : user_screen_width(user_screen_width), user_screen_height(user_screen_height), fullscreen(fullscreen)
 	{
@@ -70,7 +68,6 @@ struct WindowSystem
 		init_window();
 		set_display_settings(user_screen_width, user_screen_height);
 		SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0"); //use nearest-neighbor
-		main_menu = new MainMenu();
 	}
 
 	static WindowSystem &get_instance()
@@ -84,8 +81,8 @@ struct WindowSystem
 	{
 		this->user_screen_width = user_screen_width;
 		this->user_screen_height = user_screen_height;
-		float width_ratio = (float)((float)user_screen_width / (float)screen_width);
-		float height_ratio = (float)((float)user_screen_height / (float)screen_height);
+		float width_ratio = (float)((float)user_screen_width / (float)SCREEN_WIDTH);
+		float height_ratio = (float)((float)user_screen_height / (float)SCREEN_HEIGHT);
 		uint16_t actual_width_ratio = (uint16_t)width_ratio;
 		uint16_t actual_height_ratio = (uint16_t)height_ratio;
 		raw_to_user_scalar =

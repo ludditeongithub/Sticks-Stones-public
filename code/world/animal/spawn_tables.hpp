@@ -6,7 +6,7 @@
 namespace animal
 {
 
-inline constexpr LookupTable<Animal, SCoord> temperature_penalty_ranges = []
+inline constexpr LookupTable<Animal, SCoord> TEMPERATURE_PENALTY_RANGES = []
 {
 	LookupTable<Animal, SCoord> lt{};
 	using enum Animal;
@@ -37,7 +37,7 @@ inline constexpr LookupTable<Animal, SCoord> temperature_penalty_ranges = []
 	return lt;
 }();
 
-inline constexpr LookupTable<Animal, Coord> humidity_penalty_ranges = []
+inline constexpr LookupTable<Animal, Coord> HUMIDITY_PENALTY_RANGES = []
 {
 	LookupTable<Animal, Coord> lt{};
 	using enum Animal;
@@ -78,7 +78,7 @@ constexpr float veryrare = 0.00003;
 constexpr float endangered = 0.00001;
 constexpr float never = 0.0;
 
-inline constexpr LookupTable2D<Biome, Animal, float> biome_spawn_chances = []
+inline constexpr LookupTable2D<Biome, Animal, float> BIOME_SPAWN_CHANCES = []
 {
 	LookupTable2D<Biome, Animal, float> lt{};
 	using enum Animal;

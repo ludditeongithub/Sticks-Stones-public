@@ -12,7 +12,6 @@
 #include <cereal/types/vector.hpp>
 #include <cereal/archives/binary.hpp>
 #include <cereal/types/stack.hpp>
-#include <macros/constructors.h>
 #include <schedule/event.hpp>
 #include <systems/search/search.hpp>
 #include <queue>
@@ -61,8 +60,7 @@ struct EggFertilizationHandler {
 // =========================
 
 constexpr static uint16_t entity_size = sizeof(Animal) +
-+ sizeof(bool)
-  
++ sizeof(bool)  
  +  sizeof(Animal) 
  +  sizeof(Health) 
  +  sizeof(Hunger) 
@@ -81,11 +79,11 @@ size_t capacity;
     Stack<size_t> free_slots;
     Array<bool> alives;
   SearchGrid& search;
-  World& world;
   
   std::vector<EntityID>& no_inertia_buffer; // size is amount of no inertias this loop
   
   std::vector<EntityID>& unassigned_buffer; // size is amount of unassigned this loop
+  World& world;
   tile::Database& tiles;
   item::VariantDatabase& variant_items;
 
@@ -93,72 +91,24 @@ size_t capacity;
     // ENTITY-SPECIFIC MEMBERS
     // =========================
     Array<Animal> animals;
-    Array<Health> health;
-    Array<Hunger> hunger;
-    Array<Sex> sex;
-    Array<Time> age;
-    Array<size_t> target;
-    Array<TargetType> target_type;
-    Array<Action> action;
-    Array<FrameData> frame_data;
-    Array<Frame> inertia;
-    Array<Coord> coord;
+    Array<Health> healths;
+    Array<Hunger> hungers;
+    Array<Sex> sexs;
+    Array<Time> ages;
+    Array<size_t> targets;
+    Array<TargetType> target_types;
+    Array<Action> actions;
+    Array<FrameData> frame_datas;
+    Array<Frame> inertias;
+    Array<Coord> coords;
 
-  struct Main {
-    Array<Health> health;
-    Array<Sex> sex;
-    Array<Time> age;
-
-  // Serialization
-  template <class Archive>
-    void save(Archive &archive) const
-    {
-        health.save(archive);
-        sex.save(archive);
-        age.save(archive);
-     
-      }
-
-  template <class Archive>
-    void load(Archive &archive)
-      {     
-        health.load(archive);
-        sex.load(archive);
-        age.load(archive);
-     
-    }
-};
-  struct Target {
-    Array<size_t> target;
-    Array<TargetType> target_type;
-    Array<Action> action;
-
-  // Serialization
-  template <class Archive>
-    void save(Archive &archive) const
-    {
-        target.save(archive);
-        target_type.save(archive);
-        action.save(archive);
-     
-      }
-
-  template <class Archive>
-    void load(Archive &archive)
-      {     
-        target.load(archive);
-        target_type.load(archive);
-        action.load(archive);
-     
-    }
-};
 
 
 // =========================
 // CONSTRUCTOR
 // =========================
 
-Database(Arena *arena, size_t capacity
+Database(Arena& arena, size_t capacity
   , World& world
  
   , SearchGrid& search
@@ -170,30 +120,36 @@ Database(Arena *arena, size_t capacity
 search(search),
 {
 this->capacity = capacity;
-  no_inertia_list.reserve(capacity);
+  no_inertia_buffer.reserve(capacity);
 
   this->size = 0;
   this->variant_items = variant_items;
   fertilization_handler = EggFertilizationHandler(capacity / 20);  
 
-  main.health = arena_make_array<Health>(capacity);
-  main.sex = arena_make_array<Sex>(capacity);
-  main.age = arena_make_array<Time>(capacity);
-  target.target = arena_make_array<size_t>(capacity);
-  target.target_type = arena_make_array<TargetType>(capacity);
-  target.action = arena_make_array<Action>(capacity);
 
- animals = arena_make_array<Animal>(capacity);
- health = arena_make_array<Health>(capacity);
- hunger = arena_make_array<Hunger>(capacity);
- sex = arena_make_array<Sex>(capacity);
- age = arena_make_array<Time>(capacity);
- target = arena_make_array<size_t>(capacity);
- target_type = arena_make_array<TargetType>(capacity);
- action = arena_make_array<Action>(capacity);
- frame_data = arena_make_array<FrameData>(capacity);
- inertia = arena_make_array<Frame>(capacity);
- coord = arena_make_array<Coord>(capacity);
+ 
+ animals = arena_make_array<Animal>(arena, capacity); 
+ 
+ healths = arena_make_array<Health>(arena, capacity); 
+ 
+ hungers = arena_make_array<Hunger>(arena, capacity); 
+ 
+ sexs = arena_make_array<Sex>(arena, capacity); 
+ 
+ ages = arena_make_array<Time>(arena, capacity); 
+ 
+ targets = arena_make_array<size_t>(arena, capacity); 
+ 
+ target_types = arena_make_array<TargetType>(arena, capacity); 
+ 
+ actions = arena_make_array<Action>(arena, capacity); 
+ 
+ frame_datas = arena_make_array<FrameData>(arena, capacity); 
+ 
+ inertias = arena_make_array<Frame>(arena, capacity); 
+ 
+ coords = arena_make_array<Coord>(arena, capacity); 
+ 
 
 }
 
@@ -201,58 +157,40 @@ this->capacity = capacity;
 // GETTERS
 // =========================
 
-  inline Animal& animals(const EntityID index) {
+  inline Animal& animal(const EntityID index) {
 return animals[index];
   }
   inline Health& health(const EntityID index) {
-return health[index];
+return healths[index];
   }
   inline Hunger& hunger(const EntityID index) {
-return hunger[index];
+return hungers[index];
   }
   inline Sex& sex(const EntityID index) {
-return sex[index];
+return sexs[index];
   }
   inline Time& age(const EntityID index) {
-return age[index];
+return ages[index];
   }
   inline size_t& target(const EntityID index) {
-return target[index];
+return targets[index];
   }
   inline TargetType& target_type(const EntityID index) {
-return target_type[index];
+return target_types[index];
   }
   inline Action& action(const EntityID index) {
-return action[index];
+return actions[index];
   }
   inline FrameData& frame_data(const EntityID index) {
-return frame_data[index];
+return frame_datas[index];
   }
   inline Frame& inertia(const EntityID index) {
-return inertia[index];
+return inertias[index];
   }
   inline Coord& coord(const EntityID index) {
-return coord[index];
+return coords[index];
   }
 
-    inline Health& health(const EntityID index) {    
-return main[index].health;
-    }
-    inline Sex& sex(const EntityID index) {    
-return main[index].sex;
-    }
-    inline Time& age(const EntityID index) {    
-return main[index].age;
-    }
-    inline size_t& target(const EntityID index) {    
-return target[index].target;
-    }
-    inline TargetType& target_type(const EntityID index) {    
-return target[index].target_type;
-    }
-    inline Action& action(const EntityID index) {    
-return target[index].action;
-    }
 
   
   // =========================
@@ -260,18 +198,23 @@ return target[index].action;
   // =========================
 
   void add_animals(WorldSpawner::AnimalSpawnBuffer& spawn_buffer)
-{
+  {
 	for (size_t i = 0; i < spawn_buffer.size; i++)
-	  if (spawn(spawn_buffer.animal(i), spawn_buffer.coord(i), false)) {}
+	  if (spawn(spawn_buffer.animals[i], spawn_buffer.coords[i], false)) {}
 	  else
 	    {
 	      //TODO: error
 	    }
 }
 
-bool attempt_spawn(Animal animal, bool newborn, Coord coord  , bool insert_search = true
+bool attempt_spawn(const Animal animal, const bool newborn, const Coord coord  , const bool insert_search = true
 )
-  {       
+{
+#if !SHIPPING_BUILD
+assert(animal != Animal::NONE && animal != Animal::MAX && "Tried to spawn animal as NONE or MAX.");
+#endif
+
+
         if (size + 1 > capacity)
             return 0;
         size_t i;
@@ -288,46 +231,47 @@ bool attempt_spawn(Animal animal, bool newborn, Coord coord  , bool insert_searc
         alives[i] = true;
         if (newborn)
         {
-            animals(i) = animal;
-            health(i) = animal::maxHealths[animal] * INFANT_HEALTH_MODIFIER;
-            hunger(i) = animal::maxHungers[animal] * INFANT_HUNGER_MODIFIER;
-            sex(i) = random_bool->next();
-            age(i) = 0;
-            target(i) = std::numeric_limits<size_t>::max();
-            target_type(i) = TargetType::NONE;
-            action(i) = Action::NONE;
-            frame_data(i) = FrameData{ActState::NewPath, Direction::South, Frame::F0};
-            inertia(i) = 0;
-            coord(i) = coord;
+            this->animal(i) = animal;
+            this->health(i) = animal::MAX_HEALTHS[animal] * INFANT_HEALTH_MODIFIER;
+            this->hunger(i) = animal::MAX_HUNGERS[animal] * INFANT_HUNGER_MODIFIER;
+            this->sex(i) = random_bool->next();
+            this->age(i) = 0;
+            this->target(i) = std::numeric_limits<size_t>::max();
+            this->target_type(i) = TargetType::NONE;
+            this->action(i) = Action::NONE;
+            this->frame_data(i) = FrameData{ActState::NewPath, Direction::South, 0};
+            this->inertia(i) = 0;
+            this->coord(i) = coord;
         }
         else
         {
         Time age = random_bool->next();
-            animals(i) = animal;
-            health(i) = getMaxHealth(animal, age);
-            hunger(i) = getMaxHunger(animal, age);
-            sex(i) = random_bool->next();
-            age(i) = age;
-            target(i) = std::numeric_limits<size_t>::max();
-            target_type(i) = TargetType::NONE;
-            action(i) = Action::NONE;
-            frame_data(i) = FrameData{ActState::NewPath, Direction::South, Frame::F0};
-            inertia(i) = 0;
-            coord(i) = coord;
+            this->animal(i) = animal;
+            this->health(i) = get_max_health(animal, age);
+            this->hunger(i) = get_max_hunger(animal, age);
+            this->sex(i) = random_bool->next();
+            this->age(i) = age;
+            this->target(i) = std::numeric_limits<size_t>::max();
+            this->target_type(i) = TargetType::NONE;
+            this->action(i) = Action::NONE;
+            this->frame_data(i) = FrameData{ActState::NewPath, Direction::South, 0};
+            this->inertia(i) = 0;
+            this->coord(i) = coord;
         }
-            if (insert_search) search.insert_entity(animal, {i, coord(i)});
+            if (insert_search) search.insert_entity(animal, {i, this->coord(i)});
         return i;
           }
           
         
 
 size_t spawn(const Animal animal, const bool newborn, const Coord origin
-const bool insert_search = true) {
+, const bool insert_search = true) {
 Coord spawn_point = tiles.get_nearest_empty_tile(origin);
 size_t result = 0;
 while (result == 0) {
 result = attempt_spawn(animal, newborn, spawn_point
-, insert_search);
+, insert_search  
+);
 if (result == 0) free_unused_entity();
 }
 }        
@@ -339,12 +283,12 @@ if (result == 0) free_unused_entity();
   
   inline bool remove(const EntityID i)
   {
-        if (!alive(i))
+        if (!alives[i])
             return false;
 
         free_slots.push(i);
-        alive(i) = false;
-        Animal animal = animal(i);
+        alives[i] = false;
+        Animal animal = this->animal(i);
             search.remove_entity(animal, {i, coord(i)});
         return true;
   }
@@ -364,7 +308,7 @@ if (result == 0) free_unused_entity();
     inline bool attempt_move_entity(const EntityID index)
   {
   #if !SHIPPING_BUILD
-  assert(index < 
+  assert(index <= size);
   #endif
 
         Coord& pos = coord(index);
@@ -396,16 +340,16 @@ if (result == 0) free_unused_entity();
    
 
         animals.save(archive);
-        health.save(archive);
-        hunger.save(archive);
-        sex.save(archive);
-        age.save(archive);
-        target.save(archive);
-        target_type.save(archive);
-        action.save(archive);
-        frame_data.save(archive);
-        inertia.save(archive);
-        coord.save(archive);
+        healths.save(archive);
+        hungers.save(archive);
+        sexs.save(archive);
+        ages.save(archive);
+        targets.save(archive);
+        target_types.save(archive);
+        actions.save(archive);
+        frame_datas.save(archive);
+        inertias.save(archive);
+        coords.save(archive);
     }
 
     template <class Archive>
@@ -417,16 +361,16 @@ if (result == 0) free_unused_entity();
         archive(alives);
         
         animals.load(archive);
-        health.load(archive);
-        hunger.load(archive);
-        sex.load(archive);
-        age.load(archive);
-        target.load(archive);
-        target_type.load(archive);
-        action.load(archive);
-        frame_data.load(archive);
-        inertia.load(archive);
-        coord.load(archive);
+        healths.load(archive);
+        hungers.load(archive);
+        sexs.load(archive);
+        ages.load(archive);
+        targets.load(archive);
+        target_types.load(archive);
+        actions.load(archive);
+        frame_datas.load(archive);
+        inertias.load(archive);
+        coords.load(archive);
     }
 
 
@@ -452,7 +396,7 @@ inline bool transfer(size_t i, animal::Database &old_db)
 		index = free_slots.top();
 		free_slots.pop();			
   }
-    animals(index) = old_db.animals(i);
+    animal(index) = old_db.animal(i);
     health(index) = old_db.health(i);
     hunger(index) = old_db.hunger(i);
     sex(index) = old_db.sex(i);
@@ -463,10 +407,10 @@ inline bool transfer(size_t i, animal::Database &old_db)
     frame_data(index) = old_db.frame_data(i);
     inertia(index) = old_db.inertia(i);
     coord(index) = old_db.coord(i);
-  alive(index) = true;
+  alives[index] = true;
 
   old_db.free_slots.push(i);
-  old_db.alive(index) = false;
+  old_db.alives[index] = false;
   return true;
   }
 // @codegen:end database_generation
@@ -477,12 +421,11 @@ inline bool transfer(size_t i, animal::Database &old_db)
 
 		void birth_animal(Animal animal, size_t mother_index);
 		void breed(Animal animal, size_t female_index, size_t male_index);
-        void set_track_mate_path(Animal animal, size_t index);
+                void set_track_mate_path(Animal animal, size_t index);
 		inline bool get_conception_roll(Animal animal, size_t female_index, size_t male_index);
 				
   inline void handle_event(Event& event);
-		inline void move(size_t i);
-		
+		inline void move(size_t i);	
 		void make_corpse(const size_t index);
 		void kill_animal(const size_t index);
 		void lay_egg(Animal animal, Coord coord, bool fertilized);
@@ -493,4 +436,5 @@ inline bool transfer(size_t i, animal::Database &old_db)
 
 void assign_unassigned_animals();
 };
-}
+
+} // namespace animal

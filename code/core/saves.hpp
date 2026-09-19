@@ -24,8 +24,7 @@ public:
     game.tile_database.save(archive);
     game.plant_database.save(archive);
     game.animal_database.save(archive);
-    game.player_unit_database.save(archive);
-    game.NPC_unit_database.save(archive);
+    game.unit_database.save(archive);
     game.item_database.save(archive);
     game.buildable_database.save(archive);
   }
@@ -38,8 +37,7 @@ public:
     game.tile_database.load(archive);
     game.plant_database.load(archive);
     game.animal_database.load(archive);
-    game.player_unit_database.load(archive);
-    game.NPC_unit_database.load(archive);
+    game.unit_database.load(archive);
     game.item_database.load(archive);
     game.buildable_database.load(archive);
   }

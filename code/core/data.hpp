@@ -1,86 +1,11 @@
 #pragma once
-#include <cmath>
 #include <cstdint>
-enum class Direction : uint8_t
-{
-	North = 0,
-	South = 1,
-	East = 2,
-	West = 3
-};
-
-struct Coord
-{
-	uint32_t x;
-	uint32_t y;
-
-		Coord operator*=(uint32_t s) { return Coord(this->x * s, this->y * s); }
-
-		inline void move(Direction direction)
-		{
-switch (direction) {
-case Direction::North:
-       	y -= 1;
-       	break;
-case Direction::South:
-       	y += 1;
-	    break;
-case Direction::East:
-       	x += 1;
-       	break;
-default:
-		x -= 1;
-        break;
-}
-		}			
-};
-
-struct SCoord
-{
-	int x;
-	int y;
-
-	SCoord operator*=(uint32_t s)
-	{
-		return SCoord(this->x * s, this->y * s);
-	}
-};
-
-bool adjacent_coords(Coord first, Coord second)
-{
-	return (std::abs(static_cast<int>(first.x - second.x)) <= 1 &&
-		std::abs(static_cast<int>(first.y - second.y)) <= 1);
-}
-
-//TODO: consider stride
-inline Coord get_pos(Direction direction, Coord coord, uint8_t stride = 1)
-{
-  Coord new_pos;
-  switch (direction) {
-  case Direction::North:
-    new_pos = {coord.x, coord.y - stride};
-    break;
-  case Direction::South:
-    new_pos = {coord.x, coord.y + stride};
-    break;
-  case Direction::East:
-    new_pos = {coord.x + stride, coord.y};
-    break;
-  case Direction::West:
-    new_pos = {coord.x - stride, coord.y};
-    break;
-  default:
-  // TODO: error
-    break;
-  }
-  return new_pos;
-}
 
 using Time = uint32_t;
 using Frame = uint16_t;
 
 // general
-using EntityID = size_t;
+using EntityID = std::size_t;
 using Variant = uint8_t;
 
 // geography
@@ -99,7 +24,7 @@ using Priority = uint8_t;
 using RoleMana = uint8_t;
 
 // unit skills
-constexpr uint8_t stat_max = 100;
+constexpr uint8_t STAT_MAX = 100;
 using Strength = uint8_t;
 using Athleticism = uint8_t;
 using Dexterity = uint8_t;
@@ -128,7 +53,7 @@ enum class TargetType : uint8_t
 struct Target
 {
 	TargetType type;
-	size_t index;
+	std::size_t index;
 };
 
 // Food
@@ -140,5 +65,5 @@ enum class FoodEnjoyment
 	Mediocre,
 	Good,
 	Great,
-        Legendary
+    Legendary
 };

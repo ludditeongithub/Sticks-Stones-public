@@ -447,7 +447,7 @@ int get_lowest_adj_value(vector<vector<int>> &map, int y, int x)
 	return lowest;
 }
 
-int get_highest_adj_value(vector<vector<int>> &map, int y, int x)
+int get_highest_adj_value(std::vector<std::vector<int>> &map, int y, int x)
 {
 	int dx[] = {-1, 0, 1, 0}; // x-direction for up/down
 	int dy[] = {0, 1, 0, -1}; // y-direction for left/right

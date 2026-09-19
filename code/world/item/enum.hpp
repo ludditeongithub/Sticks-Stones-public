@@ -525,6 +525,8 @@ enum class Material : uint8_t
 	Steel,
 	Copper,
 	Bronze,
+	Silver,
+	Gold,
 	Leather,
 	Stone,
 	Bone,
@@ -533,7 +535,8 @@ enum class Material : uint8_t
 	Linen,
 	Glass,
 	Wool,
-	Silk
+	Silk,
+	MAX
 };
 
 enum class Quality : uint8_t
@@ -544,7 +547,8 @@ enum class Quality : uint8_t
 	Good,
 	Excellent,
 	Perfect,
-	Legendary	
+	Legendary,
+	MAX
 };
 
 enum class ContainerType : uint8_t
@@ -557,6 +561,7 @@ enum class ContainerType : uint8_t
 	Kettle,
 	Jar,
 	Keg,
+	Bottle,
 	Basket,
 	LargeBasket,
 	MashTun,
@@ -564,6 +569,7 @@ enum class ContainerType : uint8_t
 	// ITEMS TO ADD
 	Chest,
 	Satchel,
+	LargeSatchel,
 	Waterskin,
 	MAX
 };

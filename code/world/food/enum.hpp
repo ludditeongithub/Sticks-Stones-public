@@ -3,16 +3,16 @@
 
 enum class Category : uint8_t 
 {
-	Grass,
+	Grasses,
 	Leaves,
 	Reeds,
-	Fruit,
-	Tuber,
+	Fruits,
+	Tubers,
 	Birds,
-	Fish,
-	Grain,
-	Undeground,
-	Stem,
+	Fishes,
+	Grains,
+	Undergrounds,
+	Stems,
 	SmallMammals,
 	MediumMammals,
 	LargeMammals,

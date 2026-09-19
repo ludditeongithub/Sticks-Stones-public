@@ -1,6 +1,6 @@
 #pragma once
-#include "ui/aggregates/info_section.hpp"
-#include <ui/aggregates/info_box.hpp>
+#include "info_section.hpp"
+#include "info_box.hpp"
 #include <ui/components/element.hpp>
 #include <ui/components/display_frame.hpp>
 #include <ui/components/text.hpp>
@@ -21,3 +21,4 @@ struct ProductionInfoMenu
           
         }
 };
+

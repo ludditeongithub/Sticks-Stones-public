@@ -8,7 +8,7 @@
 #include <world/progression/enum.hpp>
 #include <core/combo_enum.hpp>
 
-using Commodity = ConcatEnum<Item, Buildable, Knowledge, Order, Ritual, PlantCategory, Animal>;  
+using Commodity = ConcatEnum<Item, Buildable, knowledge::Category, order::Category, Ritual, PlantCategory, Animal>;  
 
 constexpr uint16_t ROLE_COMMODITY_JOB_AMOUNT = 4000;
 
@@ -51,23 +51,23 @@ inline const RaggedLookupTable<Role, Commodity::Variant> roles_to_commodities = 
 		   Item::MalletHeadMould, Item::AdzeHeadMould, Item::AwlHeadMould,
 		   Item::SickleHeadMould, Item::KnifeHeadMould});
 	lt.set(Prince, {Ritual::LeaderSpeech});
-	lt.set(Philosopher, {Ritual::PublicTeaching, Ritual::Debate, Knowledge::Academic});
-	lt.set(AdvisorKnowledge, {Ritual::PublicTeaching, Ritual::Debate, Ritual::KnowledgeBoost, Item::Book, Knowledge::Academic, Knowledge::Technology});
+	lt.set(Philosopher, {Ritual::PublicTeaching, Ritual::Debate, knowledge::Category::Academic});
+	lt.set(Advisorknowledge::Category, {Ritual::PublicTeaching, Ritual::Debate, Ritual::knowledge::CategoryBoost, Item::Book, knowledge::Category::Academic, knowledge::Category::Technology});
 	lt.set(Emperor, {Ritual::LeaderSpeech, Ritual::Decree});
 	lt.set(Moneyer, {Item::Coins, Ritual::MinterBoost});
 	lt.set(AdvisorStructures, {Ritual::BlueprintOrder, Ritual::MonumentBlueprintOrder});
 	lt.set(Architect, {Ritual::BlueprintOrder, Ritual::BuilderBoost});
-	lt.set(King, {Ritual::Decree, Ritual::LeaderSpeech, Order::Cultural, Order::Legal, Order::Administrative});
-	lt.set(AdvisorFarming, {Ritual::AgricultureDecree, Order::Administrative});
-	lt.set(AdvisorTrade, {Ritual::SingleTradeContract, Ritual::RepeatTradeContract, Ritual::CreateTariff, Order::Administrative});
-	lt.set(Bureaucrat, {Order::Legal, Order::Administrative, Knowledge::Units});
+	lt.set(King, {Ritual::Decree, Ritual::LeaderSpeech, order::Category::Cultural, order::Category::Legal, order::Category::Administrative});
+	lt.set(AdvisorFarming, {Ritual::AgricultureDecree, order::Category::Administrative});
+	lt.set(AdvisorTrade, {Ritual::SingleTradeContract, Ritual::RepeatTradeContract, Ritual::CreateTariff, order::Category::Administrative});
+	lt.set(Bureaucrat, {order::Category::Legal, order::Category::Administrative, knowledge::Category::Units});
 	// TODO: advisor medical
-	lt.set(AdvisorForeign, {Knowledge::Foreign, Ritual::PeaceTreaty, Ritual::RequestAid, Ritual::TradeOffer, Ritual::WarDeclaration, Ritual::FriendlyLetter});
+	lt.set(AdvisorForeign, {knowledge::Category::Foreign, Ritual::PeaceTreaty, Ritual::RequestAid, Ritual::TradeOffer, Ritual::WarDeclaration, Ritual::FriendlyLetter});
 	lt.set(MiningEngineer, {Buildable::Pulley, Buildable::BucketPump, Buildable::HydraulicPump, Buildable::Siphon, Buildable::Waterwheel, Ritual::MinerBoost});
 	lt.set(WagonMaster, {Ritual::TeamsterBoost});
-	lt.set(AdvisorOrderCulturalPerformer, {Order::Cultural, Ritual::Song, Ritual::InstrumentalSong, Ritual::Poem});
-	lt.set(AdvisorOrderCulturalArtifact, {Order::Cultural, Item::CanvasPainting, Buildable::LargeSculpture, Buildable::MediumSculpture, Item::SmallSculpture});
-	lt.set(Chieftan, {Order::Cultural, Order::Administrative, Order::Legal, Ritual::Decree, Ritual::LeaderSpeech});
+	lt.set(AdvisorOrderCulturalPerformer, {order::Category::Cultural, Ritual::Song, Ritual::InstrumentalSong, Ritual::Poem});
+	lt.set(AdvisorOrderCulturalArtifact, {order::Category::Cultural, Item::CanvasPainting, Buildable::LargeSculpture, Buildable::MediumSculpture, Item::SmallSculpture});
+	lt.set(Chieftan, {order::Category::Cultural, order::Category::Administrative, order::Category::Legal, Ritual::Decree, Ritual::LeaderSpeech});
 	lt.set(Engineer, {Buildable::CityGate, Buildable::StoneRoad, Buildable::ConcreteRoad, Buildable::BrickRoad, Buildable::Canal, Buildable::TallWall, Buildable::LargeDoor, Buildable::MiniGate, Buildable::Waterwheel, Buildable::Well, Buildable::Watchtower});
 	lt.set(CivilEngineer, {Buildable::StoneRoad, Buildable::ConcreteRoad, Buildable::BrickRoad, Buildable::Canal, Buildable::TallWall, Buildable::Waterwheel, Buildable::Well, Buildable::Watchtower, Buildable::Aqueduct, Buildable::WoodBridge, Buildable::StoneBridge, Buildable::BrickBridge, Buildable::CityGate, Buildable::CityWall});
 // check if primitive rope, primitive sting should be paleo, TODO: more tools
@@ -129,16 +129,16 @@ lt.set(BronzeSmelter, {Item::Ingot});
 	lt.set(Stonemason, {Item::CurvedStone, Item::ToolHeadPlaceholder, Item::Stone, Item::CrushedStone,  Item::CurvedStone, Item::CutStone, Item::CutStoneSheet, Item::StoneTablet, Item::ToolHeadPlaceholder, Item::SolidWheel});
 	lt.set(Wickerworker, {Item::Basket, Item::LargeBasket});
 	lt.set(Bronzesmith, {Item::Helmet, Item::Breastplate, Item::Boots, Item::Bracers, Item::Bracelet, Item::Guards, Item::Gloves, Item::ToolHeadPlaceholder, Item::WeaponHeadPlaceholder, Item::Nail, Item::NailHeader, Item::Peg, Item::Horseshoes, Item::Ring, Item::Rivet, Item::Axle, Item::LargeAxle, Item::Jar, Item::Arrowhead});
-	lt.set(Chronicler, {Ritual::HistoryText, Ritual::Chronicle, Order::Cultural, Knowledge::Academic});
+	lt.set(Chronicler, {Ritual::HistoryText, Ritual::Chronicle, order::Category::Cultural, knowledge::Category::Academic});
 	lt.set(Scholar, {Item::Scroll, Item::Book, Ritual::HistoryText, Ritual::LawText, Ritual::PhilosophyText});
 	lt.set(Apothecary, {Item::MedicinalSoap, Item::BlueDye, Item::RedDye, Item::YellowDye, Item::Poison, Item::Cyanide, Item::Arsenic, Item::Hemlock, Item::Bandage, Item::Laxative, Item::MedicinalSoap, Item::GileadBalm, Item::Theriac});
-	lt.set(Historian, {Order::Cultural, Knowledge::Academic, Ritual::HistoryText});
-	lt.set(Mathematician, {Ritual::MathematicsText, Knowledge::Academic}); // TODO: perhaps divide up academics
+	lt.set(Historian, {order::Category::Cultural, knowledge::Category::Academic, Ritual::HistoryText});
+	lt.set(Mathematician, {Ritual::MathematicsText, knowledge::Category::Academic}); // TODO: perhaps divide up academics
 	lt.set(SiegeEngineer, {Buildable::BatteringLog, Buildable::BatteringRam, Buildable::Trebuchet, Buildable::Ballista, Buildable::Catapult, Buildable::SiegeLadder, Buildable::SiegeTower});
 	lt.set(NavalEngineer, {Buildable::Canoe, Buildable::Sailboat, Buildable::LargeSailboat, Buildable::Longboat, Buildable::LightWarship, Buildable::Cog, Buildable::HeavyWarship, Buildable::Freighter});
-	lt.set(Priest, {Item::Incense, Order::Cultural});
-	lt.set(Librarian, {Item::Book, Item::Scroll, Ritual::ReviewTexts, Knowledge::Academic, Knowledge::Exploration, Knowledge::Foreign, Knowledge::Units, Knowledge::Technology});
-	lt.set(Scribe, {Item::Scroll, Item::Book, Order::Legal, Knowledge::Academic});
+	lt.set(Priest, {Item::Incense, order::Category::Cultural});
+	lt.set(Librarian, {Item::Book, Item::Scroll, Ritual::ReviewTexts, knowledge::Category::Academic, knowledge::Category::Exploration, knowledge::Category::Foreign, knowledge::Category::Units, knowledge::Category::Technology});
+	lt.set(Scribe, {Item::Scroll, Item::Book, order::Category::Legal, knowledge::Category::Academic});
 	lt.set(MasterWeaver, {Item::Cloth, Item::DyedCloth, Item::DecorativeCloth, Ritual::WeaverBoost});
 	lt.set(MasterBaker, {Item::Bread, Item::Pastry, Item::Pie, Ritual::BakerBoost});
 	lt.set(MasterBuilder, {Buildable::BrickRoad, Buildable::TentSticks, Buildable::WattleWall, Buildable::CobRoof, Buildable::CobWall, Buildable::Wall, Buildable::TallWall, Buildable::CityWall, Buildable::WallPanel, Buildable::Fence, Buildable::Gate, Buildable::CityGate, Buildable::Arch, Buildable::Aqueduct, Buildable::WoodBridge, Buildable::BrickBridge, Buildable::StoneBridge, Buildable::Dam, Buildable::LargeCanal, Buildable::MiniGate, Buildable::LargeDoor, Buildable::Pillar, Buildable::Watchtower, Buildable::PitFire, Buildable::TentCover, Buildable::WattleRoof, Buildable::RoofBeams, Buildable::Roof, Buildable::Window, Buildable::PaintedWindow, Buildable::Foundation,Buildable::Floor, Buildable::Carpet, Buildable::PlowedDirt, Buildable::Path, Buildable::StoneRoad, Buildable::BrickRoad, Buildable::ConcreteRoad, Buildable::DugCanal, Buildable::Canal, Buildable::Well, Ritual::BuilderBoost});
@@ -148,17 +148,17 @@ lt.set(BronzeSmelter, {Item::Ingot});
 	lt.set(MasterFletcher, {Item::Arrow, Item::ArrowShaft, Item::Arrowhead, Ritual::FletcherBoost});
 	lt.set(MasterMason, {Item::CurvedStone, Item::ToolHeadPlaceholder, Item::Stone, Item::CrushedStone, Item::CurvedStone, Item::CutStone, Item::CutStoneSheet, Item::StoneTablet, Item::ToolHeadPlaceholder, Item::SolidWheel});
 	lt.set(Chef, {Item::DrinkingWater}); // TODO
-	lt.set(Elder, {Knowledge::Technology, Knowledge::Units, Knowledge::Academic, Ritual::InitiationRitual});
-	lt.set(Scout, {Knowledge::Exploration, Ritual::Explore});
+	lt.set(Elder, {knowledge::Category::Technology, knowledge::Category::Units, knowledge::Category::Academic, Ritual::InitiationRitual});
+	lt.set(Scout, {knowledge::Category::Exploration, Ritual::Explore});
 	lt.set(Negotiator, {Ritual::WarDeclaration, Ritual::PeaceTreaty, Ritual::TradeOffer, Ritual::RequestAid, Ritual::RequestAlliance, Ritual::RequestUnion});
-	lt.set(Surveyor, {Knowledge::Foreign, Ritual::FindMine});
-	lt.set(Spy, {Knowledge::Foreign, Ritual::BuildSpyNetwork, Ritual::CounterSpy});
+	lt.set(Surveyor, {knowledge::Category::Foreign, Ritual::FindMine});
+	lt.set(Spy, {knowledge::Category::Foreign, Ritual::BuildSpyNetwork, Ritual::CounterSpy});
 	lt.set(Cartographer, {Item::Map, Ritual::MakeMap});
-	lt.set(Diplomat, {Knowledge::Foreign, Ritual::WarDeclaration, Ritual::PeaceTreaty, Ritual::TradeOffer, Ritual::RequestAid, Ritual::RequestAlliance, Ritual::RequestUnion, Ritual::CurryFavor, Ritual::EncourageWar, Ritual::GatherSpecificForeignInfo});
-	lt.set(Envoy, {Knowledge::Foreign, Ritual::WarDeclaration, Ritual::PeaceTreaty, Ritual::TradeOffer, Ritual::RequestAid, Ritual::RequestAlliance, Ritual::RequestUnion, Ritual::CurryFavor});
-	lt.set(Explorer, {Knowledge::Exploration, Ritual::Explore, Ritual::Chart});
-	lt.set(Navigator, {Knowledge::Exploration, Ritual::Explore, Ritual::Chart});
-	lt.set(Philosopher, {Knowledge::Technology, Knowledge::Units, Knowledge::Academic, Order::Cultural, Ritual::Debate, Ritual::PublicTeaching, Ritual::PhilosophyText, Ritual::LawText, Ritual::MathematicsText});
+	lt.set(Diplomat, {knowledge::Category::Foreign, Ritual::WarDeclaration, Ritual::PeaceTreaty, Ritual::TradeOffer, Ritual::RequestAid, Ritual::RequestAlliance, Ritual::RequestUnion, Ritual::CurryFavor, Ritual::EncourageWar, Ritual::GatherSpecificForeignInfo});
+	lt.set(Envoy, {knowledge::Category::Foreign, Ritual::WarDeclaration, Ritual::PeaceTreaty, Ritual::TradeOffer, Ritual::RequestAid, Ritual::RequestAlliance, Ritual::RequestUnion, Ritual::CurryFavor});
+	lt.set(Explorer, {knowledge::Category::Exploration, Ritual::Explore, Ritual::Chart});
+	lt.set(Navigator, {knowledge::Category::Exploration, Ritual::Explore, Ritual::Chart});
+	lt.set(Philosopher, {knowledge::Category::Technology, knowledge::Category::Units, knowledge::Category::Academic, order::Category::Cultural, Ritual::Debate, Ritual::PublicTeaching, Ritual::PhilosophyText, Ritual::LawText, Ritual::MathematicsText});
 	lt.set(Herder, {Item::Corpse, Item::Milk});
 	lt.set(Shepherd, {Item::Corpse, Item::GoatMilk});
 	lt.set(StoneMiner, {Item::Stone, Item::Lime});
@@ -192,21 +192,21 @@ lt.set(BronzeSmelter, {Item::Ingot});
 	lt.set(HorseBreeder, {Animal::Horse});
 	lt.set(HorseMaster, {Animal::Horse, Ritual::HorseBreederBoost});
 	lt.set(MasterFisher, {Item::Fish, Item::Shellfish});
-	lt.set(Shaman, {Order::Cultural});
+	lt.set(Shaman, {order::Category::Cultural});
 	lt.set(Banker, {Ritual::Loan});
 	lt.set(HeavyPlower, {Ritual::Plow});
-	lt.set(HighPriest, {Item::Incense, Order::Cultural, Ritual::PriestBoost});
-	lt.set(Bureaucrat, {Order::Administrative});
-	lt.set(ChariotRacer, {Order::Satisfaction});
+	lt.set(HighPriest, {Item::Incense, order::Category::Cultural, Ritual::PriestBoost});
+	lt.set(Bureaucrat, {order::Category::Administrative});
+	lt.set(ChariotRacer, {order::Category::Satisfaction});
 	lt.set(MoneyLender, {Ritual::Loan});
 	lt.set(Plower, {Ritual::Plow});
 	lt.set(Porter, {Item::Basket});
-	lt.set(Prostitute, {Order::Satisfaction});
-	lt.set(Administrator, {Order::Administrative});
+	lt.set(Prostitute, {order::Category::Satisfaction});
+	lt.set(Administrator, {order::Category::Administrative});
 	lt.set(Factor, {Ritual::SingleTradeContract, Ritual::RepeatTradeContract});
 	lt.set(FieldSurgeon, {Ritual::Surgery});
-	lt.set(Judge, {Order::Legal, Ritual::Judgement});
-	lt.set(Lawyer, {Order::Legal, Ritual::Argument});
+	lt.set(Judge, {order::Category::Legal, Ritual::Judgement});
+	lt.set(Lawyer, {order::Category::Legal, Ritual::Argument});
 	// teamster
 	lt.set(TradeBaron, {Ritual::RepeatTradeContract, Ritual::SingleTradeContract});
 	lt.set(Veterinarian, {Ritual::AnimalSurgery});
@@ -216,8 +216,8 @@ lt.set(BronzeSmelter, {Item::Ingot});
 	lt.set(Landowner, {Ritual::CreateTax, Ritual::PayTax});
 	lt.set(Trader, {Ritual::PayTax, Ritual::SingleTradeContract});
 	lt.set(Merchant, {Ritual::PayTax, Ritual::SingleTradeContract, Ritual::RepeatTradeContract, Ritual::Investment});
-	lt.set(Governor, {Order::Legal, Order::Administrative, Ritual::EnactLaw});
-	lt.set(Senator, {Order::Legal, Order::Administrative, Ritual::ProposeBill, Ritual::PromoteBill});
+	lt.set(Governor, {order::Category::Legal, order::Category::Administrative, Ritual::EnactLaw});
+	lt.set(Senator, {order::Category::Legal, order::Category::Administrative, Ritual::ProposeBill, Ritual::PromoteBill});
 	lt.set(ShipCaptain, {Ritual::SingleTradeContract, Ritual::Sail});
 	lt.set(Gladiator, {Ritual::Tournament});
 	lt.set(Mariner, {Ritual::AssistSail, Ritual::Sail});

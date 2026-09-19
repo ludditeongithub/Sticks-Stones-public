@@ -1,6 +1,8 @@
 // Stores hot arrays of sprite data (positions, sizes, colors, texture IDs), handles batching logic
 #pragma once
-#include "render/sprite_sheet_settings.hpp"
+#include "core/tables.hpp"
+#include "ui/aggregates/info_box.hpp"
+#include "ui/components/button.hpp"
 #include "ui/components/element.hpp"
 #include <world/item/enum.hpp>
 #include <world/buildable/enum.hpp>
@@ -9,10 +11,10 @@
 #include <world/unit/enum.hpp>
 #include <world/tile/enum.hpp>
 #include <core/data.hpp>
+#include <core/entity.hpp>
 #include <variant>
 #include <ui/components/button.hpp>
-#include <iostream>
-#include <memory>
+#include <json.hpp>
 
 // TODO: right now this is only fitted for walk animations. need to make sure
 // all the LOGIC is only fitted for walk animations, for now.
@@ -20,19 +22,160 @@
 namespace sprite
 {
 
+using json = nlohmann::json;
+// using Sprite = std::variant<Item, Plant, Tile, Grass, Animal, Unit, Buildable, ButtonSprite, UISprite>;
+
+  RuntimeLookupTable<Animal, SDL_Rect> animal;
+
+  inline constexpr LookupTable<Buildable, SDL_Rect> buildable = []
+  {
+	  LookupTable<Buildable, SDL_Rect> lt{};
+	  using enum Buildable;
+
+	  return lt;
+  }();
+
+  inline constexpr LookupTable<Plant,SDL_Rect> plant = [] {
+    LookupTable<Plant,SDL_Rect> lt{};
+    using enum Plant;
+    
+    return lt;
+  }();
+
+  inline constexpr LookupTable<Item,SDL_Rect> item = [] {
+    LookupTable<Item,SDL_Rect> lt{};
+    using enum Item;
+    
+    return lt;
+  }();
+
+  inline constexpr LookupTable<Tile,SDL_Rect> tile = [] {
+    LookupTable<Tile,SDL_Rect> lt{};
+    using enum Tile;
+    
+    return lt;
+  }();
+
+
+  inline constexpr LookupTable<Grass,SDL_Rect> grass = [] {
+    LookupTable<Grass,SDL_Rect> lt{};
+    using enum Grass;
+    
+    return lt;
+  }();
+
+  inline constexpr LookupTable<Unit,SDL_Rect> unit = [] {
+    LookupTable<Unit,SDL_Rect> lt{};
+    using enum Unit;
+    
+    return lt;
+  }();
+
+
+  inline constexpr LookupTable<ButtonSprite,SDL_Rect> button = [] {
+    LookupTable<ButtonSprite,SDL_Rect> lt{};
+    using enum ButtonSprite;
+    
+    return lt;
+  }();
+
+
+  inline constexpr LookupTable<CustomButtonDecoration,SDL_Rect> custom_decoration = [] {
+    LookupTable<CustomButtonDecoration,SDL_Rect> lt{};
+    using enum CustomButtonDecoration;
+    
+    return lt;
+  }();
+
+  inline constexpr LookupTable<UISprite,SDL_Rect> ui = [] {
+    LookupTable<UISprite,SDL_Rect> lt{};
+    using enum UISprite;
+    
+    return lt;
+  }();
+
+
+  inline constexpr LookupTable<Role,SDL_Rect> roles = [] {
+    LookupTable<Role,SDL_Rect> lt{};
+    using enum Role;
+    
+    return lt;
+  }();
+  
+template<typename Sprite>
+inline void save_sprite(int index, Sprite sprite, SCoord position, SCoord dimension)
+{
+	if (std::is_same<Animal, Sprite>::value) {
+		animal[index] = SDL_Rect{position.x, position.y, dimension.x, dimension.y};	
+        } else if (std::is_same<Buildable, Sprite>::value) {
+		buildable[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
+	} else if (std::is_same<Plant, Sprite>::value) {
+		plant[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
+	} else if (std::is_same<Item, Sprite>::value) {
+		item[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
+	} else if (std::is_same<Tile, Sprite>::value) {
+		tile[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
+	} else if (std::is_same<Grass, Sprite>::value) {
+		grass[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
+	} else if (std::is_same<ButtonUI, Sprite>::value) {
+          button[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y}; // NOTE: since buttons have three states, the dimension is divided by 3.
+	} else if (std::is_same<UISprite, Sprite>::value) {
+		ui[index] = SDL_Rect{ position.x, position.y, dimension.x, dimension.y};
+	}
+	else if (std::is_same<Role, Sprite>::value) {
+                roles[index] = SDL_Rect{position.x, position.y, dimension.x, dimension.y};
+        } else if (std::is_same<CustomButtonDecoration, Sprite>::value) {
+          custom_decoration[index] = SDL_Rect{position.x, position.y, dimension.x, dimension.y};
+        } else throw std::invalid_argument("Invalid Sprite type.");
+}
+
+template <typename Enum>
+void load_one_type_sprites(const json& sheet) {
+    for (size_t i = 0; i < static_cast<size_t>(Enum::MAX); i++) {
+        Enum sprite = static_cast<Enum>(i);
+
+        SCoord positions{}, dimensions{};
+
+        for (const auto& item : sheet) {
+            if (item.contains("filename") &&
+                item["filename"] == get_sprite_name(sprite)) { 
+
+                positions = {item["frame"]["x"], item["frame"]["y"]};
+                dimensions = {item["frame"]["w"], item["frame"]["h"]};
+            }
+        }
+
+        save_sprite(i, sprite, positions, dimensions);
+    }
+}
+
+template <typename ... Enums>
+void load_type_sprites() {
+	std::ifstream file("../../sprites/game.json");
+
+	json sheet;
+	file >> sheet;
+	(load_one_type_sprites<Enums>(sheet), ...);
+}
+
+void load_sprites()
+{
+	load_type_sprites<Animal, Plant, Item, Tile, Grass, Buildable,  ButtonSprite, UISprite>();
+}	
+
 SDL_Rect get(Entity entity)
 {
-  if (std::holds_alternative<Item>(entity)) {
-    return item[entity];
-  } else if (std::holds_alternative<Plant>(entity)) {
-    return plant[entity];
-  } else if (std::holds_alternative<Animal>(entity)) {
-    return animal[entity];
-  } else if (std::holds_alternative<Buildable>(entity)) {
-    return buildable[entity];
-  } else if (std::holds_alternative<Unit>(entity)) {
+  if (auto x = std::get_if<Item>(entity)) {
+    return item[static_cast<type>(name) ];
+  } else if (auto x = std::get_if<Plant>(entity)) {
+    return plant[static_cast<type>(name) ];
+  } else if (auto x = std::get_if<Animal>(entity)) {
+    return animal[static_cast<type>(name) ];
+  } else if (auto x = std::get_if<Buildable>(entity)) {
+    return buildable[static_cast<type>(name) ];
+  } else if (auto x = std::get_if<Unit>(entity)) {
     return unit[entity];
-  } else { // NullEntity
+  } x { // NullEntity
     // TODO: throw error
   }
 }
@@ -61,9 +204,23 @@ inline SDL_Rect get_decoration(ButtonDecoration decoration)
 {
   if (auto x = get_if<CustomButtonDecoration>(&decoration)) {
     return custom_decoration[static_cast<size_t>(*x)];
-  } else 
+  } else
+}
 
-  
+inline SDL_Rect get_displayable(Displayable display)
+{
+if (auto c = std::get_if<Item>(&req))
+	  {
+            return sprite::item[c];
+	  }
+	  else if (auto c = std::get_if<Buildable>(&req))
+	  {
+            return sprite::buildable[c];
+          } else if (auto c = std::get_if<knowledge::Academic>(&req)) {
+            return sprite::academic[c];
+          } else if (std::get_if<knowledge::Technology>(&req)) {
+            return sprite::knowledge[c];
+          }
 }
 
  // TODO: add animation to subject display
@@ -87,7 +244,7 @@ SDL_Rect get_subject_display(Time age, EntityRenderData render_data)
 	} else if (auto item_data  = std::get_if<ItemRenderData>(&render_data)) {
 	  sprite::get(item_data->item);
 	}
-}  
+}
 
 struct Info
 {

@@ -4,7 +4,7 @@
 #include <SDL2/SDL_events.h>
 #include <core/data.hpp>
 #include <ui/components/button.hpp>
-#include <render/sprite_sheet_settings.hpp>
+#include <render/sprite.hpp>
 #include <simulation/game.hpp>
 
 // TODO: load_game_button
@@ -100,29 +100,23 @@ struct MainMenu
 
 	void main_handle(SDL_Event *e, SCoord mouse_position)
 	{
-		
+		new_game_button.handle();
+		load_game_button.handle();
+		about_button.handle();
+                options_button.handle();
 	}
 
 	void load_handle(SDL_Event *e, SCoord mouse_position)
 	{
 		//TODO: finish UI element ScrollableList. saves are ScrollableList.
 		if (e->type == SDL_MOUSEBUTTONUP) {
-			if (mouse_inside(mouse_position, new_left_corner, button_dimensions)) {
-				start_game();
-			}
-			else if (mouse_inside(mouse_position, load_left_corner, button_dimensions))
-			{
-				mode = Mode::Load;
-			} else if (mouse_inside(mouse_position, options_left_corner, button_dimensions)) mode = Mode::Options;
+			
 		}
 	}		
 
 	void options_handle(SDL_Event *e, SCoord mouse_position)
 	{
-		if (e->type == SDL_MOUSEBUTTONUP) {
-			if (mouse_inside(mouse_position, audio_left_corner, button_dimensions)) mode = Mode::Audio;
-			else if (mouse_inside(mouse_position, video_left_corner, button_dimensions)) mode = Mode::Video;
-		}
+		
 	}
 	void audio_handle(SDL_Event *e, SCoord mouse_position);
 	void video_handle(SDL_Event *e, SCoord mouse_position);

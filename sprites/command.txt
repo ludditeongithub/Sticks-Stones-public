@@ -1,1 +1,0 @@
-aseprite -b "input_folder/*.png" --sheet "output/spritesheet.png" --sheet-columns <cols> --sheet-rows <rows> --sheet-pack --sheet-padding <padding> --format json-array

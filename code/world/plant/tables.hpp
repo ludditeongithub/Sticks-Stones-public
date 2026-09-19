@@ -1360,9 +1360,9 @@ inline constexpr LookupTable<Plant, int> MAX_PRODUCE = []
 
 inline uint16_t get_produce_current_target(Plant plant, const Time current_regrowth, const Time current_age)
 {
-	Time fma = full_maturity_ages[plant] * max_age[plant];
+	Time fma = FULL_MATURITY_AGES[plant] * MAX_AGES[plant];
 	float maturity = std::min(current_age, fma)  / fma;
-	float produce_portion = std::min(current_regrowth, regrowth_max[plant]) / regrowth_max[plant];
-	return max_produce[plant] * maturity * produce_portion;	
+	float produce_portion = std::min(current_regrowth, REGROWTH_MAX[plant]) / REGROWTH_MAX[plant];
+	return MAX_PRODUCE[plant] * maturity * produce_portion;	
 }
 	

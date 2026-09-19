@@ -1,51 +1,81 @@
 #pragma once
-#include <memory>
+#include <SDL2/SDL_events.h>
 
 #include <../extern/magic_enum/magic_enum.hpp>
-
+#include <ui/components/element.hpp>
 #include "ui/components/button.hpp"
 #include "ui/components/button_functionality.hpp"
 #include "ui/components/display_frame.hpp"
 #include "ui/components/element.hpp"
+#include "world/buildable/enum.hpp"
 #include <ui/aggregates/swipable_menu.hpp>
 #include <ui/aggregates/info_section.hpp>
 #include <world/item/tables.hpp>
 
-class ProductionMenu
+#include "large_menu.hpp"
+
+// serves for both 'item production' and 'buildables.' one singleton instance for each
+class ProductionMenu : public LargeMenu
 {
+  
+private:
+  inline static ProductionMenu *production_instance = nullptr;
+  inline static ProductionMenu *buildable_instance = nullptr;
+  static constexpr int SUBMENU_SELECTION_MENU_SIZE = 6;
+  static constexpr int BUTTONS_PER_ROW = 4;
+  static constexpr int BUTTONS_PER_COLUMN = 4;
+  inline static SCoord left_corner = {100, 100};
+  inline static UIElement catalog_background = UIElement(UISprite::MenuCatalogFrame, left_corner);
+
+  bool open = false;
+  Item current_item = Item::NONE;
+  std::vector<DisplayableInfo> infos;
+  SwipableMenu catalog;
   public:
   ProductionMenu(std::vector<CustomButtonDecoration>& submenu_selection_menu_decs, std::vector<Item>& products)
-      {
-	      instance = this;
-	      init_info_sections();
+  {
+          production_instance = this;
+          init_info_sections(false);
 	  init_selection_submenu(submenu_selection_menu_decs);
           init_catalog(products);
+  }
+
+  ProductionMenu(std::vector<CustomButtonDecoration>& submenu_selection_menu_decs, std::vector<Buildable>& buildables)
+  {
+          production_instance = this;
+          init_info_sections(true);
+	  init_selection_submenu(submenu_selection_menu_decs);
+          init_catalog(buildables);
   }
   
     ProductionMenu(const ProductionMenu&) = delete;
     ProductionMenu& operator=(const ProductionMenu&) = delete;
 
-    static ProductionMenu& get_instance()
+    static ProductionMenu& get_production_instance()
     {
-        assert(instance != nullptr);
-        return *instance;
+        assert(buildable_instance != nullptr);
+        return *buildable_instance;
     }
 
-private:
-  inline static ProductionMenu *instance = nullptr;
-  static constexpr int SUBMENU_SELECTION_MENU_SIZE = 6;
-  static constexpr int BUTTONS_PER_ROW = 4;
-  static constexpr int BUTTONS_PER_COLUMN = 4;
-  inline static SCoord left_corner = {100,100};
-  inline static UIElement catalog_background = UIElement(UISprite::MenuCatalogFrame, left_corner);
+    static ProductionMenu& get_buildable_instance()
+    {
+        assert(production_instance != nullptr);
+        return *production_instance;
+    }
 
-  Item current_item = Item::NONE;
-  std::vector<InfoSection> infos;
-  SwipableMenu submenu_selection_menu;
-  SwipableMenu catalog;
-
-  void init_info_sections()
+  void init_info_sections(bool buildable_menu)
   {
+	  if (buildable_menu)
+	  {
+            // reserve appropriate mem
+    infos.reserve(Buildable::MAX);
+
+    for (size_t i = 0; i < static_cast<size_t>(Buildable::MAX); i++)
+    {
+      Buildable buildable = static_cast<Buildable>(i);
+      infos[i] = InfoSection(magic_enum::enum_name(buildable), buildable::descriptions[buildable]);
+    }
+          } else {
 	  // reserve appropriate mem
     int count = 0;
     for (size_t i = 0; i < static_cast<size_t>(Item::MAX); i++)
@@ -57,22 +87,7 @@ private:
       Item item = static_cast<Item>(i);
       infos[i] = InfoSection(magic_enum::enum_name(item), item::descriptions[item]);
     }
-  }
-  
-  void init_selection_submenu(std::vector<CustomButtonDecoration> &submenu_selection_menu_decs)
-  {
-    
-    std::vector<std::unique_ptr<ButtonFunctionality>> submenu_selection_menu_BFs(SUBMENU_SELECTION_MENU_SIZE);
-    int i = 0;
-    for (auto x : submenu_selection_menu_decs)
-    {
-            std::string str{magic_enum::enum_name(x)};
-            auto type = magic_enum::enum_cast<SubmenuSelectionBF::ProductionSubmenu>(magic_enum::enum_name(x));
-
-            if (type) submenu_selection_menu_BFs[i++] = std::make_unique<SubmenuSelectionBF>(*type);            
-    }
-
-submenu_selection_menu = SwipableMenu(submenu_selection_menu_BFs, ButtonSprite::SwipableMenu, submenu_selection_menu_decs, SUBMENU_SELECTION_MENU_SIZE, 1);
+          }
   }
 
     void init_catalog(std::vector<Item>& products)
@@ -86,8 +101,32 @@ submenu_selection_menu = SwipableMenu(submenu_selection_menu_BFs, ButtonSprite::
     catalog = SwipableMenu(button_functionalities, ButtonSprite::ElementFrame, products, BUTTONS_PER_COLUMN,  BUTTONS_PER_ROW, catalog_background);
   }
 
+  void init_catalog(std::vector<Buildable>& products)
+  {
+	  std::vector<std::unique_ptr<ButtonFunctionality>> button_functionalities(products.size());
+    for (size_t i = 0; i < products.size(); i++)
+    {
+            Entity entity = products[i];
+	    button_functionalities[i] = std::make_unique<CatalogSelectionBF>(entity);
+    }
+    catalog = SwipableMenu(button_functionalities, ButtonSprite::ElementFrame, products, BUTTONS_PER_COLUMN,  BUTTONS_PER_ROW, catalog_background);
+  }
+
   void render()
   {
-    infos[static_cast<uint16_t>(current_item)].render();
+    if (open) {
+	  infos[static_cast<uint16_t>(current_item)].render();
+	  submenu_selection_menu.render();
+	  catalog.render();
+    }
+  }
+
+  void handle(SDL_Event *e)
+  {
+    if (open) {
+	  infos.handle(e);
+	  submenu_selection_menu.handle(e);
+	  catalog.handle(e);
+    }
   }
 };

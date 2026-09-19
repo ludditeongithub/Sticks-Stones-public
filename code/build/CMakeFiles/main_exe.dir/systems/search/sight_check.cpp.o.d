@@ -264,8 +264,6 @@ CMakeFiles/main_exe.dir/systems/search/sight_check.cpp.o: \
  /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/float.h \
  /usr/include/SDL2/SDL_endian.h \
  /home/logan/gameprogramming/code/world/plant/enum.hpp \
- /home/logan/gameprogramming/code/core/tables.hpp \
- /usr/include/c++/16/bitset \
  /home/logan/gameprogramming/code/world/item/enum.hpp \
  /home/logan/gameprogramming/code/world/buildable/enum.hpp \
  /home/logan/gameprogramming/code/world/tile/database.hpp \
@@ -279,21 +277,9 @@ CMakeFiles/main_exe.dir/systems/search/sight_check.cpp.o: \
  /usr/include/c++/16/bits/random.tcc /usr/include/c++/16/numeric \
  /usr/include/c++/16/bits/stl_numeric.h \
  /usr/include/c++/16/pstl/glue_numeric_defs.h \
- /home/logan/gameprogramming/code/../extern/FastNoiseLite.h \
- /home/logan/gameprogramming/code/../extern/nanoflann.hpp \
- /usr/include/c++/16/algorithm /usr/include/c++/16/bits/ranges_algo.h \
- /usr/include/c++/16/pstl/glue_algorithm_defs.h \
- /usr/include/c++/16/atomic /usr/include/c++/16/future \
- /usr/include/c++/16/mutex /usr/include/c++/16/bits/chrono.h \
- /usr/include/c++/16/ratio /usr/include/c++/16/bits/std_mutex.h \
- /usr/include/c++/16/bits/unique_lock.h \
- /usr/include/c++/16/condition_variable /usr/include/c++/16/stop_token \
- /usr/include/c++/16/bits/std_thread.h /usr/include/c++/16/semaphore \
- /usr/include/c++/16/bits/semaphore_base.h \
- /usr/include/c++/16/bits/atomic_timed_wait.h \
- /usr/include/c++/16/bits/this_thread_sleep.h /usr/include/sys/time.h \
- /usr/include/c++/16/bits/atomic_futex.h \
  /home/logan/gameprogramming/code/simulation/world_gen.hpp \
  /home/logan/gameprogramming/code/world/item/scavengeable.hpp \
  /home/logan/gameprogramming/code/world/tile/grass.hpp \
- /usr/include/c++/16/queue /usr/include/c++/16/bits/stl_queue.h
+ /home/logan/gameprogramming/code/core/tables.hpp \
+ /usr/include/c++/16/bitset /usr/include/c++/16/queue \
+ /usr/include/c++/16/bits/stl_queue.h

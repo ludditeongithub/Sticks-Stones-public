@@ -24,7 +24,7 @@ namespace bottom_bar
 {
 constexpr SDL_Rect G_VIEWPORT = {0, 305, 640, 55};  
 
-constexpr int width = screen_width;
+constexpr int width = SCREEN_WIDTH;
 constexpr int height = 55;
 
 // =========================
@@ -309,7 +309,5 @@ struct MenuButtons
           }
 	}
 };
-
-
 
 } // namespace bottom_bar

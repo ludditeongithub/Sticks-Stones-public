@@ -702,24 +702,10 @@ CMakeFiles/main_exe.dir/world/animal/breeding.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/world/animal/breeding.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/world/animal/breeding.cpp -o CMakeFiles/main_exe.dir/world/animal/breeding.cpp.s
 
-CMakeFiles/main_exe.dir/world/animal/database.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/world/animal/database.cpp.o: /home/logan/gameprogramming/code/world/animal/database.cpp
-CMakeFiles/main_exe.dir/world/animal/database.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object CMakeFiles/main_exe.dir/world/animal/database.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/animal/database.cpp.o -MF CMakeFiles/main_exe.dir/world/animal/database.cpp.o.d -o CMakeFiles/main_exe.dir/world/animal/database.cpp.o -c /home/logan/gameprogramming/code/world/animal/database.cpp
-
-CMakeFiles/main_exe.dir/world/animal/database.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/world/animal/database.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/world/animal/database.cpp > CMakeFiles/main_exe.dir/world/animal/database.cpp.i
-
-CMakeFiles/main_exe.dir/world/animal/database.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/world/animal/database.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/world/animal/database.cpp -o CMakeFiles/main_exe.dir/world/animal/database.cpp.s
-
 CMakeFiles/main_exe.dir/world/animal/events.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/world/animal/events.cpp.o: /home/logan/gameprogramming/code/world/animal/events.cpp
 CMakeFiles/main_exe.dir/world/animal/events.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building CXX object CMakeFiles/main_exe.dir/world/animal/events.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object CMakeFiles/main_exe.dir/world/animal/events.cpp.o"
 	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/animal/events.cpp.o -MF CMakeFiles/main_exe.dir/world/animal/events.cpp.o.d -o CMakeFiles/main_exe.dir/world/animal/events.cpp.o -c /home/logan/gameprogramming/code/world/animal/events.cpp
 
 CMakeFiles/main_exe.dir/world/animal/events.cpp.i: cmake_force
@@ -730,10 +716,38 @@ CMakeFiles/main_exe.dir/world/animal/events.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/world/animal/events.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/world/animal/events.cpp -o CMakeFiles/main_exe.dir/world/animal/events.cpp.s
 
+CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.o: /home/logan/gameprogramming/code/world/foreign/tribe_events.cpp
+CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building CXX object CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.o -MF CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.o.d -o CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.o -c /home/logan/gameprogramming/code/world/foreign/tribe_events.cpp
+
+CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/world/foreign/tribe_events.cpp > CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.i
+
+CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/world/foreign/tribe_events.cpp -o CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.s
+
+CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.o: /home/logan/gameprogramming/code/world/foreign/tribes.cpp
+CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Building CXX object CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.o -MF CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.o.d -o CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.o -c /home/logan/gameprogramming/code/world/foreign/tribes.cpp
+
+CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/world/foreign/tribes.cpp > CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.i
+
+CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/world/foreign/tribes.cpp -o CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.s
+
 CMakeFiles/main_exe.dir/world/item/operations.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/world/item/operations.cpp.o: /home/logan/gameprogramming/code/world/item/operations.cpp
 CMakeFiles/main_exe.dir/world/item/operations.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Building CXX object CMakeFiles/main_exe.dir/world/item/operations.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Building CXX object CMakeFiles/main_exe.dir/world/item/operations.cpp.o"
 	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/item/operations.cpp.o -MF CMakeFiles/main_exe.dir/world/item/operations.cpp.o.d -o CMakeFiles/main_exe.dir/world/item/operations.cpp.o -c /home/logan/gameprogramming/code/world/item/operations.cpp
 
 CMakeFiles/main_exe.dir/world/item/operations.cpp.i: cmake_force
@@ -747,7 +761,7 @@ CMakeFiles/main_exe.dir/world/item/operations.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
 CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Building CXX object CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_50) "Building CXX object CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o"
 	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o -MF CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o.d -o CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o -c /home/logan/gameprogramming/code/world/plant/birth_death.cpp
 
 CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.i: cmake_force
@@ -761,7 +775,7 @@ CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/world/plant/operations.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/world/plant/operations.cpp.o: /home/logan/gameprogramming/code/world/plant/operations.cpp
 CMakeFiles/main_exe.dir/world/plant/operations.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_50) "Building CXX object CMakeFiles/main_exe.dir/world/plant/operations.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_51) "Building CXX object CMakeFiles/main_exe.dir/world/plant/operations.cpp.o"
 	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/plant/operations.cpp.o -MF CMakeFiles/main_exe.dir/world/plant/operations.cpp.o.d -o CMakeFiles/main_exe.dir/world/plant/operations.cpp.o -c /home/logan/gameprogramming/code/world/plant/operations.cpp
 
 CMakeFiles/main_exe.dir/world/plant/operations.cpp.i: cmake_force
@@ -775,7 +789,7 @@ CMakeFiles/main_exe.dir/world/plant/operations.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/world/policies.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/world/policies.cpp.o: /home/logan/gameprogramming/code/world/policies.cpp
 CMakeFiles/main_exe.dir/world/policies.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_51) "Building CXX object CMakeFiles/main_exe.dir/world/policies.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_52) "Building CXX object CMakeFiles/main_exe.dir/world/policies.cpp.o"
 	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/policies.cpp.o -MF CMakeFiles/main_exe.dir/world/policies.cpp.o.d -o CMakeFiles/main_exe.dir/world/policies.cpp.o -c /home/logan/gameprogramming/code/world/policies.cpp
 
 CMakeFiles/main_exe.dir/world/policies.cpp.i: cmake_force
@@ -789,7 +803,7 @@ CMakeFiles/main_exe.dir/world/policies.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/world/roles.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/world/roles.cpp.o: /home/logan/gameprogramming/code/world/roles.cpp
 CMakeFiles/main_exe.dir/world/roles.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_52) "Building CXX object CMakeFiles/main_exe.dir/world/roles.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_53) "Building CXX object CMakeFiles/main_exe.dir/world/roles.cpp.o"
 	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/roles.cpp.o -MF CMakeFiles/main_exe.dir/world/roles.cpp.o.d -o CMakeFiles/main_exe.dir/world/roles.cpp.o -c /home/logan/gameprogramming/code/world/roles.cpp
 
 CMakeFiles/main_exe.dir/world/roles.cpp.i: cmake_force
@@ -803,7 +817,7 @@ CMakeFiles/main_exe.dir/world/roles.cpp.s: cmake_force
 CMakeFiles/main_exe.dir/world/tile/database.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/world/tile/database.cpp.o: /home/logan/gameprogramming/code/world/tile/database.cpp
 CMakeFiles/main_exe.dir/world/tile/database.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_53) "Building CXX object CMakeFiles/main_exe.dir/world/tile/database.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_54) "Building CXX object CMakeFiles/main_exe.dir/world/tile/database.cpp.o"
 	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/tile/database.cpp.o -MF CMakeFiles/main_exe.dir/world/tile/database.cpp.o.d -o CMakeFiles/main_exe.dir/world/tile/database.cpp.o -c /home/logan/gameprogramming/code/world/tile/database.cpp
 
 CMakeFiles/main_exe.dir/world/tile/database.cpp.i: cmake_force
@@ -814,38 +828,10 @@ CMakeFiles/main_exe.dir/world/tile/database.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/world/tile/database.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/world/tile/database.cpp -o CMakeFiles/main_exe.dir/world/tile/database.cpp.s
 
-CMakeFiles/main_exe.dir/world/tribeEvents.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/world/tribeEvents.cpp.o: /home/logan/gameprogramming/code/world/tribeEvents.cpp
-CMakeFiles/main_exe.dir/world/tribeEvents.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_54) "Building CXX object CMakeFiles/main_exe.dir/world/tribeEvents.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/tribeEvents.cpp.o -MF CMakeFiles/main_exe.dir/world/tribeEvents.cpp.o.d -o CMakeFiles/main_exe.dir/world/tribeEvents.cpp.o -c /home/logan/gameprogramming/code/world/tribeEvents.cpp
-
-CMakeFiles/main_exe.dir/world/tribeEvents.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/world/tribeEvents.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/world/tribeEvents.cpp > CMakeFiles/main_exe.dir/world/tribeEvents.cpp.i
-
-CMakeFiles/main_exe.dir/world/tribeEvents.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/world/tribeEvents.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/world/tribeEvents.cpp -o CMakeFiles/main_exe.dir/world/tribeEvents.cpp.s
-
-CMakeFiles/main_exe.dir/world/tribes.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/world/tribes.cpp.o: /home/logan/gameprogramming/code/world/tribes.cpp
-CMakeFiles/main_exe.dir/world/tribes.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_55) "Building CXX object CMakeFiles/main_exe.dir/world/tribes.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/tribes.cpp.o -MF CMakeFiles/main_exe.dir/world/tribes.cpp.o.d -o CMakeFiles/main_exe.dir/world/tribes.cpp.o -c /home/logan/gameprogramming/code/world/tribes.cpp
-
-CMakeFiles/main_exe.dir/world/tribes.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/world/tribes.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/world/tribes.cpp > CMakeFiles/main_exe.dir/world/tribes.cpp.i
-
-CMakeFiles/main_exe.dir/world/tribes.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/world/tribes.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/world/tribes.cpp -o CMakeFiles/main_exe.dir/world/tribes.cpp.s
-
 CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o: /home/logan/gameprogramming/code/world/unit/OLD_resouceUnits.cpp
 CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_56) "Building CXX object CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_55) "Building CXX object CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o"
 	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o -MF CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o.d -o CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o -c /home/logan/gameprogramming/code/world/unit/OLD_resouceUnits.cpp
 
 CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.i: cmake_force
@@ -903,16 +889,15 @@ main_exe_OBJECTS = \
 "CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.o" \
 "CMakeFiles/main_exe.dir/ui/aggregates/swipable_menu.cpp.o" \
 "CMakeFiles/main_exe.dir/world/animal/breeding.cpp.o" \
-"CMakeFiles/main_exe.dir/world/animal/database.cpp.o" \
 "CMakeFiles/main_exe.dir/world/animal/events.cpp.o" \
+"CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.o" \
+"CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.o" \
 "CMakeFiles/main_exe.dir/world/item/operations.cpp.o" \
 "CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o" \
 "CMakeFiles/main_exe.dir/world/plant/operations.cpp.o" \
 "CMakeFiles/main_exe.dir/world/policies.cpp.o" \
 "CMakeFiles/main_exe.dir/world/roles.cpp.o" \
 "CMakeFiles/main_exe.dir/world/tile/database.cpp.o" \
-"CMakeFiles/main_exe.dir/world/tribeEvents.cpp.o" \
-"CMakeFiles/main_exe.dir/world/tribes.cpp.o" \
 "CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o"
 
 # External object files for target main_exe
@@ -963,21 +948,20 @@ main_exe: CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.o
 main_exe: CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.o
 main_exe: CMakeFiles/main_exe.dir/ui/aggregates/swipable_menu.cpp.o
 main_exe: CMakeFiles/main_exe.dir/world/animal/breeding.cpp.o
-main_exe: CMakeFiles/main_exe.dir/world/animal/database.cpp.o
 main_exe: CMakeFiles/main_exe.dir/world/animal/events.cpp.o
+main_exe: CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.o
+main_exe: CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.o
 main_exe: CMakeFiles/main_exe.dir/world/item/operations.cpp.o
 main_exe: CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o
 main_exe: CMakeFiles/main_exe.dir/world/plant/operations.cpp.o
 main_exe: CMakeFiles/main_exe.dir/world/policies.cpp.o
 main_exe: CMakeFiles/main_exe.dir/world/roles.cpp.o
 main_exe: CMakeFiles/main_exe.dir/world/tile/database.cpp.o
-main_exe: CMakeFiles/main_exe.dir/world/tribeEvents.cpp.o
-main_exe: CMakeFiles/main_exe.dir/world/tribes.cpp.o
 main_exe: CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o
 main_exe: CMakeFiles/main_exe.dir/build.make
 main_exe: CMakeFiles/main_exe.dir/compiler_depend.ts
 main_exe: CMakeFiles/main_exe.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_57) "Linking CXX executable main_exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_56) "Linking CXX executable main_exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/main_exe.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

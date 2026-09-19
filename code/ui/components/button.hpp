@@ -1,16 +1,16 @@
 #pragma once
-#include "element.hpp"
 #include <SDL2/SDL_rect.h>
 #include <SDL2/SDL_events.h>
 #include <stdexcept>
 #include <string>
 #include <core/data.hpp>
+#include <core/entity.hpp>
 #include <core/mouse.hpp>
 #include <chrono>
 #include <format>
 #include <ui/components/button_functionality.hpp>
 #include "render/screen.hpp"
-#include "render/sprite_sheet_settings.hpp"
+#include "render/sprite.hpp"
 #include "text.hpp"
 #include "ui/components/text.hpp"
 #include "world/buildable/enum.hpp"
@@ -80,13 +80,13 @@ struct ButtonUI
         std::unique_ptr<ButtonFunctionality> function;
 	ButtonSprite sprite;
         std::optional<ButtonDecoration> decoration;
-	SCoord top_left_corner;
+	SCoord pos;
 	Sound* pressed_sound;
 	ButtonState state = ButtonState::Unpressed;
 
-  ButtonUI(SDL_Rect& viewport, std::unique_ptr<ButtonFunctionality> function, ButtonSprite sprite, SCoord top_left_corner, std::optional<ButtonDecoration> decoration = std::nullopt,
+  ButtonUI(SDL_Rect& viewport, std::unique_ptr<ButtonFunctionality> function, ButtonSprite sprite, SCoord pos, std::optional<ButtonDecoration> decoration = std::nullopt,
 		 Sound *pressed_sound = nullptr)
-    : viewport(viewport), sprite(sprite), decoration(decoration), top_left_corner(top_left_corner), pressed_sound(pressed_sound)
+    : viewport(viewport), sprite(sprite), decoration(decoration), pos(pos), pressed_sound(pressed_sound)
 	{
           this->function = std::move(function);
 	}
@@ -97,16 +97,16 @@ struct ButtonUI
 		SDL_Rect rect;
 	        rect = sprite::get_button(sprite, state);
 		
-		sprite_sheet_texture.render(top_left_corner.x, top_left_corner.y, &rect, viewport);
+		sprite_sheet_texture.render(pos.x, pos.y, &rect, viewport);
 		//TODO: decoration should appear lower, if button is pressed!
 		if (decoration.has_value()) {
 			SDL_Rect dec_rect = sprite::get_decoration(decoration);
 			//TODO: the dec should lower by one pixel if the state is PRESSED.
-		  sprite_sheet_texture.render(top_left_corner.x, top_left_corner.y, &dec_rect, viewport);
+		  sprite_sheet_texture.render(pos.x, pos.y, &dec_rect, viewport);
 		}		
 	}
 
-	void handle_event(SDL_Event *e)
+	void handle(SDL_Event *e)
 	{
 		if( e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP )
 	{
@@ -115,7 +115,7 @@ struct ButtonUI
 		SDL_GetMouseState( &x, &y );
 
 		SCoord dimensions = get_button_sprite_dimensions(sprite);
-		bool inside = mouse_inside(viewport, {x,y}, top_left_corner, dimensions);
+		bool inside = mouse_inside(viewport, {x,y}, pos, dimensions);
 
 		if( !inside )
 		{
@@ -147,10 +147,10 @@ struct TextButtonUI : public ButtonUI
     Text text;	
 
   TextButtonUI(Text text, ButtonFunctionality function, ButtonSprite sprite,      
-        SCoord top_left_corner,
+        SCoord pos,
         Sound* pressed_sound = nullptr)
         : ButtonUI(function, sprite,
-            top_left_corner,
+            pos,
             pressed_sound),
           text(text)
   {    
@@ -160,7 +160,7 @@ struct TextButtonUI : public ButtonUI
     {
       ButtonUI::render(viewport);
       SDL_RenderSetViewport(renderer, viewport);
-	fc_draw_color(text.font, renderer, top_left_corner.x, top_left_corner.y, text.color, text.text); 
+	fc_draw_color(text.font, renderer, pos.x, pos.y, text.color, text.text); 
     }
 
     void handle_event(SDL_Event *e) { ButtonUI::handle_event(e); }
@@ -180,10 +180,10 @@ struct CheckboxUI : public ButtonUI
 {
     bool checked = false;
 
-    CheckboxUI(ButtonFunctionality function, ButtonSprite sprite, const SCoord top_left_corner,
+    CheckboxUI(ButtonFunctionality function, ButtonSprite sprite, const SCoord pos,
 	       Sound *sound = nullptr)
 	: function(
-	      function, sprite(sprite), top_left_corner(top_left_corner),
+	      function, sprite(sprite), pos(pos),
 	      sound(sound) {}
 
     void render(SDL_Rect *viewport){
@@ -196,7 +196,7 @@ struct CheckboxUI : public ButtonUI
 		{
 			rect = get_button_sprite(sprite, state);	
 	}
-        sprite_sheet_texture.render(top_left_corner.x, top_left_corner.y, &rect, viewport);
+        sprite_sheet_texture.render(pos.x, pos.y, &rect, viewport);
     }
 
     bool handle_event(SDL_Event* e)
@@ -210,7 +210,7 @@ struct CheckboxUI : public ButtonUI
         int mx, my;
         SDL_GetMouseState(&mx, &my);
 
-	if (mouse_inside({mx, my}, top_left_corner, dimensions) && !checked)
+	if (mouse_inside({mx, my}, pos, dimensions) && !checked)
 			{
 				state = Button::Hovered;	
 			}
@@ -258,3 +258,16 @@ class MainButtonUI : public ButtonUI {
           
         }
 };
+
+  class KnowledgeButton : public ButtonUI
+{
+private:
+public:
+  KnowledgeButton()
+  {
+    
+  };
+  
+};
+
+

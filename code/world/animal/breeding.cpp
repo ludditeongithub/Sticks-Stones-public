@@ -1,13 +1,24 @@
 #include "core/data.hpp"
-#include "database.hpp"
+#include <world/animal/database.hpp>
+#error "DATABASE HEADER INCLUDED"
 #include "render/sprite.hpp"
-#include "render/sprite_sheet_settings.hpp"
+#include "render/sprite.hpp"
 #include "schedule/event.hpp"
 #include "world/animal/enum.hpp"
 #include "world/animal/tables.hpp"
+#include <stdexcept>
+#include <string>
 
-void animal::Database::birth_animal(Animal animal, size_t mother_index)
+namespace animal {
+
+void Database::birth_animal(Animal animal, size_t mother_index)
 {
+        #if !SHIPPING_BUILD
+	if (mother_index >= size)
+		throw std::out_of_range("Mother index out of range when birthing.");
+        if (animal == NONE || animal == MAX) throw std::invalid_argument("Attempted to birth animal as NONE or MAX.");
+        #endif
+        
 	// TODO: perhaps include age lowering fertility later
 	Coord origin = coords[mother_index];	
 	int length = animal_sprite_infos[animal].CHILD_SIDE_LENGTH;
@@ -16,52 +27,73 @@ void animal::Database::birth_animal(Animal animal, size_t mother_index)
 	spawn(animal, true, bottom_left_corner);
 	// after birth, add event for next breeding in the future
 	// TODO: consider sleeping
-	if (ages[mother_index] < animal::senescence_ages[animal] - animal::breeding_intervals[animal])
-	g_Events->add_event(animal::breeding_intervals[animal], EventType::FindMate,
+	if (ages[mother_index] < senescence_ages[animal] - breeding_intervals[animal])
+	g_Events->add_event(breeding_intervals[animal], EventType::FindMate,
 	static_cast<size_t>(animals[mother_index]), mother_index);
 }
 
 
-inline bool animal::Database::get_conception_roll(Animal animal, size_t female_index, size_t male_index)
-{		
+inline bool Database::get_conception_roll(Animal animal, size_t female_index, size_t male_index)
+{
+        #if !SHIPPING_BUILD
+	if (female_index >= size)
+		throw std::out_of_range("female index out of range when birthing.");
+        if (male_index >= size)
+		throw std::out_of_range("male index out of range when birthing.");
+        if (animal == Animal::NONE || animal == Animal::MAX) throw std::invalid_argument("Attempted to roll conception for animal as NONE or MAX.");
+        #endif
+  
 		const Time male_age = ages[male_index];
 		const Time female_age = ages[female_index];
-		if (female_age < animal::fertility_ages[animal] || male_age < animal::fertility_ages[animal])
+		if (female_age < fertility_ages[animal] || male_age < fertility_ages[animal])
 			{
 					// TODO: error handling
 					return 0.0;
 			}
-		if (female_age < animal::senescence_ages[animal] || male_age < animal::senescence_ages[animal])
+		if (female_age < senescence_ages[animal] || male_age < senescence_ages[animal])
 			{
 					// TODO: error handling
 					return 0.0;
 			}
-		return (random_chance->next() < animal::base_fertility_chances[animal]);
+		return (random_chance->next() < base_fertility_chances[animal]);
 }
 
 
-void animal::Database::breed(Animal animal, size_t female_index, size_t male_index)
+void Database::breed(Animal animal, size_t female_index, size_t male_index)
 {
+        #if !SHIPPING_BUILD
+	if (female_index >= size)
+		throw std::out_of_range("female index out of range when birthing.");
+        if (male_index >= size)
+		throw std::out_of_range("male index out of range when birthing.");
+        if (animal == NONE || animal == MAX) throw std::invalid_argument("Attempted to roll conception for animal as NONE or MAX.");
+        #endif
+  
 		if (animals[male_index] != animals[female_index])
 		{
 		// TODO: error handling
 		}
 		if (get_conception_roll(female_index, male_index)) {
 				// MTODO: change state to pregnant
-				if (animal::is_egg_layer[animal]) {
+				if (is_egg_layer[animal]) {
 						// MTODO: fish differently
 				fertilization_handler.push_back(female_index);                  
-				} else g_Events->add_event(animal::pregnancy_lengths[animal], EventType::AnimalBirth, static_cast<size_t>(animal), female_index);
+				} else g_Events->add_event(pregnancy_lengths[animal], EventType::AnimalBirth, static_cast<size_t>(animal), female_index);
 		}
 }
 
-void animal::Database::set_track_mate_path(Animal animal, size_t index)
+void Database::set_track_mate_path(Animal animal, size_t index)
 {
+  #if !SHIPPING_BUILD
+  assert(index <= size, "Mate candidate index out of range.");
+        if (animal == NONE || animal == MAX) throw std::invalid_argument("Attempted to track mate for animal as NONE or MAX.");
+#endif
+        
 		bool found = false;
 		int nearest = 0;
 		Coord origin = coords[index];
 		EntitySearchData esd = search.get_nearest(animal, origin);
-		if (ages[esd.index] > animal::fertility_ages[animal])
+		if (ages[esd.index] > fertility_ages[animal])
 				found = true;
 		while (!found)
 				{
@@ -75,19 +107,22 @@ void animal::Database::set_track_mate_path(Animal animal, size_t index)
 }
 
 // TODO: protective mothers
-void animal::Database::lay_egg(Animal animal, Coord coord, bool fertilized)
+void Database::lay_egg(Animal animal, Coord coord, bool fertilized)
 {
-	
+	#if !SHIPPING_BUILD
+  assert(!IS_EGG_LAYER[animal], "Non egg-laying animal attempted to lay egg at " + std::to_string(coord.x) + "," + std::to_string(coord.y));
+#endif
+        
 	Item item;
 	switch (animal)
 	{
-	case Animal::Duck:
+	case Duck:
 		item = Item::DuckEgg;
 		break;
-	case Animal::Chicken:
+	case Chicken:
 		item = Item::ChickenEgg;
 		break;
-	case Animal::Turtle:
+	case Turtle:
 		item = Item::TurtleEgg;
 			break;
 	default:
@@ -95,24 +130,28 @@ void animal::Database::lay_egg(Animal animal, Coord coord, bool fertilized)
 			break;
 	}
 	items.attempt_spawn(item, true, coord);	
-	if (fertilized) g_Events->add_event(animal::hatch_times[animal], EventType::Hatch, static_cast<size_t>(animal), static_cast<size_t>(fertilized));
+	if (fertilized) g_Events->add_event(hatch_times[animal], EventType::Hatch, static_cast<size_t>(animal), static_cast<size_t>(fertilized));
 }
 
 
-void animal::Database::make_corpse(const size_t index)
+void Database::make_corpse(const size_t index)
 {
+  #if !SHIPPING_BUILD
+  assert(index <= size, "Attempted to make corpse out of range.");
+#endif
+  
 	const Coord coord = coords[index];
 	const Animal animal = animals[index];
 	const Time age = ages[index];
 	size_t length;
-	if (age < animal::fertility_ages[animal]) {
+	if (age < fertility_ages[animal]) {
 	   length = animal_sprite_infos[animal].CHILD_FRONT_LENGTH;
 	} else length = animal_sprite_infos[animal].FRONT_LENGTH;
 	Coord left_corner = tiles.get_nearest_empty_tile_block(coord, length);
 	variant_items.attempt_spawn(Item::Corpse, false, coord, static_cast<Variant>(animal));
 }
 
-void animal::Database::kill_animal(const size_t index)
+void Database::kill_animal(const size_t index)
 {
 	if (remove(index)) make_corpse(index);
 	else
@@ -122,3 +161,4 @@ void animal::Database::kill_animal(const size_t index)
 }
 
 
+}

@@ -1,4 +1,5 @@
 #pragma once
+#include <queue>
 #include <world/unit/roles_commodities.hpp>
 #include <core/data.hpp>
 #include <core/containers.hpp>
@@ -17,7 +18,7 @@ struct PlayerTaskJobData
   uint8_t amount = 1;
 };
 
-PriorityQueue<PlayerTaskJobData>* g_task_priority_queue;
+std::priority_queue<PlayerTaskJobData>* g_task_priority_queue;
 
 struct MovingStateDispatchBuffer
 {
@@ -66,7 +67,7 @@ void assign_unassigned_entities();
 template <typename DB>
 MovingStateDispatchBuffer mark_entities_moving_state(std::vector<EntityID> &indices, DB& database);
 inline Role get_valid_action_role(unit::Database& database, size_t i, Commodity c);
-void assign_tasks(std::vector<EntityID> &indices, PriorityQueue<PlayerTaskJobData> &pq, unit::Database &database);
+void assign_tasks(std::vector<EntityID> &indices, std::priority_queue<PlayerTaskJobData> &pq, unit::Database &database);
 void assign_animal_tasks(Array<Animal> &animals, Array<ActState> &actions, Array<Coord> &positions, Array<Hunger> hungers);
 void handle_actions_and_movement();
 std::vector<EntityID> get_ready_actors();

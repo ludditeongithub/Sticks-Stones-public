@@ -1210,30 +1210,6 @@ world/animal/breeding.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/world/animal/breeding.cpp.s
 .PHONY : world/animal/breeding.cpp.s
 
-world/animal/database.o: world/animal/database.cpp.o
-.PHONY : world/animal/database.o
-
-# target to build an object file
-world/animal/database.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/world/animal/database.cpp.o
-.PHONY : world/animal/database.cpp.o
-
-world/animal/database.i: world/animal/database.cpp.i
-.PHONY : world/animal/database.i
-
-# target to preprocess a source file
-world/animal/database.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/world/animal/database.cpp.i
-.PHONY : world/animal/database.cpp.i
-
-world/animal/database.s: world/animal/database.cpp.s
-.PHONY : world/animal/database.s
-
-# target to generate assembly for a file
-world/animal/database.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/world/animal/database.cpp.s
-.PHONY : world/animal/database.cpp.s
-
 world/animal/events.o: world/animal/events.cpp.o
 .PHONY : world/animal/events.o
 
@@ -1257,6 +1233,54 @@ world/animal/events.s: world/animal/events.cpp.s
 world/animal/events.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/world/animal/events.cpp.s
 .PHONY : world/animal/events.cpp.s
+
+world/foreign/tribe_events.o: world/foreign/tribe_events.cpp.o
+.PHONY : world/foreign/tribe_events.o
+
+# target to build an object file
+world/foreign/tribe_events.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.o
+.PHONY : world/foreign/tribe_events.cpp.o
+
+world/foreign/tribe_events.i: world/foreign/tribe_events.cpp.i
+.PHONY : world/foreign/tribe_events.i
+
+# target to preprocess a source file
+world/foreign/tribe_events.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.i
+.PHONY : world/foreign/tribe_events.cpp.i
+
+world/foreign/tribe_events.s: world/foreign/tribe_events.cpp.s
+.PHONY : world/foreign/tribe_events.s
+
+# target to generate assembly for a file
+world/foreign/tribe_events.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.s
+.PHONY : world/foreign/tribe_events.cpp.s
+
+world/foreign/tribes.o: world/foreign/tribes.cpp.o
+.PHONY : world/foreign/tribes.o
+
+# target to build an object file
+world/foreign/tribes.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.o
+.PHONY : world/foreign/tribes.cpp.o
+
+world/foreign/tribes.i: world/foreign/tribes.cpp.i
+.PHONY : world/foreign/tribes.i
+
+# target to preprocess a source file
+world/foreign/tribes.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.i
+.PHONY : world/foreign/tribes.cpp.i
+
+world/foreign/tribes.s: world/foreign/tribes.cpp.s
+.PHONY : world/foreign/tribes.s
+
+# target to generate assembly for a file
+world/foreign/tribes.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.s
+.PHONY : world/foreign/tribes.cpp.s
 
 world/item/operations.o: world/item/operations.cpp.o
 .PHONY : world/item/operations.o
@@ -1401,54 +1425,6 @@ world/tile/database.s: world/tile/database.cpp.s
 world/tile/database.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/world/tile/database.cpp.s
 .PHONY : world/tile/database.cpp.s
-
-world/tribeEvents.o: world/tribeEvents.cpp.o
-.PHONY : world/tribeEvents.o
-
-# target to build an object file
-world/tribeEvents.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/world/tribeEvents.cpp.o
-.PHONY : world/tribeEvents.cpp.o
-
-world/tribeEvents.i: world/tribeEvents.cpp.i
-.PHONY : world/tribeEvents.i
-
-# target to preprocess a source file
-world/tribeEvents.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/world/tribeEvents.cpp.i
-.PHONY : world/tribeEvents.cpp.i
-
-world/tribeEvents.s: world/tribeEvents.cpp.s
-.PHONY : world/tribeEvents.s
-
-# target to generate assembly for a file
-world/tribeEvents.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/world/tribeEvents.cpp.s
-.PHONY : world/tribeEvents.cpp.s
-
-world/tribes.o: world/tribes.cpp.o
-.PHONY : world/tribes.o
-
-# target to build an object file
-world/tribes.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/world/tribes.cpp.o
-.PHONY : world/tribes.cpp.o
-
-world/tribes.i: world/tribes.cpp.i
-.PHONY : world/tribes.i
-
-# target to preprocess a source file
-world/tribes.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/world/tribes.cpp.i
-.PHONY : world/tribes.cpp.i
-
-world/tribes.s: world/tribes.cpp.s
-.PHONY : world/tribes.s
-
-# target to generate assembly for a file
-world/tribes.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main_exe.dir/build.make CMakeFiles/main_exe.dir/world/tribes.cpp.s
-.PHONY : world/tribes.cpp.s
 
 world/unit/OLD_resouceUnits.o: world/unit/OLD_resouceUnits.cpp.o
 .PHONY : world/unit/OLD_resouceUnits.o
@@ -1618,12 +1594,15 @@ help:
 	@echo "... world/animal/breeding.o"
 	@echo "... world/animal/breeding.i"
 	@echo "... world/animal/breeding.s"
-	@echo "... world/animal/database.o"
-	@echo "... world/animal/database.i"
-	@echo "... world/animal/database.s"
 	@echo "... world/animal/events.o"
 	@echo "... world/animal/events.i"
 	@echo "... world/animal/events.s"
+	@echo "... world/foreign/tribe_events.o"
+	@echo "... world/foreign/tribe_events.i"
+	@echo "... world/foreign/tribe_events.s"
+	@echo "... world/foreign/tribes.o"
+	@echo "... world/foreign/tribes.i"
+	@echo "... world/foreign/tribes.s"
 	@echo "... world/item/operations.o"
 	@echo "... world/item/operations.i"
 	@echo "... world/item/operations.s"
@@ -1642,12 +1621,6 @@ help:
 	@echo "... world/tile/database.o"
 	@echo "... world/tile/database.i"
 	@echo "... world/tile/database.s"
-	@echo "... world/tribeEvents.o"
-	@echo "... world/tribeEvents.i"
-	@echo "... world/tribeEvents.s"
-	@echo "... world/tribes.o"
-	@echo "... world/tribes.i"
-	@echo "... world/tribes.s"
 	@echo "... world/unit/OLD_resouceUnits.o"
 	@echo "... world/unit/OLD_resouceUnits.i"
 	@echo "... world/unit/OLD_resouceUnits.s"

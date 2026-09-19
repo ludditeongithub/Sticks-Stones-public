@@ -2,6 +2,7 @@
 #include "enum.hpp"
 #include "world/chunk/data.hpp"
 #include "world/tile/data.hpp"
+#include <core/entity.hpp>
 #include <core/containers.hpp>
 #include <core/data.hpp>
 #include <queue>
@@ -21,9 +22,9 @@ class Database
 // BASE DATABASE MEMBERS
 // =========================
 
-constexpr static uint16_t entity_size = sizeof(Tile_data) +
+constexpr static uint16_t entity_size = sizeof(Tiledata) +
   
- +  sizeof(Tile_data) 
+ +  sizeof(Tiledata) 
  +  sizeof(Alt) 
  +  sizeof(Liquid) 
  +  sizeof(TileStatus) 
@@ -35,11 +36,11 @@ size_t capacity;
     // =========================
     // ENTITY-SPECIFIC MEMBERS
     // =========================
-    Array<Tile_data> tile_datas;
-    Array<Alt> altitude;
-    Array<Liquid> water;
-    Array<TileStatus> tile_status;
-    Array<Entity> entity;
+    Array<Tiledata> tiledatas;
+    Array<Alt> altitudes;
+    Array<Liquid> waters;
+    Array<TileStatus> tile_statuss;
+    Array<Entity> entitys;
 
 
 
@@ -47,7 +48,7 @@ size_t capacity;
 // CONSTRUCTOR
 // =========================
 
-Database(Arena *arena, size_t capacity
+Database(Arena& arena, size_t capacity
   , World& world
  
 ) :
@@ -57,11 +58,17 @@ this->capacity = capacity;
 
 
 
- tile_datas = arena_make_array<Tile_data>(capacity);
- altitude = arena_make_array<Alt>(capacity);
- water = arena_make_array<Liquid>(capacity);
- tile_status = arena_make_array<TileStatus>(capacity);
- entity = arena_make_array<Entity>(capacity);
+ 
+ tiledatas = arena_make_array<Tiledata>(arena, capacity); 
+ 
+ altitudes = arena_make_array<Alt>(arena, capacity); 
+ 
+ waters = arena_make_array<Liquid>(arena, capacity); 
+ 
+ tile_statuss = arena_make_array<TileStatus>(arena, capacity); 
+ 
+ entitys = arena_make_array<Entity>(arena, capacity); 
+ 
 
 }
 
@@ -69,20 +76,20 @@ this->capacity = capacity;
 // GETTERS
 // =========================
 
-  inline Tile_data& tile_datas(const EntityID index) {
-return tile_datas[index];
+  inline Tiledata& tiledata(const EntityID index) {
+return tiledatas[index];
   }
   inline Alt& altitude(const EntityID index) {
-return altitude[index];
+return altitudes[index];
   }
   inline Liquid& water(const EntityID index) {
-return water[index];
+return waters[index];
   }
   inline TileStatus& tile_status(const EntityID index) {
-return tile_status[index];
+return tile_statuss[index];
   }
   inline Entity& entity(const EntityID index) {
-return entity[index];
+return entitys[index];
   }
 
 
@@ -103,11 +110,11 @@ return entity[index];
     archive(capacity);
    
 
-        tile_datas.save(archive);
-        altitude.save(archive);
-        water.save(archive);
-        tile_status.save(archive);
-        entity.save(archive);
+        tiledatas.save(archive);
+        altitudes.save(archive);
+        waters.save(archive);
+        tile_statuss.save(archive);
+        entitys.save(archive);
     }
 
     template <class Archive>
@@ -115,11 +122,11 @@ return entity[index];
     {
         archive(capacity);
         
-        tile_datas.load(archive);
-        altitude.load(archive);
-        water.load(archive);
-        tile_status.load(archive);
-        entity.load(archive);
+        tiledatas.load(archive);
+        altitudes.load(archive);
+        waters.load(archive);
+        tile_statuss.load(archive);
+        entitys.load(archive);
     }
 
 // @codegen:end database_generation
@@ -127,7 +134,7 @@ return entity[index];
 	Coord get_nearest_empty_tile(Coord coord);
 		Coord get_nearest_empty_tile_block(Coord coord, size_t length, size_t width = 1);
   inline size_t get_index(const Coord coord){return (coord.y * world.height_chunks) + (coord.x * world.length_chunks);}
-  inline Coord get_coord(const size_t index){return {(index % world.length_chunks), (index / world.height_chunks)};}
+		inline Coord get_coord(const size_t index){return {static_cast<uint32_t>(index % world.length_chunks) , static_cast<uint32_t>(index / world.height_chunks)};}
   inline Frame calc_inertia(const Coord coord, bool running);
 		inline Frame calc_inertia(Frame entity_base_frames, const Coord coord);
 };

@@ -1,7 +1,6 @@
 #pragma once
 #include "render/animation.hpp"
 #include "render/sprite.hpp"
-#include "render/sprite_sheet_settings.hpp"
 #include "ui/components/button_functionality.hpp"
 #include "ui/components/drop_down_menu.hpp"
 #include <cereal/details/helpers.hpp>
@@ -124,6 +123,6 @@ catch (...)
 void launch()
 {
         FirstLaunchBuffer flb = handle_launch();	
-	g_ui_system = new UISystem(flb.user_screen_resolution.x, flb.user_screen_resolution.y, flb.fullscreen);
+	 (flb.user_screen_resolution.x, flb.user_screen_resolution.y, flb.fullscreen);
         
 }

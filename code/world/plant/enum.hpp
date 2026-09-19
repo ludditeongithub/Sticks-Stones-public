@@ -1,6 +1,5 @@
 #pragma once
 #include <cstdint>
-#include <core/tables.hpp>
 // enum class Type {
 // NONE, EDIBLE, WOOD, Fern, Moss, Reed, Wheat, Oat, Rice, Bush, Papyrus,
 // PioneerTree, DeciduousTree, EvergreenTree, TropicalTree, OrangeTree,
@@ -12,7 +11,8 @@
 // Cocoa, Senna, Saffron, AloeVera, MAX,
 // };
 
-enum class Plant : uint16_t {
+enum class Plant : uint16_t
+{
 	NONE,
 	Fern,
 	Moss,
@@ -71,14 +71,15 @@ enum class Plant : uint16_t {
 	Lime,
 	// Non-fall fruits
 	Blueberry,
-	Strawberry,	
+	Strawberry,
+        Grape,
 
 	// TODO: add data for olive!
 	Olive,
 	MAX
 };
 // TODO: let leaf types have heights-- tall animals, animals that climb can eat trees
-enum class PlantCategory : size_t
+enum class PlantCategory : uint8_t
 {
 	NONE,
 	Tree,
@@ -104,7 +105,7 @@ enum class PlantCategory : size_t
 	MAX
 };
 
-enum class Fruit
+enum class Fruit : uint8_t
 {
 	NONE,
 	// also doubles for juice

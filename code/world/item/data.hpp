@@ -26,6 +26,7 @@ constexpr float MID_BULK_MAX = 35.0;
 constexpr float SINGLE_BULK_MAX = 60.0;
 
 constexpr float MAX_CARRY = 250.0;
+constexpr uint16_t STAT_MAX = 
 
 constexpr uint8_t HUMAN_SIGHT = 50;
 constexpr uint16_t NEAR_GATHER_RANGE = HUMAN_SIGHT; // the farthest a pawn will  go to fetch an item

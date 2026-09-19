@@ -11,12 +11,14 @@ struct UnitStatusBar
 		Hunger,
 		Thirst,
 		Satisfaction,
+                Temperature,
 		MAX
 	};
   Value value = Value::Health;
 
   SDL_Rect get_full_sprite() { return unit_status_bars[value].full; }
-  SDL_Rect get_empty_sprite() { return unit_status_bars[value].full; }
+  SDL_Rect get_empty_sprite() { return unit_status_bars[value].empty; }
+  }
 };
 
 struct AnimalStatusBar
@@ -31,7 +33,7 @@ struct AnimalStatusBar
   Value value = Value::Health;
 
   SDL_Rect get_full_sprite() { return animal_status_bars[value].full; }
-  SDL_Rect get_empty_sprite() { return animal_status_bars[value].full; }
+  SDL_Rect get_empty_sprite() { return animal_status_bars[value].empty; }
 };
 
 struct PlantStatusBar
@@ -46,12 +48,28 @@ struct PlantStatusBar
   Value value = Value::Health;
 
   SDL_Rect get_full_sprite() { return plant_status_bars[value].full; }
-  SDL_Rect get_empty_sprite() { return plant_status_bars[value].full; }
+  SDL_Rect get_empty_sprite() { return plant_status_bars[value].empty; }
+};
+
+struct AggregateStatusBar {
+	enum class Value
+	{
+		Health,
+		Thirst,
+                Hunger,
+		Satisfaction,
+                Temperature,
+		MAX
+	};
+  Value value = Value::Health;
+
+  SDL_Rect get_full_sprite() { return plant_status_bars[value].full; }
+  SDL_Rect get_empty_sprite() { return plant_status_bars[value].empty; }
 };
 
 
 // TODO
-using StatusBarVariant = std::variant<UnitStatusBar, AnimalStatusBar, PlantStatusBar>;
+using StatusBarVariant = std::variant<UnitStatusBar, AnimalStatusBar, PlantStatusBar, AggregateStatusBar>;
 
 struct StatusBar
 {
@@ -62,18 +80,20 @@ struct StatusBar
 	int current;
 	const SCoord position; // left corner
 	const bool horizontal;
+        const bool aggregate;
 
   const SDL_Rect& viewport;
 
-        StatusBar(StatusBarVariant variant, const SCoord position, const bool horizontal, const SDL_Rect& viewport)
-          : position(position), horizontal(horizontal), viewport(viewport)
-	{          
-          std::visit([this](auto& bar)
+  StatusBar(StatusBarVariant variant, const SCoord position, const SDL_Rect& viewport, const bool horizontal = false)
+    : position(position), horizontal(horizontal), viewport(viewport)
+  {
+	    std::visit(
+		[this](auto &bar)
 		{
 			full_bar = bar.get_full_sprite();
                         empty_bar = bar.get_empty_sprite();
-                },
-            variant);    
+		},
+		variant);
 	}
 
 	void render(SDL_Rect viewport)

@@ -83,7 +83,7 @@ void LTexture::render(int x, int y, SDL_Rect *clip, SDL_Rect &viewport)
 	}
 
 	// Render to screen
-	SDL_RenderCopy(*renderer, m_texture, clip, viewport);
+	SDL_RenderCopy(renderer, m_texture, clip, viewport);
 }
 
 int LTexture::get_width() { return m_width; }

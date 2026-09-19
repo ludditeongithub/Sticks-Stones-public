@@ -1,14 +1,17 @@
 #pragma once
-#include <ui/aggregates/swipable_menu.hpp>
-#include "ui/system.hpp"
 #include <core/data.hpp>
 #include <cstdint>
 #include <variant>
 #include <core/saves.hpp>
+#include <core/entity.hpp>
 #include <simulation/game.hpp>
+#include <core/saves.hpp>
 #include "pop-up_box.hpp"
+#include <ui/main/main_menu.hpp>
 
 struct SwipableMenu;
+struct MainMenu;
+struct GameSave;
 
 class ButtonFunctionality
 {
@@ -165,13 +168,13 @@ void trigger() override
 class SlideMenuBF : public ButtonFunctionality
 {
 private:
-  SwipableMenu* menu;
+  SwipableMenu& menu;
   bool right;
 public:
-  SlideMenuBF(SwipableMenu* menu, bool right) : menu(menu), right(right) {};
+  SlideMenuBF(SwipableMenu& menu, bool right) : menu(menu), right(right) {};
 void trigger() override
 {
-  right ? menu->slide_right() : menu->slide_left(); 
+  right ? menu.slide_right() : menu.slide_left(); 
 }
 };
 
@@ -202,9 +205,6 @@ private:
 public:
   CatalogSelectionBF(Entity entity) {};
 };
-
-
-
 
 
 // IN GAME

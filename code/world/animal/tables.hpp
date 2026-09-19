@@ -208,7 +208,7 @@ inline constexpr LookupTable<Animal, Time> FERTILITY_AGES = []
 	lt[Animal::Fish] = 0.08f;
         for (size_t i = 0; i < static_cast<size_t>(Animal::MAX); i++)
 	{
-		lt[static_cast<Animal>(i)] *= max_ages[static_cast<Animal>(i)];
+		lt[static_cast<Animal>(i)] *= MAX_AGES[static_cast<Animal>(i)];
         }
 	return lt;
 }();
@@ -387,7 +387,7 @@ inline constexpr LookupTable<Animal, Time> HATCH_TIMES = []
 	return lt;
 }();
 
-inline constexpr LookupTable<Animal, Time> breeding_season_start = []
+inline constexpr LookupTable<Animal, Time> BREEDING_SEASON_START = []
 {
 	LookupTable<Animal, Time> lt{};
 	using enum Animal;
@@ -395,7 +395,7 @@ inline constexpr LookupTable<Animal, Time> breeding_season_start = []
 	return lt;
 }();
 
-inline constexpr LookupTable<Animal, Time> breeding_season_end = []
+inline constexpr LookupTable<Animal, Time> BREEDING_SEASON_END = []
 {
 	LookupTable<Animal, Time> lt{};
 	using enum Animal;
@@ -403,7 +403,7 @@ inline constexpr LookupTable<Animal, Time> breeding_season_end = []
 	return lt;
 }();
 
-inline constexpr LookupTable<Animal, Time> migration_season_start = []
+inline constexpr LookupTable<Animal, Time> MIGRATION_SEASON_START = []
 {
 	LookupTable<Animal, Time> lt{};
 	using enum Animal;
@@ -411,7 +411,7 @@ inline constexpr LookupTable<Animal, Time> migration_season_start = []
 	return lt;
 }();
 
-  inline constexpr LookupTable<Animal,Time> migration_season_end = [] {
+  inline constexpr LookupTable<Animal,Time> MIGRATION_SEASON_END = [] {
     LookupTable<Animal,Time> lt{};
     using enum Animal;
     

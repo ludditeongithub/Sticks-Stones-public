@@ -1,7 +1,7 @@
 #include "element.hpp"
 #include "button.hpp"
 #include "render/screen.hpp"
-#include "ui/components/button.hpp"
+#include <ui/components/button.hpp>
 #include "ui/components/button_functionality.hpp"
 #include <SDL2/SDL_events.h>
 #include <algorithm>

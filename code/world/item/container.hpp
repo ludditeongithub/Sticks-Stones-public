@@ -18,10 +18,10 @@ struct BulkStatus {
 
 struct ContainerData
 {
-        BulkStatus max_bulk_status;
+    BulkStatus max_bulk_status;
 	float bulk;
 	float weight;
-  bool liquid;
+    bool liquid;
 };
 
 struct ItemSlot
@@ -31,7 +31,7 @@ struct ItemSlot
 
 	ItemSlot(Item item, uint16_t amount) : item(item), amount(amount)
 	{
-		assert(!has_tag(ItemTags::Variant | ItemTags::Tool | ItemTags::Art, item::TAGS[item]));
+			assert(!has_tag(item::Tag::Variant | item::Tag::OneHandedTool | item::Tag::TwoHandedTool | item::Tag::Art, item::TAGS[item]));
 	}
 
 	inline bool is_empty()
@@ -55,7 +55,7 @@ struct VariantItemSlot
 	VariantItemSlot(Item item, uint16_t amount, uint8_t variant)
 	    : item(item), amount(amount), variant(variant)
 	{
-		assert(has_tag(ItemTags::Variant, item::TAGS[item]));
+		assert(has_tag(item::Tag::Variant, item::TAGS[item]));
 	}
 
 	inline bool is_empty()
@@ -77,7 +77,7 @@ struct ToolSlot
 
 	ToolSlot(Item item, SpecialItemData special_data) : item(item), special_data(special_data)
 	{
-		assert(has_tag(ItemTags::OneHandedTool, item::TAGS[item]));
+		assert(has_tag(item::Tag::OneHandedTool, item::TAGS[item]));
 	}
 
 	inline bool is_empty()
@@ -95,7 +95,7 @@ struct ArtSlot {
 
 	ArtSlot(Item item, SpecialItemData special_data) : item(item), special_data(special_data)
 	{
-		assert(has_tag(ItemTags::Art, item::TAGS[item]));
+		assert(has_tag(item::Tag::Art, item::TAGS[item]));
 	}
 
 	inline bool is_empty()
@@ -145,14 +145,14 @@ struct Container
 
 	Container(Item type, ContainerFullTags tags, float bulk, float weight) : type(type), tags(tags), bulk(bulk), weight(weight)
 	{
-			assert(has_tag(ItemTags::Container, item::TAGS[type]));	
+			assert(has_tag(item::Tag::Container, item::TAGS[type]));	
 	}
 };
 
 struct ContainerStorageData
 {
-	float remaining_weight = 0;
-	float remaining_bulk = 0;
+	float remaining_weight = 0.0;
+	float remaining_bulk = 0.0;
 };
 
 inline uint32_t overflow_hash(uint16_t unit_index, uint16_t container_index)
@@ -220,7 +220,7 @@ float get_container_capacity(ContainerType c)
 	}
 }
 
-ContainerData bulk_and_weights[Item::MAX + Container::MAX];
+ContainerData bulk_and_weights[static_cast<int>(Item::MAX) + static_cast<int>(ContainerType::MAX)];
 
 bool valid_container(Container container, Item new_item)
 {

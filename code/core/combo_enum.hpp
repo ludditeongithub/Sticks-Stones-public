@@ -57,7 +57,6 @@ private:
         using types = std::tuple<Enums...>;
 	if constexpr (I >= sizeof...(Enums))
 			{
-			// NOTE
             static_assert(I < sizeof...(Enums), "Type not found in ConcatEnum");
             return 0;
         } else if constexpr (std::is_same_v<T, std::tuple_element_t<I, types>>) {

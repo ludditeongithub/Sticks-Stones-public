@@ -3,7 +3,7 @@
 #include <core/tables.hpp>
 #include "enum.hpp"
 
-inline constexpr const BitsetTable<Category> meat_categories = []
+inline constexpr const BitsetTable<Category> MEAT_CATEGORIES = []
 {
 	BitsetTable<Category> s;
 	auto add = [&](Category e) {s.bitset.set(static_cast<uint16_t>(e)); };
@@ -17,7 +17,7 @@ inline constexpr const BitsetTable<Category> meat_categories = []
 
 // TODO height of plant factored
 // TODO  'attraction factor' (some bitter or repulsive plants avoided)
-inline constexpr const BitsetTable<Plant> leaves = []
+inline constexpr const BitsetTable<Plant> LEAVES = []
 {
 	BitsetTable<Plant> s;
 	auto add = [&](Plant e) {s.bitset.set(static_cast<uint16_t>(e)); };
@@ -38,7 +38,7 @@ inline constexpr const BitsetTable<Plant> leaves = []
 	return s;
 }();
 
-inline constexpr const BitsetTable<Plant> fruits = []
+inline constexpr const BitsetTable<Plant> FRUITS = []
 {
 	BitsetTable<Plant> s;
 	auto add = [&](Plant e) {s.bitset.set(static_cast<uint16_t>(e)); };	
@@ -59,7 +59,7 @@ inline constexpr const BitsetTable<Plant> fruits = []
 	return s;
 }();
 
-inline constexpr const BitsetTable<Plant> grains = []
+inline constexpr const BitsetTable<Plant> GRAINS = []
 {
 	BitsetTable<Plant> s;
 	using enum Plant;
@@ -71,7 +71,7 @@ inline constexpr const BitsetTable<Plant> grains = []
 	return s;
 }();
 
-inline constexpr const BitsetTable<Plant> undergrounds = []
+inline constexpr const BitsetTable<Plant> UNDERGROUNDS = []
 {
 	BitsetTable<Plant> s;
 	using enum Plant;
@@ -85,7 +85,7 @@ inline constexpr const BitsetTable<Plant> undergrounds = []
 	return s;
 }();
 
-inline constexpr const BitsetTable<Plant> stems = []
+inline constexpr const BitsetTable<Plant> STEMS = []
 {
 	BitsetTable<Plant> s;
 	using enum Plant;
@@ -95,7 +95,7 @@ inline constexpr const BitsetTable<Plant> stems = []
 	return s;
 }();
 
-inline constexpr const BitsetTable<Animal> birds = []
+inline constexpr const BitsetTable<Animal> BIRDS = []
 {
 		BitsetTable<Animal> s;
 		auto add = [&](Animal e) { s.bitset.set(static_cast<uint16_t>(e)); };
@@ -105,14 +105,14 @@ inline constexpr const BitsetTable<Animal> birds = []
 	return s;
 }();
 
-inline constexpr const BitsetTable<Animal> fish = []
+inline constexpr const BitsetTable<Animal> FISHES = []
 {
 	BitsetTable<Animal> s;
 
 	return s;
 }();
 
-inline constexpr const BitsetTable<Animal> small_mammals = []
+inline constexpr const BitsetTable<Animal> SMALL_MAMMALS = []
 {
 		BitsetTable<Animal> s;
 	auto add = [&](Animal e) { s.bitset.set(static_cast<uint16_t>(e)); };
@@ -121,7 +121,7 @@ inline constexpr const BitsetTable<Animal> small_mammals = []
 	return s;
 }();
 
-inline constexpr const BitsetTable<Animal> medium_mammals = []
+inline constexpr const BitsetTable<Animal> MEDIUM_MAMMALS = []
 {
 		BitsetTable<Animal> s;
 			auto add = [&](Animal e) { s.bitset.set(static_cast<uint16_t>(e)); };
@@ -136,7 +136,7 @@ inline constexpr const BitsetTable<Animal> medium_mammals = []
 	return s;
 }();
 
-inline constexpr const BitsetTable<Animal> large_mammals = []
+inline constexpr const BitsetTable<Animal> LARGE_MAMMALS = []
 {
 		BitsetTable<Animal> s;
 			auto add = [&](Animal e) { s.bitset.set(static_cast<uint16_t>(e)); };
@@ -152,7 +152,7 @@ inline constexpr const BitsetTable<Animal> large_mammals = []
 	return s;
 }();
 
-inline constexpr const BitsetTable<Animal> small_reptiles = []
+inline constexpr const BitsetTable<Animal> SMALL_REPTILES = []
 {
 		BitsetTable<Animal> s;
 			auto add = [&](Animal e) { s.bitset.set(static_cast<uint16_t>(e)); };
@@ -161,7 +161,7 @@ inline constexpr const BitsetTable<Animal> small_reptiles = []
 	return s;
 }();
 
-inline constexpr const BitsetTable<Animal> large_reptiles = []
+inline constexpr const BitsetTable<Animal> LARGE_REPTILES = []
 {
 	BitsetTable<Animal> s;
 auto add = [&](Animal e) { s.bitset.set(static_cast<uint16_t>(e)); };

@@ -4,16 +4,12 @@
 #include "screen.hpp"
 #include "sprite.hpp"
 #include "texture.hpp"
-#include "viewport.hpp"
 #include "sprite_sheet_settings.hpp"
 #include <SDL2/SDL_render.h>
 #include <core/containers.hpp>
-#include <core/database.hpp>
 #include <core/packed_enum.hpp>
 #include <core/tables.hpp>
 #include <cstdint>
-
-#include <systems/perishables_manager.hpp>
 #include <world/animal/enum.hpp>
 #include <world/item/database.hpp>
 #include <world/plant/enum.hpp>
