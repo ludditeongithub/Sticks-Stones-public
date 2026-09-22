@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/logan/gameprogramming/code/build/_deps/sdl2-subbuild/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

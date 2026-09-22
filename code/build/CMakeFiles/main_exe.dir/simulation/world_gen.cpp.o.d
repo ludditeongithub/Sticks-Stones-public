@@ -252,14 +252,14 @@ CMakeFiles/main_exe.dir/simulation/world_gen.cpp.o: \
  /home/logan/gameprogramming/code/../extern/cereal/details/polymorphic_impl_fwd.hpp \
  /home/logan/gameprogramming/code/../extern/cereal/types/common.hpp \
  /usr/include/c++/16/sstream /usr/include/c++/16/bits/sstream.tcc \
- /home/logan/gameprogramming/code/world/animal/enum.hpp \
+ /home/logan/gameprogramming/code/data/types/animal.hpp \
  /home/logan/gameprogramming/code/core/packed_enum.hpp \
- /home/logan/gameprogramming/code/world/plant/enum.hpp \
- /home/logan/gameprogramming/code/world/chunk/data.hpp \
- /home/logan/gameprogramming/code/world/tile/enum.hpp \
- /home/logan/gameprogramming/code/world/chunk/enum.hpp \
+ /home/logan/gameprogramming/code/data/types/plant.hpp \
+ /home/logan/gameprogramming/code/data/const/chunk_data.hpp \
+ /home/logan/gameprogramming/code/data/types/tile.hpp \
+ /home/logan/gameprogramming/code/data/types/chunk.hpp \
  /home/logan/gameprogramming/code/world/item/scavengeable.hpp \
- /home/logan/gameprogramming/code/world/item/enum.hpp \
+ /home/logan/gameprogramming/code/data/types/item.hpp \
  /home/logan/gameprogramming/code/world/tile/grass.hpp \
  /home/logan/gameprogramming/code/core/tables.hpp \
  /usr/include/c++/16/bitset /usr/include/c++/16/queue \

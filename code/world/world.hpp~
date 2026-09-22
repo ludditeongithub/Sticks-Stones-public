@@ -2,8 +2,8 @@
 #include <core/FastNoiseLite.h>
 #include <core/nanoflann.hpp>
 #include <core/memory.hpp>
-#include <world/tile/data.hpp>
-#include <world/chunk/data.hpp>
+#include <data/const/tile_data.hpp>
+#include <data/const/chunk_data.hpp>
 #include <array>
 #include <cstdint>
 #include <queue>

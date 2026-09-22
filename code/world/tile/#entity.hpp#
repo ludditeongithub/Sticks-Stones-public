@@ -1,6 +1,0 @@
-#include "enum.hpp"
-
-struct TileIndex {
-  uint16_t index;
-};
-

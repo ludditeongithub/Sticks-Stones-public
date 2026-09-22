@@ -10,10 +10,26 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/home/logan/gameprogramming/code/CMakeLists.txt"
   "CMakeFiles/4.4.2/CMakeCXXCompiler.cmake"
   "CMakeFiles/4.4.2/CMakeSystem.cmake"
-  "CMakeFiles/VerifyGlobs.cmake"
-  "CMakeFiles/cmake.verify_globs"
+  "/usr/lib/cmake/SDL2/SDL2Config.cmake"
+  "/usr/lib/cmake/SDL2/SDL2ConfigVersion.cmake"
+  "/usr/lib/cmake/SDL2/SDL2Targets-none.cmake"
+  "/usr/lib/cmake/SDL2/SDL2Targets.cmake"
+  "/usr/lib/cmake/SDL2/SDL2mainTargets-none.cmake"
+  "/usr/lib/cmake/SDL2/SDL2mainTargets.cmake"
+  "/usr/lib/cmake/SDL2_image/Findlibjxl.cmake"
+  "/usr/lib/cmake/SDL2_image/Findwebp.cmake"
+  "/usr/lib/cmake/SDL2_image/sdl2_image-config-version.cmake"
+  "/usr/lib/cmake/SDL2_image/sdl2_image-config.cmake"
+  "/usr/lib/cmake/libavif/libavif-config-noconfig.cmake"
+  "/usr/lib/cmake/libavif/libavif-config-version.cmake"
+  "/usr/lib/cmake/libavif/libavif-config.cmake"
+  "/usr/lib/cmake/tiff/tiff-config-version.cmake"
+  "/usr/lib/cmake/tiff/tiff-config.cmake"
+  "/usr/lib/cmake/tiff/tiff-targets-none.cmake"
+  "/usr/lib/cmake/tiff/tiff-targets.cmake"
   "/usr/share/cmake/Modules/CMakeCXXInformation.cmake"
   "/usr/share/cmake/Modules/CMakeCommonLanguageInclude.cmake"
+  "/usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake"
   "/usr/share/cmake/Modules/CMakeGenericSystem.cmake"
   "/usr/share/cmake/Modules/CMakeInitializeConfigs.cmake"
   "/usr/share/cmake/Modules/CMakeLanguageInformation.cmake"
@@ -22,6 +38,13 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake"
   "/usr/share/cmake/Modules/Compiler/GNU-CXX.cmake"
   "/usr/share/cmake/Modules/Compiler/GNU.cmake"
+  "/usr/share/cmake/Modules/FeatureSummary.cmake"
+  "/usr/share/cmake/Modules/FindJPEG.cmake"
+  "/usr/share/cmake/Modules/FindPNG.cmake"
+  "/usr/share/cmake/Modules/FindPackageHandleStandardArgs.cmake"
+  "/usr/share/cmake/Modules/FindPackageMessage.cmake"
+  "/usr/share/cmake/Modules/FindTIFF.cmake"
+  "/usr/share/cmake/Modules/FindZLIB.cmake"
   "/usr/share/cmake/Modules/Internal/CMakeCXXLinkerInformation.cmake"
   "/usr/share/cmake/Modules/Internal/CMakeCommonLinkerInformation.cmake"
   "/usr/share/cmake/Modules/Linker/GNU-CXX.cmake"
@@ -34,6 +57,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/share/cmake/Modules/Platform/Linux-Initialize.cmake"
   "/usr/share/cmake/Modules/Platform/Linux.cmake"
   "/usr/share/cmake/Modules/Platform/UnixPaths.cmake"
+  "/usr/share/cmake/Modules/SelectLibraryConfigurations.cmake"
   )
 
 # The corresponding makefile is:
@@ -49,5 +73,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/main_exe.dir/DependInfo.cmake"
+  "CMakeFiles/test_exe.dir/DependInfo.cmake"
   )

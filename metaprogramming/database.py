@@ -16,7 +16,7 @@ def create_databases():
             extra_arrays,
         )
 
-        relative_path = f"world/{database['name']}/database.hpp"
+        relative_path = f"data/run/{database['name']}_database.hpp"
 
         meta.replace_block(
             relative_path,

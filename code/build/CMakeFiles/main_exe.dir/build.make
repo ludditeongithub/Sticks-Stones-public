@@ -72,10 +72,696 @@ include CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/codegen:
 .PHONY : CMakeFiles/main_exe.dir/codegen
 
+CMakeFiles/main_exe.dir/display/render/texture.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/display/render/texture.cpp.o: /home/logan/gameprogramming/code/display/render/texture.cpp
+CMakeFiles/main_exe.dir/display/render/texture.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/main_exe.dir/display/render/texture.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/display/render/texture.cpp.o -MF CMakeFiles/main_exe.dir/display/render/texture.cpp.o.d -o CMakeFiles/main_exe.dir/display/render/texture.cpp.o -c /home/logan/gameprogramming/code/display/render/texture.cpp
+
+CMakeFiles/main_exe.dir/display/render/texture.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/display/render/texture.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/display/render/texture.cpp > CMakeFiles/main_exe.dir/display/render/texture.cpp.i
+
+CMakeFiles/main_exe.dir/display/render/texture.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/display/render/texture.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/display/render/texture.cpp -o CMakeFiles/main_exe.dir/display/render/texture.cpp.s
+
+CMakeFiles/main_exe.dir/display/ui/aggregates/swipable_menu.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/display/ui/aggregates/swipable_menu.cpp.o: /home/logan/gameprogramming/code/display/ui/aggregates/swipable_menu.cpp
+CMakeFiles/main_exe.dir/display/ui/aggregates/swipable_menu.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main_exe.dir/display/ui/aggregates/swipable_menu.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/display/ui/aggregates/swipable_menu.cpp.o -MF CMakeFiles/main_exe.dir/display/ui/aggregates/swipable_menu.cpp.o.d -o CMakeFiles/main_exe.dir/display/ui/aggregates/swipable_menu.cpp.o -c /home/logan/gameprogramming/code/display/ui/aggregates/swipable_menu.cpp
+
+CMakeFiles/main_exe.dir/display/ui/aggregates/swipable_menu.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/display/ui/aggregates/swipable_menu.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/display/ui/aggregates/swipable_menu.cpp > CMakeFiles/main_exe.dir/display/ui/aggregates/swipable_menu.cpp.i
+
+CMakeFiles/main_exe.dir/display/ui/aggregates/swipable_menu.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/display/ui/aggregates/swipable_menu.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/display/ui/aggregates/swipable_menu.cpp -o CMakeFiles/main_exe.dir/display/ui/aggregates/swipable_menu.cpp.s
+
+CMakeFiles/main_exe.dir/logic/breeding.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/breeding.cpp.o: /home/logan/gameprogramming/code/logic/breeding.cpp
+CMakeFiles/main_exe.dir/logic/breeding.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/main_exe.dir/logic/breeding.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/breeding.cpp.o -MF CMakeFiles/main_exe.dir/logic/breeding.cpp.o.d -o CMakeFiles/main_exe.dir/logic/breeding.cpp.o -c /home/logan/gameprogramming/code/logic/breeding.cpp
+
+CMakeFiles/main_exe.dir/logic/breeding.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/breeding.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/breeding.cpp > CMakeFiles/main_exe.dir/logic/breeding.cpp.i
+
+CMakeFiles/main_exe.dir/logic/breeding.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/breeding.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/breeding.cpp -o CMakeFiles/main_exe.dir/logic/breeding.cpp.s
+
+CMakeFiles/main_exe.dir/logic/gameplay/action/assign.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/gameplay/action/assign.cpp.o: /home/logan/gameprogramming/code/logic/gameplay/action/assign.cpp
+CMakeFiles/main_exe.dir/logic/gameplay/action/assign.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/main_exe.dir/logic/gameplay/action/assign.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/gameplay/action/assign.cpp.o -MF CMakeFiles/main_exe.dir/logic/gameplay/action/assign.cpp.o.d -o CMakeFiles/main_exe.dir/logic/gameplay/action/assign.cpp.o -c /home/logan/gameprogramming/code/logic/gameplay/action/assign.cpp
+
+CMakeFiles/main_exe.dir/logic/gameplay/action/assign.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/gameplay/action/assign.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/gameplay/action/assign.cpp > CMakeFiles/main_exe.dir/logic/gameplay/action/assign.cpp.i
+
+CMakeFiles/main_exe.dir/logic/gameplay/action/assign.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/gameplay/action/assign.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/gameplay/action/assign.cpp -o CMakeFiles/main_exe.dir/logic/gameplay/action/assign.cpp.s
+
+CMakeFiles/main_exe.dir/logic/gameplay/action/attempt.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/gameplay/action/attempt.cpp.o: /home/logan/gameprogramming/code/logic/gameplay/action/attempt.cpp
+CMakeFiles/main_exe.dir/logic/gameplay/action/attempt.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/main_exe.dir/logic/gameplay/action/attempt.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/gameplay/action/attempt.cpp.o -MF CMakeFiles/main_exe.dir/logic/gameplay/action/attempt.cpp.o.d -o CMakeFiles/main_exe.dir/logic/gameplay/action/attempt.cpp.o -c /home/logan/gameprogramming/code/logic/gameplay/action/attempt.cpp
+
+CMakeFiles/main_exe.dir/logic/gameplay/action/attempt.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/gameplay/action/attempt.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/gameplay/action/attempt.cpp > CMakeFiles/main_exe.dir/logic/gameplay/action/attempt.cpp.i
+
+CMakeFiles/main_exe.dir/logic/gameplay/action/attempt.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/gameplay/action/attempt.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/gameplay/action/attempt.cpp -o CMakeFiles/main_exe.dir/logic/gameplay/action/attempt.cpp.s
+
+CMakeFiles/main_exe.dir/logic/gameplay/action/product.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/gameplay/action/product.cpp.o: /home/logan/gameprogramming/code/logic/gameplay/action/product.cpp
+CMakeFiles/main_exe.dir/logic/gameplay/action/product.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/main_exe.dir/logic/gameplay/action/product.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/gameplay/action/product.cpp.o -MF CMakeFiles/main_exe.dir/logic/gameplay/action/product.cpp.o.d -o CMakeFiles/main_exe.dir/logic/gameplay/action/product.cpp.o -c /home/logan/gameprogramming/code/logic/gameplay/action/product.cpp
+
+CMakeFiles/main_exe.dir/logic/gameplay/action/product.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/gameplay/action/product.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/gameplay/action/product.cpp > CMakeFiles/main_exe.dir/logic/gameplay/action/product.cpp.i
+
+CMakeFiles/main_exe.dir/logic/gameplay/action/product.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/gameplay/action/product.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/gameplay/action/product.cpp -o CMakeFiles/main_exe.dir/logic/gameplay/action/product.cpp.s
+
+CMakeFiles/main_exe.dir/logic/gameplay/action/resource.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/gameplay/action/resource.cpp.o: /home/logan/gameprogramming/code/logic/gameplay/action/resource.cpp
+CMakeFiles/main_exe.dir/logic/gameplay/action/resource.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/main_exe.dir/logic/gameplay/action/resource.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/gameplay/action/resource.cpp.o -MF CMakeFiles/main_exe.dir/logic/gameplay/action/resource.cpp.o.d -o CMakeFiles/main_exe.dir/logic/gameplay/action/resource.cpp.o -c /home/logan/gameprogramming/code/logic/gameplay/action/resource.cpp
+
+CMakeFiles/main_exe.dir/logic/gameplay/action/resource.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/gameplay/action/resource.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/gameplay/action/resource.cpp > CMakeFiles/main_exe.dir/logic/gameplay/action/resource.cpp.i
+
+CMakeFiles/main_exe.dir/logic/gameplay/action/resource.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/gameplay/action/resource.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/gameplay/action/resource.cpp -o CMakeFiles/main_exe.dir/logic/gameplay/action/resource.cpp.s
+
+CMakeFiles/main_exe.dir/logic/gameplay/action/support.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/gameplay/action/support.cpp.o: /home/logan/gameprogramming/code/logic/gameplay/action/support.cpp
+CMakeFiles/main_exe.dir/logic/gameplay/action/support.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/main_exe.dir/logic/gameplay/action/support.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/gameplay/action/support.cpp.o -MF CMakeFiles/main_exe.dir/logic/gameplay/action/support.cpp.o.d -o CMakeFiles/main_exe.dir/logic/gameplay/action/support.cpp.o -c /home/logan/gameprogramming/code/logic/gameplay/action/support.cpp
+
+CMakeFiles/main_exe.dir/logic/gameplay/action/support.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/gameplay/action/support.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/gameplay/action/support.cpp > CMakeFiles/main_exe.dir/logic/gameplay/action/support.cpp.i
+
+CMakeFiles/main_exe.dir/logic/gameplay/action/support.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/gameplay/action/support.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/gameplay/action/support.cpp -o CMakeFiles/main_exe.dir/logic/gameplay/action/support.cpp.s
+
+CMakeFiles/main_exe.dir/logic/gameplay/combat/combat.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/gameplay/combat/combat.cpp.o: /home/logan/gameprogramming/code/logic/gameplay/combat/combat.cpp
+CMakeFiles/main_exe.dir/logic/gameplay/combat/combat.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/main_exe.dir/logic/gameplay/combat/combat.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/gameplay/combat/combat.cpp.o -MF CMakeFiles/main_exe.dir/logic/gameplay/combat/combat.cpp.o.d -o CMakeFiles/main_exe.dir/logic/gameplay/combat/combat.cpp.o -c /home/logan/gameprogramming/code/logic/gameplay/combat/combat.cpp
+
+CMakeFiles/main_exe.dir/logic/gameplay/combat/combat.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/gameplay/combat/combat.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/gameplay/combat/combat.cpp > CMakeFiles/main_exe.dir/logic/gameplay/combat/combat.cpp.i
+
+CMakeFiles/main_exe.dir/logic/gameplay/combat/combat.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/gameplay/combat/combat.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/gameplay/combat/combat.cpp -o CMakeFiles/main_exe.dir/logic/gameplay/combat/combat.cpp.s
+
+CMakeFiles/main_exe.dir/logic/gameplay/policies.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/gameplay/policies.cpp.o: /home/logan/gameprogramming/code/logic/gameplay/policies.cpp
+CMakeFiles/main_exe.dir/logic/gameplay/policies.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/main_exe.dir/logic/gameplay/policies.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/gameplay/policies.cpp.o -MF CMakeFiles/main_exe.dir/logic/gameplay/policies.cpp.o.d -o CMakeFiles/main_exe.dir/logic/gameplay/policies.cpp.o -c /home/logan/gameprogramming/code/logic/gameplay/policies.cpp
+
+CMakeFiles/main_exe.dir/logic/gameplay/policies.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/gameplay/policies.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/gameplay/policies.cpp > CMakeFiles/main_exe.dir/logic/gameplay/policies.cpp.i
+
+CMakeFiles/main_exe.dir/logic/gameplay/policies.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/gameplay/policies.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/gameplay/policies.cpp -o CMakeFiles/main_exe.dir/logic/gameplay/policies.cpp.s
+
+CMakeFiles/main_exe.dir/logic/gameplay/roles.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/gameplay/roles.cpp.o: /home/logan/gameprogramming/code/logic/gameplay/roles.cpp
+CMakeFiles/main_exe.dir/logic/gameplay/roles.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/main_exe.dir/logic/gameplay/roles.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/gameplay/roles.cpp.o -MF CMakeFiles/main_exe.dir/logic/gameplay/roles.cpp.o.d -o CMakeFiles/main_exe.dir/logic/gameplay/roles.cpp.o -c /home/logan/gameprogramming/code/logic/gameplay/roles.cpp
+
+CMakeFiles/main_exe.dir/logic/gameplay/roles.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/gameplay/roles.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/gameplay/roles.cpp > CMakeFiles/main_exe.dir/logic/gameplay/roles.cpp.i
+
+CMakeFiles/main_exe.dir/logic/gameplay/roles.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/gameplay/roles.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/gameplay/roles.cpp -o CMakeFiles/main_exe.dir/logic/gameplay/roles.cpp.s
+
+CMakeFiles/main_exe.dir/logic/gameplay/tribes.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/gameplay/tribes.cpp.o: /home/logan/gameprogramming/code/logic/gameplay/tribes.cpp
+CMakeFiles/main_exe.dir/logic/gameplay/tribes.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/main_exe.dir/logic/gameplay/tribes.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/gameplay/tribes.cpp.o -MF CMakeFiles/main_exe.dir/logic/gameplay/tribes.cpp.o.d -o CMakeFiles/main_exe.dir/logic/gameplay/tribes.cpp.o -c /home/logan/gameprogramming/code/logic/gameplay/tribes.cpp
+
+CMakeFiles/main_exe.dir/logic/gameplay/tribes.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/gameplay/tribes.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/gameplay/tribes.cpp > CMakeFiles/main_exe.dir/logic/gameplay/tribes.cpp.i
+
+CMakeFiles/main_exe.dir/logic/gameplay/tribes.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/gameplay/tribes.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/gameplay/tribes.cpp -o CMakeFiles/main_exe.dir/logic/gameplay/tribes.cpp.s
+
+CMakeFiles/main_exe.dir/logic/generic/database.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/generic/database.cpp.o: /home/logan/gameprogramming/code/logic/generic/database.cpp
+CMakeFiles/main_exe.dir/logic/generic/database.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/main_exe.dir/logic/generic/database.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/generic/database.cpp.o -MF CMakeFiles/main_exe.dir/logic/generic/database.cpp.o.d -o CMakeFiles/main_exe.dir/logic/generic/database.cpp.o -c /home/logan/gameprogramming/code/logic/generic/database.cpp
+
+CMakeFiles/main_exe.dir/logic/generic/database.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/generic/database.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/generic/database.cpp > CMakeFiles/main_exe.dir/logic/generic/database.cpp.i
+
+CMakeFiles/main_exe.dir/logic/generic/database.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/generic/database.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/generic/database.cpp -o CMakeFiles/main_exe.dir/logic/generic/database.cpp.s
+
+CMakeFiles/main_exe.dir/logic/generic/inventory/check.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/generic/inventory/check.cpp.o: /home/logan/gameprogramming/code/logic/generic/inventory/check.cpp
+CMakeFiles/main_exe.dir/logic/generic/inventory/check.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/main_exe.dir/logic/generic/inventory/check.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/generic/inventory/check.cpp.o -MF CMakeFiles/main_exe.dir/logic/generic/inventory/check.cpp.o.d -o CMakeFiles/main_exe.dir/logic/generic/inventory/check.cpp.o -c /home/logan/gameprogramming/code/logic/generic/inventory/check.cpp
+
+CMakeFiles/main_exe.dir/logic/generic/inventory/check.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/generic/inventory/check.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/generic/inventory/check.cpp > CMakeFiles/main_exe.dir/logic/generic/inventory/check.cpp.i
+
+CMakeFiles/main_exe.dir/logic/generic/inventory/check.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/generic/inventory/check.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/generic/inventory/check.cpp -o CMakeFiles/main_exe.dir/logic/generic/inventory/check.cpp.s
+
+CMakeFiles/main_exe.dir/logic/generic/inventory/inventory.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/generic/inventory/inventory.cpp.o: /home/logan/gameprogramming/code/logic/generic/inventory/inventory.cpp
+CMakeFiles/main_exe.dir/logic/generic/inventory/inventory.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/main_exe.dir/logic/generic/inventory/inventory.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/generic/inventory/inventory.cpp.o -MF CMakeFiles/main_exe.dir/logic/generic/inventory/inventory.cpp.o.d -o CMakeFiles/main_exe.dir/logic/generic/inventory/inventory.cpp.o -c /home/logan/gameprogramming/code/logic/generic/inventory/inventory.cpp
+
+CMakeFiles/main_exe.dir/logic/generic/inventory/inventory.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/generic/inventory/inventory.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/generic/inventory/inventory.cpp > CMakeFiles/main_exe.dir/logic/generic/inventory/inventory.cpp.i
+
+CMakeFiles/main_exe.dir/logic/generic/inventory/inventory.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/generic/inventory/inventory.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/generic/inventory/inventory.cpp -o CMakeFiles/main_exe.dir/logic/generic/inventory/inventory.cpp.s
+
+CMakeFiles/main_exe.dir/logic/generic/jobs/work_queue.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/generic/jobs/work_queue.cpp.o: /home/logan/gameprogramming/code/logic/generic/jobs/work_queue.cpp
+CMakeFiles/main_exe.dir/logic/generic/jobs/work_queue.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/main_exe.dir/logic/generic/jobs/work_queue.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/generic/jobs/work_queue.cpp.o -MF CMakeFiles/main_exe.dir/logic/generic/jobs/work_queue.cpp.o.d -o CMakeFiles/main_exe.dir/logic/generic/jobs/work_queue.cpp.o -c /home/logan/gameprogramming/code/logic/generic/jobs/work_queue.cpp
+
+CMakeFiles/main_exe.dir/logic/generic/jobs/work_queue.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/generic/jobs/work_queue.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/generic/jobs/work_queue.cpp > CMakeFiles/main_exe.dir/logic/generic/jobs/work_queue.cpp.i
+
+CMakeFiles/main_exe.dir/logic/generic/jobs/work_queue.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/generic/jobs/work_queue.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/generic/jobs/work_queue.cpp -o CMakeFiles/main_exe.dir/logic/generic/jobs/work_queue.cpp.s
+
+CMakeFiles/main_exe.dir/logic/generic/movement/action_movement.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/generic/movement/action_movement.cpp.o: /home/logan/gameprogramming/code/logic/generic/movement/action_movement.cpp
+CMakeFiles/main_exe.dir/logic/generic/movement/action_movement.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/main_exe.dir/logic/generic/movement/action_movement.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/generic/movement/action_movement.cpp.o -MF CMakeFiles/main_exe.dir/logic/generic/movement/action_movement.cpp.o.d -o CMakeFiles/main_exe.dir/logic/generic/movement/action_movement.cpp.o -c /home/logan/gameprogramming/code/logic/generic/movement/action_movement.cpp
+
+CMakeFiles/main_exe.dir/logic/generic/movement/action_movement.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/generic/movement/action_movement.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/generic/movement/action_movement.cpp > CMakeFiles/main_exe.dir/logic/generic/movement/action_movement.cpp.i
+
+CMakeFiles/main_exe.dir/logic/generic/movement/action_movement.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/generic/movement/action_movement.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/generic/movement/action_movement.cpp -o CMakeFiles/main_exe.dir/logic/generic/movement/action_movement.cpp.s
+
+CMakeFiles/main_exe.dir/logic/generic/movement/lazy.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/generic/movement/lazy.cpp.o: /home/logan/gameprogramming/code/logic/generic/movement/lazy.cpp
+CMakeFiles/main_exe.dir/logic/generic/movement/lazy.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/main_exe.dir/logic/generic/movement/lazy.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/generic/movement/lazy.cpp.o -MF CMakeFiles/main_exe.dir/logic/generic/movement/lazy.cpp.o.d -o CMakeFiles/main_exe.dir/logic/generic/movement/lazy.cpp.o -c /home/logan/gameprogramming/code/logic/generic/movement/lazy.cpp
+
+CMakeFiles/main_exe.dir/logic/generic/movement/lazy.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/generic/movement/lazy.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/generic/movement/lazy.cpp > CMakeFiles/main_exe.dir/logic/generic/movement/lazy.cpp.i
+
+CMakeFiles/main_exe.dir/logic/generic/movement/lazy.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/generic/movement/lazy.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/generic/movement/lazy.cpp -o CMakeFiles/main_exe.dir/logic/generic/movement/lazy.cpp.s
+
+CMakeFiles/main_exe.dir/logic/generic/movement/movement.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/generic/movement/movement.cpp.o: /home/logan/gameprogramming/code/logic/generic/movement/movement.cpp
+CMakeFiles/main_exe.dir/logic/generic/movement/movement.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/main_exe.dir/logic/generic/movement/movement.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/generic/movement/movement.cpp.o -MF CMakeFiles/main_exe.dir/logic/generic/movement/movement.cpp.o.d -o CMakeFiles/main_exe.dir/logic/generic/movement/movement.cpp.o -c /home/logan/gameprogramming/code/logic/generic/movement/movement.cpp
+
+CMakeFiles/main_exe.dir/logic/generic/movement/movement.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/generic/movement/movement.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/generic/movement/movement.cpp > CMakeFiles/main_exe.dir/logic/generic/movement/movement.cpp.i
+
+CMakeFiles/main_exe.dir/logic/generic/movement/movement.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/generic/movement/movement.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/generic/movement/movement.cpp -o CMakeFiles/main_exe.dir/logic/generic/movement/movement.cpp.s
+
+CMakeFiles/main_exe.dir/logic/generic/movement/pathfinding.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/generic/movement/pathfinding.cpp.o: /home/logan/gameprogramming/code/logic/generic/movement/pathfinding.cpp
+CMakeFiles/main_exe.dir/logic/generic/movement/pathfinding.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/main_exe.dir/logic/generic/movement/pathfinding.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/generic/movement/pathfinding.cpp.o -MF CMakeFiles/main_exe.dir/logic/generic/movement/pathfinding.cpp.o.d -o CMakeFiles/main_exe.dir/logic/generic/movement/pathfinding.cpp.o -c /home/logan/gameprogramming/code/logic/generic/movement/pathfinding.cpp
+
+CMakeFiles/main_exe.dir/logic/generic/movement/pathfinding.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/generic/movement/pathfinding.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/generic/movement/pathfinding.cpp > CMakeFiles/main_exe.dir/logic/generic/movement/pathfinding.cpp.i
+
+CMakeFiles/main_exe.dir/logic/generic/movement/pathfinding.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/generic/movement/pathfinding.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/generic/movement/pathfinding.cpp -o CMakeFiles/main_exe.dir/logic/generic/movement/pathfinding.cpp.s
+
+CMakeFiles/main_exe.dir/logic/generic/movement/position.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/generic/movement/position.cpp.o: /home/logan/gameprogramming/code/logic/generic/movement/position.cpp
+CMakeFiles/main_exe.dir/logic/generic/movement/position.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/main_exe.dir/logic/generic/movement/position.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/generic/movement/position.cpp.o -MF CMakeFiles/main_exe.dir/logic/generic/movement/position.cpp.o.d -o CMakeFiles/main_exe.dir/logic/generic/movement/position.cpp.o -c /home/logan/gameprogramming/code/logic/generic/movement/position.cpp
+
+CMakeFiles/main_exe.dir/logic/generic/movement/position.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/generic/movement/position.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/generic/movement/position.cpp > CMakeFiles/main_exe.dir/logic/generic/movement/position.cpp.i
+
+CMakeFiles/main_exe.dir/logic/generic/movement/position.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/generic/movement/position.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/generic/movement/position.cpp -o CMakeFiles/main_exe.dir/logic/generic/movement/position.cpp.s
+
+CMakeFiles/main_exe.dir/logic/generic/movement/queue_actions.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/generic/movement/queue_actions.cpp.o: /home/logan/gameprogramming/code/logic/generic/movement/queue_actions.cpp
+CMakeFiles/main_exe.dir/logic/generic/movement/queue_actions.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/main_exe.dir/logic/generic/movement/queue_actions.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/generic/movement/queue_actions.cpp.o -MF CMakeFiles/main_exe.dir/logic/generic/movement/queue_actions.cpp.o.d -o CMakeFiles/main_exe.dir/logic/generic/movement/queue_actions.cpp.o -c /home/logan/gameprogramming/code/logic/generic/movement/queue_actions.cpp
+
+CMakeFiles/main_exe.dir/logic/generic/movement/queue_actions.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/generic/movement/queue_actions.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/generic/movement/queue_actions.cpp > CMakeFiles/main_exe.dir/logic/generic/movement/queue_actions.cpp.i
+
+CMakeFiles/main_exe.dir/logic/generic/movement/queue_actions.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/generic/movement/queue_actions.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/generic/movement/queue_actions.cpp -o CMakeFiles/main_exe.dir/logic/generic/movement/queue_actions.cpp.s
+
+CMakeFiles/main_exe.dir/logic/generic/schedule/action.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/generic/schedule/action.cpp.o: /home/logan/gameprogramming/code/logic/generic/schedule/action.cpp
+CMakeFiles/main_exe.dir/logic/generic/schedule/action.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/main_exe.dir/logic/generic/schedule/action.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/generic/schedule/action.cpp.o -MF CMakeFiles/main_exe.dir/logic/generic/schedule/action.cpp.o.d -o CMakeFiles/main_exe.dir/logic/generic/schedule/action.cpp.o -c /home/logan/gameprogramming/code/logic/generic/schedule/action.cpp
+
+CMakeFiles/main_exe.dir/logic/generic/schedule/action.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/generic/schedule/action.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/generic/schedule/action.cpp > CMakeFiles/main_exe.dir/logic/generic/schedule/action.cpp.i
+
+CMakeFiles/main_exe.dir/logic/generic/schedule/action.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/generic/schedule/action.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/generic/schedule/action.cpp -o CMakeFiles/main_exe.dir/logic/generic/schedule/action.cpp.s
+
+CMakeFiles/main_exe.dir/logic/generic/schedule/loop.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/generic/schedule/loop.cpp.o: /home/logan/gameprogramming/code/logic/generic/schedule/loop.cpp
+CMakeFiles/main_exe.dir/logic/generic/schedule/loop.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/main_exe.dir/logic/generic/schedule/loop.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/generic/schedule/loop.cpp.o -MF CMakeFiles/main_exe.dir/logic/generic/schedule/loop.cpp.o.d -o CMakeFiles/main_exe.dir/logic/generic/schedule/loop.cpp.o -c /home/logan/gameprogramming/code/logic/generic/schedule/loop.cpp
+
+CMakeFiles/main_exe.dir/logic/generic/schedule/loop.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/generic/schedule/loop.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/generic/schedule/loop.cpp > CMakeFiles/main_exe.dir/logic/generic/schedule/loop.cpp.i
+
+CMakeFiles/main_exe.dir/logic/generic/schedule/loop.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/generic/schedule/loop.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/generic/schedule/loop.cpp -o CMakeFiles/main_exe.dir/logic/generic/schedule/loop.cpp.s
+
+CMakeFiles/main_exe.dir/logic/generic/search/entity_specific_check.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/generic/search/entity_specific_check.cpp.o: /home/logan/gameprogramming/code/logic/generic/search/entity_specific_check.cpp
+CMakeFiles/main_exe.dir/logic/generic/search/entity_specific_check.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/main_exe.dir/logic/generic/search/entity_specific_check.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/generic/search/entity_specific_check.cpp.o -MF CMakeFiles/main_exe.dir/logic/generic/search/entity_specific_check.cpp.o.d -o CMakeFiles/main_exe.dir/logic/generic/search/entity_specific_check.cpp.o -c /home/logan/gameprogramming/code/logic/generic/search/entity_specific_check.cpp
+
+CMakeFiles/main_exe.dir/logic/generic/search/entity_specific_check.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/generic/search/entity_specific_check.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/generic/search/entity_specific_check.cpp > CMakeFiles/main_exe.dir/logic/generic/search/entity_specific_check.cpp.i
+
+CMakeFiles/main_exe.dir/logic/generic/search/entity_specific_check.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/generic/search/entity_specific_check.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/generic/search/entity_specific_check.cpp -o CMakeFiles/main_exe.dir/logic/generic/search/entity_specific_check.cpp.s
+
+CMakeFiles/main_exe.dir/logic/generic/search/old.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/generic/search/old.cpp.o: /home/logan/gameprogramming/code/logic/generic/search/old.cpp
+CMakeFiles/main_exe.dir/logic/generic/search/old.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/main_exe.dir/logic/generic/search/old.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/generic/search/old.cpp.o -MF CMakeFiles/main_exe.dir/logic/generic/search/old.cpp.o.d -o CMakeFiles/main_exe.dir/logic/generic/search/old.cpp.o -c /home/logan/gameprogramming/code/logic/generic/search/old.cpp
+
+CMakeFiles/main_exe.dir/logic/generic/search/old.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/generic/search/old.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/generic/search/old.cpp > CMakeFiles/main_exe.dir/logic/generic/search/old.cpp.i
+
+CMakeFiles/main_exe.dir/logic/generic/search/old.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/generic/search/old.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/generic/search/old.cpp -o CMakeFiles/main_exe.dir/logic/generic/search/old.cpp.s
+
+CMakeFiles/main_exe.dir/logic/generic/search/search.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/generic/search/search.cpp.o: /home/logan/gameprogramming/code/logic/generic/search/search.cpp
+CMakeFiles/main_exe.dir/logic/generic/search/search.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/main_exe.dir/logic/generic/search/search.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/generic/search/search.cpp.o -MF CMakeFiles/main_exe.dir/logic/generic/search/search.cpp.o.d -o CMakeFiles/main_exe.dir/logic/generic/search/search.cpp.o -c /home/logan/gameprogramming/code/logic/generic/search/search.cpp
+
+CMakeFiles/main_exe.dir/logic/generic/search/search.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/generic/search/search.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/generic/search/search.cpp > CMakeFiles/main_exe.dir/logic/generic/search/search.cpp.i
+
+CMakeFiles/main_exe.dir/logic/generic/search/search.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/generic/search/search.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/generic/search/search.cpp -o CMakeFiles/main_exe.dir/logic/generic/search/search.cpp.s
+
+CMakeFiles/main_exe.dir/logic/generic/search/sight_check.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/generic/search/sight_check.cpp.o: /home/logan/gameprogramming/code/logic/generic/search/sight_check.cpp
+CMakeFiles/main_exe.dir/logic/generic/search/sight_check.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/main_exe.dir/logic/generic/search/sight_check.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/generic/search/sight_check.cpp.o -MF CMakeFiles/main_exe.dir/logic/generic/search/sight_check.cpp.o.d -o CMakeFiles/main_exe.dir/logic/generic/search/sight_check.cpp.o -c /home/logan/gameprogramming/code/logic/generic/search/sight_check.cpp
+
+CMakeFiles/main_exe.dir/logic/generic/search/sight_check.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/generic/search/sight_check.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/generic/search/sight_check.cpp > CMakeFiles/main_exe.dir/logic/generic/search/sight_check.cpp.i
+
+CMakeFiles/main_exe.dir/logic/generic/search/sight_check.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/generic/search/sight_check.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/generic/search/sight_check.cpp -o CMakeFiles/main_exe.dir/logic/generic/search/sight_check.cpp.s
+
+CMakeFiles/main_exe.dir/logic/generic/search/target_adj_check.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/generic/search/target_adj_check.cpp.o: /home/logan/gameprogramming/code/logic/generic/search/target_adj_check.cpp
+CMakeFiles/main_exe.dir/logic/generic/search/target_adj_check.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/main_exe.dir/logic/generic/search/target_adj_check.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/generic/search/target_adj_check.cpp.o -MF CMakeFiles/main_exe.dir/logic/generic/search/target_adj_check.cpp.o.d -o CMakeFiles/main_exe.dir/logic/generic/search/target_adj_check.cpp.o -c /home/logan/gameprogramming/code/logic/generic/search/target_adj_check.cpp
+
+CMakeFiles/main_exe.dir/logic/generic/search/target_adj_check.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/generic/search/target_adj_check.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/generic/search/target_adj_check.cpp > CMakeFiles/main_exe.dir/logic/generic/search/target_adj_check.cpp.i
+
+CMakeFiles/main_exe.dir/logic/generic/search/target_adj_check.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/generic/search/target_adj_check.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/generic/search/target_adj_check.cpp -o CMakeFiles/main_exe.dir/logic/generic/search/target_adj_check.cpp.s
+
+CMakeFiles/main_exe.dir/logic/generic/visibility/lazy.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/generic/visibility/lazy.cpp.o: /home/logan/gameprogramming/code/logic/generic/visibility/lazy.cpp
+CMakeFiles/main_exe.dir/logic/generic/visibility/lazy.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/main_exe.dir/logic/generic/visibility/lazy.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/generic/visibility/lazy.cpp.o -MF CMakeFiles/main_exe.dir/logic/generic/visibility/lazy.cpp.o.d -o CMakeFiles/main_exe.dir/logic/generic/visibility/lazy.cpp.o -c /home/logan/gameprogramming/code/logic/generic/visibility/lazy.cpp
+
+CMakeFiles/main_exe.dir/logic/generic/visibility/lazy.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/generic/visibility/lazy.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/generic/visibility/lazy.cpp > CMakeFiles/main_exe.dir/logic/generic/visibility/lazy.cpp.i
+
+CMakeFiles/main_exe.dir/logic/generic/visibility/lazy.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/generic/visibility/lazy.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/generic/visibility/lazy.cpp -o CMakeFiles/main_exe.dir/logic/generic/visibility/lazy.cpp.s
+
+CMakeFiles/main_exe.dir/logic/generic/visibility/scheduled.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/generic/visibility/scheduled.cpp.o: /home/logan/gameprogramming/code/logic/generic/visibility/scheduled.cpp
+CMakeFiles/main_exe.dir/logic/generic/visibility/scheduled.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/main_exe.dir/logic/generic/visibility/scheduled.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/generic/visibility/scheduled.cpp.o -MF CMakeFiles/main_exe.dir/logic/generic/visibility/scheduled.cpp.o.d -o CMakeFiles/main_exe.dir/logic/generic/visibility/scheduled.cpp.o -c /home/logan/gameprogramming/code/logic/generic/visibility/scheduled.cpp
+
+CMakeFiles/main_exe.dir/logic/generic/visibility/scheduled.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/generic/visibility/scheduled.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/generic/visibility/scheduled.cpp > CMakeFiles/main_exe.dir/logic/generic/visibility/scheduled.cpp.i
+
+CMakeFiles/main_exe.dir/logic/generic/visibility/scheduled.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/generic/visibility/scheduled.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/generic/visibility/scheduled.cpp -o CMakeFiles/main_exe.dir/logic/generic/visibility/scheduled.cpp.s
+
+CMakeFiles/main_exe.dir/logic/simulation/birth_death/animal.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/simulation/birth_death/animal.cpp.o: /home/logan/gameprogramming/code/logic/simulation/birth_death/animal.cpp
+CMakeFiles/main_exe.dir/logic/simulation/birth_death/animal.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building CXX object CMakeFiles/main_exe.dir/logic/simulation/birth_death/animal.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/simulation/birth_death/animal.cpp.o -MF CMakeFiles/main_exe.dir/logic/simulation/birth_death/animal.cpp.o.d -o CMakeFiles/main_exe.dir/logic/simulation/birth_death/animal.cpp.o -c /home/logan/gameprogramming/code/logic/simulation/birth_death/animal.cpp
+
+CMakeFiles/main_exe.dir/logic/simulation/birth_death/animal.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/simulation/birth_death/animal.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/simulation/birth_death/animal.cpp > CMakeFiles/main_exe.dir/logic/simulation/birth_death/animal.cpp.i
+
+CMakeFiles/main_exe.dir/logic/simulation/birth_death/animal.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/simulation/birth_death/animal.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/simulation/birth_death/animal.cpp -o CMakeFiles/main_exe.dir/logic/simulation/birth_death/animal.cpp.s
+
+CMakeFiles/main_exe.dir/logic/simulation/birth_death/plant.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/simulation/birth_death/plant.cpp.o: /home/logan/gameprogramming/code/logic/simulation/birth_death/plant.cpp
+CMakeFiles/main_exe.dir/logic/simulation/birth_death/plant.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building CXX object CMakeFiles/main_exe.dir/logic/simulation/birth_death/plant.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/simulation/birth_death/plant.cpp.o -MF CMakeFiles/main_exe.dir/logic/simulation/birth_death/plant.cpp.o.d -o CMakeFiles/main_exe.dir/logic/simulation/birth_death/plant.cpp.o -c /home/logan/gameprogramming/code/logic/simulation/birth_death/plant.cpp
+
+CMakeFiles/main_exe.dir/logic/simulation/birth_death/plant.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/simulation/birth_death/plant.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/simulation/birth_death/plant.cpp > CMakeFiles/main_exe.dir/logic/simulation/birth_death/plant.cpp.i
+
+CMakeFiles/main_exe.dir/logic/simulation/birth_death/plant.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/simulation/birth_death/plant.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/simulation/birth_death/plant.cpp -o CMakeFiles/main_exe.dir/logic/simulation/birth_death/plant.cpp.s
+
+CMakeFiles/main_exe.dir/logic/simulation/birth_death/unit.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/simulation/birth_death/unit.cpp.o: /home/logan/gameprogramming/code/logic/simulation/birth_death/unit.cpp
+CMakeFiles/main_exe.dir/logic/simulation/birth_death/unit.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building CXX object CMakeFiles/main_exe.dir/logic/simulation/birth_death/unit.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/simulation/birth_death/unit.cpp.o -MF CMakeFiles/main_exe.dir/logic/simulation/birth_death/unit.cpp.o.d -o CMakeFiles/main_exe.dir/logic/simulation/birth_death/unit.cpp.o -c /home/logan/gameprogramming/code/logic/simulation/birth_death/unit.cpp
+
+CMakeFiles/main_exe.dir/logic/simulation/birth_death/unit.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/simulation/birth_death/unit.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/simulation/birth_death/unit.cpp > CMakeFiles/main_exe.dir/logic/simulation/birth_death/unit.cpp.i
+
+CMakeFiles/main_exe.dir/logic/simulation/birth_death/unit.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/simulation/birth_death/unit.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/simulation/birth_death/unit.cpp -o CMakeFiles/main_exe.dir/logic/simulation/birth_death/unit.cpp.s
+
+CMakeFiles/main_exe.dir/logic/simulation/feeding/feeding.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/simulation/feeding/feeding.cpp.o: /home/logan/gameprogramming/code/logic/simulation/feeding/feeding.cpp
+CMakeFiles/main_exe.dir/logic/simulation/feeding/feeding.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building CXX object CMakeFiles/main_exe.dir/logic/simulation/feeding/feeding.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/simulation/feeding/feeding.cpp.o -MF CMakeFiles/main_exe.dir/logic/simulation/feeding/feeding.cpp.o.d -o CMakeFiles/main_exe.dir/logic/simulation/feeding/feeding.cpp.o -c /home/logan/gameprogramming/code/logic/simulation/feeding/feeding.cpp
+
+CMakeFiles/main_exe.dir/logic/simulation/feeding/feeding.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/simulation/feeding/feeding.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/simulation/feeding/feeding.cpp > CMakeFiles/main_exe.dir/logic/simulation/feeding/feeding.cpp.i
+
+CMakeFiles/main_exe.dir/logic/simulation/feeding/feeding.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/simulation/feeding/feeding.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/simulation/feeding/feeding.cpp -o CMakeFiles/main_exe.dir/logic/simulation/feeding/feeding.cpp.s
+
+CMakeFiles/main_exe.dir/logic/simulation/feeding/hunger.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/simulation/feeding/hunger.cpp.o: /home/logan/gameprogramming/code/logic/simulation/feeding/hunger.cpp
+CMakeFiles/main_exe.dir/logic/simulation/feeding/hunger.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building CXX object CMakeFiles/main_exe.dir/logic/simulation/feeding/hunger.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/simulation/feeding/hunger.cpp.o -MF CMakeFiles/main_exe.dir/logic/simulation/feeding/hunger.cpp.o.d -o CMakeFiles/main_exe.dir/logic/simulation/feeding/hunger.cpp.o -c /home/logan/gameprogramming/code/logic/simulation/feeding/hunger.cpp
+
+CMakeFiles/main_exe.dir/logic/simulation/feeding/hunger.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/simulation/feeding/hunger.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/simulation/feeding/hunger.cpp > CMakeFiles/main_exe.dir/logic/simulation/feeding/hunger.cpp.i
+
+CMakeFiles/main_exe.dir/logic/simulation/feeding/hunger.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/simulation/feeding/hunger.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/simulation/feeding/hunger.cpp -o CMakeFiles/main_exe.dir/logic/simulation/feeding/hunger.cpp.s
+
+CMakeFiles/main_exe.dir/logic/simulation/first_spawn.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/simulation/first_spawn.cpp.o: /home/logan/gameprogramming/code/logic/simulation/first_spawn.cpp
+CMakeFiles/main_exe.dir/logic/simulation/first_spawn.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building CXX object CMakeFiles/main_exe.dir/logic/simulation/first_spawn.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/simulation/first_spawn.cpp.o -MF CMakeFiles/main_exe.dir/logic/simulation/first_spawn.cpp.o.d -o CMakeFiles/main_exe.dir/logic/simulation/first_spawn.cpp.o -c /home/logan/gameprogramming/code/logic/simulation/first_spawn.cpp
+
+CMakeFiles/main_exe.dir/logic/simulation/first_spawn.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/simulation/first_spawn.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/simulation/first_spawn.cpp > CMakeFiles/main_exe.dir/logic/simulation/first_spawn.cpp.i
+
+CMakeFiles/main_exe.dir/logic/simulation/first_spawn.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/simulation/first_spawn.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/simulation/first_spawn.cpp -o CMakeFiles/main_exe.dir/logic/simulation/first_spawn.cpp.s
+
+CMakeFiles/main_exe.dir/logic/simulation/game.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/simulation/game.cpp.o: /home/logan/gameprogramming/code/logic/simulation/game.cpp
+CMakeFiles/main_exe.dir/logic/simulation/game.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building CXX object CMakeFiles/main_exe.dir/logic/simulation/game.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/simulation/game.cpp.o -MF CMakeFiles/main_exe.dir/logic/simulation/game.cpp.o.d -o CMakeFiles/main_exe.dir/logic/simulation/game.cpp.o -c /home/logan/gameprogramming/code/logic/simulation/game.cpp
+
+CMakeFiles/main_exe.dir/logic/simulation/game.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/simulation/game.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/simulation/game.cpp > CMakeFiles/main_exe.dir/logic/simulation/game.cpp.i
+
+CMakeFiles/main_exe.dir/logic/simulation/game.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/simulation/game.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/simulation/game.cpp -o CMakeFiles/main_exe.dir/logic/simulation/game.cpp.s
+
+CMakeFiles/main_exe.dir/logic/simulation/mating/mating.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/simulation/mating/mating.cpp.o: /home/logan/gameprogramming/code/logic/simulation/mating/mating.cpp
+CMakeFiles/main_exe.dir/logic/simulation/mating/mating.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building CXX object CMakeFiles/main_exe.dir/logic/simulation/mating/mating.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/simulation/mating/mating.cpp.o -MF CMakeFiles/main_exe.dir/logic/simulation/mating/mating.cpp.o.d -o CMakeFiles/main_exe.dir/logic/simulation/mating/mating.cpp.o -c /home/logan/gameprogramming/code/logic/simulation/mating/mating.cpp
+
+CMakeFiles/main_exe.dir/logic/simulation/mating/mating.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/simulation/mating/mating.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/simulation/mating/mating.cpp > CMakeFiles/main_exe.dir/logic/simulation/mating/mating.cpp.i
+
+CMakeFiles/main_exe.dir/logic/simulation/mating/mating.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/simulation/mating/mating.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/simulation/mating/mating.cpp -o CMakeFiles/main_exe.dir/logic/simulation/mating/mating.cpp.s
+
+CMakeFiles/main_exe.dir/logic/simulation/pack/packMovementPatterns.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/simulation/pack/packMovementPatterns.cpp.o: /home/logan/gameprogramming/code/logic/simulation/pack/packMovementPatterns.cpp
+CMakeFiles/main_exe.dir/logic/simulation/pack/packMovementPatterns.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building CXX object CMakeFiles/main_exe.dir/logic/simulation/pack/packMovementPatterns.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/simulation/pack/packMovementPatterns.cpp.o -MF CMakeFiles/main_exe.dir/logic/simulation/pack/packMovementPatterns.cpp.o.d -o CMakeFiles/main_exe.dir/logic/simulation/pack/packMovementPatterns.cpp.o -c /home/logan/gameprogramming/code/logic/simulation/pack/packMovementPatterns.cpp
+
+CMakeFiles/main_exe.dir/logic/simulation/pack/packMovementPatterns.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/simulation/pack/packMovementPatterns.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/simulation/pack/packMovementPatterns.cpp > CMakeFiles/main_exe.dir/logic/simulation/pack/packMovementPatterns.cpp.i
+
+CMakeFiles/main_exe.dir/logic/simulation/pack/packMovementPatterns.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/simulation/pack/packMovementPatterns.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/simulation/pack/packMovementPatterns.cpp -o CMakeFiles/main_exe.dir/logic/simulation/pack/packMovementPatterns.cpp.s
+
+CMakeFiles/main_exe.dir/logic/simulation/perishables/continuous.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/simulation/perishables/continuous.cpp.o: /home/logan/gameprogramming/code/logic/simulation/perishables/continuous.cpp
+CMakeFiles/main_exe.dir/logic/simulation/perishables/continuous.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building CXX object CMakeFiles/main_exe.dir/logic/simulation/perishables/continuous.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/simulation/perishables/continuous.cpp.o -MF CMakeFiles/main_exe.dir/logic/simulation/perishables/continuous.cpp.o.d -o CMakeFiles/main_exe.dir/logic/simulation/perishables/continuous.cpp.o -c /home/logan/gameprogramming/code/logic/simulation/perishables/continuous.cpp
+
+CMakeFiles/main_exe.dir/logic/simulation/perishables/continuous.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/simulation/perishables/continuous.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/simulation/perishables/continuous.cpp > CMakeFiles/main_exe.dir/logic/simulation/perishables/continuous.cpp.i
+
+CMakeFiles/main_exe.dir/logic/simulation/perishables/continuous.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/simulation/perishables/continuous.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/simulation/perishables/continuous.cpp -o CMakeFiles/main_exe.dir/logic/simulation/perishables/continuous.cpp.s
+
+CMakeFiles/main_exe.dir/logic/simulation/perishables/lazy.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/simulation/perishables/lazy.cpp.o: /home/logan/gameprogramming/code/logic/simulation/perishables/lazy.cpp
+CMakeFiles/main_exe.dir/logic/simulation/perishables/lazy.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Building CXX object CMakeFiles/main_exe.dir/logic/simulation/perishables/lazy.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/simulation/perishables/lazy.cpp.o -MF CMakeFiles/main_exe.dir/logic/simulation/perishables/lazy.cpp.o.d -o CMakeFiles/main_exe.dir/logic/simulation/perishables/lazy.cpp.o -c /home/logan/gameprogramming/code/logic/simulation/perishables/lazy.cpp
+
+CMakeFiles/main_exe.dir/logic/simulation/perishables/lazy.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/simulation/perishables/lazy.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/simulation/perishables/lazy.cpp > CMakeFiles/main_exe.dir/logic/simulation/perishables/lazy.cpp.i
+
+CMakeFiles/main_exe.dir/logic/simulation/perishables/lazy.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/simulation/perishables/lazy.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/simulation/perishables/lazy.cpp -o CMakeFiles/main_exe.dir/logic/simulation/perishables/lazy.cpp.s
+
+CMakeFiles/main_exe.dir/logic/simulation/plant/basic.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/simulation/plant/basic.cpp.o: /home/logan/gameprogramming/code/logic/simulation/plant/basic.cpp
+CMakeFiles/main_exe.dir/logic/simulation/plant/basic.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_43) "Building CXX object CMakeFiles/main_exe.dir/logic/simulation/plant/basic.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/simulation/plant/basic.cpp.o -MF CMakeFiles/main_exe.dir/logic/simulation/plant/basic.cpp.o.d -o CMakeFiles/main_exe.dir/logic/simulation/plant/basic.cpp.o -c /home/logan/gameprogramming/code/logic/simulation/plant/basic.cpp
+
+CMakeFiles/main_exe.dir/logic/simulation/plant/basic.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/simulation/plant/basic.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/simulation/plant/basic.cpp > CMakeFiles/main_exe.dir/logic/simulation/plant/basic.cpp.i
+
+CMakeFiles/main_exe.dir/logic/simulation/plant/basic.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/simulation/plant/basic.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/simulation/plant/basic.cpp -o CMakeFiles/main_exe.dir/logic/simulation/plant/basic.cpp.s
+
+CMakeFiles/main_exe.dir/logic/simulation/plant/growth.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/simulation/plant/growth.cpp.o: /home/logan/gameprogramming/code/logic/simulation/plant/growth.cpp
+CMakeFiles/main_exe.dir/logic/simulation/plant/growth.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building CXX object CMakeFiles/main_exe.dir/logic/simulation/plant/growth.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/simulation/plant/growth.cpp.o -MF CMakeFiles/main_exe.dir/logic/simulation/plant/growth.cpp.o.d -o CMakeFiles/main_exe.dir/logic/simulation/plant/growth.cpp.o -c /home/logan/gameprogramming/code/logic/simulation/plant/growth.cpp
+
+CMakeFiles/main_exe.dir/logic/simulation/plant/growth.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/simulation/plant/growth.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/simulation/plant/growth.cpp > CMakeFiles/main_exe.dir/logic/simulation/plant/growth.cpp.i
+
+CMakeFiles/main_exe.dir/logic/simulation/plant/growth.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/simulation/plant/growth.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/simulation/plant/growth.cpp -o CMakeFiles/main_exe.dir/logic/simulation/plant/growth.cpp.s
+
+CMakeFiles/main_exe.dir/logic/simulation/plant/update.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/simulation/plant/update.cpp.o: /home/logan/gameprogramming/code/logic/simulation/plant/update.cpp
+CMakeFiles/main_exe.dir/logic/simulation/plant/update.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object CMakeFiles/main_exe.dir/logic/simulation/plant/update.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/simulation/plant/update.cpp.o -MF CMakeFiles/main_exe.dir/logic/simulation/plant/update.cpp.o.d -o CMakeFiles/main_exe.dir/logic/simulation/plant/update.cpp.o -c /home/logan/gameprogramming/code/logic/simulation/plant/update.cpp
+
+CMakeFiles/main_exe.dir/logic/simulation/plant/update.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/simulation/plant/update.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/simulation/plant/update.cpp > CMakeFiles/main_exe.dir/logic/simulation/plant/update.cpp.i
+
+CMakeFiles/main_exe.dir/logic/simulation/plant/update.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/simulation/plant/update.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/simulation/plant/update.cpp -o CMakeFiles/main_exe.dir/logic/simulation/plant/update.cpp.s
+
+CMakeFiles/main_exe.dir/logic/simulation/test.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/simulation/test.cpp.o: /home/logan/gameprogramming/code/logic/simulation/test.cpp
+CMakeFiles/main_exe.dir/logic/simulation/test.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object CMakeFiles/main_exe.dir/logic/simulation/test.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/simulation/test.cpp.o -MF CMakeFiles/main_exe.dir/logic/simulation/test.cpp.o.d -o CMakeFiles/main_exe.dir/logic/simulation/test.cpp.o -c /home/logan/gameprogramming/code/logic/simulation/test.cpp
+
+CMakeFiles/main_exe.dir/logic/simulation/test.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/simulation/test.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/simulation/test.cpp > CMakeFiles/main_exe.dir/logic/simulation/test.cpp.i
+
+CMakeFiles/main_exe.dir/logic/simulation/test.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/simulation/test.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/simulation/test.cpp -o CMakeFiles/main_exe.dir/logic/simulation/test.cpp.s
+
+CMakeFiles/main_exe.dir/logic/simulation/weather_calculations.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/simulation/weather_calculations.cpp.o: /home/logan/gameprogramming/code/logic/simulation/weather_calculations.cpp
+CMakeFiles/main_exe.dir/logic/simulation/weather_calculations.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building CXX object CMakeFiles/main_exe.dir/logic/simulation/weather_calculations.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/simulation/weather_calculations.cpp.o -MF CMakeFiles/main_exe.dir/logic/simulation/weather_calculations.cpp.o.d -o CMakeFiles/main_exe.dir/logic/simulation/weather_calculations.cpp.o -c /home/logan/gameprogramming/code/logic/simulation/weather_calculations.cpp
+
+CMakeFiles/main_exe.dir/logic/simulation/weather_calculations.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/simulation/weather_calculations.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/simulation/weather_calculations.cpp > CMakeFiles/main_exe.dir/logic/simulation/weather_calculations.cpp.i
+
+CMakeFiles/main_exe.dir/logic/simulation/weather_calculations.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/simulation/weather_calculations.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/simulation/weather_calculations.cpp -o CMakeFiles/main_exe.dir/logic/simulation/weather_calculations.cpp.s
+
+CMakeFiles/main_exe.dir/logic/simulation/world_gen.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/simulation/world_gen.cpp.o: /home/logan/gameprogramming/code/logic/simulation/world_gen.cpp
+CMakeFiles/main_exe.dir/logic/simulation/world_gen.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Building CXX object CMakeFiles/main_exe.dir/logic/simulation/world_gen.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/simulation/world_gen.cpp.o -MF CMakeFiles/main_exe.dir/logic/simulation/world_gen.cpp.o.d -o CMakeFiles/main_exe.dir/logic/simulation/world_gen.cpp.o -c /home/logan/gameprogramming/code/logic/simulation/world_gen.cpp
+
+CMakeFiles/main_exe.dir/logic/simulation/world_gen.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/simulation/world_gen.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/simulation/world_gen.cpp > CMakeFiles/main_exe.dir/logic/simulation/world_gen.cpp.i
+
+CMakeFiles/main_exe.dir/logic/simulation/world_gen.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/simulation/world_gen.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/simulation/world_gen.cpp -o CMakeFiles/main_exe.dir/logic/simulation/world_gen.cpp.s
+
+CMakeFiles/main_exe.dir/logic/simulation/world_gen_helpers.cpp.o: CMakeFiles/main_exe.dir/flags.make
+CMakeFiles/main_exe.dir/logic/simulation/world_gen_helpers.cpp.o: /home/logan/gameprogramming/code/logic/simulation/world_gen_helpers.cpp
+CMakeFiles/main_exe.dir/logic/simulation/world_gen_helpers.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Building CXX object CMakeFiles/main_exe.dir/logic/simulation/world_gen_helpers.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/logic/simulation/world_gen_helpers.cpp.o -MF CMakeFiles/main_exe.dir/logic/simulation/world_gen_helpers.cpp.o.d -o CMakeFiles/main_exe.dir/logic/simulation/world_gen_helpers.cpp.o -c /home/logan/gameprogramming/code/logic/simulation/world_gen_helpers.cpp
+
+CMakeFiles/main_exe.dir/logic/simulation/world_gen_helpers.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/logic/simulation/world_gen_helpers.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/simulation/world_gen_helpers.cpp > CMakeFiles/main_exe.dir/logic/simulation/world_gen_helpers.cpp.i
+
+CMakeFiles/main_exe.dir/logic/simulation/world_gen_helpers.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/logic/simulation/world_gen_helpers.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/simulation/world_gen_helpers.cpp -o CMakeFiles/main_exe.dir/logic/simulation/world_gen_helpers.cpp.s
+
 CMakeFiles/main_exe.dir/main.cpp.o: CMakeFiles/main_exe.dir/flags.make
 CMakeFiles/main_exe.dir/main.cpp.o: /home/logan/gameprogramming/code/main.cpp
 CMakeFiles/main_exe.dir/main.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/main_exe.dir/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_50) "Building CXX object CMakeFiles/main_exe.dir/main.cpp.o"
 	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/main.cpp.o -MF CMakeFiles/main_exe.dir/main.cpp.o.d -o CMakeFiles/main_exe.dir/main.cpp.o -c /home/logan/gameprogramming/code/main.cpp
 
 CMakeFiles/main_exe.dir/main.cpp.i: cmake_force
@@ -86,882 +772,116 @@ CMakeFiles/main_exe.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/main.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/main.cpp -o CMakeFiles/main_exe.dir/main.cpp.s
 
-CMakeFiles/main_exe.dir/render/texture.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/render/texture.cpp.o: /home/logan/gameprogramming/code/render/texture.cpp
-CMakeFiles/main_exe.dir/render/texture.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main_exe.dir/render/texture.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/render/texture.cpp.o -MF CMakeFiles/main_exe.dir/render/texture.cpp.o.d -o CMakeFiles/main_exe.dir/render/texture.cpp.o -c /home/logan/gameprogramming/code/render/texture.cpp
-
-CMakeFiles/main_exe.dir/render/texture.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/render/texture.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/render/texture.cpp > CMakeFiles/main_exe.dir/render/texture.cpp.i
-
-CMakeFiles/main_exe.dir/render/texture.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/render/texture.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/render/texture.cpp -o CMakeFiles/main_exe.dir/render/texture.cpp.s
-
-CMakeFiles/main_exe.dir/schedule/action.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/schedule/action.cpp.o: /home/logan/gameprogramming/code/schedule/action.cpp
-CMakeFiles/main_exe.dir/schedule/action.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/main_exe.dir/schedule/action.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/schedule/action.cpp.o -MF CMakeFiles/main_exe.dir/schedule/action.cpp.o.d -o CMakeFiles/main_exe.dir/schedule/action.cpp.o -c /home/logan/gameprogramming/code/schedule/action.cpp
-
-CMakeFiles/main_exe.dir/schedule/action.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/schedule/action.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/schedule/action.cpp > CMakeFiles/main_exe.dir/schedule/action.cpp.i
-
-CMakeFiles/main_exe.dir/schedule/action.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/schedule/action.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/schedule/action.cpp -o CMakeFiles/main_exe.dir/schedule/action.cpp.s
-
-CMakeFiles/main_exe.dir/schedule/loop.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/schedule/loop.cpp.o: /home/logan/gameprogramming/code/schedule/loop.cpp
-CMakeFiles/main_exe.dir/schedule/loop.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/main_exe.dir/schedule/loop.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/schedule/loop.cpp.o -MF CMakeFiles/main_exe.dir/schedule/loop.cpp.o.d -o CMakeFiles/main_exe.dir/schedule/loop.cpp.o -c /home/logan/gameprogramming/code/schedule/loop.cpp
-
-CMakeFiles/main_exe.dir/schedule/loop.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/schedule/loop.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/schedule/loop.cpp > CMakeFiles/main_exe.dir/schedule/loop.cpp.i
-
-CMakeFiles/main_exe.dir/schedule/loop.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/schedule/loop.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/schedule/loop.cpp -o CMakeFiles/main_exe.dir/schedule/loop.cpp.s
-
-CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.o: /home/logan/gameprogramming/code/simulation/first_spawn.cpp
-CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.o -MF CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.o.d -o CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.o -c /home/logan/gameprogramming/code/simulation/first_spawn.cpp
-
-CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/simulation/first_spawn.cpp > CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.i
-
-CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/simulation/first_spawn.cpp -o CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.s
-
-CMakeFiles/main_exe.dir/simulation/game.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/simulation/game.cpp.o: /home/logan/gameprogramming/code/simulation/game.cpp
-CMakeFiles/main_exe.dir/simulation/game.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/main_exe.dir/simulation/game.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/simulation/game.cpp.o -MF CMakeFiles/main_exe.dir/simulation/game.cpp.o.d -o CMakeFiles/main_exe.dir/simulation/game.cpp.o -c /home/logan/gameprogramming/code/simulation/game.cpp
-
-CMakeFiles/main_exe.dir/simulation/game.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/simulation/game.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/simulation/game.cpp > CMakeFiles/main_exe.dir/simulation/game.cpp.i
-
-CMakeFiles/main_exe.dir/simulation/game.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/simulation/game.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/simulation/game.cpp -o CMakeFiles/main_exe.dir/simulation/game.cpp.s
-
-CMakeFiles/main_exe.dir/simulation/test.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/simulation/test.cpp.o: /home/logan/gameprogramming/code/simulation/test.cpp
-CMakeFiles/main_exe.dir/simulation/test.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/main_exe.dir/simulation/test.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/simulation/test.cpp.o -MF CMakeFiles/main_exe.dir/simulation/test.cpp.o.d -o CMakeFiles/main_exe.dir/simulation/test.cpp.o -c /home/logan/gameprogramming/code/simulation/test.cpp
-
-CMakeFiles/main_exe.dir/simulation/test.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/simulation/test.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/simulation/test.cpp > CMakeFiles/main_exe.dir/simulation/test.cpp.i
-
-CMakeFiles/main_exe.dir/simulation/test.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/simulation/test.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/simulation/test.cpp -o CMakeFiles/main_exe.dir/simulation/test.cpp.s
-
-CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.o: /home/logan/gameprogramming/code/simulation/weather_calculations.cpp
-CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.o -MF CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.o.d -o CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.o -c /home/logan/gameprogramming/code/simulation/weather_calculations.cpp
-
-CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/simulation/weather_calculations.cpp > CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.i
-
-CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/simulation/weather_calculations.cpp -o CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.s
-
-CMakeFiles/main_exe.dir/simulation/world_gen.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/simulation/world_gen.cpp.o: /home/logan/gameprogramming/code/simulation/world_gen.cpp
-CMakeFiles/main_exe.dir/simulation/world_gen.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/main_exe.dir/simulation/world_gen.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/simulation/world_gen.cpp.o -MF CMakeFiles/main_exe.dir/simulation/world_gen.cpp.o.d -o CMakeFiles/main_exe.dir/simulation/world_gen.cpp.o -c /home/logan/gameprogramming/code/simulation/world_gen.cpp
-
-CMakeFiles/main_exe.dir/simulation/world_gen.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/simulation/world_gen.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/simulation/world_gen.cpp > CMakeFiles/main_exe.dir/simulation/world_gen.cpp.i
-
-CMakeFiles/main_exe.dir/simulation/world_gen.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/simulation/world_gen.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/simulation/world_gen.cpp -o CMakeFiles/main_exe.dir/simulation/world_gen.cpp.s
-
-CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.o: /home/logan/gameprogramming/code/simulation/world_gen_helpers.cpp
-CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.o -MF CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.o.d -o CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.o -c /home/logan/gameprogramming/code/simulation/world_gen_helpers.cpp
-
-CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/simulation/world_gen_helpers.cpp > CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.i
-
-CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/simulation/world_gen_helpers.cpp -o CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.s
-
-CMakeFiles/main_exe.dir/systems/action/assign.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/action/assign.cpp.o: /home/logan/gameprogramming/code/systems/action/assign.cpp
-CMakeFiles/main_exe.dir/systems/action/assign.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/main_exe.dir/systems/action/assign.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/action/assign.cpp.o -MF CMakeFiles/main_exe.dir/systems/action/assign.cpp.o.d -o CMakeFiles/main_exe.dir/systems/action/assign.cpp.o -c /home/logan/gameprogramming/code/systems/action/assign.cpp
-
-CMakeFiles/main_exe.dir/systems/action/assign.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/action/assign.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/action/assign.cpp > CMakeFiles/main_exe.dir/systems/action/assign.cpp.i
-
-CMakeFiles/main_exe.dir/systems/action/assign.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/action/assign.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/action/assign.cpp -o CMakeFiles/main_exe.dir/systems/action/assign.cpp.s
-
-CMakeFiles/main_exe.dir/systems/action/attempt.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/action/attempt.cpp.o: /home/logan/gameprogramming/code/systems/action/attempt.cpp
-CMakeFiles/main_exe.dir/systems/action/attempt.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/main_exe.dir/systems/action/attempt.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/action/attempt.cpp.o -MF CMakeFiles/main_exe.dir/systems/action/attempt.cpp.o.d -o CMakeFiles/main_exe.dir/systems/action/attempt.cpp.o -c /home/logan/gameprogramming/code/systems/action/attempt.cpp
-
-CMakeFiles/main_exe.dir/systems/action/attempt.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/action/attempt.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/action/attempt.cpp > CMakeFiles/main_exe.dir/systems/action/attempt.cpp.i
-
-CMakeFiles/main_exe.dir/systems/action/attempt.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/action/attempt.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/action/attempt.cpp -o CMakeFiles/main_exe.dir/systems/action/attempt.cpp.s
-
-CMakeFiles/main_exe.dir/systems/action/product.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/action/product.cpp.o: /home/logan/gameprogramming/code/systems/action/product.cpp
-CMakeFiles/main_exe.dir/systems/action/product.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/main_exe.dir/systems/action/product.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/action/product.cpp.o -MF CMakeFiles/main_exe.dir/systems/action/product.cpp.o.d -o CMakeFiles/main_exe.dir/systems/action/product.cpp.o -c /home/logan/gameprogramming/code/systems/action/product.cpp
-
-CMakeFiles/main_exe.dir/systems/action/product.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/action/product.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/action/product.cpp > CMakeFiles/main_exe.dir/systems/action/product.cpp.i
-
-CMakeFiles/main_exe.dir/systems/action/product.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/action/product.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/action/product.cpp -o CMakeFiles/main_exe.dir/systems/action/product.cpp.s
-
-CMakeFiles/main_exe.dir/systems/action/resource.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/action/resource.cpp.o: /home/logan/gameprogramming/code/systems/action/resource.cpp
-CMakeFiles/main_exe.dir/systems/action/resource.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/main_exe.dir/systems/action/resource.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/action/resource.cpp.o -MF CMakeFiles/main_exe.dir/systems/action/resource.cpp.o.d -o CMakeFiles/main_exe.dir/systems/action/resource.cpp.o -c /home/logan/gameprogramming/code/systems/action/resource.cpp
-
-CMakeFiles/main_exe.dir/systems/action/resource.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/action/resource.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/action/resource.cpp > CMakeFiles/main_exe.dir/systems/action/resource.cpp.i
-
-CMakeFiles/main_exe.dir/systems/action/resource.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/action/resource.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/action/resource.cpp -o CMakeFiles/main_exe.dir/systems/action/resource.cpp.s
-
-CMakeFiles/main_exe.dir/systems/action/support.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/action/support.cpp.o: /home/logan/gameprogramming/code/systems/action/support.cpp
-CMakeFiles/main_exe.dir/systems/action/support.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/main_exe.dir/systems/action/support.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/action/support.cpp.o -MF CMakeFiles/main_exe.dir/systems/action/support.cpp.o.d -o CMakeFiles/main_exe.dir/systems/action/support.cpp.o -c /home/logan/gameprogramming/code/systems/action/support.cpp
-
-CMakeFiles/main_exe.dir/systems/action/support.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/action/support.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/action/support.cpp > CMakeFiles/main_exe.dir/systems/action/support.cpp.i
-
-CMakeFiles/main_exe.dir/systems/action/support.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/action/support.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/action/support.cpp -o CMakeFiles/main_exe.dir/systems/action/support.cpp.s
-
-CMakeFiles/main_exe.dir/systems/birth_death/animal.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/birth_death/animal.cpp.o: /home/logan/gameprogramming/code/systems/birth_death/animal.cpp
-CMakeFiles/main_exe.dir/systems/birth_death/animal.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/main_exe.dir/systems/birth_death/animal.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/birth_death/animal.cpp.o -MF CMakeFiles/main_exe.dir/systems/birth_death/animal.cpp.o.d -o CMakeFiles/main_exe.dir/systems/birth_death/animal.cpp.o -c /home/logan/gameprogramming/code/systems/birth_death/animal.cpp
-
-CMakeFiles/main_exe.dir/systems/birth_death/animal.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/birth_death/animal.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/birth_death/animal.cpp > CMakeFiles/main_exe.dir/systems/birth_death/animal.cpp.i
-
-CMakeFiles/main_exe.dir/systems/birth_death/animal.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/birth_death/animal.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/birth_death/animal.cpp -o CMakeFiles/main_exe.dir/systems/birth_death/animal.cpp.s
-
-CMakeFiles/main_exe.dir/systems/birth_death/plant.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/birth_death/plant.cpp.o: /home/logan/gameprogramming/code/systems/birth_death/plant.cpp
-CMakeFiles/main_exe.dir/systems/birth_death/plant.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/main_exe.dir/systems/birth_death/plant.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/birth_death/plant.cpp.o -MF CMakeFiles/main_exe.dir/systems/birth_death/plant.cpp.o.d -o CMakeFiles/main_exe.dir/systems/birth_death/plant.cpp.o -c /home/logan/gameprogramming/code/systems/birth_death/plant.cpp
-
-CMakeFiles/main_exe.dir/systems/birth_death/plant.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/birth_death/plant.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/birth_death/plant.cpp > CMakeFiles/main_exe.dir/systems/birth_death/plant.cpp.i
-
-CMakeFiles/main_exe.dir/systems/birth_death/plant.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/birth_death/plant.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/birth_death/plant.cpp -o CMakeFiles/main_exe.dir/systems/birth_death/plant.cpp.s
-
-CMakeFiles/main_exe.dir/systems/birth_death/scheduled.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/birth_death/scheduled.cpp.o: /home/logan/gameprogramming/code/systems/birth_death/scheduled.cpp
-CMakeFiles/main_exe.dir/systems/birth_death/scheduled.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/main_exe.dir/systems/birth_death/scheduled.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/birth_death/scheduled.cpp.o -MF CMakeFiles/main_exe.dir/systems/birth_death/scheduled.cpp.o.d -o CMakeFiles/main_exe.dir/systems/birth_death/scheduled.cpp.o -c /home/logan/gameprogramming/code/systems/birth_death/scheduled.cpp
-
-CMakeFiles/main_exe.dir/systems/birth_death/scheduled.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/birth_death/scheduled.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/birth_death/scheduled.cpp > CMakeFiles/main_exe.dir/systems/birth_death/scheduled.cpp.i
-
-CMakeFiles/main_exe.dir/systems/birth_death/scheduled.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/birth_death/scheduled.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/birth_death/scheduled.cpp -o CMakeFiles/main_exe.dir/systems/birth_death/scheduled.cpp.s
-
-CMakeFiles/main_exe.dir/systems/birth_death/unit.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/birth_death/unit.cpp.o: /home/logan/gameprogramming/code/systems/birth_death/unit.cpp
-CMakeFiles/main_exe.dir/systems/birth_death/unit.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/main_exe.dir/systems/birth_death/unit.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/birth_death/unit.cpp.o -MF CMakeFiles/main_exe.dir/systems/birth_death/unit.cpp.o.d -o CMakeFiles/main_exe.dir/systems/birth_death/unit.cpp.o -c /home/logan/gameprogramming/code/systems/birth_death/unit.cpp
-
-CMakeFiles/main_exe.dir/systems/birth_death/unit.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/birth_death/unit.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/birth_death/unit.cpp > CMakeFiles/main_exe.dir/systems/birth_death/unit.cpp.i
-
-CMakeFiles/main_exe.dir/systems/birth_death/unit.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/birth_death/unit.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/birth_death/unit.cpp -o CMakeFiles/main_exe.dir/systems/birth_death/unit.cpp.s
-
-CMakeFiles/main_exe.dir/systems/combat/combat.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/combat/combat.cpp.o: /home/logan/gameprogramming/code/systems/combat/combat.cpp
-CMakeFiles/main_exe.dir/systems/combat/combat.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/main_exe.dir/systems/combat/combat.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/combat/combat.cpp.o -MF CMakeFiles/main_exe.dir/systems/combat/combat.cpp.o.d -o CMakeFiles/main_exe.dir/systems/combat/combat.cpp.o -c /home/logan/gameprogramming/code/systems/combat/combat.cpp
-
-CMakeFiles/main_exe.dir/systems/combat/combat.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/combat/combat.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/combat/combat.cpp > CMakeFiles/main_exe.dir/systems/combat/combat.cpp.i
-
-CMakeFiles/main_exe.dir/systems/combat/combat.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/combat/combat.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/combat/combat.cpp -o CMakeFiles/main_exe.dir/systems/combat/combat.cpp.s
-
-CMakeFiles/main_exe.dir/systems/feeding/feeding.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/feeding/feeding.cpp.o: /home/logan/gameprogramming/code/systems/feeding/feeding.cpp
-CMakeFiles/main_exe.dir/systems/feeding/feeding.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/main_exe.dir/systems/feeding/feeding.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/feeding/feeding.cpp.o -MF CMakeFiles/main_exe.dir/systems/feeding/feeding.cpp.o.d -o CMakeFiles/main_exe.dir/systems/feeding/feeding.cpp.o -c /home/logan/gameprogramming/code/systems/feeding/feeding.cpp
-
-CMakeFiles/main_exe.dir/systems/feeding/feeding.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/feeding/feeding.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/feeding/feeding.cpp > CMakeFiles/main_exe.dir/systems/feeding/feeding.cpp.i
-
-CMakeFiles/main_exe.dir/systems/feeding/feeding.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/feeding/feeding.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/feeding/feeding.cpp -o CMakeFiles/main_exe.dir/systems/feeding/feeding.cpp.s
-
-CMakeFiles/main_exe.dir/systems/feeding/hunger.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/feeding/hunger.cpp.o: /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
-CMakeFiles/main_exe.dir/systems/feeding/hunger.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/main_exe.dir/systems/feeding/hunger.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/feeding/hunger.cpp.o -MF CMakeFiles/main_exe.dir/systems/feeding/hunger.cpp.o.d -o CMakeFiles/main_exe.dir/systems/feeding/hunger.cpp.o -c /home/logan/gameprogramming/code/systems/feeding/hunger.cpp
-
-CMakeFiles/main_exe.dir/systems/feeding/hunger.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/feeding/hunger.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/feeding/hunger.cpp > CMakeFiles/main_exe.dir/systems/feeding/hunger.cpp.i
-
-CMakeFiles/main_exe.dir/systems/feeding/hunger.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/feeding/hunger.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/feeding/hunger.cpp -o CMakeFiles/main_exe.dir/systems/feeding/hunger.cpp.s
-
-CMakeFiles/main_exe.dir/systems/inventory/check.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/inventory/check.cpp.o: /home/logan/gameprogramming/code/systems/inventory/check.cpp
-CMakeFiles/main_exe.dir/systems/inventory/check.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/main_exe.dir/systems/inventory/check.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/inventory/check.cpp.o -MF CMakeFiles/main_exe.dir/systems/inventory/check.cpp.o.d -o CMakeFiles/main_exe.dir/systems/inventory/check.cpp.o -c /home/logan/gameprogramming/code/systems/inventory/check.cpp
-
-CMakeFiles/main_exe.dir/systems/inventory/check.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/inventory/check.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/inventory/check.cpp > CMakeFiles/main_exe.dir/systems/inventory/check.cpp.i
-
-CMakeFiles/main_exe.dir/systems/inventory/check.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/inventory/check.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/inventory/check.cpp -o CMakeFiles/main_exe.dir/systems/inventory/check.cpp.s
-
-CMakeFiles/main_exe.dir/systems/inventory/inventory.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/inventory/inventory.cpp.o: /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
-CMakeFiles/main_exe.dir/systems/inventory/inventory.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/main_exe.dir/systems/inventory/inventory.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/inventory/inventory.cpp.o -MF CMakeFiles/main_exe.dir/systems/inventory/inventory.cpp.o.d -o CMakeFiles/main_exe.dir/systems/inventory/inventory.cpp.o -c /home/logan/gameprogramming/code/systems/inventory/inventory.cpp
-
-CMakeFiles/main_exe.dir/systems/inventory/inventory.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/inventory/inventory.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/inventory/inventory.cpp > CMakeFiles/main_exe.dir/systems/inventory/inventory.cpp.i
-
-CMakeFiles/main_exe.dir/systems/inventory/inventory.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/inventory/inventory.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/inventory/inventory.cpp -o CMakeFiles/main_exe.dir/systems/inventory/inventory.cpp.s
-
-CMakeFiles/main_exe.dir/systems/jobs/work_queue.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/jobs/work_queue.cpp.o: /home/logan/gameprogramming/code/systems/jobs/work_queue.cpp
-CMakeFiles/main_exe.dir/systems/jobs/work_queue.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/main_exe.dir/systems/jobs/work_queue.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/jobs/work_queue.cpp.o -MF CMakeFiles/main_exe.dir/systems/jobs/work_queue.cpp.o.d -o CMakeFiles/main_exe.dir/systems/jobs/work_queue.cpp.o -c /home/logan/gameprogramming/code/systems/jobs/work_queue.cpp
-
-CMakeFiles/main_exe.dir/systems/jobs/work_queue.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/jobs/work_queue.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/jobs/work_queue.cpp > CMakeFiles/main_exe.dir/systems/jobs/work_queue.cpp.i
-
-CMakeFiles/main_exe.dir/systems/jobs/work_queue.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/jobs/work_queue.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/jobs/work_queue.cpp -o CMakeFiles/main_exe.dir/systems/jobs/work_queue.cpp.s
-
-CMakeFiles/main_exe.dir/systems/movement/action_movement.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/movement/action_movement.cpp.o: /home/logan/gameprogramming/code/systems/movement/action_movement.cpp
-CMakeFiles/main_exe.dir/systems/movement/action_movement.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/main_exe.dir/systems/movement/action_movement.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/movement/action_movement.cpp.o -MF CMakeFiles/main_exe.dir/systems/movement/action_movement.cpp.o.d -o CMakeFiles/main_exe.dir/systems/movement/action_movement.cpp.o -c /home/logan/gameprogramming/code/systems/movement/action_movement.cpp
-
-CMakeFiles/main_exe.dir/systems/movement/action_movement.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/movement/action_movement.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/movement/action_movement.cpp > CMakeFiles/main_exe.dir/systems/movement/action_movement.cpp.i
-
-CMakeFiles/main_exe.dir/systems/movement/action_movement.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/movement/action_movement.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/movement/action_movement.cpp -o CMakeFiles/main_exe.dir/systems/movement/action_movement.cpp.s
-
-CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.o: /home/logan/gameprogramming/code/systems/movement/lazy.cpp
-CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.o -MF CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.o.d -o CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.o -c /home/logan/gameprogramming/code/systems/movement/lazy.cpp
-
-CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/movement/lazy.cpp > CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.i
-
-CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/movement/lazy.cpp -o CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.s
-
-CMakeFiles/main_exe.dir/systems/movement/movement.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/movement/movement.cpp.o: /home/logan/gameprogramming/code/systems/movement/movement.cpp
-CMakeFiles/main_exe.dir/systems/movement/movement.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/main_exe.dir/systems/movement/movement.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/movement/movement.cpp.o -MF CMakeFiles/main_exe.dir/systems/movement/movement.cpp.o.d -o CMakeFiles/main_exe.dir/systems/movement/movement.cpp.o -c /home/logan/gameprogramming/code/systems/movement/movement.cpp
-
-CMakeFiles/main_exe.dir/systems/movement/movement.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/movement/movement.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/movement/movement.cpp > CMakeFiles/main_exe.dir/systems/movement/movement.cpp.i
-
-CMakeFiles/main_exe.dir/systems/movement/movement.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/movement/movement.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/movement/movement.cpp -o CMakeFiles/main_exe.dir/systems/movement/movement.cpp.s
-
-CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.o: /home/logan/gameprogramming/code/systems/movement/pathfinding.cpp
-CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.o -MF CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.o.d -o CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.o -c /home/logan/gameprogramming/code/systems/movement/pathfinding.cpp
-
-CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/movement/pathfinding.cpp > CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.i
-
-CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/movement/pathfinding.cpp -o CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.s
-
-CMakeFiles/main_exe.dir/systems/movement/position.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/movement/position.cpp.o: /home/logan/gameprogramming/code/systems/movement/position.cpp
-CMakeFiles/main_exe.dir/systems/movement/position.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/main_exe.dir/systems/movement/position.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/movement/position.cpp.o -MF CMakeFiles/main_exe.dir/systems/movement/position.cpp.o.d -o CMakeFiles/main_exe.dir/systems/movement/position.cpp.o -c /home/logan/gameprogramming/code/systems/movement/position.cpp
-
-CMakeFiles/main_exe.dir/systems/movement/position.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/movement/position.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/movement/position.cpp > CMakeFiles/main_exe.dir/systems/movement/position.cpp.i
-
-CMakeFiles/main_exe.dir/systems/movement/position.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/movement/position.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/movement/position.cpp -o CMakeFiles/main_exe.dir/systems/movement/position.cpp.s
-
-CMakeFiles/main_exe.dir/systems/movement/queue_actions.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/movement/queue_actions.cpp.o: /home/logan/gameprogramming/code/systems/movement/queue_actions.cpp
-CMakeFiles/main_exe.dir/systems/movement/queue_actions.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/main_exe.dir/systems/movement/queue_actions.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/movement/queue_actions.cpp.o -MF CMakeFiles/main_exe.dir/systems/movement/queue_actions.cpp.o.d -o CMakeFiles/main_exe.dir/systems/movement/queue_actions.cpp.o -c /home/logan/gameprogramming/code/systems/movement/queue_actions.cpp
-
-CMakeFiles/main_exe.dir/systems/movement/queue_actions.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/movement/queue_actions.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/movement/queue_actions.cpp > CMakeFiles/main_exe.dir/systems/movement/queue_actions.cpp.i
-
-CMakeFiles/main_exe.dir/systems/movement/queue_actions.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/movement/queue_actions.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/movement/queue_actions.cpp -o CMakeFiles/main_exe.dir/systems/movement/queue_actions.cpp.s
-
-CMakeFiles/main_exe.dir/systems/pack/packMovementPatterns.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/pack/packMovementPatterns.cpp.o: /home/logan/gameprogramming/code/systems/pack/packMovementPatterns.cpp
-CMakeFiles/main_exe.dir/systems/pack/packMovementPatterns.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building CXX object CMakeFiles/main_exe.dir/systems/pack/packMovementPatterns.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/pack/packMovementPatterns.cpp.o -MF CMakeFiles/main_exe.dir/systems/pack/packMovementPatterns.cpp.o.d -o CMakeFiles/main_exe.dir/systems/pack/packMovementPatterns.cpp.o -c /home/logan/gameprogramming/code/systems/pack/packMovementPatterns.cpp
-
-CMakeFiles/main_exe.dir/systems/pack/packMovementPatterns.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/pack/packMovementPatterns.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/pack/packMovementPatterns.cpp > CMakeFiles/main_exe.dir/systems/pack/packMovementPatterns.cpp.i
-
-CMakeFiles/main_exe.dir/systems/pack/packMovementPatterns.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/pack/packMovementPatterns.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/pack/packMovementPatterns.cpp -o CMakeFiles/main_exe.dir/systems/pack/packMovementPatterns.cpp.s
-
-CMakeFiles/main_exe.dir/systems/perishables/continuous.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/perishables/continuous.cpp.o: /home/logan/gameprogramming/code/systems/perishables/continuous.cpp
-CMakeFiles/main_exe.dir/systems/perishables/continuous.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building CXX object CMakeFiles/main_exe.dir/systems/perishables/continuous.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/perishables/continuous.cpp.o -MF CMakeFiles/main_exe.dir/systems/perishables/continuous.cpp.o.d -o CMakeFiles/main_exe.dir/systems/perishables/continuous.cpp.o -c /home/logan/gameprogramming/code/systems/perishables/continuous.cpp
-
-CMakeFiles/main_exe.dir/systems/perishables/continuous.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/perishables/continuous.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/perishables/continuous.cpp > CMakeFiles/main_exe.dir/systems/perishables/continuous.cpp.i
-
-CMakeFiles/main_exe.dir/systems/perishables/continuous.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/perishables/continuous.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/perishables/continuous.cpp -o CMakeFiles/main_exe.dir/systems/perishables/continuous.cpp.s
-
-CMakeFiles/main_exe.dir/systems/perishables/lazy.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/perishables/lazy.cpp.o: /home/logan/gameprogramming/code/systems/perishables/lazy.cpp
-CMakeFiles/main_exe.dir/systems/perishables/lazy.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building CXX object CMakeFiles/main_exe.dir/systems/perishables/lazy.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/perishables/lazy.cpp.o -MF CMakeFiles/main_exe.dir/systems/perishables/lazy.cpp.o.d -o CMakeFiles/main_exe.dir/systems/perishables/lazy.cpp.o -c /home/logan/gameprogramming/code/systems/perishables/lazy.cpp
-
-CMakeFiles/main_exe.dir/systems/perishables/lazy.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/perishables/lazy.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/perishables/lazy.cpp > CMakeFiles/main_exe.dir/systems/perishables/lazy.cpp.i
-
-CMakeFiles/main_exe.dir/systems/perishables/lazy.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/perishables/lazy.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/perishables/lazy.cpp -o CMakeFiles/main_exe.dir/systems/perishables/lazy.cpp.s
-
-CMakeFiles/main_exe.dir/systems/plant/growth.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/plant/growth.cpp.o: /home/logan/gameprogramming/code/systems/plant/growth.cpp
-CMakeFiles/main_exe.dir/systems/plant/growth.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building CXX object CMakeFiles/main_exe.dir/systems/plant/growth.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/plant/growth.cpp.o -MF CMakeFiles/main_exe.dir/systems/plant/growth.cpp.o.d -o CMakeFiles/main_exe.dir/systems/plant/growth.cpp.o -c /home/logan/gameprogramming/code/systems/plant/growth.cpp
-
-CMakeFiles/main_exe.dir/systems/plant/growth.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/plant/growth.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/plant/growth.cpp > CMakeFiles/main_exe.dir/systems/plant/growth.cpp.i
-
-CMakeFiles/main_exe.dir/systems/plant/growth.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/plant/growth.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/plant/growth.cpp -o CMakeFiles/main_exe.dir/systems/plant/growth.cpp.s
-
-CMakeFiles/main_exe.dir/systems/plant/update.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/plant/update.cpp.o: /home/logan/gameprogramming/code/systems/plant/update.cpp
-CMakeFiles/main_exe.dir/systems/plant/update.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building CXX object CMakeFiles/main_exe.dir/systems/plant/update.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/plant/update.cpp.o -MF CMakeFiles/main_exe.dir/systems/plant/update.cpp.o.d -o CMakeFiles/main_exe.dir/systems/plant/update.cpp.o -c /home/logan/gameprogramming/code/systems/plant/update.cpp
-
-CMakeFiles/main_exe.dir/systems/plant/update.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/plant/update.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/plant/update.cpp > CMakeFiles/main_exe.dir/systems/plant/update.cpp.i
-
-CMakeFiles/main_exe.dir/systems/plant/update.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/plant/update.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/plant/update.cpp -o CMakeFiles/main_exe.dir/systems/plant/update.cpp.s
-
-CMakeFiles/main_exe.dir/systems/search/entity_specific_check.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/search/entity_specific_check.cpp.o: /home/logan/gameprogramming/code/systems/search/entity_specific_check.cpp
-CMakeFiles/main_exe.dir/systems/search/entity_specific_check.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building CXX object CMakeFiles/main_exe.dir/systems/search/entity_specific_check.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/search/entity_specific_check.cpp.o -MF CMakeFiles/main_exe.dir/systems/search/entity_specific_check.cpp.o.d -o CMakeFiles/main_exe.dir/systems/search/entity_specific_check.cpp.o -c /home/logan/gameprogramming/code/systems/search/entity_specific_check.cpp
-
-CMakeFiles/main_exe.dir/systems/search/entity_specific_check.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/search/entity_specific_check.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/search/entity_specific_check.cpp > CMakeFiles/main_exe.dir/systems/search/entity_specific_check.cpp.i
-
-CMakeFiles/main_exe.dir/systems/search/entity_specific_check.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/search/entity_specific_check.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/search/entity_specific_check.cpp -o CMakeFiles/main_exe.dir/systems/search/entity_specific_check.cpp.s
-
-CMakeFiles/main_exe.dir/systems/search/old.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/search/old.cpp.o: /home/logan/gameprogramming/code/systems/search/old.cpp
-CMakeFiles/main_exe.dir/systems/search/old.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building CXX object CMakeFiles/main_exe.dir/systems/search/old.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/search/old.cpp.o -MF CMakeFiles/main_exe.dir/systems/search/old.cpp.o.d -o CMakeFiles/main_exe.dir/systems/search/old.cpp.o -c /home/logan/gameprogramming/code/systems/search/old.cpp
-
-CMakeFiles/main_exe.dir/systems/search/old.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/search/old.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/search/old.cpp > CMakeFiles/main_exe.dir/systems/search/old.cpp.i
-
-CMakeFiles/main_exe.dir/systems/search/old.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/search/old.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/search/old.cpp -o CMakeFiles/main_exe.dir/systems/search/old.cpp.s
-
-CMakeFiles/main_exe.dir/systems/search/search.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/search/search.cpp.o: /home/logan/gameprogramming/code/systems/search/search.cpp
-CMakeFiles/main_exe.dir/systems/search/search.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building CXX object CMakeFiles/main_exe.dir/systems/search/search.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/search/search.cpp.o -MF CMakeFiles/main_exe.dir/systems/search/search.cpp.o.d -o CMakeFiles/main_exe.dir/systems/search/search.cpp.o -c /home/logan/gameprogramming/code/systems/search/search.cpp
-
-CMakeFiles/main_exe.dir/systems/search/search.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/search/search.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/search/search.cpp > CMakeFiles/main_exe.dir/systems/search/search.cpp.i
-
-CMakeFiles/main_exe.dir/systems/search/search.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/search/search.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/search/search.cpp -o CMakeFiles/main_exe.dir/systems/search/search.cpp.s
-
-CMakeFiles/main_exe.dir/systems/search/sight_check.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/search/sight_check.cpp.o: /home/logan/gameprogramming/code/systems/search/sight_check.cpp
-CMakeFiles/main_exe.dir/systems/search/sight_check.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building CXX object CMakeFiles/main_exe.dir/systems/search/sight_check.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/search/sight_check.cpp.o -MF CMakeFiles/main_exe.dir/systems/search/sight_check.cpp.o.d -o CMakeFiles/main_exe.dir/systems/search/sight_check.cpp.o -c /home/logan/gameprogramming/code/systems/search/sight_check.cpp
-
-CMakeFiles/main_exe.dir/systems/search/sight_check.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/search/sight_check.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/search/sight_check.cpp > CMakeFiles/main_exe.dir/systems/search/sight_check.cpp.i
-
-CMakeFiles/main_exe.dir/systems/search/sight_check.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/search/sight_check.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/search/sight_check.cpp -o CMakeFiles/main_exe.dir/systems/search/sight_check.cpp.s
-
-CMakeFiles/main_exe.dir/systems/search/target_adj_check.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/search/target_adj_check.cpp.o: /home/logan/gameprogramming/code/systems/search/target_adj_check.cpp
-CMakeFiles/main_exe.dir/systems/search/target_adj_check.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building CXX object CMakeFiles/main_exe.dir/systems/search/target_adj_check.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/search/target_adj_check.cpp.o -MF CMakeFiles/main_exe.dir/systems/search/target_adj_check.cpp.o.d -o CMakeFiles/main_exe.dir/systems/search/target_adj_check.cpp.o -c /home/logan/gameprogramming/code/systems/search/target_adj_check.cpp
-
-CMakeFiles/main_exe.dir/systems/search/target_adj_check.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/search/target_adj_check.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/search/target_adj_check.cpp > CMakeFiles/main_exe.dir/systems/search/target_adj_check.cpp.i
-
-CMakeFiles/main_exe.dir/systems/search/target_adj_check.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/search/target_adj_check.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/search/target_adj_check.cpp -o CMakeFiles/main_exe.dir/systems/search/target_adj_check.cpp.s
-
-CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.o: /home/logan/gameprogramming/code/systems/visibility/lazy.cpp
-CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Building CXX object CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.o -MF CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.o.d -o CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.o -c /home/logan/gameprogramming/code/systems/visibility/lazy.cpp
-
-CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/visibility/lazy.cpp > CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.i
-
-CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/visibility/lazy.cpp -o CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.s
-
-CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.o: /home/logan/gameprogramming/code/systems/visibility/scheduled.cpp
-CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_43) "Building CXX object CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.o -MF CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.o.d -o CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.o -c /home/logan/gameprogramming/code/systems/visibility/scheduled.cpp
-
-CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/systems/visibility/scheduled.cpp > CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.i
-
-CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/systems/visibility/scheduled.cpp -o CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.s
-
-CMakeFiles/main_exe.dir/ui/aggregates/swipable_menu.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/ui/aggregates/swipable_menu.cpp.o: /home/logan/gameprogramming/code/ui/aggregates/swipable_menu.cpp
-CMakeFiles/main_exe.dir/ui/aggregates/swipable_menu.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building CXX object CMakeFiles/main_exe.dir/ui/aggregates/swipable_menu.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/ui/aggregates/swipable_menu.cpp.o -MF CMakeFiles/main_exe.dir/ui/aggregates/swipable_menu.cpp.o.d -o CMakeFiles/main_exe.dir/ui/aggregates/swipable_menu.cpp.o -c /home/logan/gameprogramming/code/ui/aggregates/swipable_menu.cpp
-
-CMakeFiles/main_exe.dir/ui/aggregates/swipable_menu.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/ui/aggregates/swipable_menu.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/ui/aggregates/swipable_menu.cpp > CMakeFiles/main_exe.dir/ui/aggregates/swipable_menu.cpp.i
-
-CMakeFiles/main_exe.dir/ui/aggregates/swipable_menu.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/ui/aggregates/swipable_menu.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/ui/aggregates/swipable_menu.cpp -o CMakeFiles/main_exe.dir/ui/aggregates/swipable_menu.cpp.s
-
-CMakeFiles/main_exe.dir/world/animal/breeding.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/world/animal/breeding.cpp.o: /home/logan/gameprogramming/code/world/animal/breeding.cpp
-CMakeFiles/main_exe.dir/world/animal/breeding.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object CMakeFiles/main_exe.dir/world/animal/breeding.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/animal/breeding.cpp.o -MF CMakeFiles/main_exe.dir/world/animal/breeding.cpp.o.d -o CMakeFiles/main_exe.dir/world/animal/breeding.cpp.o -c /home/logan/gameprogramming/code/world/animal/breeding.cpp
-
-CMakeFiles/main_exe.dir/world/animal/breeding.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/world/animal/breeding.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/world/animal/breeding.cpp > CMakeFiles/main_exe.dir/world/animal/breeding.cpp.i
-
-CMakeFiles/main_exe.dir/world/animal/breeding.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/world/animal/breeding.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/world/animal/breeding.cpp -o CMakeFiles/main_exe.dir/world/animal/breeding.cpp.s
-
-CMakeFiles/main_exe.dir/world/animal/events.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/world/animal/events.cpp.o: /home/logan/gameprogramming/code/world/animal/events.cpp
-CMakeFiles/main_exe.dir/world/animal/events.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object CMakeFiles/main_exe.dir/world/animal/events.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/animal/events.cpp.o -MF CMakeFiles/main_exe.dir/world/animal/events.cpp.o.d -o CMakeFiles/main_exe.dir/world/animal/events.cpp.o -c /home/logan/gameprogramming/code/world/animal/events.cpp
-
-CMakeFiles/main_exe.dir/world/animal/events.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/world/animal/events.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/world/animal/events.cpp > CMakeFiles/main_exe.dir/world/animal/events.cpp.i
-
-CMakeFiles/main_exe.dir/world/animal/events.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/world/animal/events.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/world/animal/events.cpp -o CMakeFiles/main_exe.dir/world/animal/events.cpp.s
-
-CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.o: /home/logan/gameprogramming/code/world/foreign/tribe_events.cpp
-CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building CXX object CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.o -MF CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.o.d -o CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.o -c /home/logan/gameprogramming/code/world/foreign/tribe_events.cpp
-
-CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/world/foreign/tribe_events.cpp > CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.i
-
-CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/world/foreign/tribe_events.cpp -o CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.s
-
-CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.o: /home/logan/gameprogramming/code/world/foreign/tribes.cpp
-CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Building CXX object CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.o -MF CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.o.d -o CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.o -c /home/logan/gameprogramming/code/world/foreign/tribes.cpp
-
-CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/world/foreign/tribes.cpp > CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.i
-
-CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/world/foreign/tribes.cpp -o CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.s
-
-CMakeFiles/main_exe.dir/world/item/operations.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/world/item/operations.cpp.o: /home/logan/gameprogramming/code/world/item/operations.cpp
-CMakeFiles/main_exe.dir/world/item/operations.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Building CXX object CMakeFiles/main_exe.dir/world/item/operations.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/item/operations.cpp.o -MF CMakeFiles/main_exe.dir/world/item/operations.cpp.o.d -o CMakeFiles/main_exe.dir/world/item/operations.cpp.o -c /home/logan/gameprogramming/code/world/item/operations.cpp
-
-CMakeFiles/main_exe.dir/world/item/operations.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/world/item/operations.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/world/item/operations.cpp > CMakeFiles/main_exe.dir/world/item/operations.cpp.i
-
-CMakeFiles/main_exe.dir/world/item/operations.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/world/item/operations.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/world/item/operations.cpp -o CMakeFiles/main_exe.dir/world/item/operations.cpp.s
-
-CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o: /home/logan/gameprogramming/code/world/plant/birth_death.cpp
-CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_50) "Building CXX object CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o -MF CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o.d -o CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o -c /home/logan/gameprogramming/code/world/plant/birth_death.cpp
-
-CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/world/plant/birth_death.cpp > CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.i
-
-CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/world/plant/birth_death.cpp -o CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.s
-
-CMakeFiles/main_exe.dir/world/plant/operations.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/world/plant/operations.cpp.o: /home/logan/gameprogramming/code/world/plant/operations.cpp
-CMakeFiles/main_exe.dir/world/plant/operations.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_51) "Building CXX object CMakeFiles/main_exe.dir/world/plant/operations.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/plant/operations.cpp.o -MF CMakeFiles/main_exe.dir/world/plant/operations.cpp.o.d -o CMakeFiles/main_exe.dir/world/plant/operations.cpp.o -c /home/logan/gameprogramming/code/world/plant/operations.cpp
-
-CMakeFiles/main_exe.dir/world/plant/operations.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/world/plant/operations.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/world/plant/operations.cpp > CMakeFiles/main_exe.dir/world/plant/operations.cpp.i
-
-CMakeFiles/main_exe.dir/world/plant/operations.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/world/plant/operations.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/world/plant/operations.cpp -o CMakeFiles/main_exe.dir/world/plant/operations.cpp.s
-
-CMakeFiles/main_exe.dir/world/policies.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/world/policies.cpp.o: /home/logan/gameprogramming/code/world/policies.cpp
-CMakeFiles/main_exe.dir/world/policies.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_52) "Building CXX object CMakeFiles/main_exe.dir/world/policies.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/policies.cpp.o -MF CMakeFiles/main_exe.dir/world/policies.cpp.o.d -o CMakeFiles/main_exe.dir/world/policies.cpp.o -c /home/logan/gameprogramming/code/world/policies.cpp
-
-CMakeFiles/main_exe.dir/world/policies.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/world/policies.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/world/policies.cpp > CMakeFiles/main_exe.dir/world/policies.cpp.i
-
-CMakeFiles/main_exe.dir/world/policies.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/world/policies.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/world/policies.cpp -o CMakeFiles/main_exe.dir/world/policies.cpp.s
-
-CMakeFiles/main_exe.dir/world/roles.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/world/roles.cpp.o: /home/logan/gameprogramming/code/world/roles.cpp
-CMakeFiles/main_exe.dir/world/roles.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_53) "Building CXX object CMakeFiles/main_exe.dir/world/roles.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/roles.cpp.o -MF CMakeFiles/main_exe.dir/world/roles.cpp.o.d -o CMakeFiles/main_exe.dir/world/roles.cpp.o -c /home/logan/gameprogramming/code/world/roles.cpp
-
-CMakeFiles/main_exe.dir/world/roles.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/world/roles.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/world/roles.cpp > CMakeFiles/main_exe.dir/world/roles.cpp.i
-
-CMakeFiles/main_exe.dir/world/roles.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/world/roles.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/world/roles.cpp -o CMakeFiles/main_exe.dir/world/roles.cpp.s
-
-CMakeFiles/main_exe.dir/world/tile/database.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/world/tile/database.cpp.o: /home/logan/gameprogramming/code/world/tile/database.cpp
-CMakeFiles/main_exe.dir/world/tile/database.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_54) "Building CXX object CMakeFiles/main_exe.dir/world/tile/database.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/tile/database.cpp.o -MF CMakeFiles/main_exe.dir/world/tile/database.cpp.o.d -o CMakeFiles/main_exe.dir/world/tile/database.cpp.o -c /home/logan/gameprogramming/code/world/tile/database.cpp
-
-CMakeFiles/main_exe.dir/world/tile/database.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/world/tile/database.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/world/tile/database.cpp > CMakeFiles/main_exe.dir/world/tile/database.cpp.i
-
-CMakeFiles/main_exe.dir/world/tile/database.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/world/tile/database.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/world/tile/database.cpp -o CMakeFiles/main_exe.dir/world/tile/database.cpp.s
-
-CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o: CMakeFiles/main_exe.dir/flags.make
-CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o: /home/logan/gameprogramming/code/world/unit/OLD_resouceUnits.cpp
-CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o: CMakeFiles/main_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_55) "Building CXX object CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o"
-	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o -MF CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o.d -o CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o -c /home/logan/gameprogramming/code/world/unit/OLD_resouceUnits.cpp
-
-CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/world/unit/OLD_resouceUnits.cpp > CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.i
-
-CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/world/unit/OLD_resouceUnits.cpp -o CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.s
-
 # Object files for target main_exe
 main_exe_OBJECTS = \
-"CMakeFiles/main_exe.dir/main.cpp.o" \
-"CMakeFiles/main_exe.dir/render/texture.cpp.o" \
-"CMakeFiles/main_exe.dir/schedule/action.cpp.o" \
-"CMakeFiles/main_exe.dir/schedule/loop.cpp.o" \
-"CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.o" \
-"CMakeFiles/main_exe.dir/simulation/game.cpp.o" \
-"CMakeFiles/main_exe.dir/simulation/test.cpp.o" \
-"CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.o" \
-"CMakeFiles/main_exe.dir/simulation/world_gen.cpp.o" \
-"CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/action/assign.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/action/attempt.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/action/product.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/action/resource.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/action/support.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/birth_death/animal.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/birth_death/plant.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/birth_death/scheduled.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/birth_death/unit.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/combat/combat.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/feeding/feeding.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/feeding/hunger.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/inventory/check.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/inventory/inventory.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/jobs/work_queue.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/movement/action_movement.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/movement/movement.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/movement/position.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/movement/queue_actions.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/pack/packMovementPatterns.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/perishables/continuous.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/perishables/lazy.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/plant/growth.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/plant/update.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/search/entity_specific_check.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/search/old.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/search/search.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/search/sight_check.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/search/target_adj_check.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.o" \
-"CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.o" \
-"CMakeFiles/main_exe.dir/ui/aggregates/swipable_menu.cpp.o" \
-"CMakeFiles/main_exe.dir/world/animal/breeding.cpp.o" \
-"CMakeFiles/main_exe.dir/world/animal/events.cpp.o" \
-"CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.o" \
-"CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.o" \
-"CMakeFiles/main_exe.dir/world/item/operations.cpp.o" \
-"CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o" \
-"CMakeFiles/main_exe.dir/world/plant/operations.cpp.o" \
-"CMakeFiles/main_exe.dir/world/policies.cpp.o" \
-"CMakeFiles/main_exe.dir/world/roles.cpp.o" \
-"CMakeFiles/main_exe.dir/world/tile/database.cpp.o" \
-"CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o"
+"CMakeFiles/main_exe.dir/display/render/texture.cpp.o" \
+"CMakeFiles/main_exe.dir/display/ui/aggregates/swipable_menu.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/breeding.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/gameplay/action/assign.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/gameplay/action/attempt.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/gameplay/action/product.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/gameplay/action/resource.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/gameplay/action/support.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/gameplay/combat/combat.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/gameplay/policies.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/gameplay/roles.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/gameplay/tribes.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/generic/database.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/generic/inventory/check.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/generic/inventory/inventory.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/generic/jobs/work_queue.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/generic/movement/action_movement.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/generic/movement/lazy.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/generic/movement/movement.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/generic/movement/pathfinding.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/generic/movement/position.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/generic/movement/queue_actions.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/generic/schedule/action.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/generic/schedule/loop.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/generic/search/entity_specific_check.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/generic/search/old.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/generic/search/search.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/generic/search/sight_check.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/generic/search/target_adj_check.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/generic/visibility/lazy.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/generic/visibility/scheduled.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/simulation/birth_death/animal.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/simulation/birth_death/plant.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/simulation/birth_death/unit.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/simulation/feeding/feeding.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/simulation/feeding/hunger.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/simulation/first_spawn.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/simulation/game.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/simulation/mating/mating.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/simulation/pack/packMovementPatterns.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/simulation/perishables/continuous.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/simulation/perishables/lazy.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/simulation/plant/basic.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/simulation/plant/growth.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/simulation/plant/update.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/simulation/test.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/simulation/weather_calculations.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/simulation/world_gen.cpp.o" \
+"CMakeFiles/main_exe.dir/logic/simulation/world_gen_helpers.cpp.o" \
+"CMakeFiles/main_exe.dir/main.cpp.o"
 
 # External object files for target main_exe
 main_exe_EXTERNAL_OBJECTS =
 
+main_exe: CMakeFiles/main_exe.dir/display/render/texture.cpp.o
+main_exe: CMakeFiles/main_exe.dir/display/ui/aggregates/swipable_menu.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/breeding.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/gameplay/action/assign.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/gameplay/action/attempt.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/gameplay/action/product.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/gameplay/action/resource.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/gameplay/action/support.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/gameplay/combat/combat.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/gameplay/policies.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/gameplay/roles.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/gameplay/tribes.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/generic/database.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/generic/inventory/check.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/generic/inventory/inventory.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/generic/jobs/work_queue.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/generic/movement/action_movement.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/generic/movement/lazy.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/generic/movement/movement.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/generic/movement/pathfinding.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/generic/movement/position.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/generic/movement/queue_actions.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/generic/schedule/action.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/generic/schedule/loop.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/generic/search/entity_specific_check.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/generic/search/old.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/generic/search/search.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/generic/search/sight_check.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/generic/search/target_adj_check.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/generic/visibility/lazy.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/generic/visibility/scheduled.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/simulation/birth_death/animal.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/simulation/birth_death/plant.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/simulation/birth_death/unit.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/simulation/feeding/feeding.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/simulation/feeding/hunger.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/simulation/first_spawn.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/simulation/game.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/simulation/mating/mating.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/simulation/pack/packMovementPatterns.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/simulation/perishables/continuous.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/simulation/perishables/lazy.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/simulation/plant/basic.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/simulation/plant/growth.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/simulation/plant/update.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/simulation/test.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/simulation/weather_calculations.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/simulation/world_gen.cpp.o
+main_exe: CMakeFiles/main_exe.dir/logic/simulation/world_gen_helpers.cpp.o
 main_exe: CMakeFiles/main_exe.dir/main.cpp.o
-main_exe: CMakeFiles/main_exe.dir/render/texture.cpp.o
-main_exe: CMakeFiles/main_exe.dir/schedule/action.cpp.o
-main_exe: CMakeFiles/main_exe.dir/schedule/loop.cpp.o
-main_exe: CMakeFiles/main_exe.dir/simulation/first_spawn.cpp.o
-main_exe: CMakeFiles/main_exe.dir/simulation/game.cpp.o
-main_exe: CMakeFiles/main_exe.dir/simulation/test.cpp.o
-main_exe: CMakeFiles/main_exe.dir/simulation/weather_calculations.cpp.o
-main_exe: CMakeFiles/main_exe.dir/simulation/world_gen.cpp.o
-main_exe: CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/action/assign.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/action/attempt.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/action/product.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/action/resource.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/action/support.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/birth_death/animal.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/birth_death/plant.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/birth_death/scheduled.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/birth_death/unit.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/combat/combat.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/feeding/feeding.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/feeding/hunger.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/inventory/check.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/inventory/inventory.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/jobs/work_queue.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/movement/action_movement.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/movement/lazy.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/movement/movement.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/movement/position.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/movement/queue_actions.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/pack/packMovementPatterns.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/perishables/continuous.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/perishables/lazy.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/plant/growth.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/plant/update.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/search/entity_specific_check.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/search/old.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/search/search.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/search/sight_check.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/search/target_adj_check.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.o
-main_exe: CMakeFiles/main_exe.dir/systems/visibility/scheduled.cpp.o
-main_exe: CMakeFiles/main_exe.dir/ui/aggregates/swipable_menu.cpp.o
-main_exe: CMakeFiles/main_exe.dir/world/animal/breeding.cpp.o
-main_exe: CMakeFiles/main_exe.dir/world/animal/events.cpp.o
-main_exe: CMakeFiles/main_exe.dir/world/foreign/tribe_events.cpp.o
-main_exe: CMakeFiles/main_exe.dir/world/foreign/tribes.cpp.o
-main_exe: CMakeFiles/main_exe.dir/world/item/operations.cpp.o
-main_exe: CMakeFiles/main_exe.dir/world/plant/birth_death.cpp.o
-main_exe: CMakeFiles/main_exe.dir/world/plant/operations.cpp.o
-main_exe: CMakeFiles/main_exe.dir/world/policies.cpp.o
-main_exe: CMakeFiles/main_exe.dir/world/roles.cpp.o
-main_exe: CMakeFiles/main_exe.dir/world/tile/database.cpp.o
-main_exe: CMakeFiles/main_exe.dir/world/unit/OLD_resouceUnits.cpp.o
 main_exe: CMakeFiles/main_exe.dir/build.make
 main_exe: CMakeFiles/main_exe.dir/compiler_depend.ts
 main_exe: CMakeFiles/main_exe.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_56) "Linking CXX executable main_exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_51) "Linking CXX executable main_exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/main_exe.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

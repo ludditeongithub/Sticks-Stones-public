@@ -1,0 +1,14 @@
+// a chaser is someone who is going after a moving target, and thus needs their
+// destination updated frequently, and short paths.
+// TODO: make chaser give up if it knows target type is much faster
+
+#include "schedule/dispatch.hpp"
+#include <data/run/animal_database.hpp>
+#include <data/run/unit_database.hpp>
+
+struct ChaserDispatch
+{
+	void dispatch_animal_hunters(DispatchData<Animal> &dd) {}
+
+	void dispatch_unit_chasers(DispatchData<>) {}
+};

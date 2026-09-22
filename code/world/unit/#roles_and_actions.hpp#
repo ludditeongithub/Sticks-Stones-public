@@ -1,0 +1,20 @@
+#ifndef ROLES_H_
+#define ROLES_H_
+#include "enum.hpp"
+#include <data/types/action.hpp>
+#include <data/types/aliases.hpp>
+#include <cstdint>
+#include <limits>
+#include <vector>
+#include <variant>
+#include <data/types/item.hpp>
+#include <data/types/buildable.hpp>
+#include <core/tables.hpp>
+
+
+
+
+RoleData role_datas[static_cast<int>(Role::MAX)];
+
+	    
+#endif // ROLES_H_

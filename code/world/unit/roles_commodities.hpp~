@@ -1,9 +1,9 @@
 #include "core/tables.hpp"
-#include "world/unit/enum.hpp"
+#include "data/types/unit.hpp"
 #include <variant>
 #include <vector>
-#include <world/item/enum.hpp>
-#include <world/progression/enum.hpp>
+#include <data/types/item.hpp>
+#include <data/types/progression.hpp>
 #include <core/combo_enum.hpp>
 
 using Commodity = ConcatEnum<Item, Buildable, Knowledge, Order, Ritual>;

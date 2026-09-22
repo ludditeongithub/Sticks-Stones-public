@@ -234,16 +234,16 @@ CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.o: \
  /home/logan/gameprogramming/code/../extern/cereal/details/polymorphic_impl_fwd.hpp \
  /home/logan/gameprogramming/code/../extern/cereal/types/common.hpp \
  /usr/include/c++/16/sstream /usr/include/c++/16/bits/sstream.tcc \
- /home/logan/gameprogramming/code/world/animal/enum.hpp \
+ /home/logan/gameprogramming/code/data/types/animal.hpp \
  /home/logan/gameprogramming/code/core/packed_enum.hpp \
- /home/logan/gameprogramming/code/world/action/enum.hpp \
+ /home/logan/gameprogramming/code/data/types/action.hpp \
  /home/logan/gameprogramming/code/core/math.hpp \
  /usr/include/c++/16/algorithm /usr/include/c++/16/bits/ranges_algo.h \
  /usr/include/c++/16/pstl/glue_algorithm_defs.h \
  /usr/include/c++/16/math.h \
- /home/logan/gameprogramming/code/world/tile/data.hpp \
- /home/logan/gameprogramming/code/world/tile/enum.hpp \
- /home/logan/gameprogramming/code/world/chunk/enum.hpp \
+ /home/logan/gameprogramming/code/data/const/tile_data.hpp \
+ /home/logan/gameprogramming/code/data/types/tile.hpp \
+ /home/logan/gameprogramming/code/data/types/chunk.hpp \
  /home/logan/gameprogramming/code/world/world.hpp \
  /home/logan/gameprogramming/code/core/random.hpp \
  /usr/include/SDL2/SDL_pixels.h /usr/include/SDL2/SDL_stdinc.h \
@@ -265,14 +265,14 @@ CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.o: \
  /usr/include/c++/16/bits/stl_numeric.h \
  /usr/include/c++/16/pstl/glue_numeric_defs.h \
  /home/logan/gameprogramming/code/simulation/world_gen.hpp \
- /home/logan/gameprogramming/code/world/plant/enum.hpp \
- /home/logan/gameprogramming/code/world/chunk/data.hpp \
+ /home/logan/gameprogramming/code/data/types/plant.hpp \
+ /home/logan/gameprogramming/code/data/const/chunk_data.hpp \
  /home/logan/gameprogramming/code/world/item/scavengeable.hpp \
- /home/logan/gameprogramming/code/world/item/enum.hpp \
+ /home/logan/gameprogramming/code/data/types/item.hpp \
  /home/logan/gameprogramming/code/world/tile/grass.hpp \
  /home/logan/gameprogramming/code/core/tables.hpp \
  /usr/include/c++/16/bitset \
- /home/logan/gameprogramming/code/world/tile/database.hpp \
+ /home/logan/gameprogramming/code/data/run/tile_database.hpp \
  /usr/include/c++/16/queue /usr/include/c++/16/deque \
  /usr/include/c++/16/bits/stl_deque.h /usr/include/c++/16/bits/deque.tcc \
  /usr/include/c++/16/bits/stl_queue.h /usr/include/c++/16/ranges \
@@ -280,5 +280,5 @@ CMakeFiles/main_exe.dir/systems/movement/pathfinding.cpp.o: \
  /usr/include/c++/16/variant /usr/include/c++/16/bits/parse_numbers.h \
  /usr/include/c++/16/bits/elements_of.h \
  /home/logan/gameprogramming/code/world/unit/roles_and_actions.hpp \
- /home/logan/gameprogramming/code/world/unit/enum.hpp \
- /home/logan/gameprogramming/code/world/buildable/enum.hpp
+ /home/logan/gameprogramming/code/data/types/unit.hpp \
+ /home/logan/gameprogramming/code/data/types/buildable.hpp

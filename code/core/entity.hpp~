@@ -3,10 +3,10 @@
 #include "data.hpp"
 #include <core/packed_enum.hpp>
 #include <core/containers.hpp>
-#include <world/animal/enum.hpp>
-#include <world/unit/enum.hpp>
-#include <world/plant/enum.hpp>
-#include <world/item/enum.hpp>
+#include <data/types/animal.hpp>
+#include <data/types/unit.hpp>
+#include <data/types/plant.hpp>
+#include <data/types/item.hpp>
 
 
 using Entity = PackedEnum4_32<Role, 8, Animal, 6, Plant, 6, Item, 10>;

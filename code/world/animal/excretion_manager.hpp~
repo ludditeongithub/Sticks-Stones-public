@@ -1,7 +1,0 @@
-#ifndef EXCRETION_MANAGER_HPP
-#define EXCRETION_MANAGER_HPP
-
-void excreteSeed(int animalIndex, Plant plant);
-void prepareSeedDropping(int animalIndex, int plantIndex, bool regrowth);
-
-#endif

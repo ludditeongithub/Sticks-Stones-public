@@ -1,15 +1,21 @@
 * GAME ITEMS TODAY <2026-09-16 Wed>
-- debug 'world'
-- finish production info menu (right side)
-- touch up center production info menu
-- figure out init for UI and rendering 'globals'
-* Pre-Alpha (NOW)
+- fix nlohmann json
+
+* Pre-Alpha 
 ** TODO Logan
 *** 0 errors
-*** Code Reorganization
-*** 
-*** Launch Program
-*** Spawn a World
+*** [1/6] Launch World
+**** Clean up blocking bugs
+**** [1/1] Launch Window
+**** Call all necessary sprites
+***** UI
+***** Tile
+***** Plant
+***** Animal
+***** placeholder
+**** Launch Menu
+**** Generate World
+**** Render World
 *** Finish UI
 **** functional large menus
 *** Prereq core systems to main loop playable
@@ -127,7 +133,11 @@ tailor: not modern, modern top as icon, not too compressed
 ** Checks/Debugging
 *** verify that 2d arrays are [y][x] indexed
 *** ensuring searching for any entity actually works!
+** When I have a chance
+*** extract method bodies and delete (for transferring .hpp to .cpp)
+*** change window and renderer to g_ versions
 * Pre-Beta
+** read spreadsheet and insert metaprogramming
 ** additional metaprogramming features: crossed enum:
 list = {A, B, C}
 crossedEnum(list) returns:

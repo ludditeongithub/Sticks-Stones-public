@@ -1,5 +1,5 @@
 #pragma once
-#include "data.hpp"
+#include "coord.hpp"
 #include <SDL2/SDL_pixels.h>
 #include <array>
 #include <limits>

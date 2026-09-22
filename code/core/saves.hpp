@@ -1,7 +1,7 @@
 #pragma once
 #include <chrono>
 #include <fstream>
-#include <simulation/game.hpp>
+#include <logic/simulation/game.hpp>
 #include <cereal/archives/binary.hpp>
 
 struct GameSave

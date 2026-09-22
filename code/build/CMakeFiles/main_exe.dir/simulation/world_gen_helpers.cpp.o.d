@@ -1,8 +1,8 @@
 CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.o: \
  /home/logan/gameprogramming/code/simulation/world_gen_helpers.cpp \
  /usr/include/stdc-predef.h \
- /home/logan/gameprogramming/code/world/tile/data.hpp \
- /home/logan/gameprogramming/code/world/tile/enum.hpp \
+ /home/logan/gameprogramming/code/data/const/tile_data.hpp \
+ /home/logan/gameprogramming/code/data/types/tile.hpp \
  /home/logan/gameprogramming/code/core/packed_enum.hpp \
  /usr/include/c++/16/cstdint \
  /usr/include/c++/16/x86_64-pc-linux-gnu/bits/c++config.h \
@@ -45,7 +45,7 @@ CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.o: \
  /usr/include/c++/16/numbers /usr/include/c++/16/limits \
  /usr/include/c++/16/utility /usr/include/c++/16/bits/stl_relops.h \
  /usr/include/c++/16/bits/intcmp.h \
- /home/logan/gameprogramming/code/world/chunk/enum.hpp \
+ /home/logan/gameprogramming/code/data/types/chunk.hpp \
  /home/logan/gameprogramming/code/world/world.hpp \
  /home/logan/gameprogramming/code/core/data.hpp /usr/include/c++/16/cmath \
  /usr/include/c++/16/bits/requires_hosted.h /usr/include/math.h \
@@ -257,15 +257,15 @@ CMakeFiles/main_exe.dir/simulation/world_gen_helpers.cpp.o: \
  /home/logan/gameprogramming/code/../extern/cereal/types/common.hpp \
  /usr/include/c++/16/sstream /usr/include/c++/16/bits/sstream.tcc \
  /home/logan/gameprogramming/code/simulation/world_gen.hpp \
- /home/logan/gameprogramming/code/world/animal/enum.hpp \
- /home/logan/gameprogramming/code/world/plant/enum.hpp \
- /home/logan/gameprogramming/code/world/chunk/data.hpp \
+ /home/logan/gameprogramming/code/data/types/animal.hpp \
+ /home/logan/gameprogramming/code/data/types/plant.hpp \
+ /home/logan/gameprogramming/code/data/const/chunk_data.hpp \
  /home/logan/gameprogramming/code/world/item/scavengeable.hpp \
- /home/logan/gameprogramming/code/world/item/enum.hpp \
+ /home/logan/gameprogramming/code/data/types/item.hpp \
  /home/logan/gameprogramming/code/world/tile/grass.hpp \
  /home/logan/gameprogramming/code/core/tables.hpp \
  /usr/include/c++/16/bitset \
- /home/logan/gameprogramming/code/world/tile/database.hpp \
+ /home/logan/gameprogramming/code/data/run/tile_database.hpp \
  /usr/include/c++/16/queue /usr/include/c++/16/deque \
  /usr/include/c++/16/bits/stl_deque.h /usr/include/c++/16/bits/deque.tcc \
  /usr/include/c++/16/bits/stl_queue.h /usr/include/c++/16/ranges \

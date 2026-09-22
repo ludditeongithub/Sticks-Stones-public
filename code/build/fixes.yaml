@@ -350,11 +350,11 @@ Diagnostics:
 - BuildDirectory: /home/logan/gameprogramming/code/build
   DiagnosticMessage:
     FileOffset: 26
-    FilePath: /home/logan/gameprogramming/code/world/item/database.hpp
+    FilePath: /home/logan/gameprogramming/code/data/run/item_database.hpp
     Message: '''core/packed_enum.hpp'' file not found'
     Ranges:
     - FileOffset: 26
-      FilePath: /home/logan/gameprogramming/code/world/item/database.hpp
+      FilePath: /home/logan/gameprogramming/code/data/run/item_database.hpp
       Length: 22
     Replacements: []
   DiagnosticName: clang-diagnostic-error
@@ -775,7 +775,7 @@ Diagnostics:
   DiagnosticMessage:
     FileOffset: 9
     FilePath: /home/logan/gameprogramming/code/simulation/world_gen_helpers.cpp
-    Message: '''world/tile/data.hpp'' file not found'
+    Message: '''data/const/tile_data.hpp'' file not found'
     Ranges:
     - FileOffset: 9
       FilePath: /home/logan/gameprogramming/code/simulation/world_gen_helpers.cpp
@@ -814,11 +814,11 @@ Diagnostics:
 - BuildDirectory: /home/logan/gameprogramming/code/build
   DiagnosticMessage:
     FileOffset: 22
-    FilePath: /home/logan/gameprogramming/code/world/tile/enum.hpp
+    FilePath: /home/logan/gameprogramming/code/data/types/tile.hpp
     Message: '''core/packed_enum.hpp'' file not found'
     Ranges:
     - FileOffset: 22
-      FilePath: /home/logan/gameprogramming/code/world/tile/enum.hpp
+      FilePath: /home/logan/gameprogramming/code/data/types/tile.hpp
       Length: 22
     Replacements: []
   DiagnosticName: clang-diagnostic-error
@@ -1499,7 +1499,7 @@ Diagnostics:
   DiagnosticMessage:
     FileOffset: 9
     FilePath: /home/logan/gameprogramming/code/systems/inventory/check.cpp
-    Message: '''world/action/enum.hpp'' file not found'
+    Message: '''data/types/action.hpp'' file not found'
     Ranges:
     - FileOffset: 9
       FilePath: /home/logan/gameprogramming/code/systems/inventory/check.cpp
@@ -1799,7 +1799,7 @@ Diagnostics:
   DiagnosticMessage:
     FileOffset: 9
     FilePath: /home/logan/gameprogramming/code/systems/perishables/lazy.cpp
-    Message: '''world/item/enum.hpp'' file not found'
+    Message: '''data/types/item.hpp'' file not found'
     Ranges:
     - FileOffset: 9
       FilePath: /home/logan/gameprogramming/code/systems/perishables/lazy.cpp
@@ -1834,11 +1834,11 @@ Diagnostics:
 - BuildDirectory: /home/logan/gameprogramming/code/build
   DiagnosticMessage:
     FileOffset: 23
-    FilePath: /home/logan/gameprogramming/code/world/animal/enum.hpp
+    FilePath: /home/logan/gameprogramming/code/data/types/animal.hpp
     Message: '''core/data.hpp'' file not found'
     Ranges:
     - FileOffset: 23
-      FilePath: /home/logan/gameprogramming/code/world/animal/enum.hpp
+      FilePath: /home/logan/gameprogramming/code/data/types/animal.hpp
       Length: 15
     Replacements: []
   DiagnosticName: clang-diagnostic-error
@@ -2421,11 +2421,11 @@ Diagnostics:
 - BuildDirectory: /home/logan/gameprogramming/code/build
   DiagnosticMessage:
     FileOffset: 59
-    FilePath: /home/logan/gameprogramming/code/world/plant/enum.hpp
+    FilePath: /home/logan/gameprogramming/code/data/types/plant.hpp
     Message: '''core/tables.hpp'' file not found'
     Ranges:
     - FileOffset: 59
-      FilePath: /home/logan/gameprogramming/code/world/plant/enum.hpp
+      FilePath: /home/logan/gameprogramming/code/data/types/plant.hpp
       Length: 17
     Replacements: []
   DiagnosticName: clang-diagnostic-error
@@ -2462,7 +2462,7 @@ Diagnostics:
   DiagnosticMessage:
     FileOffset: 9
     FilePath: /home/logan/gameprogramming/code/simulation/game.hpp
-    Message: '''world/buildable/database.hpp'' file not found'
+    Message: '''data/run/buildable_database.hpp'' file not found'
     Ranges:
     - FileOffset: 9
       FilePath: /home/logan/gameprogramming/code/simulation/game.hpp
@@ -2705,11 +2705,11 @@ Diagnostics:
 - BuildDirectory: /home/logan/gameprogramming/code/build
   DiagnosticMessage:
     FileOffset: 23
-    FilePath: /home/logan/gameprogramming/code/world/animal/enum.hpp
+    FilePath: /home/logan/gameprogramming/code/data/types/animal.hpp
     Message: '''core/data.hpp'' file not found'
     Ranges:
     - FileOffset: 23
-      FilePath: /home/logan/gameprogramming/code/world/animal/enum.hpp
+      FilePath: /home/logan/gameprogramming/code/data/types/animal.hpp
       Length: 15
     Replacements: []
   DiagnosticName: clang-diagnostic-error
@@ -2874,7 +2874,7 @@ Diagnostics:
   DiagnosticMessage:
     FileOffset: 9
     FilePath: /home/logan/gameprogramming/code/systems/action/product.cpp
-    Message: '''world/buildable/enum.hpp'' file not found'
+    Message: '''data/types/buildable.hpp'' file not found'
     Ranges:
     - FileOffset: 9
       FilePath: /home/logan/gameprogramming/code/systems/action/product.cpp

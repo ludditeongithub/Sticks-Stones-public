@@ -1,0 +1,198 @@
+#pragma once
+#include <core/coord.hpp>
+#include <core/containers.hpp>
+#include <data/run/world.hpp>
+#include <data/run/tile_database.hpp>
+#include <data/const/buildable_data.hpp>
+
+namespace buildable {
+class Database
+{
+  	// @codegen:begin database_generation
+// =========================
+// BASE DATABASE MEMBERS
+// =========================
+
+constexpr static uint16_t entity_size = sizeof(Buildable) +
++ sizeof(bool)
+  
+ +  sizeof(Buildable) 
+ +  sizeof(Health) 
+ +  sizeof(Coord) 
+;
+
+size_t capacity;
+    size_t size = 1; // 0 is placeholder
+    Stack<size_t> free_slots;
+    Array<bool> alives;
+  World& world;
+  tile::Database& tiles;
+
+    // =========================
+    // ENTITY-SPECIFIC MEMBERS
+    // =========================
+    Array<Buildable> buildables;
+    Array<Health> healths;
+    Array<Coord> coords;
+
+
+
+// =========================
+// CONSTRUCTOR
+// =========================
+
+Database(Arena& arena, size_t capacity
+  , World& world
+ 
+  , tile::Database& tiles
+) :
+  world(world),
+  tiles(tiles),
+{
+this->capacity = capacity;
+
+  this->size = 0;
+
+
+ 
+ buildables = arena_make_array<Buildable>(arena, capacity); 
+ 
+ healths = arena_make_array<Health>(arena, capacity); 
+ 
+ coords = arena_make_array<Coord>(arena, capacity); 
+ 
+
+}
+
+// =========================
+// GETTERS
+// =========================
+
+  inline Buildable& buildable(const EntityID index) {
+return buildables[index];
+  }
+  inline Health& health(const EntityID index) {
+return healths[index];
+  }
+  inline Coord& coord(const EntityID index) {
+return coords[index];
+  }
+
+
+  
+  // =========================
+  // SPAWN
+  // =========================
+
+
+bool attempt_spawn(const Buildable buildable, const bool newborn, const Coord coord  )
+{
+#if !SHIPPING_BUILD
+assert(buildable != Buildable::NONE && buildable != Buildable::MAX && "Tried to spawn buildable as NONE or MAX.");
+#endif
+
+
+        if (size + 1 > capacity)
+            return 0;
+        size_t i;
+        if (free_slots.empty())
+        {
+            i = size;
+            size++;
+        }
+        else
+        {
+            i = free_slots.top();
+            free_slots.pop();
+        }
+        alives[i] = true;
+        if (newborn)
+        {
+            this->buildable(i) = buildable;
+            this->health(i) = MAX_HEALTHS[buildable] * INFANT_HEALTH_MODIFIER;
+            this->coord(i) = coord;
+        }
+        else
+        {
+        Time age = random_bool->next();
+            this->buildable(i) = buildable;
+            this->health(i) = get_max_health(buildable, age);
+            this->coord(i) = coord;
+        }
+        return i;
+}
+          
+        
+
+size_t spawn(const Buildable buildable, const bool newborn, const Coord origin
+, const bool insert_search = true) {
+Coord spawn_point = tiles.get_nearest_empty_tile(origin);
+size_t result = 0;
+while (result == 0) {
+result = attempt_spawn(buildable, newborn, spawn_point
+);
+if (result == 0) free_unused_entity();
+}
+}        
+    
+
+  // =========================
+  // REMOVE
+  // =========================
+  
+  inline bool remove(const EntityID i)
+  {
+        if (!alives[i])
+            return false;
+
+        free_slots.push(i);
+        alives[i] = false;
+        return true;
+  }
+
+  inline void free_unused_entity()
+  {
+    for (size_t i = 0; i < coords.size; i++) {
+    if (tiles.tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
+    }
+  }
+    
+
+
+    // =========================
+    // SERIALIZATION
+    // =========================
+
+  // genreal serialization
+
+    template <class Archive>
+    void save(Archive &archive) const
+    {
+    archive(capacity);
+        archive(size);
+        archive(free_slots);
+        archive(alives);
+   
+
+        buildables.save(archive);
+        healths.save(archive);
+        coords.save(archive);
+    }
+
+    template <class Archive>
+    void load(Archive &archive)
+    {
+        archive(capacity);
+        archive(size);
+        archive(free_slots);
+        archive(alives);
+        
+        buildables.load(archive);
+        healths.load(archive);
+        coords.load(archive);
+    }
+
+// @codegen:end database_generation
+};
+
+}

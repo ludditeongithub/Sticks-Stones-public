@@ -1,7 +1,7 @@
 CMakeFiles/main_exe.dir/systems/perishables/lazy.cpp.o: \
  /home/logan/gameprogramming/code/systems/perishables/lazy.cpp \
  /usr/include/stdc-predef.h \
- /home/logan/gameprogramming/code/world/item/enum.hpp \
+ /home/logan/gameprogramming/code/data/types/item.hpp \
  /usr/include/c++/16/cstdint \
  /usr/include/c++/16/x86_64-pc-linux-gnu/bits/c++config.h \
  /usr/include/c++/16/x86_64-pc-linux-gnu/bits/os_defines.h \

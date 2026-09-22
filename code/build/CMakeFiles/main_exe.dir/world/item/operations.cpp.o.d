@@ -1,7 +1,7 @@
 CMakeFiles/main_exe.dir/world/item/operations.cpp.o: \
  /home/logan/gameprogramming/code/world/item/operations.cpp \
  /usr/include/stdc-predef.h \
- /home/logan/gameprogramming/code/world/item/database.hpp \
+ /home/logan/gameprogramming/code/data/run/item_database.hpp \
  /usr/include/c++/16/stack /usr/include/c++/16/bits/requires_hosted.h \
  /usr/include/c++/16/x86_64-pc-linux-gnu/bits/c++config.h \
  /usr/include/c++/16/x86_64-pc-linux-gnu/bits/os_defines.h \
@@ -155,10 +155,10 @@ CMakeFiles/main_exe.dir/world/item/operations.cpp.o: \
  /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/stdint.h \
  /usr/include/stdint.h /usr/include/bits/stdint-uintn.h \
  /usr/include/bits/stdint-least.h \
- /home/logan/gameprogramming/code/world/tile/database.hpp \
- /home/logan/gameprogramming/code/world/tile/enum.hpp \
- /home/logan/gameprogramming/code/world/chunk/enum.hpp \
- /home/logan/gameprogramming/code/world/chunk/data.hpp \
+ /home/logan/gameprogramming/code/data/run/tile_database.hpp \
+ /home/logan/gameprogramming/code/data/types/tile.hpp \
+ /home/logan/gameprogramming/code/data/types/chunk.hpp \
+ /home/logan/gameprogramming/code/data/const/chunk_data.hpp \
  /home/logan/gameprogramming/code/core/data.hpp /usr/include/c++/16/cmath \
  /usr/include/math.h /usr/include/bits/math-vector.h \
  /usr/include/bits/libm-simd-decl-stubs.h \
@@ -182,7 +182,7 @@ CMakeFiles/main_exe.dir/world/item/operations.cpp.o: \
  /usr/include/c++/16/bits/stl_vector.h \
  /usr/include/c++/16/bits/stl_bvector.h \
  /usr/include/c++/16/bits/vector.tcc \
- /home/logan/gameprogramming/code/world/tile/data.hpp \
+ /home/logan/gameprogramming/code/data/const/tile_data.hpp \
  /home/logan/gameprogramming/code/world/world.hpp \
  /home/logan/gameprogramming/code/core/random.hpp \
  /usr/include/SDL2/SDL_pixels.h /usr/include/SDL2/SDL_stdinc.h \
@@ -272,10 +272,10 @@ CMakeFiles/main_exe.dir/world/item/operations.cpp.o: \
  /home/logan/gameprogramming/code/../extern/cereal/types/common.hpp \
  /usr/include/c++/16/sstream /usr/include/c++/16/bits/sstream.tcc \
  /home/logan/gameprogramming/code/simulation/world_gen.hpp \
- /home/logan/gameprogramming/code/world/animal/enum.hpp \
- /home/logan/gameprogramming/code/world/plant/enum.hpp \
+ /home/logan/gameprogramming/code/data/types/animal.hpp \
+ /home/logan/gameprogramming/code/data/types/plant.hpp \
  /home/logan/gameprogramming/code/world/item/scavengeable.hpp \
- /home/logan/gameprogramming/code/world/item/enum.hpp \
+ /home/logan/gameprogramming/code/data/types/item.hpp \
  /home/logan/gameprogramming/code/world/tile/grass.hpp \
  /home/logan/gameprogramming/code/core/tables.hpp \
  /usr/include/c++/16/bitset /usr/include/c++/16/queue \
@@ -284,5 +284,5 @@ CMakeFiles/main_exe.dir/world/item/operations.cpp.o: \
  /home/logan/gameprogramming/code/../extern/cereal/archives/binary.hpp \
  /home/logan/gameprogramming/code/systems/search/search.hpp \
  /home/logan/gameprogramming/code/core/entity.hpp \
- /home/logan/gameprogramming/code/world/unit/enum.hpp \
- /home/logan/gameprogramming/code/world/buildable/enum.hpp
+ /home/logan/gameprogramming/code/data/types/unit.hpp \
+ /home/logan/gameprogramming/code/data/types/buildable.hpp

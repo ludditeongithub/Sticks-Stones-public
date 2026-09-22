@@ -1,0 +1,204 @@
+#pragma once
+#include <core/tables.hpp>
+
+inline constexpr LookupTable<ContainerType, float> CONTAINER_WEIGHT_CAPACITIES = []
+{
+	LookupTable<ContainerType, float> lt{};
+	using enum ContainerType;
+
+	return lt;
+}();
+
+inline constexpr LookupTable<ContainerType, float> CONTAINER_BULK_CAPACITIES = []
+{
+	LookupTable<ContainerType, float> lt{};
+	using enum ContainerType;
+
+	return lt;
+}();
+
+inline constexpr RaggedLookupTable<Commodity::underlying, Action, COMMODITY_ACTIONS> COMMODITY = []
+{
+	using enum Commodity::underlying;
+
+	RaggedLookupTable<Commodity::underlying, Action, COMMODITY_ACTIONS, > lt{};
+
+	return lt;
+}();
+
+inline constexpr LookupTable<SizeData> item_size_data = []
+{
+	LookupTable<SizeData> lt{};
+	using enum Item;
+
+	lt[Juice] = {0.4f, 1.5f, BulkLevel::Liquid};
+	lt[AgedAlcoholicDrink] = {0.6f, 2.5f, BulkLevel::Liquid};
+	lt[Milk] = {0.5f, 1.0f, BulkLevel::Liquid};
+	lt[GoatMilk] = {0.5f, 1.0f, BulkLevel::Liquid};
+	lt[Milk] = {0.5f, 1.0f, BulkLevel::Liquid};
+	lt[GoatMilk] = {0.5f, 1.0f, BulkLevel::Liquid};
+	lt[Bleach] = {0.02f, 0.015f, BulkLevel::Liquid};
+	lt[Glue] = {0.02f, 0.015f, BulkLevel::Liquid};
+	lt[Ink] = {0.02f, 0.015f, BulkLevel::Liquid};
+	lt[Resin] = {0.03f, 0.025f, BulkLevel::Liquid};
+	lt[Theriac] = {0.06f, 0.05f, BulkLevel::Liquid};
+	lt[GileadBalm] = {0.07f, 0.06f, BulkLevel::Liquid};
+	lt[Elactuarium] = {0.08f, 0.07f, BulkLevel::Liquid};
+	lt[RedDye] = {0.01f, 0.008f, BulkLevel::Liquid};
+	lt[BlueDye] = {0.01f, 0.008f, BulkLevel::Liquid};
+	lt[YellowDye] = {0.01f, 0.008f, BulkLevel::Liquid};
+	lt[Porridge] = {0.1f, 0.06f, BulkLevel::Liquid};
+	lt[Laxative] = {0.05f, 0.04f, BulkLevel::Liquid};
+	lt[Tonic] = {0.10f, 0.08f, BulkLevel::Liquid};
+	lt[TanningAgent] = {0.06f, 0.05f, BulkLevel::Liquid};
+	lt[Beer] = {0.10f, 0.09f, BulkLevel::Liquid};
+	lt[Wine] = {0.10f, 0.09f, BulkLevel::Liquid};
+	lt[FruitWine] = {0.10f, 0.09f, BulkLevel::Liquid};
+	lt[Mead] = {0.10f, 0.09f, BulkLevel::Liquid};
+	lt[SugarJuice] = {0.08f, 0.07f, BulkLevel::Liquid};
+	lt[Arsenic] = {0.01f, 0.015f, BulkLevel::Liquid};
+	lt[Cyanide] = {0.01f, 0.01f, BulkLevel::Liquid};
+
+	// TODO: FINE
+	lt[Sand] = {0.12f, 0.06f, BulkLevel::Fine};
+	lt[Flour] = {0.04f, 0.025f, BulkLevel::Fine};
+	lt[Grist] = {0.05f, 0.03f, BulkLevel::Fine};
+	lt[MilledRice] = {0.05f, 0.028f, BulkLevel::Fine};
+	lt[AnimalFat] = {0.06f, 0.04f, BulkLevel::Fine};
+	lt[BlackPepper] = {0.02f, 0.01f, BulkLevel::Fine};
+	lt[Sinew] = {0.02f, 0.01f, BulkLevel::Fine};
+	lt[Thread] = {0.005f, 0.003f, BulkLevel::Fine};
+	lt[Needles] = {0.005f, 0.002f, BulkLevel::Fine};
+	lt[String] = {0.01f, 0.005f, BulkLevel::Fine};
+	lt[Wick] = {0.01f, 0.005f, BulkLevel::Fine};
+	lt[AnimalHair] = {0.01f, 0.005f, BulkLevel::Fine};
+	lt[ChiliPowder] = {0.015f, 0.007f, BulkLevel::Fine};
+	lt[GroundBlackPepper] = {0.015f, 0.007f, BulkLevel::Fine};
+	lt[Sugar] = {0.03f, 0.015f, BulkLevel::Fine};
+	lt[Salt] = {0.03f, 0.02f, BulkLevel::Fine};
+	lt[Fiber] = {0.02f, 0.015f, BulkLevel::Fine};
+	lt[Soot] = {0.01f, 0.005f, BulkLevel::Fine};
+	lt[Hay] = {0.10f, 0.09f, BulkLevel::Fine};
+	lt[Lime] = {0.12f, 0.10f, BulkLevel::Fine};
+	lt[Ash] = {0.04f, 0.03f, BulkLevel::Fine};
+
+	// SEMI-FINE
+	lt[LoamSoil] = {0.4f, 1.6f, BulkLevel::SemiFine};
+	lt[SiltySoil] = {0.4f, 1.6f, BulkLevel::SemiFine};
+	lt[SandySoil] = {0.4f, 1.6f, BulkLevel::SemiFine};
+	lt[Podzol] = {0.4f, 1.6f, BulkLevel::SemiFine};
+	lt[PeatSoil] = {0.4f, 1.6f, BulkLevel::SemiFine};
+	lt[RockySoil] = {0.4f, 1.6f, BulkLevel::SemiFine};
+	lt[Oxisol] = {0.4f, 1.6f, BulkLevel::SemiFine};
+	lt[Peat] = {0.3f, 0.25f, BulkLevel::SemiFine};
+	lt[Hemlock] = {0.02f, 0.015f, BulkLevel::SemiFine};
+	lt[Gravel] = {0.15f, 0.20f, BulkLevel::SemiFine};
+	lt[CrushedStone] = {0.12f, 0.18f, BulkLevel::SemiFine};
+	lt[Feather] = {0.01f, 0.005f, BulkLevel::SemiFine};
+	lt[Charcoal] = {0.08f, 0.07f, BulkLevel::SemiFine};
+	// NOTE:WET
+	lt[PavingStone] = {0.15f, 0.18f, BulkLevel::SemiFine};
+	lt[Concrete] = {0.18f, 0.20f, BulkLevel::SemiFine};
+
+	// LOOSE
+	lt[Nail] = {0.05f, 0.003f, BulkLevel::Loose};
+	lt[ClaySoil] = {0.4f, 1.6f, BulkLevel::Loose};
+	lt[Ring] = {0.05f, 0.05f, BulkLevel::Loose};
+	lt[Earring] = {0.03f, 0.03f, BulkLevel::Loose};
+	lt[Garlic] = {0.04f, 0.02f, BulkLevel::Loose};
+	lt[DuckEggs] = {0.07f, 0.02f, BulkLevel::Loose};
+	lt[Cheese] = {0.06f, 0.03f, BulkLevel::Loose};
+	lt[BlueCheese] = {0.06f, 0.03f, BulkLevel::Loose};
+	lt[GoatCheese] = {0.06f, 0.03f, BulkLevel::Loose};
+	lt[Butter] = {0.05f, 0.03f, BulkLevel::Loose};
+	lt[Shellfish] = {0.06f, 0.04f, BulkLevel::Loose};
+	lt[Bone] = {0.065f, 0.02f, BulkLevel::Loose};
+	lt[AnimalHides] = {0.12f, 0.10f, BulkLevel::Loose};
+	lt[Clips] = {0.01f, 0.005f, BulkLevel::Loose};
+	lt[Arrowhead] = {0.02f, 0.015f, BulkLevel::Loose};
+	lt[Lens] = {0.02f, 0.015f, BulkLevel::Loose};
+	lt[Peg] = {0.02f, 0.015f, BulkLevel::Loose};
+	lt[Rivet] = {0.01f, 0.008f, BulkLevel::Loose};
+	lt[Wedge] = {0.03f, 0.025f, BulkLevel::Loose};
+	lt[Socket] = {0.02f, 0.015f, BulkLevel::Loose};
+	lt[Trigger] = {0.03f, 0.025f, BulkLevel::Loose};
+	lt[Straw] = {0.10f, 0.08f, BulkLevel::Loose};
+	lt[Daub] = {0.18f, 0.22f, BulkLevel::Loose};
+	lt[Mortar] = {0.20f, 0.25f, BulkLevel::Loose};
+	lt[PackedEarth] = {0.25f, 0.30f, BulkLevel::Loose};
+	lt[Plaster] = {0.16f, 0.18f, BulkLevel::Loose};
+
+	// SOFT
+	lt[Scroll] = {0.08f, 0.1f, BulkLevel::Soft};
+	lt[Airbag] = {0.3f, 0.2f, BulkLevel::Soft};
+	lt[Linen] = {0.04f, 0.03f, BulkLevel::Soft};
+	lt[Silk] = {0.05f, 0.04f, BulkLevel::Soft};
+	lt[Cloth] = {0.06f, 0.05f, BulkLevel::Soft};
+	lt[Rope] = {0.5f, 0.07f, BulkLevel::Soft};
+	lt[Bandage] = {0.04f, 0.03f, BulkLevel::Soft};
+
+	// SOLID
+	lt[Book] = {2.0f, 0.4f, BulkLevel::Solid};
+	lt[Candle] = {0.7f, 0.1f, BulkLevel::Solid};
+	lt[OilLamp] = {4.0f, 0.6f, BulkLevel::Solid};
+	lt[SmoothedPebbles] = {0.3f, 1.0f, BulkLevel::Solid};
+	lt[Javelin] = {1.2f, 1.8f, BulkLevel::Solid};
+	lt[Arrow] = {0.2f, 0.2f, BulkLevel::Solid};
+	lt[Horseshoes] = {0.7f, 1.5f, BulkLevel::Solid};
+	lt[Torch] = {0.35f, 0.8f, BulkLevel::Solid};
+
+	lt[Incense] = {4.2f, 0.025f, BulkLevel::Solid}; // Unusual combo, lightweight but voluminous
+	lt[MedicinalSoap] = {4.8f, 0.03f, BulkLevel::Solid}; // Again, lightweight but bulky
+	lt[Glass] = {6.5f, 0.8f, BulkLevel::Solid};
+	lt[Strap] = {0.05f, 0.04f, BulkLevel::Solid};
+	// lt[HeavyTannedHide] = {0.20f, 0.22f, BulkLevel::Solid};
+	lt[NailHeader] = {0.08f, 0.10f, BulkLevel::Solid};
+
+	lt[Wood] = {2.3f, 2.8f, BulkLevel::Solid};
+	lt[Plank] = {1.6f, 2.2f, BulkLevel::Solid};
+	lt[Timber] = {12.0f, 8.5f, BulkLevel::Solid};
+	lt[Stave] = {2.1f, 2.2f, BulkLevel::Solid};
+	lt[LongStave] = {4.6f, 6.5f, BulkLevel::Solid};
+	lt[Beam] = {2.3f, 3.5f, BulkLevel::Solid};
+	lt[LogBeam] = {33.5f, 40.0f, BulkLevel::Solid};
+	lt[CutStone] = {12.0f, 15.0f, BulkLevel::Solid};
+	lt[CutStoneSheet] = {3.1f, 2.3f, BulkLevel::Solid};
+	lt[CurvedStone] = {8.2f, 12.0f, BulkLevel::Solid};
+	lt[Cob] = {0.10f, 0.12f, BulkLevel::Solid};
+	lt[FiredClay] = {0.14f, 0.16f, BulkLevel::Solid};
+	lt[Bricks] = {1.8f, 2.3f, BulkLevel::Solid};
+	lt[Pane] = {6.0f, 0.6f, BulkLevel::Solid};
+	lt[ColoredPane] = {6.0f, 0.6f, BulkLevel::Solid};
+	lt[Axle] = {3.8f, 4.0f, BulkLevel::Solid};
+	lt[Gear] = {0.2f, 0.07f, BulkLevel::Solid};
+	lt[BrickMold] = {1.10f, 0.8f, BulkLevel::Solid};
+	lt[SmallHandle] = {1.85f, 1.54f, BulkLevel::Solid};
+	lt[LargeHandle] = {4.05f, 3.84f, BulkLevel::Solid};
+	lt[StoneTablet] = {2.30f, 5.25f, BulkLevel::Solid};
+	lt[Glass] = {2.2f, 0.10f, BulkLevel::Solid};
+	lt[Strap] = {0.05f, 0.04f, BulkLevel::Solid};
+	lt[NailHeader] = {0.08f, 0.10f, BulkLevel::Solid};
+
+	// NOTE: maybe change
+	lt[Wheel] = {18.5f, 6.18f, BulkLevel::Solid};
+	lt[LargeAxle] = {20.15f, 12.18f, BulkLevel::Solid};
+	lt[EmperorsStaff] = {17.2f, 3.5f, BulkLevel::Solid};
+	lt[HorseSaddle] = {29.2f, 5.5f, BulkLevel::Solid};
+	lt[OxSaddle] = {29.5f, 7.0f, BulkLevel::Solid};
+
+	// SINGLE
+	lt[ArtificialBeehive] = {40.0f, 8.0f, BulkLevel::Single};
+	// bulk_and_weights[static_cast<int>(Container::Keg) + static_cast<int>(Item::MAX)] =
+	// {48.8f, 14.2f, BulkLevel::Single};
+	lt[SolidWheel] = {55.70f, 25.5f, BulkLevel::Single};
+	return lt;
+}();
+
+namespace item
+{
+  // @codegen:begin descriptions
+
+  // @codegen:end descriptions
+
+  
+}  

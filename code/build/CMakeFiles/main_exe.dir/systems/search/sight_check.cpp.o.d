@@ -245,10 +245,10 @@ CMakeFiles/main_exe.dir/systems/search/sight_check.cpp.o: \
  /usr/include/c++/16/tr1/poly_laguerre.tcc \
  /usr/include/c++/16/tr1/riemann_zeta.tcc \
  /home/logan/gameprogramming/code/core/entity.hpp \
- /home/logan/gameprogramming/code/world/chunk/data.hpp \
- /home/logan/gameprogramming/code/world/animal/enum.hpp \
+ /home/logan/gameprogramming/code/data/const/chunk_data.hpp \
+ /home/logan/gameprogramming/code/data/types/animal.hpp \
  /home/logan/gameprogramming/code/core/packed_enum.hpp \
- /home/logan/gameprogramming/code/world/unit/enum.hpp \
+ /home/logan/gameprogramming/code/data/types/unit.hpp \
  /usr/include/SDL2/SDL_pixels.h /usr/include/SDL2/SDL_stdinc.h \
  /usr/include/SDL2/SDL_config.h /usr/include/SDL2/SDL_platform.h \
  /usr/include/SDL2/begin_code.h /usr/include/SDL2/close_code.h \
@@ -263,13 +263,13 @@ CMakeFiles/main_exe.dir/systems/search/sight_check.cpp.o: \
  /usr/include/c++/16/math.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/float.h \
  /usr/include/SDL2/SDL_endian.h \
- /home/logan/gameprogramming/code/world/plant/enum.hpp \
- /home/logan/gameprogramming/code/world/item/enum.hpp \
- /home/logan/gameprogramming/code/world/buildable/enum.hpp \
- /home/logan/gameprogramming/code/world/tile/database.hpp \
- /home/logan/gameprogramming/code/world/tile/enum.hpp \
- /home/logan/gameprogramming/code/world/chunk/enum.hpp \
- /home/logan/gameprogramming/code/world/tile/data.hpp \
+ /home/logan/gameprogramming/code/data/types/plant.hpp \
+ /home/logan/gameprogramming/code/data/types/item.hpp \
+ /home/logan/gameprogramming/code/data/types/buildable.hpp \
+ /home/logan/gameprogramming/code/data/run/tile_database.hpp \
+ /home/logan/gameprogramming/code/data/types/tile.hpp \
+ /home/logan/gameprogramming/code/data/types/chunk.hpp \
+ /home/logan/gameprogramming/code/data/const/tile_data.hpp \
  /home/logan/gameprogramming/code/world/world.hpp \
  /home/logan/gameprogramming/code/core/random.hpp \
  /usr/include/c++/16/random /usr/include/c++/16/bits/random.h \

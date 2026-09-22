@@ -1,0 +1,103 @@
+#pragma once
+#include <optional>
+#include <data/types/entity.hpp>
+#include <data/run/item_database.hpp>
+#include <data/run/unit_database.hpp>
+#include <world/item/recipes.hpp>
+#include <world/unit/roles_and_actions.hpp>
+
+// =========================
+// CHECKS
+// =========================
+
+// TODO: finding mechanisms for bonus reqs
+enum class ToolsFoundState
+{
+		FoundAll = 0,
+		Finding,
+		CannotFind
+	};
+
+enum class BuildablesFoundState
+{
+	FoundAll,
+	Finding,
+        CannotFind
+};
+
+struct NecessaryActionRequirementsBuffer
+{
+        ToolsFoundState tools_state;
+        BuildablesFoundState buildables_state;
+  std::array<std::optional<Coord>, ACTION_MAX_REQUIREMENTS> destinations;
+  std::array<std::optional<uint32_t>, ACTION_MAX_REQUIREMENTS> missing_requirement_indices;
+};
+
+struct ActionRequirementData {
+	EntitySearchData esd;
+	TargetType type;
+        uint16_t missing = 1;
+};
+
+// INVENTORY OPERATIONS
+float current_max_bulk(BulkStatus bs, Strength s)
+{
+	switch (bs)
+	{
+	case BulkStatus::Fine:
+		return FINE_BULK_MAX * s / STAT_MAX;
+	case BulkStatus::Mid:
+		return MID_BULK_MAX * s / STAT_MAX;
+	case BulkStatus::Single:
+		return SINGLE_BULK_MAX * s / STAT_MAX;
+	}
+	return 0.0;
+}
+
+float max_weight(Strength str) { return (str / STAT_MAX) * MAX_CARRY; }
+
+inline float calculate_remaining_bulk(BulkStatus bulk_status, float bulk);
+inline float calculate_remaining_bulk(ContainerType type, float bulk);
+inline float calculate_remaining_weight(ContainerType type, float weight);
+inline ContainerStorageData get_remaining_storage(Inventory &inventory, Container &container);
+// OPTI: extra check here ();
+inline uint16_t get_max_items_stored(Item holdable, ContainerStorage storage);
+inline uint16_t get_max_weight(Strength strength);
+void add_item_overflow(Slots &slots, HoldableSlot holdable,
+		     std::optional<uint16_t> unit_index = std::nullopt,
+		     std::optional<uint16_t> container_index = std::nullopt);
+else if constexpr(std::is_same_v<Slots,
+					  std::array<ItemSlot, HOLDABLE_UNDERFLOW_LIMIT>>);
+void add_item(std::vector<HoldableSlot> &holdables,
+	     InventoryAddBuffer &buffer, std::optional<uint8_t> amount = std::nullopt);
+void add_items_to_inventory(
+			  uint16_t unit_index,
+			 Inventory &inventory, InventoryAddBuffer &buffer);
+inline SizeData get_bulk_and_weight(Item holdable, uint16_t amount);
+inline void tabulate_item_add_container_data(Inventory &inventory, InventoryAddBuffer &buffer,
+					 Container &container, uint16_t &item_amount,
+					 bool &found_space, bool &unsearched_inventory,
+					 int container_index, Item holdable,
+					 uint16_t &added_amount);
+void clear_necessary_space(Inventory &inventory);
+uint16_t add_items_force(Inventory &inventory, 
+		        Item holdable,
+		       std::variant<uint16_t, Material> item_amount_or_material,
+		       std::optional<uint8_t> variant = std::nullopt);
+uint16_t attempt_add_items(Inventory &inventory, uint16_t unit_index, Strength strength,
+			 Item holdable, T item_amount_or_material,
+			 std::optional<uint8_t> variant = std::nullopt, bool force);
+// containers in main inventory ();
+inline bool remove_art_or_tool(Inventory &inventory,
+			       Item item, // std::optional<SpecialItemData> special_data,
+			       bool check = false);
+
+inline uint16_t remove_item(Inventory &inventory, Item item, uint16_t amount,
+bool check = false, std::optional<uint8_t> variant = std::nullopt);
+
+uint16_t remove_item( 
+		     Inventory &inventory, uint16_t unit_index, Item item,
+		     std::optional<uint16_t> item_amount_or_material = std::nullopt,
+		     std::optional<uint8_t> variant = std::nullopt, bool check = false);
+
+NecessaryToolsBuffer ensure_necessary_tools(SearchGrid& search, Action action, Inventory& inventory, uint16_t unit_index, Coord coord);

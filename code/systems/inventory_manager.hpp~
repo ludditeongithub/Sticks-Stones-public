@@ -1,4 +1,0 @@
-#include <variant>
-#include <world/item/enum.hpp>
-
-inline bool checkItem(std::variant<Item, Tool> item, uint16_t unit, )

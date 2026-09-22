@@ -1,8 +1,8 @@
 CMakeFiles/main_exe.dir/world/plant/operations.cpp.o: \
  /home/logan/gameprogramming/code/world/plant/operations.cpp \
  /usr/include/stdc-predef.h \
- /home/logan/gameprogramming/code/world/plant/database.hpp \
- /home/logan/gameprogramming/code/world/plant/enum.hpp \
+ /home/logan/gameprogramming/code/data/run/plant_database.hpp \
+ /home/logan/gameprogramming/code/data/types/plant.hpp \
  /usr/include/c++/16/cstdint \
  /usr/include/c++/16/x86_64-pc-linux-gnu/bits/c++config.h \
  /usr/include/c++/16/x86_64-pc-linux-gnu/bits/os_defines.h \
@@ -263,16 +263,16 @@ CMakeFiles/main_exe.dir/world/plant/operations.cpp.o: \
  /usr/include/c++/16/bits/stl_numeric.h \
  /usr/include/c++/16/pstl/glue_numeric_defs.h \
  /home/logan/gameprogramming/code/simulation/world_gen.hpp \
- /home/logan/gameprogramming/code/world/animal/enum.hpp \
+ /home/logan/gameprogramming/code/data/types/animal.hpp \
  /home/logan/gameprogramming/code/core/packed_enum.hpp \
- /home/logan/gameprogramming/code/world/chunk/data.hpp \
- /home/logan/gameprogramming/code/world/tile/enum.hpp \
- /home/logan/gameprogramming/code/world/chunk/enum.hpp \
+ /home/logan/gameprogramming/code/data/const/chunk_data.hpp \
+ /home/logan/gameprogramming/code/data/types/tile.hpp \
+ /home/logan/gameprogramming/code/data/types/chunk.hpp \
  /home/logan/gameprogramming/code/world/item/scavengeable.hpp \
- /home/logan/gameprogramming/code/world/item/enum.hpp \
+ /home/logan/gameprogramming/code/data/types/item.hpp \
  /home/logan/gameprogramming/code/world/tile/grass.hpp \
- /home/logan/gameprogramming/code/world/tile/database.hpp \
- /home/logan/gameprogramming/code/world/tile/data.hpp \
+ /home/logan/gameprogramming/code/data/run/tile_database.hpp \
+ /home/logan/gameprogramming/code/data/const/tile_data.hpp \
  /usr/include/c++/16/queue /usr/include/c++/16/deque \
  /usr/include/c++/16/bits/stl_deque.h /usr/include/c++/16/bits/deque.tcc \
  /usr/include/c++/16/bits/stl_queue.h /usr/include/c++/16/ranges \
@@ -282,18 +282,18 @@ CMakeFiles/main_exe.dir/world/plant/operations.cpp.o: \
  /home/logan/gameprogramming/code/../extern/cereal/types/stack.hpp \
  /usr/include/c++/16/stack /usr/include/c++/16/bits/stl_stack.h \
  /home/logan/gameprogramming/code/../extern/cereal/types/deque.hpp \
- /home/logan/gameprogramming/code/world/animal/database.hpp \
- /home/logan/gameprogramming/code/world/animal/data.hpp \
+ /home/logan/gameprogramming/code/data/run/animal_database.hpp \
+ /home/logan/gameprogramming/code/data/const/animal_data.hpp \
  /home/logan/gameprogramming/code/world/animal/tables.hpp \
  /home/logan/gameprogramming/code/core/time.hpp \
  /home/logan/gameprogramming/code/systems/action/action.hpp \
  /home/logan/gameprogramming/code/world/unit/roles_commodities.hpp \
- /home/logan/gameprogramming/code/world/unit/enum.hpp \
- /home/logan/gameprogramming/code/world/buildable/enum.hpp \
- /home/logan/gameprogramming/code/world/progression/enum.hpp \
+ /home/logan/gameprogramming/code/data/types/unit.hpp \
+ /home/logan/gameprogramming/code/data/types/buildable.hpp \
+ /home/logan/gameprogramming/code/data/types/progression.hpp \
  /home/logan/gameprogramming/code/core/combo_enum.hpp \
- /home/logan/gameprogramming/code/world/action/enum.hpp \
- /home/logan/gameprogramming/code/world/unit/database.hpp \
+ /home/logan/gameprogramming/code/data/types/action.hpp \
+ /home/logan/gameprogramming/code/data/run/unit_database.hpp \
  /home/logan/gameprogramming/code/../extern/cereal/archives/binary.hpp \
  /home/logan/gameprogramming/code/core/hash.hpp \
  /home/logan/gameprogramming/code/core/math.hpp \
@@ -302,7 +302,7 @@ CMakeFiles/main_exe.dir/world/plant/operations.cpp.o: \
  /home/logan/gameprogramming/code/world/item/container.hpp \
  /home/logan/gameprogramming/code/world/item/tags.hpp \
  /home/logan/gameprogramming/code/core/tags.hpp \
- /home/logan/gameprogramming/code/world/item/database.hpp \
+ /home/logan/gameprogramming/code/data/run/item_database.hpp \
  /home/logan/gameprogramming/code/systems/search/search.hpp \
  /home/logan/gameprogramming/code/core/entity.hpp \
  /home/logan/gameprogramming/code/world/variant_item/database.hpp \
@@ -316,7 +316,7 @@ CMakeFiles/main_exe.dir/world/plant/operations.cpp.o: \
  /usr/include/c++/16/x86_64-pc-linux-gnu/bits/basic_file.h \
  /usr/include/c++/16/x86_64-pc-linux-gnu/bits/c++io.h \
  /usr/include/c++/16/bits/fstream.tcc \
- /home/logan/gameprogramming/code/world/buildable/database.hpp \
+ /home/logan/gameprogramming/code/data/run/buildable_database.hpp \
  /home/logan/gameprogramming/code/world/buildable/tables.hpp \
  /home/logan/gameprogramming/code/core/info.hpp \
  /usr/include/SDL2/SDL_rect.h /usr/include/SDL2/SDL_error.h \

@@ -6,17 +6,24 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
-    "${PROJECT_SOURCE_DIR}/*.cpp"
+find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
+
+add_executable(test_exe)
+
+target_sources(test_exe
+    PRIVATE
+        test.cpp
+        display/render/texture.cpp
+        display/render/screen.cpp
 )
 
-list(FILTER SOURCES EXCLUDE REGEX "/build/")
-list(FILTER SOURCES EXCLUDE REGEX "/\\.#")
-
-add_executable(main_exe ${SOURCES})
-
-target_include_directories(main_exe PRIVATE
+target_include_directories(test_exe PRIVATE
     ${PROJECT_SOURCE_DIR}
     ${PROJECT_SOURCE_DIR}/../extern
 )
 
+target_link_libraries(test_exe PRIVATE
+    SDL2::SDL2
+    SDL2_image::SDL2_image
+)

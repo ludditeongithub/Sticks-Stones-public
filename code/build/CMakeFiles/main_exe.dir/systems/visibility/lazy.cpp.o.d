@@ -212,10 +212,10 @@ CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.o: \
  /home/logan/gameprogramming/code/../extern/cereal/details/polymorphic_impl_fwd.hpp \
  /home/logan/gameprogramming/code/../extern/cereal/types/common.hpp \
  /usr/include/c++/16/sstream /usr/include/c++/16/bits/sstream.tcc \
- /home/logan/gameprogramming/code/world/tile/data.hpp \
- /home/logan/gameprogramming/code/world/tile/enum.hpp \
+ /home/logan/gameprogramming/code/data/const/tile_data.hpp \
+ /home/logan/gameprogramming/code/data/types/tile.hpp \
  /home/logan/gameprogramming/code/core/packed_enum.hpp \
- /home/logan/gameprogramming/code/world/chunk/enum.hpp \
+ /home/logan/gameprogramming/code/data/types/chunk.hpp \
  /home/logan/gameprogramming/code/world/world.hpp \
  /home/logan/gameprogramming/code/core/data.hpp /usr/include/c++/16/cmath \
  /usr/include/math.h /usr/include/bits/math-vector.h \
@@ -258,25 +258,25 @@ CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.o: \
  /usr/include/c++/16/bits/stl_numeric.h \
  /usr/include/c++/16/pstl/glue_numeric_defs.h \
  /home/logan/gameprogramming/code/simulation/world_gen.hpp \
- /home/logan/gameprogramming/code/world/animal/enum.hpp \
- /home/logan/gameprogramming/code/world/plant/enum.hpp \
- /home/logan/gameprogramming/code/world/chunk/data.hpp \
+ /home/logan/gameprogramming/code/data/types/animal.hpp \
+ /home/logan/gameprogramming/code/data/types/plant.hpp \
+ /home/logan/gameprogramming/code/data/const/chunk_data.hpp \
  /home/logan/gameprogramming/code/world/item/scavengeable.hpp \
- /home/logan/gameprogramming/code/world/item/enum.hpp \
+ /home/logan/gameprogramming/code/data/types/item.hpp \
  /home/logan/gameprogramming/code/world/tile/grass.hpp \
  /home/logan/gameprogramming/code/core/tables.hpp \
  /usr/include/c++/16/bitset \
- /home/logan/gameprogramming/code/world/tile/database.hpp \
+ /home/logan/gameprogramming/code/data/run/tile_database.hpp \
  /usr/include/c++/16/queue /usr/include/c++/16/deque \
  /usr/include/c++/16/bits/stl_deque.h /usr/include/c++/16/bits/deque.tcc \
  /usr/include/c++/16/bits/stl_queue.h /usr/include/c++/16/ranges \
  /usr/include/c++/16/iterator /usr/include/c++/16/bits/stream_iterator.h \
  /usr/include/c++/16/variant /usr/include/c++/16/bits/parse_numbers.h \
  /usr/include/c++/16/bits/elements_of.h \
- /home/logan/gameprogramming/code/world/unit/database.hpp \
- /home/logan/gameprogramming/code/world/unit/enum.hpp \
+ /home/logan/gameprogramming/code/data/run/unit_database.hpp \
+ /home/logan/gameprogramming/code/data/types/unit.hpp \
  /home/logan/gameprogramming/code/../extern/cereal/archives/binary.hpp \
- /home/logan/gameprogramming/code/world/action/enum.hpp \
+ /home/logan/gameprogramming/code/data/types/action.hpp \
  /home/logan/gameprogramming/code/core/hash.hpp \
  /home/logan/gameprogramming/code/core/math.hpp \
  /usr/include/c++/16/algorithm /usr/include/c++/16/bits/ranges_algo.h \
@@ -285,10 +285,10 @@ CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.o: \
  /home/logan/gameprogramming/code/world/item/container.hpp \
  /home/logan/gameprogramming/code/world/item/tags.hpp \
  /home/logan/gameprogramming/code/core/tags.hpp \
- /home/logan/gameprogramming/code/world/item/database.hpp \
+ /home/logan/gameprogramming/code/data/run/item_database.hpp \
  /home/logan/gameprogramming/code/systems/search/search.hpp \
  /home/logan/gameprogramming/code/core/entity.hpp \
- /home/logan/gameprogramming/code/world/buildable/enum.hpp \
+ /home/logan/gameprogramming/code/data/types/buildable.hpp \
  /home/logan/gameprogramming/code/core/position_check.hpp \
  /home/logan/gameprogramming/code/core/math.hpp \
  /home/logan/gameprogramming/code/simulation/game.hpp \
@@ -301,9 +301,9 @@ CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.o: \
  /usr/include/c++/16/bits/fstream.tcc \
  /home/logan/gameprogramming/code/systems/action/action.hpp \
  /home/logan/gameprogramming/code/world/unit/roles_commodities.hpp \
- /home/logan/gameprogramming/code/world/progression/enum.hpp \
+ /home/logan/gameprogramming/code/data/types/progression.hpp \
  /home/logan/gameprogramming/code/core/combo_enum.hpp \
- /home/logan/gameprogramming/code/world/buildable/database.hpp \
+ /home/logan/gameprogramming/code/data/run/buildable_database.hpp \
  /home/logan/gameprogramming/code/world/buildable/tables.hpp \
  /home/logan/gameprogramming/code/core/info.hpp \
  /usr/include/SDL2/SDL_rect.h /usr/include/SDL2/SDL_error.h \
@@ -319,8 +319,8 @@ CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.o: \
  /usr/include/SDL2/SDL_quit.h /usr/include/SDL2/SDL_gesture.h \
  /usr/include/SDL2/SDL_touch.h /usr/include/SDL2/SDL_mouse.h \
  /home/logan/gameprogramming/code/core/memory_control.hpp \
- /home/logan/gameprogramming/code/world/animal/database.hpp \
- /home/logan/gameprogramming/code/world/animal/data.hpp \
+ /home/logan/gameprogramming/code/data/run/animal_database.hpp \
+ /home/logan/gameprogramming/code/data/const/animal_data.hpp \
  /home/logan/gameprogramming/code/world/animal/tables.hpp \
  /home/logan/gameprogramming/code/core/time.hpp \
  /home/logan/gameprogramming/code/world/variant_item/database.hpp \
@@ -328,7 +328,7 @@ CMakeFiles/main_exe.dir/systems/visibility/lazy.cpp.o: \
  /home/logan/gameprogramming/code/../extern/cereal/types/stack.hpp \
  /home/logan/gameprogramming/code/../extern/cereal/types/deque.hpp \
  /home/logan/gameprogramming/code/schedule/event.hpp \
- /home/logan/gameprogramming/code/world/plant/database.hpp \
+ /home/logan/gameprogramming/code/data/run/plant_database.hpp \
  /home/logan/gameprogramming/code/world/plant/defaults.hpp \
  /home/logan/gameprogramming/code/world/plant/tables.hpp \
  /home/logan/gameprogramming/code/simulation/game_time.hpp \

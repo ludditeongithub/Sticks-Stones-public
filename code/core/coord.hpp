@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <cmath>
+#include <stdexcept>
 
 enum class Direction : uint8_t
 {
@@ -15,7 +16,17 @@ struct Coord
 	uint32_t x;
 	uint32_t y;
 
-		Coord operator*=(uint32_t s) { return Coord(this->x * s, this->y * s); }
+		Coord operator+(const Coord c) { return Coord(this->x + c.x, this->y + c.y); }
+
+		void operator+=(const Coord c) { this->x += c.x; this->y += c.y; }
+
+		Coord operator-(const Coord c) { return Coord(this->x - c.x, this->y - c.y); }
+
+		void operator-=(const Coord c) { this->x -= c.x; this-> y -= c.y; }
+
+		Coord operator*(uint32_t s) { return Coord(this->x * s, this->y * s); }
+
+		void operator*=(uint32_t s) { this->x *= s; this->y *= s; }
 
 inline void move(Direction direction)
 		{
@@ -47,7 +58,7 @@ struct SCoord
 	}
 };
 
-bool adjacent_coords(Coord first, Coord second)
+inline bool adjacent_coords(Coord first, Coord second)
 {
 	return (std::abs(static_cast<int>(first.x - second.x)) <= 1 &&
 		std::abs(static_cast<int>(first.y - second.y)) <= 1);
@@ -77,8 +88,6 @@ inline Coord get_pos(Direction direction, Coord coord, uint8_t stride = 1)
   return new_pos;
 }
 
-
-// Distance and Coords
 template <typename T> T chebyshev(T x1, T y1, T x2, T y2)
 {
 	return std::max(std::abs(x2 - x1), std::abs(y2 - y1));
@@ -116,21 +125,4 @@ inline float lerp(float x1, float x2, float x3, float s1, float s2, float s3)
     if (s1 > 1.0 || s1 < 0.0 || s2 > 1.0 || s2 < 0.0 || s3 > 1.0 || s3 < 0.0)
         throw std::out_of_range("Linear Interpolation setting must be between 0.0 and 1.0");
     return std::lerp(std::lerp(x1, x2, s1), std::lerp(x2, x3, s2), s3);
-}
-
-struct HashPair
-{
-	uint16_t operator()(const std::pair<int, int> &p) const
-	{
-		auto h1 = std::hash<int>{}(p.first);
-		auto h2 = std::hash<int>{}(p.second);
-		return h1 ^ h2;
-	}
-};
-
-inline uint16_t hash_pair(int x, int y)
-{
-	auto h1 = std::hash<int>{}(x);
-	auto h2 = std::hash<int>{}(y);
-	return h1 ^ h2; // Same hash mixing logic as in the struct
 }

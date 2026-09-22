@@ -1,9 +1,0 @@
-#pragma once
-#include <core/containers.hpp>
-#include "../plant/enum.hpp"
-#include "macros/database.hpp"
-#include <core/data.hpp>
-
-struct SeedDatabase {
-
-};

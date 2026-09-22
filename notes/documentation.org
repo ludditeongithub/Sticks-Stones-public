@@ -3,13 +3,38 @@ In general we are using DoD for simplicity and performance. This is not dogmatic
 * File Organization and Standards
 - don't make files too long, and try to break up into either repeatable and uniform file names for data/world state (for example: tables.hpp contains tables, database.hpp contains metaprogrammed databases), or very descriptive ones for systems.
 ** Extern
+** Core
+*** Structures
+*** Math
+*** RNG
 ** Logic
-*** Code Structures
-*** Core
-**** Math
-**** RNG
-*** Gameplay Generic (pathfinding, 
-*** Gameplay Specific 
+*** Management
+**** Load/Save
+*** Generic (could be in any game)
+**** Timer/Ticker/Looper
+**** Scheduling
+**** Pathfinding/Movement
+**** Task Manager
+**** Inventory
+**** Visibility
+*** Simulation (acts regardless of player)
+**** World Generation
+**** Weather
+**** Plant 
+**** Mating
+**** Eating/Feeding
+**** Unit Needs
+**** Perishing
+**** Birth/Death
+**** Disease
+**** Animal Pack
+*** Gameplay/Content (requires player interaction)
+**** Unit Actions
+**** Combat
+**** Faction Interaction
+**** Upgrades/Progression
+**** Psychology/Unit uniqueness
+*** Extra (Add-ons)
 ** Data
 *** Types and Aliases
 *** Const Data
@@ -19,7 +44,7 @@ In general we are using DoD for simplicity and performance. This is not dogmatic
 *** Render
 *** UI
 *** I/O
-*** DevTools
+*** Dev
 * Formatting
 - using snake_case functions.
 
