@@ -3,7 +3,7 @@
 // info section made up of several info boxes.
 
 #include "SDL_FontCache.h"
-#include "data/types/aliases.hpp"
+
 #include "display/render/sprite.hpp"
 #include "display/render/texture.hpp"
 #include "display/ui/aggregates/info_box.hpp"

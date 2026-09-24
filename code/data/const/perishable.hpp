@@ -3,7 +3,7 @@
 #include "enum.hpp"
 #include <data/types/food.hpp>
 #include <data/types/unit.hpp>
-#include <data/types/aliases.hpp>
+
 #include <core/tables.hpp>
 #include <data/const/unit_data.hpp>
 #include <data/types/item.hpp>

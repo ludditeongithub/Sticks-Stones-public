@@ -13,7 +13,7 @@ class Database
 // BASE DATABASE MEMBERS
 // =========================
 
-constexpr static uint16_t entity_size = sizeof(Buildable) +
+constexpr static uint16_t ENTITY_SIZE = sizeof(Buildable) +
 + sizeof(bool)
   
  +  sizeof(Buildable) 
@@ -41,7 +41,7 @@ size_t capacity;
 // CONSTRUCTOR
 // =========================
 
-Database(Arena& arena, size_t capacity
+Database(Arena* arena, size_t capacity
   , World& world
  
   , tile::Database& tiles
@@ -109,7 +109,7 @@ assert(buildable != Buildable::NONE && buildable != Buildable::MAX && "Tried to 
         if (newborn)
         {
             this->buildable(i) = buildable;
-            this->health(i) = MAX_HEALTHS[buildable] * INFANT_HEALTH_MODIFIER;
+            this->health(i) = buildable::MAX_HEALTHS[buildable] * INFANT_HEALTH_MODIFIER;
             this->coord(i) = coord;
         }
         else
@@ -120,7 +120,7 @@ assert(buildable != Buildable::NONE && buildable != Buildable::MAX && "Tried to 
             this->coord(i) = coord;
         }
         return i;
-}
+          }
           
         
 

@@ -1,6 +1,6 @@
 #pragma once
 #include "animation.hpp"
-#include "data/types/aliases.hpp"
+
 #include "screen.hpp"
 #include "sprite.hpp"
 #include "texture.hpp"

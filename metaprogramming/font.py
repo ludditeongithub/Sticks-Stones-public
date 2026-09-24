@@ -5,7 +5,7 @@ def create_fonts():
     with open("font.yaml", "r") as f:
         config = yaml.safe_load(f)
 
-        relative_path = "ui/fonts.hpp"
+        relative_path = "display/ui/fonts.hpp"
         context = {
             "fonts": config["fonts"],
             "font_path": "assets/fonts"

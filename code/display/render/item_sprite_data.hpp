@@ -1,7 +1,7 @@
 #pragma once
 #include <data/types/item.hpp>
 #include <core/tables.hpp>
-#include <data/types/aliases.hpp>
+
 
 inline constexpr BitsetTable<Item> item_ascending_versions = []
 	{

@@ -1,7 +1,7 @@
 #include "eating_manager.hpp"
 #include "systems/perishables_manager.hpp"
 #include <core/containers.hpp>
-#include <data/types/aliases.hpp>
+
 #include <data/types/animal.hpp>
 #include <world/animal/tables.hpp>
 #include <data/types/item.hpp>

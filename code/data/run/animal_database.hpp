@@ -2,7 +2,7 @@
 #include <data/types/animal.hpp>
 #include "systems/action/action.hpp"
 #include <core/containers.hpp>
-#include <data/types/aliases.hpp>
+
 #include <core/random.hpp>
 #include <cstdint>
 
@@ -58,8 +58,9 @@ struct EggFertilizationHandler {
 // BASE DATABASE MEMBERS
 // =========================
 
-constexpr static uint16_t entity_size = sizeof(Animal) +
-+ sizeof(bool)  
+constexpr static uint16_t ENTITY_SIZE = sizeof(Animal) +
++ sizeof(bool)
+  
  +  sizeof(Animal) 
  +  sizeof(Health) 
  +  sizeof(Hunger) 
@@ -107,7 +108,7 @@ size_t capacity;
 // CONSTRUCTOR
 // =========================
 
-Database(Arena& arena, size_t capacity
+Database(Arena* arena, size_t capacity
   , World& world
  
   , SearchGrid& search

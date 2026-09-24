@@ -3,7 +3,7 @@
 #include <SDL2/SDL_events.h>
 #include <stdexcept>
 #include <string>
-#include <data/types/aliases.hpp>
+
 #include <data/types/entity.hpp>
 #include <core/mouse.hpp>
 #include <chrono>

@@ -1,9 +1,10 @@
 #pragma once
 #include <cstdint>
-#include <data/types/aliases.hpp>
-#include <data/run/world.hpp>
 #include <data/types/item.hpp>
-
+#include <data/types/time.hpp>
+#include <unordered_map>
+#include <vector>
+#include <data/types/container.hpp>
 
 using OverflowHashMap = std::unordered_map<uint32_t, std::vector<HoldableSlot>>;
 using OverflowContainerMap = std::unordered_map<uint16_t, std::vector<Container>>;
@@ -12,6 +13,7 @@ OverflowHashMap g_overflow_hash_map;
 OverflowContainerMap g_overflow_container_map;
 
 constexpr uint16_t UNIT_CAP = 1000;
+constexpr size_t MATURITY_AGE = 15;
 
 // the total volume of each bulk category hands can maximally carry.
 // where 0.1 is 100mL
@@ -27,7 +29,6 @@ constexpr uint8_t INITIAL_STAT_MAX = 60;
 constexpr uint16_t MAX_ROLES_PER_TASK = 6;
 constexpr uint16_t ACTION_TOOLS_AMOUNT = 100; // NOTE: likely wrong
 constexpr uint16_t ACTION_MAX_REQUIREMENTS = 7; // NOTE: likely wrong
-constexpr size_t ROLE_MAX = static_cast<size_t>(Role::MAX);
 constexpr size_t MAX_ROLES = 6;
 
 // the total volume of each bulk category hands can maximally carry.
@@ -55,27 +56,3 @@ float sunburn_level2_threshold = 0.75;
 
 constexpr Frame BASE_WALKING_FRAMES = 8;
 constexpr Frame BASE_RUNNING_FRAMES = 8;
-
-float generate_skin_warmth(float parent1, float parent2)
-{
-	float crossed_value = std::lerp(parent1, parent2, 0.5);
-	return std::lerp(crossed_value, random_chance->next(), 0.08);
-}
-
-float generate_skin_warmth(World &world, Coord coord)
-{
-  uint16_t chunk = get_chunk_index_from_tile(coord);
-	uint16_t longitude = world.get_chunk_time_zone(chunk);
-	return std::lerp(longitude, random_chance->next(), 0.3);
-}
-
-float generate_melanin(World& world, Coord coord) {
-    uint16_t chunk = get_chunk_index_from_tile(coord);
-	uint16_t latitude = world.get_chunk_time_zone(chunk);
-	return std::lerp(latitude, random_chance->next(), 0.3);
-}
-
-float generate_melanin(float parent1, float parent2) {
-        float crossed_value = std::lerp(parent1, parent2, 0.5);
-	return std::lerp(crossed_value, random_chance->next(), 0.08);
-}

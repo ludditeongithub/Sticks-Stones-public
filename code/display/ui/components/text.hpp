@@ -1,5 +1,5 @@
 #pragma once
-#include <data/types/aliases.hpp>
+
 #include <string>
 #include <cstdint>
 #include <SDL_FontCache.h>

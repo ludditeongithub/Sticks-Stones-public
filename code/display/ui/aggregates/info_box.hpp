@@ -1,13 +1,13 @@
 #pragma once
-#include "data/types/aliases.hpp"
+
 #include "display/render/sprite.hpp"
 #include "display/ui/fonts.hpp"
 #include "data/types/buildable.hpp"
-#include "world/unit/roles_commodities.hpp"
 #include <display/render/sprite.hpp>
 #include <data/types/unit.hpp>
 #include <display/ui/components/display_frame.hpp>
 #include <display/ui/components/text.hpp>
+#include <SDL_FontCache.h>
 
 // info box is all info on one thing that appears in a requirements or roles list.
 using Displayable = std::variant<Item, Buildable, knowledge::Academic, knowledge::Technology>;
@@ -23,7 +23,7 @@ struct RequirementBox {
 	  source = sprite::get_displayable(displayable);
   }
 
-  inline void render(SDL_Rect& frame, SDL_Rect& viewport)
+  inline void render(SDL_Rect& frame, SDL_Rect* viewport)
   {
 	  sprite_sheet_texture.render(pos.x, pos.y, &frame, viewport);
 	  sprite_sheet_texture.render(pos.x, pos.y, &source, viewport);	  
@@ -42,7 +42,7 @@ struct RoleBox {
   uint16_t amount_avail = 0;
   SCoord pos;
 
-  inline void render(SDL_Rect& frame, SDL_Rect& viewport)
+  inline void render(SDL_Rect& frame, SDL_Rect* viewport)
   {
 	  sprite_sheet_texture.render(pos.x, pos.y, &frame, viewport);          
           SDL_Rect source = sprite::roles[role];

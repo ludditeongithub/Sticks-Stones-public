@@ -4,7 +4,7 @@
 #include "display/render/texture.hpp"
 #include "display/ui/components/element.hpp"
 #include <SDL2/SDL_events.h>
-#include <data/types/aliases.hpp>
+
 #include <display/ui/components/button.hpp>
 #include <display/render/sprite.hpp>
 #include <logic/simulation/game.hpp>

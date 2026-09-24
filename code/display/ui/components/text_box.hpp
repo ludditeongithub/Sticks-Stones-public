@@ -6,7 +6,7 @@
 #include <data/types/item.hpp>
 #include <data/types/plant.hpp>
 #include <data/types/unit.hpp>
-#include "data/types/aliases.hpp"
+
 #include "element.hpp"
 #include "display/render/sprite.hpp"
 #include "display/ui/components/text.hpp"

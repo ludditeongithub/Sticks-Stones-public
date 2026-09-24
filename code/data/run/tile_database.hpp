@@ -4,11 +4,10 @@
 #include "data/const/tile_data.hpp"
 #include <data/types/entity.hpp>
 #include <core/containers.hpp>
-#include <data/types/aliases.hpp>
-#include <queue>
 #include <logic/simulation/world_gen.hpp>
-#include <vector>
 #include <data/run/world.hpp>
+
+struct World;
 
 namespace tile {
 // TODO: whenever a tile is interacted with, notify all 
@@ -22,9 +21,9 @@ class Database
 // BASE DATABASE MEMBERS
 // =========================
 
-constexpr static uint16_t entity_size = sizeof(Tiledata) +
+constexpr static uint16_t ENTITY_SIZE = sizeof(TileData) +
   
- +  sizeof(Tiledata) 
+ +  sizeof(TileData) 
  +  sizeof(Alt) 
  +  sizeof(Liquid) 
  +  sizeof(TileStatus) 
@@ -36,7 +35,7 @@ size_t capacity;
     // =========================
     // ENTITY-SPECIFIC MEMBERS
     // =========================
-    Array<Tiledata> tiledatas;
+    Array<TileData> tileDatas;
     Array<Alt> altitudes;
     Array<Liquid> waters;
     Array<TileStatus> tile_statuss;
@@ -48,18 +47,18 @@ size_t capacity;
 // CONSTRUCTOR
 // =========================
 
-Database(Arena& arena, size_t capacity
+Database(Arena* arena, size_t capacity
   , World& world
  
 ) :
-  world(world),
+  world(world)
 {
 this->capacity = capacity;
 
 
 
  
- tiledatas = arena_make_array<Tiledata>(arena, capacity); 
+ tileDatas = arena_make_array<TileData>(arena, capacity); 
  
  altitudes = arena_make_array<Alt>(arena, capacity); 
  
@@ -76,8 +75,8 @@ this->capacity = capacity;
 // GETTERS
 // =========================
 
-  inline Tiledata& tiledata(const EntityID index) {
-return tiledatas[index];
+  inline TileData& tileData(const EntityID index) {
+return tileDatas[index];
   }
   inline Alt& altitude(const EntityID index) {
 return altitudes[index];
@@ -110,7 +109,7 @@ return entitys[index];
     archive(capacity);
    
 
-        tiledatas.save(archive);
+        tileDatas.save(archive);
         altitudes.save(archive);
         waters.save(archive);
         tile_statuss.save(archive);
@@ -122,7 +121,7 @@ return entitys[index];
     {
         archive(capacity);
         
-        tiledatas.load(archive);
+        tileDatas.load(archive);
         altitudes.load(archive);
         waters.load(archive);
         tile_statuss.load(archive);
@@ -133,9 +132,9 @@ return entitys[index];
 	
 	Coord get_nearest_empty_tile(Coord coord);
 		Coord get_nearest_empty_tile_block(Coord coord, size_t length, size_t width = 1);
-  inline size_t get_index(const Coord coord){return (coord.y * world.height_chunks) + (coord.x * world.length_chunks);}
-		inline Coord get_coord(const size_t index){return {static_cast<uint32_t>(index % world.length_chunks) , static_cast<uint32_t>(index / world.height_chunks)};}
-  inline Frame calc_inertia(const Coord coord, bool running);
-		inline Frame calc_inertia(Frame entity_base_frames, const Coord coord);
+  size_t get_index(const Coord coord){return (coord.y * world.height_chunks) + (coord.x * world.length_chunks);}
+		Coord get_coord(const size_t index){return Coord({static_cast<uint32_t>(index % world.length_chunks), static_cast<uint32_t>(index / world.height_chunks)});}
+  Frame calc_inertia(const Coord coord, bool running);
+   Frame calc_inertia(Frame entity_base_frames, const Coord coord);
 };
 }

@@ -1,6 +1,6 @@
 #pragma once
 #include <cstdint>
-#include <data/types/aliases.hpp>
+
 #include <data/types/buildable.hpp>
 #include <data/const/buildable_tables.hpp>
 

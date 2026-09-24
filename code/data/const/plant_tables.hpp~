@@ -1278,6 +1278,62 @@ inline constexpr LookupTable<Plant, bool> FRUITS_FALL = []
 	return lt;
 }();
 
+
+inline constexpr BitsetTable<Plant> PLANT_PRODUCES = []
+	{
+		BitsetTable<Plant> t{};
+		using enum Plant;
+	t.set(Wheat);
+	t.set(Oat);
+	t.set(Rice);
+	t.set(Papyrus);
+	t.set(Cactus);
+	t.set(Grapevine);
+	t.set(Lettuce);
+	t.set(Kale);
+	t.set(Corn);
+	t.set(Carrot);
+	t.set(Beets);
+	t.set(Potato);
+	t.set(Onion);
+	t.set(Garlic);
+	t.set(Cabbage);
+	t.set(Broccoli);
+	t.set(Tomato);
+	t.set(Cucumber);
+	t.set(Pepper);
+	t.set(BlackPepper);
+	t.set(Cotton);
+	t.set(Hemp);
+	t.set(Flax);
+	t.set(Woad);
+	t.set(Madder);
+	t.set(Indigo);
+	t.set(Lavender);
+	t.set(Mint);
+	t.set(Thyme);
+	t.set(Sage);
+	t.set(Ginseng);
+	t.set(Rhubarb);
+	t.set(Cocoa);
+	t.set(Senna);
+	t.set(Saffron);
+	t.set(AloeVera);
+	t.set(Orange);
+	t.set(Apple);
+	t.set(Lemon);
+	t.set(Pear);
+	t.set(Peach);
+	t.set(Cherry);
+	t.set(Apricot);
+	t.set(Plum);
+	t.set(Lime);
+	t.set(Blueberry);
+	t.set(Strawberry);
+	t.set(Olive);
+		return t;
+	}();
+
 inline constexpr LookupTable<Plant, int> PRODUCE_MAX_YIELD = []
 {
 	LookupTable<Plant, int> lt{};

@@ -32,7 +32,7 @@
 // humidity
 // neighboring plants
 
-#include <data/types/aliases.hpp>
+
 #include "world_gen.hpp"
 #include "core/tables.hpp"
 #include "data/const/tile_data.hpp"

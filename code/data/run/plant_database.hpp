@@ -18,7 +18,7 @@ class Database
 // BASE DATABASE MEMBERS
 // =========================
 
-constexpr static uint16_t entity_size = sizeof(Plant) +
+constexpr static uint16_t ENTITY_SIZE = sizeof(Plant) +
 + sizeof(bool)
   
  +  sizeof(Plant) 
@@ -51,7 +51,7 @@ size_t capacity;
 // CONSTRUCTOR
 // =========================
 
-Database(Arena& arena, size_t capacity
+Database(Arena* arena, size_t capacity
   , World& world
  
   , SearchGrid& search

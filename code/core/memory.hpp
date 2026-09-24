@@ -35,35 +35,35 @@ size_t get_types_size_bytes(Types ... types)
 }
 
 
-void* arena_alloc(Arena& arena, size_t bytes)
+void* arena_alloc(Arena* arena, size_t bytes)
 {
-    if (arena.used + bytes > arena.capacity)
+    if (arena->used + bytes > arena->capacity)
         throw std::bad_alloc();
 
-    void* ptr = arena.start + arena.used;
-    arena.used += bytes;
+    void* ptr = arena->start + arena->used;
+    arena->used += bytes;
     return ptr;
 }
 
-void* arena_alloc_aligned(Arena& arena,
+void* arena_alloc_aligned(Arena* arena,
                           size_t bytes,
                           size_t alignment)
 {
     uintptr_t current =
-        reinterpret_cast<uintptr_t>(arena.start + arena.used);
+        reinterpret_cast<uintptr_t>(arena->start + arena->used);
 
     uintptr_t aligned =
         (current + alignment - 1) & ~(alignment - 1);
 
     size_t padding = aligned - current;
 
-    if (arena.used + padding + bytes > arena.capacity)
+    if (arena->used + padding + bytes > arena->capacity)
         throw std::bad_alloc();
 
-    arena.used += padding;
+    arena->used += padding;
 
-    void* ptr = arena.start + arena.used;
-    arena.used += bytes;
+    void* ptr = arena->start + arena->used;
+    arena->used += bytes;
 
     return ptr;
 }

@@ -24,7 +24,7 @@ databases:
         name: tile
         traits: [immortal, foreign_enum]
         extra_arrays: [altitude, water, tile_status, entity]
-        foreign_enum: [tileData]
+        foreign_enum: [tile_data]
     plant:
         name: plant
         traits: [positional, age, searchable, transferable, generated]
@@ -122,9 +122,9 @@ extra_arrays:
     random_age_default: generate_melanin(world, coord), generate_skin_warmth(world, coord), 0.5, 0.0
   - id: role_list
     name: role_list
-    type: std::array<Role, ROLE_MAX>
-    newborn_default: std::array<Role, ROLE_MAX>{}
-    random_age_default: std::array<Role, ROLE_MAX>{} # TODO: maybe function to generate Role from list of unlocked roles
+    type: std::array<Role, MAX_ROLES>
+    newborn_default: std::array<Role, MAX_ROLES>{}
+    random_age_default: std::array<Role, MAX_ROLES>{} # TODO: maybe function to generate Role from list of unlocked roles
   - id: role_mana # OPTI: can be just deduced from role list
     name: role_mana
     type: RoleMana

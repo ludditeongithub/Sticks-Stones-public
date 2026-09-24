@@ -1,12 +1,15 @@
 #include "texture.hpp"
-#include "screen.hpp"
-#include <stdio.h>           
-#include "SDL_error.h"       
-#include "SDL_pixels.h"     
-#include "SDL_render.h"     
-#include "SDL_stdinc.h"     
-#include "SDL_surface.h"
+
+#include <stdio.h>
 #include <SDL2/SDL_image.h>
+#include <SDL_rect.h>
+
+#include "screen.hpp"
+#include "SDL_error.h"
+#include "SDL_pixels.h"
+#include "SDL_render.h"
+#include "SDL_stdinc.h"
+#include "SDL_surface.h"
 
 LTexture::LTexture()
 {

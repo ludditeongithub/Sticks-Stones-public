@@ -1,5 +1,10 @@
 #include "screen.hpp"
 
+#include <SDL_render.h>
+#include <SDL_video.h>
+
+#include "core/coord.hpp"
+
 WindowSystem g_window_system = WindowSystem(SCREEN_WIDTH, SCREEN_HEIGHT, false);
 
 SDL_Window *window = NULL;

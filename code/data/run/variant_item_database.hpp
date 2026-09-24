@@ -1,9 +1,9 @@
 #pragma once
 #include <cstdint>
 #include <vector>
-#include <data/types/aliases.hpp>
+
 #include <core/containers.hpp>
-#include <systems/search/search.hpp>
+#include <logic/generic/search/search.hpp>
 #include <data/run/tile_database.hpp>
 #include <data/types/item.hpp>
 
@@ -15,7 +15,7 @@ class Database {
 // BASE DATABASE MEMBERS
 // =========================
 
-constexpr static uint16_t entity_size = sizeof(Item) +
+constexpr static uint16_t ENTITY_SIZE = sizeof(Item) +
 + sizeof(bool)
   
  +  sizeof(Item) 
@@ -48,7 +48,7 @@ size_t capacity;
 // CONSTRUCTOR
 // =========================
 
-Database(Arena& arena, size_t capacity
+Database(Arena* arena, size_t capacity
   , World& world
  
   , SearchGrid& search

@@ -1,5 +1,5 @@
 #include <core/containers.hpp>
-#include <data/types/aliases.hpp>
+
 #include <data/types/item.hpp>
 #include <world/unit/roles_and_actions.hpp>
 #include <data/types/progression.hpp>

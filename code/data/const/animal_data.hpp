@@ -1,7 +1,7 @@
 #pragma once
 #include "animal_tables.hpp"
 #include "data/types/animal.hpp"
-#include <data/types/aliases.hpp>
+
 #include <core/random.hpp>
 // ANIMAL UNIQUES
 

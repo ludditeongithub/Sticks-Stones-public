@@ -1,6 +1,6 @@
 #pragma once
 #include <core/containers.hpp>
-#include <data/types/aliases.hpp>
+
 namespace seed {
 class Database {
 	// @codegen:begin database_generation
@@ -8,7 +8,7 @@ class Database {
 // BASE DATABASE MEMBERS
 // =========================
 
-constexpr static uint16_t entity_size = sizeof(Plant) +
+constexpr static uint16_t ENTITY_SIZE = sizeof(Plant) +
 + sizeof(bool)
   
  +  sizeof(Plant) 
@@ -36,7 +36,7 @@ size_t capacity;
 // CONSTRUCTOR
 // =========================
 
-Database(Arena& arena, size_t capacity
+Database(Arena* arena, size_t capacity
   , World& world
  
   , tile::Database& tiles

@@ -5,7 +5,7 @@
 #include <core/packed_enum.hpp>
 #include <data/types/buildable.hpp>
 #include <data/types/item.hpp>
-#include <data/types/aliases.hpp>
+
 
 // actions require a certain job and also a certain tool. For example, "Butcher" requires a knife
 // and also the Butcher job, while "Cut" only requires a knife. Burn needs fire, but not oven, while

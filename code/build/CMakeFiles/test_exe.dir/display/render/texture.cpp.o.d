@@ -144,18 +144,11 @@ CMakeFiles/test_exe.dir/display/render/texture.cpp.o: \
  /usr/include/c++/16/bits/memory_resource.h /usr/include/c++/16/cstddef \
  /usr/include/c++/16/bits/uses_allocator.h \
  /usr/include/c++/16/bits/uses_allocator_args.h /usr/include/c++/16/tuple \
- /home/logan/gameprogramming/code/display/render/screen.hpp \
- /home/logan/gameprogramming/code/core/coord.hpp \
- /usr/include/c++/16/cstdint /usr/include/c++/16/stdexcept \
- /usr/include/c++/16/exception /usr/include/c++/16/bits/exception_ptr.h \
- /usr/include/c++/16/bits/cxxabi_init_exception.h \
- /usr/include/c++/16/typeinfo /usr/include/c++/16/bits/nested_exception.h \
- /usr/include/c++/16/bits/stdexcept_except.h /usr/include/c++/16/array \
- /usr/include/SDL2/SDL.h /usr/include/SDL2/SDL_main.h \
- /usr/include/SDL2/SDL_assert.h /usr/include/SDL2/SDL_atomic.h \
- /usr/include/SDL2/SDL_audio.h /usr/include/SDL2/SDL_mutex.h \
- /usr/include/SDL2/SDL_thread.h /usr/include/SDL2/SDL_clipboard.h \
- /usr/include/SDL2/SDL_cpuinfo.h \
+ /usr/include/SDL2/SDL_image.h /usr/include/SDL2/SDL.h \
+ /usr/include/SDL2/SDL_main.h /usr/include/SDL2/SDL_assert.h \
+ /usr/include/SDL2/SDL_atomic.h /usr/include/SDL2/SDL_audio.h \
+ /usr/include/SDL2/SDL_mutex.h /usr/include/SDL2/SDL_thread.h \
+ /usr/include/SDL2/SDL_clipboard.h /usr/include/SDL2/SDL_cpuinfo.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/immintrin.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/x86gprintrin.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/ia32intrin.h \
@@ -279,9 +272,25 @@ CMakeFiles/test_exe.dir/display/render/texture.cpp.o: \
  /usr/include/SDL2/SDL_shape.h /usr/include/SDL2/SDL_system.h \
  /usr/include/SDL2/SDL_timer.h /usr/include/SDL2/SDL_version.h \
  /usr/include/SDL2/SDL_locale.h /usr/include/SDL2/SDL_misc.h \
+ /usr/include/SDL2/SDL_rect.h \
+ /home/logan/gameprogramming/code/display/render/screen.hpp \
+ /home/logan/gameprogramming/code/core/coord.hpp \
+ /usr/include/c++/16/cstdint /usr/include/c++/16/stdexcept \
+ /usr/include/c++/16/exception /usr/include/c++/16/bits/exception_ptr.h \
+ /usr/include/c++/16/bits/cxxabi_init_exception.h \
+ /usr/include/c++/16/typeinfo /usr/include/c++/16/bits/nested_exception.h \
+ /usr/include/c++/16/bits/stdexcept_except.h /usr/include/SDL2/SDL.h \
  /usr/include/SDL2/SDL_video.h /usr/include/SDL2/SDL_hints.h \
- /usr/include/c++/16/cassert /usr/include/assert.h \
- /usr/include/SDL2/SDL_error.h /usr/include/SDL2/SDL_pixels.h \
- /usr/include/SDL2/SDL_render.h /usr/include/SDL2/SDL_stdinc.h \
- /usr/include/SDL2/SDL_surface.h /usr/include/SDL2/SDL_image.h \
- /usr/include/SDL2/SDL.h
+ /usr/include/SDL2/SDL_error.h /usr/include/SDL2/SDL_stdinc.h \
+ /usr/include/c++/16/array /usr/include/c++/16/cassert \
+ /usr/include/assert.h /usr/include/c++/16/algorithm \
+ /usr/include/c++/16/bits/stl_algo.h \
+ /usr/include/c++/16/bits/algorithmfwd.h \
+ /usr/include/c++/16/bits/stl_heap.h \
+ /usr/include/c++/16/bits/uniform_int_dist.h \
+ /usr/include/c++/16/bits/stl_tempbuf.h \
+ /usr/include/c++/16/bits/ranges_algo.h /usr/include/c++/16/optional \
+ /usr/include/c++/16/bits/enable_special_members.h \
+ /usr/include/c++/16/pstl/glue_algorithm_defs.h \
+ /usr/include/c++/16/pstl/execution_defs.h /usr/include/SDL2/SDL_pixels.h \
+ /usr/include/SDL2/SDL_render.h /usr/include/SDL2/SDL_surface.h

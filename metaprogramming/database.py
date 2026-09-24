@@ -27,7 +27,7 @@ def create_databases():
 def create_database(database, trait_data, extra_arrays):
     main_enum = database["name"].capitalize()
     if "foreign_enum" in database:
-        main_enum = database["foreign_enum"][0].capitalize()
+        main_enum = fmt.snake_to_camel(database["foreign_enum"][0].capitalize())
 # TODO: main enum might not be in runtime_arrays, may be in main struct
     # struct_list = database.get("structs", {})
     # structs = create_structs(
@@ -44,7 +44,7 @@ def create_database(database, trait_data, extra_arrays):
         "Entity_name": fmt.snake_to_camel(database["name"].capitalize()),
         "entity_name": fmt.uncapitalize(fmt.snake_to_camel(main_enum)),
         "folder_name": database["name"],
-        "main_enum": main_enum,        
+        "main_enum": fmt.snake_to_camel(main_enum),        
         "runtime_arrays": runtime_arrays,
     #   "structs": structs,
         "database": database,

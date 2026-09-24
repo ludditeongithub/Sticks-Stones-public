@@ -1,7 +1,10 @@
 #pragma once
 #include <cstdint>
 #include <core/packed_enum.hpp>
-// TODO: move all tool heads, and moulds, to variant items, then also figure out how ore and metal work (roles to commodities will also need to be fixed)
+// TODO: move all tool heads, and moulds, to variant items, then also figure out how ore and metal
+// work (roles to commodities will also need to be fixed)
+using Variant = uint8_t;
+
 enum class Item : uint16_t
 {
 	NONE,
@@ -522,7 +525,7 @@ enum class Item : uint16_t
 	Sandals,
 	Cape,
 	DrawPlate,
-        
+
 	MAX
 };
 

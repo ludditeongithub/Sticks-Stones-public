@@ -1,32 +1,16 @@
 #pragma once
 #include <SDL2/SDL_main.h>
 #include <SDL2/SDL_rect.h>
-#include <data/types/aliases.hpp>
+
 #include <display/render/sprite.hpp>
 #include <display/render/screen.hpp>
 #include <display/render/texture.hpp>
-
-enum class UISprite
-{
-	NONE,
-	Background,
-	WoodTextBox,
-	EntityDisplayFrame,
-	EquipmentFrame,
-	EquipmentFrameAlt,
-	RoleFrame,
-	MenuCatalogFrame,
-	CatalogItemFrame,
-	InfoMenuItemFrame,
-	RequirementFrame,
-	MAX
-};
 
 struct UIElement
 {
 	SCoord position; // left corner
 	SDL_Rect source;
-        UIElement(UISprite ui_sprite, SCoord position) : position(position), source(sprite::ui[ui_sprite])
+        UIElement(UISprite ui_sprite, SCoord position) : position(position), source(sprite::uis[ui_sprite])
 	{}
 
         inline void render(SDL_Rect viewport) { sprite_sheet_texture.render(position.x, position.y, &source, viewport); }

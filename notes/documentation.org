@@ -37,9 +37,14 @@ In general we are using DoD for simplicity and performance. This is not dogmatic
 *** Extra (Add-ons)
 ** Data
 *** Types and Aliases
+Consists of mostly enums and using declarations. Only POD, very basic structs that are used nearly universally with the enum in question are included here. 
 *** Const Data
-*** Runtime Game Data
-*** Runtime Level Data
+*** Runtime App Data
+Changes when launching the application.
+**** Sprites
+**** Mods
+*** Runtime Simulation Data
+Changes during individual 'save'/'game'. Also includes basic fetches/getters, that involve a simple single field calculation and a const data value.
 ** Display
 *** Render
 *** UI

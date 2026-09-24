@@ -1,14 +1,20 @@
 #pragma once
 #include <core/coord.hpp>
-#include "display/render/texture.hpp"
-#include <array>
-#include <string>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_video.h>
 #include <SDL2/SDL_hints.h>
+#include <SDL_error.h>
+#include <SDL_rect.h>
+#include <SDL_stdinc.h>
+#include <stdio.h>
+#include <array>
+#include <string>
 #include <cstdint>
 #include <cassert>
+#include <algorithm>
+
+#include "display/render/texture.hpp"
 
 extern SDL_Window *window;
 extern SDL_Renderer *renderer;

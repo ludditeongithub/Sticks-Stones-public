@@ -5,7 +5,7 @@
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_mouse.h>
 #include <SDL2/SDL_rect.h>
-#include <data/types/aliases.hpp>
+
 #include <core/memory_control.hpp>
 #include <logic/simulation/world_gen.hpp>
 

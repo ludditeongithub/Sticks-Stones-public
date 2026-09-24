@@ -1,6 +1,6 @@
 #pragma once
 #include <cstdint>
-#include <data/types/aliases.hpp>
+
 
 constexpr uint16_t HOUR_LENGTH = 300;
 constexpr uint16_t DAY_LENGTH = HOUR_LENGTH * 24;

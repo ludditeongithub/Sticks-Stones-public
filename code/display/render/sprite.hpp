@@ -1,8 +1,6 @@
 // Stores hot arrays of sprite data (positions, sizes, colors, texture IDs), handles batching logic
 #pragma once
 #include "core/tables.hpp"
-#include <data/types/button.hpp>
-#include "display/ui/components/element.hpp"
 #include <SDL_rect.h>
 #include <data/types/item.hpp>
 #include <data/types/buildable.hpp>
@@ -10,10 +8,14 @@
 #include <data/types/plant.hpp>
 #include <data/types/unit.hpp>
 #include <data/types/tile.hpp>
-#include <data/types/aliases.hpp>
 #include <data/types/entity.hpp>
-#include <display/ui/aggregates/info_box.hpp>
-#include <../extern/json.hpp>
+#include <data/types/ui.hpp>
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <json.hpp>
+#include <filesystem>
+#include <magic_enum/magic_enum.hpp>
 
 // TODO: right now this is only fitted for walk animations. need to make sure
 // all the LOGIC is only fitted for walk animations, for now.
@@ -44,7 +46,40 @@ namespace sprite
 
   RuntimeLookupTable<UISprite,SDL_Rect> uis;
 
-  RuntimeLookupTable<Role,SDL_Rect> roles;
+		RuntimeLookupTable<Role, SDL_Rect> roles;
+
+
+std::string to_kebab_case(std::string& s) {
+    std::string result;
+
+    for (size_t i = 0; i < s.size(); ++i) {
+        char c = s[i];
+
+        if (std::isupper(static_cast<unsigned char>(c))) {
+            if (i > 0) result += '-';
+            result += std::tolower(static_cast<unsigned char>(c));
+        } else {
+            result += c;
+        }
+    }
+
+    return result;
+}
+
+template<typename S>
+std::string get_sprite_name(S sprite_type)
+{
+    std::string name = std::string(magic_enum::enum_name(sprite_type));
+
+    if constexpr (std::is_same_v<S, Plant>)
+    {
+        if (auto item = magic_enum::enum_cast<Item>(name); item.has_value())
+        {
+            name += "-plant";
+        }
+    }
+    return to_kebab_case(name) + ".aseprite";
+}
   
 template<typename Sprite>
 inline void save_sprite(int index, Sprite sprite, SCoord position, SCoord dimension)
@@ -92,13 +127,25 @@ void load_one_type_sprites(const json& sheet) {
     }
 }
 
-template <typename ... Enums>
-void load_type_sprites() {
-	std::ifstream file("../../../data/sprites/game.json");
+template <typename... Enums> void load_type_sprites()
+{
+	std::cout << std::filesystem::current_path() << '\n';
 
-	json sheet;
-	file >> sheet;
-	(load_one_type_sprites<Enums>(sheet), ...);
+	std::string file_name = "../../assets/sprites/game.json";
+    std::ifstream file(file_name, std::ios::binary);
+
+    if (!file.is_open())
+    {
+        std::cerr << "Failed to open: " << file_name << '\n';
+        return;
+    }
+
+    std::cout << "Successfully opened: " << file_name << '\n';
+
+    json sheet;
+    file >> sheet;
+
+    (load_one_type_sprites<Enums>(sheet), ...);
 }
 
 void load_sprites()
@@ -142,17 +189,19 @@ SDL_Rect get(Entity entity)
   }
 }
 
+/*
 // MTODO: Possibly changes from ButtonState
 inline SDL_Rect get_decoration(ButtonDecoration decoration)
 {
-  if (auto x = get_if<CustomButtonDecoration>(&decoration)) {
-    return custom_decorations[static_cast<size_t>(*x)];
-  }
-  else
-		  {
-//TODO
-		  }
+if (auto x = get_if<CustomButtonDecoration>(&decoration)) {
+return  ;
 }
+else {
+ //TODO
+}
+
+}
+*/
 
 inline SDL_Rect get_displayable(Displayable req)
 {

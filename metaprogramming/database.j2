@@ -53,7 +53,7 @@ size_t capacity;
 // CONSTRUCTOR
 // =========================
 
-Database(Arena& arena, size_t capacity
+Database(Arena* arena, size_t capacity
 {% if 'movable' or 'searchable' in traits %}
   , World& world
 {% endif %} 

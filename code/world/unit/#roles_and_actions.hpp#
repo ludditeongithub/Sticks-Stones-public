@@ -2,7 +2,7 @@
 #define ROLES_H_
 #include "enum.hpp"
 #include <data/types/action.hpp>
-#include <data/types/aliases.hpp>
+
 #include <cstdint>
 #include <limits>
 #include <vector>

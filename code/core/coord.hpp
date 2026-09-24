@@ -14,7 +14,14 @@ enum class Direction : uint8_t
 struct Coord
 {
 	uint32_t x;
-	uint32_t y;
+		uint32_t y;
+
+		Coord() : x(0), y(0) {}
+
+		Coord(uint32_t x, uint32_t y) : x(x), y(y)
+		{
+				
+		}
 
 		Coord operator+(const Coord c) { return Coord(this->x + c.x, this->y + c.y); }
 

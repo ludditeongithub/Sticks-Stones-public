@@ -7,7 +7,8 @@
 #include <data/types/plant.hpp>
 #include <data/const/chunk_data.hpp>
 #include <data/types/tile.hpp>
-#include <data/types/aliases.hpp>
+#include <data/types/geography.hpp>
+#include <data/types/item.hpp>
 
 float range_penalty(float original_value, float min_value, float max_value, float adjusted_value);
 
@@ -226,7 +227,8 @@ ScavengeableSpawnBuffer(size_t capacity)
 
 	WorldSpawner(int width, int height)
 	    : width(width), height(height),
-	      tile_amount(width * height * CHUNK_SIZE * CHUNKS_PER_REGION), tile_width(width * CHUNK_SIZE)
+	      tile_amount(width * height * CHUNK_SIZE * CHUNKS_PER_REGION), tile_width(width * CHUNK_SIZE), animal_spawn_buffer(AnimalSpawnBuffer(width*height)), tile_spawn_buffer(TileSpawnBuffer(width * height)),
+		  plant_spawn_buffer(PlantSpawnBuffer(width * height)), scavengeable_spawn_buffer(ScavengeableSpawnBuffer(width * height))
 	{
 		rcx = RandomMachine<int>(height / 8, 7 * width / 8);
 		rcy = RandomMachine<int>(height / 8, 7 * width / 8);
@@ -242,14 +244,11 @@ ScavengeableSpawnBuffer(size_t capacity)
 		map_reserve_rows(width, height, instantiated_water_map);
 		map_reserve_rows(width, height, ocean_distance);
 		map_reserve_rows(width, height, r_visited);
-                tile_spawn_buffer = TileSpawnBuffer(width * height);
-		plant_spawn_buffer = PlantSpawnBuffer(width * height);
-                scavengeable_spawn_buffer = ScavengeableSpawnBuffer(width * height);
-                animal_spawn_buffer = AnimalSpawnBuffer(width * height);
 	}
 
+		//TODO: destructor
+
 	void generate_world();
-  
 	// helpers
 	void recursive_lower();
 	void recursive_fill();
@@ -303,4 +302,3 @@ humidity_and_rain_shadow_effects(int y, int x, int water, bool biomes);
 	int current_y_max = 0;
 };
 
-Tile

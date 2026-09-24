@@ -10,7 +10,7 @@
 #include <display/ui/components/status_bar.hpp>
 #include <display/ui/components/text_box.hpp>
 #include <display/ui/components/element.hpp>
-#include <data/types/aliases.hpp>
+
 #include <display/render/animation.hpp>
 #include <display/render/texture.hpp>
 #include <variant>

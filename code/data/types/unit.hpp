@@ -4,10 +4,9 @@
 #include <SDL2/SDL_pixels.h>
 #include <cstdint>
 #include <array>
-#include <data/types/aliases.hpp>
+#include <data/types/stats.hpp>
 #include <data/types/container.hpp>
-
-constexpr size_t MATURITY_AGE = 15;
+#include <data/const/unit_data.hpp>
 
 enum class Unit : uint8_t
 {
@@ -365,3 +364,6 @@ struct Place
 	PlaceType type;
 };
 
+using Roles = std::array<Role, MAX_ROLES>;
+using RoleMana = uint8_t;
+using Places = std::array<Place, 3>;

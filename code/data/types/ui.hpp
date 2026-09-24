@@ -1,7 +1,28 @@
 #pragma once
-#include <cstdint>
-#include <variant>
+#include <data/types/item.hpp>
+#include <data/types/buildable.hpp>
+#include <data/types/progression.hpp>
 #include <data/types/entity.hpp>
+#include <variant>
+
+using Displayable = std::variant<Item, Buildable, knowledge::Academic, knowledge::Technology>;
+
+enum class UISprite
+{
+	NONE,
+	Background,
+	WoodTextBox,
+	EntityDisplayFrame,
+	EquipmentFrame,
+	EquipmentFrameAlt,
+	RoleFrame,
+	MenuCatalogFrame,
+	CatalogItemFrame,
+	InfoMenuItemFrame,
+	RequirementFrame,
+	MAX
+};
+
 
 enum class ButtonSprite : uint8_t
 {
@@ -41,4 +62,6 @@ enum class ButtonState : uint8_t
 	Pressed,
 };
 
+//?
 using ButtonDecoration = std::variant<CustomButtonDecoration, Entity>;
+

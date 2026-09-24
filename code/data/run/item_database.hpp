@@ -5,7 +5,7 @@
 #include <core/hash.hpp>
 #include <../extern/cereal/archives/binary.hpp>
 #include <data/types/item.hpp>
-#include <data/types/aliases.hpp>
+
 #include <core/containers.hpp>
 #include <logic/generic/search/search.hpp>
 
@@ -19,7 +19,7 @@ class Database
 // BASE DATABASE MEMBERS
 // =========================
 
-constexpr static uint16_t entity_size = sizeof(Item) +
+constexpr static uint16_t ENTITY_SIZE = sizeof(Item) +
 + sizeof(bool)
   
  +  sizeof(Item) 
@@ -50,7 +50,7 @@ size_t capacity;
 // CONSTRUCTOR
 // =========================
 
-Database(Arena& arena, size_t capacity
+Database(Arena* arena, size_t capacity
   , World& world
  
   , SearchGrid& search
@@ -126,7 +126,9 @@ assert(item != Item::NONE && item != Item::MAX && "Tried to spawn item as NONE o
         }
             if (insert_search) search.insert_entity(item, {i, this->coord(i)});
         return i;
-}                
+          }
+          
+        
 
 size_t spawn(const Item item, const bool newborn, const Coord origin
 , const bool insert_search = true) {

@@ -2,7 +2,7 @@
 #define GEAR_H_
 
 #include <core/tables.hpp>
-#include <data/types/aliases.hpp>
+
 #include <data/const/item_data.hpp>
 #include <vector>
 #include <optional>

@@ -5,7 +5,7 @@
 #include <vector>
 
 #include <core/containers.hpp>
-#include <data/types/aliases.hpp>
+
 #include <data/types/entity.hpp>
 #include <core/memory.hpp>
 

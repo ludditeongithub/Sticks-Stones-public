@@ -1,7 +1,7 @@
 #ifndef EVENT_H_
 #define EVENT_H_
 #include <vector>
-#include <data/types/aliases.hpp>
+
 #include <logic/simulation/game.hpp>
 
 enum class EventType

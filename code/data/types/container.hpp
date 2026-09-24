@@ -140,8 +140,8 @@ enum class ContainerFullTags : uint8_t
 
 struct Container
 {
-	Item type;
-	ContainerFullTags tags;
+	ContainerType type = ContainerType::NONE;
+	ContainerFullTags tags = ContainerFullTags::NONE;
 	float bulk = 0;
 	float weight = 0;
 
@@ -151,10 +151,14 @@ struct Container
 	//  VariantItemSlot variant_item;
 	//  std::array<ToolSlot, 2> tools;
 
-	Container(Item type, ContainerFullTags tags, float bulk, float weight) : type(type), tags(tags), bulk(bulk), weight(weight)
+	Container(ContainerType type, ContainerFullTags tags, float bulk, float weight) : type(type), tags(tags), bulk(bulk), weight(weight)
 	{
-			assert(has_tag(item::Tag::Container, item::TAGS[type]));	
+			//	assert(has_tag(item::Tag::Container, item::TAGS[type]));
+			for (auto x: holdables) x = NullSlot();
 	}
+
+
+		Container() = default;
 };
 
 struct ContainerStorageData

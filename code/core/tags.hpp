@@ -1,8 +1,9 @@
 #pragma once
 #include <numeric>
+#include <type_traits>
 
 template <typename Enum>
-inline Enum operator|(Enum a, Enum b)
+constexpr Enum operator|(Enum a, Enum b)
 {
     return static_cast<Enum>(
         static_cast<std::underlying_type_t<Enum>>(a) |

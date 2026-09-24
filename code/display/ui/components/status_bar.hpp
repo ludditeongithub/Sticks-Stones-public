@@ -1,5 +1,5 @@
 #include <SDL2/SDL_rect.h>
-#include <data/types/aliases.hpp>
+
 #include <display/render/texture.hpp>
 #include <variant>
 

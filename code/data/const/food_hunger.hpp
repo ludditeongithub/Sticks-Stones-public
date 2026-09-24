@@ -2,7 +2,7 @@
 #define FOODHUNGER_HPP
 
 #include "animal_diet_categories.hpp"
-#include <data/types/aliases.hpp>
+
 #include <core/tables.hpp>
 #include <data/types/plant.hpp>
 

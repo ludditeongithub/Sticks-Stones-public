@@ -1,4 +1,4 @@
-#include "data/types/aliases.hpp"
+
 #include <data/run/animal_database.hpp>
 #error "DATABASE HEADER INCLUDED"
 #include "display/render/sprite.hpp"

@@ -1,6 +1,6 @@
 #pragma once
 #include <data/types/tile.hpp>
-#include <data/types/aliases.hpp>
+
 #include <core/tables.hpp>
 #include <data/types/chunk.hpp>
 

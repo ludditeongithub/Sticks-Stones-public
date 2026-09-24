@@ -1,7 +1,7 @@
 #pragma once
 #include <data/types/unit.hpp>
 #include <data/types/target.hpp>
-#include <data/types/aliases.hpp>
+
 #include <data/types/action.hpp>
 #include <data/const/unit_data.hpp>
 #include <cstdint>
@@ -21,7 +21,7 @@ class Database
 // BASE DATABASE MEMBERS
 // =========================
 
-constexpr static uint16_t entity_size = sizeof(Unit) +
+constexpr static uint16_t ENTITY_SIZE = sizeof(Unit) +
 + sizeof(bool)
   
  +  sizeof(Unit) 
@@ -36,7 +36,7 @@ constexpr static uint16_t entity_size = sizeof(Unit) +
  +  sizeof(Frame) 
  +  sizeof(Coord) 
  +  sizeof(RoleMana) 
- +  sizeof(std::array<Role, ROLE_MAX>) 
+ +  sizeof(std::array<Role, MAX_ROLES>) 
  +  sizeof(SkinData) 
  +  sizeof(Skills) 
  +  sizeof(Inventory) 
@@ -70,7 +70,7 @@ size_t capacity;
     Array<Frame> inertias;
     Array<Coord> coords;
     Array<RoleMana> role_manas;
-    Array<std::array<Role, ROLE_MAX>> role_lists;
+    Array<std::array<Role, MAX_ROLES>> role_lists;
     Array<SkinData> skin_datas;
     Array<Skills> skills;
     Array<Inventory> inventorys;
@@ -82,7 +82,7 @@ size_t capacity;
 // CONSTRUCTOR
 // =========================
 
-Database(Arena& arena, size_t capacity
+Database(Arena* arena, size_t capacity
   , World& world
  
   , SearchGrid& search
@@ -90,7 +90,7 @@ Database(Arena& arena, size_t capacity
 ) :
   world(world),
   tiles(tiles),
-search(search),
+search(search)
 {
 this->capacity = capacity;
   no_inertia_buffer.reserve(capacity);
@@ -123,7 +123,7 @@ this->capacity = capacity;
  
  role_manas = arena_make_array<RoleMana>(arena, capacity); 
  
- role_lists = arena_make_array<std::array<Role, ROLE_MAX>>(arena, capacity); 
+ role_lists = arena_make_array<std::array<Role, MAX_ROLES>>(arena, capacity); 
  
  skin_datas = arena_make_array<SkinData>(arena, capacity); 
  
@@ -176,7 +176,7 @@ return coords[index];
   inline RoleMana& role_mana(const EntityID index) {
 return role_manas[index];
   }
-  inline std::array<Role, ROLE_MAX>& role_list(const EntityID index) {
+  inline std::array<Role, MAX_ROLES>& role_list(const EntityID index) {
 return role_lists[index];
   }
   inline SkinData& skin_data(const EntityID index) {
@@ -235,7 +235,7 @@ assert(unit != Unit::NONE && unit != Unit::MAX && "Tried to spawn unit as NONE o
             this->inertia(i) = 0;
             this->coord(i) = coord;
             this->role_mana(i) = STARTING_ROLE_MANA;
-            this->role_list(i) = std::array<Role, ROLE_MAX>{};
+            this->role_list(i) = std::array<Role, MAX_ROLES>{};
             this->skin_data(i) = generate_melanin(parent1, parent2), generate_skin_warmth(parent1, parent2), 0.5, 0.0;
             this->skill(i) = Skills{};
             this->inventory(i) = Inventory{};
@@ -256,7 +256,7 @@ assert(unit != Unit::NONE && unit != Unit::MAX && "Tried to spawn unit as NONE o
             this->inertia(i) = 0;
             this->coord(i) = coord;
             this->role_mana(i) = STARTING_ROLE_MANA;
-            this->role_list(i) = std::array<Role, ROLE_MAX>{};
+            this->role_list(i) = std::array<Role, MAX_ROLES>{};
             this->skin_data(i) = generate_melanin(world, coord), generate_skin_warmth(world, coord), 0.5, 0.0;
             this->skill(i) = Skills{};
             this->inventory(i) = Inventory{};

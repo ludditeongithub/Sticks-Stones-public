@@ -1,5 +1,5 @@
 #pragma once
-#include "data/types/aliases.hpp"
+#include <data/types/geography.hpp>
 #include "core/random.hpp"
 #include <cstdint>
 #include <core/containers.hpp>
@@ -18,7 +18,7 @@ struct World
 	const uint16_t chunk_amount;
 	const uint16_t chunk_latitude_height = height_chunks / LATITUDE_TOTAL; // amount of chunks per latitude
   const uint16_t chunk_longitude_width = length_chunks / LONGITUDE_TOTAL;
-	const uint32_t world_tile_amount = chunk_amount * chunk_size;
+	const uint32_t world_tile_amount = chunk_amount * CHUNK_SIZE;
 	const uint32_t world_tile_length = sqrt(world_tile_amount);
 
 	static constexpr CloudKey MIN_LIGHT_CLOUDS = 50;
@@ -43,7 +43,6 @@ struct World
 	Array<float> seasonal_insolations;
 	Array<float> cloud_covers;
 
-
   struct ChunkTempData
 {
     std::vector<float> min_temps;
@@ -59,7 +58,7 @@ struct World
 };
 	ChunkTempData chunk_temp_data;
 
-	World(Arena& arena, int width, int height)
+	World(Arena* arena, int width, int height)
 	    : length_chunks(width), height_chunks(height),
 	      equator(height / 2),
       chunk_amount(width * height),      
