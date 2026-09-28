@@ -4,6 +4,8 @@
 CMakeFiles/test_exe.dir/display/render/screen.cpp.o
  /home/logan/gameprogramming/code/display/render/screen.cpp
  /home/logan/gameprogramming/code/core/coord.hpp
+ /home/logan/gameprogramming/code/data/game/screen.hpp
+ /home/logan/gameprogramming/code/data/run/camera.hpp
  /home/logan/gameprogramming/code/display/render/screen.hpp
  /home/logan/gameprogramming/code/display/render/texture.hpp
  /usr/include/SDL2/SDL.h
@@ -389,6 +391,8 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o
 CMakeFiles/test_exe.dir/display/render/texture.cpp.o
  /home/logan/gameprogramming/code/display/render/texture.cpp
  /home/logan/gameprogramming/code/core/coord.hpp
+ /home/logan/gameprogramming/code/data/game/screen.hpp
+ /home/logan/gameprogramming/code/data/run/camera.hpp
  /home/logan/gameprogramming/code/display/render/screen.hpp
  /home/logan/gameprogramming/code/display/render/texture.hpp
  /usr/include/SDL2/SDL.h
@@ -515,7 +519,6 @@ CMakeFiles/test_exe.dir/display/render/texture.cpp.o
  /usr/include/bits/wordsize.h
  /usr/include/bits/xopen_lim.h
  /usr/include/c++/16/algorithm
- /usr/include/c++/16/array
  /usr/include/c++/16/backward/binders.h
  /usr/include/c++/16/bit
  /usr/include/c++/16/bits/algorithmfwd.h
@@ -774,6 +777,7 @@ CMakeFiles/test_exe.dir/display/render/texture.cpp.o
 
 CMakeFiles/test_exe.dir/test.cpp.o
  /home/logan/gameprogramming/code/test.cpp
+ /home/logan/gameprogramming/extern/SDL_FontCache.h
  /home/logan/gameprogramming/extern/cereal/access.hpp
  /home/logan/gameprogramming/extern/cereal/archives/binary.hpp
  /home/logan/gameprogramming/extern/cereal/cereal.hpp
@@ -785,22 +789,44 @@ CMakeFiles/test_exe.dir/test.cpp.o
  /home/logan/gameprogramming/extern/cereal/specialize.hpp
  /home/logan/gameprogramming/extern/cereal/types/base_class.hpp
  /home/logan/gameprogramming/extern/cereal/types/common.hpp
+ /home/logan/gameprogramming/extern/cereal/types/deque.hpp
+ /home/logan/gameprogramming/extern/cereal/types/stack.hpp
+ /home/logan/gameprogramming/extern/cereal/types/vector.hpp
  /home/logan/gameprogramming/extern/json.hpp
  /home/logan/gameprogramming/extern/magic_enum/magic_enum.hpp
  /home/logan/gameprogramming/code/core/containers.hpp
  /home/logan/gameprogramming/code/core/coord.hpp
  /home/logan/gameprogramming/code/core/hash.hpp
+ /home/logan/gameprogramming/code/core/info.hpp
  /home/logan/gameprogramming/code/core/memory.hpp
+ /home/logan/gameprogramming/code/core/memory_control.hpp
+ /home/logan/gameprogramming/code/core/mouse.hpp
  /home/logan/gameprogramming/code/core/packed_enum.hpp
  /home/logan/gameprogramming/code/core/random.hpp
+ /home/logan/gameprogramming/code/core/saves.hpp
  /home/logan/gameprogramming/code/core/tables.hpp
  /home/logan/gameprogramming/code/core/tags.hpp
+ /home/logan/gameprogramming/code/data/const/animal_data.hpp
+ /home/logan/gameprogramming/code/data/const/animal_tables.hpp
+ /home/logan/gameprogramming/code/data/const/buildable_data.hpp
+ /home/logan/gameprogramming/code/data/const/buildable_tables.hpp
  /home/logan/gameprogramming/code/data/const/chunk_data.hpp
+ /home/logan/gameprogramming/code/data/const/plant_tables.hpp
  /home/logan/gameprogramming/code/data/const/tags.hpp
  /home/logan/gameprogramming/code/data/const/tile_data.hpp
  /home/logan/gameprogramming/code/data/const/unit_data.hpp
+ /home/logan/gameprogramming/code/data/const/unit_tables.hpp
+ /home/logan/gameprogramming/code/data/game/screen.hpp
+ /home/logan/gameprogramming/code/data/run/animal_database.hpp
+ /home/logan/gameprogramming/code/data/run/buildable_database.hpp
+ /home/logan/gameprogramming/code/data/run/camera.hpp
+ /home/logan/gameprogramming/code/data/run/item_database.hpp
+ /home/logan/gameprogramming/code/data/run/plant_database.hpp
  /home/logan/gameprogramming/code/data/run/tile_database.hpp
+ /home/logan/gameprogramming/code/data/run/unit_database.hpp
+ /home/logan/gameprogramming/code/data/run/unit_helpers.hpp
  /home/logan/gameprogramming/code/data/run/world.hpp
+ /home/logan/gameprogramming/code/data/types/action.hpp
  /home/logan/gameprogramming/code/data/types/animal.hpp
  /home/logan/gameprogramming/code/data/types/buildable.hpp
  /home/logan/gameprogramming/code/data/types/chunk.hpp
@@ -811,13 +837,27 @@ CMakeFiles/test_exe.dir/test.cpp.o
  /home/logan/gameprogramming/code/data/types/plant.hpp
  /home/logan/gameprogramming/code/data/types/progression.hpp
  /home/logan/gameprogramming/code/data/types/stats.hpp
+ /home/logan/gameprogramming/code/data/types/target.hpp
  /home/logan/gameprogramming/code/data/types/tile.hpp
  /home/logan/gameprogramming/code/data/types/time.hpp
  /home/logan/gameprogramming/code/data/types/ui.hpp
  /home/logan/gameprogramming/code/data/types/unit.hpp
+ /home/logan/gameprogramming/code/display/render/camera.hpp
+ /home/logan/gameprogramming/code/display/render/draw.hpp
+ /home/logan/gameprogramming/code/display/render/render_chunk.hpp
  /home/logan/gameprogramming/code/display/render/screen.hpp
  /home/logan/gameprogramming/code/display/render/sprite.hpp
  /home/logan/gameprogramming/code/display/render/texture.hpp
+ /home/logan/gameprogramming/code/display/ui/aggregates/swipable_menu.hpp
+ /home/logan/gameprogramming/code/display/ui/components/button.hpp
+ /home/logan/gameprogramming/code/display/ui/components/button_functionality.hpp
+ /home/logan/gameprogramming/code/display/ui/components/element.hpp
+ /home/logan/gameprogramming/code/display/ui/components/pop-up_box.hpp
+ /home/logan/gameprogramming/code/display/ui/components/text.hpp
+ /home/logan/gameprogramming/code/display/ui/main/main_menu.hpp
+ /home/logan/gameprogramming/code/display/ui/sound/sound.hpp
+ /home/logan/gameprogramming/code/logic/generic/search/search.hpp
+ /home/logan/gameprogramming/code/logic/simulation/game.hpp
  /home/logan/gameprogramming/code/logic/simulation/world_gen.hpp
  /usr/include/SDL2/SDL.h
  /usr/include/SDL2/SDL_assert.h
@@ -981,11 +1021,13 @@ CMakeFiles/test_exe.dir/test.cpp.o
  /usr/include/c++/16/bits/char_traits.h
  /usr/include/c++/16/bits/charconv.h
  /usr/include/c++/16/bits/chrono.h
+ /usr/include/c++/16/bits/chrono_io.h
  /usr/include/c++/16/bits/codecvt.h
  /usr/include/c++/16/bits/concept_check.h
  /usr/include/c++/16/bits/cpp_type_traits.h
  /usr/include/c++/16/bits/cxxabi_forced.h
  /usr/include/c++/16/bits/cxxabi_init_exception.h
+ /usr/include/c++/16/bits/deque.tcc
  /usr/include/c++/16/bits/elements_of.h
  /usr/include/c++/16/bits/enable_special_members.h
  /usr/include/c++/16/bits/erase_if.h
@@ -1070,6 +1112,7 @@ CMakeFiles/test_exe.dir/test.cpp.o
  /usr/include/c++/16/bits/stl_algobase.h
  /usr/include/c++/16/bits/stl_bvector.h
  /usr/include/c++/16/bits/stl_construct.h
+ /usr/include/c++/16/bits/stl_deque.h
  /usr/include/c++/16/bits/stl_function.h
  /usr/include/c++/16/bits/stl_heap.h
  /usr/include/c++/16/bits/stl_iterator.h
@@ -1081,6 +1124,7 @@ CMakeFiles/test_exe.dir/test.cpp.o
  /usr/include/c++/16/bits/stl_pair.h
  /usr/include/c++/16/bits/stl_raw_storage_iter.h
  /usr/include/c++/16/bits/stl_relops.h
+ /usr/include/c++/16/bits/stl_stack.h
  /usr/include/c++/16/bits/stl_tempbuf.h
  /usr/include/c++/16/bits/stl_tree.h
  /usr/include/c++/16/bits/stl_uninitialized.h
@@ -1110,6 +1154,7 @@ CMakeFiles/test_exe.dir/test.cpp.o
  /usr/include/c++/16/cctype
  /usr/include/c++/16/cerrno
  /usr/include/c++/16/charconv
+ /usr/include/c++/16/chrono
  /usr/include/c++/16/clocale
  /usr/include/c++/16/cmath
  /usr/include/c++/16/codecvt
@@ -1125,6 +1170,7 @@ CMakeFiles/test_exe.dir/test.cpp.o
  /usr/include/c++/16/cwctype
  /usr/include/c++/16/debug/assertions.h
  /usr/include/c++/16/debug/debug.h
+ /usr/include/c++/16/deque
  /usr/include/c++/16/exception
  /usr/include/c++/16/ext/aligned_buffer.h
  /usr/include/c++/16/ext/alloc_traits.h
@@ -1165,6 +1211,7 @@ CMakeFiles/test_exe.dir/test.cpp.o
  /usr/include/c++/16/ratio
  /usr/include/c++/16/span
  /usr/include/c++/16/sstream
+ /usr/include/c++/16/stack
  /usr/include/c++/16/stdexcept
  /usr/include/c++/16/stdlib.h
  /usr/include/c++/16/streambuf

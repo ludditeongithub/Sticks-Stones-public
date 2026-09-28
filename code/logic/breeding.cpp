@@ -5,7 +5,8 @@
 #include "display/render/sprite.hpp"
 #include "logic/generic/schedule/event.hpp"
 #include "data/types/animal.hpp"
-#include "world/animal/tables.hpp"
+#include <data/const/animal_data.hpp>
+#include <data/const/animal_tables.hpp>
 #include <stdexcept>
 #include <string>
 

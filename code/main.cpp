@@ -3,7 +3,6 @@
 #include <SDL2/SDL_events.h>
 #include <display/render/screen.hpp>
 
-
 int main()
 {
 		g_window_system.load_sprite_sheet();
@@ -15,7 +14,5 @@ int main()
 						SDL_Event* e;
 						SDL_PollEvent(e);
 						main_menu.handle(e);
-				}
-
-		
+				}	
 }

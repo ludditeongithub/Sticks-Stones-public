@@ -11,6 +11,7 @@ namespace variant_item
 {
 class Database {
 		// @codegen:begin database_generation
+public:
 // =========================
 // BASE DATABASE MEMBERS
 // =========================
@@ -28,11 +29,8 @@ size_t capacity;
     Stack<size_t> free_slots;
     Array<bool> alives;
   SearchGrid& search;
-  
-  std::vector<EntityID>& no_inertia_buffer; // size is amount of no inertias this loop
-  
-  std::vector<EntityID>& unassigned_buffer; // size is amount of unassigned this loop
-  World& world;
+  std::vector<EntityID> no_inertia_buffer; 
+  std::vector<EntityID> unassigned_buffer;
   tile::Database& tiles;
 
     // =========================
@@ -48,17 +46,17 @@ size_t capacity;
 // CONSTRUCTOR
 // =========================
 
-Database(Arena* arena, size_t capacity
-  , World& world
- 
+  Database(Arena* arena, size_t capacity
   , SearchGrid& search
   , tile::Database& tiles
-) :
-  world(world),
-  tiles(tiles),
-search(search),
+) 
+    : tiles(tiles),
+search(search)
+  
 {
 this->capacity = capacity;
+  no_inertia_buffer.reserve(capacity);
+  unassigned_buffer.reserve(capacity);
 
   this->size = 0;
 
@@ -94,7 +92,7 @@ return variants[index];
   // =========================
 
 
-bool attempt_spawn(const Item item, const bool newborn, const Coord coord  , const Variant variant  , const bool insert_search = true
+bool attempt_spawn(const Item item, const Coord coord, const bool newborn  , const Variant variant  , const bool insert_search = true
 )
 {
 #if !SHIPPING_BUILD
@@ -135,13 +133,13 @@ assert(item != Item::NONE && item != Item::MAX && "Tried to spawn item as NONE o
           
         
 
-size_t spawn(const Item item, const bool newborn, const Coord origin
+          size_t spawn(const Item item, const bool newborn, const Coord origin
   , const Variant variant
 , const bool insert_search = true) {
 Coord spawn_point = tiles.get_nearest_empty_tile(origin);
 size_t result = 0;
 while (result == 0) {
-result = attempt_spawn(item, newborn, spawn_point
+result = attempt_spawn(item, spawn_point, newborn
   , variant
 , insert_search  
 );

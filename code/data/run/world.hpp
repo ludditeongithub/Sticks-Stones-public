@@ -5,7 +5,10 @@
 #include <core/containers.hpp>
 #include <core/memory.hpp>
 #include <logic/simulation/world_gen.hpp>
-#include <data/run/tile_database.hpp>
+
+namespace tile {
+class Database;
+};
 
 struct World
 {
@@ -88,14 +91,9 @@ struct World
 	uint32_t get_tile_index_chunk_relative(uint32_t i);
 	uint32_t get_tile_index_chunk_relative(Coord c);
 
-	Coord get_random_player_start()
-	{	return{ static_cast<uint32_t>(random_chance->next() * length_chunks) , static_cast<uint32_t>(random_chance->next() * height_chunks)};
-	}
+	Coord get_random_player_start();
 
-	void load_chunk_data(WorldSpawner &ws)
-	{
-		ws.move_regions_to_chunks(humidities, temperatures, altitudes);
-	}
+	void load_chunk_data(WorldSpawner &ws);
 
 	void update_daily_insolations(uint16_t day365);
 
@@ -107,7 +105,7 @@ struct World
 
 	void apply_weather(tile::Database* tile_db);
 
-	void apply_precipitation(tile::Database *tile_db, uint16_t chunk, bool heavy);
+	void apply_precipitation(tile::Database* tile_db, uint16_t chunk, bool heavy);
 	
 };
 

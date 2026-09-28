@@ -1,5 +1,7 @@
 #ifndef ANIMATION_HPP
 #define ANIMATION_HPP
+#include "data/const/unit_data.hpp"
+#include "data/run/camera.hpp"
 #include "texture.hpp"
 #include <SDL2/SDL_rect.h>
 #include <core/containers.hpp>
@@ -8,9 +10,11 @@
 #include <cstdint>
 
 #include <data/types/animal.hpp>
-#include <world/animal/tables.hpp>
 #include <data/types/tile.hpp>
+#include <data/types/time.hpp>
+#include <data/const/animal_tables.hpp>
 #include <data/types/unit.hpp>
+#include <data/types/action.hpp>
 #include "sprite.hpp"
 // TODO: sex offsets!
 // TODO: perhaps walking frames last for twice as long as running frames
@@ -18,35 +22,11 @@
 template <typename T>
 void update_animations(Array<Coord> &coords, Array<Frame> &frames, Array<T> &states);
 
-const Frame walk_animation_sprite_length = Frame::F4;
-const Frame run_animation_sprite_length = Frame::F8;
+const Frame walk_animation_sprite_length = 4;
+const Frame run_animation_sprite_length = 8;
 
 // TODO: right now this is only fitted for walk animations. need to make sure
 // all the LOGIC is only fitted for walk animations, for now.
-
-
-inline uint16_t get_action_sprite_offset(sprite::Info &ai, ActionStatus as)
-{
-	switch (as)
-	{
-		// WALK
-	case ActionStatus::Approach:
-		// TODO: sometimes idle moves, sometimes it does not
-	case ActionStatus::Idle:
-	case ActionStatus::ReturnHome:
-	case ActionStatus::Prowl:
-		return 0;
-		break;
-		// TODO: RUN
-	case ActionStatus::Pursuit:
-	case ActionStatus::Flee:
-		return ai.walking_sprite_length;
-		break;
-	default:
-		break;
-	}
-	// TODO: PerformAction, set of actions, be sure to update child sprite offset!
-}
 
 inline uint16_t get_action_sprite_offset(sprite::Info &info, ActState state) {
 	switch (state)
@@ -113,27 +93,6 @@ inline uint16_t get_direction_sprite_offset(sprite::Info &asi, Direction d, bool
 		}
 	}
 	return d_offset;
-}
-
-inline uint16_t get_frame_sprite_offset(sprite::Info &asi, ActionStatus as, Frame frame_number, uint16_t sprite_height)
-{
-	uint8_t frame = static_cast<uint8_t>(frame_number);
-	switch (as)
-	{
-		// WALK
-	case ActionStatus::Approach:
-		// TODO: sometimes idle moves, sometimes it does not
-	case ActionStatus::Idle:
-	case ActionStatus::ReturnHome:
-	case ActionStatus::Prowl:
-		return sprite_height * (frame / asi.walk_sprite_frame_length);
-		break;
-		// TODO: RUN
-	case ActionStatus::Pursuit:
-	case ActionStatus::Flee:
-		return sprite_height * (frame / asi.run_sprite_frame_length);
-		break;	
-	}	
 }
 
 inline uint16_t get_frame_sprite_offset(sprite::Info &asi, ActState as, Frame frame_number,
@@ -206,12 +165,13 @@ inline Coord get_sprite_dimensions(sprite::Info &asi, Direction d, bool child)
 	return {w, h};
 }
 
-SDL_Rect get_animal_rect(Animal a, AnimalStatus as, Time age, Frame frame, sprite::Info& asi)
+inline SDL_Rect get_animal_rect(Animal a, FrameData as, Time age, sprite::Info& asi)
 {
-	bool child = age < animal::FERTILITY_AGES[a];
-	SDL_Rect sprite_set = sprite::animal[a];
+	bool child = age <animal::FERTILITY_AGES[a];
+	SDL_Rect sprite_set = sprite::animals[a];
 	int x = sprite_set.x;
-	ActionStatus ac = as.get<ActionStatus>();
+	ActState ac = as.get<ActState>();
+	Frame frame = as.get<Frame>();
 	if (child)
 		x += get_child_sprite_offset(asi);
 	x += get_action_sprite_offset(asi, ac);
@@ -224,23 +184,21 @@ SDL_Rect get_animal_rect(Animal a, AnimalStatus as, Time age, Frame frame, sprit
 	return {x, y, static_cast<int>(c.x), static_cast<int>(c.y)};
 }
 
-inline Frame get_next_animal_frame(Animal a, ActionStatus as, Frame frame_number, sprite::Info& asi)
+inline Frame get_next_animal_frame(Animal a, ActState as, Frame frame_number, sprite::Info& asi)
 {
 		uint8_t frame = static_cast<uint8_t>(frame_number);
 	switch (as)
 	{
-		// WALK
-	case ActionStatus::Approach:
-		// TODO: sometimes idle moves, sometimes it does not
-	case ActionStatus::Idle:
-	case ActionStatus::ReturnHome:
-	case ActionStatus::Prowl:
+					//TODO: act
+	case ActState::Act:
+	case ActState::NewPath:
+		frame = 0;
+		break;
+	case ActState::Walk:
 		if (frame++ > asi.walk_sprite_frame_length)
 			frame = 0;
 		break;
-		// TODO: RUN
-	case ActionStatus::Pursuit:
-	case ActionStatus::Flee:
+	case ActState::Run:
 		if (frame++ > asi.run_sprite_frame_length)
 			frame = 0;
 		break;
@@ -250,22 +208,22 @@ inline Frame get_next_animal_frame(Animal a, ActionStatus as, Frame frame_number
 	return static_cast<Frame>(frame);
 }
 
-void update_animal_animations(Coord left_corner, EntityRenderBuffer &erd, Array<Frame> &frames,
-			    Array<Time> &ages, Array<AnimalStatus> &states)
+void update_animal_animations(EntityRenderBuffer &erd, Array<FrameData> &frame_datas,
+			    Array<Time> &ages)
 {
 	for (size_t i = 0; i < erd.animal_amount; i++)
 	{
 		AnimalRenderData ard = erd.animals[i];
 		uint16_t ai = ard.index;
-		Frame &f = frames[ai];
-		AnimalStatus &s = states[ai];
-		sprite::Info asi = animal_sprite_infos[ard.animal];
-		SDL_Rect r = get_animal_rect(ard.animal, s, ages[ai], f, asi);
+		FrameData fd = frame_datas[i];
+		sprite::Info asi = sprite::ANIMAL_SPRITE_INFOS[ard.animal];
+		SDL_Rect r = get_animal_rect(ard.animal, fd, ages[ai], asi);
 
 		// TODO: position must be relative to screen
-		sprite_sheet_texture.render(ard.position.x, ard.position.y, &r, &main_screen_viewport);
-		
-		f = get_next_animal_frame(ard.animal, s.get<ActionStatus>(), f, asi);
+		sprite_sheet_texture.render(ard.position.x, ard.position.y, &r,
+									g_main_screen_viewport);
+		//set next frame
+		fd.set<Frame>(get_next_animal_frame(ard.animal, fd.get<ActState>(), fd.get<Frame>(), asi));
 	}
 }
 
@@ -283,12 +241,12 @@ inline Frame get_next_unit_frame(Unit u, ActState as, Frame frame_number)
 		break;
 		// WALK
 	case ActState::Walk:
-		if (frame++ > UNIT_SPRITE_INFO.walk_sprite_frame_length)
+			if (frame++ > sprite::UNIT_SPRITE_INFO.walk_sprite_frame_length)
 			frame = 0;
 		break;
 		// TODO: RUN
 	case ActState::Run:
-		if (frame++ > UNIT_SPRITE_INFO.run_sprite_frame_length)
+			if (frame++ > sprite::UNIT_SPRITE_INFO.run_sprite_frame_length)
 			frame = 0;
 		break;
         // TODO: implement		
@@ -301,12 +259,17 @@ inline Frame get_next_unit_frame(Unit u, ActState as, Frame frame_number)
 	return static_cast<Frame>(frame);
 }
 
+//TODO: elderly, skin
 inline SDL_Rect get_unit_rect(Unit unit, ActState state, Direction direction, Frame frame, Time age) {
-	bool child = age < MATURITY_AGE;
-	SDL_Rect sprite_set = sprite::unit[];
+	if (age < MATURITY_AGE)
+	{
+			
+	} else if (age < ELDER_AGE) {
+
+	}
+	SDL_Rect sprite_set = sprite::units[unit];
 	int x = sprite_set.x;
 	sprite::Info usi = UNIT_SPRITE_INFO;
-	if (child) x += get_child_sprite_offset(usi);
 	x += get_action_sprite_offset(usi, state);
 	x += get_direction_sprite_offset(usi, direction, child);
 
@@ -316,8 +279,7 @@ inline SDL_Rect get_unit_rect(Unit unit, ActState state, Direction direction, Fr
 	return {x, y, static_cast<int>(c.x), static_cast<int>(c.y)};
 }
 
-void update_unit_animations(Coord left_corner, EntityRenderBuffer &erd,
-			  Array<Time> &ages, Array<FrameData> &frame_datas)
+void update_unit_animations(Coord left_corner, EntityRenderBuffer &erd, Array<Time> &ages, Array<FrameData> &frame_datas)
 {
 	for (size_t i = 0; i < erd.animal_amount; i++)
 	{

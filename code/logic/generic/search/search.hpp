@@ -24,11 +24,11 @@ struct GridInfo
 	uint16_t distance;
 };
 
-constexpr uint16_t AVERAGE_CHUNK_PLANTS_SIZE = chunk_size / 2.5;
-constexpr uint16_t AVERAGE_CHUNK_ANIMALS_SIZE = chunk_size / 15;
-constexpr uint16_t AVERAGE_CHUNK_SCAVENGEABLE_SIZE = chunk_size / 12;
-constexpr uint16_t AVERAGE_CHUNK_CIVILIZATION_ITEM_SIZE = chunk_size / 10;
-constexpr uint16_t AVERAGE_CHUNK_UNIT_SIZE = chunk_size / 25;
+constexpr uint16_t AVERAGE_CHUNK_PLANTS_SIZE = CHUNK_SIZE / 2.5;
+constexpr uint16_t AVERAGE_CHUNK_ANIMALS_SIZE = CHUNK_SIZE / 15;
+constexpr uint16_t AVERAGE_CHUNK_SCAVENGEABLE_SIZE = CHUNK_SIZE / 12;
+constexpr uint16_t AVERAGE_CHUNK_CIVILIZATION_ITEM_SIZE = CHUNK_SIZE / 10;
+constexpr uint16_t AVERAGE_CHUNK_UNIT_SIZE = CHUNK_SIZE / 25;
 
 constexpr uint16_t NATURAL_CHUNK_SEARCH_SIZE =
     (AVERAGE_CHUNK_PLANTS_SIZE + AVERAGE_CHUNK_ANIMALS_SIZE + AVERAGE_CHUNK_SCAVENGEABLE_SIZE) *
@@ -89,8 +89,7 @@ struct SearchGrid
 
 	inline Array<EntitySearchData> get_all_of_type_in_range(Entity e, Coord o, Coord d);
 
-	inline EntityRenderBuffer get_all_in_range(Coord o, Coord d);
-
+	inline EntityRenderBuffer get_all_in_range(Coord origin, Coord dimensions);
 
   // =========================
   // ENTITY SCANS

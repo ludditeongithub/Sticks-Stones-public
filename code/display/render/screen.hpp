@@ -8,33 +8,13 @@
 #include <SDL_rect.h>
 #include <SDL_stdinc.h>
 #include <stdio.h>
-#include <array>
 #include <string>
 #include <cstdint>
 #include <cassert>
 #include <algorithm>
-
 #include "display/render/texture.hpp"
-
-extern SDL_Window *window;
-extern SDL_Renderer *renderer;
-// TODO: check if should be in WindowSystem
-extern SDL_Rect main_screen_viewport;
-extern SDL_Rect *g_main_screen_viewport;
-extern std::array<Coord, 6> screen_dimensions;
-extern std::array<Coord, 6> adjusted_screen_dimensions;
-extern Coord g_screen_dimensions;
-
-const int first_launch_window_width = 200;
-const int first_launch_window_height = 500;
-
-// Game Simulation screen dimensions, before upscale to user screen
-constexpr int SCREEN_WIDTH = 640;
-constexpr int SCREEN_HEIGHT = 480;
-
-constexpr uint32_t TILE_LENGTH = 16;
-constexpr uint32_t SCREEN_TILE_HEIGHT = SCREEN_HEIGHT / TILE_LENGTH;
-constexpr uint32_t SCREEN_TILE_WIDTH = SCREEN_WIDTH / TILE_LENGTH;
+#include <data/run/camera.hpp>
+#include <data/game/screen.hpp>
 
 struct WindowSystem
 {
@@ -152,7 +132,7 @@ struct WindowSystem
 		else
 		{
 			// Create renderer for window
-			renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+			renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 			if (renderer == NULL)
 			{
 				printf("Renderer could not be created! SDL Error: %s\n",

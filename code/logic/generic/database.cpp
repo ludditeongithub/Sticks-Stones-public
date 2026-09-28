@@ -1,5 +1,5 @@
-#include "database.hpp"
-#include "data/types/tile.hpp"
+#include <core/coord.hpp>
+#include <data/run/tile_database.hpp>
 
 Coord tile::Database::get_nearest_empty_tile_block(Coord coord, size_t length, size_t width = 1)
 {
@@ -19,26 +19,6 @@ Coord tile::Database::get_nearest_empty_tile_block(Coord coord, size_t length, s
 			}
 		}
 		return top_left_corner;
-}
-
-enum class Adjacency {
-		Any,
-		Horizontal,
-		Vertical
-};
-
-bool tile::Database::adjacent(Coord start, Coord next, Adjacency adjacency = Adjacency::Any) {
-		switch (adjacency) {
-		case Adjacency::Horizontal:
-       			if (std::abs(start.x - next.x) == 1 && std::abs(start.y - next.y) == 0) return true;
-				break;
-		case Adjacency::Vertical:
-       			if (std::abs(start.y - next.y) == 1 && std::abs(start.x - next.x) == 0) return true;
-       			break;
-		default:
-			if ((std::abs(start.y - next.y) <= 1 && std::abs(start.x - next.x) == 0) || (std::abs(start.x - next.x) == 1 && std::abs(start.y - next.y) == 0) return true;
-		}
-		return false;
 }
 
 Coord tile::Database::get_nearest_empty_tile(Coord coord, Adjacency adjacency = Adjacency::Any)

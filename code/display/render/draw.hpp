@@ -1,10 +1,10 @@
 #pragma once
-#include "animation.hpp"
-
+#include "data/const/unit_data.hpp"
+#include "data/run/plant_database.hpp"
+#include "data/types/entity.hpp"
+#include "display/render/sprite.hpp"
 #include "screen.hpp"
-#include "sprite.hpp"
 #include "texture.hpp"
-#include "sprite_sheet_settings.hpp"
 #include <SDL2/SDL_render.h>
 #include <core/containers.hpp>
 #include <core/packed_enum.hpp>
@@ -15,9 +15,8 @@
 #include <data/types/plant.hpp>
 #include <data/const/tile_data.hpp>
 #include <data/types/tile.hpp>
-
-constexpr uint16_t RENDER_CHUNK_WIDTH = 4;
-constexpr uint16_t RENDER_CHUNK_HEIGHT = 4;
+#include <data/const/plant_tables.hpp>
+#include <display/render/render_chunk.hpp>
 
 // entities are stored by central tile, but must drawn from left corner tile
 inline Coord get_left_corner_tile(Coord origin, Coord dimensions)
@@ -25,7 +24,7 @@ inline Coord get_left_corner_tile(Coord origin, Coord dimensions)
 	return {origin.x - (dimensions.x / 2), origin.y - dimensions.y};
 }
 
-inline void copy_tiles(SDL_Texture* chunk_texture, World& world, Array<TileData> &tiles)
+inline void copy_tiles(World& world, Array<TileData> &tiles)
 {
 	for (uint16_t i = 0; i < SCREEN_TILE_HEIGHT; i++)
 	{
@@ -33,31 +32,35 @@ inline void copy_tiles(SDL_Texture* chunk_texture, World& world, Array<TileData>
 		{
 			uint16_t ti = world.get_tile_index_from_coord({i, j});
 			// draw tiles
-			Tile t = tiles[ti].first();
-			SDL_Rect sd = sprite::tile[static_cast<int>(t)];
+			Tile t = tiles[ti].get<Tile>();
+			SDL_Rect sd = sprite::tiles[t];
 			sprite_sheet_texture.render(j * TILE_LENGTH, i * TILE_LENGTH, &sd,
 						   &main_screen_viewport);
 
 			// draw grass
-			Grass g = tiles[ti].second();
+			Grass g = tiles[ti].get<Grass>();
 			if (g != Grass::NONE)
 			{
-				sd = SpriteSheet::grass[static_cast<int>(g)];
+				sd = sprite::grasses[g];
 				sprite_sheet_texture.render(i * TILE_LENGTH, j * TILE_LENGTH, &sd, &main_screen_viewport);
 		}
 	}
 	}
 }	
 
-void copy_plants(EntityRenderBuffer &erd)
+void copy_plants(EntityRenderBuffer &erd, plant::Database& pdb)
 {
 	for (uint16_t i = 0; i < erd.plant_amount; i++)
-	{
-		EntitySearchData esd = {erd.plants[i].index, erd.plants[i].position};
-		
-		SDL_Rect sr = plant_sprite_dimensions[erd.plants[i].plant];
+			{
+		const PlantRenderData pr = erd.plants[i];
+		const std::array<sprite::StageInfo, sprite::MAX_STAGES> &sd = sprite::PLANT_SPRITE_DIMENSIONS[erd.plants[i].plant];
+
+		float age_ratio = std::min(1.0, pdb.age(pr.index) / FULL_MATURITY_AGES[pr.plant]);
+		int stage = age_ratio * sprite::PLANT_STAGE_AMOUNTS[pr.plant];
+		SDL_Rect sr = sprite::PLANT_SPRITE_DIMENSIONS[pr.plant];
+					
 		Coord lc = get_left_corner_tile(
-		    esd.position, {static_cast<uint32_t>(sr.w), static_cast<uint32_t>(sr.y)});
+		    pr.position, {static_cast<uint32_t>(sr.w), static_cast<uint32_t>(sr.y)});
 		sprite_sheet_texture.render(lc.x, lc.y, &sr, &main_screen_viewport);
 	}
 }
@@ -96,18 +99,18 @@ void render_moving_entities(World& world, Coord left_corner, Array<TileData> &ti
 	// update screen
 	SDL_RenderPresent(renderer);
 }
-  
-SDL_Texture& render_chunk_texture(World& world, Array<TileData>& tiles, Coord left_corner, EntityRenderBuffer& entity_render_buffer)
+
+//TODO: right now not rendered as texture
+SDL_Texture& render_chunk_texture(World& world, Array<TileData>& tiles, Coord left_corner, EntityRenderBuffer& entity_render_buffer, plant::Database& plants)
 {
 	SDL_Texture *chunk_texture =
-	    SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
-			      RENDER_CHUNK_WIDTH, RENDER_CHUNK_HEIGHT);
+	    SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, RENDER_CHUNK_WIDTH, RENDER_CHUNK_HEIGHT);
 	
 	SDL_SetRenderTarget(renderer, chunk_texture);
 
-	copy_tiles(chunk_texture, world, tiles);
+	copy_tiles(world, tiles);
 	copy_items(entity_render_buffer);
-	copy_plants(entity_render_buffer);
+	copy_plants(entity_render_buffer, plants);
 }
 
 enum class Renderable
@@ -139,27 +142,3 @@ struct RenderingEvent
 struct RenderingEventsBuffer { //events that have taken place since last render, which will require certain chunks to be re-rendered
 	
 };
-
-struct RenderManager
-{
-	bool first_render = false;
-	
-	void render(World& world, Array<TileData>& tiles, RenderingEventsBuffer& rendering_events_buffer)
-	{
-		EntityRenderBuffer entity_render_buffer;
-		if (first_render)
-		{
-	// render rendering-chunks
-	for (size_t i = 0; i < world.world_tile_length; i+=RENDER_CHUNK_WIDTH) {
-		for (size_t j = 0; j < world.world_tile_length; j+=RENDER_CHUNK_HEIGHT) {
-			render_chunk_texture(world, tiles, {i,j} , entity_render_buffer);
-		}
-	}
-		} else {			
-		  
-	}
-	
-}	
-
-};
-

@@ -65,9 +65,9 @@ inline int get_new_diamond_edge(std::vector<Coord>& edge_buffer, Coord c, int ra
 void breed_check(Animal animal, int male_index, Direction direction, bool total)
 {
 	if (total)
-		std::vector < std::pair<int, int> de = get_diamond(x, y, , direction);
+		std::vector < Coord de = get_diamond(x, y, , direction);
 	else
-		std::vector < std::pair<int, int> de =
+		std::vector < Coord de =
 		    get_new_diamond_edge(x, y, sight_ranges[animal], direction);
 	for (int x = 0; x < de.size(); x++)
 	{
@@ -91,9 +91,9 @@ void hunt_check(Animal &hunt_list[], int pawn_index, Direction direction, bool a
 	else
 		int sight_range = human_sight;
 	if (total)
-		std::vector < std::pair<int, int> de = get_diamond(x, y, , direction);
+		std::vector < Coord de = get_diamond(x, y, , direction);
 	else
-		std::vector < std::pair<int, int> de = get_new_diamond_edge(x, y, , direction);
+		std::vector < Coord de = get_new_diamond_edge(x, y, , direction);
 	for (int x = 0; x < de.size(); x++)
 	{
 		for (int i = 0; i < hunt_list.size(); i++)
@@ -124,8 +124,8 @@ void hunt_check(Animal &hunt_list[], int pawn_index, Direction direction, bool a
 void edible_plant_check(int animal_index, Direction direction, bool total)
 {
 	if (total)
-		std::vector < std::pair<int, int> de = get_diamond(x, y, , direction);
-	std::vector < std::pair<int, int> de =
+		std::vector < Coord de = get_diamond(x, y, , direction);
+	std::vector < Coord de =
 	    get_new_diamond_edge(x, y, sight_ranges[animals[animal_index]], direction);
 	for (int x = 0; x < de.size(); x++)
 	{
@@ -146,8 +146,8 @@ void edible_plant_check(int animal_index, Direction direction, bool total)
 void fruit_check(int animal_index, Direction direction, bool total)
 {
 	if (total)
-		std::vector < std::pair<int, int> de = get_diamond(x, y, , direction);
-	std::vector < std::pair<int, int> de =
+		std::vector < Coord de = get_diamond(x, y, , direction);
+	std::vector < Coord de =
 	    get_new_diamond_edge(x, y, sight_ranges[animals[animal_index]], direction);
 	for (int x = 0; x < de.size(); x++)
 	{

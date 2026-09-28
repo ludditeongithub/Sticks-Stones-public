@@ -66,6 +66,8 @@ struct NewGameBF : public ButtonFunctionality
 		// TODO: player can adjust world gen settings
         g_game->init_new_world();
 		g_game->new_game();
+		g_main_menu->~MainMenu();
+		g_game->start();
         }
 };
 

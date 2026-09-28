@@ -40,7 +40,7 @@ void collect_resource(Item item)
 		}
 		// get compatible SourceVariant (Tile, Plant, Animal, Scavengeable, or Item)
 		SourceVariant source = resource.source[action_index];
-		std::pair<int, int> coords = find_nearest_source(source);
+		Coord coords = find_nearest_source(source);
 		// SHORTEST PATH ALGORITHM
 	}
 }

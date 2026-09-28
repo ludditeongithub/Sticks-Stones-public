@@ -8,13 +8,14 @@
 #include <core/mouse.hpp>
 #include <chrono>
 #include <display/ui/components/button_functionality.hpp>
+#include "data/game/screen.hpp"
 #include "display/render/screen.hpp"
 #include "display/render/sprite.hpp"
 #include "text.hpp"
 #include "display/ui/components/text.hpp"
 #include "data/types/buildable.hpp"
 #include "data/types/plant.hpp"
-#include <data/types/button.hpp>
+#include <data/types/ui.hpp>
 #include <display/ui/sound/sound.hpp>
 
 constexpr size_t BUTTON_DECORATION_MAX = static_cast<size_t>(CustomButtonDecoration::MAX) + static_cast<size_t>(Buildable::MAX) + static_cast<size_t>(Item::MAX);
@@ -189,27 +190,44 @@ class SaveButtonUI
 {
 private:
 public:
-		using Clock = std::chrono::system_clock;
-		std::chrono::system_clock::time_point<Clock> last_saved = Clock::now();
-  std::string name;
-  constexpr static int MAX_SAVE_NAME_SIZE = 24;
-		inline static int SAVE_BUTTON_SIZE = 8;
-		SaveButtonUI() {};
-		
-  void render() {}
+    using Clock = std::chrono::system_clock;
 
-  void change_name(std::string new_name)
-  {
-	  if (new_name.length() > MAX_SAVE_NAME_SIZE)
-	    {
-	      throw std::invalid_argument("Name too long! Keep it 24 or less characters.");
-	    }
-  }
+    Clock::time_point last_saved = Clock::now();
 
-  void save()
-  {
-		  last_saved = Clock::now();
-  }
+    std::string name;
+    constexpr static int MAX_SAVE_NAME_SIZE = 24;
+    inline static int SAVE_BUTTON_SIZE = 8;
+
+    SaveButtonUI() {}
+
+    void render()
+    {
+			
+    }
+
+    void change_name(std::string new_name)
+    {
+        if (new_name.length() > MAX_SAVE_NAME_SIZE)
+        {
+            throw std::invalid_argument(
+                "Name too long! Keep it 24 or less characters."
+            );
+        }
+    }
+
+	
+std::string get_last_saved_date()
+{
+    std::time_t time = Clock::to_time_t(last_saved);
+    std::tm local_time = *std::localtime(&time);
+
+    std::ostringstream oss;
+    oss << std::put_time(&local_time, "%m/%d/%Y %H:%M");
+
+    return oss.str();
+}
+
+		void save() { last_saved = Clock::now(); }			
 };
 
 class MainButtonUI : public ButtonUI {

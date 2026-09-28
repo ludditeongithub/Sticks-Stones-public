@@ -1,9 +1,6 @@
-* GAME ITEMS TODAY <2026-09-16 Wed>
-- fix nlohmann json
-
+* GAME ITEMS TODAY <2026-09-26 Wed>
 * Pre-Alpha 
 ** TODO Logan
-*** 0 errors
 *** [1/6] Launch World
 **** Clean up blocking bugs
 **** [1/1] Launch Window
@@ -20,7 +17,7 @@
 **** functional large menus
 *** Prereq core systems to main loop playable
 **** Pathfinding
-**** 
+*** Wwise audio integration
 *** Main Loop Playable (Paleolithic)
 includes:
 **** Unlocking new units
@@ -53,13 +50,7 @@ triggerXFunctions triggers relevant lazy function for each type, using XBuffer a
 **** first function just iterates through recipe, and sees if pawn can realistically get and reserve all the inputs/requirements. 
 - puts data about to-do list for getting inputs into inventory pickup buffer- this system might also contain all items (can be searchgrid), so pawns can reserve items.
 **** second function assigns pawn path based one targets for each of the items
-*** cleaning up for errors
-*** (maybe) macros regarding simple operations
 *** aseprites for first launch (launching menu)
-*** game_loop
-**** handleEvent
-**** processWorld
-**** cloud covers
 *** upscaling to screen size
 *** Menus
 **** wait for sprites to be done
@@ -138,6 +129,9 @@ tailor: not modern, modern top as icon, not too compressed
 *** change window and renderer to g_ versions
 *** script to take all names in tables files and change to CAPS everywhere
 *** sprite name to enum verifier
+*** change 'display' to 'interaction'
+*** skin color
+*** move render/sprite.hpp into data/const/sprite.hpp or data/game/sprite.hpp
 * Pre-Beta
 ** read spreadsheet and insert metaprogramming
 ** additional metaprogramming features: crossed enum:
@@ -340,6 +334,7 @@ generated layer under tiles that is indexed-matched to tile above. replaces tile
 ** get rid of all vectors, standardize overflow/imps
 * Performance
 ** Transcendental Function SIMD
+** Chunked Rendering
 * NOTES
 ** Programming
 *** Scheduling and Simulation Precision

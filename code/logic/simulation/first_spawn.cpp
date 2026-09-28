@@ -34,19 +34,13 @@
 
 
 #include "world_gen.hpp"
-#include "core/tables.hpp"
-#include "data/const/tile_data.hpp"
-#include "data/run/world.hpp"
 #include <core/random.hpp>
 #include <data/types/animal.hpp>
 #include <data/run/animal_database.hpp>
-#include <world/animal/spawn_tables.hpp>
 #include <data/types/plant.hpp>
-#include <world/plant/spawn_tables.hpp>
-#include <world/tile/grass.hpp>
 #include <data/types/tile.hpp>
-#include <world/item/scavengeable.hpp>
-
+#include <data/const/grass.hpp>
+#include <data/const/plant_tables.hpp>
 
 // @codegen:begin grass_spawn
 
@@ -193,12 +187,9 @@ if (animal != Animal::NONE)
 // puts into relevant buffer for each
 void WorldSpawner::spawn_entities()
 {
-	// spawn grass and plants
 	spawn_grass_and_first_plants();
-	// spawn scavengeables
 	spawn_scavengeables();
-	// spawn animals
-
+	spawn_animals();
 	// spawn tribes
 }
 
@@ -242,7 +233,7 @@ inline bool skip_unplantable_tiles(Tile tile)
 // TODO: shrink by making lookuptables of spawn chances based on tiles
 void WorldSpawner::spawn_grass_and_first_plants()
 {
-	plant_spawn_buffer.reserve(TILE_AMOUNT);
+	plant_spawn_buffer.reserve(tile_amount);
         
 	bool regrowth_plant = false;
 	float chances = 0;
@@ -283,9 +274,9 @@ void WorldSpawner::spawn_grass_and_first_plants()
 //  APPLY ANIMAL SPAWNS
 void WorldSpawner::spawn_animals()
 {
-	animal_spawn_buffer.reserve(TILE_AMOUNT);
+	animal_spawn_buffer.reserve(tile_amount);
 
-	for (int i = 0; i < TILE_AMOUNT; i++)
+	for (int i = 0; i < tile_amount; i++)
 	{
           Tile tile = tile_spawn_buffer.tiles[i];
 		// TODO: water animals
@@ -302,7 +293,7 @@ void WorldSpawner::spawn_animals()
 
 void WorldSpawner::spawn_scavengeables()
 {	
-  for (int i = 0; i < TILE_AMOUNT; i++)
+  for (int i = 0; i < tile_amount; i++)
 	{
 		Tile tile = tile_spawn_buffer.tiles[i];
                 // TODO: seaweed, lilipads etc

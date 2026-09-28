@@ -26,8 +26,8 @@ void SearchGrid::scan_for_entity_list(DB& database, size_t index, Direction dire
 void scan_item(int pawn, Direction direction, bool total)
 {
 	if (total)
-		std::vector < std::pair<int, int> de = get_diamond(x, y, human_sight, direction);
-	std::vector < std::pair<int, int> de = get_new_diamond_edge(x, y, human_sight, direction);
+		std::vector < Coord de = get_diamond(x, y, human_sight, direction);
+	std::vector < Coord de = get_new_diamond_edge(x, y, human_sight, direction);
         
 	for (int x = 0; x < de.size(); x++)
 	{
@@ -43,8 +43,8 @@ void scan_item(int pawn, Direction direction, bool total)
 void scan_scavengeable(int pawn, Direction direction, bool total)
 {
 	if (total)
-		std::vector < std::pair<int, int> de = get_diamond(x, y, human_sight, direction);
-	std::vector < std::pair<int, int> de = get_new_diamond_edge(x, y, human_sight, direction);
+		std::vector < Coord de = get_diamond(x, y, human_sight, direction);
+	std::vector < Coord de = get_new_diamond_edge(x, y, human_sight, direction);
 	for (int x = 0; x < de.size(); x++)
 	{
 		int index = tile_indices(de[x]);

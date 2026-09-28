@@ -57,7 +57,7 @@ using EntityRenderData = std::variant<PlantRenderData, AnimalRenderData, UnitRen
 
   struct EntityRenderBuffer {
     size_t plant_amount;
-    std::array<PlantRenderData, CHUNK_SIZE> plants;
+    std::array<PlantRenderData, CHUNK_SIZE> plants; 
     size_t animal_amount;
     std::array<AnimalRenderData, CHUNK_SIZE> animals;
     size_t unit_amount;

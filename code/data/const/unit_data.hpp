@@ -1,4 +1,6 @@
 #pragma once
+#include "data/types/stats.hpp"
+#include <cstddef>
 #include <cstdint>
 #include <data/types/item.hpp>
 #include <data/types/time.hpp>
@@ -12,8 +14,15 @@ using OverflowContainerMap = std::unordered_map<uint16_t, std::vector<Container>
 OverflowHashMap g_overflow_hash_map;
 OverflowContainerMap g_overflow_container_map;
 
+namespace unit
+{
+		constexpr float INFANT_HEALTH_MODIFIER = 0.2;
+		constexpr float INFANT_HUNGER_MODIFIER = 0.2;
+}
+
 constexpr uint16_t UNIT_CAP = 1000;
-constexpr size_t MATURITY_AGE = 15;
+constexpr size_t MATURITY_AGE = 16;
+constexpr size_t ELDER_AGE = 62;
 
 // the total volume of each bulk category hands can maximally carry.
 // where 0.1 is 100mL
@@ -21,10 +30,12 @@ constexpr size_t MATURITY_AGE = 15;
 
 // mas weights pawns can carry
 constexpr uint16_t STARTING_SKILL_MAX = 15;
-
+constexpr Health MAX_HEALTH = 1000;
+constexpr Hunger MAX_HUNGER = 1000;
 constexpr uint8_t STAT_MIN = 0;
 constexpr uint8_t STAT_MAX = 100;
 constexpr uint8_t INITIAL_STAT_MAX = 60;
+constexpr uint8_t STARTING_ROLE_MANA = 10;
 
 constexpr uint16_t MAX_ROLES_PER_TASK = 6;
 constexpr uint16_t ACTION_TOOLS_AMOUNT = 100; // NOTE: likely wrong

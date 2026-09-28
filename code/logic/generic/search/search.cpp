@@ -1,20 +1,17 @@
 #include "search.hpp"
-#include "core/database.hpp"
 #include "data/types/animal.hpp"
 #include "data/const/tile_data.hpp"
 #include "data/run/tile_database.hpp"
-#include <core/limits.hpp>
 #include <data/types/entity.hpp>
 #include <core/math.hpp>
 #include <cstdint>
 #include <limits>
-#include <variant>
 #include <data/types/unit.hpp>
 #include <data/run/world.hpp>
 
 SearchGrid::SearchGrid(World& world, tile::Database& tiles) :  world(world), tiles(tiles)
 {	
-	uint16_t chunk_amount = world.CHUNK_AMOUNT;
+	uint16_t chunk_amount = world.chunk_amount;
 	chunk_bucket_arena = new Arena((chunk_amount * NATURAL_CHUNK_SEARCH_SIZE));
 
 	active_bucket_arena =
@@ -66,7 +63,7 @@ inline GridInfo SearchGrid::get_nth_nearest_chunk(Coord c, uint16_t n)
 
 	GridInfo result;
 	result.index =
-	    (target >= 0 && target < world->CHUNK_AMOUNT) ? static_cast<uint16_t>(target) : center;
+	    (target >= 0 && target < world->chunk_amount) ? static_cast<uint16_t>(target) : center;
 	result.distance = neighbors[idx].dist;
 
 	return result;
@@ -259,10 +256,10 @@ std::visit([&](auto&& arg) {
 }
 
 
-std::pair<int, int> ObjectDatabase::find_nearest_liquid_container(int x, int y)
+Coord ObjectDatabase::find_nearest_liquid_container(int x, int y)
 {
-	std::pair<int, int> subject = {x, y};
-	std::pair<int, int> closest = find_nearest_object(Container::Pot, x, y);
+	Coord subject = {x, y};
+	Coord closest = find_nearest_object(Container::Pot, x, y);
 	if (man_dist(subject, closest) <
 	    man_dist(find_nearest_object(subject, Container::Bucket, x, y)))
 		closest = find_nearest_object(subject, Container::Bucket, x, y);

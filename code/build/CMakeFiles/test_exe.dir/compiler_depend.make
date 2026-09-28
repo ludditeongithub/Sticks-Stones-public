@@ -3,6 +3,8 @@
 
 CMakeFiles/test_exe.dir/display/render/screen.cpp.o: /home/logan/gameprogramming/code/display/render/screen.cpp \
   /home/logan/gameprogramming/code/core/coord.hpp \
+  /home/logan/gameprogramming/code/data/game/screen.hpp \
+  /home/logan/gameprogramming/code/data/run/camera.hpp \
   /home/logan/gameprogramming/code/display/render/screen.hpp \
   /home/logan/gameprogramming/code/display/render/texture.hpp \
   /usr/include/SDL2/SDL.h \
@@ -387,6 +389,8 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o: /home/logan/gameprogramming
 
 CMakeFiles/test_exe.dir/display/render/texture.cpp.o: /home/logan/gameprogramming/code/display/render/texture.cpp \
   /home/logan/gameprogramming/code/core/coord.hpp \
+  /home/logan/gameprogramming/code/data/game/screen.hpp \
+  /home/logan/gameprogramming/code/data/run/camera.hpp \
   /home/logan/gameprogramming/code/display/render/screen.hpp \
   /home/logan/gameprogramming/code/display/render/texture.hpp \
   /usr/include/SDL2/SDL.h \
@@ -513,7 +517,6 @@ CMakeFiles/test_exe.dir/display/render/texture.cpp.o: /home/logan/gameprogrammin
   /usr/include/bits/wordsize.h \
   /usr/include/bits/xopen_lim.h \
   /usr/include/c++/16/algorithm \
-  /usr/include/c++/16/array \
   /usr/include/c++/16/backward/binders.h \
   /usr/include/c++/16/bit \
   /usr/include/c++/16/bits/algorithmfwd.h \
@@ -771,6 +774,7 @@ CMakeFiles/test_exe.dir/display/render/texture.cpp.o: /home/logan/gameprogrammin
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/xtestintrin.h
 
 CMakeFiles/test_exe.dir/test.cpp.o: /home/logan/gameprogramming/code/test.cpp \
+  /home/logan/gameprogramming/extern/SDL_FontCache.h \
   /home/logan/gameprogramming/extern/cereal/access.hpp \
   /home/logan/gameprogramming/extern/cereal/archives/binary.hpp \
   /home/logan/gameprogramming/extern/cereal/cereal.hpp \
@@ -782,22 +786,44 @@ CMakeFiles/test_exe.dir/test.cpp.o: /home/logan/gameprogramming/code/test.cpp \
   /home/logan/gameprogramming/extern/cereal/specialize.hpp \
   /home/logan/gameprogramming/extern/cereal/types/base_class.hpp \
   /home/logan/gameprogramming/extern/cereal/types/common.hpp \
+  /home/logan/gameprogramming/extern/cereal/types/deque.hpp \
+  /home/logan/gameprogramming/extern/cereal/types/stack.hpp \
+  /home/logan/gameprogramming/extern/cereal/types/vector.hpp \
   /home/logan/gameprogramming/extern/json.hpp \
   /home/logan/gameprogramming/extern/magic_enum/magic_enum.hpp \
   /home/logan/gameprogramming/code/core/containers.hpp \
   /home/logan/gameprogramming/code/core/coord.hpp \
   /home/logan/gameprogramming/code/core/hash.hpp \
+  /home/logan/gameprogramming/code/core/info.hpp \
   /home/logan/gameprogramming/code/core/memory.hpp \
+  /home/logan/gameprogramming/code/core/memory_control.hpp \
+  /home/logan/gameprogramming/code/core/mouse.hpp \
   /home/logan/gameprogramming/code/core/packed_enum.hpp \
   /home/logan/gameprogramming/code/core/random.hpp \
+  /home/logan/gameprogramming/code/core/saves.hpp \
   /home/logan/gameprogramming/code/core/tables.hpp \
   /home/logan/gameprogramming/code/core/tags.hpp \
+  /home/logan/gameprogramming/code/data/const/animal_data.hpp \
+  /home/logan/gameprogramming/code/data/const/animal_tables.hpp \
+  /home/logan/gameprogramming/code/data/const/buildable_data.hpp \
+  /home/logan/gameprogramming/code/data/const/buildable_tables.hpp \
   /home/logan/gameprogramming/code/data/const/chunk_data.hpp \
+  /home/logan/gameprogramming/code/data/const/plant_tables.hpp \
   /home/logan/gameprogramming/code/data/const/tags.hpp \
   /home/logan/gameprogramming/code/data/const/tile_data.hpp \
   /home/logan/gameprogramming/code/data/const/unit_data.hpp \
+  /home/logan/gameprogramming/code/data/const/unit_tables.hpp \
+  /home/logan/gameprogramming/code/data/game/screen.hpp \
+  /home/logan/gameprogramming/code/data/run/animal_database.hpp \
+  /home/logan/gameprogramming/code/data/run/buildable_database.hpp \
+  /home/logan/gameprogramming/code/data/run/camera.hpp \
+  /home/logan/gameprogramming/code/data/run/item_database.hpp \
+  /home/logan/gameprogramming/code/data/run/plant_database.hpp \
   /home/logan/gameprogramming/code/data/run/tile_database.hpp \
+  /home/logan/gameprogramming/code/data/run/unit_database.hpp \
+  /home/logan/gameprogramming/code/data/run/unit_helpers.hpp \
   /home/logan/gameprogramming/code/data/run/world.hpp \
+  /home/logan/gameprogramming/code/data/types/action.hpp \
   /home/logan/gameprogramming/code/data/types/animal.hpp \
   /home/logan/gameprogramming/code/data/types/buildable.hpp \
   /home/logan/gameprogramming/code/data/types/chunk.hpp \
@@ -808,13 +834,27 @@ CMakeFiles/test_exe.dir/test.cpp.o: /home/logan/gameprogramming/code/test.cpp \
   /home/logan/gameprogramming/code/data/types/plant.hpp \
   /home/logan/gameprogramming/code/data/types/progression.hpp \
   /home/logan/gameprogramming/code/data/types/stats.hpp \
+  /home/logan/gameprogramming/code/data/types/target.hpp \
   /home/logan/gameprogramming/code/data/types/tile.hpp \
   /home/logan/gameprogramming/code/data/types/time.hpp \
   /home/logan/gameprogramming/code/data/types/ui.hpp \
   /home/logan/gameprogramming/code/data/types/unit.hpp \
+  /home/logan/gameprogramming/code/display/render/camera.hpp \
+  /home/logan/gameprogramming/code/display/render/draw.hpp \
+  /home/logan/gameprogramming/code/display/render/render_chunk.hpp \
   /home/logan/gameprogramming/code/display/render/screen.hpp \
   /home/logan/gameprogramming/code/display/render/sprite.hpp \
   /home/logan/gameprogramming/code/display/render/texture.hpp \
+  /home/logan/gameprogramming/code/display/ui/aggregates/swipable_menu.hpp \
+  /home/logan/gameprogramming/code/display/ui/components/button.hpp \
+  /home/logan/gameprogramming/code/display/ui/components/button_functionality.hpp \
+  /home/logan/gameprogramming/code/display/ui/components/element.hpp \
+  /home/logan/gameprogramming/code/display/ui/components/pop-up_box.hpp \
+  /home/logan/gameprogramming/code/display/ui/components/text.hpp \
+  /home/logan/gameprogramming/code/display/ui/main/main_menu.hpp \
+  /home/logan/gameprogramming/code/display/ui/sound/sound.hpp \
+  /home/logan/gameprogramming/code/logic/generic/search/search.hpp \
+  /home/logan/gameprogramming/code/logic/simulation/game.hpp \
   /home/logan/gameprogramming/code/logic/simulation/world_gen.hpp \
   /usr/include/SDL2/SDL.h \
   /usr/include/SDL2/SDL_assert.h \
@@ -978,11 +1018,13 @@ CMakeFiles/test_exe.dir/test.cpp.o: /home/logan/gameprogramming/code/test.cpp \
   /usr/include/c++/16/bits/char_traits.h \
   /usr/include/c++/16/bits/charconv.h \
   /usr/include/c++/16/bits/chrono.h \
+  /usr/include/c++/16/bits/chrono_io.h \
   /usr/include/c++/16/bits/codecvt.h \
   /usr/include/c++/16/bits/concept_check.h \
   /usr/include/c++/16/bits/cpp_type_traits.h \
   /usr/include/c++/16/bits/cxxabi_forced.h \
   /usr/include/c++/16/bits/cxxabi_init_exception.h \
+  /usr/include/c++/16/bits/deque.tcc \
   /usr/include/c++/16/bits/elements_of.h \
   /usr/include/c++/16/bits/enable_special_members.h \
   /usr/include/c++/16/bits/erase_if.h \
@@ -1067,6 +1109,7 @@ CMakeFiles/test_exe.dir/test.cpp.o: /home/logan/gameprogramming/code/test.cpp \
   /usr/include/c++/16/bits/stl_algobase.h \
   /usr/include/c++/16/bits/stl_bvector.h \
   /usr/include/c++/16/bits/stl_construct.h \
+  /usr/include/c++/16/bits/stl_deque.h \
   /usr/include/c++/16/bits/stl_function.h \
   /usr/include/c++/16/bits/stl_heap.h \
   /usr/include/c++/16/bits/stl_iterator.h \
@@ -1078,6 +1121,7 @@ CMakeFiles/test_exe.dir/test.cpp.o: /home/logan/gameprogramming/code/test.cpp \
   /usr/include/c++/16/bits/stl_pair.h \
   /usr/include/c++/16/bits/stl_raw_storage_iter.h \
   /usr/include/c++/16/bits/stl_relops.h \
+  /usr/include/c++/16/bits/stl_stack.h \
   /usr/include/c++/16/bits/stl_tempbuf.h \
   /usr/include/c++/16/bits/stl_tree.h \
   /usr/include/c++/16/bits/stl_uninitialized.h \
@@ -1107,6 +1151,7 @@ CMakeFiles/test_exe.dir/test.cpp.o: /home/logan/gameprogramming/code/test.cpp \
   /usr/include/c++/16/cctype \
   /usr/include/c++/16/cerrno \
   /usr/include/c++/16/charconv \
+  /usr/include/c++/16/chrono \
   /usr/include/c++/16/clocale \
   /usr/include/c++/16/cmath \
   /usr/include/c++/16/codecvt \
@@ -1122,6 +1167,7 @@ CMakeFiles/test_exe.dir/test.cpp.o: /home/logan/gameprogramming/code/test.cpp \
   /usr/include/c++/16/cwctype \
   /usr/include/c++/16/debug/assertions.h \
   /usr/include/c++/16/debug/debug.h \
+  /usr/include/c++/16/deque \
   /usr/include/c++/16/exception \
   /usr/include/c++/16/ext/aligned_buffer.h \
   /usr/include/c++/16/ext/alloc_traits.h \
@@ -1162,6 +1208,7 @@ CMakeFiles/test_exe.dir/test.cpp.o: /home/logan/gameprogramming/code/test.cpp \
   /usr/include/c++/16/ratio \
   /usr/include/c++/16/span \
   /usr/include/c++/16/sstream \
+  /usr/include/c++/16/stack \
   /usr/include/c++/16/stdexcept \
   /usr/include/c++/16/stdlib.h \
   /usr/include/c++/16/streambuf \
@@ -1437,8 +1484,6 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 
 /usr/lib/libdeflate.so.0:
 
-/usr/lib/libdav1d.so.7:
-
 /usr/lib/libbrotlienc.so.1:
 
 /usr/lib/libbrotlicommon.so.1:
@@ -1503,8 +1548,6 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 
 /usr/include/c++/16/ranges:
 
-/usr/include/c++/16/random:
-
 /usr/include/c++/16/pstl/glue_numeric_defs.h:
 
 /usr/include/c++/16/pstl/glue_memory_defs.h:
@@ -1523,9 +1566,67 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 
 /usr/include/c++/16/ios:
 
+/usr/include/c++/16/iomanip:
+
+/usr/lib/libjpeg.so.8:
+
+/usr/include/c++/16/forward_list:
+
+/usr/include/c++/16/filesystem:
+
+/usr/include/c++/16/ext/aligned_buffer.h:
+
+/usr/include/c++/16/cwctype:
+
+/usr/include/c++/16/ctime:
+
+/usr/lib32/libzstd.so.1:
+
+/usr/include/c++/16/charconv:
+
+/usr/include/c++/16/bits/vector.tcc:
+
+/usr/include/c++/16/bits/valarray_before.h:
+
+/usr/lib/libavif.so.16:
+
+/usr/include/c++/16/bits/valarray_array.tcc:
+
+/usr/include/c++/16/bits/unordered_set.h:
+
+/usr/include/c++/16/bits/unordered_map.h:
+
+/usr/include/c++/16/bits/unique_ptr.h:
+
+/usr/include/c++/16/bits/unicode.h:
+
+/usr/include/c++/16/bits/unicode-data.h:
+
+/usr/include/c++/16/bits/streambuf.tcc:
+
+/usr/include/c++/16/bits/stl_vector.h:
+
+/usr/include/c++/16/bits/stl_tree.h:
+
+/usr/include/c++/16/functional:
+
+/usr/include/c++/16/bits/stl_stack.h:
+
+/usr/include/c++/16/bits/stl_numeric.h:
+
+/usr/include/c++/16/bits/stl_map.h:
+
+/usr/include/c++/16/bits/stl_deque.h:
+
+/usr/include/c++/16/bits/std_function.h:
+
+/usr/include/c++/16/bits/sstream.tcc:
+
 /usr/include/limits.h:
 
 /usr/include/gnu/stubs-64.h:
+
+/home/logan/gameprogramming/code/core/saves.hpp:
 
 /usr/include/stdc-predef.h:
 
@@ -1542,8 +1643,6 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 /usr/include/c++/16/tr1/special_function_util.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/raointintrin.h:
-
-/usr/include/c++/16/bits/stl_numeric.h:
 
 /usr/include/c++/16/tr1/poly_hermite.tcc:
 
@@ -1566,6 +1665,8 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 /home/logan/gameprogramming/code/data/const/tile_data.hpp:
 
 /usr/include/c++/16/tr1/beta_function.tcc:
+
+/home/logan/gameprogramming/extern/cereal/types/deque.hpp:
 
 /usr/include/c++/16/stdlib.h:
 
@@ -1597,6 +1698,8 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 
 /usr/include/bits/types/__sigset_t.h:
 
+/usr/include/c++/16/chrono:
+
 /usr/include/c++/16/initializer_list:
 
 /usr/include/bits/thread-shared-types.h:
@@ -1611,11 +1714,17 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 
 /usr/include/asm-generic/types.h:
 
-/usr/include/c++/16/bits/unordered_map.h:
+/usr/lib/libc.so.6:
+
+/usr/include/c++/16/bits/stl_raw_storage_iter.h:
+
+/usr/include/bits/fp-fast.h:
 
 /usr/include/c++/16/cwchar:
 
 /usr/include/c++/16/cstdio:
+
+/home/logan/gameprogramming/code/data/const/animal_tables.hpp:
 
 /usr/include/c++/16/cstddef:
 
@@ -1635,9 +1744,15 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 
 /usr/include/c++/16/bits/version.h:
 
+/home/logan/gameprogramming/code/data/run/camera.hpp:
+
 /usr/include/asm-generic/posix_types.h:
 
 /home/logan/gameprogramming/code/data/types/buildable.hpp:
+
+/usr/include/c++/16/ext/atomicity.h:
+
+/usr/include/c++/16/bits/string_view.tcc:
 
 /usr/include/c++/16/bits/stl_pair.h:
 
@@ -1655,21 +1770,11 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 
 /usr/include/c++/16/cassert:
 
-/usr/lib/crtn.o:
-
-/usr/include/c++/16/x86_64-pc-linux-gnu/bits/basic_file.h:
-
-/usr/include/linux/limits.h:
-
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/lwpintrin.h:
 
 /usr/include/c++/16/bits/ranges_cmp.h:
 
 /usr/include/c++/16/bits/new_throw.h:
-
-/usr/include/c++/16/bits/string_view.tcc:
-
-/usr/include/c++/16/ext/atomicity.h:
 
 /usr/include/c++/16/bits/new_except.h:
 
@@ -1679,13 +1784,9 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 
 /usr/include/c++/16/bits/nested_exception.h:
 
-/usr/lib/gcc/x86_64-pc-linux-gnu/16/include/avx10_2bf16intrin.h:
-
 /home/logan/gameprogramming/code/core/random.hpp:
 
 /home/logan/gameprogramming/code/core/memory.hpp:
-
-/usr/include/c++/16/bits/stl_construct.h:
 
 /usr/include/bits/xopen_lim.h:
 
@@ -1715,8 +1816,6 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/amxint8intrin.h:
 
-/usr/include/c++/16/cwctype:
-
 /usr/include/c++/16/bits/concept_check.h:
 
 /usr/include/c++/16/iterator:
@@ -1726,8 +1825,6 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 /usr/include/c++/16/bits/fs_dir.h:
 
 /usr/include/stdint.h:
-
-/usr/include/c++/16/bits/std_function.h:
 
 /usr/lib/libjxl.so.0.12:
 
@@ -1742,6 +1839,8 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 /usr/include/c++/16/bits/char_traits.h:
 
 /usr/include/bits/types/__fpos_t.h:
+
+/home/logan/gameprogramming/code/display/ui/components/button.hpp:
 
 /usr/include/c++/16/bits/alloc_traits.h:
 
@@ -1765,6 +1864,16 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 
 /usr/include/SDL2/SDL_blendmode.h:
 
+/usr/include/c++/16/algorithm:
+
+/home/logan/gameprogramming/code/data/types/geography.hpp:
+
+/usr/include/c++/16/bits/uses_allocator_args.h:
+
+/usr/include/c++/16/bits/ranges_base.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/include/avx512vp2intersectvlintrin.h:
+
 /usr/include/alloca.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/avx512dqintrin.h:
@@ -1787,27 +1896,11 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 
 /usr/include/SDL2/SDL_system.h:
 
-/usr/include/asm/errno.h:
-
-/usr/include/bits/stdint-uintn.h:
-
-/usr/include/bits/endian.h:
-
-/usr/include/c++/16/bits/unicode-data.h:
-
 /usr/include/c++/16/bits/cpp_type_traits.h:
 
 /usr/include/SDL2/SDL_scancode.h:
 
 /usr/include/bits/pthreadtypes.h:
-
-/usr/include/SDL2/SDL_rwops.h:
-
-/usr/include/SDL2/SDL_shape.h:
-
-/usr/include/SDL2/SDL_quit.h:
-
-/usr/include/c++/16/bits/quoted_string.h:
 
 /usr/include/bits/waitstatus.h:
 
@@ -1815,23 +1908,9 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 
 /usr/include/bits/types/struct___jmp_buf_tag.h:
 
-/usr/include/c++/16/bits/uses_allocator_args.h:
-
-/usr/include/c++/16/bits/ranges_base.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/16/include/avx512vp2intersectvlintrin.h:
-
 /usr/include/SDL2/SDL_render.h:
 
 /usr/include/c++/16/bits/requires_hosted.h:
-
-/usr/include/c++/16/optional:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/16/include/stddef.h:
-
-/usr/include/c++/16/bitset:
-
-/usr/include/c++/16/bits/streambuf.tcc:
 
 /usr/include/c++/16/bits/stl_function.h:
 
@@ -1855,13 +1934,11 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 
 /usr/include/SDL2/SDL_thread.h:
 
-/usr/include/c++/16/algorithm:
-
-/home/logan/gameprogramming/code/data/types/geography.hpp:
-
 /usr/include/SDL2/SDL_metal.h:
 
 /usr/include/bits/stdlib-float.h:
+
+/home/logan/gameprogramming/code/logic/generic/search/search.hpp:
 
 /usr/include/c++/16/type_traits:
 
@@ -1869,11 +1946,27 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 
 /usr/include/SDL2/SDL_endian.h:
 
+/usr/include/c++/16/span:
+
+/usr/include/c++/16/bits/stl_relops.h:
+
+/usr/include/c++/16/bits/stl_iterator_base_types.h:
+
+/home/logan/gameprogramming/code/data/types/tile.hpp:
+
 /usr/include/c++/16/ext/type_traits.h:
 
 /usr/include/bits/uio_lim.h:
 
 /usr/include/bits/math-vector.h:
+
+/usr/include/SDL2/SDL_messagebox.h:
+
+/usr/include/c++/16/bits/codecvt.h:
+
+/usr/include/c++/16/bits/mask_array.h:
+
+/home/logan/gameprogramming/code/display/render/camera.hpp:
 
 /usr/include/SDL2/SDL_platform.h:
 
@@ -1907,8 +2000,6 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/clflushoptintrin.h:
 
-/usr/include/SDL2/SDL_config_unix.h:
-
 /usr/include/SDL2/SDL_assert.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/avx512vlbwintrin.h:
@@ -1920,6 +2011,12 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 /usr/include/SDL2/SDL_misc.h:
 
 /home/logan/gameprogramming/extern/cereal/types/base_class.hpp:
+
+/usr/include/SDL2/SDL_log.h:
+
+/usr/include/c++/16/bits/move.h:
+
+/home/logan/gameprogramming/code/display/render/texture.hpp:
 
 /usr/include/c++/16/iosfwd:
 
@@ -1943,7 +2040,21 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 
 /usr/include/c++/16/any:
 
+/home/logan/gameprogramming/code/data/run/animal_database.hpp:
+
+/usr/include/c++/16/bits/stl_heap.h:
+
+/usr/include/bits/types/clockid_t.h:
+
 /home/logan/gameprogramming/code/display/render/screen.cpp:
+
+/usr/include/SDL2/SDL_shape.h:
+
+/usr/include/SDL2/SDL_quit.h:
+
+/usr/include/c++/16/bits/quoted_string.h:
+
+/usr/include/SDL2/SDL_rwops.h:
 
 /usr/include/errno.h:
 
@@ -1954,6 +2065,8 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 /usr/include/c++/16/bits/shared_ptr_base.h:
 
 /usr/lib/liblzma.so.5:
+
+/home/logan/gameprogramming/code/data/types/action.hpp:
 
 /usr/include/SDL2/SDL_power.h:
 
@@ -1971,6 +2084,8 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 
 /usr/include/bits/types.h:
 
+/usr/include/SDL2/SDL_config_unix.h:
+
 /usr/include/c++/16/cstdlib:
 
 /usr/include/bits/errno.h:
@@ -1983,9 +2098,7 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 
 /usr/include/SDL2/SDL_gamecontroller.h:
 
-/usr/include/locale.h:
-
-/home/logan/gameprogramming/extern/cereal/access.hpp:
+/usr/include/c++/16/bits/chrono_io.h:
 
 /usr/include/c++/16/bits/exception.h:
 
@@ -1997,19 +2110,15 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 
 /usr/include/SDL2/SDL_guid.h:
 
-/usr/include/bits/types/__fpos64_t.h:
-
-/usr/include/SDL2/SDL_clipboard.h:
-
 /usr/include/SDL2/SDL_keycode.h:
 
 /usr/include/c++/16/bits/indirect_array.h:
 
-/usr/include/c++/16/iomanip:
-
 /usr/include/pthread.h:
 
 /usr/include/c++/16/bits/localefwd.h:
+
+/home/logan/gameprogramming/code/data/game/screen.hpp:
 
 /usr/include/SDL2/SDL_keyboard.h:
 
@@ -2023,21 +2132,17 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 
 /usr/include/bits/types/sigset_t.h:
 
-/usr/include/SDL2/SDL_messagebox.h:
+/usr/include/asm/errno.h:
 
-/usr/include/bits/types/clockid_t.h:
+/usr/include/bits/stdint-uintn.h:
 
-/usr/include/c++/16/bits/stl_heap.h:
+/usr/include/c++/16/bitset:
 
-/usr/include/c++/16/bits/codecvt.h:
+/usr/include/c++/16/optional:
 
-/usr/include/c++/16/bits/mask_array.h:
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/include/stddef.h:
 
-/usr/include/c++/16/bits/move.h:
-
-/home/logan/gameprogramming/code/display/render/texture.hpp:
-
-/usr/include/SDL2/SDL_log.h:
+/usr/include/bits/endian.h:
 
 /usr/include/features.h:
 
@@ -2057,8 +2162,6 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 
 /usr/include/bits/floatn.h:
 
-/usr/include/c++/16/bits/vector.tcc:
-
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/amxmovrsintrin.h:
 
 /usr/include/bits/types/FILE.h:
@@ -2067,13 +2170,9 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 
 /usr/include/bits/flt-eval-method.h:
 
-/usr/include/c++/16/bits/unordered_set.h:
-
 /usr/include/sys/single_threaded.h:
 
 /usr/include/asm-generic/errno.h:
-
-/usr/include/c++/16/bits/stl_vector.h:
 
 /usr/lib/libmvec.so.1:
 
@@ -2095,7 +2194,15 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 
 /usr/include/bits/long-double.h:
 
+/usr/include/c++/16/stack:
+
 /usr/include/c++/16/x86_64-pc-linux-gnu/bits/c++locale.h:
+
+/usr/include/c++/16/cstring:
+
+/usr/include/c++/16/bits/stl_uninitialized.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/include/stdarg.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/vpclmulqdqintrin.h:
 
@@ -2131,6 +2238,8 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 
 /usr/include/bits/posix2_lim.h:
 
+/home/logan/gameprogramming/code/data/const/animal_data.hpp:
+
 /usr/include/bits/pthread_stack_min-dynamic.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/wmmintrin.h:
@@ -2144,6 +2253,10 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/fxsrintrin.h:
 
 /usr/include/bits/types/cookie_io_functions_t.h:
+
+/usr/include/c++/16/bits/stream_iterator.h:
+
+/usr/include/bits/types/__mbstate_t.h:
 
 /usr/include/bits/stdio_lim.h:
 
@@ -2171,9 +2284,9 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 
 /usr/include/bits/types/clock_t.h:
 
-/usr/include/c++/16/pstl/glue_algorithm_defs.h:
-
 /usr/include/c++/16/fstream:
+
+/usr/include/c++/16/pstl/glue_algorithm_defs.h:
 
 /usr/include/c++/16/bits/basic_ios.tcc:
 
@@ -2213,6 +2326,16 @@ CMakeFiles/test_exe.dir/display/render/texture.cpp.o:
 
 /usr/include/bits/timesize.h:
 
+/usr/lib/crtn.o:
+
+/usr/include/c++/16/x86_64-pc-linux-gnu/bits/basic_file.h:
+
+/usr/include/linux/limits.h:
+
+/usr/include/locale.h:
+
+/home/logan/gameprogramming/extern/cereal/access.hpp:
+
 /usr/include/math.h:
 
 /usr/lib32/libbrotlidec.so.1:
@@ -2229,8 +2352,6 @@ CMakeFiles/test_exe.dir/display/render/texture.cpp.o:
 
 /usr/include/sys/select.h:
 
-/usr/include/c++/16/ext/aligned_buffer.h:
-
 /usr/include/c++/16/version:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/amxavx512intrin.h:
@@ -2240,6 +2361,8 @@ CMakeFiles/test_exe.dir/display/render/texture.cpp.o:
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/amxbf16intrin.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/f16cintrin.h:
+
+/usr/include/c++/16/deque:
 
 /usr/include/c++/16/clocale:
 
@@ -2287,8 +2410,6 @@ CMakeFiles/test_exe.dir/display/render/texture.cpp.o:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/avx512bwintrin.h:
 
-/usr/include/c++/16/bits/valarray_before.h:
-
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/avx512cdintrin.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/avx512fintrin.h:
@@ -2297,17 +2418,9 @@ CMakeFiles/test_exe.dir/display/render/texture.cpp.o:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/avx512fp16intrin.h:
 
-/usr/include/bits/types/__mbstate_t.h:
-
-/usr/include/c++/16/bits/stream_iterator.h:
-
 /usr/include/c++/16/ratio:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/avx512ifmavlintrin.h:
-
-/usr/include/c++/16/limits:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/16/include/avx512vbmi2intrin.h:
 
 /usr/lib32/liblzma.so.5:
 
@@ -2316,8 +2429,6 @@ CMakeFiles/test_exe.dir/display/render/texture.cpp.o:
 /usr/include/c++/16/bits/max_size_type.h:
 
 /usr/include/c++/16/bits/intcmp.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/16/include/avx512vlintrin.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/avx512vnnivlintrin.h:
 
@@ -2337,23 +2448,13 @@ CMakeFiles/test_exe.dir/display/render/texture.cpp.o:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/avxneconvertintrin.h:
 
+/home/logan/gameprogramming/code/display/ui/components/element.hpp:
+
 /usr/include/bits/mathcalls-macros.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/avxvnniint8intrin.h:
 
-/usr/lib/libc_nonshared.a:
-
-/usr/include/c++/16/bits/uniform_int_dist.h:
-
-/usr/include/SDL2/SDL_atomic.h:
-
-/usr/include/c++/16/bits/ostream.tcc:
-
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/avxvnniintrin.h:
-
-/usr/include/c++/16/string_view:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/16/include/bmi2intrin.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/cldemoteintrin.h:
 
@@ -2374,6 +2475,8 @@ CMakeFiles/test_exe.dir/display/render/texture.cpp.o:
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/amxcomplexintrin.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/fmaintrin.h:
+
+/home/logan/gameprogramming/code/data/run/plant_database.hpp:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/ia32intrin.h:
 
@@ -2431,11 +2534,11 @@ CMakeFiles/test_exe.dir/display/render/texture.cpp.o:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/tmmintrin.h:
 
+/home/logan/gameprogramming/code/data/types/target.hpp:
+
 /usr/include/c++/16/bits/exception_defines.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/tsxldtrkintrin.h:
-
-/usr/include/c++/16/bits/unique_ptr.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/uintrintrin.h:
 
@@ -2449,11 +2552,13 @@ CMakeFiles/test_exe.dir/display/render/texture.cpp.o:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/xsaveoptintrin.h:
 
-/usr/lib/libavif.so.16:
-
-/usr/include/c++/16/bits/valarray_array.tcc:
-
 /usr/include/SDL2/SDL_image.h:
+
+/home/logan/gameprogramming/extern/SDL_FontCache.h:
+
+/usr/lib/libjxl_cms.so.0.12:
+
+/usr/include/c++/16/bits/forward_list.tcc:
 
 CMakeFiles/test_exe.dir/test.cpp.o:
 
@@ -2477,7 +2582,13 @@ CMakeFiles/test_exe.dir/test.cpp.o:
 
 /home/logan/gameprogramming/extern/cereal/types/common.hpp:
 
+/usr/include/c++/16/random:
+
+/home/logan/gameprogramming/extern/cereal/types/vector.hpp:
+
 /home/logan/gameprogramming/extern/json.hpp:
+
+/home/logan/gameprogramming/code/data/run/item_database.hpp:
 
 /home/logan/gameprogramming/code/core/containers.hpp:
 
@@ -2485,7 +2596,37 @@ CMakeFiles/test_exe.dir/test.cpp.o:
 
 /home/logan/gameprogramming/code/core/hash.hpp:
 
+/usr/include/c++/16/bits/stl_construct.h:
+
+/home/logan/gameprogramming/code/core/info.hpp:
+
+/usr/lib/libSDL2_image.so:
+
+/usr/include/c++/16/bits/stl_multimap.h:
+
+/home/logan/gameprogramming/extern/cereal/types/stack.hpp:
+
+/home/logan/gameprogramming/code/core/memory_control.hpp:
+
+/home/logan/gameprogramming/code/data/const/plant_tables.hpp:
+
+/usr/include/c++/16/ext/concurrence.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/include/avx512vbmiintrin.h:
+
+/home/logan/gameprogramming/code/core/mouse.hpp:
+
 /home/logan/gameprogramming/code/core/tables.hpp:
+
+/home/logan/gameprogramming/code/data/const/buildable_data.hpp:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/include/avx10_2bf16intrin.h:
+
+/home/logan/gameprogramming/code/data/const/buildable_tables.hpp:
+
+/home/logan/gameprogramming/code/data/const/unit_tables.hpp:
+
+/home/logan/gameprogramming/code/data/run/buildable_database.hpp:
 
 /home/logan/gameprogramming/code/data/run/tile_database.hpp:
 
@@ -2494,6 +2635,10 @@ CMakeFiles/test_exe.dir/test.cpp.o:
 /usr/lib/libpng16.so.16:
 
 /usr/include/c++/16/bits/ostream_print.h:
+
+/home/logan/gameprogramming/code/data/run/unit_database.hpp:
+
+/home/logan/gameprogramming/code/data/run/unit_helpers.hpp:
 
 /usr/include/SDL2/SDL_loadso.h:
 
@@ -2525,17 +2670,55 @@ CMakeFiles/test_exe.dir/test.cpp.o:
 
 /home/logan/gameprogramming/code/data/types/unit.hpp:
 
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/include/avx512vlintrin.h:
+
+/home/logan/gameprogramming/code/display/render/draw.hpp:
+
+/usr/include/c++/16/string_view:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/include/bmi2intrin.h:
+
+/home/logan/gameprogramming/code/display/render/render_chunk.hpp:
+
 /home/logan/gameprogramming/code/display/render/sprite.hpp:
 
 /usr/include/c++/16/bits/fs_fwd.h:
 
+/home/logan/gameprogramming/code/display/ui/aggregates/swipable_menu.hpp:
+
+/home/logan/gameprogramming/code/display/ui/components/button_functionality.hpp:
+
+/home/logan/gameprogramming/code/display/ui/components/pop-up_box.hpp:
+
+/usr/include/bits/types/__fpos64_t.h:
+
+/usr/include/SDL2/SDL_clipboard.h:
+
+/home/logan/gameprogramming/code/display/ui/components/text.hpp:
+
+/usr/include/c++/16/limits:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/include/avx512vbmi2intrin.h:
+
+/home/logan/gameprogramming/code/display/ui/main/main_menu.hpp:
+
+/usr/lib/libc_nonshared.a:
+
+/usr/include/c++/16/bits/uniform_int_dist.h:
+
+/usr/include/SDL2/SDL_atomic.h:
+
+/usr/include/c++/16/bits/ostream.tcc:
+
+/home/logan/gameprogramming/code/display/ui/sound/sound.hpp:
+
+/usr/include/bits/types/struct_tm.h:
+
+/home/logan/gameprogramming/code/logic/simulation/game.hpp:
+
 /usr/include/c++/16/bits/hash_bytes.h:
 
 /home/logan/gameprogramming/code/logic/simulation/world_gen.hpp:
-
-/usr/lib32/libzstd.so.1:
-
-/usr/include/c++/16/charconv:
 
 /usr/include/c++/16/tr1/hypergeometric.tcc:
 
@@ -2561,8 +2744,6 @@ CMakeFiles/test_exe.dir/test.cpp.o:
 
 /usr/include/bits/types/struct_itimerspec.h:
 
-/usr/include/bits/types/struct_tm.h:
-
 /usr/include/bits/stdint-intn.h:
 
 /usr/include/bits/wctype-wchar.h:
@@ -2579,13 +2760,13 @@ CMakeFiles/test_exe.dir/test.cpp.o:
 
 /usr/include/c++/16/bits/binders.h:
 
+/usr/lib/libdav1d.so.7:
+
+/usr/include/c++/16/bits/deque.tcc:
+
 /usr/include/c++/16/bits/elements_of.h:
 
 /usr/include/c++/16/bits/formatfwd.h:
-
-/usr/lib/libjxl_cms.so.0.12:
-
-/usr/include/c++/16/bits/forward_list.tcc:
 
 /usr/include/c++/16/streambuf:
 
@@ -2631,10 +2812,6 @@ CMakeFiles/test_exe.dir/test.cpp.o:
 
 /usr/include/c++/16/bits/out_ptr.h:
 
-/usr/lib/libjpeg.so.8:
-
-/usr/include/c++/16/forward_list:
-
 /usr/include/c++/16/bits/parse_numbers.h:
 
 /usr/include/SDL2/SDL_rect.h:
@@ -2643,12 +2820,6 @@ CMakeFiles/test_exe.dir/test.cpp.o:
 
 /usr/include/c++/16/bits/ranges_uninitialized.h:
 
-/usr/lib/libc.so.6:
-
-/usr/include/bits/fp-fast.h:
-
-/usr/include/c++/16/bits/stl_raw_storage_iter.h:
-
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/avx10_2minmaxintrin.h:
 
 /usr/include/c++/16/bits/shared_ptr_atomic.h:
@@ -2656,39 +2827,3 @@ CMakeFiles/test_exe.dir/test.cpp.o:
 /usr/lib/libaom.so.3:
 
 /usr/include/c++/16/bits/slice_array.h:
-
-/usr/include/c++/16/bits/sstream.tcc:
-
-/usr/include/c++/16/bits/stl_map.h:
-
-/usr/lib/libSDL2_image.so:
-
-/usr/include/c++/16/bits/stl_multimap.h:
-
-/usr/include/c++/16/span:
-
-/usr/include/c++/16/bits/stl_iterator_base_types.h:
-
-/home/logan/gameprogramming/code/data/types/tile.hpp:
-
-/usr/include/c++/16/bits/stl_relops.h:
-
-/usr/include/c++/16/bits/stl_tree.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/16/include/stdarg.h:
-
-/usr/include/c++/16/cstring:
-
-/usr/include/c++/16/bits/stl_uninitialized.h:
-
-/usr/include/c++/16/bits/unicode.h:
-
-/usr/include/c++/16/ctime:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/16/include/avx512vbmiintrin.h:
-
-/usr/include/c++/16/ext/concurrence.h:
-
-/usr/include/c++/16/filesystem:
-
-/usr/include/c++/16/functional:

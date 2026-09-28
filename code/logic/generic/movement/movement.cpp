@@ -77,7 +77,12 @@ void trigger_movements(Array<T>& types, std::vector<EntityID>& indices, Array<Co
 	for (EntityID i = 0; i < indices.size(); i++)
 	{
           Direction direction = frame_datas[i].get<Direction>();
-          g_Search->move_entity(types[i], {indices[i], std::make_optional<Coord>(coords[i]), direction});	coords[i].move(direction);                
+          g_search->move_entity(types[i], {indices[i], std::make_optional<Coord>(coords[i]), direction});	coords[i].move(direction);                
 	}        
 }
 
+void handle_movement()
+{
+update_positions(g_unit_paths_buffer, ud.coords, ud.inertias, ud.actions);
+	
+}

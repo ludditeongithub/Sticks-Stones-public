@@ -46,7 +46,7 @@ namespace sprite
 
   RuntimeLookupTable<UISprite,SDL_Rect> uis;
 
-		RuntimeLookupTable<Role, SDL_Rect> roles;
+  RuntimeLookupTable<Role, SDL_Rect> roles;
 
 
 std::string to_kebab_case(std::string& s) {
@@ -69,7 +69,7 @@ std::string to_kebab_case(std::string& s) {
 template<typename S>
 std::string get_sprite_name(S sprite_type)
 {
-    std::string name = std::string(magic_enum::enum_name(sprite_type));
+		std::string name = std::string(magic_enum::enum_name(sprite_type));
 
     if constexpr (std::is_same_v<S, Plant>)
     {
@@ -107,18 +107,25 @@ inline void save_sprite(int index, Sprite sprite, SCoord position, SCoord dimens
         } else throw std::invalid_argument("Invalid Sprite type.");
 }
 
-template <typename Enum>
-void load_one_type_sprites(const json& sheet) {
+template <typename Enum> void load_one_type_sprites(const json &sheet)
+{
+	std::cout << "Started loading one type sprite.";
+	
     for (size_t i = 0; i < static_cast<size_t>(Enum::MAX); i++) {
         Enum sprite = static_cast<Enum>(i);
-
+		
         SCoord positions{}, dimensions{};
 
-        for (const auto& item : sheet) {
-            if (item.contains("filename") &&
-                item["filename"] == get_sprite_name(sprite)) { 
-
-                positions = {item["frame"]["x"], item["frame"]["y"]};
+	for (auto &item : sheet)
+			{
+					std::string s = item["filename"].get<std::string>();
+					std::cout << "sprite name:" + s + '\n';
+					std::string sn = get_sprite_name(sprite);
+				if (s == sn)
+				{						
+						std::cout << "Loaded sprite: " + get_sprite_name(sprite);
+					
+					positions = {item["frame"]["x"], item["frame"]["y"]};
                 dimensions = {item["frame"]["w"], item["frame"]["h"]};
             }
         }
@@ -142,8 +149,7 @@ template <typename... Enums> void load_type_sprites()
 
     std::cout << "Successfully opened: " << file_name << '\n';
 
-    json sheet;
-    file >> sheet;
+    json sheet = json::parse(file);
 
     (load_one_type_sprites<Enums>(sheet), ...);
 }
@@ -400,6 +406,19 @@ inline constexpr LookupTable<Plant, std::array<StageInfo, MAX_STAGES>> PLANT_SPR
 	lt[Blueberry] = {{ StageInfo({1,1},4), StageInfo({2,2},2), StageInfo({2,3},1)}}; //TODO: fruited stages
 	lt[Strawberry] = {{ StageInfo({1,1},4), StageInfo({2,2},2), StageInfo({2,3},1)}};
 	return lt;
+}();
+
+inline constexpr LookupTable<Plant,uint8_t> PLANT_STAGE_AMOUNTS = [] {
+		LookupTable<Plant,uint8_t> lt{};
+		using enum Plant;
+		for (size_t i = 0; i < static_cast<size_t>(Plant::MAX); i++)
+				{
+						Plant p = static_cast<Plant>(i);
+						int s = 0;
+						for (size_t j = 0; j < PLANT_SPRITE_DIMENSIONS[p].size(); j++) s += PLANT_SPRITE_DIMENSIONS[p][j].stages;
+						lt[p] = s;	
+		}
+		return lt;
 }();
 
 }

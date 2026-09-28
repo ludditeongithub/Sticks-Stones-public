@@ -81,7 +81,7 @@ void LTexture::free()
 	}
 }
 
-void LTexture::render(int x, int y, SDL_Rect *clip, SDL_Rect* viewport)
+void LTexture::render(int x, int y, SDL_Rect *clip, SDL_Rect* viewport = g_main_screen_viewport)
 {
 
 	// Set clip rendering dimensions

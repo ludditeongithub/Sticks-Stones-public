@@ -1,8 +1,9 @@
 #pragma once
 #include <data/types/tile.hpp>
-
+#include <core/coord.hpp>
 #include <core/tables.hpp>
 #include <data/types/chunk.hpp>
+#include <data/types/stats.hpp>
 
 // TODO: natural grass reproduction
 constexpr Hunger GRASS_HUNGER_VALUE = 300;

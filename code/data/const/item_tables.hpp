@@ -26,7 +26,7 @@ inline constexpr RaggedLookupTable<Commodity::underlying, Action, COMMODITY_ACTI
 	return lt;
 }();
 
-inline constexpr LookupTable<SizeData> item_size_data = []
+inline constexpr LookupTable<SizeData> ITEM_SIZE_DATA = []
 {
 	LookupTable<SizeData> lt{};
 	using enum Item;

@@ -7,16 +7,13 @@
 #include <logic/simulation/world_gen.hpp>
 #include <data/run/world.hpp>
 
-struct World;
-
 namespace tile {
 // TODO: whenever a tile is interacted with, notify all 
 // TODO: enforce occupied on other databses
 class Database
 {
-      public:
-	World& world;
   	// @codegen:begin database_generation
+public:
 // =========================
 // BASE DATABASE MEMBERS
 // =========================
@@ -47,11 +44,9 @@ size_t capacity;
 // CONSTRUCTOR
 // =========================
 
-Database(Arena* arena, size_t capacity
-  , World& world
- 
-) :
-  world(world)
+  Database(Arena* arena, size_t capacity
+) 
+  
 {
 this->capacity = capacity;
 
@@ -130,10 +125,10 @@ return entitys[index];
 
 // @codegen:end database_generation
 	
-	Coord get_nearest_empty_tile(Coord coord);
-		Coord get_nearest_empty_tile_block(Coord coord, size_t length, size_t width = 1);
-  size_t get_index(const Coord coord){return (coord.y * world.height_chunks) + (coord.x * world.length_chunks);}
-		Coord get_coord(const size_t index){return Coord({static_cast<uint32_t>(index % world.length_chunks), static_cast<uint32_t>(index / world.height_chunks)});}
+	Coord get_nearest_empty_tile(Coord coord, Adjacency adjacency = Adjacency::Any);
+    Coord get_nearest_empty_tile_block(Coord coord, size_t length, size_t width = 1);
+  size_t get_index(const Coord coord){return (coord.y * g_world->height_chunks) + (coord.x * g_world->length_chunks);}
+	Coord get_coord(const size_t index){return Coord({static_cast<uint32_t>(index % g_world->length_chunks), static_cast<uint32_t>(index / g_world->height_chunks)});}
   Frame calc_inertia(const Coord coord, bool running);
    Frame calc_inertia(Frame entity_base_frames, const Coord coord);
 };

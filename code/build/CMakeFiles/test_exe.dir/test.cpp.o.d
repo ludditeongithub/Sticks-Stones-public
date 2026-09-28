@@ -290,6 +290,9 @@ CMakeFiles/test_exe.dir/test.cpp.o: \
  /usr/include/c++/16/bits/fs_ops.h /usr/include/c++/16/ranges \
  /usr/include/c++/16/bits/elements_of.h /usr/include/c++/16/any \
  /home/logan/gameprogramming/code/../extern/magic_enum/magic_enum.hpp \
+ /home/logan/gameprogramming/code/display/ui/main/main_menu.hpp \
+ /home/logan/gameprogramming/code/core/mouse.hpp \
+ /usr/include/SDL2/SDL_rect.h \
  /home/logan/gameprogramming/code/display/render/screen.hpp \
  /usr/include/SDL2/SDL.h /usr/include/SDL2/SDL_main.h \
  /usr/include/SDL2/SDL_assert.h /usr/include/SDL2/SDL_atomic.h \
@@ -425,8 +428,16 @@ CMakeFiles/test_exe.dir/test.cpp.o: \
  /usr/include/SDL2/SDL_hints.h /usr/include/SDL2/SDL_error.h \
  /usr/include/SDL2/SDL_stdinc.h \
  /home/logan/gameprogramming/code/display/render/texture.hpp \
- /usr/include/SDL2/SDL_rect.h \
- /home/logan/gameprogramming/code/logic/simulation/world_gen.hpp \
+ /home/logan/gameprogramming/code/data/run/camera.hpp \
+ /home/logan/gameprogramming/code/data/game/screen.hpp \
+ /home/logan/gameprogramming/code/display/ui/components/element.hpp \
+ /usr/include/SDL2/SDL_main.h /usr/include/SDL2/SDL_events.h \
+ /home/logan/gameprogramming/code/display/ui/components/button.hpp \
+ /usr/include/c++/16/chrono /usr/include/c++/16/bits/chrono_io.h \
+ /home/logan/gameprogramming/code/display/ui/components/button_functionality.hpp \
+ /home/logan/gameprogramming/code/core/saves.hpp \
+ /home/logan/gameprogramming/code/logic/simulation/game.hpp \
+ /home/logan/gameprogramming/code/data/run/buildable_database.hpp \
  /home/logan/gameprogramming/code/core/containers.hpp \
  /home/logan/gameprogramming/code/core/memory.hpp \
  /home/logan/gameprogramming/code/../extern/cereal/archives/binary.hpp \
@@ -443,7 +454,42 @@ CMakeFiles/test_exe.dir/test.cpp.o: \
  /home/logan/gameprogramming/code/../extern/cereal/types/base_class.hpp \
  /home/logan/gameprogramming/code/../extern/cereal/details/polymorphic_impl_fwd.hpp \
  /home/logan/gameprogramming/code/../extern/cereal/types/common.hpp \
- /home/logan/gameprogramming/code/data/types/geography.hpp \
  /home/logan/gameprogramming/code/data/run/world.hpp \
+ /home/logan/gameprogramming/code/data/types/geography.hpp \
+ /home/logan/gameprogramming/code/logic/simulation/world_gen.hpp \
  /home/logan/gameprogramming/code/data/run/tile_database.hpp \
- /home/logan/gameprogramming/code/data/const/tile_data.hpp
+ /home/logan/gameprogramming/code/data/const/tile_data.hpp \
+ /home/logan/gameprogramming/code/data/const/buildable_data.hpp \
+ /home/logan/gameprogramming/code/data/const/buildable_tables.hpp \
+ /home/logan/gameprogramming/code/core/info.hpp \
+ /usr/include/SDL2/SDL_mouse.h \
+ /home/logan/gameprogramming/code/core/memory_control.hpp \
+ /home/logan/gameprogramming/code/data/run/animal_database.hpp \
+ /home/logan/gameprogramming/code/data/types/target.hpp \
+ /home/logan/gameprogramming/code/data/types/action.hpp \
+ /home/logan/gameprogramming/code/data/const/animal_data.hpp \
+ /home/logan/gameprogramming/code/data/const/animal_tables.hpp \
+ /home/logan/gameprogramming/code/data/const/time_data.hpp \
+ /home/logan/gameprogramming/code/data/const/animal_tables.hpp \
+ /home/logan/gameprogramming/code/logic/generic/search/search.hpp \
+ /usr/include/c++/16/stack /usr/include/c++/16/deque \
+ /usr/include/c++/16/bits/stl_deque.h /usr/include/c++/16/bits/deque.tcc \
+ /usr/include/c++/16/bits/stl_stack.h \
+ /home/logan/gameprogramming/code/../extern/cereal/types/vector.hpp \
+ /home/logan/gameprogramming/code/../extern/cereal/types/stack.hpp \
+ /home/logan/gameprogramming/code/../extern/cereal/types/deque.hpp \
+ /home/logan/gameprogramming/code/data/run/plant_database.hpp \
+ /home/logan/gameprogramming/code/data/const/plant_tables.hpp \
+ /home/logan/gameprogramming/code/data/run/unit_database.hpp \
+ /home/logan/gameprogramming/code/data/const/unit_tables.hpp \
+ /home/logan/gameprogramming/code/data/run/unit_helpers.hpp \
+ /home/logan/gameprogramming/code/display/render/camera.hpp \
+ /home/logan/gameprogramming/code/display/render/draw.hpp \
+ /home/logan/gameprogramming/code/data/run/item_database.hpp \
+ /home/logan/gameprogramming/code/../extern/cereal/archives/binary.hpp \
+ /home/logan/gameprogramming/code/display/render/render_chunk.hpp \
+ /home/logan/gameprogramming/code/display/ui/components/pop-up_box.hpp \
+ /home/logan/gameprogramming/code/../extern/SDL_FontCache.h \
+ /home/logan/gameprogramming/code/display/ui/components/text.hpp \
+ /home/logan/gameprogramming/code/display/ui/aggregates/swipable_menu.hpp \
+ /home/logan/gameprogramming/code/display/ui/sound/sound.hpp

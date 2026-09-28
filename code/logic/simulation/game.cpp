@@ -6,11 +6,18 @@
 #include "data/run/unit_database.hpp"
 #include <optional>
 
+void Game::start()
+{
+		speed = 1;
+		while () game_loop();				
+}
+
 void Game::init_new_world()
 {
 	absolute_time = 0;
 	WorldSpawner *ws = new WorldSpawner(50 / 2, 50 / 2);
-	ws->generate_world();
+	ws->generate_empty_world();
+	ws->spawn_entities();
 
 	chunk_arena =
 	    Arena(World::ENTITY_SIZE * (ws->WIDTH_WITH_BORDER + ws->HEIGHT_WITH_BORDER) * CHUNKS_PER_REGION);
@@ -76,7 +83,6 @@ void Game::new_game()
 
 	// NOTE: right now Ws uses regions while world does chunks, but the same width
 	// and height is used for both.
-	
 	
 }
 

@@ -1,6 +1,25 @@
 import meta
 import yaml
 import fmt
+def build_initializers(database):
+    traits = database.get("traits", [])
+    references = database.get("database_references", [])
+
+    initializers = []
+
+    if "movable" in traits:
+        initializers.append("world(world)")
+    
+    if "positional" in traits:
+        initializers.append("tiles(tiles)")
+
+    if "searchable" in traits:
+        initializers.append("search(search)")
+
+    if "variant_items" in references:
+        initializers.append("variant_items(variant_items)")
+
+    return ",\n".join(initializers)
 
 def create_databases():
     with open("databases.yaml", "r") as f:
@@ -39,7 +58,9 @@ def create_database(database, trait_data, extra_arrays):
         main_enum,
         trait_data,
         extra_arrays
-    )    
+    )
+    initializers = build_initializers(database)
+
     context = {
         "Entity_name": fmt.snake_to_camel(database["name"].capitalize()),
         "entity_name": fmt.uncapitalize(fmt.snake_to_camel(main_enum)),
@@ -51,6 +72,7 @@ def create_database(database, trait_data, extra_arrays):
         "traits": database.get("traits", []),
         "database_references": database.get("database_references", []),
         "extra_arrays": database.get("extra_arrays", []),
+        "initializers": initializers,
     }
     template = meta.env.get_template("database.j2")
     first_pass = template.render(**context)

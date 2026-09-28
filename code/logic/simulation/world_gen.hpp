@@ -9,6 +9,10 @@
 #include <data/types/tile.hpp>
 #include <data/types/geography.hpp>
 #include <data/types/item.hpp>
+#include <data/run/world.hpp>
+
+
+struct World;
 
 float range_penalty(float original_value, float min_value, float max_value, float adjusted_value);
 
@@ -92,13 +96,13 @@ class WorldSpawner
 	std::vector<std::vector<Temp>> temperature_map;
 	std::vector<std::vector<Hum>> humidity_map;
 	std::vector<std::vector<Biome>> biome_map;
-	std::vector<std::vector<int>> ocean_map;
-	std::vector<std::vector<int>> lands_map;
-	std::vector<std::vector<int>> water_map;
-	std::vector<std::vector<int>> potential_humidity_map;
-	std::vector<std::vector<int>> created_humidity_map;
+	std::vector<std::vector<uint32_t>> ocean_map;
+	std::vector<std::vector<uint32_t>> lands_map;
+	std::vector<std::vector<uint32_t>> water_map;
+	std::vector<std::vector<uint32_t>> potential_humidity_map;
+	std::vector<std::vector<uint32_t>> created_humidity_map;
 	std::vector<std::vector<bool>> instantiated_water_map;
-	std::vector<std::vector<int>> ocean_distance;
+	std::vector<std::vector<uint32_t>> ocean_distance;
 
 	std::vector<std::vector<bool>> r_visited; // holds visited rivers
 
@@ -248,13 +252,11 @@ ScavengeableSpawnBuffer(size_t capacity)
 
 		//TODO: destructor
 
-	void generate_world();
 	// helpers
 	void recursive_lower();
 	void recursive_fill();
 	void print_map();
-        void move_regions_to_chunks(Array<Hum> humidities, Array<Temp> temperatures,
-				 Array<Alt> altitudes);
+    void move_regions_to_chunks(Array<Hum>& humidity_table, Array<Temp>& min_temperature_table, Array<Alt>& altitudes);
 	void print_info();
 	Coord get_tile_coord_from_index(size_t i);
     size_t get_tile_index_from_coord(Coord c);
@@ -272,6 +274,7 @@ ScavengeableSpawnBuffer(size_t capacity)
 	void factor_wetlands_jungles_and_forests();
 	void generate_biomes();
 	void generate_altitude_map();
+	std::vector<std::vector<int>> generate_wb_distances(std::vector<std::vector<int>> &water_map);
 	void get_rivers_from_groundwater();
 	void clean_altitude_map();	
 std::vector<std::tuple<float, bool, bool>>
@@ -282,18 +285,23 @@ humidity_and_rain_shadow_effects(int y, int x, int water, bool biomes);
 	calculate_ocean_distance(std::vector<std::vector<int>> &water_map, bool lake, bool river);
 	std::vector<Coord> generate_voronoi_sites();
 	void generate_tile_types(std::vector<float> &chances, std::vector<Coord> &voronoi_sites,
-			       std::vector<Tile> &r_tiles, Array<Alt> &r_altitudes);
-	std::vector<float> generate_tile_chances();
+			       std::vector<Tile> &r_tiles, Array<Alt> &raltitudes);
+		std::vector<float> generate_tile_chances();
 
-  // spawners
+  //spawners
   void spawn_grass_and_first_plants();
   void spawn_scavengeables();
   void spawn_animals();
 
-        inline void roll_grass_spawn(Coord coord, Biome biome, Tile tile, int temperature, int humidity);
+inline void roll_grass_spawn(Coord coord, Biome biome, Tile tile, int temperature, int humidity);
         inline void roll_plant_spawn(Coord coord, Biome biome, Tile tile, int temperature, int humidity);
         inline void roll_animal_spawn(Coord coord, Biome biome, Tile tile, int temperature, int humidity);
       inline void roll_scavengeable_spawn(Coord coord, Biome biome, Tile tile, int temperature, int humidity);
+
+  // main
+  void generate_empty_world();
+  void spawn_entities();
+	
 	// Constants
 	// IN CELLS
 	int current_x_min = 0;
@@ -302,3 +310,4 @@ humidity_and_rain_shadow_effects(int y, int x, int water, bool biomes);
 	int current_y_max = 0;
 };
 
+void generate_world(World& world);

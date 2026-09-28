@@ -1,6 +1,4 @@
 #pragma once
-#include "core/saves.hpp"
-#include "systems/action/action.hpp"
 #include "data/run/buildable_database.hpp"
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_mouse.h>
@@ -26,6 +24,7 @@ struct Game
 {
   bool first_save = false;
   bool unsaved_changes = true;
+  int8_t speed = 1;
 
   Time absolute_time;
   SDL_Rect player_bounds;      
@@ -61,6 +60,8 @@ GameSave& save_game(std::string name, GameSave *save);
 void load_game(GameSave& save);
 
 void new_game();
+
+void start();
 
 void player_spawn();  
 

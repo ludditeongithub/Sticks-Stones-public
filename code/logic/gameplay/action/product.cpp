@@ -62,8 +62,8 @@ bool attempt_production(int pawn, T product, size_t amount = 1)
 		}
 		}
 
-		vector<std::pair<int, int>> ingredients_found;
-		vector<std::pair<int, int>> variant_ingredients_found;
+		vector<Coord> ingredients_found;
+		vector<Coord> variant_ingredients_found;
 
 		// FOR LIQUIDS
 		if (recipe.item::TAGS.has_tag(item::TAGS::Liquid))
@@ -233,7 +233,7 @@ bool attempt_production(int pawn, T product, size_t amount = 1)
 						// try to find nearest ingredient
 						// TODO: create nearest with lower man dist, also do
 						// for non-alternate recipe
-						std::pair<int, int> item_coord = find_nearest_object(
+						Coord item_coord = find_nearest_object(
 						    recipe.ingredients[i], coords[pawn].first,
 						    coords[pawn] second);
 						if (item_coord != {-1, -1} &&

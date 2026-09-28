@@ -10,16 +10,34 @@ struct Field
     using value_type = T;
     static constexpr unsigned BITS = Bits;
 
-    static_assert(std::is_enum_v<T> ||
-                  (std::is_integral_v<T> && std::is_unsigned_v<T>));
+    static_assert(Bits > 0 && Bits <= sizeof(T) * 8,
+                  "Field bit count must fit inside its value type.");
+
+    static_assert(
+        std::is_enum_v<T> ||
+        (std::is_integral_v<T> && !std::is_same_v<T, bool>),
+        "Field type must be an enum or integral type.");
 };
 
 template<typename T>
-using field_value_type =
-    std::conditional_t<
-        std::is_enum_v<T>,
-        std::underlying_type_t<T>,
-        T>;
+struct field_value_type_impl
+{
+    using type = T;
+};
+
+template<typename T>
+    requires std::is_enum_v<T>
+struct field_value_type_impl<T>
+{
+    using type = std::underlying_type_t<T>;
+};
+
+template<typename T>
+using field_value_type = typename field_value_type_impl<T>::type;
+
+template<typename T>
+using field_unsigned_type =
+    std::make_unsigned_t<field_value_type<T>>;
 
 template<typename T>
 constexpr T bitmask(unsigned bits)
@@ -50,10 +68,12 @@ class PackedEnum
 {
 private:
     static constexpr unsigned TOTAL_BITS = (Fs::BITS + ... + 0);
+
     static_assert(TOTAL_BITS <= 64);
 
 public:
     using Storage = smallest_uint_t<TOTAL_BITS>;
+
     Storage raw{};
 
     template<typename T>
@@ -116,18 +136,52 @@ public:
     constexpr T get() const
     {
         using U = field_value_type<T>;
+        using UnsignedU = std::make_unsigned_t<U>;
 
-        return static_cast<T>(
-            static_cast<U>(
-                (raw & FIELD_MASK<T>) >> FIELD_OFFSET<T>));
+        Storage bits =
+            (raw & FIELD_MASK<T>) >> FIELD_OFFSET<T>;
+
+        UnsignedU value =
+            static_cast<UnsignedU>(bits);
+
+        if constexpr (std::is_signed_v<U>)
+        {
+            constexpr unsigned BITS = FIELD_BITS<T>;
+            constexpr unsigned WIDTH = sizeof(U) * 8;
+
+            if constexpr (BITS < WIDTH)
+            {
+                constexpr UnsignedU SIGN_BIT =
+                    UnsignedU{1} << (BITS - 1);
+
+                if (value & SIGN_BIT)
+                {
+                    constexpr UnsignedU UPPER_BITS =
+                        ~bitmask<UnsignedU>(BITS);
+
+                    value |= UPPER_BITS;
+                }
+            }
+        }
+
+        return static_cast<T>(static_cast<U>(value));
     }
 
     template<typename T>
     constexpr void set(T value)
     {
         using U = field_value_type<T>;
+        using UnsignedU = std::make_unsigned_t<U>;
 
-        Storage v = static_cast<Storage>(static_cast<U>(value));
+        // Convert to the unsigned representation of U.
+        //
+        // For signed values this intentionally preserves the
+        // low Bits bits using unsigned arithmetic.
+        UnsignedU unsigned_value =
+            static_cast<UnsignedU>(static_cast<U>(value));
+
+        Storage v =
+            static_cast<Storage>(unsigned_value);
 
         raw =
             (raw & ~FIELD_MASK<T>) |

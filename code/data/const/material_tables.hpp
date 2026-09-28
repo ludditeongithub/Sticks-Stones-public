@@ -20,7 +20,7 @@ inline constexpr LookupTable<Material,float>  WEIGHT_MULTIPLIER = [] {
   return lt;
  }();
 
-inline constexpr LookupTable<Material,float> toughness_multiplier = [] {
+inline constexpr LookupTable<Material,float> TOUGHNESS_MULTIPLIER = [] {
   LookupTable<Material,float> lt{};
   using enum Material;
     lt[Material::Wood] = 4.0;

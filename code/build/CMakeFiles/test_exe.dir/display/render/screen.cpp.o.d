@@ -278,9 +278,9 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o: \
  /usr/include/SDL2/SDL_misc.h /usr/include/SDL2/SDL_render.h \
  /usr/include/SDL2/SDL_video.h /usr/include/SDL2/SDL_hints.h \
  /usr/include/SDL2/SDL_error.h /usr/include/SDL2/SDL_rect.h \
- /usr/include/SDL2/SDL_stdinc.h /usr/include/c++/16/array \
- /usr/include/c++/16/cassert /usr/include/assert.h \
- /usr/include/c++/16/algorithm /usr/include/c++/16/bits/stl_algo.h \
+ /usr/include/SDL2/SDL_stdinc.h /usr/include/c++/16/cassert \
+ /usr/include/assert.h /usr/include/c++/16/algorithm \
+ /usr/include/c++/16/bits/stl_algo.h \
  /usr/include/c++/16/bits/algorithmfwd.h \
  /usr/include/c++/16/bits/stl_heap.h \
  /usr/include/c++/16/bits/uniform_int_dist.h \
@@ -290,5 +290,8 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o: \
  /usr/include/c++/16/pstl/glue_algorithm_defs.h \
  /usr/include/c++/16/pstl/execution_defs.h \
  /home/logan/gameprogramming/code/display/render/texture.hpp \
- /usr/include/SDL2/SDL_rect.h /usr/include/SDL2/SDL_render.h \
- /usr/include/SDL2/SDL_video.h
+ /usr/include/SDL2/SDL_rect.h \
+ /home/logan/gameprogramming/code/data/run/camera.hpp \
+ /home/logan/gameprogramming/code/data/game/screen.hpp \
+ /usr/include/SDL2/SDL_render.h /usr/include/SDL2/SDL_video.h \
+ /usr/include/c++/16/array

@@ -1,28 +1,35 @@
 #pragma once
+#include "data/types/tile.hpp"
 #include <data/types/animal.hpp>
-#include "systems/action/action.hpp"
+#include <data/types/stats.hpp>
+#include <data/types/time.hpp>
+#include <data/types/target.hpp>
+#include <data/types/action.hpp>
+#include <data/const/animal_data.hpp>
+#include <data/const/animal_tables.hpp>
 #include <core/containers.hpp>
+#include <logic/generic/search/search.hpp>
 
 #include <core/random.hpp>
 #include <cstdint>
 
 #include <data/run/world.hpp>
-#include <world/variant_item/database.hpp>
 #include <cereal/types/vector.hpp>
 #include <cereal/archives/binary.hpp>
 #include <cereal/types/stack.hpp>
-#include <logic/generic/schedule/event.hpp>
-#include <systems/search/search.hpp>
-#include <queue>
+#include <data/const/time_data.hpp>
 
-namespace animal {
+struct World;
+
+namespace animal
+		{				
 class Database
 {
-public:
-struct EggFertilizationHandler {
+private:
+		struct EggFertilizationHandler {
 		std::vector<size_t> fertilized_egg_layers;
 		std::vector<bool> valid;
-		std::queue<size_t> free_indices;
+		Stack<size_t> free_indices;
 		void push_back(size_t index)
 		{
 			if (free_indices.empty())
@@ -32,7 +39,7 @@ struct EggFertilizationHandler {
 					}
 					else
 							{
-									size_t slot = free_indices.front();
+									size_t slot = free_indices.top();
 									free_indices.pop();
 									fertilized_egg_layers[slot] =
 											index;
@@ -51,9 +58,10 @@ struct EggFertilizationHandler {
 				valid.reserve(size);				
 		}
 };
-		EggFertilizationHandler fertilization_handler;
-	
+
+   EggFertilizationHandler fertilization_handler;
 	// @codegen:begin database_generation
+public:
 // =========================
 // BASE DATABASE MEMBERS
 // =========================
@@ -80,10 +88,8 @@ size_t capacity;
     Array<bool> alives;
   SearchGrid& search;
   
-  std::vector<EntityID>& no_inertia_buffer; // size is amount of no inertias this loop
-  
-  std::vector<EntityID>& unassigned_buffer; // size is amount of unassigned this loop
-  World& world;
+  std::vector<EntityID> no_inertia_buffer; 
+  std::vector<EntityID> unassigned_buffer;
   tile::Database& tiles;
   item::VariantDatabase& variant_items;
 
@@ -109,22 +115,20 @@ size_t capacity;
 // =========================
 
 Database(Arena* arena, size_t capacity
-  , World& world
- 
   , SearchGrid& search
   , tile::Database& tiles
   , item::VariantDatabase& variant_items
-) :
-  world(world),
-  tiles(tiles),
+) 
+    : tiles(tiles),
 search(search),
+variant_items(variant_items)
 {
 this->capacity = capacity;
   no_inertia_buffer.reserve(capacity);
+  unassigned_buffer.reserve(capacity);
 
   this->size = 0;
   this->variant_items = variant_items;
-  fertilization_handler = EggFertilizationHandler(capacity / 20);  
 
 
  
@@ -207,7 +211,7 @@ return coords[index];
 	    }
 }
 
-bool attempt_spawn(const Animal animal, const bool newborn, const Coord coord  , const bool insert_search = true
+bool attempt_spawn(const Animal animal, const Coord coord, const bool newborn  , const bool insert_search = true
 )
 {
 #if !SHIPPING_BUILD
@@ -264,7 +268,7 @@ assert(animal != Animal::NONE && animal != Animal::MAX && "Tried to spawn animal
           
         
 
-size_t spawn(const Animal animal, const bool newborn, const Coord origin
+          size_t spawn(const Animal animal, const bool newborn, const Coord origin
 , const bool insert_search = true) {
 Coord spawn_point = tiles.get_nearest_empty_tile(origin);
 size_t result = 0;
@@ -313,9 +317,9 @@ if (result == 0) free_unused_entity();
 
         Coord& pos = coord(index);
         Coord new_pos = get_pos(frame_data(index).get<Direction>(), pos);
-        size_t ti = world.get_tile_index_from_coord(new_pos);
+        size_t ti = g_world->get_tile_index_from_coord(new_pos);
 
-        if (search.tiles.tile_statuses.get<OccupiedStatus>()[ti] == false)
+    if (tile_database.tile_statuss[ti].get<OccupiedStatus>() == OccupiedStatus::Vacant)
         {
             pos = new_pos;
             return true;

@@ -53,11 +53,12 @@ inline void eval_temperature(World& world, int chunk_index, Plant p, float& next
 		}
 }
 
-inline void eval_sunlight(World& world, int chunk_index, float& next_growth, Array2D<float>& daily_insolations, Array<float>& cloud_covers, Plant p, bool regrowth = false)
+inline void eval_sunlight(const World& world, int chunk_index, float& next_growth, Plant p, bool regrowth = false)
 {
+		
 		uint16_t latitude = world.get_chunk_latitude(chunk_index);
 		uint16_t time_zone = world.get_chunk_time_zone(chunk_index);
-		float is = daily_insolations[latitude][time_zone];
+		float is = world.daily_insolations[latitude][time_zone];
 		float psun = perfect_sunlight[p];
 		// sunlight (from 0.0 to 1.0)
 		if (is <= 0.0)
@@ -67,7 +68,7 @@ inline void eval_sunlight(World& world, int chunk_index, float& next_growth, Arr
 		else
 		{
 			// factor cloud cover
-			float ccf = cloud_covers[chunk_index] * MAX_CLOUD_FACTOR;
+			float ccf = world.cloud_covers[chunk_index] * MAX_CLOUD_FACTOR;
 			float sunlight = is / (1 + ccf);
 			float sf = 1.0;
 			if (sunlight < psun)
@@ -78,18 +79,19 @@ inline void eval_sunlight(World& world, int chunk_index, float& next_growth, Arr
 
 // OPTI: have plant temp values be precalcuated so chunk temps is accessed
 // faster
-void plant::Database::update_plants(World& world, Array2D<float> &daily_insolations, Array<float> &cloud_covers, Time time_passed)
+void plant::Database::update_plants(World& world, Time time_passed)
 {
-	for (uint32_t i = 0; i < plant_list.size(); i++)
+	
+	for (uint32_t i = 0; i < plants.size(); i++)
 	{
-		Plant p = plant_list[i];		
+		Plant p = plants[i];		
 		
-		if (plant_list[i] == Plant::NONE)
+		if (plants[i] == Plant::NONE)
 			continue;
 		float next_growth = 1.0;
 		const Coord pos = coords[i];
 		uint32_t chunk_index = get_chunk_index_from_tile(pos);
-		eval_sunlight(world, chunk_index, next_growth, world.daily_insolations, world.cloud_covers, p);
+		eval_sunlight(world, chunk_index, next_growth, p);
 		eval_temperature(world, chunk_index, p, next_growth, alive[i]);
 		if (!alive[i]) continue;		
 

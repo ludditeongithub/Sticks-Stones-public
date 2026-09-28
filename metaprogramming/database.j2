@@ -1,3 +1,4 @@
+public:
 // =========================
 // BASE DATABASE MEMBERS
 // =========================
@@ -16,16 +17,16 @@ size_t capacity;
     size_t size = 1; // 0 is placeholder
     Stack<size_t> free_slots;
     Array<bool> alives;
+  {% endif %}
+{% if 'movable' in traits %}
+  World& world;
 {% endif %}
 {% if ('movable' in traits) or ('searchable' in traits) %}
   SearchGrid& search;
-  
-  std::vector<EntityID>& no_inertia_buffer; // size is amount of no inertias this loop
-  
-  std::vector<EntityID>& unassigned_buffer; // size is amount of unassigned this loop
+  std::vector<EntityID> no_inertia_buffer; 
+  std::vector<EntityID> unassigned_buffer;
 {% endif %}
 {% if 'positional' in traits %}
-  World& world;
   tile::Database& tiles;
 {% endif %}
 {% if 'variant_items' in database_references %}
@@ -53,10 +54,10 @@ size_t capacity;
 // CONSTRUCTOR
 // =========================
 
-Database(Arena* arena, size_t capacity
-{% if 'movable' or 'searchable' in traits %}
-  , World& world
-{% endif %} 
+  Database(Arena* arena, size_t capacity
+  {% if 'movable' in traits %}
+    , World& world
+  {% endif %}
 {% if 'searchable' in traits %}
   , SearchGrid& search
 {% endif %}
@@ -66,30 +67,22 @@ Database(Arena* arena, size_t capacity
 {% if 'variant_items' in database_references %}
   , item::VariantDatabase& variant_items
 {% endif %}
-) :
-{% if 'movable' or 'searchable' in traits %}
-  world(world),
-{% endif %}
-{% if 'positional' in traits %}
-  tiles(tiles),
-{% endif %}
-{% if 'searchable' in traits %}
-search(search),
+) 
+{% if initializers %}
+    : {{ initializers }}
+  {% endif %}  
+{% if entity_name == 'animal' %}
+  ,fertilization_handler(EggFertilizationHandler(capacity / 20))  
 {% endif %}
 {
 this->capacity = capacity;
-{% if 'movable' in traits %}
+{% if 'movable' in traits or 'searchable' in traits %}
   no_inertia_buffer.reserve(capacity);
+  unassigned_buffer.reserve(capacity);
 {% endif %}
 
 {% if not 'immortal' in traits %}
   this->size = 0;
-{% endif %}
-{% if 'variant_items' in database_references %}
-  this->variant_items = variant_items;
-{% endif %}
-{% if entity_name == 'animal' %}
-  fertilization_handler = EggFertilizationHandler(capacity / 20);  
 {% endif %}
 
 {# {% for s in structs %} #}
@@ -138,7 +131,10 @@ return {{ r.name }}s[index];
 }
 {% endif %}
 
-bool attempt_spawn(const {{ main_enum }} {{ entity_name }}, const bool newborn, const Coord coord {% if 'variant' in traits %} , const Variant variant {% endif %} {% if 'searchable' in traits %}
+bool attempt_spawn(const {{ main_enum }} {{ entity_name }}, const Coord coord, const bool newborn {% if 'variant' in traits %} , const Variant variant {% endif %} {% if 'skin_color' in traits %}
+, float parent1, float parent2
+{% endif %}
+{% if 'searchable' in traits %}
 , const bool insert_search = true
 {% endif %}
 )
@@ -184,7 +180,10 @@ assert({{ entity_name }} != {{ PascalCase(entity_name) }}::NONE && {{ entity_nam
 {# TODO: error report if it does NOT spawn on passed origin #}
         
 
-size_t spawn(const {{ main_enum }} {{ entity_name }}, const bool newborn, const Coord origin
+          size_t spawn(const {{ main_enum }} {{ entity_name }}, const bool newborn, const Coord origin
+{% if 'skin_color' in traits %}
+, float parent1, float parent2,
+{% endif %}
 {% if 'variant' in traits %}
   , const Variant variant
 {% endif %}
@@ -192,9 +191,12 @@ size_t spawn(const {{ main_enum }} {{ entity_name }}, const bool newborn, const 
 Coord spawn_point = tiles.get_nearest_empty_tile(origin);
 size_t result = 0;
 while (result == 0) {
-result = attempt_spawn({{ entity_name }}, newborn, spawn_point
+result = attempt_spawn({{ entity_name }}, spawn_point, newborn
 {% if 'variant' in traits %}
   , variant
+{% endif %}
+{% if 'skin_color' in traits %}
+, parent1, parent2,
 {% endif %}
 {% if 'searchable' in traits %}
 , insert_search  
@@ -248,9 +250,9 @@ if (result == 0) free_unused_entity();
 
         Coord& pos = coord(index);
         Coord new_pos = get_pos(frame_data(index).get<Direction>(), pos);
-        size_t ti = world.get_tile_index_from_coord(new_pos);
+        size_t ti = g_world->get_tile_index_from_coord(new_pos);
 
-        if (search.tiles.tile_statuses.get<OccupiedStatus>()[ti] == false)
+    if (tiles.tile_statuss[ti].get<OccupiedStatus>() == OccupiedStatus::Vacant)
         {
             pos = new_pos;
             return true;

@@ -104,7 +104,7 @@ void WorldSpawner::applyExtraHighlandsAndMountains() {
                     l = rint(1,4);
                     s = rint(1,3);
                 }
-                std::pair<int,int> change = getHighestAdj(landsMap, y, x);
+                Coord change = getHighestAdj(landsMap, y, x);
                 int nx = change.second;
                 int ny = change.first;
 
@@ -129,15 +129,15 @@ void WorldSpawner::applyExtraHighlandsAndMountains() {
     for (int y = 0; y < HEIGHT; ++y) {
         for (int x = 0; x < WIDTH; x++) {
             if (landsMap[y][x] != 0 && landsMap[y][x] != 1) {
-                std::pair<int,int> near = adjGet(landsMap, y, x, 1, 3);
-                std::pair<int,int> current = {y,x};
+                Coord near = adjGet(landsMap, y, x, 1, 3);
+                Coord current = {y,x};
                 if (near != current) {
                     if (rfloat(0,1.0) < coastalRangeChance) {
                         landsMap[y][x] = 5; //Mountain
                         int size = rint(3,7);
                         for (int i = 0; i < size; i++) {
                             //get nearest lowlands
-                            std::pair<int,int> near2 = adjGet(landsMap, y, x, 2, 1);
+                            Coord near2 = adjGet(landsMap, y, x, 2, 1);
                             int nx = near2.second; int ny = near2.first;
                             //check to ensure new lowlands tile is close to coast
                             if (adjCheck(landsMap, ny, nx, 1, 3) == true && landsMap[nx][ny] != 0 && landsMap[nx][ny] != 1)
@@ -318,7 +318,7 @@ std::vector<std::vector<int>> WorldSpawner::calculateOceanDistance(std::vector<s
     int water = lake ? 5 : 0;
     water = river ? 3 : water;
 
-    std::queue<std::pair<int, int>> q;
+    std::queue<Coord> q;
 
     // Initialize distances and queue
     for (int y = 0; y < HEIGHT; ++y) {
@@ -439,7 +439,7 @@ std::vector<std::tuple<float, bool, bool>> humidityAndRainShadowEffects(vector<v
     // //eliminate ocean tiles not adjacent to coasts
     for (int i = 0; i < (int)ocoords.size(); i++) {
         std::tuple<int, int, int> t = ocoords[i];
-        std::pair<int, int> waterBody = {get<0>(t), get<1>(t)};
+        Coord waterBody = {get<0>(t), get<1>(t)};
 
         if (water == 0) {
             if (!adjCheck(landsMap, waterBody.first, waterBody.second,1,1)){
@@ -449,7 +449,7 @@ std::vector<std::tuple<float, bool, bool>> humidityAndRainShadowEffects(vector<v
         //for all found tiles, calculate added humidity to current tile
         //and if mountain is blocking
         wdistance = std::get<2>(t);
-        std::pair<int,int> current = {y, x};
+        Coord current = {y, x};
         // increase humidity by distance from water body
         hincrease = fmax(0.0, (min+1.0 - pow(wdistance, power)));
         // check if mountain is between current tile and water body
@@ -460,7 +460,7 @@ std::vector<std::tuple<float, bool, bool>> humidityAndRainShadowEffects(vector<v
         vector<std::tuple<int, int, int>> mcoords = adjGetAll(landsMap, waterBody.first, waterBody.second, 5, 4);
         for (int i = 0; i < (int)mcoords.size(); i++) {
             std::tuple<int, int, int> t = mcoords[i];
-            std::pair<int, int> mount ={std::get<0>(t), std::get<1>(t)};
+            Coord mount ={std::get<0>(t), std::get<1>(t)};
             // check if current tile is between waterbody and mountain
             bool result = coordsInPath(mount, waterBody, current);
             if (result) windwardEffect = true;
@@ -721,10 +721,10 @@ void WorldSpawner::applyRiverTiles() {
     int minElevation = rTileAlt[index];
     int currentElevation = minElevation;
     int minDist = calculateDistance(y, x, target);
-    std::std::pair<int,int> nextTile = {y, x};
+    std::Coord nextTile = {y, x};
 
     // Find the lowest elevation neighboring tile
-    std::vector<std::std::pair<int,int>> lowElevTiles;  // To store ties for lowest elevation
+    std::vector<std::Coord> lowElevTiles;  // To store ties for lowest elevation
     for (const auto& dir : directions) {
         int nx = x + dir.second;
         int ny = y + dir.first;
@@ -786,7 +786,7 @@ void WorldSpawner::recursiveLower() {
     rTileAlt[index] -= decreaseAmount;
 
     // Recursively lower neighboring cells
-    for (const auto& delta : std::vector<std::std::pair<int, int>>{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}) {
+    for (const auto& delta : std::vector<std::Coord>{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}) {
         int nx = x + delta.first;
         int ny = y + delta.second;
         if (nx >= 0 && ny >= 0 && nx < WORLD_WIDTH && ny < WORLD_HEIGHT) {
@@ -805,7 +805,7 @@ void WorldSpawner::recursiveFill() {
     rTileWater[index] = true;
 
     // Recursively lower neighboring cells
-    for (const auto& delta : std::vector<std::std::pair<int, int>>{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}) {
+    for (const auto& delta : std::vector<std::Coord>{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}) {
         int nx = x + delta.first;
         int ny = y + delta.second;
         if (nx >= 0 && ny >= 0 && nx < WORLD_WIDTH && ny < WORLD_HEIGHT) {
@@ -841,7 +841,7 @@ void WorldSpawner::recursiveFill() {
         //                     foundMountain = true;
         //                     //find good source tiles in between mountain seed tile and current seed tile
         //                     std::std::pair mountainSeed = voronoiSites[cellIndex];
-        //                     std::std::pair<int,int> sourceTile = {lerp((int) mountainSeed.first, (int)seed.first, 0.6), lerp((int)mountainSeed.second,(int) seed.second, 0.6)};
+        //                     std::Coord sourceTile = {lerp((int) mountainSeed.first, (int)seed.first, 0.6), lerp((int)mountainSeed.second,(int) seed.second, 0.6)};
         //                     // int width = rint(3,10);
         //                     // int length = rint(3,10);
         //                     // for (int w = 0; w < width; w++) {
@@ -861,7 +861,7 @@ void WorldSpawner::recursiveFill() {
         //         }
         //         if (waterMap[mapCoord.first][mapCoord.second] == 6) {
         //             // put sources from highlands or groundwater in random spot in cell
-        //             std::std::pair<int,int> random = {(int)seed.first + rint((-CELL_SIZE/2)+10,(CELL_SIZE/2)-10),seed.second + rint((-CELL_SIZE/2)+10,(CELL_SIZE/2)-10)};
+        //             std::Coord random = {(int)seed.first + rint((-CELL_SIZE/2)+10,(CELL_SIZE/2)-10),seed.second + rint((-CELL_SIZE/2)+10,(CELL_SIZE/2)-10)};
         //             if (rTileIndex.find({random.first,random.second}) != rTileIndex.end()) {
         //                         int ti = rTileIndex[{random.first,random.second}];
         //                         rTileWater[ti] = true;
@@ -879,7 +879,7 @@ void WorldSpawner::recursiveFill() {
         //             //     i++;
         //             // }
         //             // create altitude depressions to fill lakes with
-        //              std::std::pair<int,int> depressionCenter = {seed.first + rint((-CELL_SIZE/2)+10,(CELL_SIZE/2)-10),seed.second + rint((-CELL_SIZE/2)+10,(CELL_SIZE/2)-10)};
+        //              std::Coord depressionCenter = {seed.first + rint((-CELL_SIZE/2)+10,(CELL_SIZE/2)-10),seed.second + rint((-CELL_SIZE/2)+10,(CELL_SIZE/2)-10)};
         //              if (rTileIndex.find({depressionCenter.first,depressionCenter.second}) != rTileIndex.end()) {
         //              int ti = rTileIndex[{depressionCenter.first,depressionCenter.second}];
         //              //add depressionCenter to lake centers
@@ -897,7 +897,7 @@ void WorldSpawner::recursiveFill() {
         //             lakeOrEnd[{seed.first, seed.second}] = false;
         //         }
         //           if (waterMap[mapCoord.first][mapCoord.second] == 7) { // inland
-        //                 std::std::pair<int,int> center = {(int)seed.first + rint((-CELL_SIZE/2)+10,(CELL_SIZE/2)-10), (int)seed.second + rint((-CELL_SIZE/2)+8,(CELL_SIZE/2)-8)};
+        //                 std::Coord center = {(int)seed.first + rint((-CELL_SIZE/2)+10,(CELL_SIZE/2)-10), (int)seed.second + rint((-CELL_SIZE/2)+8,(CELL_SIZE/2)-8)};
         //              riverEnds.push_back(center);
         //              lakeOrEnd[{center.first, center.second}] = false;
         //         }

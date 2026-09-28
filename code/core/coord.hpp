@@ -3,6 +3,13 @@
 #include <cmath>
 #include <stdexcept>
 
+enum class Adjacency 
+{
+		Any,
+		Horizontal,
+		Vertical
+};
+
 enum class Direction : uint8_t
 {
 	North = 0,
@@ -13,15 +20,8 @@ enum class Direction : uint8_t
 
 struct Coord
 {
-	uint32_t x;
+	    uint32_t x;
 		uint32_t y;
-
-		Coord() : x(0), y(0) {}
-
-		Coord(uint32_t x, uint32_t y) : x(x), y(y)
-		{
-				
-		}
 
 		Coord operator+(const Coord c) { return Coord(this->x + c.x, this->y + c.y); }
 
@@ -33,7 +33,16 @@ struct Coord
 
 		Coord operator*(uint32_t s) { return Coord(this->x * s, this->y * s); }
 
-		void operator*=(uint32_t s) { this->x *= s; this->y *= s; }
+		void operator*=(uint32_t s)
+		{
+			this->x *= s;
+			this->y *= s;
+		}
+
+		bool operator!=(Coord c)
+		{
+				return this->x == c.x && this->y == c.y;
+		}
 
 inline void move(Direction direction)
 		{
@@ -65,10 +74,24 @@ struct SCoord
 	}
 };
 
+inline bool adjacent(Coord start, Coord next, Adjacency adjacency = Adjacency::Any) {
+		switch (adjacency) {
+		case Adjacency::Horizontal:
+       			if ((start.x - next.x) == 1 && (start.y - next.y) == 0) return true;
+				break;
+		case Adjacency::Vertical:
+       			if ((start.y - next.y) == 1 && (start.x - next.x) == 0) return true;
+       			break;
+		default:
+				if (((start.y - next.y) <= 1 && (start.x - next.x) == 0) || ((start.x - next.x) == 1 && (start.y - next.y) == 0)) return true;
+		}
+		return false;
+}
+
 inline bool adjacent_coords(Coord first, Coord second)
 {
-	return (std::abs(static_cast<int>(first.x - second.x)) <= 1 &&
-		std::abs(static_cast<int>(first.y - second.y)) <= 1);
+	return ((static_cast<int>(first.x - second.x)) <= 1 &&
+		(static_cast<int>(first.y - second.y)) <= 1);
 }
 
 //TODO: consider stride
@@ -97,7 +120,7 @@ inline Coord get_pos(Direction direction, Coord coord, uint8_t stride = 1)
 
 template <typename T> T chebyshev(T x1, T y1, T x2, T y2)
 {
-	return std::max(std::abs(x2 - x1), std::abs(y2 - y1));
+	return std::max((x2 - x1), (y2 - y1));
 }
 
 template <typename T> inline T euclidean_dist(T x1, T y1, T x2, T y2)
@@ -110,13 +133,13 @@ inline uint16_t manhattan_dist(Coord c1, Coord c2)
     int dx = static_cast<int>(c1.x) - static_cast<int>(c2.x);
     int dy = static_cast<int>(c1.y) - static_cast<int>(c2.y);
 
-    return static_cast<uint16_t>(std::abs(dx) + std::abs(dy));
+    return static_cast<uint16_t>((dx) + (dy));
 }
 
 template <typename T> inline float diff_mult(T value, T target, T bound)
 {
-	T range = std::abs(bound - target);
-	T diff = std::abs(bound - value);
+	T range = abs(bound - target);
+	T diff = abs(bound - value);
 	return diff / range;
 }
 

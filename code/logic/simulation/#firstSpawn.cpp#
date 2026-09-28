@@ -924,7 +924,7 @@ void WorldSpawner::spawnScavengeables(vector<bool>& tileWater, vector<bool>& til
 for (int i = 0; i < rAdIndex.size(); i++) {
     if (static_cast<int>(rAdObject[i]) != 0) continue;
      uint32_t chunk = rAdChunkIndex[i];
-     std::pair<int,int> chunkCoord = rMapsLink[chunk];
+     Coord chunkCoord = rMapsLink[chunk];
      int biome = biomeMap[chunkCoord.first][chunkCoord.second];
      Scavengeable scavengeable;
      float logChance = 0.0;

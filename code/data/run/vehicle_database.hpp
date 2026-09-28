@@ -8,6 +8,7 @@
 namespace vehicle {
 class Database {
   	// @codegen:begin database_generation
+public:
 // =========================
 // BASE DATABASE MEMBERS
 // =========================
@@ -26,12 +27,10 @@ size_t capacity;
     size_t size = 1; // 0 is placeholder
     Stack<size_t> free_slots;
     Array<bool> alives;
-  SearchGrid& search;
-  
-  std::vector<EntityID>& no_inertia_buffer; // size is amount of no inertias this loop
-  
-  std::vector<EntityID>& unassigned_buffer; // size is amount of unassigned this loop
   World& world;
+  SearchGrid& search;
+  std::vector<EntityID> no_inertia_buffer; 
+  std::vector<EntityID> unassigned_buffer;
   tile::Database& tiles;
 
     // =========================
@@ -49,16 +48,17 @@ size_t capacity;
 // CONSTRUCTOR
 // =========================
 
-Database(Arena* arena, size_t capacity
-  , World& world
- 
+  Database(Arena* arena, size_t capacity
+    , World& world
   , tile::Database& tiles
-) :
-  world(world),
-  tiles(tiles),
+) 
+    : world(world),
+tiles(tiles)
+  
 {
 this->capacity = capacity;
   no_inertia_buffer.reserve(capacity);
+  unassigned_buffer.reserve(capacity);
 
   this->size = 0;
 
@@ -104,7 +104,7 @@ return coords[index];
   // =========================
 
 
-bool attempt_spawn(const Vehicle vehicle, const bool newborn, const Coord coord  )
+bool attempt_spawn(const Vehicle vehicle, const Coord coord, const bool newborn  )
 {
 #if !SHIPPING_BUILD
 assert(vehicle != Vehicle::NONE && vehicle != Vehicle::MAX && "Tried to spawn vehicle as NONE or MAX.");
@@ -147,12 +147,12 @@ assert(vehicle != Vehicle::NONE && vehicle != Vehicle::MAX && "Tried to spawn ve
           
         
 
-size_t spawn(const Vehicle vehicle, const bool newborn, const Coord origin
+          size_t spawn(const Vehicle vehicle, const bool newborn, const Coord origin
 , const bool insert_search = true) {
 Coord spawn_point = tiles.get_nearest_empty_tile(origin);
 size_t result = 0;
 while (result == 0) {
-result = attempt_spawn(vehicle, newborn, spawn_point
+result = attempt_spawn(vehicle, spawn_point, newborn
 );
 if (result == 0) free_unused_entity();
 }
@@ -193,9 +193,9 @@ if (result == 0) free_unused_entity();
 
         Coord& pos = coord(index);
         Coord new_pos = get_pos(frame_data(index).get<Direction>(), pos);
-        size_t ti = world.get_tile_index_from_coord(new_pos);
+        size_t ti = g_world->get_tile_index_from_coord(new_pos);
 
-        if (search.tiles.tile_statuses.get<OccupiedStatus>()[ti] == false)
+    if (tiles.tile_statuss[ti].get<OccupiedStatus>() == OccupiedStatus::Vacant)
         {
             pos = new_pos;
             return true;

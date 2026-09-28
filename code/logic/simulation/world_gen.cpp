@@ -8,9 +8,9 @@
 // 1. Generate Ocean on altitude, land, and ocean maps
 void WorldSpawner::generate_oceans_on_maps()
 {
-	for (int x = 0; x < width; ++x)
+	for (uint32_t x = 0; x < width; ++x)
 	{
-		for (int y = 0; y < height; ++y)
+		for (uint32_t y = 0; y < height; ++y)
 		{
 			if (altitude_map[y][x] > land_threshold)
 			{
@@ -30,9 +30,9 @@ void WorldSpawner::generate_oceans_on_maps()
 // Function to mark adjacent tiles to coast as lowlands
 void WorldSpawner::mark_coasts()
 {
-	for (int x = 0; x < width; ++x)
+	for (uint32_t x = 0; x < width; ++x)
 	{
-		for (int y = 0; y < height; ++y)
+		for (uint32_t y = 0; y < height; ++y)
 		{
 			if (ocean_map[y][x] == 1)
 			{ // Land
@@ -49,11 +49,11 @@ void WorldSpawner::mark_coasts()
 void WorldSpawner::apply_extra_highlands_and_mountains()
 {
 	// Step 1: Transition one tile to other tile
-	for (int y = 0; y < height; ++y)
+	for (uint32_t y = 0; y < height; ++y)
 	{
-		for (int x = 0; x < width; ++x)
+		for (uint32_t x = 0; x < width; ++x)
 		{
-			int lowest = get_lowest_adj_value(lands_map, x, y);
+			uint32_t lowest = get_lowest_adj_value(lands_map, x, y);
 			float threshold;
 			switch (lowest)
 			{
@@ -81,23 +81,23 @@ void WorldSpawner::apply_extra_highlands_and_mountains()
 	}
 
 	// Step 2: Apply highlands, mountains swaths
-	for (int y = 0; y < height; ++y)
+	for (uint32_t y = 0; y < height; ++y)
 	{
-		for (int x = 0; x < width; ++x)
+		for (uint32_t x = 0; x < width; ++x)
 		{
 			if (lands_map[y][x] == 5)
 			{
-				int success;
-				int backup;
+				uint32_t success;
+				uint32_t backup;
 				float chance;
-				int l;
-				int s;
+				uint32_t l;
+				uint32_t s;
 
 				if (lands_map[y][x] == 5)
 				{
 					success = 5;
-					int highest = get_highest_adj_value(lands_map, y, x);
-					int lowest = get_lowest_adj_value(lands_map, y, x);
+					uint32_t highest = get_highest_adj_value(lands_map, y, x);
+					uint32_t lowest = get_lowest_adj_value(lands_map, y, x);
 					backup = highest;
 					switch (lowest)
 					{
@@ -127,17 +127,17 @@ void WorldSpawner::apply_extra_highlands_and_mountains()
 					l = r1_to4.next();
 					s = r1_to3.next();
 				}
-				std::pair<int, int> change = get_highest_adj(lands_map, y, x);
-				int nx = change.second;
-				int ny = change.first;
+				Coord change = get_highest_adj(lands_map, y, x);
+				uint32_t nx = change.x;
+				uint32_t ny = change.y;
 
 				// Random chance which determines if highlands range is deleted or
 				// expanded
 				if (rand() / (float)RAND_MAX < chance)
 				{
-					for (int i = 0; i < l; i++)
+					for (uint32_t i = 0; i < l; i++)
 					{
-						for (int j = 0; j < s; j++)
+						for (uint32_t j = 0; j < s; j++)
 						{
 							if (nx >= 0 && nx < width && ny >= 0 &&
 							    ny < height)
@@ -159,27 +159,27 @@ void WorldSpawner::apply_extra_highlands_and_mountains()
 	}
 
 	// Step 3: Apply coastal mountains chance
-	for (int y = 0; y < height; ++y)
+	for (uint32_t y = 0; y < height; ++y)
 	{
-		for (int x = 0; x < width; x++)
+		for (uint32_t x = 0; x < width; x++)
 		{
 			if (lands_map[y][x] != 0 && lands_map[y][x] != 1)
 			{
-				std::pair<int, int> near = adj_get(lands_map, y, x, 1, 3);
-				std::pair<int, int> current = {y, x};
+				Coord near = adj_get(lands_map, y, x, 1, 3);
+				Coord current = {x, y};
 				if (near != current)
 				{
 					if (rchance.next() < coastal_range_chance)
 					{
 						lands_map[y][x] = 5; // Mountain
-						int size = r1_to4 + 3;
-						for (int i = 0; i < size; i++)
+						uint32_t size = r1_to4.next() + 3;
+						for (uint32_t i = 0; i < size; i++)
 						{
 							// get nearest lowlands
-							std::pair<int, int> near2 =
+							Coord near2 =
 							    adj_get(lands_map, y, x, 2, 1);
-							int nx = near2.second;
-							int ny = near2.first;
+							uint32_t nx = near2.x;
+							uint32_t ny = near2.y;
 							// check to ensure new lowlands tile is
 							// close to coast
 							if (adj_check(lands_map, ny, nx, 1, 3) ==
@@ -216,9 +216,9 @@ void WorldSpawner::apply_extra_highlands_and_mountains()
 void WorldSpawner::generate_lands_map()
 {
 	mark_coasts();
-	for (int x = 0; x < width; ++x)
+	for (uint32_t x = 0; x < width; ++x)
 	{
-		for (int y = 0; y < height; ++y)
+		for (uint32_t y = 0; y < height; ++y)
 		{
 			if (ocean_map[y][x] == 1 && lands_map[y][x] != 1)
 			{
@@ -241,7 +241,7 @@ void WorldSpawner::generate_lands_map()
 }
 
 // TODO: make river
-void WorldSpawner::extend_rivers_from_source(uint16_t river_length, int x, int y)
+void WorldSpawner::extend_rivers_from_source(uint32_t river_length, uint32_t x, uint32_t y)
 {
 	// Base case 1: Hits the edge of the map
 	if (x < 0 || x >= width || y < 0 || y >= height)
@@ -286,13 +286,13 @@ void WorldSpawner::extend_rivers_from_source(uint16_t river_length, int x, int y
 		return;
 	}
 
-	int dx[] = {-1, 0, 1, 0};
-	int dy[] = {0, 1, 0, -1};
+	uint32_t dx[] = {-1, 0, 1, 0};
+	uint32_t dy[] = {0, 1, 0, -1};
 
-	for (int i = 0; i < 4; i++)
+	for (uint32_t i = 0; i < 4; i++)
 	{
-		int nx = x + dx[i];
-		int ny = y + dy[i];
+		uint32_t nx = x + dx[i];
+		uint32_t ny = y + dy[i];
 
 		if (nx >= 0 && nx < width && ny >= 0 && ny < height)
 		{
@@ -318,17 +318,17 @@ void WorldSpawner::extend_rivers_from_source(uint16_t river_length, int x, int y
 
 void WorldSpawner::mark_river_ends()
 {
-	for (int y = 0; y < height; ++y)
+	for (uint32_t y = 0; y < height; ++y)
 	{
-		for (int x = 0; x < width; ++x)
+		for (uint32_t x = 0; x < width; ++x)
 		{
 			// Check if any adjacent tile is a river
-			int dx[] = {-1, 0, 1, 0};
-			int dy[] = {0, 1, 0, -1};
-			for (int i = 0; i < 4; ++i)
+			uint32_t dx[] = {-1, 0, 1, 0};
+			uint32_t dy[] = {0, 1, 0, -1};
+			for (uint32_t i = 0; i < 4; ++i)
 			{
-				int nx = x + dx[i];
-				int ny = y + dy[i];
+				uint32_t nx = x + dx[i];
+				uint32_t ny = y + dy[i];
 				if (nx >= 0 && nx < width && ny >= 0 && ny < height)
 				{
 					if (water_map[ny][nx] == 3)
@@ -357,9 +357,9 @@ void WorldSpawner::generate_water_map()
 	water_map = ocean_map;
 
 	// generate river sources
-	for (int y = 1; y < height + 1; y++)
+	for (uint32_t y = 1; y < height + 1; y++)
 	{
-		for (int x = 1; x < width + 1; x++)
+		for (uint32_t x = 1; x < width + 1; x++)
 		{ // Start from 1 to avoid borders
 			if (lands_map[y][x] != 0 && lands_map[y][x] != 1)
 			{
@@ -408,9 +408,9 @@ void WorldSpawner::generate_water_map()
 		}
 	}
 
-	for (int y = 1; y < height + 1; y++)
+	for (uint32_t y = 1; y < height + 1; y++)
 	{
-		for (int x = 1; x < width + 1; x++)
+		for (uint32_t x = 1; x < width + 1; x++)
 		{
 			// generate rivers from lakes
 			std::fill(r_visited.begin(), r_visited.end(),
@@ -422,21 +422,21 @@ void WorldSpawner::generate_water_map()
 }
 
 // BFS function to calculate the distance from the ocean
-std::vector<std::vector<int>>
-WorldSpawner::calculate_ocean_distance(std::vector<std::vector<int>> &water_map, bool lake, bool river)
+std::vector<std::vector<uint32_t>>
+WorldSpawner::calculate_ocean_distance(std::vector<std::vector<uint32_t>> &water_map, bool lake, bool river)
 {
-	std::vector<std::vector<int>> distance_map(
-	    height, std::vector<int>(width, width * height)); // Initialize with large values
+	std::vector<std::vector<uint32_t>> distance_map(
+	    height, std::vector<uint32_t>(width, width * height)); // Initialize with large values
 
-	int water = lake ? 5 : 0;
+	uint32_t water = lake ? 5 : 0;
 	water = river ? 3 : water;
 
-	std::queue<std::pair<int, int>> q;
+	std::queue<Coord> q;
 
 	// Initialize distances and queue
-	for (int y = 0; y < height; ++y)
+	for (uuint32_t32_t y = 0; y < height; ++y)
 	{
-		for (int x = 0; x < width; ++x)
+		for (uuint32_t32_t x = 0; x < width; ++x)
 		{
 			if (water_map[y][x] == water)
 			{ // Check water_map, not lands_map
@@ -454,7 +454,7 @@ WorldSpawner::calculate_ocean_distance(std::vector<std::vector<int>> &water_map,
 
 		for (auto [dy, dx] : directions)
 		{
-			int ny = cy + dy, nx = cx + dx;
+			uint32_t ny = cy + dy, nx = cx + dx;
 			if (ny >= 0 && ny < height && nx >= 0 && nx < width)
 			{
 				if (distance_map[ny][nx] > distance_map[cy][cx] + 1)
@@ -468,36 +468,36 @@ WorldSpawner::calculate_ocean_distance(std::vector<std::vector<int>> &water_map,
 	return distance_map;
 }
 
-std::vector<std::vector<int>>
-WorldSpawner::generate_wb_distances(std::vector<std::vector<int>> &water_map)
+std::vector<std::vector<uint32_t>>
+WorldSpawner::generate_wb_distances(std::vector<std::vector<uint32_t>> &water_map)
 {
-	std::vector<std::vector<int>> ocean_distance =
+	std::vector<std::vector<uint32_t>> ocean_distance =
 	    calculate_ocean_distance(water_map, false, false);
 	return ocean_distance;
 }
 
 void WorldSpawner::generate_temperature_map()
 {
-	for (int y = 0; y < height; y++)
+	for (uint32_t y = 0; y < height; y++)
 	{
-		for (int x = 0; x < width; x++)
+		for (uint32_t x = 0; x < width; x++)
 		{
 			if (ocean_map[y][x] == 0)
 				continue;
-			int edist = std::abs(y - EQUATOR);
-			int odist = ocean_distance[y][x];
-			int temperature = 90;
+			uint32_t edist = std::abs(y - equator);
+			uint32_t odist = ocean_distance[y][x];
+			uint32_t temperature = 90;
 			// affect temp by latitude
 			temperature -= (pow(edist, 1.05) * 94 / height);
 			// affect temp by altitude
-			temperature -= std::min(12, static_cast<int>(altitude_map[y][x] / 3.2f));
+			temperature -= std::min(12, static_cast<uint32_t>(altitude_map[y][x] / 3.2f));
 			// mountain tiles affect temp relative to the ocean
-			int range = adj_range(lands_map, y, x, 5); // find mountain
+			uint32_t range = adj_range(lands_map, y, x, 5); // find mountain
 			if (range < 4 && lands_map[y][x] != 5)
 			{
 				std::pair ag = adj_get(lands_map, y, x, 5, range + 1);
-				int nx = ag.second;
-				int ny = ag.first;
+				uint32_t nx = ag.second;
+				uint32_t ny = ag.first;
 				// get and see if mountain is between current tile and coast
 				if (adj_range(lands_map, ny, nx, 0) < 3 &&
 				    adj_range(lands_map, ny, nx, 0) < range)
@@ -513,7 +513,7 @@ void WorldSpawner::generate_temperature_map()
 				}
 			}
 			// ocean moderates temp, but less near equator
-			int otemp = 80 - (edist / (height * 1.3f / height));
+			uint32_t otemp = 80 - (edist / (height * 1.3f / height));
 
 			if (temperature > 70 && odist >= 1)
 			{
@@ -530,18 +530,18 @@ void WorldSpawner::generate_temperature_map()
 }
 
 std::vector<std::tuple<float, bool, bool>>
-WorldSpawner::humidity_and_rain_shadow_effects(int y, int x, int water, bool biomes)
+WorldSpawner::humidity_and_rain_shadow_effects(uint32_t y, uint32_t x, uint32_t water, bool biomes)
 {
 	std::vector<std::tuple<float, bool, bool>> ret;
 	bool leeward_effect = false;
 	bool windward_effect = false;
 	float min;
 	float power;
-	int wdistance;
+	uint32_t wdistance;
 	float hincrease;
-	int dist;
+	uint32_t dist;
 	// make vector with all nearby tiles of water body type
-	std::vector<std::tuple<int, int, int>> ocoords;
+	std::vector<std::tuple<uint32_t, uint32_t, uint32_t>> ocoords;
 	// adjust exponential decrease of humidity gain based on water body type
 	if (!biomes)
 	{
@@ -589,10 +589,10 @@ WorldSpawner::humidity_and_rain_shadow_effects(int y, int x, int water, bool bio
 		ocoords = adj_get_all(biome_map, y, x, water, dist);
 	}
 	// //eliminate ocean tiles not adjacent to coasts
-	for (int i = 0; i < (int)ocoords.size(); i++)
+	for (uint32_t i = 0; i < (uint32_t)ocoords.size(); i++)
 	{
-		std::tuple<int, int, int> t = ocoords[i];
-		std::pair<int, int> water_body = {get<0>(t), get<1>(t)};
+		std::tuple<uint32_t, uint32_t, uint32_t> t = ocoords[i];
+		Coord water_body = {get<0>(t), get<1>(t)};
 
 		if (water == 0)
 		{
@@ -604,7 +604,7 @@ WorldSpawner::humidity_and_rain_shadow_effects(int y, int x, int water, bool bio
 		// for all found tiles, calculate added humidity to current tile
 		// and if mountain is blocking
 		wdistance = std::get<2>(t);
-		std::pair<int, int> current = {y, x};
+		Coord current = {y, x};
 		// increase humidity by distance from water body
 		hincrease = fmax(0.0, (min + 1.0 - pow(wdistance, power)));
 		// check if mountain is between current tile and water body
@@ -613,12 +613,12 @@ WorldSpawner::humidity_and_rain_shadow_effects(int y, int x, int water, bool bio
 
 		// get windward effect
 		// get all mountains near water body
-		std::vector<std::tuple<int, int, int>> mcoords =
+		std::vector<std::tuple<uint32_t, uint32_t, uint32_t>> mcoords =
 		    adj_get_all(lands_map, water_body.first, water_body.second, 5, 4);
-		for (int i = 0; i < (int)mcoords.size(); i++)
+		for (uint32_t i = 0; i < (uint32_t)mcoords.size(); i++)
 		{
-			std::tuple<int, int, int> t = mcoords[i];
-			std::pair<int, int> mount = {std::get<0>(t), std::get<1>(t)};
+			std::tuple<uint32_t, uint32_t, uint32_t> t = mcoords[i];
+			Coord mount = {std::get<0>(t), std::get<1>(t)};
 			// check if current tile is between waterbody and mountain
 			bool result = coords_in_path(mount, water_body, current);
 			if (result)
@@ -630,11 +630,11 @@ WorldSpawner::humidity_and_rain_shadow_effects(int y, int x, int water, bool bio
 	return ret;
 }
 
-float WorldSpawner::total_created_humidity(int y, int x)
+float WorldSpawner::total_created_humidity(uint32_t y, uint32_t x)
 {
 	float createdhumidity = 0.0;
-	int water_body;
-	for (int c = 0; c < 3; c++)
+	uint32_t water_body;
+	for (uint32_t c = 0; c < 3; c++)
 	{
 		if (c == 0)
 			water_body = 0;
@@ -644,7 +644,7 @@ float WorldSpawner::total_created_humidity(int y, int x)
 			water_body = 3;
 		std::vector<std::tuple<float, bool, bool>> water_bodies =
 		    humidity_and_rain_shadow_effects(lands_map, y, x, water_body, false);
-		for (int i = 0; i < (int)water_bodies.size(); i++)
+		for (uint32_t i = 0; i < (uint32_t)water_bodies.size(); i++)
 		{
 			std::tuple<float, bool, bool> t = water_bodies[i];
 			float ah = std::get<0>(t);
@@ -663,9 +663,9 @@ float WorldSpawner::total_created_humidity(int y, int x)
 // generate the humidity map based on distance to ocean and altitude
 void WorldSpawner::generate_humidity_map()
 {
-	for (int x = 0; x < width; ++x)
+	for (uint32_t x = 0; x < width; ++x)
 	{
-		for (int y = 0; y < height; ++y)
+		for (uint32_t y = 0; y < height; ++y)
 		{
 			if (ocean_map[y][x] == 0)
 			{ // Ocean
@@ -675,7 +675,7 @@ void WorldSpawner::generate_humidity_map()
 			{
 
 				float potentialhumidity = 0.0;
-				int humidity;
+				uint32_t humidity;
 
 				// latitudinal humidity effects
 				// make measurements relative, no matter height
@@ -730,15 +730,15 @@ void WorldSpawner::generate_humidity_map()
 
 void WorldSpawner::factor_wetlands_jungles_and_forests()
 {
-	for (int x = 0; x < width; x++)
+	for (uint32_t x = 0; x < width; x++)
 	{
-		for (int y = 0; y < height; y++)
+		for (uint32_t y = 0; y < height; y++)
 		{
 			if (ocean_map[y][x] == 0)
 				continue;
 			float createdhumidity = 0.0;
-			int biome;
-			for (int c = 0; c < 3; c++)
+			uint32_t biome;
+			for (uint32_t c = 0; c < 3; c++)
 			{
 				if (c == 0)
 					biome = 4;
@@ -749,7 +749,7 @@ void WorldSpawner::factor_wetlands_jungles_and_forests()
 				std::vector<std::tuple<float, bool, bool>> biomes =
 				    humidity_and_rain_shadow_effects(water_map, lands_map, y, x, biome,
 								 true);
-				for (int i = 0; i < (int)biomes.size(); i++)
+				for (uint32_t i = 0; i < (uint32_t)biomes.size(); i++)
 				{
 					std::tuple<float, bool, bool> t = biomes[i];
 					float ah = std::get<0>(t);
@@ -787,8 +787,8 @@ void WorldSpawner::factor_wetlands_jungles_and_forests()
 void WorldSpawner::generate_biomes()
 {
 	// load data of each biome
-	std::tuple<int, int, int, float, float, float, float> biome_data[11];
-	int size = 11;
+	std::tuple<uint32_t, uint32_t, uint32_t, float, float, float, float> biome_data[11];
+	uint32_t size = 11;
 	// humidity, altitude, temp, humidity flexibility, altitude flexibility, temp
 	// flexibility, spread chance/size
 	biome_data[1] = {10, 7, 90, 1, 4, 2, 0.6};      // Hot Desert
@@ -802,23 +802,23 @@ void WorldSpawner::generate_biomes()
 	biome_data[9] = {5, 31, 20, 4, 6.0, 1, 0.7};    // Tundra
 	biome_data[10] = {10, 8, 40, 0.4, 1, 0.6, 0.5}; // Cold Desert
 
-	for (int s = 0; s < 5; s++)
+	for (uint32_t s = 0; s < 5; s++)
 	{
-		for (int x = s; x < width; x += 5)
+		for (uint32_t x = s; x < width; x += 5)
 		{
-			for (int y = s; y < height; y++)
+			for (uint32_t y = s; y < height; y++)
 			{
 				if (biome_map[x][y] != 0)
 					continue;
 				if (ocean_map[x][y] == 0)
 					continue;
-				int humidity = humidity_map[x][y];
-				int altitude = altitude_map[x][y];
-				int temp = temperature_map[x][y];
+				uint32_t humidity = humidity_map[x][y];
+				uint32_t altitude = altitude_map[x][y];
+				uint32_t temp = temperature_map[x][y];
 				float lowest_score = RAND_MAX;
-				int biome = 0;
+				uint32_t biome = 0;
 
-				for (int i = 1; i < size; i++)
+				for (uint32_t i = 1; i < size; i++)
 				{
 					// get how far away stats are from each biome_type
 					float hum_distance = abs(humidity - get<0>(biome_data[i])) /
@@ -844,14 +844,14 @@ void WorldSpawner::generate_biomes()
 
 void WorldSpawner::generate_altitude_map()
 {
-	for (int y = 0; y < height; ++y)
+	for (uint32_t y = 0; y < height; ++y)
 	{
-		for (int x = 0; x < width; ++x)
+		for (uint32_t x = 0; x < width; ++x)
 		{
 			// Generate noise value in range [-1, 1]
 			float noise_value = r_noise.GetNoise((float)y, (float)x);
 			// Map the noise value to a height range (e.g., 0 to 255)
-			int altitude = static_cast<int>(
+			uint32_t altitude = static_cast<uint32_t>(
 			    pow((noise_value * 23), 1.2)); // Converts from [-1, 1] to [-100, 100]
 			altitude_map[y][x] = altitude;
 		}
@@ -860,9 +860,9 @@ void WorldSpawner::generate_altitude_map()
 
 void WorldSpawner::get_rivers_from_groundwater()
 {
-	for (int y = 0; y < height; ++y)
+	for (uint32_t y = 0; y < height; ++y)
 	{
-		for (int x = 0; x < width; ++x)
+		for (uint32_t x = 0; x < width; ++x)
 		{
 			// skip tiles that already have water
 			if (water_map[y][x] != 1)
@@ -886,9 +886,9 @@ void WorldSpawner::get_rivers_from_groundwater()
 
 void WorldSpawner::clean_altitude_map()
 {
-	for (int y = 0; y < height; ++y)
+	for (uint32_t y = 0; y < height; ++y)
 	{
-		for (int x = 0; x < width; ++x)
+		for (uint32_t x = 0; x < width; ++x)
 		{
 			if (altitude_map[y][x] < land_threshold)
 			{
@@ -904,12 +904,12 @@ void WorldSpawner::add_depressions()
 	noise_generator.SetSeed(43543);
 	noise_generator.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
 
-	for (int y = 0; y < height; y++)
+	for (uint32_t y = 0; y < height; y++)
 	{
-		for (int x = 0; x < width; x++)
+		for (uint32_t x = 0; x < width; x++)
 		{
 			float noise_value = noise_generator.GetNoise((float)y, (float)x);
-			float altitude = static_cast<int>(
+			float altitude = static_cast<uint32_t>(
 			    (noise_value) * 100); // Converts from [-1, 1] to [-100, 100]
 			if (altitude < depression_threshold && altitude > 0 && ocean_map[x][y] == 1)
 			{
@@ -923,11 +923,11 @@ void WorldSpawner::add_depressions()
 // MAKE MICRO MAP
 
 // Assign each tile to the nearest Voronoi site
-// int get_cell_idfor_tile(int x, int y) {
+// uint32_t get_cell_idfor_tile(uint32_t x, uint32_t y) {
 //     float min_dist = (float)RAND_MAX;
-//     int closest_site = 0;
+//     uint32_t closest_site = 0;
 
-//     for (int i = 0; i < (int)voronoi_sites.size(); i++) {
+//     for (uint32_t i = 0; i < (uint32_t)voronoi_sites.size(); i++) {
 //         float dist = std::hypot(y - voronoi_sites[i].first, x -
 //         voronoi_sites[i].second); if (dist < min_dist) {
 //             min_dist = dist;
@@ -941,7 +941,7 @@ void WorldSpawner::add_depressions()
 // river end) or lowest elevation)
 void WorldSpawner::apply_river_tiles()
 {
-	int index = r_tile_index[{y, x}];
+	uint32_t index = r_tile_index[{y, x}];
 	// base case: reached target
 	if (y == target.first && x == target.second)
 	{
@@ -952,20 +952,20 @@ void WorldSpawner::apply_river_tiles()
 	{
 		return;
 	}
-	int min_elevation = r_tile_alt[index];
-	int current_elevation = min_elevation;
-	int min_dist = calculate_distance(y, x, target);
-	std::std::pair<int, int> next_tile = {y, x};
+	uint32_t min_elevation = r_tile_alt[index];
+	uint32_t current_elevation = min_elevation;
+	uint32_t min_dist = calculate_distance(y, x, target);
+	std::Coord next_tile = {y, x};
 
 	// Find the lowest elevation neighboring tile
-	std::vector<std::std::pair<int, int>> low_elev_tiles; // To store ties for lowest elevation
+	std::vector<std::Coord> low_elev_tiles; // To store ties for lowest elevation
 	for (const auto &dir : directions)
 	{
-		int nx = x + dir.second;
-		int ny = y + dir.first;
+		uint32_t nx = x + dir.second;
+		uint32_t ny = y + dir.first;
 
-		int dist_to_target = calculate_distance(ny, nx, target);
-		int new_index = r_tile_index[{ny, nx}];
+		uint32_t dist_to_target = calculate_distance(ny, nx, target);
+		uint32_t new_index = r_tile_index[{ny, nx}];
 		if (tile_alt[new_index] < min_elevation)
 		{
 			min_elevation = tile_alt[new_index];
@@ -993,10 +993,10 @@ void WorldSpawner::apply_river_tiles()
 		// Check distance to target, if closer to the target, move that way
 		for (const auto &dir : directions)
 		{
-			int nx = x + dir.second;
-			int ny = y + dir.first;
+			uint32_t nx = x + dir.second;
+			uint32_t ny = y + dir.first;
 
-			int dist_to_target = calculate_distance(ny, nx, target);
+			uint32_t dist_to_target = calculate_distance(ny, nx, target);
 			if (dist_to_target < min_dist)
 			{
 				next_tile = {ny, nx};
@@ -1004,10 +1004,10 @@ void WorldSpawner::apply_river_tiles()
 			}
 		}
 	}
-	int ty = next_tile.first;
-	int tx = next_tile.second;
+	uint32_t ty = next_tile.first;
+	uint32_t tx = next_tile.second;
 	// apply next_tile as river_tile
-	int next_index = r_tile_index[{ty, tx}];
+	uint32_t next_index = r_tile_index[{ty, tx}];
 	r_tile_type[next_index] = Tile::FlowingWater;
 	r_tile_alt[next_index] -= 1;
 	apply_river_tiles(r_tile_alt, r_tile_type, r_tile_index, ty, tx, target);
@@ -1028,15 +1028,15 @@ void WorldSpawner::recursive_lower()
 	}
 
 	// Lower the elevation by the decrease amount
-	int index = r_tile_index[{y, x}];
+	uint32_t index = r_tile_index[{y, x}];
 	r_tile_alt[index] -= decrease_amount;
 
 	// Recursively lower neighboring cells
 	for (const auto &delta :
-	     std::vector<std::std::pair<int, int>>{{-1, 0}, {1, 0}, {0, -1}, {0, 1}})
+	     std::vector<std::Coord>{{-1, 0}, {1, 0}, {0, -1}, {0, 1}})
 	{
-		int nx = x + delta.first;
-		int ny = y + delta.second;
+		uint32_t nx = x + delta.first;
+		uint32_t ny = y + delta.second;
 		if (nx >= 0 && ny >= 0 && nx < world_width && ny < world_height)
 		{
 			recursive_lower(nx, ny, decrease_amount);
@@ -1046,7 +1046,7 @@ void WorldSpawner::recursive_lower()
 
 void WorldSpawner::recursive_fill()
 {
-	int index = r_tile_index[{y, x}];
+	uint32_t index = r_tile_index[{y, x}];
 	if (tile_alt[index] > alt_threshold)
 	{
 		return;
@@ -1057,10 +1057,10 @@ void WorldSpawner::recursive_fill()
 
 	// Recursively lower neighboring cells
 	for (const auto &delta :
-	     std::vector<std::std::pair<int, int>>{{-1, 0}, {1, 0}, {0, -1}, {0, 1}})
+	     std::vector<std::Coord>{{-1, 0}, {1, 0}, {0, -1}, {0, 1}})
 	{
-		int nx = x + delta.first;
-		int ny = y + delta.second;
+		uint32_t nx = x + delta.first;
+		uint32_t ny = y + delta.second;
 		if (nx >= 0 && ny >= 0 && nx < world_width && ny < world_height)
 		{
 			recursive_lower(nx, ny, alt_threshold);
@@ -1069,11 +1069,11 @@ void WorldSpawner::recursive_fill()
 }
 
 // generates starting tiles based on amount of cells fully generated (loaded
-// into memory)
+// uint32_to memory)
 
 // generate water bodies
-// for (int i = 0; i < (int)r_tile_cell_index.size(); i++) {
-//         uint32_t index = r_tile_cell_index[i];
+// for (uint32_t i = 0; i < (uint32_t)r_tile_cell_index.size(); i++) {
+//         uuint32_t32_t index = r_tile_cell_index[i];
 //         std::std::pair map_coord = maps_link[index];
 //         //get seed of cell
 //         std::std::pair seed = voronoi_sites[index];
@@ -1083,34 +1083,34 @@ void WorldSpawner::recursive_fill()
 //             // goal: put sources close to mountian tiles
 //             // 1. get closest adj mountain tile
 
-//             const uint16_t num_results = 5;
-//             std::vector<float> query_point = {seed.first, seed.second};
-//             uint32_t ret_index[num_results]; // nearest neighbor index
+//             const uuint32_t16_t num_results = 5;
+//             std::vector<float> query_pouint32_t = {seed.first, seed.second};
+//             uuint32_t32_t ret_index[num_results]; // nearest neighbor index
 //             float out_dist_sqr[num_results]; //distance between nn and current
-//             tree.knn_search(&query_point[0], num_results, &ret_index[0],
-//             &out_dist_sqr[0]); bool found_mountain = false; for (int i = 0; i <
+//             tree.knn_search(&query_pouint32_t[0], num_results, &ret_index[0],
+//             &out_dist_sqr[0]); bool found_mountain = false; for (uint32_t i = 0; i <
 //             num_results; i++) {
-//                 int cell_index = (int)ret_index[0];
+//                 uint32_t cell_index = (uint32_t)ret_index[0];
 //                 std::std::pair near_cell_coord = maps_link[cell_index];
-//                 // if found nearby point is a mountain
+//                 // if found nearby pouint32_t is a mountain
 //                 if (lands_map[near_cell_coord.first][near_cell_coord.second] == 5)
 //                 {
 //                     found_mountain = true;
 //                     //find good source tiles in between mountain seed tile
 //                     and current seed tile std::std::pair mountain_seed =
-//                     voronoi_sites[cell_index]; std::std::pair<int,int>
-//                     source_tile = {lerp((int) mountain_seed.first,
-//                     (int)seed.first, 0.6),
-//                     lerp((int)mountain_seed.second,(int) seed.second, 0.6)};
-//                     // int width = rint(3,10);
-//                     // int length = rint(3,10);
-//                     // for (int w = 0; w < width; w++) {
-//                     //      for (int l = 0; l < length; l++) {
-//                     //          int ti =
+//                     voronoi_sites[cell_index]; std::Coord
+//                     source_tile = {lerp((uint32_t) mountain_seed.first,
+//                     (uint32_t)seed.first, 0.6),
+//                     lerp((uint32_t)mountain_seed.second,(uint32_t) seed.second, 0.6)};
+//                     // uint32_t width = ruint32_t(3,10);
+//                     // uint32_t length = ruint32_t(3,10);
+//                     // for (uint32_t w = 0; w < width; w++) {
+//                     //      for (uint32_t l = 0; l < length; l++) {
+//                     //          uint32_t ti =
 //                     r_tile_index[{source_tile.first+w,source_tile.second+l}]; if
 //                     (r_tile_index.find({source_tile.first,source_tile.second}) !=
 //                     r_tile_index.end()) {
-//                          int ti = r_tile_index[{source_tile.first,
+//                          uint32_t ti = r_tile_index[{source_tile.first,
 //                          source_tile.second}];
 //                     r_tile_water[ti] = true;
 //                              r_tile_type[ti] = Tile::RiverSource;
@@ -1124,12 +1124,12 @@ void WorldSpawner::recursive_fill()
 //         }
 //         if (water_map[map_coord.first][map_coord.second] == 6) {
 //             // put sources from highlands or groundwater in random spot in
-//             cell std::std::pair<int,int> random = {(int)seed.first +
-//             rint((-CELL_SIZE/2)+10,(CELL_SIZE/2)-10),seed.second +
-//             rint((-CELL_SIZE/2)+10,(CELL_SIZE/2)-10)}; if
+//             cell std::Coord random = {(uint32_t)seed.first +
+//             ruint32_t((-CELL_SIZE/2)+10,(CELL_SIZE/2)-10),seed.second +
+//             ruint32_t((-CELL_SIZE/2)+10,(CELL_SIZE/2)-10)}; if
 //             (r_tile_index.find({random.first,random.second}) !=
 //             r_tile_index.end()) {
-//                         int ti = r_tile_index[{random.first,random.second}];
+//                         uint32_t ti = r_tile_index[{random.first,random.second}];
 //                         r_tile_water[ti] = true;
 //                         r_tile_alt[ti] -= 2;
 //                         r_tile_type[ti] = Tile::RiverSource;
@@ -1139,25 +1139,25 @@ void WorldSpawner::recursive_fill()
 //         // add lakes
 //         if (water_map[map_coord.first][map_coord.second] == 5) {
 //             //check if lake takes up more than one cell
-//             // std::vector<std::tuple<int,int,int>> lake_pieces =
+//             // std::vector<std::tuple<uint32_t,uint32_t,uint32_t>> lake_pieces =
 //             adj_get_all(water_map,map_coord.first,map_coord.second,5,1);
-//             // while (int i = 0 < lake_pieces.size()) {
+//             // while (uint32_t i = 0 < lake_pieces.size()) {
 //             //     lake_pieces[i];
 //             //     i++;
 //             // }
 //             // create altitude depressions to fill lakes with
-//              std::std::pair<int,int> depression_center = {seed.first +
-//              rint((-CELL_SIZE/2)+10,(CELL_SIZE/2)-10),seed.second +
-//              rint((-CELL_SIZE/2)+10,(CELL_SIZE/2)-10)}; if
+//              std::Coord depression_center = {seed.first +
+//              ruint32_t((-CELL_SIZE/2)+10,(CELL_SIZE/2)-10),seed.second +
+//              ruint32_t((-CELL_SIZE/2)+10,(CELL_SIZE/2)-10)}; if
 //              (r_tile_index.find({depression_center.first,depression_center.second})
-//              != r_tile_index.end()) { int ti =
+//              != r_tile_index.end()) { uint32_t ti =
 //              r_tile_index[{depression_center.first,depression_center.second}];
 //              //add depression_center to lake centers
 //              river_ends.push_back(depression_center);
 //              lake_or_end[{depression_center.first, depression_center.second}] =
-//              true; int alt_threshold = r_tile_alt[ti];
+//              true; uint32_t alt_threshold = r_tile_alt[ti];
 //              recursive_lower(depression_center.first,
-//              depression_center.second,rint(1,4));
+//              depression_center.second,ruint32_t(1,4));
 //              // fill all tiles with water that are lower than the original
 //              center tile of the new lake
 //              recursive_fill(depression_center.first,
@@ -1170,9 +1170,9 @@ void WorldSpawner::recursive_fill()
 //             lake_or_end[{seed.first, seed.second}] = false;
 //         }
 //           if (water_map[map_coord.first][map_coord.second] == 7) { // inland
-//                 std::std::pair<int,int> center = {(int)seed.first +
-//                 rint((-CELL_SIZE/2)+10,(CELL_SIZE/2)-10), (int)seed.second +
-//                 rint((-CELL_SIZE/2)+8,(CELL_SIZE/2)-8)};
+//                 std::Coord center = {(uint32_t)seed.first +
+//                 ruint32_t((-CELL_SIZE/2)+10,(CELL_SIZE/2)-10), (uint32_t)seed.second +
+//                 ruint32_t((-CELL_SIZE/2)+8,(CELL_SIZE/2)-8)};
 //              river_ends.push_back(center);
 //              lake_or_end[{center.first, center.second}] = false;
 //         }
@@ -1190,14 +1190,14 @@ void WorldSpawner::recursive_fill()
 // my_kd_tree_t river_ends_tree(2 /*dim*/, river_ends_cloud, {10} /* max leaf size
 // */); river_ends_tree.build_index();
 // // generate river flow tiles, from source to nearest river_end
-// for (int i = 0; i < river_sources.size(); i++) {
+// for (uint32_t i = 0; i < river_sources.size(); i++) {
 //         //get seed of cell
 //         std::std::pair<float,float> source = river_sources[i];
-//          std::vector<float> query_point = {source.first, source.second};
-//         const uint16_t num_results = 1;
-//         uint32_t ret_index[num_results]; // nearest neighbor index
+//          std::vector<float> query_pouint32_t = {source.first, source.second};
+//         const uuint32_t16_t num_results = 1;
+//         uuint32_t32_t ret_index[num_results]; // nearest neighbor index
 //         float out_dist_sqr[num_results]; //distance between nn and current
-//         river_ends_tree.knn_search(&query_point[0], num_results, &ret_index[0],
+//         river_ends_tree.knn_search(&query_pouint32_t[0], num_results, &ret_index[0],
 //         &out_dist_sqr[0]);
 //         // flow from source to nearest river end
 //         apply_river_tiles(source.first, source.second,river_ends[ret_index[0]]);
@@ -1227,11 +1227,11 @@ float range_penalty(float original_value, float min_value, float max_value, floa
 	}
 }
 
-template <typename T> void WorldSpawner::print_map(T map)
+template <typename T> void WorldSpawner::pruint32_t_map(T map)
 {
-	for (int x = 0; x < width; ++x)
+	for (uint32_t x = 0; x < width; ++x)
 	{
-		for (int y = 0; y < HEIGHT; ++y)
+		for (uint32_t y = 0; y < HEIGHT; ++y)
 		{
 			cout << map[x][y] << " ";
 		}
@@ -1246,9 +1246,9 @@ std::vector<Coord> WorldSpawner::generate_voronoi_sites()
 	FastNoiseLite noise;
 	noise.SetNoiseType(FastNoiseLite::NoiseType_Cellular);
 	std::vector<Coord> voronoi_sites(AMOUNT);
-	for (int y = 0; y < height; y++)
+	for (uint32_t y = 0; y < height; y++)
 	{
-		for (int x = 0; x < width; x++)
+		for (uint32_t x = 0; x < width; x++)
 		{
 			float vx = (rand() % world_width);
 			float vy = (rand() % world_height);
@@ -1275,12 +1275,12 @@ void WorldSpawner::generate_tile_types(std::vector<float> &chances, std::vector<
 	tree.build_index();
 
 	// CREATE ALL TILES FOR STARTING CELLS
-	int tiles = 0;
+	uint32_t tiles = 0;
 
-	// zoom into tile
-	int cx = rcx.next();
-	int cy = rcy.next();
-	// select cell as randomized spawn point
+	// zoom uint32_to tile
+	uint32_t cx = rcx.next();
+	uint32_t cy = rcy.next();
+	// select cell as randomized spawn pouint32_t
 	bool selected = false;
 	while (!selected)
 	{
@@ -1293,30 +1293,30 @@ void WorldSpawner::generate_tile_types(std::vector<float> &chances, std::vector<
 			selected = true;
 	}
 
-	uint32_t seed_index = cy * height + cx;
+	uuint32_t32_t seed_index = cy * height + cx;
 	std::std::pair<float, float> s_vseed = voronoi_sites[seed_index];
 
-	// generate tiles near to randomized spawn point
+	// generate tiles near to randomized spawn pouint32_t
 	current_xmin = s_vseed.second - STARTING_MAP_width / 2;
 	current_xmax = s_vseed.second + STARTING_MAP_width / 2;
 	current_ymin = s_vseed.first - STARTING_MAP_HEIGHT / 2;
 	current_ymax = s_vseed.first + STARTING_MAP_HEIGHT / 2;
 
-	int ci = 0;
+	uint32_t ci = 0;
 
-	for (int y = current_ymin; y < current_ymax; y++)
+	for (uint32_t y = current_ymin; y < current_ymax; y++)
 	{
-		for (int x = current_xmin; x < current_xmax; x++)
+		for (uint32_t x = current_xmin; x < current_xmax; x++)
 		{
-			std::vector<float> query_point = {(float)y, (float)x};
+			std::vector<float> query_pouint32_t = {(float)y, (float)x};
 			// Perform the nearest neighbor search, num_results is # of neighbors
-			const uint16_t num_results = 5;
-			uint32_t ret_index[num_results]; // nearest neighbor index
+			const uuint32_t16_t num_results = 5;
+			uuint32_t32_t ret_index[num_results]; // nearest neighbor index
 			float out_dist_sqr[num_results];  // distance between nn and current
 
-			tree.knn_search(&query_point[0], num_results, &ret_index[0], &out_dist_sqr[0]);
+			tree.knn_search(&query_pouint32_t[0], num_results, &ret_index[0], &out_dist_sqr[0]);
 			// check if tile is still part of current cell
-			int ti = r_tile_index[{y, x}];
+			uint32_t ti = r_tile_index[{y, x}];
 
 			// TODO: optimize this part
 			//  calculate altitude based on weighted average
@@ -1324,7 +1324,7 @@ void WorldSpawner::generate_tile_types(std::vector<float> &chances, std::vector<
 			float strengths[num_results];
 			float denominator = 0.0000000001;
 
-			for (int i = 0; i < num_results; i++)
+			for (uint32_t i = 0; i < num_results; i++)
 			{
 				if (index >= 0 && index < r_maps_link.size())
 				{
@@ -1337,7 +1337,7 @@ void WorldSpawner::generate_tile_types(std::vector<float> &chances, std::vector<
 				}
 			}
 
-			int calc_alt = (int)current_alt / denominator;
+			uint32_t calc_alt = (uint32_t)current_alt / denominator;
 
 			std::pair<float, float> cell = r_maps_link[ret_index[0]];
 
@@ -1346,10 +1346,10 @@ void WorldSpawner::generate_tile_types(std::vector<float> &chances, std::vector<
 			if (cell.first >= 0 && cell.first < height && cell.second >= 0 &&
 			    cell.second < width)
 			{
-				int biome = biome_map[cell.first][cell.second];
-				// int second_biome =
+				uint32_t biome = biome_map[cell.first][cell.second];
+				// uint32_t second_biome =
 				// biome_map[second_cell.first][second_cell.second];
-				int index = y *;
+				uint32_t index = y *;
 				tile_spawn_buffer.tiles[index] = get_tile_type(biome, chances[ci++]);
 				tile_spawn_buffer.altitudes[index] = calc_alt;
 			}
@@ -1357,21 +1357,19 @@ void WorldSpawner::generate_tile_types(std::vector<float> &chances, std::vector<
 	}
 }
 
-void WorldSpawner::move_regions_to_chunks(Array<uint8_t> &humidity_table,
-				       Array<int8_t> &min_temperature_table,
-				       Array<uint8_t> &altitudes)
+void WorldSpawner::move_regions_to_chunks(Array<Hum>& humidity_table, Array<Temp>& min_temperature_table, Array<Alt>& altitudes)
 {
-	int idx = 0;
-	for (int i = 0; i < LENGTH_CHUNKS; i++)
+	uint32_t idx = 0;
+	for (uint32_t i = 0; i < LENGTH_CHUNKS; i++)
 	{
-		for (int j = 0; j < HEIGHT_CHUNKS; j++)
+		for (uint32_t j = 0; j < HEIGHT_CHUNKS; j++)
 		{
 			// for each chunk, count tiles per region slot
-			std::unordered_map<uint16_t, uint16_t> region_counts;
-			int total_count = 0;
-			for (int k = 0; k < CHUNK_SIZE; k++)
+			std::unordered_map<uuint32_t16_t, uuint32_t16_t> region_counts;
+			uint32_t total_count = 0;
+			for (uint32_t k = 0; k < CHUNK_SIZE; k++)
 			{
-				uint16_t region =
+				uuint32_t16_t region =
 				    tile_region_slot[(j * CHUNK_LENGTH) + (k / CHUNK_LENGTH)]
 						  [(i * CHUNK_LENGTH) + (k % CHUNK_LENGTH)];
 				region_counts[region]++;
@@ -1398,26 +1396,27 @@ void WorldSpawner::move_regions_to_chunks(Array<uint8_t> &humidity_table,
 			idx++;
 		}
 	}
+}
 
-	WorldSpawner::print_info()
+	WorldSpawner::pruint32_t_info()
 	{
 		cout << "Ocean" << endl;
-		print_map(ocean_map);
+		pruint32_t_map(ocean_map);
 		cout << "Lands" << endl;
-		print_map(lands_map);
+		pruint32_t_map(lands_map);
 		cout << "Altitude" << endl;
-		print_map(altitude_map);
+		pruint32_t_map(altitude_map);
 		cout << "Water Bodies" << endl;
-		print_map(water_map);
+		pruint32_t_map(water_map);
 		cout << "Temperature" << endl;
-		print_map(temperature_map);
+		pruint32_t_map(temperature_map);
 		cout << "Humidity" << endl;
-		print_map(humidity_map);
+		pruint32_t_map(humidity_map);
 		cout << "Biomes" << endl;
-		print_map(biome_map);
+		pruint32_t_map(biome_map);
 	}
 
-	WorldSpawner::generate_world()
+	WorldSpawner::generate_empty_world()
 	{
 		FastNoiseLite noise_layer;
 		noise_layer.SetSeed(1434933);
@@ -1443,11 +1442,15 @@ void WorldSpawner::move_regions_to_chunks(Array<uint8_t> &humidity_table,
 		generate_tiles_types(gtc, gvs);
 		world.calculate_chunk_temperature_inputs();
 		world.calculate_chunk_precipitation_equilibrium();
-		spawn_grass_and_first_plants();
-		cout << "PLANTS SPAWNED" << endl;
-		spawn_first_animals();
-		cout << "TILE AMOUNT:" << r_tile_index.size() << endl;
-		int cell = r_tile_cell_index[5];
-		cout << " Cell: " << cell;
-		spawn_scavengeables();
+	}
+
+	void generate_world(World &world)
+	{
+		WorldSpawner world_spawner = WorldSpawner(500, 500);
+		world_spawner.generate_empty_world();
+		world_spawner.spawn_entities();
+		world.load_chunk_data(world_spawner);
+	}
+
+
 	}

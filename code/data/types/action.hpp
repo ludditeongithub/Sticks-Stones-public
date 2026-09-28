@@ -5,6 +5,7 @@
 #include <core/packed_enum.hpp>
 #include <data/types/buildable.hpp>
 #include <data/types/item.hpp>
+#include <data/types/time.hpp>
 
 
 // actions require a certain job and also a certain tool. For example, "Butcher" requires a knife

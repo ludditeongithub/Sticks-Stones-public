@@ -18,8 +18,8 @@ databases:
         foreign_enum: [item]
     unit:
         name: unit
-        traits: [health, hunger, sex, age, targeting, movable, positional, searchable, transferable]
-        extra_arrays: [health, role_mana, role_list, skin_data, skill, inventory, place, movable]
+        traits: [health, hunger, sex, age, targeting, movable, positional, searchable, transferable, skin_color]
+        extra_arrays: [health, role_mana, role_list, skill, inventory, place, movable]
     tile:
         name: tile
         traits: [immortal, foreign_enum]
@@ -28,7 +28,7 @@ databases:
     plant:
         name: plant
         traits: [positional, age, searchable, transferable, generated]
-        extra_arrays: [positional, age]
+        extra_arrays: [positional, growth]
         database_references: [seed, tile, animal]
     seed:
         name: seed
@@ -109,17 +109,18 @@ trait_data:
     newborn_default: variant
     random_age_default: variant
 
+  - trait_name: skin_color
+    name: skin_data
+    type: SkinData
+    newborn_default: {generate_melanin(parent1, parent2), generate_skin_warmth(parent1, parent2), 0.5, 0.0}
+    random_age_default: {generate_melanin(world, coord), generate_skin_warmth(world, coord), 0.5, 0.0}
+
 extra_arrays:
   - id: animal_status
     name: animal_status
     type: AnimalStatus
     newborn_default: AnimalStatus{Direction::North, MatingStatus::Idle}
     random_age_default: AnimalStatus{Direction::North, MatingStatus::Idle}
-  - id: skin_data
-    name: skin_data
-    type: SkinData
-    newborn_default: generate_melanin(parent1, parent2), generate_skin_warmth(parent1, parent2), 0.5, 0.0
-    random_age_default: generate_melanin(world, coord), generate_skin_warmth(world, coord), 0.5, 0.0
   - id: role_list
     name: role_list
     type: std::array<Role, MAX_ROLES>
@@ -154,7 +155,7 @@ extra_arrays:
     name: water
     type: Liquid
     newborn_default: tile::WATER_DEFAULTS[tile]
-    random_age_default: tile::WATER_DEFAULTs[tile]
+    random_age_default: tile::WATER_DEFAULTS[tile]
   - id: altitude
     name: altitude
     type: Alt
@@ -165,3 +166,8 @@ extra_arrays:
     type: Entity
     newborn_default: NullEntity::Null
     random_age_default: NullEntity:Null
+  - id: growth
+    name: growth
+    type: Time
+    newborn_default: 0
+    random_age_default: FULL_MATURITY_AGES[plant] * random_chance->next()

@@ -1,25 +1,24 @@
-#include <vector>
 #include <cmath>
-#include <optional>
-#include "data.hpp"
-#include "math.hpp"
+#include <vector>
+#include <cstdint>
+#include <core/coord.hpp>
 #include <queue>
 
 float max_alt_change = 2.0;
 
-std::vector<std::pair<int, int>> directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+std::vector<SCoord> directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
 template <typename T>
-bool is_in_path(const T &map, std::pair<int, int> start, std::pair<int, int> end, const int obstacle)
+bool is_in_path(const T &map, Coord start, Coord end, const uint32_t obstacle)
 {
-	int dx = abs(end.second - start.second);
-	int dy = abs(end.first - start.first);
-	int sx = start.second < end.second ? 1 : -1;
-	int sy = start.first < end.first ? 1 : -1;
-	int err = dx - dy;
+	uint32_t dx = abs(end.x - start.x);
+	uint32_t dy = abs(end.y - start.y);
+	uint32_t sx = start.x < end.x ? 1 : -1;
+	uint32_t sy = start.y < end.y ? 1 : -1;
+	uint32_t err = dx - dy;
 
-	int x = start.second;
-	int y = start.first;
+	uint32_t x = start.x;
+	uint32_t y = start.y;
 
 	while (true)
 	{
@@ -29,12 +28,12 @@ bool is_in_path(const T &map, std::pair<int, int> start, std::pair<int, int> end
 			return true; // Blocked tile found in the path
 		}
 
-		if (x == end.second && y == end.first)
+		if (x == end.x && y == end.y)
 		{
 			break; // Reached the end tile
 		}
 
-		int e2 = 2 * err;
+		uint32_t e2 = 2 * err;
 		if (e2 > -dy)
 		{
 			err -= dy;
@@ -50,30 +49,30 @@ bool is_in_path(const T &map, std::pair<int, int> start, std::pair<int, int> end
 	return false; // No blocked tiles in the path
 }
 
-bool coords_in_path(std::pair<int, int> start, std::pair<int, int> end, std::pair<int, int> between)
+bool coords_in_path(Coord start, Coord end, Coord between)
 {
-	int dx = std::abs(end.second - start.second);
-	int dy = std::abs(end.first - start.first);
-	int sx = start.second < end.second ? 1 : -1;
-	int sy = start.first < end.first ? 1 : -1;
-	int err = dx - dy;
+	uint32_t dx = std::abs(end.x - start.x);
+	uint32_t dy = std::abs(end.y - start.y);
+	uint32_t sx = start.x < end.x ? 1 : -1;
+	uint32_t sy = start.y < end.y ? 1 : -1;
+	uint32_t err = dx - dy;
 
-	int x = start.second;
-	int y = start.first;
+	uint32_t x = start.x;
+	uint32_t y = start.y;
 
 	while (true)
 	{
-		if (y == between.first && x == between.second)
+		if (y == between.y && x == between.x)
 		{
 			return true; // Blocked tile found in the path
 		}
 
-		if (x == end.second && y == end.first)
+		if (x == end.x && y == end.y)
 		{
 			break; // Reached the end tile
 		}
 
-		int e2 = 2 * err;
+		uint32_t e2 = 2 * err;
 		if (e2 > -dy)
 		{
 			err -= dy;
@@ -90,20 +89,20 @@ bool coords_in_path(std::pair<int, int> start, std::pair<int, int> end, std::pai
 }
 
 /* HELPER FUNCTIONS */
-bool adj_check(const std::vector<std::vector<int>>& map, int y, int x, int check, int range)
+bool adj_check(const std::vector<std::vector<uint32_t>>& map, uint32_t y, uint32_t x, uint32_t check, uint32_t range)
 {
-	int rows = map.size();	  // height
-	int cols = map[0].size(); // width
+	uint32_t rows = map.size();	  // height
+	uint32_t cols = map[0].size(); // width
 
-	for (int r = -range; r <= range; r++)
+	for (uint32_t r = -range; r <= range; r++)
 	{
-		for (int c = -range; c <= range; c++)
+		for (uint32_t c = -range; c <= range; c++)
 		{
 			if (r == 0 && c == 0)
 				continue;
 
-			int nx = x + c;
-			int ny = y + r;
+			uint32_t nx = x + c;
+			uint32_t ny = y + r;
 
 			if (abs(r) + abs(c) <= range && nx >= 0 && nx < cols && ny >= 0 &&
 			    ny < rows)
@@ -119,20 +118,20 @@ bool adj_check(const std::vector<std::vector<int>>& map, int y, int x, int check
 }
 
 template <typename L, typename M, typename T>
-bool adj_check(L &reference_map, M &map, int y, int x, T check, int range)
+bool adj_check(L &reference_map, M &map, uint32_t y, uint32_t x, T check, uint32_t range)
 {
-	for (int r = -range; r <= range; r++)
+	for (uint32_t r = -range; r <= range; r++)
 	{
-		for (int c = -range; c <= range; c++)
+		for (uint32_t c = -range; c <= range; c++)
 		{
 			if (r == 0 && c == 0)
 				continue;
 
-			int nx = x + c;
-			int ny = y + r;
+			uint32_t nx = x + c;
+			uint32_t ny = y + r;
 			if (reference_map.find({ny, nx}) != reference_map.end())
 			{
-				int index = reference_map.at({ny, nx});
+				uint32_t index = reference_map.at({ny, nx});
 				auto item = map[index];
 
 				if (abs(r) + abs(c) <= range && nx >= 0)
@@ -148,55 +147,55 @@ bool adj_check(L &reference_map, M &map, int y, int x, T check, int range)
 	return false;
 }
 
-bool adj_check_object(int first_index, int second_index, bool first_animal, bool second_animal, std::vector<std::pair<int,int>>& animal_coords, std::vector<std::pair<int, int>>& current_coords)
+bool adj_check_object(uint32_t y_index, uint32_t x_index, bool y_animal, bool x_animal, std::vector<Coord>& animal_coords, std::vector<Coord>& current_coords)
 {
-	std::pair<int, int> fc, sc;
-	if (first_animal)
-		fc = animal_coords[first_index];
+	Coord fc, sc;
+	if (y_animal)
+		fc = animal_coords[y_index];
 	else
-		fc = current_coords[first_index];
-	if (second_animal)
-		sc = animal_coords[second_index];
+		fc = current_coords[y_index];
+	if (x_animal)
+		sc = animal_coords[x_index];
 	else
-		sc = current_coords[first_index];
+		sc = current_coords[y_index];
 	
-	if ((abs(fc.first - sc.first) == 1 || abs(fc.first - sc.first) == 0) &&
-	    (abs(fc.second - sc.second) == 0 || abs(fc.second - sc.second) == 1))
+	if ((abs(fc.y - sc.y) == 1 || abs(fc.y - sc.y) == 0) &&
+	    (abs(fc.x - sc.x) == 0 || abs(fc.x - sc.x) == 1))
 		return true;
 	return false;
 }
 
 // TODO: check to see if this makes sense returns nullptr if not adjacent
-std::optional<Direction> adj_check_tile(std::pair<int, int> subject, std::pair<int, int> target)
+std::optional<Direction> adj_check_tile(Coord subject, Coord target)
 {
 	if (manhattan_dist(subject, target) > 1)
 		return std::nullopt;
-	if (subject.first - target.first == 1)
+	if (subject.y - target.y == 1)
 		return std::make_optional<Direction>(Direction::East);
-	if (subject.first - target.first == -1)
+	if (subject.y - target.y == -1)
 		return std::make_optional<Direction>(Direction::West);
-	if (subject.second - target.second == 1)
+	if (subject.x - target.x == 1)
 		return std::make_optional<Direction>(Direction::North);
-	if (subject.second - target.second == -1)
+	if (subject.x - target.x == -1)
 		return std::make_optional<Direction>(Direction::South);
 	return std::nullopt;
 }
 
 template <typename L, typename M, typename Container>
-bool adj_check_list(L &reference_map, M &map, int y, int x, const Container &check, int range)
+bool adj_check_list(L &reference_map, M &map, uint32_t y, uint32_t x, const Container &check, uint32_t range)
 {
-	for (int r = -range; r <= range; r++)
+	for (uint32_t r = -range; r <= range; r++)
 	{
-		for (int c = -range; c <= range; c++)
+		for (uint32_t c = -range; c <= range; c++)
 		{
 			if (r == 0 && c == 0)
 				continue;
 
-			int nx = x + c;
-			int ny = y + r;
+			uint32_t nx = x + c;
+			uint32_t ny = y + r;
 			if (reference_map.find({ny, nx}) != reference_map.end())
 			{
-				int index = reference_map.at({ny, nx});
+				uint32_t index = reference_map.at({ny, nx});
 				auto item = map[index];
 
 				if (abs(r) + abs(c) <= range && nx >= 0)
@@ -216,21 +215,21 @@ bool adj_check_list(L &reference_map, M &map, int y, int x, const Container &che
 }
 
 template <typename L, typename M, typename Container>
-int adj_check_list_count(L &reference_map, M &map, int y, int x, const Container &check, int range)
+uint32_t adj_check_list_count(L &reference_map, M &map, uint32_t y, uint32_t x, const Container &check, uint32_t range)
 {
-	int count = 0;
-	for (int r = -range; r <= range; r++)
+	uint32_t count = 0;
+	for (uint32_t r = -range; r <= range; r++)
 	{
-		for (int c = -range; c <= range; c++)
+		for (uint32_t c = -range; c <= range; c++)
 		{
 			if (r == 0 && c == 0)
 				continue; // Skip the center tile
 
-			int nx = x + c;
-			int ny = y + r;
+			uint32_t nx = x + c;
+			uint32_t ny = y + r;
 			if (reference_map.find({ny, nx}) != reference_map.end())
 			{
-				int index = reference_map.at({ny, nx});
+				uint32_t index = reference_map.at({ny, nx});
 				auto item = map[index];
 
 				if (abs(r) + abs(c) <= range && nx >= 0)
@@ -250,21 +249,21 @@ int adj_check_list_count(L &reference_map, M &map, int y, int x, const Container
 }
 
 // returns the closest adjacent tile of check type
-std::pair<int, int> adj_get(vector<vector<int>> &map, int y, int x, int check, int range)
+Coord adj_get(std::vector<std::vector<uint32_t>> &map, uint32_t y, uint32_t x, uint32_t check, uint32_t range)
 {
-	int rows = map.size();
-	int cols = map[0].size();
-	std::pair<int, int> adj = {x, y}; // return original coords if none in range
+	uint32_t rows = map.size();
+	uint32_t cols = map[0].size();
+	Coord adj = {x, y}; // return original coords if none in range
 
-	for (int r = -range; r <= range; r++)
+	for (uint32_t r = -range; r <= range; r++)
 	{
-		for (int c = -range; c <= range; c++)
+		for (uint32_t c = -range; c <= range; c++)
 		{
 			if (r == 0 && c == 0)
 				continue; // Skip the center tile
 
-			int nx = x + c;
-			int ny = y + r;
+			uint32_t nx = x + c;
+			uint32_t ny = y + r;
 
 			// Ensure we're checking only directly adjacent tiles within the range
 			if (abs(r) + abs(c) <= range && nx >= 0 && nx < rows && ny >= 0 &&
@@ -272,7 +271,7 @@ std::pair<int, int> adj_get(vector<vector<int>> &map, int y, int x, int check, i
 			{
 				if (map[ny][nx] == check)
 				{
-					// cout << adj.first << "," << adj.second << ";";
+					// cout << adj.y << "," << adj.x << ";";
 					adj = {ny, nx};
 					return adj;
 				}
@@ -282,22 +281,22 @@ std::pair<int, int> adj_get(vector<vector<int>> &map, int y, int x, int check, i
 	return adj;
 }
 
-int adj_range(const std::vector<std::vector<int>> &map, int y, int x, int check)
+uint32_t adj_range(const std::vector<std::vector<uint32_t>> &map, uint32_t y, uint32_t x, uint32_t check)
 {
-	int rows = map.size(), cols = map[0].size();
-	std::vector<std::pair<int, int>> directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-	std::queue<std::pair<int, int>> q;
+	uint32_t rows = map.size(), cols = map[0].size();
+	std::vector<Coord> directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+	std::queue<Coord> q;
 	std::vector<std::vector<bool>> visited(rows, std::vector<bool>(cols, false));
 	q.push({y, x});
 	visited[y][x] = true;
 
 	while (!q.empty())
 	{
-		int current_x = q.front().second, current_y = q.front().first;
+		uint32_t current_x = q.front().x, current_y = q.front().y;
 		q.pop();
 		for (const auto &dir : directions)
 		{
-			int nx = current_x + dir.second, ny = current_y + dir.first;
+			uint32_t nx = current_x + dir.x, ny = current_y + dir.y;
 			if (nx >= 0 && nx < rows && ny >= 0 && ny < cols && !visited[ny][nx])
 			{
 				visited[ny][nx] = true;
@@ -311,22 +310,22 @@ int adj_range(const std::vector<std::vector<int>> &map, int y, int x, int check)
 }
 
 // returns all adjacent tiles of type, and distance
-std::vector<std::tuple<int, int, int>> adj_get_all(vector<vector<int>> &map, int y, int x, int check,
-						 int range)
+std::vector<std::tuple<uint32_t, uint32_t, uint32_t>> adj_get_all(vector<vector<uint32_t>> &map, uint32_t y, uint32_t x, uint32_t check,
+						 uint32_t range)
 {
-	int rows = map.size();
-	int cols = map[0].size();
-	std::vector<std::tuple<int, int, int>> tiles;
+	uint32_t rows = map.size();
+	uint32_t cols = map[0].size();
+	std::vector<std::tuple<uint32_t, uint32_t, uint32_t>> tiles;
 
-	for (int r = -range; r <= range; r++)
+	for (uint32_t r = -range; r <= range; r++)
 	{
-		for (int c = -range; c <= range; c++)
+		for (uint32_t c = -range; c <= range; c++)
 		{
 			if (r == 0 && c == 0)
 				continue; // Skip the center tile
 
-			int nx = x + c;
-			int ny = y + r;
+			uint32_t nx = x + c;
+			uint32_t ny = y + r;
 
 			// Ensure we're checking only directly adjacent tiles within the range
 			if (abs(r) + abs(c) <= range && nx >= 0 && nx < rows && ny >= 0 &&
@@ -334,7 +333,7 @@ std::vector<std::tuple<int, int, int>> adj_get_all(vector<vector<int>> &map, int
 			{
 				if (map[ny][nx] == check)
 				{
-					// cout << adj.first << "," << adj.second << ";";
+					// cout << adj.y << "," << adj.x << ";";
 					tiles.push_back({ny, nx, chebyshev(y, x, ny, nx)});
 				}
 			}
@@ -344,20 +343,20 @@ std::vector<std::tuple<int, int, int>> adj_get_all(vector<vector<int>> &map, int
 }
 
 // adds corner adjacent tiles to adj_check
-bool diag_adj_check(std::vector<std::vector<int>> &map, int y, int x, int check, int range)
+bool diag_adj_check(std::vector<std::vector<uint32_t>> &map, uint32_t y, uint32_t x, uint32_t check, uint32_t range)
 {
-	int rows = map.size();
-	int cols = map[0].size();
+	uint32_t rows = map.size();
+	uint32_t cols = map[0].size();
 
-	for (int r = -range; r <= range; r++)
+	for (uint32_t r = -range; r <= range; r++)
 	{
-		for (int c = -range; c <= range; c++)
+		for (uint32_t c = -range; c <= range; c++)
 		{
 			if (r == 0 && c == 0)
 				continue; // Skip the center tile
 
-			int nx = x + r;
-			int ny = y + c;
+			uint32_t nx = x + r;
+			uint32_t ny = y + c;
 
 			// Ensuring only diagonal or directly adjacent tiles are checked
 			if (fmax(abs(r), abs(c)) <= range && nx >= 0 && nx < rows && ny >= 0 &&
@@ -374,17 +373,18 @@ bool diag_adj_check(std::vector<std::vector<int>> &map, int y, int x, int check,
 }
 
 // gets adjacent tile with lowest value
-std::pair<int, int> get_lowest_adj(std::vector<std::vector<int>> &map, int y, int x)
+template<typename I>
+Coord get_lowest_adj(std::vector<std::vector<I>> &map, uint32_t y, uint32_t x)
 {
 	int dx[] = {-1, 0, 1, 0}; // x-direction for up/down
 	int dy[] = {0, 1, 0, -1}; // y-direction for left/right
-	int lowest = RAND_MAX;
-	std::pair<int, int> ret;
+	uint32_t lowest = RAND_MAX;
+	Coord ret;
 
-	for (int i = 0; i < 4; i++)
+	for (uint32_t i = 0; i < 4; i++)
 	{
-		int nx = x + dx[i];
-		int ny = y + dy[i];
+		uint32_t nx = x + dx[i];
+		uint32_t ny = y + dy[i];
 
 		// Check if within bounds
 		if (nx >= 0 && nx < map.size() && ny >= 0 && ny < map[0].size())
@@ -400,17 +400,18 @@ std::pair<int, int> get_lowest_adj(std::vector<std::vector<int>> &map, int y, in
 }
 
 // gets adjacent tile with highest value
-std::pair<int, int> get_highest_adj(std::vector<std::vector<int>> &map, int y, int x)
+Coord get_highest_adj(std::vector<std::vector<uint32_t>> &map, uint32_t y, uint32_t x)
 {
-	int dx[] = {-1, 0, 1, 0}; // x-direction for up/down
-	int dy[] = {0, 1, 0, -1}; // y-direction for left/right
-	int highest = -9999999;
-	std::pair<int, int> ret;
+	int dx[] = {-1, 0, 1, 0};
+	int dy[] = {0, 1, 0, -1};
+		
+	uint32_t highest = -9999999;
+	Coord ret;
 
-	for (int i = 0; i < 4; i++)
+	for (uint32_t i = 0; i < 4; i++)
 	{
-		int nx = x + dx[i];
-		int ny = y + dy[i];
+		uint32_t nx = x + dx[i];
+		uint32_t ny = y + dy[i];
 		// Check if within bounds
 		if (nx >= 0 && nx < map.size() && ny >= 0 && ny < map[0].size())
 		{
@@ -424,18 +425,18 @@ std::pair<int, int> get_highest_adj(std::vector<std::vector<int>> &map, int y, i
 	return ret;
 }
 
-int get_lowest_adj_value(vector<vector<int>> &map, int y, int x)
+template<typename I>
+I get_lowest_adj_value(std::vector<std::vector<I>> &map, uint32_t y, uint32_t x)
 {
 	int dx[] = {-1, 0, 1, 0}; // x-direction for up/down
 	int dy[] = {0, 1, 0, -1}; // y-direction for left/right
-	int lowest = RAND_MAX;
+	uint32_t lowest = RAND_MAX;
 
-	for (int i = 0; i < 4; i++)
+	for (uint32_t i = 0; i < 4; i++)
 	{
-		int nx = x + dx[i];
-		int ny = y + dy[i];
+		uint32_t nx = x + dx[i];
+		uint32_t ny = y + dy[i];
 
-		// Check if within bounds
 		if (nx >= 0 && nx < map.size() && ny >= 0 && ny < map[0].size())
 		{
 			if (map[ny][nx] < lowest)
@@ -447,18 +448,18 @@ int get_lowest_adj_value(vector<vector<int>> &map, int y, int x)
 	return lowest;
 }
 
-int get_highest_adj_value(std::vector<std::vector<int>> &map, int y, int x)
+template<typename I>
+uint32_t get_highest_adj_value(std::vector<std::vector<I>> &map, uint32_t y, uint32_t x)
 {
-	int dx[] = {-1, 0, 1, 0}; // x-direction for up/down
-	int dy[] = {0, 1, 0, -1}; // y-direction for left/right
-	int highest = -9999999;
+	int dx[] = {-1, 0, 1, 0}; 
+	int dy[] = {0, 1, 0, -1}; 
+	uint32_t highest = -9999999;
 
-	for (int i = 0; i < 4; i++)
+	for (uint32_t i = 0; i < 4; i++)
 	{
-		int nx = x + dx[i];
-		int ny = y + dy[i];
+		uint32_t nx = x + dx[i];
+		uint32_t ny = y + dy[i];
 
-		// Check if within bounds
 		if (nx >= 0 && nx < map.size() && ny >= 0 && ny < map[0].size())
 		{
 			if (map[ny][nx] > highest)
@@ -470,10 +471,10 @@ int get_highest_adj_value(std::vector<std::vector<int>> &map, int y, int x)
 	return highest;
 }
 
-template <typename T> void transform_adj(T &map, int y, int x, int transform, float chance)
+template <typename T> void transform_adj(T &map, uint32_t y, uint32_t x, uint32_t transform, float chance)
 {
-	int dx = -1;
-	int dy = 0;
+	uint32_t dx = -1;
+	uint32_t dy = 0;
 	if (rand() / (float)RAND_MAX < chance)
 	{
 		map[x + dx][y + dy] = transform;
@@ -496,10 +497,10 @@ template <typename T> void transform_adj(T &map, int y, int x, int transform, fl
 	}
 }
 
-template <typename T> void adjust_adj(T &map, int y, int x, int adjustment)
+template <typename T> void adjust_adj(T &map, uint32_t y, uint32_t x, uint32_t adjustment)
 {
-	int dx = -1;
-	int dy = 0;
+	uint32_t dx = -1;
+	uint32_t dy = 0;
 	map[x + dx][y + dy] += adjustment;
 	dx = 1;
 	map[x + dx][y + dy] = adjustment;
@@ -510,36 +511,7 @@ template <typename T> void adjust_adj(T &map, int y, int x, int adjustment)
 	map[x + dx][y + dy] = adjustment;
 }
 
-bool check_empty_tile(int tile_index, int adjacent_tile_index)
-{
-	if (tile_water[tile_index])
-		return false;
-	if (tile_alt[tile_index] > tile_alt[adjacent_tile_index] + max_alt_change ||
-	    tile_alt[tile_index] < tile_alt[adjacent_tile_index] - max_alt_change)
-		return false;
-	if (Plant *p_ptr = std::get_if<Plant>(&tile_object[tile_index]))
-		if (*p_ptr != Plant::NONE)
-			return false;
-	if (Scavengeable *s_ptr = std::get_if<Scavengeable>(&tile_object[tile_index]))
-		if (*s_ptr != Scavengeable::NONE)
-			return false;
-	if (Item *i_ptr = std::get_if<Item>(&tile_object[tile_index]))
-		if (*i_ptr != Item::NONE)
-			return false;
-	if (Buildable *b_ptr = std::get_if<Buildable>(&tile_object[tile_index]))
-		if (*b_ptr != Buildable::NONE)
-			return false;
-	if (Animal *a_ptr = std::get_if<Animal>(&tile_object[tile_index]))
-		if (*a_ptr != Animal::NONE)
-			return false;
-	if (Vehicle *v_ptr = std::get_if<Vehicle>(&tile_object[tile_index]))
-		if (*v_ptr != Vehicle::NONE)
-			return false;
-	if (object_to_int(tile_object[tile_index]) != 0)
-		return false;
-}
-
-std::pair<int, int> get_adjacent_tile(int tile_index, Direction direction)
+Coord get_adjacent_tile(uint32_t tile_index, Direction direction)
 {
 	adjacent_tiles_indices[tile_index];
 	if (direction == Direction::North)
@@ -573,35 +545,35 @@ Direction get_random_adj_direction(Direction direction)
 	return Direction::South;
 }
 
-void move_in_direction(&std::pair<int, int> coord, Direction direction)
+void move_in_direction(&Coord coord, Direction direction)
 {
 	if (direction == Direction::North)
-		coord.second += 1;
+		coord.x += 1;
 	else if (direction == Direction::South)
-		coord.second -= 1;
+		coord.x -= 1;
 	if (direction == Direction::East)
-		coord.first += 1;
+		coord.y += 1;
 	else if (direction == Direction::West)
-		coord.second -= 1;
+		coord.x -= 1;
 }
 
-std::pair<int, int> get_nearest_empty_tile(int start_index)
+Coord get_nearest_empty_tile(uint32_t start_index)
 {
-	std::queue<int> q;
-	std::unordered_set<int> visited;
+	std::queue<uint32_t> q;
+	std::unordered_set<uint32_t> visited;
 
 	q.push(start_index);
 	visited.insert(start_index);
 
 	while (!q.empty())
 	{
-		int current = q.front();
+		uint32_t current = q.front();
 		q.pop();
 
 		auto [above, right, below, left] = adjacent_tiles_indices[current];
-		std::array<int, 4> neighbors = {above, right, below, left};
+		std::array<uint32_t, 4> neighbors = {above, right, below, left};
 
-		for (int neighbor : neighbors)
+		for (uint32_t neighbor : neighbors)
 		{
 			if (neighbor < 0 || visited.count(neighbor))
 				continue;
@@ -619,23 +591,23 @@ std::pair<int, int> get_nearest_empty_tile(int start_index)
 	return {-1, -1}; // No empty tile found
 }
 
-int get_nearest_adjacent_empty_tile_index(int start_index)
+uint32_t get_nearest_adjacent_empty_tile_index(uint32_t start_index)
 {
-	std::queue<int> q;
-	std::unordered_set<int> visited;
+	std::queue<uint32_t> q;
+	std::unordered_set<uint32_t> visited;
 
 	q.push(start_index);
 	visited.insert(start_index);
 
 	while (!q.empty())
 	{
-		int current = q.front();
+		uint32_t current = q.front();
 		q.pop();
 
 		auto [above, right, below, left] = adjacent_tiles_indices[current];
-		std::array<int, 4> neighbors = {above, right, below, left};
+		std::array<uint32_t, 4> neighbors = {above, right, below, left};
 
-		for (int neighbor : neighbors)
+		for (uint32_t neighbor : neighbors)
 		{
 			if (neighbor < 0 || visited.count(neighbor))
 				continue;
@@ -655,16 +627,16 @@ int get_nearest_adjacent_empty_tile_index(int start_index)
 
 struct TileBlock()
 {
-	std::pair<int, int> start_tile;
-	uint8_t block_size;
+	Coord start_tile;
+	uuint32_t8_t block_size;
 	Direction direction;
 }
 
 TileBlock
-get_nearest_adjacent_empty_tile_block(int start_index, uint8_t block_size)
+get_nearest_adjacent_empty_tile_block(uint32_t start_index, uuint32_t8_t block_size)
 {
-	std::queue<int> q;
-	std::unordered_set<int> visited;
+	std::queue<uint32_t> q;
+	std::unordered_set<uint32_t> visited;
 	Direction direction;
 
 	q.push(start_index);
@@ -672,13 +644,13 @@ get_nearest_adjacent_empty_tile_block(int start_index, uint8_t block_size)
 
 	while (!q.empty())
 	{
-		int current = q.front();
+		uint32_t current = q.front();
 		q.pop();
 
 		auto [above, right, below, left] = adjacent_tiles_indices[current];
-		std::array<int, 4> neighbors = {above, right, below, left};
+		std::array<uint32_t, 4> neighbors = {above, right, below, left};
 
-		for (int neighbor : neighbors)
+		for (uint32_t neighbor : neighbors)
 		{
 			if (neighbor < 0 || visited.count(neighbor))
 				continue;
@@ -687,12 +659,12 @@ get_nearest_adjacent_empty_tile_block(int start_index, uint8_t block_size)
 			{
 				// Found an empty tile, now check for a block of adjacent empty
 				// tiles
-				int count = 1; // Start with the current empty tile
+				uint32_t count = 1; // Start with the current empty tile
 				// Check horizontal and vertical directions for contiguous empty
 				// tiles
 
 				// Check to the right
-				int temp = neighbor;
+				uint32_t temp = neighbor;
 				while (check_empty_tile(current, temp) && visited.count(temp) == 0)
 				{
 					count++;
@@ -744,28 +716,28 @@ get_nearest_adjacent_empty_tile_block(int start_index, uint8_t block_size)
 	return {-1, -1}; // No empty tile block found
 }
 
-// int get_speed(Animal animal) {
+// uint32_t get_speed(Animal animal) {
 //     switch (animal) {
 //         Pig, Cow, Chicken, Duck, Sheep, Goat, Horse, Ox, Donkey, Camel, WaterBuffalo, Rabbit,
 //         Antelope, Deer, Moose, Capybara, Turtle, Elephant, Bison, Wolf, Bear, Caribou, Fish,
 //     }
 // }
 
-int get_seed_index(int y, int x, int length) { return y * length + x; }
+uint32_t get_seed_index(uint32_t y, uint32_t x, uint32_t length) { return y * length + x; }
 
-int calculate_distance(int y, int x, const std::pair<int, int> &target)
+uint32_t calculate_distance(uint32_t y, uint32_t x, const Coord &target)
 {
-	return std::abs(x - target.first) + std::abs(y - target.second);
+	return std::abs(x - target.y) + std::abs(y - target.x);
 }
 
 struct Node
 {
-	int index;
-	uint8_t move_cost; // The cost of moving to this node
-	uint8_t f_cost;	  // f_cost = g_cost + heuristic
+	uint32_t index;
+	uuint32_t8_t move_cost; // The cost of moving to this node
+	uuint32_t8_t f_cost;	  // f_cost = g_cost + heuristic
 	Node *parent;	  // Parent node for path reconstruction
 
-	Node(int index, uint8_t move_cost, uint8_t f_cost, Node *parent = nullptr)
+	Node(uint32_t index, uuint32_t8_t move_cost, uuint32_t8_t f_cost, Node *parent = nullptr)
 	    : index(index), move_cost(move_cost), f_cost(f_cost), parent(parent)
 	{
 	}
@@ -773,11 +745,11 @@ struct Node
 	bool operator>(const Node &other) const { return f_cost > other.f_cost; }
 };
 
-uint16_t man_dist(int x1, int y1, int x2, int y2) { return std::abs(x1 - x2) + std::abs(y1 - y2); }
+uuint32_t16_t man_dist(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2) { return std::abs(x1 - x2) + std::abs(y1 - y2); }
 
-uint16_t man_dist(std::pair<int, int> x, std::pair<int, int> y)
+uuint32_t16_t man_dist(Coord x, Coord y)
 {
-	return std::abs(x.first - y.first) + std::abs(x.second - y.second);
+	return std::abs(x.y - y.y) + std::abs(x.x - y.x);
 }
 
 inline bool within(Coord subject, Coord border_top_left_corner, Coord border_dimensions)
@@ -787,28 +759,28 @@ inline bool within(Coord subject, Coord border_top_left_corner, Coord border_dim
 }	
 
 // returns pair of index, cost to new path vector
-// std::vector<std::pair<int, int>> greedy_path(int start_index, int end_index) {
-//     int start_x = tile_coords[start_index].first;
-//     int start_y = tile_coords[start_index].second;
+// std::vector<Coord> greedy_path(uint32_t start_index, uint32_t end_index) {
+//     uint32_t start_x = tile_coords[start_index].y;
+//     uint32_t start_y = tile_coords[start_index].x;
 
-//     int goal_x = tile_coords[end_index].first;
-//     int goal_y = tile_coords[end_index].second;
+//     uint32_t goal_x = tile_coords[end_index].y;
+//     uint32_t goal_y = tile_coords[end_index].x;
 //     std::priority_queue<Node, std::vector<Node>, std::greater<Node>> open_set;
-//     std::unordered_map<int, bool> visited;
+//     std::unordered_map<uint32_t, bool> visited;
 
 //     // Start with the initial node, no parent (null)
 //     open_set.push(Node(start_x, start_y, 0, man_distance(start_x, start_y, goal_x, goal_y), nullptr));
 
-//     std::vector<std::pair<std::pair<int, int>, int>> path;
+//     std::vector<std::pair<Coord, uint32_t>> path;
 
 //     while (!open_set.empty()) {
 //         Node current = open_set.top();
 //         open_set.pop();
 
-//         int index = current.index;
-//         int cost = current.move_cost;
+//         uint32_t index = current.index;
+//         uint32_t cost = current.move_cost;
 
-//         if (tile_coords[index].first == goal_x && tile_coords[index].second == goal_y) {
+//         if (tile_coords[index].y == goal_x && tile_coords[index].x == goal_y) {
 //             // reconstruct the path by backtracking from goal to start
 //             while (current.parent != nullptr) {
 //                 path.push_back(index, cost);
@@ -823,18 +795,18 @@ inline bool within(Coord subject, Coord border_top_left_corner, Coord border_dim
 //         if (visited(index)) continue;
 //         visited(index) = true;
 
-//         for (int i = 0; i < 4; ++i) {;
-//             if (i == 0) std::pair<int,int> mt = get_move_time_and_tile_index(Direction::Up);
-//             if (i == 1) std::pair<int,int> mt = get_move_time_and_tile_index(Direction::Down);
-//             if (i == 2) std::pair<int,int> mt = get_move_time_and_tile_index(Direction::Left);
-//             if (i == 3) std::pair<int,int> mt = get_move_time_and_tile_index(Direction::Right);
+//         for (uint32_t i = 0; i < 4; ++i) {;
+//             if (i == 0) Coord mt = get_move_time_and_tile_index(Direction::Up);
+//             if (i == 1) Coord mt = get_move_time_and_tile_index(Direction::Down);
+//             if (i == 2) Coord mt = get_move_time_and_tile_index(Direction::Left);
+//             if (i == 3) Coord mt = get_move_time_and_tile_index(Direction::Right);
 
-//             uint8_t move_cost = mt.first;
-//             int new_index = mt.second;
+//             uuint32_t8_t move_cost = mt.y;
+//             uint32_t new_index = mt.x;
 
 //             if (new_index == -1) continue;
 //             if (visited(new_index)) continue;
-//             uint8_t new_man_dist = man_dist(tile_coords[index].first, tile_coords[index].second,
+//             uuint32_t8_t new_man_dist = man_dist(tile_coords[index].y, tile_coords[index].x,
 //             goal_x, goal_y); open_set.push(Node(new_index, move_cost, move_cost + new_man_dist,
 //             &current));
 //         }
@@ -843,107 +815,107 @@ inline bool within(Coord subject, Coord border_top_left_corner, Coord border_dim
 // }
 
 // use to estimate when object will arrive at target
-//  int time_to_dest_estimator(bool min, int subject_index, int target_index, bool subject_animal, bool
+//  uint32_t time_to_dest_estimator(bool min, uint32_t subject_index, uint32_t target_index, bool subject_animal, bool
 //  target_animal) {
 //          if (target_animal) {
-//          std::pair<int,int> target_coord = animal_coords[target_index];
-//      } else std::pair<int,int> target_coord = current_coords[target_index];
+//          Coord target_coord = animal_coords[target_index];
+//      } else Coord target_coord = current_coords[target_index];
 
 //     if (subject_animal) {
-//         std::pair<int,int> subject_coord = animal_coords[subject_index];
+//         Coord subject_coord = animal_coords[subject_index];
 //         Animal animal = animals[subject_index];
-//     } else std::pair<int,int> subject_coord = current_coords[target_index];
+//     } else Coord subject_coord = current_coords[target_index];
 
-//     int dist = man_dist(subject_coord.first, subject_coord.second, target_coord.first,
-//     target_coord.second); if (subject_animal) dist *= get_speed(animal); return dist;
+//     uint32_t dist = man_dist(subject_coord.y, subject_coord.x, target_coord.y,
+//     target_coord.x); if (subject_animal) dist *= get_speed(animal); return dist;
 // }
 
-// void move_animal(vector<std::pair<int,int> path, int animal_index) {
-//  	std::pair<int,int>& subject_coords = animal_coords[animal_index];
+// void move_animal(vector<Coord path, uint32_t animal_index) {
+//  	Coord& subject_coords = animal_coords[animal_index];
 //     Animal animal = animals[animal_index];
 
-//     int next_tile_move_time = 0;
-//     for (int i = 0; i < path.size(); i++) {
-//         next_tile_move_time += path[i].second * get_speed(animal);
-//         add_event(next_tile_move_time, EventType::AnimalMoveTile, animal_index, path[i].first);
+//     uint32_t next_tile_move_time = 0;
+//     for (uint32_t i = 0; i < path.size(); i++) {
+//         next_tile_move_time += path[i].x * get_speed(animal);
+//         add_event(next_tile_move_time, EventType::AnimalMoveTile, animal_index, path[i].y);
 //     }
 // }
 
-// void move_pawn(vector<std::pair<int,int> path, int pawn_index) {
-//  	std::pair<int,int>& subject_coords = current_coords[pawn_index];
-//     int next_tile_move_time = 0;
-//     for (int i = 0; i < path.size(); i++) {
-//         next_tile_move_time += path[i].second;
-//         add_event(next_tile_move_time, EventType::PawnMoveTile, pawn_index, path[i].first);
+// void move_pawn(vector<Coord path, uint32_t pawn_index) {
+//  	Coord& subject_coords = current_coords[pawn_index];
+//     uint32_t next_tile_move_time = 0;
+//     for (uint32_t i = 0; i < path.size(); i++) {
+//         next_tile_move_time += path[i].x;
+//         add_event(next_tile_move_time, EventType::PawnMoveTile, pawn_index, path[i].y);
 //     }
 // }
 
-// void move_animal(int object_index, int dest_coord_index) {
-//     std::pair<int, int> ec = animal_coords[object_index];
-//     vector<std::pair<std::pair<int,int>, int>> path = greedy_path(ec, dest_coord_index);
+// void move_animal(uint32_t object_index, uint32_t dest_coord_index) {
+//     Coord ec = animal_coords[object_index];
+//     vector<std::pair<Coord, uint32_t>> path = greedy_path(ec, dest_coord_index);
 //     move_animal(path, object_index);
 // }
 
-// void move_pawn(int object_index, int dest_coord_index) {
-//     std::pair<int, int> ec = animal_coords[object_index];
-//     std::pair<int, int> ec = current_coords[object_index];
+// void move_pawn(uint32_t object_index, uint32_t dest_coord_index) {
+//     Coord ec = animal_coords[object_index];
+//     Coord ec = current_coords[object_index];
 
-//     vector<std::pair<std::pair<int,int>, int>> path = greedy_path(ec, dest_coord_index);
+//     vector<std::pair<Coord, uint32_t>> path = greedy_path(ec, dest_coord_index);
 //     move_pawn(path, object_index);
 // }
 
 // //TODO: consider making the move tile events directional
-// void move_animal(int object_index, int dest_coord_index, DelayedEvent event) {
-//     std::pair<int, int> ec = animal_coords[object_index];
-//     vector<std::pair<std::pair<int,int>, int>> path = greedy_path(ec, dest_coord_index);
+// void move_animal(uint32_t object_index, uint32_t dest_coord_index, DelayedEvent event) {
+//     Coord ec = animal_coords[object_index];
+//     vector<std::pair<Coord, uint32_t>> path = greedy_path(ec, dest_coord_index);
 //     Animal animal = animals[animal_index];
 
-//     int next_tile_move_time = 0;
-//     for (int i = 0; i < path.size(); i++) {
-//         next_tile_move_time += path[i].second * get_speed(animal);
-//         add_event(next_tile_move_time, EventType::AnimalMoveTile, object_index, path[i].first);
+//     uint32_t next_tile_move_time = 0;
+//     for (uint32_t i = 0; i < path.size(); i++) {
+//         next_tile_move_time += path[i].x * get_speed(animal);
+//         add_event(next_tile_move_time, EventType::AnimalMoveTile, object_index, path[i].y);
 //     }
 //     add_event(next_tile_move_time + 1, event, object_index);
 // }
 
-// void move_pawn(int object_index, int dest_coord_index, DelayedEvent event) {
-//     std::pair<int, int> ec = animal_coords[object_index];
-//     vector<std::pair<std::pair<int,int>, int>> path = greedy_path(ec, dest_coord_index);
+// void move_pawn(uint32_t object_index, uint32_t dest_coord_index, DelayedEvent event) {
+//     Coord ec = animal_coords[object_index];
+//     vector<std::pair<Coord, uint32_t>> path = greedy_path(ec, dest_coord_index);
 
-//     int next_tile_move_time = 0;
-//     for (int i = 0; i < path.size(); i++) {
-//         next_tile_move_time += path[i].second;
-//         add_event(next_tile_move_time, EventType::PawnMoveTile, object_index, path[i].first);
+//     uint32_t next_tile_move_time = 0;
+//     for (uint32_t i = 0; i < path.size(); i++) {
+//         next_tile_move_time += path[i].x;
+//         add_event(next_tile_move_time, EventType::PawnMoveTile, object_index, path[i].y);
 //     }
 //     add_event(next_tile_move_time + 1, event, object_index);
 // }
 
 // moves a certain object until it is adjacent with another object and facing it.
-//  void meet(int finder_index, int target_index, bool finder_animal, bool target_animal, DelayedEvent
+//  void meet(uint32_t finder_index, uint32_t target_index, bool finder_animal, bool target_animal, DelayedEvent
 //  meet_type) {
-//      if (finder_animal) std::pair<int, int> fc = animal_coords[finder_index];
-//      else std::pair<int, int> fc = current_coords[finder_index];
-//      if (target_animal) std::pair<int, int> tc = animal_coords[target_index];
-//      else std::pair<int, int> tc = current_coords[target_index];
+//      if (finder_animal) Coord fc = animal_coords[finder_index];
+//      else Coord fc = current_coords[finder_index];
+//      if (target_animal) Coord tc = animal_coords[target_index];
+//      else Coord tc = current_coords[target_index];
 
 //     //TODO: if hunting, give up if animal is faster and not asleep or injured
 
-//     vector<std::pair<std::pair<int,int>, int>> path = greedy_path(tile_indices(fc),
+//     vector<std::pair<Coord, uint32_t>> path = greedy_path(tile_indices(fc),
 //     tile_indices(tc)); if (finder_animal) move_animal(path, animal_index); else move_pawn(path,
 //     pawn_index);
 
-//     int time = time_to_dest_estimator(finder_index, target_index, finder_animal, target_animal);
+//     uint32_t time = time_to_dest_estimator(finder_index, target_index, finder_animal, target_animal);
 //     if (finder_animal) {
 //         if (target_animal) {
-//             add_event(time, EventType::CheckIfAdjacentAnimals, static_cast<int>(meet_type),
+//             add_event(time, EventType::CheckIfAdjacentAnimals, static_cast<uint32_t>(meet_type),
 //             finder_index, target_index);
-//         } else add_event(time, EventType::CheckIfAdjacentAnimalToPawn, static_cast<int>(meet_type),
+//         } else add_event(time, EventType::CheckIfAdjacentAnimalToPawn, static_cast<uint32_t>(meet_type),
 //         finder_index, target_index);
 //     } else {
 //         if (target_animal) {
 //             add_event(time, EventType::CheckIfAdjacentPawnToAnimal,
-//             static_cast<int>(meet_type),finder_index, target_index);
-//         } else add_event(time, EventType::CheckIfAdjacentPawns, static_cast<int>(meet_type),
+//             static_cast<uint32_t>(meet_type),finder_index, target_index);
+//         } else add_event(time, EventType::CheckIfAdjacentPawns, static_cast<uint32_t>(meet_type),
 //         finder_index, target_index);
 //     }
 //     //TODO:fix and face entities

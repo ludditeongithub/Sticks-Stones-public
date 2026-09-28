@@ -11,6 +11,13 @@
 
 // TODO: load_game_button
 
+const int button_left_alignment = SCREEN_WIDTH / 2 - (sprite::buttons[ButtonSprite::Main].w / 2);
+	
+	const SCoord new_left_corner = {button_left_alignment, 2 * SCREEN_HEIGHT / 6};
+	const SCoord load_left_corner = {button_left_alignment / 2, 3 * SCREEN_HEIGHT / 6};
+	const SCoord options_left_corner = {button_left_alignment / 2, 4 * SCREEN_HEIGHT / 6};
+	const SCoord about_left_corner = {button_left_alignment / 2, 5 * SCREEN_HEIGHT / 6};
+
 struct MainMenu
 {
 	bool active = false;
@@ -19,12 +26,7 @@ struct MainMenu
 	uint8_t raw_to_user_scalar;
 	// Button Positions
 	SDL_Rect background;
-	static constexpr int button_left_alignment = SCREEN_WIDTH / 2 - (sprite::button[static_cast<int>(ButtonSprite::Main)].w / 2);
 	
-	static constexpr SCoord new_left_corner = {button_left_alignment, 2 * SCREEN_HEIGHT / 6};
-	static constexpr SCoord load_left_corner = {button_left_alignment / 2, 3 * SCREEN_HEIGHT / 6};
-	static constexpr SCoord options_left_corner = {button_left_alignment / 2, 4 * SCREEN_HEIGHT / 6};
-	static constexpr SCoord about_left_corner = {button_left_alignment / 2, 5 * SCREEN_HEIGHT / 6};
 	MainButtonUI new_game_button;
 	MainButtonUI load_game_button;
 	MainButtonUI about_button;
@@ -52,7 +54,7 @@ struct MainMenu
 
 	MainMenu()
 	{
-		  background = sprite::ui[UISprite::Background];
+		  background = sprite::uis[UISprite::Background];
           new_game_button = MainButtonUI(NewGameBF(), new_left_corner);
 		  load_game_button = MainButtonUI(LoadMenuBF(), load_left_corner);
           about_button = MainButtonUI(AboutBF(), about_left_corner);
@@ -65,6 +67,21 @@ struct MainMenu
           video_button = MainButtonUI(VideoBF(), video_left_corner);
           audio_button = MainButtonUI(AudioBF(), audio_left_corner);
           //keybindings_button = MainButtonUI(KeybindingsBF(),keybindings_left_corner);
+	}
+
+	void activate()
+	{
+			active = true;
+			while (active)
+					{
+							SDL_Event e;
+							while (SDL_PollEvent(&e))
+									{
+											handle(&e);
+									}
+							render();
+							SDL_RenderPresent(renderer);
+					}
 	}
 
 	void render()
@@ -87,8 +104,7 @@ struct MainMenu
 	case Mode::Audio:
        	    audio_render();
 			break;
-    default:
-            
+    default:       
 	}
 	}
 
@@ -144,11 +160,12 @@ struct MainMenu
 		video_button.handle(e);
 		audio_button.handle(e);
 	}
+		
 	void load_handle(SDL_Event *e, SCoord mouse_position);
 	void options_handle(SDL_Event *e, SCoord mouse_position);
 	void audio_handle(SDL_Event *e, SCoord mouse_position);
 	void video_handle(SDL_Event *e, SCoord mouse_position);
 };
 
-
+MainMenu* g_main_menu;
 

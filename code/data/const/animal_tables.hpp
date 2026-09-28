@@ -4,8 +4,10 @@
 #include <data/types/animal.hpp>
 #include <core/coord.hpp>
 #include <core/tables.hpp>
-#include <core/time.hpp>
 #include <data/types/tile.hpp>
+#include <data/types/stats.hpp>
+#include <data/types/time.hpp>
+#include <data/const/time_data.hpp>
 
 namespace animal
 {
@@ -40,11 +42,10 @@ inline constexpr LookupTable<Animal, SCoord> TEMPERATURE_PENALTY_RANGES = []
 	return lt;
 }();
 
-inline constexpr LookupTable<Animal, Coord> HUMIDITY_PENALTY_RANGES = []
-{
-	LookupTable<Animal, Coord> lt{};
-	using enum Animal;
-
+inline constexpr LookupTable<Animal,SCoord> HUMIDITY_PENALTY_RANGES = [] {
+		LookupTable<Animal,SCoord> lt{};
+		using enum Animal;
+		
 	lt[Pig]          = {50, 80};
 	lt[Cow]          = {40, 80};
 	lt[Chicken]      = {40, 70};
@@ -68,9 +69,8 @@ inline constexpr LookupTable<Animal, Coord> HUMIDITY_PENALTY_RANGES = []
 	lt[Bear]         = {40, 80};
 	lt[Caribou]      = {40, 90};
 
-	return lt;
+		return lt;
 }();
-  
 constexpr float dominant = 0.003;
 constexpr float abundant = 0.0015;
 constexpr float common = 0.0008;
@@ -219,8 +219,8 @@ inline constexpr LookupTable<Animal, Frame> RUNNING_FRAME_PER_TILES = []
 LookupTable<Animal, Frame> get_frame_per_tiles_table(bool running)
 {
 	if (running)
-			return running_frame_per_tiles;
-	else return walking_frame_per_tiles;
+			return RUNNING_FRAME_PER_TILES;
+	else return WALKING_FRAME_PER_TILES;
 }
 
 inline constexpr LookupTable<Animal, Time> BREEDING_INTERVALS = []
@@ -433,12 +433,12 @@ inline constexpr LookupTable<Animal, Time> SENESCENCE_AGES = [] {
 	lt[Caribou]       = 0.75f;
 	lt[Fish]          = 0.85f;
         for (size_t i = 0; i < static_cast<size_t>(Animal::MAX); i++) {
-          lt[static_cast<Animal>(i)] *= max_ages[static_cast<Animal>(i)];
+          lt[static_cast<Animal>(i)] *= MAX_AGES[static_cast<Animal>(i)];
         }
 	return lt;
 }();
 
-inline constexpr LookupTable<Animal, uint16_t> hunger_search_threshold = []
+inline constexpr LookupTable<Animal, uint16_t> HUNGER_SEARCH_THRESHOLD = []
 {
 	LookupTable<Animal, uint16_t> lt;
 	using enum Animal;

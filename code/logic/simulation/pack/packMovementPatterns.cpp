@@ -17,7 +17,7 @@ MovingStatus::PackRegroup MovingStatus::PackFollow
 
 uint8_t pack_sizes[static_cast<int>(Animal::MAX)];
 vector<PackCenter> pack_centers;
-vector<std::pair<int, int>> pack_coords;
+vector<Coord> pack_coords;
 
 void return_to_pack(int animal_index)
 {
@@ -162,7 +162,7 @@ struct Squad
 	vector<int> pawns;
 	vector<bool> within_suitable_distance;
 	Direction direction;
-	std::pair<int, int> center;
+	Coord center;
 	bool organizing;
 	bool in_brigade;
 	uint16_t time_till_change_operation;
@@ -172,5 +172,5 @@ struct Brigade
 {
 	vector<int> squads;
 	Direction direction;
-	std::pair<int, int> center;
+	Coord center;
 }

@@ -4,6 +4,7 @@
 namespace seed {
 class Database {
 	// @codegen:begin database_generation
+public:
 // =========================
 // BASE DATABASE MEMBERS
 // =========================
@@ -20,7 +21,6 @@ size_t capacity;
     size_t size = 1; // 0 is placeholder
     Stack<size_t> free_slots;
     Array<bool> alives;
-  World& world;
   tile::Database& tiles;
 
     // =========================
@@ -36,13 +36,11 @@ size_t capacity;
 // CONSTRUCTOR
 // =========================
 
-Database(Arena* arena, size_t capacity
-  , World& world
- 
+  Database(Arena* arena, size_t capacity
   , tile::Database& tiles
-) :
-  world(world),
-  tiles(tiles),
+) 
+    : tiles(tiles)
+  
 {
 this->capacity = capacity;
 
@@ -80,7 +78,7 @@ return ages[index];
   // =========================
 
 
-bool attempt_spawn(const Plant plant, const bool newborn, const Coord coord  )
+bool attempt_spawn(const Plant plant, const Coord coord, const bool newborn  )
 {
 #if !SHIPPING_BUILD
 assert(plant != Plant::NONE && plant != Plant::MAX && "Tried to spawn plant as NONE or MAX.");
@@ -119,12 +117,12 @@ assert(plant != Plant::NONE && plant != Plant::MAX && "Tried to spawn plant as N
           
         
 
-size_t spawn(const Plant plant, const bool newborn, const Coord origin
+          size_t spawn(const Plant plant, const bool newborn, const Coord origin
 , const bool insert_search = true) {
 Coord spawn_point = tiles.get_nearest_empty_tile(origin);
 size_t result = 0;
 while (result == 0) {
-result = attempt_spawn(plant, newborn, spawn_point
+result = attempt_spawn(plant, spawn_point, newborn
 );
 if (result == 0) free_unused_entity();
 }

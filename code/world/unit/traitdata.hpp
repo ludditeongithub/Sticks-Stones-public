@@ -1,4 +1,5 @@
 #include "items.hpp"
+#include <vector>
 
 struct UnitData
 {
@@ -35,7 +36,7 @@ void produce_items(std::vector<Item> &queue, std::vector<int> &amount, UnitData 
 			auto &inventory = units.inventories[i];
 			auto &inv_amounts = units.amounts[i];
 
-			std::vector<std::pair<int, int>> product_ingredients(
+			std::vector<Coord> product_ingredients(
 			    recipe.ingredients.size(), {-1, 0});
 			bool missing_ingredients = false;
 
@@ -103,7 +104,6 @@ void produce_items(std::vector<Item> &queue, std::vector<int> &amount, UnitData 
 					}
 				}
 			}
-
 			units.work_left[i] = recipe.work_time;
 		}
 	}

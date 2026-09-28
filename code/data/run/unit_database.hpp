@@ -4,6 +4,8 @@
 
 #include <data/types/action.hpp>
 #include <data/const/unit_data.hpp>
+#include <data/const/unit_tables.hpp>
+#include <data/run/unit_helpers.hpp>
 #include <cstdint>
 #include <core/containers.hpp>
 #include <logic/generic/search/search.hpp>
@@ -17,6 +19,7 @@ namespace unit {
 class Database
 {
 	// @codegen:begin database_generation
+public:
 // =========================
 // BASE DATABASE MEMBERS
 // =========================
@@ -35,9 +38,9 @@ constexpr static uint16_t ENTITY_SIZE = sizeof(Unit) +
  +  sizeof(FrameData) 
  +  sizeof(Frame) 
  +  sizeof(Coord) 
+ +  sizeof(SkinData) 
  +  sizeof(RoleMana) 
  +  sizeof(std::array<Role, MAX_ROLES>) 
- +  sizeof(SkinData) 
  +  sizeof(Skills) 
  +  sizeof(Inventory) 
  +  sizeof(Place) 
@@ -47,12 +50,10 @@ size_t capacity;
     size_t size = 1; // 0 is placeholder
     Stack<size_t> free_slots;
     Array<bool> alives;
-  SearchGrid& search;
-  
-  std::vector<EntityID>& no_inertia_buffer; // size is amount of no inertias this loop
-  
-  std::vector<EntityID>& unassigned_buffer; // size is amount of unassigned this loop
   World& world;
+  SearchGrid& search;
+  std::vector<EntityID> no_inertia_buffer; 
+  std::vector<EntityID> unassigned_buffer;
   tile::Database& tiles;
 
     // =========================
@@ -69,9 +70,9 @@ size_t capacity;
     Array<FrameData> frame_datas;
     Array<Frame> inertias;
     Array<Coord> coords;
+    Array<SkinData> skin_datas;
     Array<RoleMana> role_manas;
     Array<std::array<Role, MAX_ROLES>> role_lists;
-    Array<SkinData> skin_datas;
     Array<Skills> skills;
     Array<Inventory> inventorys;
     Array<Place> places;
@@ -82,18 +83,19 @@ size_t capacity;
 // CONSTRUCTOR
 // =========================
 
-Database(Arena* arena, size_t capacity
-  , World& world
- 
+  Database(Arena* arena, size_t capacity
+    , World& world
   , SearchGrid& search
   , tile::Database& tiles
-) :
-  world(world),
-  tiles(tiles),
+) 
+    : world(world),
+tiles(tiles),
 search(search)
+  
 {
 this->capacity = capacity;
   no_inertia_buffer.reserve(capacity);
+  unassigned_buffer.reserve(capacity);
 
   this->size = 0;
 
@@ -121,11 +123,11 @@ this->capacity = capacity;
  
  coords = arena_make_array<Coord>(arena, capacity); 
  
+ skin_datas = arena_make_array<SkinData>(arena, capacity); 
+ 
  role_manas = arena_make_array<RoleMana>(arena, capacity); 
  
  role_lists = arena_make_array<std::array<Role, MAX_ROLES>>(arena, capacity); 
- 
- skin_datas = arena_make_array<SkinData>(arena, capacity); 
  
  skills = arena_make_array<Skills>(arena, capacity); 
  
@@ -173,14 +175,14 @@ return inertias[index];
   inline Coord& coord(const EntityID index) {
 return coords[index];
   }
+  inline SkinData& skin_data(const EntityID index) {
+return skin_datas[index];
+  }
   inline RoleMana& role_mana(const EntityID index) {
 return role_manas[index];
   }
   inline std::array<Role, MAX_ROLES>& role_list(const EntityID index) {
 return role_lists[index];
-  }
-  inline SkinData& skin_data(const EntityID index) {
-return skin_datas[index];
   }
   inline Skills& skill(const EntityID index) {
 return skills[index];
@@ -199,7 +201,8 @@ return places[index];
   // =========================
 
 
-bool attempt_spawn(const Unit unit, const bool newborn, const Coord coord  , const bool insert_search = true
+bool attempt_spawn(const Unit unit, const Coord coord, const bool newborn  , float parent1, float parent2
+, const bool insert_search = true
 )
 {
 #if !SHIPPING_BUILD
@@ -234,9 +237,9 @@ assert(unit != Unit::NONE && unit != Unit::MAX && "Tried to spawn unit as NONE o
             this->frame_data(i) = FrameData{ActState::NewPath, Direction::South, 0};
             this->inertia(i) = 0;
             this->coord(i) = coord;
+            this->skin_data(i) = {'generate_melanin(parent1': None, 'parent2)': None, 'generate_skin_warmth(parent1': None, 0.5: None, 0.0: None};
             this->role_mana(i) = STARTING_ROLE_MANA;
             this->role_list(i) = std::array<Role, MAX_ROLES>{};
-            this->skin_data(i) = generate_melanin(parent1, parent2), generate_skin_warmth(parent1, parent2), 0.5, 0.0;
             this->skill(i) = Skills{};
             this->inventory(i) = Inventory{};
             this->place(i) = Places{};
@@ -255,9 +258,9 @@ assert(unit != Unit::NONE && unit != Unit::MAX && "Tried to spawn unit as NONE o
             this->frame_data(i) = FrameData{ActState::NewPath, Direction::South, 0};
             this->inertia(i) = 0;
             this->coord(i) = coord;
+            this->skin_data(i) = {'generate_melanin(world': None, 'coord)': None, 'generate_skin_warmth(world': None, 0.5: None, 0.0: None};
             this->role_mana(i) = STARTING_ROLE_MANA;
             this->role_list(i) = std::array<Role, MAX_ROLES>{};
-            this->skin_data(i) = generate_melanin(world, coord), generate_skin_warmth(world, coord), 0.5, 0.0;
             this->skill(i) = Skills{};
             this->inventory(i) = Inventory{};
             this->place(i) = Places{};
@@ -268,12 +271,14 @@ assert(unit != Unit::NONE && unit != Unit::MAX && "Tried to spawn unit as NONE o
           
         
 
-size_t spawn(const Unit unit, const bool newborn, const Coord origin
+          size_t spawn(const Unit unit, const bool newborn, const Coord origin
+, float parent1, float parent2,
 , const bool insert_search = true) {
 Coord spawn_point = tiles.get_nearest_empty_tile(origin);
 size_t result = 0;
 while (result == 0) {
-result = attempt_spawn(unit, newborn, spawn_point
+result = attempt_spawn(unit, spawn_point, newborn
+, parent1, parent2,
 , insert_search  
 );
 if (result == 0) free_unused_entity();
@@ -317,9 +322,9 @@ if (result == 0) free_unused_entity();
 
         Coord& pos = coord(index);
         Coord new_pos = get_pos(frame_data(index).get<Direction>(), pos);
-        size_t ti = world.get_tile_index_from_coord(new_pos);
+        size_t ti = g_world->get_tile_index_from_coord(new_pos);
 
-        if (search.tiles.tile_statuses.get<OccupiedStatus>()[ti] == false)
+    if (tiles.tile_statuss[ti].get<OccupiedStatus>() == OccupiedStatus::Vacant)
         {
             pos = new_pos;
             return true;
@@ -354,9 +359,9 @@ if (result == 0) free_unused_entity();
         frame_datas.save(archive);
         inertias.save(archive);
         coords.save(archive);
+        skin_datas.save(archive);
         role_manas.save(archive);
         role_lists.save(archive);
-        skin_datas.save(archive);
         skills.save(archive);
         inventorys.save(archive);
         places.save(archive);
@@ -381,9 +386,9 @@ if (result == 0) free_unused_entity();
         frame_datas.load(archive);
         inertias.load(archive);
         coords.load(archive);
+        skin_datas.load(archive);
         role_manas.load(archive);
         role_lists.load(archive);
-        skin_datas.load(archive);
         skills.load(archive);
         inventorys.load(archive);
         places.load(archive);
@@ -423,9 +428,9 @@ inline bool transfer(size_t i, unit::Database &old_db)
     frame_data(index) = old_db.frame_data(i);
     inertia(index) = old_db.inertia(i);
     coord(index) = old_db.coord(i);
+    skin_data(index) = old_db.skin_data(i);
     role_mana(index) = old_db.role_mana(i);
     role_list(index) = old_db.role_list(i);
-    skin_data(index) = old_db.skin_data(i);
     skill(index) = old_db.skill(i);
     inventory(index) = old_db.inventory(i);
     place(index) = old_db.place(i);

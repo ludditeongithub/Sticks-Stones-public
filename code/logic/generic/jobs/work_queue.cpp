@@ -133,8 +133,8 @@ bool attempt_production(int pawn)
 		}
 		}
 
-		vector<std::pair<int, int>> ingredients_found;
-		vector<std::pair<int, int>> variant_ingredients_found;
+		vector<Coord> ingredients_found;
+		vector<Coord> variant_ingredients_found;
 
 		// FOR LIQUIDS
 		if (recipe.item::TAGS.has_tag(item::TAGS::Liquid))
@@ -304,7 +304,7 @@ bool attempt_production(int pawn)
 						// try to find nearest ingredient
 						// TODO: create nearest with lower man dist, also do
 						// for non-alternate recipe
-						std::pair<int, int> item_coord = find_nearest_object(
+						Coord item_coord = find_nearest_object(
 						    recipe.ingredients[i], coords[pawn].first,
 						    coords[pawn] second);
 						if (item_coord != {-1, -1} &&
@@ -438,7 +438,7 @@ void collect_resource(Item item)
 			break;
 		// get compatible SourceVariant (Tile, Plant, Animal, Scavengeable, or Item)
 		SourceVariant source = resource.source[action_index];
-		std::pair<int, int> coords = find_nearest_source(source);
+		Coord coords = find_nearest_source(source);
 		// SHORTEST PATH ALGORITHM
 	}
 }
@@ -676,13 +676,13 @@ void product_finish(ProductVariant product, int pawn, Actions action, uint16_t v
 	}
 	else if (std::holds_alternative<Buildable>(current_products[pawn]))
 	{
-		std::pair<int, int> item_coords = coords_from_facing(coords[pawn], directions[pawn]);
+		Coord item_coords = coords_from_facing(coords[pawn], directions[pawn]);
 		tile_object[tile_index[item_coords]] = current_products[pawn];
 		// VEHICLE
 	}
 	else if (std::holds_alternative<Vehicle>(current_products[pawn]))
 	{
-		std::pair<int, int> item_coords = coords_from_facing(coords[pawn], directions[pawn]);
+		Coord item_coords = coords_from_facing(coords[pawn], directions[pawn]);
 		tile_object[tile_index[item_coords]] = current_products[pawn];
 	} // OTHER ITEMS
 	else

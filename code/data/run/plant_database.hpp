@@ -4,16 +4,15 @@
 #include <cereal/types/stack.hpp>
 #include <stack>
 #include <stdint.h>
-
-#include <world/plant/tables.hpp>
+#include <data/const/plant_tables.hpp>
 #include <data/run/animal_database.hpp>
 #include <logic/simulation/world_gen.hpp>
-#include <logic/simulation/game_time.hpp>
 
 namespace plant {
 class Database
 {
 	// @codegen:begin database_generation
+public:
 // =========================
 // BASE DATABASE MEMBERS
 // =========================
@@ -24,6 +23,7 @@ constexpr static uint16_t ENTITY_SIZE = sizeof(Plant) +
  +  sizeof(Plant) 
  +  sizeof(Coord) 
  +  sizeof(Time) 
+ +  sizeof(Time) 
 ;
 
 size_t capacity;
@@ -31,11 +31,8 @@ size_t capacity;
     Stack<size_t> free_slots;
     Array<bool> alives;
   SearchGrid& search;
-  
-  std::vector<EntityID>& no_inertia_buffer; // size is amount of no inertias this loop
-  
-  std::vector<EntityID>& unassigned_buffer; // size is amount of unassigned this loop
-  World& world;
+  std::vector<EntityID> no_inertia_buffer; 
+  std::vector<EntityID> unassigned_buffer;
   tile::Database& tiles;
 
     // =========================
@@ -44,6 +41,7 @@ size_t capacity;
     Array<Plant> plants;
     Array<Coord> coords;
     Array<Time> ages;
+    Array<Time> growths;
 
 
 
@@ -51,17 +49,17 @@ size_t capacity;
 // CONSTRUCTOR
 // =========================
 
-Database(Arena* arena, size_t capacity
-  , World& world
- 
+  Database(Arena* arena, size_t capacity
   , SearchGrid& search
   , tile::Database& tiles
-) :
-  world(world),
-  tiles(tiles),
-search(search),
+) 
+    : tiles(tiles),
+search(search)
+  
 {
 this->capacity = capacity;
+  no_inertia_buffer.reserve(capacity);
+  unassigned_buffer.reserve(capacity);
 
   this->size = 0;
 
@@ -72,6 +70,8 @@ this->capacity = capacity;
  coords = arena_make_array<Coord>(arena, capacity); 
  
  ages = arena_make_array<Time>(arena, capacity); 
+ 
+ growths = arena_make_array<Time>(arena, capacity); 
  
 
 }
@@ -88,6 +88,9 @@ return coords[index];
   }
   inline Time& age(const EntityID index) {
 return ages[index];
+  }
+  inline Time& growth(const EntityID index) {
+return growths[index];
   }
 
 
@@ -106,7 +109,7 @@ return ages[index];
 	    }
 }
 
-bool attempt_spawn(const Plant plant, const bool newborn, const Coord coord  , const bool insert_search = true
+bool attempt_spawn(const Plant plant, const Coord coord, const bool newborn  , const bool insert_search = true
 )
 {
 #if !SHIPPING_BUILD
@@ -133,6 +136,7 @@ assert(plant != Plant::NONE && plant != Plant::MAX && "Tried to spawn plant as N
             this->plant(i) = plant;
             this->coord(i) = coord;
             this->age(i) = 0;
+            this->growth(i) = 0;
         }
         else
         {
@@ -140,6 +144,7 @@ assert(plant != Plant::NONE && plant != Plant::MAX && "Tried to spawn plant as N
             this->plant(i) = plant;
             this->coord(i) = coord;
             this->age(i) = age;
+            this->growth(i) = FULL_MATURITY_AGES[plant] * random_chance->next();
         }
             if (insert_search) search.insert_entity(plant, {i, this->coord(i)});
         return i;
@@ -147,12 +152,12 @@ assert(plant != Plant::NONE && plant != Plant::MAX && "Tried to spawn plant as N
           
         
 
-size_t spawn(const Plant plant, const bool newborn, const Coord origin
+          size_t spawn(const Plant plant, const bool newborn, const Coord origin
 , const bool insert_search = true) {
 Coord spawn_point = tiles.get_nearest_empty_tile(origin);
 size_t result = 0;
 while (result == 0) {
-result = attempt_spawn(plant, newborn, spawn_point
+result = attempt_spawn(plant, spawn_point, newborn
 , insert_search  
 );
 if (result == 0) free_unused_entity();
@@ -203,6 +208,7 @@ if (result == 0) free_unused_entity();
         plants.save(archive);
         coords.save(archive);
         ages.save(archive);
+        growths.save(archive);
     }
 
     template <class Archive>
@@ -216,6 +222,7 @@ if (result == 0) free_unused_entity();
         plants.load(archive);
         coords.load(archive);
         ages.load(archive);
+        growths.load(archive);
     }
 
 
@@ -244,6 +251,7 @@ inline bool transfer(size_t i, plant::Database &old_db)
     plant(index) = old_db.plant(i);
     coord(index) = old_db.coord(i);
     age(index) = old_db.age(i);
+    growth(index) = old_db.growth(i);
   alives[index] = true;
 
   old_db.free_slots.push(i);

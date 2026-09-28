@@ -10,6 +10,24 @@
 
 enum class Unit : uint8_t
 {
+		NONE,
+	// GreenEyesRedHair,
+	// BlueEyesRedHair,
+	// BrownEyesRedHair,
+	// BlueEyesBlondeHair,
+	// GreenEyesBlondeHair,
+	// BrownEyesBlondeHair,
+	// GreenEyesBrownHair,
+	BlueEyesBrownHair,
+	// BrownEyesBrownHair,
+	// GreenEyesBlackHair,
+	// BlueEyesBlackHair,
+	// BrownEyesBlackHair,
+	MAX
+};
+
+enum class UnitStage : uint8_t{
+	NONE,
 	Child,
 	Adult,
 	Elder,

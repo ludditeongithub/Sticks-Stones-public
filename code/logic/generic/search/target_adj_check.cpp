@@ -1,6 +1,6 @@
 Direction check_if_adj_target(int pawn)
 {
-	std::pair<int, int> coords = coords[pawn];
+	Coord coords = coords[pawn];
 	Object obj;
 	for (int i = 0; i < 4; i++)
 	{

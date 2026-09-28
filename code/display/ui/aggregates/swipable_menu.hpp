@@ -1,10 +1,9 @@
 #include <display/ui/components/element.hpp>
-#include "button.hpp"
+#include <display/ui/components/button.hpp>
 #include "display/render/screen.hpp"
 #include <display/ui/components/button.hpp>
 #include "display/ui/components/button_functionality.hpp"
 #include <SDL2/SDL_events.h>
-#include <algorithm>
 
 // TODO: make rows and columns work, for production and inventory menus.
 struct SwipableMenu

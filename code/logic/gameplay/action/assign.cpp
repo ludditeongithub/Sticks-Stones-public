@@ -68,15 +68,15 @@ void mark_unassigned_and_no_inertia_entities(DB& database)
 // only send alive and timer up units
 void assign_unassigned_units(unit::Database& database)
 {
-  if (g_task_priority_queue.empty()) return;
+  if (g_task_priority_queue->empty()) return;
   for (size_t i = 0; i < database.unassigned_buffer.size(); i++) {
     #if !SHIPPING_BUILD
     assert(database.actions[i] == Action::Assign || database.actions[i] == Action::Idle);
     #endif						
 			// get valid task for selected pawn
 			Role role = Role::NONE;
-			PlayerTaskJobData td = g_task_priority_queue.top();
-                        Commodity c = td.commodity;
+			PlayerTaskJobData td = g_task_priority_queue->top();
+            Commodity c = td.commodity;
 			size_t amount = 0;
 			while (role == Role::NONE && !g_task_priority_queue.next_empty())
 			{				
@@ -185,14 +185,16 @@ buffer.emplace_back(i);
 		return buffer;
 }
 
-void handle_actions_and_movement()
+void handle_animal_actions() {}
+
+void handle_unit_actions() {}
+
+void handle_actions()
 	{
 		unit::Database& unit_database = g_Game->unit_database;
         Array<Time>& inertias = unit_database.inertias;
 		std::vector<EntityID> ready_actors = get_ready_actors(inertias);
 		ActionInProgressDispatchBuffer action_event_buffer = mark_acting_entities(ready_actors, nullptr, unit_database.coords, unit_database.targets,
 																		 unit_database.actions, unit_database.frame_datas);
-
-		handle_movements();
 	}
 

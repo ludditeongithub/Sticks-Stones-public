@@ -1,5 +1,7 @@
 #pragma once
-#include "draw.hpp"
+#include <SDL2/SDL.h>
+#include <core/coord.hpp>
+#include <display/render/screen.hpp>
 
 constexpr uint16_t RENDER_CHUNK_WIDTH = 4;
 constexpr uint16_t RENDER_CHUNK_HEIGHT = 4;
