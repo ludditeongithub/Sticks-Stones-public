@@ -471,10 +471,12 @@ CMakeFiles/test_exe.dir/test.cpp.o: \
  /home/logan/gameprogramming/code/data/const/animal_tables.hpp \
  /home/logan/gameprogramming/code/data/const/time_data.hpp \
  /home/logan/gameprogramming/code/data/const/animal_tables.hpp \
- /home/logan/gameprogramming/code/logic/generic/search/search.hpp \
+ /home/logan/gameprogramming/code/data/run/item_database.hpp \
  /usr/include/c++/16/stack /usr/include/c++/16/deque \
  /usr/include/c++/16/bits/stl_deque.h /usr/include/c++/16/bits/deque.tcc \
  /usr/include/c++/16/bits/stl_stack.h \
+ /home/logan/gameprogramming/code/../extern/cereal/archives/binary.hpp \
+ /home/logan/gameprogramming/code/logic/generic/search/search.hpp \
  /home/logan/gameprogramming/code/../extern/cereal/types/vector.hpp \
  /home/logan/gameprogramming/code/../extern/cereal/types/stack.hpp \
  /home/logan/gameprogramming/code/../extern/cereal/types/deque.hpp \
@@ -485,8 +487,6 @@ CMakeFiles/test_exe.dir/test.cpp.o: \
  /home/logan/gameprogramming/code/data/run/unit_helpers.hpp \
  /home/logan/gameprogramming/code/display/render/camera.hpp \
  /home/logan/gameprogramming/code/display/render/draw.hpp \
- /home/logan/gameprogramming/code/data/run/item_database.hpp \
- /home/logan/gameprogramming/code/../extern/cereal/archives/binary.hpp \
  /home/logan/gameprogramming/code/display/render/render_chunk.hpp \
  /home/logan/gameprogramming/code/display/ui/components/pop-up_box.hpp \
  /home/logan/gameprogramming/code/../extern/SDL_FontCache.h \

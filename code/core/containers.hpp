@@ -159,10 +159,8 @@ Array2D<T>& arena_make_2d_array(Arena* arena,
                             bytes,
                             alignof(Array2D<T>));
 
-    // Construct header
     Array2D<T>* arr = new (mem) Array2D<T>();
 
-    // Data lives immediately after header
     T* data = reinterpret_cast<T*>(
         reinterpret_cast<uint8_t*>(mem) + sizeof(Array2D<T>)
     );

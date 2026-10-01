@@ -42,7 +42,7 @@ struct World
 	RandomMachine<int8_t> next_precipitation_changes = RandomMachine<int8_t>(-5, 5);
 	RandomChanceMachine precipitation_variance = RandomChanceMachine();
 	
-	Array2D<float> daily_insolations;
+        Array2D<float> daily_insolations;
 	Array<float> seasonal_insolations;
 	Array<float> cloud_covers;
 
@@ -61,18 +61,18 @@ struct World
 };
 	ChunkTempData chunk_temp_data;
 
-	World(Arena* arena, int width, int height)
+  World(Arena* arena, size_t width, size_t height)
 	    : length_chunks(width), height_chunks(height),
 	      equator(height / 2),
       chunk_amount(width * height),      
       chunk_temp_data(this) 
 {
-    humidities = arena_make_array<Hum>(arena, width * height);
-    temperatures = arena_make_array<Temp>(arena, width * height);
-    altitudes = arena_make_array<Alt>(arena, width * height);
-    daily_insolations = arena_make_2d_array<float>(arena, width, height);
-    seasonal_insolations = arena_make_array<float>(arena, width * height);
-    cloud_covers = arena_make_array<float>(arena, width * height);
+  humidities = arena_make_array<Hum>(arena, width * height);
+  temperatures = arena_make_array<Temp>( arena, width * height);
+  altitudes = arena_make_array<Alt>(arena, width * height);
+  daily_insolations = arena_make_2d_array<float>(arena, width, height);
+  seasonal_insolations = arena_make_array<float>(arena, width * height);
+  cloud_covers = arena_make_array<float>(arena, width * height);
 }
 
 	uint16_t get_chunk_height(int i) { return i / height_chunks; }

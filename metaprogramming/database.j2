@@ -5,7 +5,7 @@ public:
 
 constexpr static uint16_t ENTITY_SIZE = sizeof({{ main_enum }}) +
 {% if not 'immortal' in traits %}
-+ sizeof(bool)
++ sizeof(bool)!
 {% endif %}  
 {% for r in runtime_arrays %}
  +  sizeof({{ r.type }}) 
@@ -15,7 +15,7 @@ constexpr static uint16_t ENTITY_SIZE = sizeof({{ main_enum }}) +
 size_t capacity;
 {% if not 'immortal' in traits %}
     size_t size = 1; // 0 is placeholder
-    Stack<size_t> free_slots;
+    std::stack<size_t> free_slots;
     Array<bool> alives;
   {% endif %}
 {% if 'movable' in traits %}
@@ -23,8 +23,8 @@ size_t capacity;
 {% endif %}
 {% if ('movable' in traits) or ('searchable' in traits) %}
   SearchGrid& search;
-  std::vector<EntityID> no_inertia_buffer; 
-  std::vector<EntityID> unassigned_buffer;
+  Array<EntityID> no_inertia_buffer; 
+  Array<EntityID> unassigned_buffer;
 {% endif %}
 {% if 'positional' in traits %}
   tile::Database& tiles;
@@ -77,23 +77,30 @@ size_t capacity;
 {
 this->capacity = capacity;
 {% if 'movable' in traits or 'searchable' in traits %}
-  no_inertia_buffer.reserve(capacity);
-  unassigned_buffer.reserve(capacity);
+  no_inertia_buffer = arena_make_array<EntityID>(arena, capacity);
+  unassigned_buffer = arena_make_array<EntityID>(arena, capacity);
 {% endif %}
-
 {% if not 'immortal' in traits %}
   this->size = 0;
 {% endif %}
-
 {# {% for s in structs %} #}
 {#   {{ s.name }}s = arena_make_array<{{ PascalCase(s.name) }}>(arena, capacity); #}
 {# {% endfor %} #}
-
 {% for r in runtime_arrays %} 
- {{ r.name }}s = arena_make_array<{{ r.type }}>(arena, capacity); 
+  {{ r.name }}s = arena_make_array<{{ r.type }}>(arena, capacity);
 {% endfor %} 
 
 }
+    // =========================
+    // SERIALIZATION
+    // =========================
+
+      template <class Archive>
+    void serialize(Archive &archive) const
+  {
+         archive({{ serialization_list }});
+    }
+
 
 // =========================
 // GETTERS
@@ -180,29 +187,39 @@ assert({{ entity_name }} != {{ PascalCase(entity_name) }}::NONE && {{ entity_nam
 {# TODO: error report if it does NOT spawn on passed origin #}
         
 
-          size_t spawn(const {{ main_enum }} {{ entity_name }}, const bool newborn, const Coord origin
+          bool spawn(const {{ main_enum }} {{ entity_name }}, const Coord origin, const bool newborn
 {% if 'skin_color' in traits %}
-, float parent1, float parent2,
+, float parent1, float parent2
 {% endif %}
 {% if 'variant' in traits %}
   , const Variant variant
 {% endif %}
 , const bool insert_search = true) {
 Coord spawn_point = tiles.get_nearest_empty_tile(origin);
-size_t result = 0;
-while (result == 0) {
+bool result = false;
 result = attempt_spawn({{ entity_name }}, spawn_point, newborn
 {% if 'variant' in traits %}
   , variant
 {% endif %}
 {% if 'skin_color' in traits %}
-, parent1, parent2,
+, parent1, parent2
 {% endif %}
 {% if 'searchable' in traits %}
 , insert_search  
 {% endif %}
 );
-if (result == 0) free_unused_entity();
+if (!result) {
+free_unused_entity();
+attempt_spawn({{ entity_name }}, spawn_point, newborn
+{% if 'variant' in traits %}
+  , variant
+{% endif %}
+{% if 'skin_color' in traits %}
+, parent1, parent2
+{% endif %}
+{% if 'searchable' in traits %}
+, insert_search  
+{% endif %});
 }
 }        
 {% endif %}    
@@ -230,7 +247,7 @@ if (result == 0) free_unused_entity();
   inline void free_unused_entity()
   {
   {% if 'positional' in traits %}
-    for (size_t i = 0; i < coords.size; i++) {
+    for (size_t i = 0; i < coords.size(); i++) {
     if (tiles.tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
     }
   {% endif %}
@@ -261,44 +278,6 @@ if (result == 0) free_unused_entity();
         return false;
     }
   {% endif %}
-
-    // =========================
-    // SERIALIZATION
-    // =========================
-
-  // genreal serialization
-
-    template <class Archive>
-    void save(Archive &archive) const
-    {
-    archive(capacity);
-{% if not 'immortal' in traits %}
-        archive(size);
-        archive(free_slots);
-        archive(alives);
-{% endif %}   
-
-{% for r in runtime_arrays %}
-        {{ r.name }}s.save(archive);
-      {% endfor %}
-      {# TODO: MODIFY TO WORK FOR STRUCTS TOO #}
-    }
-
-    template <class Archive>
-    void load(Archive &archive)
-    {
-        archive(capacity);
-{% if not 'immortal' in traits %}
-        archive(size);
-        archive(free_slots);
-        archive(alives);
-{% endif %}
-        
-{% for r in runtime_arrays %}
-        {{ r.name }}s.load(archive);
-      {% endfor %}
-       {# TODO: MODIFY TO WORK FOR STRUCTS TOO #}
-    }
 
 {% if 'transferable' in traits %}
 

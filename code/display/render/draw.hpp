@@ -3,13 +3,13 @@
 #include "data/run/plant_database.hpp"
 #include "data/types/entity.hpp"
 #include "display/render/sprite.hpp"
-#include "screen.hpp"
 #include "texture.hpp"
 #include <SDL2/SDL_render.h>
 #include <core/containers.hpp>
 #include <core/packed_enum.hpp>
 #include <core/tables.hpp>
 #include <cstdint>
+#include <cmath>
 #include <data/types/animal.hpp>
 #include <data/run/item_database.hpp>
 #include <data/types/plant.hpp>
@@ -54,7 +54,7 @@ void copy_plants(EntityRenderBuffer &erd, plant::Database& pdb)
 			{
 		const PlantRenderData pr = erd.plants[i];
 		const std::array<sprite::StageInfo, sprite::MAX_STAGES> &sd = sprite::PLANT_SPRITE_DIMENSIONS[erd.plants[i].plant];
-
+                
 		float age_ratio = std::min(1.0, pdb.age(pr.index) / FULL_MATURITY_AGES[pr.plant]);
 		int stage = age_ratio * sprite::PLANT_STAGE_AMOUNTS[pr.plant];
 		SDL_Rect sr = sprite::PLANT_SPRITE_DIMENSIONS[pr.plant];

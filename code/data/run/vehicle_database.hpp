@@ -14,7 +14,7 @@ public:
 // =========================
 
 constexpr static uint16_t ENTITY_SIZE = sizeof(Vehicle) +
-+ sizeof(bool)
++ sizeof(bool)!
   
  +  sizeof(Vehicle) 
  +  sizeof(Health) 
@@ -25,12 +25,12 @@ constexpr static uint16_t ENTITY_SIZE = sizeof(Vehicle) +
 
 size_t capacity;
     size_t size = 1; // 0 is placeholder
-    Stack<size_t> free_slots;
+    std::stack<size_t> free_slots;
     Array<bool> alives;
   World& world;
   SearchGrid& search;
-  std::vector<EntityID> no_inertia_buffer; 
-  std::vector<EntityID> unassigned_buffer;
+  Array<EntityID> no_inertia_buffer; 
+  Array<EntityID> unassigned_buffer;
   tile::Database& tiles;
 
     // =========================
@@ -57,25 +57,44 @@ tiles(tiles)
   
 {
 this->capacity = capacity;
-  no_inertia_buffer.reserve(capacity);
-  unassigned_buffer.reserve(capacity);
+  no_inertia_buffer = arena_make_array<EntityID>(arena, capacity);
+  unassigned_buffer = arena_make_array<EntityID>(arena, capacity);
 
   this->size = 0;
 
 
  
- vehicles = arena_make_array<Vehicle>(arena, capacity); 
+  vehicles = arena_make_array<Vehicle>(arena, capacity);
  
- healths = arena_make_array<Health>(arena, capacity); 
+  healths = arena_make_array<Health>(arena, capacity);
  
- frame_datas = arena_make_array<FrameData>(arena, capacity); 
+  frame_datas = arena_make_array<FrameData>(arena, capacity);
  
- inertias = arena_make_array<Frame>(arena, capacity); 
+  inertias = arena_make_array<Frame>(arena, capacity);
  
- coords = arena_make_array<Coord>(arena, capacity); 
+  coords = arena_make_array<Coord>(arena, capacity);
  
 
 }
+    // =========================
+    // SERIALIZATION
+    // =========================
+
+      template <class Archive>
+    void serialize(Archive &archive) const
+  {
+         archive(world,
+tiles,
+size,
+free_slots,
+alives,
+vehicles,
+healths,
+frame_datas,
+inertias,
+coords);
+    }
+
 
 // =========================
 // GETTERS
@@ -137,7 +156,7 @@ assert(vehicle != Vehicle::NONE && vehicle != Vehicle::MAX && "Tried to spawn ve
         {
         Time age = random_bool->next();
             this->vehicle(i) = vehicle;
-            this->health(i) = get_max_health(vehicle, age);
+            this->health(i) = vehicle::get_max_health(vehicle, age);
             this->frame_data(i) = FrameData{ActState::NewPath, Direction::South, 0};
             this->inertia(i) = 0;
             this->coord(i) = coord;
@@ -147,14 +166,16 @@ assert(vehicle != Vehicle::NONE && vehicle != Vehicle::MAX && "Tried to spawn ve
           
         
 
-          size_t spawn(const Vehicle vehicle, const bool newborn, const Coord origin
+          bool spawn(const Vehicle vehicle, const Coord origin, const bool newborn
 , const bool insert_search = true) {
 Coord spawn_point = tiles.get_nearest_empty_tile(origin);
-size_t result = 0;
-while (result == 0) {
+bool result = false;
 result = attempt_spawn(vehicle, spawn_point, newborn
 );
-if (result == 0) free_unused_entity();
+if (!result) {
+free_unused_entity();
+attempt_spawn(vehicle, spawn_point, newborn
+);
 }
 }        
     
@@ -175,7 +196,7 @@ if (result == 0) free_unused_entity();
 
   inline void free_unused_entity()
   {
-    for (size_t i = 0; i < coords.size; i++) {
+    for (size_t i = 0; i < coords.size(); i++) {
     if (tiles.tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
     }
   }
@@ -202,43 +223,6 @@ if (result == 0) free_unused_entity();
         }
 
         return false;
-    }
-
-    // =========================
-    // SERIALIZATION
-    // =========================
-
-  // genreal serialization
-
-    template <class Archive>
-    void save(Archive &archive) const
-    {
-    archive(capacity);
-        archive(size);
-        archive(free_slots);
-        archive(alives);
-   
-
-        vehicles.save(archive);
-        healths.save(archive);
-        frame_datas.save(archive);
-        inertias.save(archive);
-        coords.save(archive);
-    }
-
-    template <class Archive>
-    void load(Archive &archive)
-    {
-        archive(capacity);
-        archive(size);
-        archive(free_slots);
-        archive(alives);
-        
-        vehicles.load(archive);
-        healths.load(archive);
-        frame_datas.load(archive);
-        inertias.load(archive);
-        coords.load(archive);
     }
 
 // @codegen:end database_generation

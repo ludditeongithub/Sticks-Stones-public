@@ -17,7 +17,7 @@ public:
 // =========================
 
 constexpr static uint16_t ENTITY_SIZE = sizeof(Item) +
-+ sizeof(bool)
++ sizeof(bool)!
   
  +  sizeof(Item) 
  +  sizeof(Coord) 
@@ -26,11 +26,11 @@ constexpr static uint16_t ENTITY_SIZE = sizeof(Item) +
 
 size_t capacity;
     size_t size = 1; // 0 is placeholder
-    Stack<size_t> free_slots;
+    std::stack<size_t> free_slots;
     Array<bool> alives;
   SearchGrid& search;
-  std::vector<EntityID> no_inertia_buffer; 
-  std::vector<EntityID> unassigned_buffer;
+  Array<EntityID> no_inertia_buffer; 
+  Array<EntityID> unassigned_buffer;
   tile::Database& tiles;
 
     // =========================
@@ -55,21 +55,38 @@ search(search)
   
 {
 this->capacity = capacity;
-  no_inertia_buffer.reserve(capacity);
-  unassigned_buffer.reserve(capacity);
+  no_inertia_buffer = arena_make_array<EntityID>(arena, capacity);
+  unassigned_buffer = arena_make_array<EntityID>(arena, capacity);
 
   this->size = 0;
 
 
  
- items = arena_make_array<Item>(arena, capacity); 
+  items = arena_make_array<Item>(arena, capacity);
  
- coords = arena_make_array<Coord>(arena, capacity); 
+  coords = arena_make_array<Coord>(arena, capacity);
  
- variants = arena_make_array<Variant>(arena, capacity); 
+  variants = arena_make_array<Variant>(arena, capacity);
  
 
 }
+    // =========================
+    // SERIALIZATION
+    // =========================
+
+      template <class Archive>
+    void serialize(Archive &archive) const
+  {
+         archive(tiles,
+search,
+size,
+free_slots,
+alives,
+items,
+coords,
+variants);
+    }
+
 
 // =========================
 // GETTERS
@@ -133,17 +150,21 @@ assert(item != Item::NONE && item != Item::MAX && "Tried to spawn item as NONE o
           
         
 
-          size_t spawn(const Item item, const bool newborn, const Coord origin
+          bool spawn(const Item item, const Coord origin, const bool newborn
   , const Variant variant
 , const bool insert_search = true) {
 Coord spawn_point = tiles.get_nearest_empty_tile(origin);
-size_t result = 0;
-while (result == 0) {
+bool result = false;
 result = attempt_spawn(item, spawn_point, newborn
   , variant
 , insert_search  
 );
-if (result == 0) free_unused_entity();
+if (!result) {
+free_unused_entity();
+attempt_spawn(item, spawn_point, newborn
+  , variant
+, insert_search  
+);
 }
 }        
     
@@ -166,45 +187,12 @@ if (result == 0) free_unused_entity();
 
   inline void free_unused_entity()
   {
-    for (size_t i = 0; i < coords.size; i++) {
+    for (size_t i = 0; i < coords.size(); i++) {
     if (tiles.tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
     }
   }
     
 
-
-    // =========================
-    // SERIALIZATION
-    // =========================
-
-  // genreal serialization
-
-    template <class Archive>
-    void save(Archive &archive) const
-    {
-    archive(capacity);
-        archive(size);
-        archive(free_slots);
-        archive(alives);
-   
-
-        items.save(archive);
-        coords.save(archive);
-        variants.save(archive);
-    }
-
-    template <class Archive>
-    void load(Archive &archive)
-    {
-        archive(capacity);
-        archive(size);
-        archive(free_slots);
-        archive(alives);
-        
-        items.load(archive);
-        coords.load(archive);
-        variants.load(archive);
-    }
 
 
 // =========================

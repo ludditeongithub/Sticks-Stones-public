@@ -1,10 +1,9 @@
 #include "game.hpp"
 #include "core/saves.hpp"
-#include "logic/simulation/game_time.hpp"
 #include "logic/simulation/launch_game.hpp"
 #include "logic/simulation/save_game.hpp"
-#include "data/run/unit_database.hpp"
-#include <optional>
+#include <data/const/database.hpp>
+#include <data/run/tile_database.hpp>
 
 void Game::start()
 {
@@ -18,29 +17,18 @@ void Game::init_new_world()
 	WorldSpawner *ws = new WorldSpawner(50 / 2, 50 / 2);
 	ws->generate_empty_world();
 	ws->spawn_entities();
-
-	chunk_arena =
-	    Arena(World::ENTITY_SIZE * (ws->WIDTH_WITH_BORDER + ws->HEIGHT_WITH_BORDER) * CHUNKS_PER_REGION);
-	world = World(chunk_arena, 50, 50);
 	world.load_chunk_data(*ws);
 
-	tile_arena = Arena(tile::Database::ENTITY_SIZE * world.WORLD_TILE_AMOUNT);
-	tile_database = tile::Database(tile_arena, ws->tile_spawn_buffer, world);
+	arena = Arena((tile::Database::ENTITY_SIZE * world.world_tile_amount) +
+				(plant::Database::ENTITY_SIZE * plant::CAPACITY) +
+				(animal::Database::ENTITY_SIZE * animal::CAPACITY) +
+                      (unit::Database::ENTITY_SIZE * unit::CAPACITY));
 
-	search(world);
-	
-	plant_arena = Arena(plant::Database::ENTITY_SIZE * PLANT_DATABASE_CAP);
-	plant_database = plant::Database(&plant_arena, search, PLANT_DATABASE_CAP);
-
-	animal_arena = Arena(animal::Database::ENTITY_SIZE * ANIMAL_DATABASE_CAP);
-	animal_database = animal::Database(&animal_arena, ANIMAL_DATABASE_CAP, search);
+	tile_database = tile::Database(&arena, world.world_tile_amount);
+        plant_database = plant::Database(&arena, plant::CAPACITY, search, tile_database);
+	animal_database = animal::Database(&arena, animal::CAPACITY, search);
 	animal_database->add_animals(ws->animal_spawn_buffer);	
 
-	player_unit_arena = Arena(unit::Database::ENTITY_SIZE * UNIT_CAP);
-	player_unit_database = unit::Database(player_unit_arena, PLAYER_UNIT_DATABASE_CAP, world, search);
-
-	NPCUnitArena = Arena(unit::Database::ENTITY_SIZE * NPC_UNIT_DATABASE_CAP);
-        NPCunit::Database = unit::Database(NPCUnitArena, NPC_UNIT_DATABASE_CAP, world, search);
 
         sprite_sheet_texture.load_from_file("sprite_sheet.png");
 }

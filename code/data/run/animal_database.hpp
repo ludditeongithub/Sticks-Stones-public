@@ -7,18 +7,18 @@
 #include <data/types/action.hpp>
 #include <data/const/animal_data.hpp>
 #include <data/const/animal_tables.hpp>
+#include <data/const/time_data.hpp>
+#include <data/run/item_database.hpp>
+#include <data/run/world.hpp>
 #include <core/containers.hpp>
 #include <logic/generic/search/search.hpp>
 
 #include <core/random.hpp>
 #include <cstdint>
 
-#include <data/run/world.hpp>
 #include <cereal/types/vector.hpp>
 #include <cereal/archives/binary.hpp>
 #include <cereal/types/stack.hpp>
-#include <data/const/time_data.hpp>
-
 struct World;
 
 namespace animal
@@ -67,7 +67,7 @@ public:
 // =========================
 
 constexpr static uint16_t ENTITY_SIZE = sizeof(Animal) +
-+ sizeof(bool)
++ sizeof(bool)!
   
  +  sizeof(Animal) 
  +  sizeof(Health) 
@@ -84,12 +84,12 @@ constexpr static uint16_t ENTITY_SIZE = sizeof(Animal) +
 
 size_t capacity;
     size_t size = 1; // 0 is placeholder
-    Stack<size_t> free_slots;
+    std::stack<size_t> free_slots;
     Array<bool> alives;
+  World& world;
   SearchGrid& search;
-  
-  std::vector<EntityID> no_inertia_buffer; 
-  std::vector<EntityID> unassigned_buffer;
+  Array<EntityID> no_inertia_buffer; 
+  Array<EntityID> unassigned_buffer;
   tile::Database& tiles;
   item::VariantDatabase& variant_items;
 
@@ -114,48 +114,77 @@ size_t capacity;
 // CONSTRUCTOR
 // =========================
 
-Database(Arena* arena, size_t capacity
+  Database(Arena* arena, size_t capacity
+    , World& world
   , SearchGrid& search
   , tile::Database& tiles
   , item::VariantDatabase& variant_items
 ) 
-    : tiles(tiles),
+    : world(world),
+tiles(tiles),
 search(search),
 variant_items(variant_items)
+  
+  ,fertilization_handler(EggFertilizationHandler(capacity / 20))  
 {
 this->capacity = capacity;
-  no_inertia_buffer.reserve(capacity);
-  unassigned_buffer.reserve(capacity);
+  no_inertia_buffer = arena_make_array<EntityID>(arena, capacity);
+  unassigned_buffer = arena_make_array<EntityID>(arena, capacity);
 
   this->size = 0;
-  this->variant_items = variant_items;
 
 
  
- animals = arena_make_array<Animal>(arena, capacity); 
+  animals = arena_make_array<Animal>(arena, capacity);
  
- healths = arena_make_array<Health>(arena, capacity); 
+  healths = arena_make_array<Health>(arena, capacity);
  
- hungers = arena_make_array<Hunger>(arena, capacity); 
+  hungers = arena_make_array<Hunger>(arena, capacity);
  
- sexs = arena_make_array<Sex>(arena, capacity); 
+  sexs = arena_make_array<Sex>(arena, capacity);
  
- ages = arena_make_array<Time>(arena, capacity); 
+  ages = arena_make_array<Time>(arena, capacity);
  
- targets = arena_make_array<size_t>(arena, capacity); 
+  targets = arena_make_array<size_t>(arena, capacity);
  
- target_types = arena_make_array<TargetType>(arena, capacity); 
+  target_types = arena_make_array<TargetType>(arena, capacity);
  
- actions = arena_make_array<Action>(arena, capacity); 
+  actions = arena_make_array<Action>(arena, capacity);
  
- frame_datas = arena_make_array<FrameData>(arena, capacity); 
+  frame_datas = arena_make_array<FrameData>(arena, capacity);
  
- inertias = arena_make_array<Frame>(arena, capacity); 
+  inertias = arena_make_array<Frame>(arena, capacity);
  
- coords = arena_make_array<Coord>(arena, capacity); 
+  coords = arena_make_array<Coord>(arena, capacity);
  
 
 }
+    // =========================
+    // SERIALIZATION
+    // =========================
+
+      template <class Archive>
+    void serialize(Archive &archive) const
+  {
+         archive(world,
+tiles,
+search,
+size,
+free_slots,
+alives,
+animals,
+healths,
+hungers,
+sexs,
+ages,
+targets,
+target_types,
+actions,
+frame_datas,
+inertias,
+coords);
+    }
+
 
 // =========================
 // GETTERS
@@ -251,7 +280,7 @@ assert(animal != Animal::NONE && animal != Animal::MAX && "Tried to spawn animal
         {
         Time age = random_bool->next();
             this->animal(i) = animal;
-            this->health(i) = get_max_health(animal, age);
+            this->health(i) = animal::get_max_health(animal, age);
             this->hunger(i) = get_max_hunger(animal, age);
             this->sex(i) = random_bool->next();
             this->age(i) = age;
@@ -268,15 +297,18 @@ assert(animal != Animal::NONE && animal != Animal::MAX && "Tried to spawn animal
           
         
 
-          size_t spawn(const Animal animal, const bool newborn, const Coord origin
+          bool spawn(const Animal animal, const Coord origin, const bool newborn
 , const bool insert_search = true) {
 Coord spawn_point = tiles.get_nearest_empty_tile(origin);
-size_t result = 0;
-while (result == 0) {
-result = attempt_spawn(animal, newborn, spawn_point
+bool result = false;
+result = attempt_spawn(animal, spawn_point, newborn
 , insert_search  
 );
-if (result == 0) free_unused_entity();
+if (!result) {
+free_unused_entity();
+attempt_spawn(animal, spawn_point, newborn
+, insert_search  
+);
 }
 }        
     
@@ -299,7 +331,7 @@ if (result == 0) free_unused_entity();
 
   inline void free_unused_entity()
   {
-    for (size_t i = 0; i < coords.size; i++) {
+    for (size_t i = 0; i < coords.size(); i++) {
     if (tiles.tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
     }
   }
@@ -319,62 +351,13 @@ if (result == 0) free_unused_entity();
         Coord new_pos = get_pos(frame_data(index).get<Direction>(), pos);
         size_t ti = g_world->get_tile_index_from_coord(new_pos);
 
-    if (tile_database.tile_statuss[ti].get<OccupiedStatus>() == OccupiedStatus::Vacant)
+    if (tiles.tile_statuss[ti].get<OccupiedStatus>() == OccupiedStatus::Vacant)
         {
             pos = new_pos;
             return true;
         }
 
         return false;
-    }
-
-    // =========================
-    // SERIALIZATION
-    // =========================
-
-  // genreal serialization
-
-    template <class Archive>
-    void save(Archive &archive) const
-    {
-    archive(capacity);
-        archive(size);
-        archive(free_slots);
-        archive(alives);
-   
-
-        animals.save(archive);
-        healths.save(archive);
-        hungers.save(archive);
-        sexs.save(archive);
-        ages.save(archive);
-        targets.save(archive);
-        target_types.save(archive);
-        actions.save(archive);
-        frame_datas.save(archive);
-        inertias.save(archive);
-        coords.save(archive);
-    }
-
-    template <class Archive>
-    void load(Archive &archive)
-    {
-        archive(capacity);
-        archive(size);
-        archive(free_slots);
-        archive(alives);
-        
-        animals.load(archive);
-        healths.load(archive);
-        hungers.load(archive);
-        sexs.load(archive);
-        ages.load(archive);
-        targets.load(archive);
-        target_types.load(archive);
-        actions.load(archive);
-        frame_datas.load(archive);
-        inertias.load(archive);
-        coords.load(archive);
     }
 
 

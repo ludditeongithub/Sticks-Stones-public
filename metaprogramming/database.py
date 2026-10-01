@@ -21,6 +21,31 @@ def build_initializers(database):
 
     return ",\n".join(initializers)
 
+def build_serialization_list(database, runtime_arrays):
+    traits = database.get("traits", [])
+    references = database.get("database_references", [])
+
+    s_list = []
+
+    if "movable" in traits:
+        s_list.append("world")
+
+    if "positional" in traits:
+        s_list.append("tiles")
+
+    if "searchable" in traits:
+        s_list.append("search")
+
+    if not "immortal" in traits:
+        s_list.append("size")
+        s_list.append("free_slots")
+        s_list.append("alives")
+
+    for r in runtime_arrays:
+        s_list.append(r["name"] + "s")
+        
+    return ",\n".join(s_list)
+
 def create_databases():
     with open("databases.yaml", "r") as f:
         config = yaml.safe_load(f)
@@ -42,6 +67,7 @@ def create_databases():
             "database_generation",
             generated_code,
         )
+    
 
 def create_database(database, trait_data, extra_arrays):
     main_enum = database["name"].capitalize()
@@ -60,6 +86,7 @@ def create_database(database, trait_data, extra_arrays):
         extra_arrays
     )
     initializers = build_initializers(database)
+    serialization_list = build_serialization_list(database, runtime_arrays)
 
     context = {
         "Entity_name": fmt.snake_to_camel(database["name"].capitalize()),
@@ -72,6 +99,7 @@ def create_database(database, trait_data, extra_arrays):
         "traits": database.get("traits", []),
         "database_references": database.get("database_references", []),
         "extra_arrays": database.get("extra_arrays", []),
+        "serialization_list": serialization_list,
         "initializers": initializers,
     }
     template = meta.env.get_template("database.j2")

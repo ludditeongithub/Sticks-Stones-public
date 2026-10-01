@@ -1,3 +1,4 @@
+# database references not active
 databases:
     animal:
         name: animal
@@ -52,7 +53,7 @@ trait_data:
     name: health
     type: Health
     newborn_default: "{{ entity_name }}::MAX_HEALTHS[{{ entity_name }}] * INFANT_HEALTH_MODIFIER"
-    random_age_default: get_max_health({{ entity_name }}, age)
+    random_age_default: "{{entity_name}}::get_max_health({{ entity_name }}, age)"
 
   - trait_name: hunger
     name: hunger
@@ -112,8 +113,8 @@ trait_data:
   - trait_name: skin_color
     name: skin_data
     type: SkinData
-    newborn_default: {generate_melanin(parent1, parent2), generate_skin_warmth(parent1, parent2), 0.5, 0.0}
-    random_age_default: {generate_melanin(world, coord), generate_skin_warmth(world, coord), 0.5, 0.0}
+    newborn_default: '{generate_melanin(parent1, parent2), generate_skin_warmth(parent1, parent2), 0.5, 0.0}'
+    random_age_default: '{generate_melanin(world, coord), generate_skin_warmth(world, coord), 0.5, 0.0}'
 
 extra_arrays:
   - id: animal_status
@@ -143,7 +144,7 @@ extra_arrays:
     random_age_default: Skills{}
   - id: place
     name: place
-    type: Place
+    type: Places
     newborn_default: Places{}
     random_age_default: Places{}
   - id: tile_status

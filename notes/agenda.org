@@ -1,4 +1,6 @@
-* GAME ITEMS TODAY <2026-09-26 Wed>
+* TODO GAME ITEMS TODAY <2026-09-30 Wed +1d>
+- keep debugging
+- currently working on dependencies for serialization, ensuring that it can follow a step-by-step order 
 * Pre-Alpha 
 ** TODO Logan
 *** [1/6] Launch World
@@ -29,7 +31,6 @@ includes:
 **** eating
 **** Combat
 **** inventory
-
 **** check needs- aggregate and individual
 **** receive event warnings
 - death
@@ -133,6 +134,7 @@ tailor: not modern, modern top as icon, not too compressed
 *** skin color
 *** move render/sprite.hpp into data/const/sprite.hpp or data/game/sprite.hpp
 * Pre-Beta
+** proper dynamic runtime kfpserialization so databases can be a non-set size
 ** read spreadsheet and insert metaprogramming
 ** additional metaprogramming features: crossed enum:
 list = {A, B, C}
@@ -332,6 +334,8 @@ generated layer under tiles that is indexed-matched to tile above. replaces tile
 ** Tile drops display if altitude variation is too high to prevent building contiguously
 ** Artificial Selection-- plants and animals can get 'better'
 ** get rid of all vectors, standardize overflow/imps
+** advanced graphics:
+https://github.com/DiligentGraphics/DiligentEngine
 * Performance
 ** Transcendental Function SIMD
 ** Chunked Rendering

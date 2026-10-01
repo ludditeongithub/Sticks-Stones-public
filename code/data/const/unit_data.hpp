@@ -18,6 +18,8 @@ namespace unit
 {
 		constexpr float INFANT_HEALTH_MODIFIER = 0.2;
 		constexpr float INFANT_HUNGER_MODIFIER = 0.2;
+		constexpr float ELDER_HEALTH_MODIFIER = 0.7;
+		constexpr float ELDER_HUNGER_MODIFIER = 0.58;		
 }
 
 constexpr uint16_t UNIT_CAP = 1000;

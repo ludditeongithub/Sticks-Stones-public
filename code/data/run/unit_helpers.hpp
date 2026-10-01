@@ -29,10 +29,49 @@ inline float generate_melanin(float parent1, float parent2) {
 	return std::lerp(crossed_value, random_chance->next(), 0.08);
 }
 
-inline UnitStage get_unit_stage(Time age)
+namespace unit {
+inline UnitStage get_stage(Time age)
 {
 	if (age < MATURITY_AGE) return UnitStage::Child;
 	else if (age < ELDER_AGE)
 			return UnitStage::Adult;
 	else return UnitStage::Elder;
 }
+
+inline Health get_max_health(Unit unit, Time age)
+{
+	if (age < MATURITY_AGE)
+			{
+					float p = age / MATURITY_AGE;
+					float mod = lerp(INFANT_HEALTH_MODIFIER, 1.0, p);
+					return MAX_HEALTH * mod;
+			} else if (age < ELDER_AGE)
+			{
+					return MAX_HEALTH;
+					}
+					else
+							{
+					float p = age / MATURITY_AGE;
+					float mod = lerp(ELDER_HEALTH_MODIFIER, 1.0, p);
+					return MAX_HEALTH * mod;									
+							}
+}
+inline Hunger get_max_hunger(Unit unit, Time age)
+{
+	if (age < MATURITY_AGE)
+			{
+					float p = age / MATURITY_AGE;
+					float mod = lerp(INFANT_HUNGER_MODIFIER, 1.0, p);
+					return MAX_HUNGER * mod;
+			} else if (age < ELDER_AGE)
+			{
+					return MAX_HUNGER;
+					}
+					else
+							{
+					float p = age / MATURITY_AGE;
+					float mod = lerp(ELDER_HUNGER_MODIFIER, 1.0, p);
+					return MAX_HUNGER * mod;									
+							}
+}
+};

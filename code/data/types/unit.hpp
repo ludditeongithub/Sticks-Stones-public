@@ -331,7 +331,15 @@ struct Inventory
 		weight = 0;
 	}
 
-	bool attempt_hold(Item item) {}
+	bool attempt_hold(Item item);
+
+	template <typename Archive> void save(Archive& a) const
+	{
+			a(containers);
+			a(bulk_status);
+			a(weight);
+			
+	}
 };
 
 struct Skills

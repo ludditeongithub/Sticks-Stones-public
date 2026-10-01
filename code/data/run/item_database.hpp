@@ -1,6 +1,5 @@
 #pragma once
-#include <stack>
-#include <core/packed_enum.hpp>
+#include <vector>
 #include "data/run/tile_database.hpp"
 #include <core/hash.hpp>
 #include <../extern/cereal/archives/binary.hpp>
@@ -29,8 +28,8 @@ constexpr static uint16_t ENTITY_SIZE = sizeof(Item) +
 
 size_t capacity;
     size_t size = 1; // 0 is placeholder
-    Stack<size_t> free_slots;
-    Array<bool> alives;
+    std::stack<size_t> free_slots;
+    std::vector<bool> alives;
   SearchGrid& search;
   std::vector<EntityID> no_inertia_buffer; 
   std::vector<EntityID> unassigned_buffer;
@@ -39,8 +38,8 @@ size_t capacity;
     // =========================
     // ENTITY-SPECIFIC MEMBERS
     // =========================
-    Array<Item> items;
-    Array<Coord> coords;
+    std::vector<Item> items;
+    std::vector<Coord> coords;
 
 
 
@@ -48,7 +47,7 @@ size_t capacity;
 // CONSTRUCTOR
 // =========================
 
-  Database(Arena* arena, size_t capacity
+  Database(size_t capacity
   , SearchGrid& search
   , tile::Database& tiles
 ) 
@@ -64,11 +63,12 @@ this->capacity = capacity;
 
 
  
- items = arena_make_array<Item>(arena, capacity); 
+  items.reserve(capacity);
+  items.resize(capacity);
  
- coords = arena_make_array<Coord>(arena, capacity); 
+  coords.reserve(capacity);
+  coords.resize(capacity);
  
-
 }
 
 // =========================
@@ -128,15 +128,18 @@ assert(item != Item::NONE && item != Item::MAX && "Tried to spawn item as NONE o
           
         
 
-          size_t spawn(const Item item, const bool newborn, const Coord origin
+          bool spawn(const Item item, const Coord origin, const bool newborn
 , const bool insert_search = true) {
 Coord spawn_point = tiles.get_nearest_empty_tile(origin);
-size_t result = 0;
-while (result == 0) {
+bool result = false;
 result = attempt_spawn(item, spawn_point, newborn
 , insert_search  
 );
-if (result == 0) free_unused_entity();
+if (!result) {
+free_unused_entity();
+attempt_spawn(item, spawn_point, newborn
+, insert_search  
+);
 }
 }        
     
@@ -159,7 +162,7 @@ if (result == 0) free_unused_entity();
 
   inline void free_unused_entity()
   {
-    for (size_t i = 0; i < coords.size; i++) {
+    for (size_t i = 0; i < coords.size(); i++) {
     if (tiles.tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
     }
   }
@@ -172,29 +175,16 @@ if (result == 0) free_unused_entity();
 
   // genreal serialization
 
-    template <class Archive>
-    void save(Archive &archive) const
-    {
-    archive(capacity);
-        archive(size);
-        archive(free_slots);
-        archive(alives);
-   
-
-        items.save(archive);
-        coords.save(archive);
-    }
-
-    template <class Archive>
-    void load(Archive &archive)
-    {
-        archive(capacity);
-        archive(size);
-        archive(free_slots);
-        archive(alives);
-        
-        items.load(archive);
-        coords.load(archive);
+      template <class Archive>
+    void serialize(Archive &archive) const
+  {
+         archive(tiles,
+search,
+size,
+free_slots,
+alives,
+items,
+coords);
     }
 
 

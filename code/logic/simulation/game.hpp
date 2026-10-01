@@ -3,10 +3,8 @@
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_mouse.h>
 #include <SDL2/SDL_rect.h>
-
 #include <core/memory_control.hpp>
 #include <logic/simulation/world_gen.hpp>
-
 #include <data/run/animal_database.hpp>
 #include <data/run/plant_database.hpp>
 #include <data/const/tile_data.hpp>
@@ -29,27 +27,22 @@ struct Game
   Time absolute_time;
   SDL_Rect player_bounds;      
 		
-  Arena chunk_arena;
   World world;
   SearchGrid search;
 
-  Arena tile_arena;
-  tile::Database tile_database;
-  
-Arena plant_arena;
+  Arena arena;
+
+tile::Database tile_database;  
 plant::Database plant_database;
-Arena regrowth_plant_arena;
 plant::RegrowthDatabase regrowth_plant_database;
-Arena animal_arena;
 animal::Database animal_database;
-Arena unit_arena;
 unit::Database unit_database;
 // Arena NPCUnitArena;  
 // unit::Database NPCunit::Database;
-Arena item_arena;
 item::Database item_database;
 buildable::Database buildable_database;
-Arena buildable_arena;
+
+Game(size_t world_width, size_t world_height);
 		
 void init_new_world();
 

@@ -811,6 +811,7 @@ CMakeFiles/test_exe.dir/test.cpp.o: /home/logan/gameprogramming/code/test.cpp \
   /home/logan/gameprogramming/code/data/const/plant_tables.hpp \
   /home/logan/gameprogramming/code/data/const/tags.hpp \
   /home/logan/gameprogramming/code/data/const/tile_data.hpp \
+  /home/logan/gameprogramming/code/data/const/time_data.hpp \
   /home/logan/gameprogramming/code/data/const/unit_data.hpp \
   /home/logan/gameprogramming/code/data/const/unit_tables.hpp \
   /home/logan/gameprogramming/code/data/game/screen.hpp \
@@ -1622,6 +1623,10 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 
 /usr/include/c++/16/bits/sstream.tcc:
 
+/usr/lib/libaom.so.3:
+
+/usr/include/c++/16/bits/slice_array.h:
+
 /usr/include/limits.h:
 
 /usr/include/gnu/stubs-64.h:
@@ -1909,6 +1914,8 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o:
 /usr/include/bits/types/struct___jmp_buf_tag.h:
 
 /usr/include/SDL2/SDL_render.h:
+
+/home/logan/gameprogramming/code/data/const/time_data.hpp:
 
 /usr/include/c++/16/bits/requires_hosted.h:
 
@@ -2823,7 +2830,3 @@ CMakeFiles/test_exe.dir/test.cpp.o:
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/avx10_2minmaxintrin.h:
 
 /usr/include/c++/16/bits/shared_ptr_atomic.h:
-
-/usr/lib/libaom.so.3:
-
-/usr/include/c++/16/bits/slice_array.h:

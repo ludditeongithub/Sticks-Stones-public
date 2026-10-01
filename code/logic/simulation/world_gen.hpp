@@ -284,8 +284,7 @@ humidity_and_rain_shadow_effects(int y, int x, int water, bool biomes);
 	std::vector<std::vector<int>>
 	calculate_ocean_distance(std::vector<std::vector<int>> &water_map, bool lake, bool river);
 	std::vector<Coord> generate_voronoi_sites();
-	void generate_tile_types(std::vector<float> &chances, std::vector<Coord> &voronoi_sites,
-			       std::vector<Tile> &r_tiles, Array<Alt> &raltitudes);
+	void generate_tile_types(std::vector<float> &chances, std::vector<Coord> &voronoi_sites, std::vector<Tile> &r_tiles, Array<Alt> &raltitudes);
 		std::vector<float> generate_tile_chances();
 
   //spawners

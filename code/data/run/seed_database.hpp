@@ -1,5 +1,5 @@
 #pragma once
-#include <core/containers.hpp>
+#include <vector>
 
 namespace seed {
 class Database {
@@ -10,7 +10,7 @@ public:
 // =========================
 
 constexpr static uint16_t ENTITY_SIZE = sizeof(Plant) +
-+ sizeof(bool)
++ sizeof(bool)!
   
  +  sizeof(Plant) 
  +  sizeof(Coord) 
@@ -19,7 +19,7 @@ constexpr static uint16_t ENTITY_SIZE = sizeof(Plant) +
 
 size_t capacity;
     size_t size = 1; // 0 is placeholder
-    Stack<size_t> free_slots;
+    std::stack<size_t> free_slots;
     Array<bool> alives;
   tile::Database& tiles;
 
@@ -48,14 +48,30 @@ this->capacity = capacity;
 
 
  
- plants = arena_make_array<Plant>(arena, capacity); 
+  plants = arena_make_array<Plant>(arena, capacity);
  
- coords = arena_make_array<Coord>(arena, capacity); 
+  coords = arena_make_array<Coord>(arena, capacity);
  
- ages = arena_make_array<Time>(arena, capacity); 
+  ages = arena_make_array<Time>(arena, capacity);
  
 
 }
+    // =========================
+    // SERIALIZATION
+    // =========================
+
+      template <class Archive>
+    void serialize(Archive &archive) const
+  {
+         archive(tiles,
+size,
+free_slots,
+alives,
+plants,
+coords,
+ages);
+    }
+
 
 // =========================
 // GETTERS
@@ -117,14 +133,16 @@ assert(plant != Plant::NONE && plant != Plant::MAX && "Tried to spawn plant as N
           
         
 
-          size_t spawn(const Plant plant, const bool newborn, const Coord origin
+          bool spawn(const Plant plant, const Coord origin, const bool newborn
 , const bool insert_search = true) {
 Coord spawn_point = tiles.get_nearest_empty_tile(origin);
-size_t result = 0;
-while (result == 0) {
+bool result = false;
 result = attempt_spawn(plant, spawn_point, newborn
 );
-if (result == 0) free_unused_entity();
+if (!result) {
+free_unused_entity();
+attempt_spawn(plant, spawn_point, newborn
+);
 }
 }        
     
@@ -145,45 +163,12 @@ if (result == 0) free_unused_entity();
 
   inline void free_unused_entity()
   {
-    for (size_t i = 0; i < coords.size; i++) {
+    for (size_t i = 0; i < coords.size(); i++) {
     if (tiles.tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
     }
   }
     
 
-
-    // =========================
-    // SERIALIZATION
-    // =========================
-
-  // genreal serialization
-
-    template <class Archive>
-    void save(Archive &archive) const
-    {
-    archive(capacity);
-        archive(size);
-        archive(free_slots);
-        archive(alives);
-   
-
-        plants.save(archive);
-        coords.save(archive);
-        ages.save(archive);
-    }
-
-    template <class Archive>
-    void load(Archive &archive)
-    {
-        archive(capacity);
-        archive(size);
-        archive(free_slots);
-        archive(alives);
-        
-        plants.load(archive);
-        coords.load(archive);
-        ages.load(archive);
-    }
 
 // @codegen:end database_generation
 };

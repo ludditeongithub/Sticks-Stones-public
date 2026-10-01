@@ -3,7 +3,7 @@
 #include "data/const/chunk_data.hpp"
 #include "data/const/tile_data.hpp"
 #include <data/types/entity.hpp>
-#include <core/containers.hpp>
+#include <vector>
 #include <logic/simulation/world_gen.hpp>
 #include <data/run/world.hpp>
 
@@ -50,21 +50,33 @@ size_t capacity;
 {
 this->capacity = capacity;
 
-
-
  
- tileDatas = arena_make_array<TileData>(arena, capacity); 
+  tileDatas = arena_make_array<TileData>(arena, capacity);
  
- altitudes = arena_make_array<Alt>(arena, capacity); 
+  altitudes = arena_make_array<Alt>(arena, capacity);
  
- waters = arena_make_array<Liquid>(arena, capacity); 
+  waters = arena_make_array<Liquid>(arena, capacity);
  
- tile_statuss = arena_make_array<TileStatus>(arena, capacity); 
+  tile_statuss = arena_make_array<TileStatus>(arena, capacity);
  
- entitys = arena_make_array<Entity>(arena, capacity); 
+  entitys = arena_make_array<Entity>(arena, capacity);
  
 
 }
+    // =========================
+    // SERIALIZATION
+    // =========================
+
+      template <class Archive>
+    void serialize(Archive &archive) const
+  {
+         archive(tileDatas,
+altitudes,
+waters,
+tile_statuss,
+entitys);
+    }
+
 
 // =========================
 // GETTERS
@@ -91,37 +103,6 @@ return entitys[index];
 
     
 
-
-    // =========================
-    // SERIALIZATION
-    // =========================
-
-  // genreal serialization
-
-    template <class Archive>
-    void save(Archive &archive) const
-    {
-    archive(capacity);
-   
-
-        tileDatas.save(archive);
-        altitudes.save(archive);
-        waters.save(archive);
-        tile_statuss.save(archive);
-        entitys.save(archive);
-    }
-
-    template <class Archive>
-    void load(Archive &archive)
-    {
-        archive(capacity);
-        
-        tileDatas.load(archive);
-        altitudes.load(archive);
-        waters.load(archive);
-        tile_statuss.load(archive);
-        entitys.load(archive);
-    }
 
 // @codegen:end database_generation
 	
