@@ -1,22 +1,16 @@
 #pragma once
 #include <SDL2/SDL_rect.h>
 #include <SDL2/SDL_events.h>
-#include <stdexcept>
 #include <string>
-
-#include <data/types/entity.hpp>
-#include <core/mouse.hpp>
+#include <optional>
 #include <chrono>
-#include <display/ui/components/button_functionality.hpp>
-#include "data/game/screen.hpp"
-#include "display/render/screen.hpp"
-#include "display/render/sprite.hpp"
+#include <data/types/entity.hpp>
+#include "data/types/buildable.hpp"
+#include <data/types/ui.hpp>
 #include "text.hpp"
 #include "display/ui/components/text.hpp"
-#include "data/types/buildable.hpp"
-#include "data/types/plant.hpp"
-#include <data/types/ui.hpp>
 #include <display/ui/sound/sound.hpp>
+#include <display/render/sprite.hpp>
 
 constexpr size_t BUTTON_DECORATION_MAX = static_cast<size_t>(CustomButtonDecoration::MAX) + static_cast<size_t>(Buildable::MAX) + static_cast<size_t>(Item::MAX);
 
@@ -31,100 +25,43 @@ inline constexpr BitsetTable<ButtonSprite> REQUIRES_DECORATION = []
 
 inline SCoord get_button_sprite_dimensions(ButtonSprite sprite)
 {
-  return {sprite::buttons[static_cast<int>(sprite)].w, sprite::buttons[static_cast<int>(sprite)].h / 3};
+  return {sprite::buttons[sprite].w, sprite::buttons[sprite].h / 3};
 }
+
+static_assert(true, "REACHED BUTTONUI");
 
 struct ButtonUI
 {
-public:
-	SDL_Rect* viewport;
-    ButtonFunctionality* function;
-	ButtonSprite sprite;
+public:	
+    ButtonFunctionality function;
+    ButtonSprite sprite; 
+    SDL_Rect* viewport;
 	std::optional<ButtonDecoration> decoration;
 	SCoord pos;
 	Sound* pressed_sound;
 	ButtonState state = ButtonState::Unpressed;
 
-	ButtonUI(ButtonFunctionality* function, ButtonSprite sprite, SCoord pos, SDL_Rect* viewport, std::optional<ButtonDecoration> decoration = std::nullopt_t, Sound *pressed_sound = nullptr)
-		:  function(function), sprite(sprite), viewport(viewport), decoration(decoration), pos(pos), pressed_sound(pressed_sound)
-	{
-	}
+ButtonUI(ButtonFunctionality function, ButtonSprite sprite, SCoord pos, SDL_Rect* viewport = g_main_screen_viewport, std::optional<ButtonDecoration> decoration = std::nullopt, Sound *pressed_sound = nullptr);
 		
-	void render()
-	{
-		SDL_Rect rect;
-	    rect = sprite::get_button(sprite, state);
-		
-		sprite_sheet_texture.render(pos.x, pos.y, &rect, viewport);
-		//TODO: decoration should appear lower, if button is pressed!
-		if (decoration.has_value()) {
-			SDL_Rect dec_rect = sprite::get_decoration(decoration);
-			//TODO: the dec should lower by one pixel if the state is PRESSED.
-		  sprite_sheet_texture.render(pos.x, pos.y, &dec_rect, viewport);
-		}		
-	}
+	void render();
 
-	void handle(SDL_Event *e)
-	{
-		if( e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP )
-	{
-		//Get mouse position
-		int x, y;
-		SDL_GetMouseState( &x, &y );
-
-		SCoord dimensions = get_button_sprite_dimensions(sprite);
-		bool inside = mouse_inside(viewport, {x,y}, pos, dimensions);
-
-		if( !inside )
-		{
-			state = ButtonState::Unpressed;
-		}
-		else
-		{
-			//Set mouse over sprite
-			switch( e->type )
-			{
-				case SDL_MOUSEMOTION:
-					state = ButtonState::Hover;
-				break;
-
-			case SDL_MOUSEBUTTONDOWN:
-			case SDL_MOUSEBUTTONUP:
-				state = ButtonState::Pressed;
-				function->trigger();
-				if (pressed_sound != NULL) play_sound(*pressed_sound);
-				break;
-			}
-		}
-	}
-	}
+    std::optional<ButtonFunctionality> handle(SDL_Event *e);
 };
 
 struct TextButtonUI : public ButtonUI
 {
     Text text;	
 
-		TextButtonUI(Text text, ButtonFunctionality* function, ButtonSprite sprite, SCoord pos, std::optional<ButtonDecoration> decoration = std::optional<ButtonDecoration>(std::nullopt_t), Sound* pressed_sound = nullptr)
-        : ButtonUI(function, sprite, pos, decoration, pressed_sound),
-          text(text)
-  {    
-    }
+	TextButtonUI(Text text, ButtonFunctionality function, ButtonSprite sprite, SCoord pos, SDL_Rect& viewport, std::optional<ButtonDecoration> decoration = std::nullopt, Sound* pressed_sound = nullptr);
+    inline void render();
 
-    inline void render()
-    {
-	  ButtonUI::render();
-      SDL_RenderSetViewport(renderer, viewport);
-	fc_draw_color(text.font, renderer, pos.x, pos.y, text.color, text.text);
-    }
-
-    void handle(SDL_Event *e) { ButtonUI::handle(e); }
-    
+    void handle(SDL_Event *e);    
 };
 
 // TODO: add functionality to right click, and view how many there are, or be linked to that item's
 // page even
 
-struct ItemButtonUI : ButtonUI
+struct ItemButtonUI : public ButtonUI
 {
 	Item item;
 };
@@ -134,59 +71,15 @@ struct CheckboxUI : public ButtonUI
 {
     bool checked = false;
 
-    CheckboxUI(ButtonFunctionality* function, ButtonSprite sprite, const SCoord pos,
-	       Sound *sound = nullptr)
-	: function(
-	      function, sprite(sprite), pos(pos),
-	      sound(sound) {}
+    CheckboxUI(ButtonFunctionality function, ButtonSprite sprite, const SCoord pos, SDL_Rect* viewport,
+	       Sound *sound = nullptr);
 
-    void render(SDL_Rect& viewport){
-      SDL_Rect rect;
-        if (checked)
-        {
-				rect = get_button_sprite(sprite, ButtonState::Pressed);
-        }
-        else
-		{
-			rect = get_button_sprite(sprite, state);	
-	}
-        sprite_sheet_texture.render(pos.x, pos.y, &rect, viewport);
-    }
+    void render(SDL_Rect& viewport);
 
-    bool handle(SDL_Event* e)
-    {
-        if (e->type != SDL_MOUSEBUTTONUP &&
-            e->type != SDL_MOUSEMOTION)
-        {
-            return false;
-        }
-
-        int mx, my;
-        SDL_GetMouseState(&mx, &my);
-
-	if (mouse_inside({mx, my}, pos, dimensions) && !checked)
-			{
-				state = Button::Hovered;	
-			}
-
-        if (hovered &&
-            e->type == SDL_MOUSEBUTTONUP &&
-            e->button.button == SDL_BUTTON_LEFT)
-        {
-            checked = !checked;
-
-            // if (click_sound)
-            // {
-            //     play_sound(click_sound);
-            // }		
-            return true;
-        }
-
-        return false;
-    }
+    std::optional<ButtonFunctionality> handle(SDL_Event* e);
 };
 
-class SaveButtonUI
+struct SaveButtonUI
 {
 private:
 public:
@@ -198,43 +91,24 @@ public:
     constexpr static int MAX_SAVE_NAME_SIZE = 24;
     inline static int SAVE_BUTTON_SIZE = 8;
 
-    SaveButtonUI() {}
+    SaveButtonUI();
 
-    void render()
-    {
-			
-    }
+    void render();
 
-    void change_name(std::string new_name)
-    {
-        if (new_name.length() > MAX_SAVE_NAME_SIZE)
-        {
-            throw std::invalid_argument(
-                "Name too long! Keep it 24 or less characters."
-            );
-        }
-    }
+    void change_name(std::string new_name);
 
 	
-std::string get_last_saved_date()
-{
-    std::time_t time = Clock::to_time_t(last_saved);
-    std::tm local_time = *std::localtime(&time);
+std::string get_last_saved_date();
 
-    std::ostringstream oss;
-    oss << std::put_time(&local_time, "%m/%d/%Y %H:%M");
-
-    return oss.str();
-}
-
-		void save() { last_saved = Clock::now(); }			
+		void save();			
 };
 
-class MainButtonUI : public ButtonUI {
+struct MainButtonUI : public ButtonUI {
 public:
-	MainButtonUI(ButtonFunctionality function, SCoord left_corner) : ButtonUI(&function, ButtonSprite::Main, left_corner, g_main_screen_viewport) {}
+	MainButtonUI(ButtonFunctionality function, SCoord left_corner);
 };
 
+/*
   class KnowledgeButton : public ButtonUI
 {
 private:
@@ -245,5 +119,4 @@ public:
   };
   
 };
-
-
+*/

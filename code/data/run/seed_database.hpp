@@ -10,7 +10,7 @@ public:
 // =========================
 
 constexpr static uint16_t ENTITY_SIZE = sizeof(Plant) +
-+ sizeof(bool)!
++ sizeof(bool)
   
  +  sizeof(Plant) 
  +  sizeof(Coord) 
@@ -21,7 +21,7 @@ size_t capacity;
     size_t size = 1; // 0 is placeholder
     std::stack<size_t> free_slots;
     Array<bool> alives;
-  tile::Database& tiles;
+  tile::Database* tiles;
 
     // =========================
     // ENTITY-SPECIFIC MEMBERS
@@ -33,20 +33,16 @@ size_t capacity;
 
 
 // =========================
-// CONSTRUCTOR
+// INIT
 // =========================
 
-  Database(Arena* arena, size_t capacity
+  void init(Arena* arena, size_t capacity
   , tile::Database& tiles
 ) 
-    : tiles(tiles)
-  
 {
 this->capacity = capacity;
-
   this->size = 0;
-
-
+  this->tiles = &tiles;
  
   plants = arena_make_array<Plant>(arena, capacity);
  
@@ -62,16 +58,18 @@ this->capacity = capacity;
 
       template <class Archive>
     void serialize(Archive &archive) const
-  {
-         archive(tiles,
-size,
-free_slots,
-alives,
-plants,
-coords,
-ages);
-    }
+{
+        archive(tiles);
+        archive(size);
+        archive(free_slots);
+        archive(alives);
 
+           plants.serialize(archive);
+           coords.serialize(archive);
+           ages.serialize(archive);
+         
+    }
+         
 
 // =========================
 // GETTERS
@@ -89,10 +87,14 @@ return ages[index];
 
 
   
+// =========================
+// GENERATION
+// =========================
+
+
   // =========================
   // SPAWN
   // =========================
-
 
 bool attempt_spawn(const Plant plant, const Coord coord, const bool newborn  )
 {
@@ -135,7 +137,7 @@ assert(plant != Plant::NONE && plant != Plant::MAX && "Tried to spawn plant as N
 
           bool spawn(const Plant plant, const Coord origin, const bool newborn
 , const bool insert_search = true) {
-Coord spawn_point = tiles.get_nearest_empty_tile(origin);
+Coord spawn_point = tiles->get_nearest_empty_tile(origin);
 bool result = false;
 result = attempt_spawn(plant, spawn_point, newborn
 );
@@ -144,9 +146,11 @@ free_unused_entity();
 attempt_spawn(plant, spawn_point, newborn
 );
 }
+return result;
 }        
     
 
+  
   // =========================
   // REMOVE
   // =========================
@@ -163,8 +167,8 @@ attempt_spawn(plant, spawn_point, newborn
 
   inline void free_unused_entity()
   {
-    for (size_t i = 0; i < coords.size(); i++) {
-    if (tiles.tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
+    for (size_t i = 0; i < coords.capacity; i++) {
+    if (tiles->tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
     }
   }
     

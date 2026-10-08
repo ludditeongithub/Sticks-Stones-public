@@ -9,7 +9,6 @@ int main()
 		sprite::load_sprites();
 		g_window_system.init_window();
 
-		*g_main_menu = MainMenu();
-		
+		*g_main_menu = MainMenu();			
 		g_window_system.close_window();	
 }

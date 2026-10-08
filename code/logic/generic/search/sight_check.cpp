@@ -35,19 +35,19 @@ inline int get_new_diamond_edge(std::vector<Coord>& edge_buffer, Coord c, int ra
 			uint32_t x, y;
 			switch (direction) {
 			case Direction::East:
-				x = c.x + radius - std::abs(i - l);
+				x = c.x + radius - unsigned_abs_diff(i , l);
 				y = c.y + i;
 				break;
 			case Direction::West:
-				x = c.x - radius + std::abs(i - l);
+				x = c.x - radius + unsigned_abs_diff(i , l);
 				y = c.y + i;
 				break;
 			case Direction::South:
-				y = c.y + radius - std::abs(i - l);
+				y = c.y + radius - unsigned_abs_diff(i , l);
 				x = c.x + i;
 				break;
 			case Direction::North:
-				y = c.y - radius + std::abs(i - l);
+				y = c.y - radius + unsigned_abs_diff(i , l);
 				x = c.x + i;
 				break;
 			default:

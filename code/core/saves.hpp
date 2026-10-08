@@ -16,33 +16,31 @@ public:
     last_saved = std::chrono::system_clock::to_time_t(now);
   };
 
-  void save(Game& game)
+  void serialize(Game& game)
   {    
     std::ofstream ofs(name, std::ios::binary);
     cereal::BinaryOutputArchive archive(ofs);
     // NOTE: the order of this is VERY important!
-    game.tile_database.save(archive);
-    game.plant_database.save(archive);
-    game.animal_database.save(archive);
-    game.unit_database.save(archive);
-    game.item_database.save(archive);
-    game.buildable_database.save(archive);
+    game.tile_database.serialize(archive);
+    game.plant_database.serialize(archive);
+    game.animal_database.serialize(archive);
+    game.unit_database.serialize(archive);
+    game.item_database.serialize(archive);
+    game.buildable_database.serialize(archive);
   }
 
-  void load(Game& game)
+  void load_and_init_memory(Game& game)
   {    
-    std::ifstream ifs(name, std::ios::binary);
-    cereal::BinaryInputArchive archive(ifs);
-    // NOTE: the order of this is VERY important!
-    game.tile_database.load(archive);
-    game.plant_database.load(archive);
-    game.animal_database.load(archive);
-    game.unit_database.load(archive);
-    game.item_database.load(archive);
-    game.buildable_database.load(archive);
+    std::ofstream ofs(name, std::ios::binary);
+    cereal::BinaryOutputArchive archive(ofs);
+    size_t arena_capacity;
+    archive(arena_capacity);
+    game.arena = Arena(arena_capacity);
+    game.init_databases();
+    serialize(game);
   }
 
-  bool confirm_save()
+  bool confirm_serialize()
   {
     
   }

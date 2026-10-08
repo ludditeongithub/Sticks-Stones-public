@@ -3,23 +3,23 @@
 #include <vector>
 #include <SDL_FontCache.h>
 #include <SDL2/SDL_render.h>
-#include "button.hpp"
+#include <display/ui/components/button.hpp>
 #include <display/render/screen.hpp>
 #include "text.hpp"
 
 SDL_Rect pop_up_box_sprite = {};
+struct ButtonUI;
 
 struct PopUpBox {
   std::string message;
   std::vector<ButtonUI> options;
   Text text;
-  uint16_t horizontal_padding;
-  Coord top_left_corner;
-
-  void render()
+  SDL_Rect box;
+  
+  void render(SDL_Rect* viewport)
   {
-	  sprite_sheet_texture.render(top_left_corner.x, top_left_corner.y, &pop_up_box_sprite, viewport);
+	  sprite_sheet_texture.render(box.x, box.y, &pop_up_box_sprite, viewport);
           SDL_RenderSetViewport(renderer, viewport);
-          fc_draw_color(text.font, renderer, top_left_corner.x + horizontal_padding, top_left_corner.y, text.color, text.text);
+          FC_DrawBoxEffect(text.font, renderer, box, text.effect, text.text);
   }
 };

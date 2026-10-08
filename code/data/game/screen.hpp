@@ -4,6 +4,10 @@
 
 extern SDL_Window *window;
 extern SDL_Renderer *renderer;
+
+extern SDL_Rect main_screen_viewport;
+extern SDL_Rect *g_main_screen_viewport;
+
 // TODO: check if should be in WindowSystem
 
 extern std::array<Coord, 6> screen_dimensions;
@@ -20,5 +24,4 @@ constexpr int SCREEN_HEIGHT = 480;
 constexpr uint32_t TILE_LENGTH = 16;
 constexpr uint32_t SCREEN_TILE_HEIGHT = SCREEN_HEIGHT / TILE_LENGTH;
 constexpr uint32_t SCREEN_TILE_WIDTH = SCREEN_WIDTH / TILE_LENGTH;
-
 

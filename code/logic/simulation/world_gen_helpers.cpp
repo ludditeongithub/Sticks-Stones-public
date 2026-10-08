@@ -1,4 +1,9 @@
-#include "FastNoiseLite.h"
+#include <FastNoiseLite.h>
+#include <data/types/tile.hpp>
+#include <vector>
+#include <core/coord.hpp>
+#include "world_gen.hpp"
+
 
 inline Tile get_tile_type(int biome, float chance)
 {

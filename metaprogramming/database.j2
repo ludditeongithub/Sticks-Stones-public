@@ -5,7 +5,7 @@ public:
 
 constexpr static uint16_t ENTITY_SIZE = sizeof({{ main_enum }}) +
 {% if not 'immortal' in traits %}
-+ sizeof(bool)!
++ sizeof(bool)
 {% endif %}  
 {% for r in runtime_arrays %}
  +  sizeof({{ r.type }}) 
@@ -18,19 +18,16 @@ size_t capacity;
     std::stack<size_t> free_slots;
     Array<bool> alives;
   {% endif %}
-{% if 'movable' in traits %}
-  World& world;
-{% endif %}
 {% if ('movable' in traits) or ('searchable' in traits) %}
   SearchGrid& search;
   Array<EntityID> no_inertia_buffer; 
   Array<EntityID> unassigned_buffer;
 {% endif %}
 {% if 'positional' in traits %}
-  tile::Database& tiles;
+  tile::Database* tiles;
 {% endif %}
 {% if 'variant_items' in database_references %}
-  item::VariantDatabase& variant_items;
+  item::VariantDatabase* variant_items;
 {% endif %}
 
     // =========================
@@ -51,13 +48,10 @@ size_t capacity;
 
 
 // =========================
-// CONSTRUCTOR
+// INIT
 // =========================
 
-  Database(Arena* arena, size_t capacity
-  {% if 'movable' in traits %}
-    , World& world
-  {% endif %}
+  void init(Arena* arena, size_t capacity
 {% if 'searchable' in traits %}
   , SearchGrid& search
 {% endif %}
@@ -68,12 +62,6 @@ size_t capacity;
   , item::VariantDatabase& variant_items
 {% endif %}
 ) 
-{% if initializers %}
-    : {{ initializers }}
-  {% endif %}  
-{% if entity_name == 'animal' %}
-  ,fertilization_handler(EggFertilizationHandler(capacity / 20))  
-{% endif %}
 {
 this->capacity = capacity;
 {% if 'movable' in traits or 'searchable' in traits %}
@@ -82,6 +70,15 @@ this->capacity = capacity;
 {% endif %}
 {% if not 'immortal' in traits %}
   this->size = 0;
+{% endif %}
+{% if 'positional' in traits %}
+  this->tiles = &tiles;
+{% endif %}
+{% if 'variant_items' in database_references %}
+  this->variant_items = &variant_items;
+{% endif %}
+{% if entity_name == 'animal' %}
+  fertilization_handler = EggFertilizationHandler(capacity / 20);
 {% endif %}
 {# {% for s in structs %} #}
 {#   {{ s.name }}s = arena_make_array<{{ PascalCase(s.name) }}>(arena, capacity); #}
@@ -97,10 +94,25 @@ this->capacity = capacity;
 
       template <class Archive>
     void serialize(Archive &archive) const
-  {
-         archive({{ serialization_list }});
-    }
+{
+    {% if "positional" in traits %}
+        archive(tiles);
+    {% endif %}
+    {% if "searchable" in traits %}
+        archive(search);
+    {% endif %}
+    {% if not "immortal" in traits %}
+        archive(size);
+        archive(free_slots);
+        archive(alives);
+     {% endif %}
 
+         {% for r in runtime_arrays %}
+           {{ r.name }}s.serialize(archive);
+         {% endfor %}
+         
+    }
+         
 
 // =========================
 // GETTERS
@@ -122,9 +134,9 @@ return {{ r.name }}s[index];
 
 {% if not 'immortal' in traits %}
   
-  // =========================
-  // SPAWN
-  // =========================
+// =========================
+// GENERATION
+// =========================
 
 {% if 'generated' in traits %}
   void add_{{ entity_name }}s(WorldSpawner::{{ Entity_name }}SpawnBuffer& spawn_buffer)
@@ -137,6 +149,10 @@ return {{ r.name }}s[index];
 	    }
 }
 {% endif %}
+
+  // =========================
+  // SPAWN
+  // =========================
 
 bool attempt_spawn(const {{ main_enum }} {{ entity_name }}, const Coord coord, const bool newborn {% if 'variant' in traits %} , const Variant variant {% endif %} {% if 'skin_color' in traits %}
 , float parent1, float parent2
@@ -195,7 +211,7 @@ assert({{ entity_name }} != {{ PascalCase(entity_name) }}::NONE && {{ entity_nam
   , const Variant variant
 {% endif %}
 , const bool insert_search = true) {
-Coord spawn_point = tiles.get_nearest_empty_tile(origin);
+Coord spawn_point = tiles->get_nearest_empty_tile(origin);
 bool result = false;
 result = attempt_spawn({{ entity_name }}, spawn_point, newborn
 {% if 'variant' in traits %}
@@ -221,10 +237,12 @@ attempt_spawn({{ entity_name }}, spawn_point, newborn
 , insert_search  
 {% endif %});
 }
+return result;
 }        
 {% endif %}    
 
 {% if not 'immortal' in traits %}
+  
   // =========================
   // REMOVE
   // =========================
@@ -247,8 +265,8 @@ attempt_spawn({{ entity_name }}, spawn_point, newborn
   inline void free_unused_entity()
   {
   {% if 'positional' in traits %}
-    for (size_t i = 0; i < coords.size(); i++) {
-    if (tiles.tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
+    for (size_t i = 0; i < coords.capacity; i++) {
+    if (tiles->tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
     }
   {% endif %}
   }
@@ -261,15 +279,13 @@ attempt_spawn({{ entity_name }}, spawn_point, newborn
   
     inline bool attempt_move_entity(const EntityID index)
   {
-  #if !SHIPPING_BUILD
   assert(index <= size);
-  #endif
 
         Coord& pos = coord(index);
         Coord new_pos = get_pos(frame_data(index).get<Direction>(), pos);
         size_t ti = g_world->get_tile_index_from_coord(new_pos);
 
-    if (tiles.tile_statuss[ti].get<OccupiedStatus>() == OccupiedStatus::Vacant)
+    if (tiles->tile_statuss[ti].get<OccupiedStatus>() == OccupiedStatus::Vacant)
         {
             pos = new_pos;
             return true;
@@ -285,12 +301,9 @@ attempt_spawn({{ entity_name }}, spawn_point, newborn
 // TRANSFER
 // =========================
 
-
 inline bool transfer(size_t i, {{ entity_name }}::Database &old_db)
   {
-  #if !SHIPPING_BUILD
   assert(i < size);
-  #endif
   
   if (size >= capacity) return false;
   int index;  
@@ -312,4 +325,5 @@ inline bool transfer(size_t i, {{ entity_name }}::Database &old_db)
   old_db.alives[index] = false;
   return true;
   }
+  
 {% endif %}

@@ -1,4 +1,5 @@
 #pragma once
+#include "data/types/geography.hpp"
 #include <data/types/tile.hpp>
 #include <core/tables.hpp>
 
@@ -15,3 +16,15 @@ inline constexpr LookupTable<Tile ,float> TILE_FRAME_MULTIPLIER = [] {
 		
 		return lt;
 }();
+
+inline constexpr LookupTable<Tile,Liquid> STARTING_WATER = [] {
+  LookupTable<Tile,Liquid> lt{};
+  using enum Tile;
+  lt[DeepWater] = 3000;
+  lt[ShallowSaltWater] = 300;
+  lt[RiverSource] = 800;
+  lt[FlowingWater] = 700;
+  lt[ShallowWater] = 300;
+  
+  return lt;
+ }();

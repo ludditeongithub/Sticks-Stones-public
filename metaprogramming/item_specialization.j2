@@ -20,27 +20,22 @@ return lt;
 {% endfor %}
 
 struct {{ Specialization }}Database {
-Database database;
+Database& database;
+size_t size = 0;
+std::stack<size_t> free_slots;
+Array<size_t> indices;
 {% for f in fields %}
-  Array<{{f.type}}> {{f.name}};
+  Array<{{f.type}}> {{f.name}}s;
 {% endfor %}
 
 // =========================
-// CONSTRUCTOR
+// INIT
 // =========================
 
-{{ Specialization }}Database(Arena *arena, size_t capacity
-  , World& world
-  , SearchGrid& search
-  , tile::Database& tiles
-) :
-  world(world),
-  tiles(tiles),
-search(search)
+void init(Arena* arena, size_t capacity)
 {
-database = Database(arena, capacity, world, search, tiles);
 {% for f in fields %}
-  {{ f.name }} = arena_make_array<{{  f.type }}>(capacity);
+  {{ f.name }}s = arena_make_array<{{  f.type }}>(arena, capacity);
 {% endfor %}
 }
 
@@ -58,17 +53,20 @@ return {{ f.name }}s[index];
 // SPAWN
 // =========================
 
-bool attempt_spawn({{ Specialization }} {{ specialization }}, bool newborn, Coord coord, Variant variant {% for f in fields %}
+void spawn_{{ specialization }}_component({{ Specialization }} {{ specialization }}, {% for f in fields %}
 , {{ f.type }} {{ f.name}}
 {% endfor %}
 )
 {
 Item item = item_to_{{ specialization }}({{ specialization }});
-if (database.attempt_spawn(item, newborn, coord, variant, true)) {
+size_t i;
+if (free_slots.empty()) {
+//TODO: emergency storage
+i = size++;
+} else i = free_slots.pop();
 {% for f in fields %}
   {{ f.name }}(i) = {{ f.name }};
 {% endfor %}
-} else return false;
 }
 
 // =========================
@@ -76,6 +74,7 @@ if (database.attempt_spawn(item, newborn, coord, variant, true)) {
 // =========================
 
 inline bool remove(size_t i) {
+free_slots.push(i);
 database.remove(i);
 }
 
@@ -84,31 +83,25 @@ database.remove(i);
 // =========================
 
     template <class Archive>
-    void save(Archive &archive) const
+    void serialize(Archive &archive) const
     {
-      database.save(archive);
+      archive(size);
+      archive(free_slots);
+      archive(indices);
       {% for f in fields %}
-        {{ f.name }}.save(archive);
+        archive({{ f.name }}s);
       {% endfor %}     
     }
 
-    template <class Archive>
-    void load(Archive &archive)
-      {
-      database.load(archive);      
-      {% for f in fields %}
-        {{ f.name }}.load(archive);
-      {% endfor %}     
-    }
 
 // =========================
 // TRANSFER
 // =========================
 
-inline bool transfer_{{ Specialization }}(size_t i, {{ Specialization }}Database &old_db)
+inline bool transfer(size_t i, {{ Specialization }}Database &old_db)
 {
   return database.transfer_item(i, old_db);
-  }
+}
 
 // =========================
 // INVENTORY MANAGEMENT

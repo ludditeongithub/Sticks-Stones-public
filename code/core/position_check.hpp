@@ -1,18 +1,23 @@
+#include "core/math.hpp"
+#include "core/random.hpp"
 #include <cmath>
 #include <vector>
 #include <cstdint>
 #include <core/coord.hpp>
 #include <queue>
+#include <cstdint>
+#include <unordered_set>
+
+
+// TODO: polish this so these functions are pure functions or member functions and useful in actual contexts
 
 float max_alt_change = 2.0;
-
-std::vector<SCoord> directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
 template <typename T>
 bool is_in_path(const T &map, Coord start, Coord end, const uint32_t obstacle)
 {
-	uint32_t dx = abs(end.x - start.x);
-	uint32_t dy = abs(end.y - start.y);
+	uint32_t dx = unsigned_abs_diff(end.x, start.x);
+	uint32_t dy = unsigned_abs_diff(end.y, start.y);
 	uint32_t sx = start.x < end.x ? 1 : -1;
 	uint32_t sy = start.y < end.y ? 1 : -1;
 	uint32_t err = dx - dy;
@@ -22,15 +27,14 @@ bool is_in_path(const T &map, Coord start, Coord end, const uint32_t obstacle)
 
 	while (true)
 	{
-		// Check if the current tile matches the condition (e.g., is blocked)
 		if (map[y][x] == obstacle)
 		{
-			return true; // Blocked tile found in the path
+			return true;
 		}
 
 		if (x == end.x && y == end.y)
 		{
-			break; // Reached the end tile
+			break; 
 		}
 
 		uint32_t e2 = 2 * err;
@@ -45,48 +49,9 @@ bool is_in_path(const T &map, Coord start, Coord end, const uint32_t obstacle)
 			y += sy;
 		}
 	}
-
-	return false; // No blocked tiles in the path
+	return false; 
 }
 
-bool coords_in_path(Coord start, Coord end, Coord between)
-{
-	uint32_t dx = std::abs(end.x - start.x);
-	uint32_t dy = std::abs(end.y - start.y);
-	uint32_t sx = start.x < end.x ? 1 : -1;
-	uint32_t sy = start.y < end.y ? 1 : -1;
-	uint32_t err = dx - dy;
-
-	uint32_t x = start.x;
-	uint32_t y = start.y;
-
-	while (true)
-	{
-		if (y == between.y && x == between.x)
-		{
-			return true; // Blocked tile found in the path
-		}
-
-		if (x == end.x && y == end.y)
-		{
-			break; // Reached the end tile
-		}
-
-		uint32_t e2 = 2 * err;
-		if (e2 > -dy)
-		{
-			err -= dy;
-			x += sx;
-		}
-		if (e2 < dx)
-		{
-			err += dx;
-			y += sy;
-		}
-	}
-
-	return false; // No blocked tiles in the path
-}
 
 /* HELPER FUNCTIONS */
 bool adj_check(const std::vector<std::vector<uint32_t>>& map, uint32_t y, uint32_t x, uint32_t check, uint32_t range)
@@ -104,7 +69,7 @@ bool adj_check(const std::vector<std::vector<uint32_t>>& map, uint32_t y, uint32
 			uint32_t nx = x + c;
 			uint32_t ny = y + r;
 
-			if (abs(r) + abs(c) <= range && nx >= 0 && nx < cols && ny >= 0 &&
+			if (r + c <= range && nx >= 0 && nx < cols && ny >= 0 &&
 			    ny < rows)
 			{
 				if (map[ny][nx] == check)
@@ -134,7 +99,7 @@ bool adj_check(L &reference_map, M &map, uint32_t y, uint32_t x, T check, uint32
 				uint32_t index = reference_map.at({ny, nx});
 				auto item = map[index];
 
-				if (abs(r) + abs(c) <= range && nx >= 0)
+				if (r + c <= range && nx >= 0)
 				{
 					if (item == check)
 					{
@@ -159,27 +124,12 @@ bool adj_check_object(uint32_t y_index, uint32_t x_index, bool y_animal, bool x_
 	else
 		sc = current_coords[y_index];
 	
-	if ((abs(fc.y - sc.y) == 1 || abs(fc.y - sc.y) == 0) &&
-	    (abs(fc.x - sc.x) == 0 || abs(fc.x - sc.x) == 1))
+	if ((unsigned_abs_diff((uint32_t)fc.y , sc.y) == 1 || unsigned_abs_diff((uint32_t)fc.y , sc.y) == 0) &&
+	    (unsigned_abs_diff((uint32_t)fc.x , sc.x) == 0 || unsigned_abs_diff((uint32_t)fc.x , sc.x) == 1))
 		return true;
 	return false;
 }
 
-// TODO: check to see if this makes sense returns nullptr if not adjacent
-std::optional<Direction> adj_check_tile(Coord subject, Coord target)
-{
-	if (manhattan_dist(subject, target) > 1)
-		return std::nullopt;
-	if (subject.y - target.y == 1)
-		return std::make_optional<Direction>(Direction::East);
-	if (subject.y - target.y == -1)
-		return std::make_optional<Direction>(Direction::West);
-	if (subject.x - target.x == 1)
-		return std::make_optional<Direction>(Direction::North);
-	if (subject.x - target.x == -1)
-		return std::make_optional<Direction>(Direction::South);
-	return std::nullopt;
-}
 
 template <typename L, typename M, typename Container>
 bool adj_check_list(L &reference_map, M &map, uint32_t y, uint32_t x, const Container &check, uint32_t range)
@@ -198,7 +148,7 @@ bool adj_check_list(L &reference_map, M &map, uint32_t y, uint32_t x, const Cont
 				uint32_t index = reference_map.at({ny, nx});
 				auto item = map[index];
 
-				if (abs(r) + abs(c) <= range && nx >= 0)
+				if (r + c <= range && nx >= 0)
 				{
 					for (const auto &check_item : check)
 					{
@@ -232,7 +182,7 @@ uint32_t adj_check_list_count(L &reference_map, M &map, uint32_t y, uint32_t x, 
 				uint32_t index = reference_map.at({ny, nx});
 				auto item = map[index];
 
-				if (abs(r) + abs(c) <= range && nx >= 0)
+				if (r + c <= range && nx >= 0)
 				{
 					for (const auto &check_item : check)
 					{
@@ -260,18 +210,17 @@ Coord adj_get(std::vector<std::vector<uint32_t>> &map, uint32_t y, uint32_t x, u
 		for (uint32_t c = -range; c <= range; c++)
 		{
 			if (r == 0 && c == 0)
-				continue; // Skip the center tile
+				continue; 
 
 			uint32_t nx = x + c;
 			uint32_t ny = y + r;
 
-			// Ensure we're checking only directly adjacent tiles within the range
-			if (abs(r) + abs(c) <= range && nx >= 0 && nx < rows && ny >= 0 &&
+
+			if (r + c <= range && nx >= 0 && nx < rows && ny >= 0 &&
 			    ny < cols)
 			{
 				if (map[ny][nx] == check)
 				{
-					// cout << adj.y << "," << adj.x << ";";
 					adj = {ny, nx};
 					return adj;
 				}
@@ -284,7 +233,7 @@ Coord adj_get(std::vector<std::vector<uint32_t>> &map, uint32_t y, uint32_t x, u
 uint32_t adj_range(const std::vector<std::vector<uint32_t>> &map, uint32_t y, uint32_t x, uint32_t check)
 {
 	uint32_t rows = map.size(), cols = map[0].size();
-	std::vector<Coord> directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+	std::vector<SCoord> directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 	std::queue<Coord> q;
 	std::vector<std::vector<bool>> visited(rows, std::vector<bool>(cols, false));
 	q.push({y, x});
@@ -301,7 +250,7 @@ uint32_t adj_range(const std::vector<std::vector<uint32_t>> &map, uint32_t y, ui
 			{
 				visited[ny][nx] = true;
 				if (map[ny][nx] == check)
-					return abs(ny - y) + abs(nx - x);
+					return unsigned_abs_diff(ny , y) + unsigned_abs_diff(nx , x);
 				q.push({ny, nx});
 			}
 		}
@@ -310,7 +259,7 @@ uint32_t adj_range(const std::vector<std::vector<uint32_t>> &map, uint32_t y, ui
 }
 
 // returns all adjacent tiles of type, and distance
-std::vector<std::tuple<uint32_t, uint32_t, uint32_t>> adj_get_all(vector<vector<uint32_t>> &map, uint32_t y, uint32_t x, uint32_t check,
+std::vector<std::tuple<uint32_t, uint32_t, uint32_t>> adj_get_all(std::vector<std::vector<uint32_t>> &map, uint32_t y, uint32_t x, uint32_t check,
 						 uint32_t range)
 {
 	uint32_t rows = map.size();
@@ -322,18 +271,16 @@ std::vector<std::tuple<uint32_t, uint32_t, uint32_t>> adj_get_all(vector<vector<
 		for (uint32_t c = -range; c <= range; c++)
 		{
 			if (r == 0 && c == 0)
-				continue; // Skip the center tile
+				continue; 
 
 			uint32_t nx = x + c;
 			uint32_t ny = y + r;
 
-			// Ensure we're checking only directly adjacent tiles within the range
-			if (abs(r) + abs(c) <= range && nx >= 0 && nx < rows && ny >= 0 &&
+			if (r + c <= range && nx >= 0 && nx < rows && ny >= 0 &&
 			    ny < cols)
 			{
 				if (map[ny][nx] == check)
 				{
-					// cout << adj.y << "," << adj.x << ";";
 					tiles.push_back({ny, nx, chebyshev(y, x, ny, nx)});
 				}
 			}
@@ -352,14 +299,12 @@ bool diag_adj_check(std::vector<std::vector<uint32_t>> &map, uint32_t y, uint32_
 	{
 		for (uint32_t c = -range; c <= range; c++)
 		{
-			if (r == 0 && c == 0)
-				continue; // Skip the center tile
+			if (r == 0 && c == 0) continue; 
 
 			uint32_t nx = x + r;
 			uint32_t ny = y + c;
 
-			// Ensuring only diagonal or directly adjacent tiles are checked
-			if (fmax(abs(r), abs(c)) <= range && nx >= 0 && nx < rows && ny >= 0 &&
+			if (fmax(r, c) <= range && nx >= 0 && nx < rows && ny >= 0 &&
 			    ny < cols)
 			{
 				if (map[ny][nx] == check)
@@ -511,86 +456,6 @@ template <typename T> void adjust_adj(T &map, uint32_t y, uint32_t x, uint32_t a
 	map[x + dx][y + dy] = adjustment;
 }
 
-Coord get_adjacent_tile(uint32_t tile_index, Direction direction)
-{
-	adjacent_tiles_indices[tile_index];
-	if (direction == Direction::North)
-		return if (direction == Direction::South) if (direction ==
-							      Direction::West) if (direction ==
-										   Direction::East)
-}
-
-Direction get_random_adj_direction(Direction direction)
-{
-	if (direction == Direction::North)
-	{
-		if (rbool())
-			return Direction::East;
-		return Direction::West;
-	}
-	if (direction == Direction::South)
-	{
-		if (rbool())
-			return Direction::East;
-		return Direction::West;
-	}
-	if (direction == Direction::West)
-	{
-		if (rbool())
-			return Direction::North;
-		return Direction::South;
-	}
-	if (rbool())
-		return Direction::North;
-	return Direction::South;
-}
-
-void move_in_direction(&Coord coord, Direction direction)
-{
-	if (direction == Direction::North)
-		coord.x += 1;
-	else if (direction == Direction::South)
-		coord.x -= 1;
-	if (direction == Direction::East)
-		coord.y += 1;
-	else if (direction == Direction::West)
-		coord.x -= 1;
-}
-
-Coord get_nearest_empty_tile(uint32_t start_index)
-{
-	std::queue<uint32_t> q;
-	std::unordered_set<uint32_t> visited;
-
-	q.push(start_index);
-	visited.insert(start_index);
-
-	while (!q.empty())
-	{
-		uint32_t current = q.front();
-		q.pop();
-
-		auto [above, right, below, left] = adjacent_tiles_indices[current];
-		std::array<uint32_t, 4> neighbors = {above, right, below, left};
-
-		for (uint32_t neighbor : neighbors)
-		{
-			if (neighbor < 0 || visited.count(neighbor))
-				continue;
-
-			if (check_empty_tile(current, neighbor))
-			{
-				return tile_coords[neighbor]; // Found nearest empty tile
-			}
-
-			visited.insert(neighbor);
-			q.push(neighbor);
-		}
-	}
-
-	return {-1, -1}; // No empty tile found
-}
-
 uint32_t get_nearest_adjacent_empty_tile_index(uint32_t start_index)
 {
 	std::queue<uint32_t> q;
@@ -604,8 +469,7 @@ uint32_t get_nearest_adjacent_empty_tile_index(uint32_t start_index)
 		uint32_t current = q.front();
 		q.pop();
 
-		auto [above, right, below, left] = adjacent_tiles_indices[current];
-		std::array<uint32_t, 4> neighbors = {above, right, below, left};
+		std::array<uint32_t, 4> neighbors = get_adjacent_tiles_indices(current);;
 
 		for (uint32_t neighbor : neighbors)
 		{
@@ -625,15 +489,14 @@ uint32_t get_nearest_adjacent_empty_tile_index(uint32_t start_index)
 	return -1; // No empty tile found
 }
 
-struct TileBlock()
+struct TileBlock
 {
-	Coord start_tile;
-	uuint32_t8_t block_size;
+	SCoord start_tile;
+	uint32_t block_size;
 	Direction direction;
 }
 
-TileBlock
-get_nearest_adjacent_empty_tile_block(uint32_t start_index, uuint32_t8_t block_size)
+TileBlock get_nearest_adjacent_empty_tile_block(uint32_t start_index, uint32_t block_size)
 {
 	std::queue<uint32_t> q;
 	std::unordered_set<uint32_t> visited;
@@ -727,30 +590,23 @@ uint32_t get_seed_index(uint32_t y, uint32_t x, uint32_t length) { return y * le
 
 uint32_t calculate_distance(uint32_t y, uint32_t x, const Coord &target)
 {
-	return std::abs(x - target.y) + std::abs(y - target.x);
+	return unsigned_abs_diff(x , target.y) + unsigned_abs_diff(y , target.x);
 }
 
 struct Node
 {
 	uint32_t index;
-	uuint32_t8_t move_cost; // The cost of moving to this node
-	uuint32_t8_t f_cost;	  // f_cost = g_cost + heuristic
-	Node *parent;	  // Parent node for path reconstruction
+	uint32_t move_cost;
+	uint32_t f_cost;
+	Node *parent;	 
 
-	Node(uint32_t index, uuint32_t8_t move_cost, uuint32_t8_t f_cost, Node *parent = nullptr)
+	Node(uint32_t index, uint32_t move_cost, uint32_t f_cost, Node *parent = nullptr)
 	    : index(index), move_cost(move_cost), f_cost(f_cost), parent(parent)
 	{
 	}
 
 	bool operator>(const Node &other) const { return f_cost > other.f_cost; }
 };
-
-uuint32_t16_t man_dist(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2) { return std::abs(x1 - x2) + std::abs(y1 - y2); }
-
-uuint32_t16_t man_dist(Coord x, Coord y)
-{
-	return std::abs(x.y - y.y) + std::abs(x.x - y.x);
-}
 
 inline bool within(Coord subject, Coord border_top_left_corner, Coord border_dimensions)
 {

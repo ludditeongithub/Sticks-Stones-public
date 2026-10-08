@@ -16,9 +16,6 @@ struct ProductionInfoMenu
   };
   std::vector<FullMenu> menus; // contains objects for all possible produced items 
   
-	void render(Item item)
-	{
-          
-        }
+	void render(Item item);         
 };
 

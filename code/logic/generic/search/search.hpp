@@ -97,7 +97,7 @@ struct SearchGrid
 
   
 	// inline void set_old_entity(Coord tile_coord, uint16_t index) {
-	//   uint16_t gc = get_chunk_index_from_tile(tile_coord);
+	//   uint16_t gc = tile_to_chunk_index(tile_coord);
 
 	//   fchunk_buckets[gc].size(); i++) if (indices[i] == index) old[i] = 1;
 	// }

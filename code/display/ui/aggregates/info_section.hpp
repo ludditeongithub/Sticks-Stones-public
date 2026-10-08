@@ -16,7 +16,7 @@
 struct InfoSection {
 	static inline SCoord display_pos;
 	static constexpr uint8_t FRAME_BORDER = 1;
-	static inline SDL_Rect frame = sprite::ui[UISprite::InfoMenuItemFrame];
+	static inline SDL_Rect frame = sprite::uis[UISprite::InfoMenuItemFrame];
   static constexpr SCoord title_pos= {50, 13};
         static constexpr FC_Font** title_font = &cagliostro;
   static constexpr SDL_Rect desc_box = {15, 56, 40, 50};
@@ -25,31 +25,9 @@ struct InfoSection {
 	Text title;
 	Text desc;
 
-  InfoSection(SDL_Rect display, const char* title, const char* desc) : 
-  {
-		this->title = Text(*title_font, title);
-                this->desc = Text(*desc_font, desc);
-        }
+  InfoSection(SDL_Rect display, const char* title, const char* desc);
 
-  void render(SDL_Rect& viewport)
-  {
-    //render frame
-    sprite_sheet_texture.render(display_pos.x, display_pos.y, &frame, viewport);
-
-    //render item
-                SDL_Rect r;
-                if (auto i = get_if<Item>(&display)) {
-                  r = sprite::item[i];
-                } else if (auto i = get_if<Buildable>(&display)) {
-                  r =  sprite::buildable[i];
-                }
-		sprite_sheet_texture.render(display_pos.x + FRAME_BORDER,
-                                            display_pos.y + FRAME_BORDER, &r, viewport);
-
-                title.render(viewport, title_pos, Alignment::Left);
-
-		desc.render(viewport, desc_box, Alignment::Left);
-        }
+  void render(SDL_Rect& viewport);
 };
 
 struct RequirementsSection
@@ -90,17 +68,7 @@ struct RolesSection {
   static inline SDL_Rect frame = sprite::ui[UISprite::RoleFrame];
   static inline std::vector<RoleBox> reqs;
 
-  RolesSection() {
-    for (size_t i = 0; i < reqs.size(); i++) {
-	    reqs[i].pos.x = pos.x;
-            reqs[i].pos.y = pos.y + frame.y;
-    }
-  }
+  RolesSection();
 
-  void render(SDL_Rect &viewport)
-  {
-	  sprite_sheet_texture.render(pos.x, pos.y, &frame, viewport);
-
-	  for (auto x: reqs) x.render(frame, viewport);
-  }  
+  void render(SDL_Rect &viewport);  
 };

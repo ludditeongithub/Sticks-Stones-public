@@ -1,0 +1,6 @@
+structs:
+        temp:
+                min_temps: float
+                diurnal_temp_variances: float
+                seasonal_temp_variances: float
+        

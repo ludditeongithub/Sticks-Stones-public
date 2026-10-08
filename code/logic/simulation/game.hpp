@@ -1,5 +1,6 @@
 #pragma once
 #include "data/run/buildable_database.hpp"
+#include "data/run/item_database.hpp"
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_mouse.h>
 #include <SDL2/SDL_rect.h>
@@ -40,6 +41,7 @@ unit::Database unit_database;
 // Arena NPCUnitArena;  
 // unit::Database NPCunit::Database;
 item::Database item_database;
+item::VariantDatabase variant_item_database;
 buildable::Database buildable_database;
 
 Game(size_t world_width, size_t world_height);
@@ -48,7 +50,9 @@ void init_new_world();
 
 void deinit_world();
 
-GameSave& save_game(std::string name, GameSave *save);
+void save_game(std::string name, GameSave *save);
+
+void init_databases();
 
 void load_game(GameSave& save);
 

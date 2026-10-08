@@ -10,7 +10,6 @@
 static std::random_device rd;
 static std::mt19937 gen(rd());
 
-
 template <typename T> struct RandomMachine
 {
 	static constexpr uint16_t PREGENERATED_RANDOM_SIZE = 15650;
@@ -111,7 +110,7 @@ struct RandomEnumMachine
     }
 };
 
-RandomEnumMachine<Direction> random_direction = RandomEnumMachine<Direction>(Direction::North, Direction::West);
+extern RandomEnumMachine<Direction> random_direction;
 
 struct RandomChanceMachine
 {
@@ -121,7 +120,7 @@ struct RandomChanceMachine
 	float next() { return mac.next(); }
 };
 
-RandomChanceMachine *random_chance = new RandomChanceMachine();
+extern RandomChanceMachine *random_chance;
 
 struct RandomBoolMachine
 {
@@ -129,7 +128,7 @@ struct RandomBoolMachine
 	bool next() { return mac.next(); }
 };
 
-RandomBoolMachine *random_bool = new RandomBoolMachine();
+extern RandomBoolMachine *random_bool;;
 
 inline double rnormal()
 {

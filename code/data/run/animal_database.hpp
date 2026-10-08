@@ -23,7 +23,7 @@ struct World;
 
 namespace animal
 		{				
-class Database
+struct Database
 {
 private:
 		struct EggFertilizationHandler {
@@ -67,7 +67,7 @@ public:
 // =========================
 
 constexpr static uint16_t ENTITY_SIZE = sizeof(Animal) +
-+ sizeof(bool)!
++ sizeof(bool)
   
  +  sizeof(Animal) 
  +  sizeof(Health) 
@@ -86,12 +86,11 @@ size_t capacity;
     size_t size = 1; // 0 is placeholder
     std::stack<size_t> free_slots;
     Array<bool> alives;
-  World& world;
   SearchGrid& search;
   Array<EntityID> no_inertia_buffer; 
   Array<EntityID> unassigned_buffer;
-  tile::Database& tiles;
-  item::VariantDatabase& variant_items;
+  tile::Database* tiles;
+  item::VariantDatabase* variant_items;
 
     // =========================
     // ENTITY-SPECIFIC MEMBERS
@@ -111,29 +110,22 @@ size_t capacity;
 
 
 // =========================
-// CONSTRUCTOR
+// INIT
 // =========================
 
-  Database(Arena* arena, size_t capacity
-    , World& world
+  void init(Arena* arena, size_t capacity
   , SearchGrid& search
   , tile::Database& tiles
   , item::VariantDatabase& variant_items
 ) 
-    : world(world),
-tiles(tiles),
-search(search),
-variant_items(variant_items)
-  
-  ,fertilization_handler(EggFertilizationHandler(capacity / 20))  
 {
 this->capacity = capacity;
   no_inertia_buffer = arena_make_array<EntityID>(arena, capacity);
   unassigned_buffer = arena_make_array<EntityID>(arena, capacity);
-
   this->size = 0;
-
-
+  this->tiles = &tiles;
+  this->variant_items = &variant_items;
+  fertilization_handler = EggFertilizationHandler(capacity / 20);
  
   animals = arena_make_array<Animal>(arena, capacity);
  
@@ -165,26 +157,27 @@ this->capacity = capacity;
 
       template <class Archive>
     void serialize(Archive &archive) const
-  {
-         archive(world,
-tiles,
-search,
-size,
-free_slots,
-alives,
-animals,
-healths,
-hungers,
-sexs,
-ages,
-targets,
-target_types,
-actions,
-frame_datas,
-inertias,
-coords);
-    }
+{
+        archive(tiles);
+        archive(search);
+        archive(size);
+        archive(free_slots);
+        archive(alives);
 
+           animals.serialize(archive);
+           healths.serialize(archive);
+           hungers.serialize(archive);
+           sexs.serialize(archive);
+           ages.serialize(archive);
+           targets.serialize(archive);
+           target_types.serialize(archive);
+           actions.serialize(archive);
+           frame_datas.serialize(archive);
+           inertias.serialize(archive);
+           coords.serialize(archive);
+         
+    }
+         
 
 // =========================
 // GETTERS
@@ -226,9 +219,9 @@ return coords[index];
 
 
   
-  // =========================
-  // SPAWN
-  // =========================
+// =========================
+// GENERATION
+// =========================
 
   void add_animals(WorldSpawner::AnimalSpawnBuffer& spawn_buffer)
   {
@@ -239,6 +232,10 @@ return coords[index];
 	      //TODO: error
 	    }
 }
+
+  // =========================
+  // SPAWN
+  // =========================
 
 bool attempt_spawn(const Animal animal, const Coord coord, const bool newborn  , const bool insert_search = true
 )
@@ -299,7 +296,7 @@ assert(animal != Animal::NONE && animal != Animal::MAX && "Tried to spawn animal
 
           bool spawn(const Animal animal, const Coord origin, const bool newborn
 , const bool insert_search = true) {
-Coord spawn_point = tiles.get_nearest_empty_tile(origin);
+Coord spawn_point = tiles->get_nearest_empty_tile(origin);
 bool result = false;
 result = attempt_spawn(animal, spawn_point, newborn
 , insert_search  
@@ -310,9 +307,11 @@ attempt_spawn(animal, spawn_point, newborn
 , insert_search  
 );
 }
+return result;
 }        
     
 
+  
   // =========================
   // REMOVE
   // =========================
@@ -331,8 +330,8 @@ attempt_spawn(animal, spawn_point, newborn
 
   inline void free_unused_entity()
   {
-    for (size_t i = 0; i < coords.size(); i++) {
-    if (tiles.tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
+    for (size_t i = 0; i < coords.capacity; i++) {
+    if (tiles->tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
     }
   }
     
@@ -343,15 +342,13 @@ attempt_spawn(animal, spawn_point, newborn
   
     inline bool attempt_move_entity(const EntityID index)
   {
-  #if !SHIPPING_BUILD
   assert(index <= size);
-  #endif
 
         Coord& pos = coord(index);
         Coord new_pos = get_pos(frame_data(index).get<Direction>(), pos);
         size_t ti = g_world->get_tile_index_from_coord(new_pos);
 
-    if (tiles.tile_statuss[ti].get<OccupiedStatus>() == OccupiedStatus::Vacant)
+    if (tiles->tile_statuss[ti].get<OccupiedStatus>() == OccupiedStatus::Vacant)
         {
             pos = new_pos;
             return true;
@@ -365,12 +362,9 @@ attempt_spawn(animal, spawn_point, newborn
 // TRANSFER
 // =========================
 
-
 inline bool transfer(size_t i, animal::Database &old_db)
   {
-  #if !SHIPPING_BUILD
   assert(i < size);
-  #endif
   
   if (size >= capacity) return false;
   int index;  
@@ -400,18 +394,19 @@ inline bool transfer(size_t i, animal::Database &old_db)
   old_db.alives[index] = false;
   return true;
   }
+  
 // @codegen:end database_generation
 
   // =========================
-		// REPRODUCTION
-		// =========================
+  // REPRODUCTION
+  // =========================
 
 		void birth_animal(Animal animal, size_t mother_index);
 		void breed(Animal animal, size_t female_index, size_t male_index);
                 void set_track_mate_path(Animal animal, size_t index);
 		inline bool get_conception_roll(Animal animal, size_t female_index, size_t male_index);
 				
-  inline void handle_event(Event& event);
+  //                inline void handle_event(Event& event);
 		inline void move(size_t i);	
 		void make_corpse(const size_t index);
 		void kill_animal(const size_t index);

@@ -23,8 +23,8 @@ databases:
         extra_arrays: [health, role_mana, role_list, skill, inventory, place, movable]
     tile:
         name: tile
-        traits: [immortal, foreign_enum]
-        extra_arrays: [altitude, water, tile_status, entity]
+        traits: [immortal, generated, foreign_enum]
+        extra_arrays: [altitude, water, tile_status] # got rid of entity from extra_arrays
         foreign_enum: [tile_data]
     plant:
         name: plant
@@ -41,6 +41,19 @@ databases:
         traits: [health, movable, positional, seats]
         extra_arrays: [health, movable, positional]
         database_references: [unit]
+    # plain systems/structs, in allocated_struct.py
+structs:
+    temp:
+        path: data/run/temperature.hpp
+        fields:
+                min_temp: float
+                diurnal_temp_variance: float
+                seasonal_temp_variance: float
+    terrain:
+        path: data/run/terrain.hpp
+        fields:
+                altitudes: Alt
+                
 
 trait_data:
   - trait_name: age
@@ -114,7 +127,7 @@ trait_data:
     name: skin_data
     type: SkinData
     newborn_default: '{generate_melanin(parent1, parent2), generate_skin_warmth(parent1, parent2), 0.5, 0.0}'
-    random_age_default: '{generate_melanin(world, coord), generate_skin_warmth(world, coord), 0.5, 0.0}'
+    random_age_default: '{generate_melanin(coord), generate_skin_warmth(coord), 0.5, 0.0}'
 
 extra_arrays:
   - id: animal_status
@@ -172,3 +185,4 @@ extra_arrays:
     type: Time
     newborn_default: 0
     random_age_default: FULL_MATURITY_AGES[plant] * random_chance->next()
+                

@@ -291,7 +291,6 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.o: \
  /usr/include/c++/16/pstl/execution_defs.h \
  /home/logan/gameprogramming/code/display/render/texture.hpp \
  /usr/include/SDL2/SDL_rect.h \
- /home/logan/gameprogramming/code/data/run/camera.hpp \
  /home/logan/gameprogramming/code/data/game/screen.hpp \
  /usr/include/SDL2/SDL_render.h /usr/include/SDL2/SDL_video.h \
  /usr/include/c++/16/array

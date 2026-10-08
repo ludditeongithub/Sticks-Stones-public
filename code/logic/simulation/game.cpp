@@ -1,5 +1,6 @@
 #include "game.hpp"
 #include "core/saves.hpp"
+#include "data/run/item_database.hpp"
 #include "logic/simulation/launch_game.hpp"
 #include "logic/simulation/save_game.hpp"
 #include <data/const/database.hpp>
@@ -8,7 +9,6 @@
 void Game::start()
 {
 		speed = 1;
-		while () game_loop();				
 }
 
 void Game::init_new_world()
@@ -18,22 +18,29 @@ void Game::init_new_world()
 	ws->generate_empty_world();
 	ws->spawn_entities();
 	world.load_chunk_data(*ws);
-
+        
 	arena = Arena((tile::Database::ENTITY_SIZE * world.world_tile_amount) +
 				(plant::Database::ENTITY_SIZE * plant::CAPACITY) +
 				(animal::Database::ENTITY_SIZE * animal::CAPACITY) +
                       (unit::Database::ENTITY_SIZE * unit::CAPACITY));
 
-	tile_database = tile::Database(&arena, world.world_tile_amount);
-        plant_database = plant::Database(&arena, plant::CAPACITY, search, tile_database);
-	animal_database = animal::Database(&arena, animal::CAPACITY, search);
-	animal_database->add_animals(ws->animal_spawn_buffer);	
+	init_databases();
 
-
-        sprite_sheet_texture.load_from_file("sprite_sheet.png");
+	tile_database.add_generated_tiles(ws->tile_spawn_buffer);
+	//variant_item_database item::VariantDatabase(item_database);
+	plant_database.add_plants(ws->plant_spawn_buffer);
+	// animal_database.init(&arena, animal::CAPACITY, search, tile_database,
+	// variant_item_database); animal_database.add_animals(ws->animal_spawn_buffer);
 }
 
-GameSave& Game::save_game(std::string name, GameSave* save)
+void Game::init_databases()
+{
+	tile_database.init(&arena, world.world_tile_amount);
+        item_database.init(&arena, item::CAPACITY, search, tile_database);
+        plant_database.init(&arena, plant::CAPACITY, search, tile_database);
+}
+
+void Game::save_game(std::string name, GameSave* save)
 {
 		bool successful = false;
   if (save == nullptr)
@@ -50,9 +57,7 @@ GameSave& Game::save_game(std::string name, GameSave* save)
 
 void Game::load_game(GameSave& save)
 {
-  // TODO: init and loading can be different if entities exceed maximum size
-		init_new_world();
-		save.load(*this);
+  save.load_and_init_memory(*this);
 }
 
 void Game::deinit_world()

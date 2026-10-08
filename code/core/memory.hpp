@@ -28,7 +28,8 @@ struct Arena
     }
 };
 
-void* arena_alloc(Arena* arena, size_t bytes)
+
+inline void* arena_alloc(Arena* arena, size_t bytes)
 {
     if (arena->used + bytes > arena->capacity)
         throw std::bad_alloc();
@@ -38,7 +39,7 @@ void* arena_alloc(Arena* arena, size_t bytes)
     return ptr;
 }
 
-void* arena_alloc_aligned(Arena* arena,
+inline void* arena_alloc_aligned(Arena* arena,
                           size_t bytes,
                           size_t alignment)
 {

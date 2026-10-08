@@ -48,6 +48,8 @@ namespace sprite
 
   RuntimeLookupTable<Role, SDL_Rect> roles;
 
+  SDL_Rect null_sprite;	
+
 
 std::string to_kebab_case(std::string& s) {
     std::string result;
@@ -195,19 +197,40 @@ SDL_Rect get(Entity entity)
   }
 }
 
-/*
+
 // MTODO: Possibly changes from ButtonState
 inline SDL_Rect get_decoration(ButtonDecoration decoration)
 {
 if (auto x = get_if<CustomButtonDecoration>(&decoration)) {
-return  ;
+return custom_decorations[*x];
 }
-else {
- //TODO
+else if (auto x = get_if<Entity>(&decoration)) {
+	if (auto y = get_if<Unit>(x))
+			{
+					return units[*y];
+			}
+			else if (auto y = get_if<Animal>(x))
+			{
+					return animals[*y];
+			}
+			else if (auto y = get_if<Plant>(x))
+			{
+					return plants[*y];
+			}
+			else if (auto y = get_if<Buildable>(x))
+			{
+					return buildables[*y];
+			}
+			else
+			{
+					// TODO: error handling
+					return null_sprite;
+					
+			}
+}
+return null_sprite;
 }
 
-}
-*/
 
 inline SDL_Rect get_displayable(Displayable req)
 {
@@ -325,10 +348,10 @@ inline constexpr LookupTable<Animal, Info> ANIMAL_SPRITE_INFOS = []
 constexpr uint8_t MAX_STAGES = 4;
 
 struct StageInfo {
-	SDL_Rect dimensions;
+	Coord dimensions;
 	uint8_t stages;
 	 constexpr StageInfo() = default;	
-	constexpr StageInfo(SDL_Rect dimensions, uint8_t stages)
+	constexpr StageInfo(Coord dimensions, uint8_t stages)
 	    : dimensions(dimensions), stages(stages)
 	{
 	}
@@ -408,17 +431,48 @@ inline constexpr LookupTable<Plant, std::array<StageInfo, MAX_STAGES>> PLANT_SPR
 	return lt;
 }();
 
-inline constexpr LookupTable<Plant,uint8_t> PLANT_STAGE_AMOUNTS = [] {
-		LookupTable<Plant,uint8_t> lt{};
-		using enum Plant;
-		for (size_t i = 0; i < static_cast<size_t>(Plant::MAX); i++)
-				{
-						Plant p = static_cast<Plant>(i);
-						int s = 0;
-						for (size_t j = 0; j < PLANT_SPRITE_DIMENSIONS[p].size(); j++) s += PLANT_SPRITE_DIMENSIONS[p][j].stages;
-						lt[p] = s;	
-		}
-		return lt;
+inline constexpr LookupTable<Plant, uint8_t> PLANT_STAGE_AMOUNTS = []
+{
+	LookupTable<Plant, uint8_t> lt{};
+	using enum Plant;
+	for (size_t i = 0; i < static_cast<size_t>(Plant::MAX); i++)
+	{
+		Plant p = static_cast<Plant>(i);
+		int s = 0;
+		for (size_t j = 0; j < PLANT_SPRITE_DIMENSIONS[p].size(); j++)
+			s += PLANT_SPRITE_DIMENSIONS[p][j].stages;
+		lt[p] = s;
+	}
+	return lt;
+}();
+
+SDL_Rect get_plant(Plant plant, int stage)
+{
+        const std::array<sprite::StageInfo, sprite::MAX_STAGES> &sd = sprite::PLANT_SPRITE_DIMENSIONS[plant];
+	StageInfo si = sprite::PLANT_SPRITE_DIMENSIONS[plant][stage];
+	int tile_offset = 0;
+	for (int i = 0; i < stage; i++)
+		tile_offset += sd[i].dimensions.x;	
+	return {plants[plant].x + tile_offset, plants[plant].y, (int)si.dimensions.x, (int)si.dimensions.y};
+}
+
+//items which can be stacked. need multiple layered versions.
+inline constexpr LookupTable<Item, Coord> ITEM_DIMENSIONS = []
+{
+	LookupTable<Item, Coord> lt{};
+
+
+	for (size_t i = 0; i < static_cast<uint16_t>(Item::MAX); i++)
+	{
+		lt[static_cast<Item>(i) ] = {1,1};
+	}
+
+	using enum Item;
+
+	lt[Log] = {2,2};
+	lt[Headdress] = {2,2};
+
+	return lt;
 }();
 
 }

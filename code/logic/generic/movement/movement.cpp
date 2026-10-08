@@ -36,7 +36,7 @@ default:
 					direction[i] = next.first;
 					if (next.second)
 					{
-						move_in_direction(i, false);
+						coord::move(i, false);
 						inertias[i] = calc_speed(min_speed_pawn, coords[i]);
 					}
 					else
@@ -60,7 +60,7 @@ default:
 					    next_direction_to_moving_target(i);
 					direction[i] = next.first;
 					if (next.second)
-						move_in_direction(i, true);
+						coord::move(i, true);
 					else
 					{
 						// TODO: do this

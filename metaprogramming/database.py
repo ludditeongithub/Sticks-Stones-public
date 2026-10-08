@@ -6,9 +6,6 @@ def build_initializers(database):
     references = database.get("database_references", [])
 
     initializers = []
-
-    if "movable" in traits:
-        initializers.append("world(world)")
     
     if "positional" in traits:
         initializers.append("tiles(tiles)")
@@ -21,30 +18,6 @@ def build_initializers(database):
 
     return ",\n".join(initializers)
 
-def build_serialization_list(database, runtime_arrays):
-    traits = database.get("traits", [])
-    references = database.get("database_references", [])
-
-    s_list = []
-
-    if "movable" in traits:
-        s_list.append("world")
-
-    if "positional" in traits:
-        s_list.append("tiles")
-
-    if "searchable" in traits:
-        s_list.append("search")
-
-    if not "immortal" in traits:
-        s_list.append("size")
-        s_list.append("free_slots")
-        s_list.append("alives")
-
-    for r in runtime_arrays:
-        s_list.append(r["name"] + "s")
-        
-    return ",\n".join(s_list)
 
 def create_databases():
     with open("databases.yaml", "r") as f:
@@ -66,8 +39,7 @@ def create_databases():
             relative_path,
             "database_generation",
             generated_code,
-        )
-    
+        )    
 
 def create_database(database, trait_data, extra_arrays):
     main_enum = database["name"].capitalize()
@@ -86,8 +58,8 @@ def create_database(database, trait_data, extra_arrays):
         extra_arrays
     )
     initializers = build_initializers(database)
-    serialization_list = build_serialization_list(database, runtime_arrays)
 
+    print(database["name"] + ":")
     context = {
         "Entity_name": fmt.snake_to_camel(database["name"].capitalize()),
         "entity_name": fmt.uncapitalize(fmt.snake_to_camel(main_enum)),
@@ -99,7 +71,6 @@ def create_database(database, trait_data, extra_arrays):
         "traits": database.get("traits", []),
         "database_references": database.get("database_references", []),
         "extra_arrays": database.get("extra_arrays", []),
-        "serialization_list": serialization_list,
         "initializers": initializers,
     }
     template = meta.env.get_template("database.j2")
@@ -114,11 +85,12 @@ def create_runtime_arrays(database, main_enum, trait_data, extra_arrays, structs
 
     if not structs:
         for trait in database.get("traits", []):
+            print(trait + ",")
             for trait_info in trait_data:
                 if trait_info["trait_name"] == trait:
-                    runtime_arrays.append(trait_info)
+                    runtime_arrays.append(trait_info)                    
     else:
-        for trait in database.get("traits", []):
+        for trait in database.get("traits", []):            
             for trait_info in trait_data:
                 if (
                     trait_info["trait_name"] == trait

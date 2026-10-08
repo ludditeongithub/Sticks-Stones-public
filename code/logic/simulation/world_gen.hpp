@@ -1,4 +1,5 @@
 #pragma once
+#include "FastNoiseLite.h"
 #include <core/random.hpp>
 #include <cstdint>
 #include <vector>
@@ -115,13 +116,13 @@ struct TileSpawnBuffer
 	size_t size;
 	std::vector<TileData> tiles;
 	std::vector<Alt> altitudes;
-  std::vector<bool> occupieds;
+  //std::vector<OccupiedStatus> occupieds;
 
   TileSpawnBuffer(size_t capacity)
 	{
 		tiles.reserve(capacity);
 		altitudes.reserve(capacity);
-                size = capacity;
+        size = capacity;
         }
 
 inline void add(WorldSpawner& world_spawner, Grass grass, Coord coord)
@@ -147,7 +148,8 @@ AnimalSpawnBuffer(size_t capacity)
   inline void add(WorldSpawner& world_spawner, TileSpawnBuffer& tile_spawn_buffer, Animal animal, Coord coord)
 	{
 		animals[size++] = animal;
-		coords[size] = coord;                   tile_spawn_buffer.occupieds[world_spawner.get_tile_index_from_coord(coord)] = true;
+		coords[size] = coord;
+		//tile_spawn_buffer.occupieds[world_spawner.get_tile_index_from_coord(coord)] = OccupiedStatus::Entity;
 	}
   void shrink_to_size()
 	{
@@ -175,7 +177,8 @@ PlantSpawnBuffer(size_t capacity)
   inline void add(WorldSpawner& world_spawner, TileSpawnBuffer& tile_spawn_buffer, Plant plant, Coord coord)
 	{
 		plants[size++] = plant;
-		coords[size] = coord;                   tile_spawn_buffer.occupieds[world_spawner.get_tile_index_from_coord(coord)] = true;
+		coords[size] = coord;		
+		//tile_spawn_buffer.occupieds[world_spawner.get_tile_index_from_coord(coord)] = OccupiedStatus::Entity;
 	}
   void shrink_to_size()
 	{
@@ -203,7 +206,8 @@ ScavengeableSpawnBuffer(size_t capacity)
   inline void add(WorldSpawner& world_spawner, TileSpawnBuffer& tile_spawn_buffer, Scavengeable scavengeable, Coord coord)
 	{
 		scavengeables[size++] = scavengeable;
-		coords[size] = coord;                   tile_spawn_buffer.occupieds[world_spawner.get_tile_index_from_coord(coord)] = true;
+		coords[size] = coord;
+		//tile_spawn_buffer.occupieds[world_spawner.get_tile_index_from_coord(coord)] = OccupiedStatus::Item;
 	}
   void shrink_to_size()
 	{
@@ -255,7 +259,7 @@ ScavengeableSpawnBuffer(size_t capacity)
 	// helpers
 	void recursive_lower();
 	void recursive_fill();
-	void print_map();
+        template <typename T> void print_map(T map);
     void move_regions_to_chunks(Array<Hum>& humidity_table, Array<Temp>& min_temperature_table, Array<Alt>& altitudes);
 	void print_info();
 	Coord get_tile_coord_from_index(size_t i);
@@ -273,7 +277,7 @@ ScavengeableSpawnBuffer(size_t capacity)
 	void generate_humidity_map();
 	void factor_wetlands_jungles_and_forests();
 	void generate_biomes();
-	void generate_altitude_map();
+	void generate_altitude_map(FastNoiseLite& r_noise);
 	std::vector<std::vector<int>> generate_wb_distances(std::vector<std::vector<int>> &water_map);
 	void get_rivers_from_groundwater();
 	void clean_altitude_map();	

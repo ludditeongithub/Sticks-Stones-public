@@ -11,7 +11,7 @@
 template <typename T>
 struct Array
 {
-    Arena* arena;
+	Arena* arena;
     size_t size;    
     size_t capacity;
 
@@ -36,6 +36,15 @@ struct Array
         return data[index];
     }
 
+
+    void operator=(Array<T> &array)
+    {
+      #if !SHIPPING_BUILD
+      assert(array.capacity == capacity && "Tried to copy from array of unequal size.");
+      #endif
+      for (size_t i = 0; i < capacity; i++) data[i] = array[i];      
+    }
+
     bool is_full() const
     {
         return size == capacity;
@@ -52,24 +61,9 @@ struct Array
     }
 
     template<class Archive>
-    void save(Archive& ar) const
+    void serialize(Archive& ar) const
     {
-        ar(capacity, size);
-
         for (size_t i = 0; i < size; i++)
-            ar(data[i]);
-    }
-
-    template<class Archive>
-    void load(Archive& ar)
-    {
-        ar(capacity, size);
-
-        data = static_cast<T*>(
-            arena_alloc(arena, sizeof(T) * capacity)
-        );
-
-        for (uint16_t i = 0; i < size; i++)
             ar(data[i]);
     }
 };

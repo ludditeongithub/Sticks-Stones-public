@@ -13,7 +13,6 @@
 #include <cassert>
 #include <algorithm>
 #include "display/render/texture.hpp"
-#include <data/run/camera.hpp>
 #include <data/game/screen.hpp>
 
 struct WindowSystem

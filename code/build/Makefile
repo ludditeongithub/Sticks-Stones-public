@@ -129,6 +129,30 @@ test_exe/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_exe.dir/build.make CMakeFiles/test_exe.dir/build
 .PHONY : test_exe/fast
 
+data/run/world.o: data/run/world.cpp.o
+.PHONY : data/run/world.o
+
+# target to build an object file
+data/run/world.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_exe.dir/build.make CMakeFiles/test_exe.dir/data/run/world.cpp.o
+.PHONY : data/run/world.cpp.o
+
+data/run/world.i: data/run/world.cpp.i
+.PHONY : data/run/world.i
+
+# target to preprocess a source file
+data/run/world.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_exe.dir/build.make CMakeFiles/test_exe.dir/data/run/world.cpp.i
+.PHONY : data/run/world.cpp.i
+
+data/run/world.s: data/run/world.cpp.s
+.PHONY : data/run/world.s
+
+# target to generate assembly for a file
+data/run/world.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_exe.dir/build.make CMakeFiles/test_exe.dir/data/run/world.cpp.s
+.PHONY : data/run/world.cpp.s
+
 display/render/screen.o: display/render/screen.cpp.o
 .PHONY : display/render/screen.o
 
@@ -177,6 +201,30 @@ display/render/texture.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_exe.dir/build.make CMakeFiles/test_exe.dir/display/render/texture.cpp.s
 .PHONY : display/render/texture.cpp.s
 
+logic/simulation/world_gen.o: logic/simulation/world_gen.cpp.o
+.PHONY : logic/simulation/world_gen.o
+
+# target to build an object file
+logic/simulation/world_gen.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_exe.dir/build.make CMakeFiles/test_exe.dir/logic/simulation/world_gen.cpp.o
+.PHONY : logic/simulation/world_gen.cpp.o
+
+logic/simulation/world_gen.i: logic/simulation/world_gen.cpp.i
+.PHONY : logic/simulation/world_gen.i
+
+# target to preprocess a source file
+logic/simulation/world_gen.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_exe.dir/build.make CMakeFiles/test_exe.dir/logic/simulation/world_gen.cpp.i
+.PHONY : logic/simulation/world_gen.cpp.i
+
+logic/simulation/world_gen.s: logic/simulation/world_gen.cpp.s
+.PHONY : logic/simulation/world_gen.s
+
+# target to generate assembly for a file
+logic/simulation/world_gen.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_exe.dir/build.make CMakeFiles/test_exe.dir/logic/simulation/world_gen.cpp.s
+.PHONY : logic/simulation/world_gen.cpp.s
+
 test.o: test.cpp.o
 .PHONY : test.o
 
@@ -210,12 +258,18 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... test_exe"
+	@echo "... data/run/world.o"
+	@echo "... data/run/world.i"
+	@echo "... data/run/world.s"
 	@echo "... display/render/screen.o"
 	@echo "... display/render/screen.i"
 	@echo "... display/render/screen.s"
 	@echo "... display/render/texture.o"
 	@echo "... display/render/texture.i"
 	@echo "... display/render/texture.s"
+	@echo "... logic/simulation/world_gen.o"
+	@echo "... logic/simulation/world_gen.i"
+	@echo "... logic/simulation/world_gen.s"
 	@echo "... test.o"
 	@echo "... test.i"
 	@echo "... test.s"

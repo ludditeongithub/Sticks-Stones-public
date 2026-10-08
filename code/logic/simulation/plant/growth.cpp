@@ -90,7 +90,7 @@ void plant::Database::update_plants(World& world, Time time_passed)
 			continue;
 		float next_growth = 1.0;
 		const Coord pos = coords[i];
-		uint32_t chunk_index = get_chunk_index_from_tile(pos);
+		uint32_t chunk_index = tile_to_chunk_index(pos);
 		eval_sunlight(world, chunk_index, next_growth, p);
 		eval_temperature(world, chunk_index, p, next_growth, alive[i]);
 		if (!alive[i]) continue;		
@@ -110,7 +110,7 @@ void Regrowthplant::Database::update_regrowth_plants(item::Database& item_databa
 		if (plant_list[i] == Plant::NONE) continue;
 		float next_growth = 1.0;
 		const Coord pos = plant_database.coords[i];
-		uint32_t chunk_index = get_chunk_index_from_tile(pos);
+		uint32_t chunk_index = tile_to_chunk_index(pos);
 
 		eval_sunlight(world, chunk_index, next_growth, world.daily_insolations, world.cloud_covers, p);
 		// sunlight must come before temp, because temp sets next_growth to negative

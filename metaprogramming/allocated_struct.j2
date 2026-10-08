@@ -1,0 +1,70 @@
+constexpr static uint16_t SIZE =  0
+{% for r in runtime_arrays %}
++ sizeof({{ r.type }}) 
+{% endfor %}
+;
+
+size_t capacity;
+
+    // =========================
+    // ENTITY-SPECIFIC MEMBERS
+    // =========================
+{% for r in runtime_arrays %}
+    Array<{{ r.type }}> {{ r.name }}s;
+  {% endfor %}
+
+{# {% for s in structs %}  #}
+{#   struct {{ PascalCase(s.name) }} {  #}
+{# {% for f in s.fields %}  #}
+{#     {{ f.type }} {{ f.name }};  #}
+{#   {% endfor %}  #}
+{#   };  #}
+{#   Array<{{ PascalCase(s.name) }}> {{ s.name }}s;  #}
+{# {% endfor %}  #}
+
+// =========================
+// INIT
+// =========================
+
+  void init(Arena* arena, size_t cap) 
+{
+capacity = cap;
+{# {% for s in structs %} #}
+{#   {{ s.name }}s = arena_make_array<{{ PascalCase(s.name) }}>(arena, capacity); #}
+{# {% endfor %} #}
+{% for r in runtime_arrays %} 
+  {{ r.name }}s = arena_make_array<{{ r.type }}>(arena, capacity);
+{% endfor %} 
+
+}
+    // =========================
+    // SERIALIZATION
+    // =========================
+
+      template <class Archive>
+    void serialize(Archive &archive)
+   {
+         {% for r in runtime_arrays %}
+           {{ r.name }}s.serialize(archive);
+         {% endfor %}
+         
+    }
+         
+// =========================
+// GETTERS
+// =========================
+
+{% for r in runtime_arrays %}
+  inline {{ r.type }}& {{ r.name }}(const EntityID index) {
+return {{ r.name }}s[index];
+  }
+{% endfor %}
+
+{# {% for s in structs %} #}
+{#   {% for f in s.fields %} #}
+{#     inline {{ f.type }}& {{ f.name }}(const EntityID index) {     #}
+{# return {{ s.name }}[index].{{ f.name }}; #}
+{#     } #}
+{#   {% endfor %} #}
+{# {% endfor %} #}
+

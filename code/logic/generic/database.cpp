@@ -37,7 +37,7 @@ Coord tile::Database::get_nearest_empty_tile(Coord coord, Adjacency adjacency = 
 			queue.pop();
 			for (size_t i = 0; i < 4; i++) {
 				Coord candidate = {std::min(world.WORLD_TILE_LENGTH, target.x + vectors[i].x), std::min(world.WORLD_TILE_LENGTH, target.y + vectors[i].y)};
-				if (tile_statuses[get_chunk_index_from_tile(candidate)].get<OccupiedStatus>() == OccupiedStatus::Vacant) return candidate;
+				if (tile_statuses[tile_to_chunk_index(candidate)].get<OccupiedStatus>() == OccupiedStatus::Vacant) return candidate;
 				else queue.push(candidate);
 			}
 		}

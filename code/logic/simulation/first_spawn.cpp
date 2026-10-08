@@ -282,7 +282,7 @@ void WorldSpawner::spawn_animals()
 		// TODO: water animals
             if (is_water(tile)) continue;
 		    Coord coord = get_tile_coord_from_index(i);
-		    Coord chunk_coord = get_chunk_from_tile(coord);
+		    Coord chunk_coord = tile_to_chunk(coord);
 		    Biome biome = biome_map[chunk_coord.x][chunk_coord.y];
 		    Temp temperature = temperature_map[chunk_coord.x][chunk_coord.y];
                     Hum humidity = humidity_map[chunk_coord.x][chunk_coord.y];
@@ -298,7 +298,7 @@ void WorldSpawner::spawn_scavengeables()
 		Tile tile = tile_spawn_buffer.tiles[i];
                 // TODO: seaweed, lilipads etc
 		Coord coord = get_tile_coord_from_index(i);
-                Coord chunk_coord = get_chunk_from_tile(coord);
+                Coord chunk_coord = tile_to_chunk(coord);
 		Biome biome = biome_map[chunk_coord.x][chunk_coord.y];
 		Temp temperature = temperature_map[chunk_coord.x][chunk_coord.y];
                 Hum humidity = humidity_map[chunk_coord.x][chunk_coord.y];

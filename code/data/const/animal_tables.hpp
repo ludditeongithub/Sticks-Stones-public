@@ -371,9 +371,9 @@ inline constexpr LookupTable<Animal, Time> MAX_AGES = []
 	return lt;
 }();
 
-inline constexpr LookupTable<Animal, Time> FERTILITY_AGES = []
+inline constexpr LookupTable<Animal, float> FERTILITY_AGES = []
 {
-	LookupTable<Animal, Time> lt;
+	LookupTable<Animal, float> lt;
 	lt[Animal::Pig] = 0.10f;
 	lt[Animal::Cow] = 0.18f;
 	lt[Animal::Chicken] = 0.22f;
@@ -405,8 +405,8 @@ inline constexpr LookupTable<Animal, Time> FERTILITY_AGES = []
 }();
 
   
-inline constexpr LookupTable<Animal, Time> SENESCENCE_AGES = [] {
-	LookupTable<Animal, Time> lt{};
+inline constexpr LookupTable<Animal, float> SENESCENCE_AGES = [] {
+	LookupTable<Animal, float> lt{};
 	using enum Animal;
 
 	lt[Pig]           = 0.80f;

@@ -1,11 +1,11 @@
 #pragma once
 #include <queue>
-
 #include <core/containers.hpp>
 #include <vector>
 #include <data/types/action.hpp>
 #include <data/types/animal.hpp>
 #include <data/run/unit_database.hpp>
+#include <data/types/category.hpp>
 
 // =========================
 // TASK (tasks are the wider context over actions. some tasks may be made up of several actions or just one)

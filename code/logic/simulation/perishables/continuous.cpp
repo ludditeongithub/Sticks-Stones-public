@@ -12,7 +12,7 @@ void process_perishables(LifetimeManager &lm, ChunkManager &cm, Array<uint16_t> 
 	for (uint16_t i = 0; i < living_times.capacity; i++)
 	{
 		uint16_t pi = perishable_indices[i];
-		uint16_t c = get_chunk_index_from_tile(perishable_coords[pi]);
+		uint16_t c = tile_to_chunk_index(perishable_coords[pi]);
 		Temp temp = cm.get_chunk_temperature(c);
 		living_times[i] += get_perishable_time(perishables[i], time_passed, temp);
 		Item p = perishables[i];

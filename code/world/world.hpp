@@ -1,5 +1,4 @@
 #pragma once
-
 #include "core/random.hpp"
 #include <cstdint>
 #include <core/containers.hpp>
@@ -10,14 +9,9 @@
 struct World
 {
 	static const uint16_t entity_size = sizeof(uint8_t) * 3;
-	const uint16_t length_chunks;
-	const uint16_t height_chunks;
 	const uint16_t equator;
 	const uint16_t chunk_amount;
-	const uint16_t chunk_latitude_height = height_chunks / LATITUDE_TOTAL; // amount of chunks per latitude
-  const uint16_t chunk_longitude_width = length_chunks / LONGITUDE_TOTAL;
-	const uint32_t world_tile_amount = chunk_amount * CHUNK_SIZE;
-	const uint32_t world_tile_length = sqrt(world_tile_amount);
+	
 
 	const CloudKey min_light_clouds = 50;
 	const CloudKey min_heavy_clouds = 150;
@@ -41,7 +35,6 @@ struct World
 	Array<float> seasonal_insolations;
 	Array<float> cloud_covers;
 
-
   struct ChunkTempData
 {
     std::vector<float> min_temps;
@@ -58,7 +51,7 @@ struct World
 	ChunkTempData chunk_temp_data;
 
 	World(Arena& arena, int width, int height)
-	    : length_chunks(width), height_chunks(height),
+	    : coord::length_chunks(width), height_coord::length_chunks(height),
 	      equator(height / 2),
       chunk_amount(width * height),      
       chunk_temp_data(this) 
@@ -82,13 +75,12 @@ struct World
 
 	uint16_t get_chunk_time_zone(uint32_t chunk_index);
         uint16_t get_chunk_index_from_coord(Coord c);
-	uint32_t get_tile_index_from_coord(Coord c);
 	Coord get_tile_coord_from_index(uint32_t i);
 	uint32_t get_tile_index_chunk_relative(uint32_t i);
 	uint32_t get_tile_index_chunk_relative(Coord c);
 
 	Coord get_random_player_start()
-	{	return{ static_cast<uint32_t>(random_chance->next() * length_chunks) , static_cast<uint32_t>(random_chance->next() * height_chunks)};
+	{	return{ static_cast<uint32_t>(random_chance->next() * coord::length_chunks) , static_cast<uint32_t>(random_chance->next() * coord::height_chunks)};
 	}
 
 	void load_chunk_data(WorldSpawner &ws)

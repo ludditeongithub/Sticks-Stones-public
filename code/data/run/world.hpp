@@ -4,26 +4,16 @@
 #include <cstdint>
 #include <core/containers.hpp>
 #include <core/memory.hpp>
-#include <logic/simulation/world_gen.hpp>
+#include <data/const/chunk_data.hpp>
 
 namespace tile {
 class Database;
 };
 
+struct WorldSpawner;
+
 struct World
 {
-	static constexpr uint16_t LATITUDE_TOTAL = 180;
-	static constexpr uint16_t LONGITUDE_TOTAL = 180;
-		
-	const uint16_t length_chunks;
-	const uint16_t height_chunks;
-	const uint16_t equator;
-	const uint16_t chunk_amount;
-	const uint16_t chunk_latitude_height = height_chunks / LATITUDE_TOTAL; // amount of chunks per latitude
-  const uint16_t chunk_longitude_width = length_chunks / LONGITUDE_TOTAL;
-	const uint32_t world_tile_amount = chunk_amount * CHUNK_SIZE;
-	const uint32_t world_tile_length = sqrt(world_tile_amount);
-
 	static constexpr CloudKey MIN_LIGHT_CLOUDS = 50;
 	static constexpr CloudKey MIN_HEAVY_CLOUDS = 150;
 	static constexpr PrecipitationKey PRECIPITATION_MIN = 160;
@@ -48,9 +38,7 @@ struct World
 
   struct ChunkTempData
 {
-    std::vector<float> min_temps;
-    std::vector<float> diurnal_temp_variances;
-	std::vector<float> seasonal_temp_variances;
+    
 
     ChunkTempData(World* world)
     {
@@ -62,7 +50,7 @@ struct World
 	ChunkTempData chunk_temp_data;
 
   World(Arena* arena, size_t width, size_t height)
-	    : length_chunks(width), height_chunks(height),
+	    : coord::length_chunks(width), coord::height_chunks(height),
 	      equator(height / 2),
       chunk_amount(width * height),      
       chunk_temp_data(this) 
@@ -109,7 +97,7 @@ struct World
 	
 };
 
-World* g_world;
+extern World* g_world;
 /*
  * Need to ensure that if a block of tile generates, that some of those tiles aren't actually river
  * tiles,  but haven't been generated as such because neighboring ungenerated tiles which should

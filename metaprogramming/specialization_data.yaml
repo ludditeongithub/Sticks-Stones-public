@@ -567,4 +567,10 @@ data:
             decay_period: YEAR_LENGTH * 3.00
             disease_risk: 1.00
             cooling_effect: 0.80
-            fermentable: true
+            fermentable: true            
+    container:
+   
+    art:
+   
+    scavengeable:
+      

@@ -1,0 +1,7 @@
+#pragma once
+
+template <typename T>
+constexpr T unsigned_abs_diff(T a, T b)
+{
+    return a > b ? a - b : b - a;
+}

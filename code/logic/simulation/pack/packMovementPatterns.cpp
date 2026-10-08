@@ -89,14 +89,14 @@ if (moving_status[i] = MovingStatus::PackFollow)
 {
 	if (check_pack_distance(animal) > 1)
 		// NOTE: bad
-		move_in_direction(find_next_direction(animal_coords[animal]),
+		coord::move(find_next_direction(animal_coords[animal]),
 				pack_coords[animal_target[animal_index]]);
 	if (check_pack_distance(animal) > pack_max[static_cast<int>(animal)])
 		moving_status[i] = MovingStatus::PackRegroup;
 }
 if (moving_status[i] == MovingStatus::PackRegroup)
 {
-	move_in_direction(pawn, find_next_direction(animal_coords[animal]),
+	coord::move(pawn, find_next_direction(animal_coords[animal]),
 			pack_coords[animal_target[animal_index]]);
 	if (check_pack_distance(animal) < pack_max[static_cast<int>(animal)])
 		moving_status[i] = MovingStatus::PackFollow;
@@ -113,7 +113,7 @@ if (moving_status[i] == MovingStatus::FanOut)
 	{
     if (rint(0,3 == 3) Direction direction = just_not_backwards(directions[pawn]);
 	else Direction direction = directions[pawn];
-    move_in_direction(pawn, direction);
+    coord::move(pawn, direction);
 	if (check_enemy_settlement()) notify_squad(pawn);
 	}
 }
@@ -124,7 +124,7 @@ if (moving_status[i] == MovingStatus::ScoutAndRegroup)
 		if (man_dist(current_coords[pawn, squads[player_squads[pawn]].center] <
 			    (int)(log(2, current_size))))
 		{
-			move_in_direction(current_coords[pawn],
+			coord::move(current_coords[pawn],
 					find_next_direction(squads[pawn].center));
 		}
 		else
@@ -141,7 +141,7 @@ if (moving_status[i] == MovingStatus::ReturnWithNews)
 	// Make this a pointer
 	if (man_dist(current_coords[pawn, squads[pawn].center] < (int)(log(2, current_size))))
 	{
-		move_in_direction(current_coords[pawn], find_next_direction(squads[pawn].center));
+		coord::move(current_coords[pawn], find_next_direction(squads[pawn].center));
 	}
 	else
 	{

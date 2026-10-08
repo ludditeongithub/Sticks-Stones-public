@@ -22,8 +22,6 @@ inline Hunger get_max_hunger(Animal animal, Time age)
 	return animal::MAX_HUNGERS[animal] * (age / animal::FERTILITY_AGES[animal]);
 }
 
-inline float get_conception_roll()
-{
+inline float get_conception_roll();
 
-}
 }

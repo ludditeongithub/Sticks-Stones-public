@@ -1,0 +1,1 @@
+coord: for vector spaces which have a fixed size, but that size is variable. in practice, the 2D world.

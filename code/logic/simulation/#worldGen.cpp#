@@ -357,7 +357,7 @@ void WorldSpawner::generateTemperatureMap() {
     for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < WIDTH; x++) {
             if (oceanMap[y][x] == 0) continue;
-            int edist = std::abs(y - EQUATOR);
+            int edist = std::unsigned_abs_diff(y , EQUATOR);
             int odist = oceanDistance[y][x];
             int temperature = 90;
             // affect temp by latitude
@@ -507,7 +507,7 @@ void WorldSpawner::generateHumidityMap() {
                 float adjustedHEIGHT = 1.0;
                 float adjustedLat = float(x) / HEIGHT;
                 float equator = 0.5;
-                float latitude = std::abs(adjustedLat - equator);
+                float latitude = std::unsigned_abs_diff(adjustedLat , equator);
                 float latEffect = 0.0;
 
                 // simulate hadley effect, which lowers humidity at 30 and 90, raises at 0 and 60
@@ -603,9 +603,9 @@ void WorldSpawner::generateBiomes() {
 
                 for (int i = 1; i < size; i++) {
                     // get how far away stats are from each biomeType
-                    float humDistance = abs(humidity - get<0>(biomeData[i])) / get<3>(biomeData[i]);
-                    float altDistance = abs(altitude - get<1>(biomeData[i])) * 2.3 / get<4>(biomeData[i]);
-                    float tempDistance = abs(temp - get<2>(biomeData[i])) /  get<5>(biomeData[i]);
+                    float humDistance = unsigned_abs_diff(humidity , get<0>(biomeData[i])) / get<3>(biomeData[i]);
+                    float altDistance = unsigned_abs_diff(altitude , get<1>(biomeData[i])) * 2.3 / get<4>(biomeData[i]);
+                    float tempDistance = unsigned_abs_diff(temp , get<2>(biomeData[i])) /  get<5>(biomeData[i]);
                     if (humDistance + altDistance + tempDistance < lowestScore) {
                         lowestScore = humDistance + altDistance + tempDistance;
                         biome = i;
@@ -1186,7 +1186,7 @@ void generateTileTypes(std::array<float, TILE_AMOUNT> chances, const std::array<
 }
 
 void moveRegionsToChunks(std::vector< std::vector<uint16_t> > & temperatureMap, std::vector< std::vector<uint16_t >  > & humidityMap, Array2D& humidityTable, Array2D& minTemperatureTable) {
-  for (int i = 0; i < LENGTH_CHUNKS; i++) {
+  for (int i = 0; i < coord::length_chunks; i++) {
     for (int j = 0; j < HEIGHT_CHUNKS; j++) {
         // for each chunk, count tiles per region slot
         std::unordered_map<uint16_t, uint16_t> regionCounts;

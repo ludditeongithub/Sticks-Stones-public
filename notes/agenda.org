@@ -1,26 +1,12 @@
 * TODO GAME ITEMS TODAY <2026-09-30 Wed +1d>
 - keep debugging
-- currently working on dependencies for serialization, ensuring that it can follow a step-by-step order 
+- currently working on dependencies for serialization, ensuring that it can follow a step-by-step order
 * Pre-Alpha 
 ** TODO Logan
-*** [1/6] Launch World
-**** Clean up blocking bugs
-**** [1/1] Launch Window
-**** Call all necessary sprites
-***** UI
-***** Tile
-***** Plant
-***** Animal
-***** placeholder
-**** Launch Menu
-**** Generate World
-**** Render World
-*** Finish UI
-**** functional large menus
 *** Prereq core systems to main loop playable
 **** Pathfinding
-*** Wwise audio integration
 *** Main Loop Playable (Paleolithic)
+List the amount each algo needs to be run per frame. Write headers. then use this to organize code. then feed from world gen
 includes:
 **** Unlocking new units
 **** Finding and harvesting resources
@@ -39,6 +25,21 @@ includes:
 - mental break
 **** messages (tutorials)
 **** farming
+*** [1/6] Launch World
+**** Clean up blocking bugs
+**** [1/1] Launch Window
+**** Call all necessary sprites
+***** UI
+***** Tile
+***** Plant
+***** Animal
+***** placeholder
+**** Launch Menu
+**** Generate World
+**** Render World
+*** Finish UI
+**** functional large menus
+*** Wwise audio integration
 *** Movement + Action + NewPath
 first queueReadyActions sees if sub-action is finished. (inertia 0)
 if sub-action finished, then marked for buffer to processEntityActions.
@@ -339,6 +340,7 @@ https://github.com/DiligentGraphics/DiligentEngine
 * Performance
 ** Transcendental Function SIMD
 ** Chunked Rendering
+** Emergency memory and resizing when databases (esp item specializations) get full
 * NOTES
 ** Programming
 *** Scheduling and Simulation Precision

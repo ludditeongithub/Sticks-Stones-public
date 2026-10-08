@@ -13,9 +13,16 @@ add_executable(test_exe)
 
 target_sources(test_exe
     PRIVATE
-        test.cpp
-        display/render/texture.cpp
-        display/render/screen.cpp
+  test.cpp
+    
+  core/random.hpp
+
+  data/run/world.cpp
+  
+  logic/simulation/world_gen.cpp
+  
+  display/render/texture.cpp
+  display/render/screen.cpp
 )
 
 target_include_directories(test_exe PRIVATE

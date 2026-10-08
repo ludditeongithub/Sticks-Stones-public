@@ -29,47 +29,59 @@ constexpr static uint16_t ENTITY_SIZE = sizeof(Item) +
 size_t capacity;
     size_t size = 1; // 0 is placeholder
     std::stack<size_t> free_slots;
-    std::vector<bool> alives;
+    Array<bool> alives;
   SearchGrid& search;
-  std::vector<EntityID> no_inertia_buffer; 
-  std::vector<EntityID> unassigned_buffer;
-  tile::Database& tiles;
+  Array<EntityID> no_inertia_buffer; 
+  Array<EntityID> unassigned_buffer;
+  tile::Database* tiles;
 
     // =========================
     // ENTITY-SPECIFIC MEMBERS
     // =========================
-    std::vector<Item> items;
-    std::vector<Coord> coords;
+    Array<Item> items;
+    Array<Coord> coords;
 
 
 
 // =========================
-// CONSTRUCTOR
+// INIT
 // =========================
 
-  Database(size_t capacity
+  void init(Arena* arena, size_t capacity
   , SearchGrid& search
   , tile::Database& tiles
 ) 
-    : tiles(tiles),
-search(search)
-  
 {
 this->capacity = capacity;
-  no_inertia_buffer.reserve(capacity);
-  unassigned_buffer.reserve(capacity);
-
+  no_inertia_buffer = arena_make_array<EntityID>(arena, capacity);
+  unassigned_buffer = arena_make_array<EntityID>(arena, capacity);
   this->size = 0;
+  this->tiles = &tiles;
+ 
+  items = arena_make_array<Item>(arena, capacity);
+ 
+  coords = arena_make_array<Coord>(arena, capacity);
+ 
 
-
- 
-  items.reserve(capacity);
-  items.resize(capacity);
- 
-  coords.reserve(capacity);
-  coords.resize(capacity);
- 
 }
+    // =========================
+    // SERIALIZATION
+    // =========================
+
+      template <class Archive>
+    void serialize(Archive &archive) const
+{
+        archive(tiles);
+        archive(search);
+        archive(size);
+        archive(free_slots);
+        archive(alives);
+
+           items.serialize(archive);
+           coords.serialize(archive);
+         
+    }
+         
 
 // =========================
 // GETTERS
@@ -84,10 +96,14 @@ return coords[index];
 
 
   
+// =========================
+// GENERATION
+// =========================
+
+
   // =========================
   // SPAWN
   // =========================
-
 
 bool attempt_spawn(const Item item, const Coord coord, const bool newborn  , const bool insert_search = true
 )
@@ -130,7 +146,7 @@ assert(item != Item::NONE && item != Item::MAX && "Tried to spawn item as NONE o
 
           bool spawn(const Item item, const Coord origin, const bool newborn
 , const bool insert_search = true) {
-Coord spawn_point = tiles.get_nearest_empty_tile(origin);
+Coord spawn_point = tiles->get_nearest_empty_tile(origin);
 bool result = false;
 result = attempt_spawn(item, spawn_point, newborn
 , insert_search  
@@ -141,9 +157,11 @@ attempt_spawn(item, spawn_point, newborn
 , insert_search  
 );
 }
+return result;
 }        
     
 
+  
   // =========================
   // REMOVE
   // =========================
@@ -162,42 +180,21 @@ attempt_spawn(item, spawn_point, newborn
 
   inline void free_unused_entity()
   {
-    for (size_t i = 0; i < coords.size(); i++) {
-    if (tiles.tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
+    for (size_t i = 0; i < coords.capacity; i++) {
+    if (tiles->tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
     }
   }
     
 
-
-    // =========================
-    // SERIALIZATION
-    // =========================
-
-  // genreal serialization
-
-      template <class Archive>
-    void serialize(Archive &archive) const
-  {
-         archive(tiles,
-search,
-size,
-free_slots,
-alives,
-items,
-coords);
-    }
 
 
 // =========================
 // TRANSFER
 // =========================
 
-
 inline bool transfer(size_t i, item::Database &old_db)
   {
-  #if !SHIPPING_BUILD
   assert(i < size);
-  #endif
   
   if (size >= capacity) return false;
   int index;  
@@ -218,21 +215,28 @@ inline bool transfer(size_t i, item::Database &old_db)
   old_db.alives[index] = false;
   return true;
   }
+  
 // @codegen:end database_generation
   
 	inline void add_item(Item item, Coord coord);
 	inline void drop_fruit(Plant plant, Coord coord, uint16_t amount);
 };
 
+  //TODO: metaprogramming
 struct PerishableDatabase
 {
 		Database &database;
-		
+                Array<size_t> indices;		
 };
 
 struct VariantDatabase {
-		Database &database;
-		Array<Variant> variants;
+	Database &database;
+	struct VariantData
+	{
+		Variant variant;
+                size_t index;
+        };
+        Array<VariantData> variant_datas;
 };
   
 }

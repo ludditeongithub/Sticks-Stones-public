@@ -1,3 +1,4 @@
+#pragma once
 #include "data/run/camera.hpp"
 #include "data/run/plant_database.hpp"
 #include "data/types/entity.hpp"
@@ -8,7 +9,7 @@
 
 void render(Game& game)
 {
-	EntityRenderBuffer erb = g_search->get_all_in_range(g_camera_left_corner, );
+		EntityRenderBuffer erb = g_search->get_all_in_range(g_camera_left_corner, );
 // TODO: set new intertias/actions
 		render_chunk_texture(g_world, game.tile_database.tileDatas, g_camera_left_corner, erb, game.plant_database);
 		

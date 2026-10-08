@@ -62,6 +62,30 @@ enum class ButtonState : uint8_t
 	Pressed,
 };
 
+enum class ButtonFunctionality : uint8_t
+{
+	Null,
+	ChangeScreenDimensions,
+	Launch,
+	NewGame,
+	Continue,
+	LoadMenu,
+	LoadGame,
+	SaveGame,
+	About,
+	Options,
+	Video,
+	Audio,
+	Keybindings,
+	ChangeEquipmentView,
+	OpenMenu,
+	SlideMenuLeft,
+	SlideMenuRight,
+	SubmenuSelection,
+	CatalogSelection,
+	MAX
+};
+
 //?
 using ButtonDecoration = std::variant<CustomButtonDecoration, Entity>;
 

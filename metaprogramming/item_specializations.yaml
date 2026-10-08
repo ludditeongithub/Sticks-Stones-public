@@ -1,3 +1,4 @@
+# TODO: application of default values, also in j2
 # OPTI: AoS mode
 specializations:
         wearable:
@@ -36,7 +37,6 @@ specializations:
                 constants:
                         capacity_weight: float
                         capacity_bulk: float
-                # data in AoS
         art:
                 special_cases:
                 constants:
@@ -48,7 +48,6 @@ specializations:
                 special_cases:
                 constants:                       
                         variant: Variant
-
 
 specialization_fields:
         decay:

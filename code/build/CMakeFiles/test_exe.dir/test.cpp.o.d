@@ -291,14 +291,24 @@ CMakeFiles/test_exe.dir/test.cpp.o: \
  /usr/include/c++/16/bits/elements_of.h /usr/include/c++/16/any \
  /home/logan/gameprogramming/code/../extern/magic_enum/magic_enum.hpp \
  /home/logan/gameprogramming/code/display/ui/main/main_menu.hpp \
- /home/logan/gameprogramming/code/core/mouse.hpp \
- /usr/include/SDL2/SDL_rect.h \
- /home/logan/gameprogramming/code/display/render/screen.hpp \
+ /usr/include/SDL2/SDL_events.h /usr/include/SDL2/SDL_video.h \
+ /usr/include/SDL2/SDL_rect.h /usr/include/SDL2/SDL_surface.h \
+ /usr/include/SDL2/SDL_blendmode.h /usr/include/SDL2/SDL_keyboard.h \
+ /usr/include/SDL2/SDL_keycode.h /usr/include/SDL2/SDL_scancode.h \
+ /usr/include/SDL2/SDL_mouse.h /usr/include/SDL2/SDL_joystick.h \
+ /usr/include/SDL2/SDL_guid.h /usr/include/SDL2/SDL_mutex.h \
+ /usr/include/SDL2/SDL_gamecontroller.h /usr/include/SDL2/SDL_sensor.h \
+ /usr/include/SDL2/SDL_quit.h /usr/include/SDL2/SDL_gesture.h \
+ /usr/include/SDL2/SDL_touch.h \
+ /home/logan/gameprogramming/code/display/ui/components/button.hpp \
+ /usr/include/SDL2/SDL_rect.h /usr/include/c++/16/chrono \
+ /usr/include/c++/16/bits/chrono_io.h \
+ /home/logan/gameprogramming/code/display/ui/components/text.hpp \
+ /home/logan/gameprogramming/code/../extern/SDL_FontCache.h \
  /usr/include/SDL2/SDL.h /usr/include/SDL2/SDL_main.h \
  /usr/include/SDL2/SDL_assert.h /usr/include/SDL2/SDL_atomic.h \
- /usr/include/SDL2/SDL_audio.h /usr/include/SDL2/SDL_mutex.h \
- /usr/include/SDL2/SDL_thread.h /usr/include/SDL2/SDL_clipboard.h \
- /usr/include/SDL2/SDL_cpuinfo.h \
+ /usr/include/SDL2/SDL_audio.h /usr/include/SDL2/SDL_thread.h \
+ /usr/include/SDL2/SDL_clipboard.h /usr/include/SDL2/SDL_cpuinfo.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/immintrin.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/x86gprintrin.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/ia32intrin.h \
@@ -408,34 +418,23 @@ CMakeFiles/test_exe.dir/test.cpp.o: \
  /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/amxmovrsintrin.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/avx512bmmintrin.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/avx512bmmvlintrin.h \
- /usr/include/SDL2/SDL_events.h /usr/include/SDL2/SDL_video.h \
- /usr/include/SDL2/SDL_rect.h /usr/include/SDL2/SDL_surface.h \
- /usr/include/SDL2/SDL_blendmode.h /usr/include/SDL2/SDL_keyboard.h \
- /usr/include/SDL2/SDL_keycode.h /usr/include/SDL2/SDL_scancode.h \
- /usr/include/SDL2/SDL_mouse.h /usr/include/SDL2/SDL_joystick.h \
- /usr/include/SDL2/SDL_guid.h /usr/include/SDL2/SDL_gamecontroller.h \
- /usr/include/SDL2/SDL_sensor.h /usr/include/SDL2/SDL_quit.h \
- /usr/include/SDL2/SDL_gesture.h /usr/include/SDL2/SDL_touch.h \
- /usr/include/SDL2/SDL_filesystem.h /usr/include/SDL2/SDL_haptic.h \
- /usr/include/SDL2/SDL_hidapi.h /usr/include/SDL2/SDL_hints.h \
- /usr/include/SDL2/SDL_loadso.h /usr/include/SDL2/SDL_log.h \
- /usr/include/SDL2/SDL_messagebox.h /usr/include/SDL2/SDL_metal.h \
- /usr/include/SDL2/SDL_power.h /usr/include/SDL2/SDL_render.h \
- /usr/include/SDL2/SDL_shape.h /usr/include/SDL2/SDL_system.h \
- /usr/include/SDL2/SDL_timer.h /usr/include/SDL2/SDL_version.h \
- /usr/include/SDL2/SDL_locale.h /usr/include/SDL2/SDL_misc.h \
+ /usr/include/SDL2/SDL_events.h /usr/include/SDL2/SDL_filesystem.h \
+ /usr/include/SDL2/SDL_haptic.h /usr/include/SDL2/SDL_hidapi.h \
+ /usr/include/SDL2/SDL_hints.h /usr/include/SDL2/SDL_loadso.h \
+ /usr/include/SDL2/SDL_log.h /usr/include/SDL2/SDL_messagebox.h \
+ /usr/include/SDL2/SDL_metal.h /usr/include/SDL2/SDL_power.h \
+ /usr/include/SDL2/SDL_render.h /usr/include/SDL2/SDL_shape.h \
+ /usr/include/SDL2/SDL_system.h /usr/include/SDL2/SDL_timer.h \
+ /usr/include/SDL2/SDL_version.h /usr/include/SDL2/SDL_locale.h \
+ /usr/include/SDL2/SDL_misc.h /usr/include/SDL2/SDL_ttf.h \
+ /usr/include/SDL2/SDL.h \
+ /home/logan/gameprogramming/code/display/render/screen.hpp \
  /usr/include/SDL2/SDL_render.h /usr/include/SDL2/SDL_video.h \
  /usr/include/SDL2/SDL_hints.h /usr/include/SDL2/SDL_error.h \
  /usr/include/SDL2/SDL_stdinc.h \
  /home/logan/gameprogramming/code/display/render/texture.hpp \
- /home/logan/gameprogramming/code/data/run/camera.hpp \
  /home/logan/gameprogramming/code/data/game/screen.hpp \
- /home/logan/gameprogramming/code/display/ui/components/element.hpp \
- /usr/include/SDL2/SDL_main.h /usr/include/SDL2/SDL_events.h \
- /home/logan/gameprogramming/code/display/ui/components/button.hpp \
- /usr/include/c++/16/chrono /usr/include/c++/16/bits/chrono_io.h \
- /home/logan/gameprogramming/code/display/ui/components/button_functionality.hpp \
- /home/logan/gameprogramming/code/core/saves.hpp \
+ /home/logan/gameprogramming/code/display/ui/sound/sound.hpp \
  /home/logan/gameprogramming/code/logic/simulation/game.hpp \
  /home/logan/gameprogramming/code/data/run/buildable_database.hpp \
  /home/logan/gameprogramming/code/core/containers.hpp \
@@ -456,12 +455,18 @@ CMakeFiles/test_exe.dir/test.cpp.o: \
  /home/logan/gameprogramming/code/../extern/cereal/types/common.hpp \
  /home/logan/gameprogramming/code/data/run/world.hpp \
  /home/logan/gameprogramming/code/data/types/geography.hpp \
- /home/logan/gameprogramming/code/logic/simulation/world_gen.hpp \
  /home/logan/gameprogramming/code/data/run/tile_database.hpp \
  /home/logan/gameprogramming/code/data/const/tile_data.hpp \
+ /home/logan/gameprogramming/code/data/const/tile_tables.hpp \
+ /home/logan/gameprogramming/code/logic/simulation/world_gen.hpp \
  /home/logan/gameprogramming/code/data/const/buildable_data.hpp \
  /home/logan/gameprogramming/code/data/const/buildable_tables.hpp \
- /home/logan/gameprogramming/code/core/info.hpp \
+ /home/logan/gameprogramming/code/core/info.hpp /usr/include/c++/16/stack \
+ /usr/include/c++/16/deque /usr/include/c++/16/bits/stl_deque.h \
+ /usr/include/c++/16/bits/deque.tcc /usr/include/c++/16/bits/stl_stack.h \
+ /home/logan/gameprogramming/code/data/run/item_database.hpp \
+ /home/logan/gameprogramming/code/../extern/cereal/archives/binary.hpp \
+ /home/logan/gameprogramming/code/logic/generic/search/search.hpp \
  /usr/include/SDL2/SDL_mouse.h \
  /home/logan/gameprogramming/code/core/memory_control.hpp \
  /home/logan/gameprogramming/code/data/run/animal_database.hpp \
@@ -471,12 +476,6 @@ CMakeFiles/test_exe.dir/test.cpp.o: \
  /home/logan/gameprogramming/code/data/const/animal_tables.hpp \
  /home/logan/gameprogramming/code/data/const/time_data.hpp \
  /home/logan/gameprogramming/code/data/const/animal_tables.hpp \
- /home/logan/gameprogramming/code/data/run/item_database.hpp \
- /usr/include/c++/16/stack /usr/include/c++/16/deque \
- /usr/include/c++/16/bits/stl_deque.h /usr/include/c++/16/bits/deque.tcc \
- /usr/include/c++/16/bits/stl_stack.h \
- /home/logan/gameprogramming/code/../extern/cereal/archives/binary.hpp \
- /home/logan/gameprogramming/code/logic/generic/search/search.hpp \
  /home/logan/gameprogramming/code/../extern/cereal/types/vector.hpp \
  /home/logan/gameprogramming/code/../extern/cereal/types/stack.hpp \
  /home/logan/gameprogramming/code/../extern/cereal/types/deque.hpp \
@@ -487,9 +486,6 @@ CMakeFiles/test_exe.dir/test.cpp.o: \
  /home/logan/gameprogramming/code/data/run/unit_helpers.hpp \
  /home/logan/gameprogramming/code/display/render/camera.hpp \
  /home/logan/gameprogramming/code/display/render/draw.hpp \
- /home/logan/gameprogramming/code/display/render/render_chunk.hpp \
- /home/logan/gameprogramming/code/display/ui/components/pop-up_box.hpp \
- /home/logan/gameprogramming/code/../extern/SDL_FontCache.h \
- /home/logan/gameprogramming/code/display/ui/components/text.hpp \
- /home/logan/gameprogramming/code/display/ui/aggregates/swipable_menu.hpp \
- /home/logan/gameprogramming/code/display/ui/sound/sound.hpp
+ /home/logan/gameprogramming/code/display/render/animation.hpp \
+ /home/logan/gameprogramming/code/data/run/camera.hpp \
+ /home/logan/gameprogramming/code/display/render/render_chunk.hpp

@@ -19,7 +19,7 @@ uint32_t plant::Database::get_plant_index()
 bool plant::Database::viable_harvest(int plant_index)
 {
 		Plant plant = plants[plant_index];
-		if (growths[plant_index] < full_maturity_ages[plant] * max_ages[plant])
+		if (growths[plant_index] < FULL_MATURITY_AGES[plant] * MAX_AGES[plant])
 				return true;
 		return false;
 }

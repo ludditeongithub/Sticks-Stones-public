@@ -4,6 +4,7 @@
 #include <data/run/world.hpp>
 #include <data/run/tile_database.hpp>
 #include <data/const/buildable_data.hpp>
+#include <stack>
 
 namespace buildable {
 class Database
@@ -15,7 +16,7 @@ public:
 // =========================
 
 constexpr static uint16_t ENTITY_SIZE = sizeof(Buildable) +
-+ sizeof(bool)!
++ sizeof(bool)
   
  +  sizeof(Buildable) 
  +  sizeof(Health) 
@@ -26,7 +27,7 @@ size_t capacity;
     size_t size = 1; // 0 is placeholder
     std::stack<size_t> free_slots;
     Array<bool> alives;
-  tile::Database& tiles;
+  tile::Database* tiles;
 
     // =========================
     // ENTITY-SPECIFIC MEMBERS
@@ -38,20 +39,16 @@ size_t capacity;
 
 
 // =========================
-// CONSTRUCTOR
+// INIT
 // =========================
 
-  Database(Arena* arena, size_t capacity
+  void init(Arena* arena, size_t capacity
   , tile::Database& tiles
 ) 
-    : tiles(tiles)
-  
 {
 this->capacity = capacity;
-
   this->size = 0;
-
-
+  this->tiles = &tiles;
  
   buildables = arena_make_array<Buildable>(arena, capacity);
  
@@ -67,16 +64,18 @@ this->capacity = capacity;
 
       template <class Archive>
     void serialize(Archive &archive) const
-  {
-         archive(tiles,
-size,
-free_slots,
-alives,
-buildables,
-healths,
-coords);
-    }
+{
+        archive(tiles);
+        archive(size);
+        archive(free_slots);
+        archive(alives);
 
+           buildables.serialize(archive);
+           healths.serialize(archive);
+           coords.serialize(archive);
+         
+    }
+         
 
 // =========================
 // GETTERS
@@ -94,10 +93,14 @@ return coords[index];
 
 
   
+// =========================
+// GENERATION
+// =========================
+
+
   // =========================
   // SPAWN
   // =========================
-
 
 bool attempt_spawn(const Buildable buildable, const Coord coord, const bool newborn  )
 {
@@ -140,7 +143,7 @@ assert(buildable != Buildable::NONE && buildable != Buildable::MAX && "Tried to 
 
           bool spawn(const Buildable buildable, const Coord origin, const bool newborn
 , const bool insert_search = true) {
-Coord spawn_point = tiles.get_nearest_empty_tile(origin);
+Coord spawn_point = tiles->get_nearest_empty_tile(origin);
 bool result = false;
 result = attempt_spawn(buildable, spawn_point, newborn
 );
@@ -149,9 +152,11 @@ free_unused_entity();
 attempt_spawn(buildable, spawn_point, newborn
 );
 }
+return result;
 }        
     
 
+  
   // =========================
   // REMOVE
   // =========================
@@ -168,8 +173,8 @@ attempt_spawn(buildable, spawn_point, newborn
 
   inline void free_unused_entity()
   {
-    for (size_t i = 0; i < coords.size(); i++) {
-    if (tiles.tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
+    for (size_t i = 0; i < coords.capacity; i++) {
+    if (tiles->tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
     }
   }
     

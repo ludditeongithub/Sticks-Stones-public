@@ -51,6 +51,7 @@ databases:
         extra_arrays: [health, movable, positional]
         database_references: [unit]
 
+        
 trait_data:
   - trait_name: age
     name: age

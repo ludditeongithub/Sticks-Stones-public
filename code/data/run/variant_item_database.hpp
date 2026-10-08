@@ -17,7 +17,7 @@ public:
 // =========================
 
 constexpr static uint16_t ENTITY_SIZE = sizeof(Item) +
-+ sizeof(bool)!
++ sizeof(bool)
   
  +  sizeof(Item) 
  +  sizeof(Coord) 
@@ -31,7 +31,7 @@ size_t capacity;
   SearchGrid& search;
   Array<EntityID> no_inertia_buffer; 
   Array<EntityID> unassigned_buffer;
-  tile::Database& tiles;
+  tile::Database* tiles;
 
     // =========================
     // ENTITY-SPECIFIC MEMBERS
@@ -43,24 +43,19 @@ size_t capacity;
 
 
 // =========================
-// CONSTRUCTOR
+// INIT
 // =========================
 
-  Database(Arena* arena, size_t capacity
+  void init(Arena* arena, size_t capacity
   , SearchGrid& search
   , tile::Database& tiles
 ) 
-    : tiles(tiles),
-search(search)
-  
 {
 this->capacity = capacity;
   no_inertia_buffer = arena_make_array<EntityID>(arena, capacity);
   unassigned_buffer = arena_make_array<EntityID>(arena, capacity);
-
   this->size = 0;
-
-
+  this->tiles = &tiles;
  
   items = arena_make_array<Item>(arena, capacity);
  
@@ -76,17 +71,19 @@ this->capacity = capacity;
 
       template <class Archive>
     void serialize(Archive &archive) const
-  {
-         archive(tiles,
-search,
-size,
-free_slots,
-alives,
-items,
-coords,
-variants);
-    }
+{
+        archive(tiles);
+        archive(search);
+        archive(size);
+        archive(free_slots);
+        archive(alives);
 
+           items.serialize(archive);
+           coords.serialize(archive);
+           variants.serialize(archive);
+         
+    }
+         
 
 // =========================
 // GETTERS
@@ -104,10 +101,14 @@ return variants[index];
 
 
   
+// =========================
+// GENERATION
+// =========================
+
+
   // =========================
   // SPAWN
   // =========================
-
 
 bool attempt_spawn(const Item item, const Coord coord, const bool newborn  , const Variant variant  , const bool insert_search = true
 )
@@ -153,7 +154,7 @@ assert(item != Item::NONE && item != Item::MAX && "Tried to spawn item as NONE o
           bool spawn(const Item item, const Coord origin, const bool newborn
   , const Variant variant
 , const bool insert_search = true) {
-Coord spawn_point = tiles.get_nearest_empty_tile(origin);
+Coord spawn_point = tiles->get_nearest_empty_tile(origin);
 bool result = false;
 result = attempt_spawn(item, spawn_point, newborn
   , variant
@@ -166,9 +167,11 @@ attempt_spawn(item, spawn_point, newborn
 , insert_search  
 );
 }
+return result;
 }        
     
 
+  
   // =========================
   // REMOVE
   // =========================
@@ -187,8 +190,8 @@ attempt_spawn(item, spawn_point, newborn
 
   inline void free_unused_entity()
   {
-    for (size_t i = 0; i < coords.size(); i++) {
-    if (tiles.tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
+    for (size_t i = 0; i < coords.capacity; i++) {
+    if (tiles->tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
     }
   }
     
@@ -199,12 +202,9 @@ attempt_spawn(item, spawn_point, newborn
 // TRANSFER
 // =========================
 
-
 inline bool transfer(size_t i, item::Database &old_db)
   {
-  #if !SHIPPING_BUILD
   assert(i < size);
-  #endif
   
   if (size >= capacity) return false;
   int index;  
@@ -226,6 +226,7 @@ inline bool transfer(size_t i, item::Database &old_db)
   old_db.alives[index] = false;
   return true;
   }
+  
 // @codegen:end database_generation
 
 };

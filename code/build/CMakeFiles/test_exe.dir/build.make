@@ -86,10 +86,38 @@ CMakeFiles/test_exe.dir/test.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/test_exe.dir/test.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/test.cpp -o CMakeFiles/test_exe.dir/test.cpp.s
 
+CMakeFiles/test_exe.dir/data/run/world.cpp.o: CMakeFiles/test_exe.dir/flags.make
+CMakeFiles/test_exe.dir/data/run/world.cpp.o: /home/logan/gameprogramming/code/data/run/world.cpp
+CMakeFiles/test_exe.dir/data/run/world.cpp.o: CMakeFiles/test_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/test_exe.dir/data/run/world.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test_exe.dir/data/run/world.cpp.o -MF CMakeFiles/test_exe.dir/data/run/world.cpp.o.d -o CMakeFiles/test_exe.dir/data/run/world.cpp.o -c /home/logan/gameprogramming/code/data/run/world.cpp
+
+CMakeFiles/test_exe.dir/data/run/world.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/test_exe.dir/data/run/world.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/data/run/world.cpp > CMakeFiles/test_exe.dir/data/run/world.cpp.i
+
+CMakeFiles/test_exe.dir/data/run/world.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/test_exe.dir/data/run/world.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/data/run/world.cpp -o CMakeFiles/test_exe.dir/data/run/world.cpp.s
+
+CMakeFiles/test_exe.dir/logic/simulation/world_gen.cpp.o: CMakeFiles/test_exe.dir/flags.make
+CMakeFiles/test_exe.dir/logic/simulation/world_gen.cpp.o: /home/logan/gameprogramming/code/logic/simulation/world_gen.cpp
+CMakeFiles/test_exe.dir/logic/simulation/world_gen.cpp.o: CMakeFiles/test_exe.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/test_exe.dir/logic/simulation/world_gen.cpp.o"
+	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test_exe.dir/logic/simulation/world_gen.cpp.o -MF CMakeFiles/test_exe.dir/logic/simulation/world_gen.cpp.o.d -o CMakeFiles/test_exe.dir/logic/simulation/world_gen.cpp.o -c /home/logan/gameprogramming/code/logic/simulation/world_gen.cpp
+
+CMakeFiles/test_exe.dir/logic/simulation/world_gen.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/test_exe.dir/logic/simulation/world_gen.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/logan/gameprogramming/code/logic/simulation/world_gen.cpp > CMakeFiles/test_exe.dir/logic/simulation/world_gen.cpp.i
+
+CMakeFiles/test_exe.dir/logic/simulation/world_gen.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/test_exe.dir/logic/simulation/world_gen.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/logan/gameprogramming/code/logic/simulation/world_gen.cpp -o CMakeFiles/test_exe.dir/logic/simulation/world_gen.cpp.s
+
 CMakeFiles/test_exe.dir/display/render/texture.cpp.o: CMakeFiles/test_exe.dir/flags.make
 CMakeFiles/test_exe.dir/display/render/texture.cpp.o: /home/logan/gameprogramming/code/display/render/texture.cpp
 CMakeFiles/test_exe.dir/display/render/texture.cpp.o: CMakeFiles/test_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/test_exe.dir/display/render/texture.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/test_exe.dir/display/render/texture.cpp.o"
 	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test_exe.dir/display/render/texture.cpp.o -MF CMakeFiles/test_exe.dir/display/render/texture.cpp.o.d -o CMakeFiles/test_exe.dir/display/render/texture.cpp.o -c /home/logan/gameprogramming/code/display/render/texture.cpp
 
 CMakeFiles/test_exe.dir/display/render/texture.cpp.i: cmake_force
@@ -103,7 +131,7 @@ CMakeFiles/test_exe.dir/display/render/texture.cpp.s: cmake_force
 CMakeFiles/test_exe.dir/display/render/screen.cpp.o: CMakeFiles/test_exe.dir/flags.make
 CMakeFiles/test_exe.dir/display/render/screen.cpp.o: /home/logan/gameprogramming/code/display/render/screen.cpp
 CMakeFiles/test_exe.dir/display/render/screen.cpp.o: CMakeFiles/test_exe.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/test_exe.dir/display/render/screen.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/test_exe.dir/display/render/screen.cpp.o"
 	$(CMAKE_COMMAND) -E __run_co_compile --iwyu="include-what-you-use;--driver-mode=g++" -- /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/test_exe.dir/display/render/screen.cpp.o -MF CMakeFiles/test_exe.dir/display/render/screen.cpp.o.d -o CMakeFiles/test_exe.dir/display/render/screen.cpp.o -c /home/logan/gameprogramming/code/display/render/screen.cpp
 
 CMakeFiles/test_exe.dir/display/render/screen.cpp.i: cmake_force
@@ -117,6 +145,8 @@ CMakeFiles/test_exe.dir/display/render/screen.cpp.s: cmake_force
 # Object files for target test_exe
 test_exe_OBJECTS = \
 "CMakeFiles/test_exe.dir/test.cpp.o" \
+"CMakeFiles/test_exe.dir/data/run/world.cpp.o" \
+"CMakeFiles/test_exe.dir/logic/simulation/world_gen.cpp.o" \
 "CMakeFiles/test_exe.dir/display/render/texture.cpp.o" \
 "CMakeFiles/test_exe.dir/display/render/screen.cpp.o"
 
@@ -124,6 +154,8 @@ test_exe_OBJECTS = \
 test_exe_EXTERNAL_OBJECTS =
 
 test_exe: CMakeFiles/test_exe.dir/test.cpp.o
+test_exe: CMakeFiles/test_exe.dir/data/run/world.cpp.o
+test_exe: CMakeFiles/test_exe.dir/logic/simulation/world_gen.cpp.o
 test_exe: CMakeFiles/test_exe.dir/display/render/texture.cpp.o
 test_exe: CMakeFiles/test_exe.dir/display/render/screen.cpp.o
 test_exe: CMakeFiles/test_exe.dir/build.make
@@ -131,7 +163,7 @@ test_exe: CMakeFiles/test_exe.dir/compiler_depend.ts
 test_exe: /usr/lib/libSDL2-2.0.so.0.3200.70
 test_exe: /usr/lib/libSDL2_image.so
 test_exe: CMakeFiles/test_exe.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable test_exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/logan/gameprogramming/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable test_exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/test_exe.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

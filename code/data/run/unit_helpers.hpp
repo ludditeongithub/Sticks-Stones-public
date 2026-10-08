@@ -11,16 +11,16 @@ inline float generate_skin_warmth(float parent1, float parent2)
 	return std::lerp(crossed_value, random_chance->next(), 0.08);
 }
 
-inline float generate_skin_warmth(World &world, Coord coord)
+inline float generate_skin_warmth(Coord coord)
 {
-  uint16_t chunk = get_chunk_index_from_tile(coord);
-	uint16_t longitude = world.get_chunk_time_zone(chunk);
+  uint16_t chunk = tile_to_chunk_index(coord);
+	uint16_t longitude = g_world->get_chunk_time_zone(chunk);
 	return std::lerp(longitude, random_chance->next(), 0.3);
 }
 
-inline float generate_melanin(World& world, Coord coord) {
-    uint16_t chunk = get_chunk_index_from_tile(coord);
-	uint16_t latitude = world.get_chunk_time_zone(chunk);
+inline float generate_melanin(Coord coord) {
+        uint16_t chunk = tile_to_chunk_index(coord);
+	uint16_t latitude = g_world->get_chunk_time_zone(chunk);
 	return std::lerp(latitude, random_chance->next(), 0.3);
 }
 

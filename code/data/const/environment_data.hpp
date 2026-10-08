@@ -1,10 +1,6 @@
 #pragma once
 #include <data/const/time_data.hpp>
 
-constexpr uint16_t LATITUDE_TOTAL = 180;
-constexpr int LATITUDE_MIN = -90;
-constexpr int LATITUDE_MAX = 90;
-constexpr uint16_t LONGITUDE_TOTAL = 180;
 constexpr float MAX_CLOUD_FACTOR = 3.2;
 
 constexpr uint8_t MAX_ALTITUDE = 120;	     // TODO: check

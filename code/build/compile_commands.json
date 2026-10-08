@@ -7,6 +7,18 @@
 },
 {
   "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern -isystem /usr/include/SDL2 -std=gnu++23 -fPIE -o CMakeFiles/test_exe.dir/data/run/world.cpp.o -c /home/logan/gameprogramming/code/data/run/world.cpp",
+  "file": "/home/logan/gameprogramming/code/data/run/world.cpp",
+  "output": "CMakeFiles/test_exe.dir/data/run/world.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
+  "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern -isystem /usr/include/SDL2 -std=gnu++23 -fPIE -o CMakeFiles/test_exe.dir/logic/simulation/world_gen.cpp.o -c /home/logan/gameprogramming/code/logic/simulation/world_gen.cpp",
+  "file": "/home/logan/gameprogramming/code/logic/simulation/world_gen.cpp",
+  "output": "CMakeFiles/test_exe.dir/logic/simulation/world_gen.cpp.o"
+},
+{
+  "directory": "/home/logan/gameprogramming/code/build",
   "command": "/usr/bin/c++  -I/home/logan/gameprogramming/code -I/home/logan/gameprogramming/code/../extern -isystem /usr/include/SDL2 -std=gnu++23 -fPIE -o CMakeFiles/test_exe.dir/display/render/texture.cpp.o -c /home/logan/gameprogramming/code/display/render/texture.cpp",
   "file": "/home/logan/gameprogramming/code/display/render/texture.cpp",
   "output": "CMakeFiles/test_exe.dir/display/render/texture.cpp.o"

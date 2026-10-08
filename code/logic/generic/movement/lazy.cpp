@@ -46,7 +46,7 @@ else if (actions[i] == Action::Prowl ||
 		{ // TODO: ProwlTile
 			if (rint(0, 50) < 50)
 				directions[i] = get_random_adj_direction(directions[i]);
-			move_in_direction(i, false);
+			coord::move(i, false);
 			// check surroundings, if target is now seen
 			Object obj = current_target[i];
 			if (actions[i] = Action::CheckProwl)
@@ -72,7 +72,7 @@ else if (actions[i] == Action::Prowl ||
 			direction[i] = next.first;
 			if (next.second)
 			{
-				move_in_direction(i, false);
+				coord::move(i, false);
 				inertias[i] = calc_speed(min_speed_pawn, coords[i]);
 			}
 			else
@@ -97,7 +97,7 @@ else if (actions[i] == Action::Prowl ||
 			direction[i] = next.first;
 			if (next.second)
 			{
-				move_in_direction(i, false);
+				coord::move(i, false);
 				inertias[i] = calc_speed(mid_speed_pawn, coords[i]);
 				// promised versions, while approach is non-promise
 				if (actions[i] == Action::GetItem)
@@ -113,7 +113,7 @@ else if (actions[i] == Action::Prowl ||
 				std::pair<Direction, bool> next = next_direction_to_moving_target(i);
 				direction[i] = next.first;
 				if (next.second)
-					move_in_direction(i, false);
+					coord::move(i, false);
 				else
 				{
 					if (actions[i] == Action::Pursuit)

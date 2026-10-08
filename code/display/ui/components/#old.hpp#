@@ -1,24 +1,11 @@
 #pragma once
-
 #include <cstdint>
-#include <variant>
-#include <core/saves.hpp>
-#include <data/types/entity.hpp>
-#include <logic/simulation/game.hpp>
-#include <core/saves.hpp>
-#include "pop-up_box.hpp"
-#include <display/ui/main/main_menu.hpp>
-#include <display/ui/aggregates/swipable_menu.hpp>
+#include <data/types/ui.hpp>
 
-struct SwipableMenu;
-struct MainMenu;
-struct GameSave;
-
-class ButtonFunctionality
+void activate_button(ButtonFunctionality function)
 {
-	public:
-	virtual void trigger();
-};
+		
+}
 
 class NullBF : public ButtonFunctionality
 {
@@ -34,7 +21,7 @@ class ChangeScreenDimensionsBF : public ButtonFunctionality
 	ChangeScreenDimensionsBF(Coord screen_dimensions) : screen_dimensions(screen_dimensions) {}
 	void trigger() override
 	{
-	  screen_dimensions = screen_dimensions;
+	  g_screen_dimensions = screen_dimensions;
 	}
 };
 
@@ -55,6 +42,7 @@ public:
   }
 };
 
+/*
 // MAIN MENU
 struct NewGameBF : public ButtonFunctionality
 {
@@ -66,11 +54,11 @@ struct NewGameBF : public ButtonFunctionality
 		// TODO: player can adjust world gen settings
         g_game->init_new_world();
 		g_game->new_game();
-		g_main_menu->~MainMenu();
+		//g_main_menu->~MainMenu();
 		g_game->start();
         }
 };
-
+*/
 struct ContinueBF : public ButtonFunctionality {
       public:
 	ContinueBF()
@@ -143,7 +131,8 @@ public:
 class KeybindingsBF : public ButtonFunctionality {
 private:
 public:
-  KeybindingsBF() {};
+		KeybindingsBF() {};
+		
 };
 
 class ChangeEquipmentViewBF : public ButtonFunctionality
@@ -162,10 +151,11 @@ public:
   OpenMenuBF(ButtonDecoration menu) : menu(menu) {};  
 void trigger() override
 {
-  open_menu(menu);
+//  open_menu(menu);
 }
 };
 
+/*
 class SlideMenuBF : public ButtonFunctionality
 {
 private:
@@ -175,9 +165,10 @@ public:
   SlideMenuBF(SwipableMenu& menu, bool right) : menu(menu), right(right) {};
 void trigger() override
 {
-  right ? menu.slide_right() : menu.slide_left(); 
+  right ? menu.slide_right() : menu.slide_left();
 }
 };
+*/
 
 class SubmenuSelectionBF : public ButtonFunctionality
 {
@@ -209,3 +200,4 @@ public:
 
 
 // IN GAME
+

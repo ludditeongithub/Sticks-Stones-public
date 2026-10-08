@@ -14,7 +14,7 @@ public:
 // =========================
 
 constexpr static uint16_t ENTITY_SIZE = sizeof(Vehicle) +
-+ sizeof(bool)!
++ sizeof(bool)
   
  +  sizeof(Vehicle) 
  +  sizeof(Health) 
@@ -27,11 +27,10 @@ size_t capacity;
     size_t size = 1; // 0 is placeholder
     std::stack<size_t> free_slots;
     Array<bool> alives;
-  World& world;
   SearchGrid& search;
   Array<EntityID> no_inertia_buffer; 
   Array<EntityID> unassigned_buffer;
-  tile::Database& tiles;
+  tile::Database* tiles;
 
     // =========================
     // ENTITY-SPECIFIC MEMBERS
@@ -45,24 +44,18 @@ size_t capacity;
 
 
 // =========================
-// CONSTRUCTOR
+// INIT
 // =========================
 
-  Database(Arena* arena, size_t capacity
-    , World& world
+  void init(Arena* arena, size_t capacity
   , tile::Database& tiles
 ) 
-    : world(world),
-tiles(tiles)
-  
 {
 this->capacity = capacity;
   no_inertia_buffer = arena_make_array<EntityID>(arena, capacity);
   unassigned_buffer = arena_make_array<EntityID>(arena, capacity);
-
   this->size = 0;
-
-
+  this->tiles = &tiles;
  
   vehicles = arena_make_array<Vehicle>(arena, capacity);
  
@@ -82,19 +75,20 @@ this->capacity = capacity;
 
       template <class Archive>
     void serialize(Archive &archive) const
-  {
-         archive(world,
-tiles,
-size,
-free_slots,
-alives,
-vehicles,
-healths,
-frame_datas,
-inertias,
-coords);
-    }
+{
+        archive(tiles);
+        archive(size);
+        archive(free_slots);
+        archive(alives);
 
+           vehicles.serialize(archive);
+           healths.serialize(archive);
+           frame_datas.serialize(archive);
+           inertias.serialize(archive);
+           coords.serialize(archive);
+         
+    }
+         
 
 // =========================
 // GETTERS
@@ -118,10 +112,14 @@ return coords[index];
 
 
   
+// =========================
+// GENERATION
+// =========================
+
+
   // =========================
   // SPAWN
   // =========================
-
 
 bool attempt_spawn(const Vehicle vehicle, const Coord coord, const bool newborn  )
 {
@@ -168,7 +166,7 @@ assert(vehicle != Vehicle::NONE && vehicle != Vehicle::MAX && "Tried to spawn ve
 
           bool spawn(const Vehicle vehicle, const Coord origin, const bool newborn
 , const bool insert_search = true) {
-Coord spawn_point = tiles.get_nearest_empty_tile(origin);
+Coord spawn_point = tiles->get_nearest_empty_tile(origin);
 bool result = false;
 result = attempt_spawn(vehicle, spawn_point, newborn
 );
@@ -177,9 +175,11 @@ free_unused_entity();
 attempt_spawn(vehicle, spawn_point, newborn
 );
 }
+return result;
 }        
     
 
+  
   // =========================
   // REMOVE
   // =========================
@@ -196,8 +196,8 @@ attempt_spawn(vehicle, spawn_point, newborn
 
   inline void free_unused_entity()
   {
-    for (size_t i = 0; i < coords.size(); i++) {
-    if (tiles.tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
+    for (size_t i = 0; i < coords.capacity; i++) {
+    if (tiles->tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
     }
   }
     
@@ -208,15 +208,13 @@ attempt_spawn(vehicle, spawn_point, newborn
   
     inline bool attempt_move_entity(const EntityID index)
   {
-  #if !SHIPPING_BUILD
   assert(index <= size);
-  #endif
 
         Coord& pos = coord(index);
         Coord new_pos = get_pos(frame_data(index).get<Direction>(), pos);
         size_t ti = g_world->get_tile_index_from_coord(new_pos);
 
-    if (tiles.tile_statuss[ti].get<OccupiedStatus>() == OccupiedStatus::Vacant)
+    if (tiles->tile_statuss[ti].get<OccupiedStatus>() == OccupiedStatus::Vacant)
         {
             pos = new_pos;
             return true;

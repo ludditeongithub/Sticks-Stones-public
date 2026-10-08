@@ -1,6 +1,8 @@
 #include "world_gen.hpp"
+#include <FastNoiseLite.h>
 #include <queue>
 #include <core/position_check.hpp>
+using std::endl;
 
 // TO-DO: refactor all code to use adjacent tiles based on nearest Voronoi
 // seeds, not square cells
@@ -484,7 +486,7 @@ void WorldSpawner::generate_temperature_map()
 		{
 			if (ocean_map[y][x] == 0)
 				continue;
-			uint32_t edist = std::abs(y - equator);
+			uint32_t edist = std::unsigned_abs_diff(y , equator);
 			uint32_t odist = ocean_distance[y][x];
 			uint32_t temperature = 90;
 			// affect temp by latitude
@@ -682,7 +684,7 @@ void WorldSpawner::generate_humidity_map()
 				float adjusted_height = 1.0;
 				float adjusted_lat = float(x) / height;
 				float equator = 0.5;
-				float latitude = std::abs(adjusted_lat - equator);
+				float latitude = std::unsigned_abs_diff(adjusted_lat , equator);
 				float lat_effect = 0.0;
 
 				// simulate hadley effect, which lowers humidity at 30 and 90,
@@ -821,12 +823,12 @@ void WorldSpawner::generate_biomes()
 				for (uint32_t i = 1; i < size; i++)
 				{
 					// get how far away stats are from each biome_type
-					float hum_distance = abs(humidity - get<0>(biome_data[i])) /
+					float hum_distance = unsigned_abs_diff(humidity , get<0>(biome_data[i])) /
 							    get<3>(biome_data[i]);
-					float alt_distance = abs(altitude - get<1>(biome_data[i])) *
+					float alt_distance = unsigned_abs_diff(altitude , get<1>(biome_data[i])) *
 							    2.3 / get<4>(biome_data[i]);
 					float temp_distance =
-					    abs(temp - get<2>(biome_data[i])) / get<5>(biome_data[i]);
+					    unsigned_abs_diff(temp , get<2>(biome_data[i])) / get<5>(biome_data[i]);
 					if (hum_distance + alt_distance + temp_distance < lowest_score)
 					{
 						lowest_score =
@@ -842,7 +844,7 @@ void WorldSpawner::generate_biomes()
 	}
 }
 
-void WorldSpawner::generate_altitude_map()
+void WorldSpawner::generate_altitude_map(FastNoiseLite& r_noise)
 {
 	for (uint32_t y = 0; y < height; ++y)
 	{
@@ -1360,7 +1362,7 @@ void WorldSpawner::generate_tile_types(std::vector<float> &chances, std::vector<
 void WorldSpawner::move_regions_to_chunks(Array<Hum>& humidity_table, Array<Temp>& min_temperature_table, Array<Alt>& altitudes)
 {
 	uint32_t idx = 0;
-	for (uint32_t i = 0; i < LENGTH_CHUNKS; i++)
+	for (uint32_t i = 0; i < coord::length_chunks; i++)
 	{
 		for (uint32_t j = 0; j < HEIGHT_CHUNKS; j++)
 		{
@@ -1390,33 +1392,44 @@ void WorldSpawner::move_regions_to_chunks(Array<Hum>& humidity_table, Array<Temp
 				    temperature_map[key / CHUNK_LENGTH][key % CHUNK_LENGTH] *
 				    (value / total_count));
 
-	altitudes[idx] += static_cast<float>(            altitude_map[key / CHUNK_LENGTH][key % CHUNK_LENGTH] *
-            (value / total_count)))
+	altitudes[idx] += static_cast<float>(altitude_map[key / CHUNK_LENGTH][key % CHUNK_LENGTH] * (value / total_count)))
 			}
 			idx++;
 		}
 	}
 }
 
-	WorldSpawner::pruint32_t_info()
+template <typename T> void WorldSpawner::print_map(T map)
+{
+	for (int x = 0; x < WIDTH; ++x)
+	{
+		for (int y = 0; y < HEIGHT; ++y)
+		{
+			cout << map[x][y] << " ";
+		}
+		cout << endl;
+	}
+}
+
+	void WorldSpawner::print_info()
 	{
 		cout << "Ocean" << endl;
-		pruint32_t_map(ocean_map);
+		print_map(ocean_map);
 		cout << "Lands" << endl;
-		pruint32_t_map(lands_map);
+		print_map(lands_map);
 		cout << "Altitude" << endl;
-		pruint32_t_map(altitude_map);
+		print_map(altitude_map);
 		cout << "Water Bodies" << endl;
-		pruint32_t_map(water_map);
+		print_map(water_map);
 		cout << "Temperature" << endl;
-		pruint32_t_map(temperature_map);
+		print_map(temperature_map);
 		cout << "Humidity" << endl;
-		pruint32_t_map(humidity_map);
+		print_map(humidity_map);
 		cout << "Biomes" << endl;
-		pruint32_t_map(biome_map);
+		print_map(biome_map);
 	}
 
-	WorldSpawner::generate_empty_world()
+	void WorldSpawner::generate_empty_world()
 	{
 		FastNoiseLite noise_layer;
 		noise_layer.SetSeed(1434933);
@@ -1427,21 +1440,21 @@ void WorldSpawner::move_regions_to_chunks(Array<Hum>& humidity_table, Array<Temp
 		noise_layer.SetFractalOctaves(7);       // more detail, extremes appear in cells
 
 		// MAPS
-		world.generate_altitude_map(noise_layer);
-		world.generate_oceans_on_maps(ocean_map, altitude_map, lands_map, land_threshold);
-		world.clean_altitude_map();
-		world.generate_lands_map()
-                world.generate_water_map();
-		world.generate_wbdistances();
-		world.generate_temperature_map();
-		world.generate_humidity_map();
-		world.generate_biomes();
-		world.get_rivers_from_groundwater();
-		std::vector<float> gtc = ws.generate_tile_chances();
-		std::vector<Coord> gvs = ws.generate_voronoi_sites();
-		generate_tiles_types(gtc, gvs);
-		world.calculate_chunk_temperature_inputs();
-		world.calculate_chunk_precipitation_equilibrium();
+		generate_altitude_map(noise_layer);
+		generate_oceans_on_maps();
+		clean_altitude_map();
+		generate_lands_map();
+                generate_water_map();
+	        generate_wb_distances();
+		generate_temperature_map();
+		generate_humidity_map();
+		generate_biomes();
+		get_rivers_from_groundwater();
+		std::vector<float> gtc = generate_tile_chances();
+		std::vector<Coord> gvs = generate_voronoi_sites();
+		generate_tile_types(gtc, gvs, altitude_map);
+// TODO		calculate_chunk_temperature_inputs();
+// TODO		calculate_chunk_precipitation_equilibrium();
 	}
 
 	void generate_world(World &world)
@@ -1450,7 +1463,4 @@ void WorldSpawner::move_regions_to_chunks(Array<Hum>& humidity_table, Array<Temp
 		world_spawner.generate_empty_world();
 		world_spawner.spawn_entities();
 		world.load_chunk_data(world_spawner);
-	}
-
-
 	}

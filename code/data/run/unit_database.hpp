@@ -25,7 +25,7 @@ public:
 // =========================
 
 constexpr static uint16_t ENTITY_SIZE = sizeof(Unit) +
-+ sizeof(bool)!
++ sizeof(bool)
   
  +  sizeof(Unit) 
  +  sizeof(Health) 
@@ -50,11 +50,10 @@ size_t capacity;
     size_t size = 1; // 0 is placeholder
     std::stack<size_t> free_slots;
     Array<bool> alives;
-  World& world;
   SearchGrid& search;
   Array<EntityID> no_inertia_buffer; 
   Array<EntityID> unassigned_buffer;
-  tile::Database& tiles;
+  tile::Database* tiles;
 
     // =========================
     // ENTITY-SPECIFIC MEMBERS
@@ -80,26 +79,19 @@ size_t capacity;
 
 
 // =========================
-// CONSTRUCTOR
+// INIT
 // =========================
 
-  Database(Arena* arena, size_t capacity
-    , World& world
+  void init(Arena* arena, size_t capacity
   , SearchGrid& search
   , tile::Database& tiles
 ) 
-    : world(world),
-tiles(tiles),
-search(search)
-  
 {
 this->capacity = capacity;
   no_inertia_buffer = arena_make_array<EntityID>(arena, capacity);
   unassigned_buffer = arena_make_array<EntityID>(arena, capacity);
-
   this->size = 0;
-
-
+  this->tiles = &tiles;
  
   units = arena_make_array<Unit>(arena, capacity);
  
@@ -143,32 +135,33 @@ this->capacity = capacity;
 
       template <class Archive>
     void serialize(Archive &archive) const
-  {
-         archive(world,
-tiles,
-search,
-size,
-free_slots,
-alives,
-units,
-healths,
-hungers,
-sexs,
-ages,
-targets,
-target_types,
-actions,
-frame_datas,
-inertias,
-coords,
-skin_datas,
-role_manas,
-role_lists,
-skills,
-inventorys,
-places);
-    }
+{
+        archive(tiles);
+        archive(search);
+        archive(size);
+        archive(free_slots);
+        archive(alives);
 
+           units.serialize(archive);
+           healths.serialize(archive);
+           hungers.serialize(archive);
+           sexs.serialize(archive);
+           ages.serialize(archive);
+           targets.serialize(archive);
+           target_types.serialize(archive);
+           actions.serialize(archive);
+           frame_datas.serialize(archive);
+           inertias.serialize(archive);
+           coords.serialize(archive);
+           skin_datas.serialize(archive);
+           role_manas.serialize(archive);
+           role_lists.serialize(archive);
+           skills.serialize(archive);
+           inventorys.serialize(archive);
+           places.serialize(archive);
+         
+    }
+         
 
 // =========================
 // GETTERS
@@ -228,10 +221,14 @@ return places[index];
 
 
   
+// =========================
+// GENERATION
+// =========================
+
+
   // =========================
   // SPAWN
   // =========================
-
 
 bool attempt_spawn(const Unit unit, const Coord coord, const bool newborn  , float parent1, float parent2
 , const bool insert_search = true
@@ -290,7 +287,7 @@ assert(unit != Unit::NONE && unit != Unit::MAX && "Tried to spawn unit as NONE o
             this->frame_data(i) = FrameData{ActState::NewPath, Direction::South, 0};
             this->inertia(i) = 0;
             this->coord(i) = coord;
-            this->skin_data(i) = {generate_melanin(world, coord), generate_skin_warmth(world, coord), 0.5, 0.0};
+            this->skin_data(i) = {generate_melanin(coord), generate_skin_warmth(coord), 0.5, 0.0};
             this->role_mana(i) = STARTING_ROLE_MANA;
             this->role_list(i) = std::array<Role, MAX_ROLES>{};
             this->skill(i) = Skills{};
@@ -306,7 +303,7 @@ assert(unit != Unit::NONE && unit != Unit::MAX && "Tried to spawn unit as NONE o
           bool spawn(const Unit unit, const Coord origin, const bool newborn
 , float parent1, float parent2
 , const bool insert_search = true) {
-Coord spawn_point = tiles.get_nearest_empty_tile(origin);
+Coord spawn_point = tiles->get_nearest_empty_tile(origin);
 bool result = false;
 result = attempt_spawn(unit, spawn_point, newborn
 , parent1, parent2
@@ -319,9 +316,11 @@ attempt_spawn(unit, spawn_point, newborn
 , insert_search  
 );
 }
+return result;
 }        
     
 
+  
   // =========================
   // REMOVE
   // =========================
@@ -340,8 +339,8 @@ attempt_spawn(unit, spawn_point, newborn
 
   inline void free_unused_entity()
   {
-    for (size_t i = 0; i < coords.size(); i++) {
-    if (tiles.tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
+    for (size_t i = 0; i < coords.capacity; i++) {
+    if (tiles->tile_status(i).get<VisionStatus>() == VisionStatus::Hidden) remove(i);
     }
   }
     
@@ -352,15 +351,13 @@ attempt_spawn(unit, spawn_point, newborn
   
     inline bool attempt_move_entity(const EntityID index)
   {
-  #if !SHIPPING_BUILD
   assert(index <= size);
-  #endif
 
         Coord& pos = coord(index);
         Coord new_pos = get_pos(frame_data(index).get<Direction>(), pos);
         size_t ti = g_world->get_tile_index_from_coord(new_pos);
 
-    if (tiles.tile_statuss[ti].get<OccupiedStatus>() == OccupiedStatus::Vacant)
+    if (tiles->tile_statuss[ti].get<OccupiedStatus>() == OccupiedStatus::Vacant)
         {
             pos = new_pos;
             return true;
@@ -374,12 +371,9 @@ attempt_spawn(unit, spawn_point, newborn
 // TRANSFER
 // =========================
 
-
 inline bool transfer(size_t i, unit::Database &old_db)
   {
-  #if !SHIPPING_BUILD
   assert(i < size);
-  #endif
   
   if (size >= capacity) return false;
   int index;  
@@ -415,6 +409,7 @@ inline bool transfer(size_t i, unit::Database &old_db)
   old_db.alives[index] = false;
   return true;
   }
+  
 // @codegen:end database_generation
 };
         

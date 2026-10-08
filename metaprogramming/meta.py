@@ -29,6 +29,7 @@ def replace_block(relative_file_path, marker, new_content):
         f.write(new_contents)
 
 import database
+import allocated_struct
 import entity_spawn
 import world_generation
 import specialization
@@ -37,6 +38,8 @@ import font
 def main():
     database.create_databases()
     font.create_fonts()
+    allocated_struct.create_databases()
+#    specialization.create_specializations()
 
 if __name__ == "__main__":
     main()

@@ -1,5 +1,6 @@
 import meta
 import yaml
+import fmt
 
 def create_specialization(entity_name, specialization_type, specialization, specialization_data):
     context = {
@@ -12,15 +13,16 @@ def create_specialization(entity_name, specialization_type, specialization, spec
 
     "fields": [
     {"name": name, "type": type_}
-    for name, type_ in specialization["fields"].items()
+    for name, type_ in specialization_data["fields"].items()
     ],
 
     "items": [
-        {"name": snake_to_pascal(item_name), **item_data}
+        {"name": fmt.snake_to_pascal(item_name), **item_data}
         for item_name, item_data in specialization_data.items()
     ],
     }
-    template = meta.env.get_template("item_specializations.j2")
+    
+    template = meta.env.get_template("item_specialization.j2")
     first_pass = template.render(**context)
     return meta.env.from_string(first_pass).render(**context)
 
@@ -32,7 +34,6 @@ def create_specializations():
         data = yaml.safe_load(f)
 
     specialization_data = data["data"]
-
     for specialization_name, specialization in specializations["specializations"].items():
         generated_code = create_specialization(
             "item",
@@ -41,10 +42,10 @@ def create_specializations():
             specialization_data[specialization_name],
         )
 
-        relative_path = "world/item/{specialization_name}.hpp"
+        relative_path = "data/run/item_specializations.hpp"
 
         meta.replace_block(
             relative_path,
-            "specialization",
+            specialization_name,
             generated_code,
         )

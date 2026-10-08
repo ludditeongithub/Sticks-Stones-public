@@ -2,13 +2,16 @@
 #include <data/types/tile.hpp>
 #include "data/const/chunk_data.hpp"
 #include "data/const/tile_data.hpp"
+#include "data/const/tile_tables.hpp"
+#include "data/const/unit_data.hpp"
 #include <data/types/entity.hpp>
 #include <vector>
 #include <logic/simulation/world_gen.hpp>
 #include <data/run/world.hpp>
 
+
 namespace tile {
-// TODO: whenever a tile is interacted with, notify all 
+		// TODO: whenever a tile is interacted with, notify all, or consider dropping entitys and leaving that for search
 // TODO: enforce occupied on other databses
 class Database
 {
@@ -24,7 +27,6 @@ constexpr static uint16_t ENTITY_SIZE = sizeof(TileData) +
  +  sizeof(Alt) 
  +  sizeof(Liquid) 
  +  sizeof(TileStatus) 
- +  sizeof(Entity) 
 ;
 
 size_t capacity;
@@ -36,20 +38,17 @@ size_t capacity;
     Array<Alt> altitudes;
     Array<Liquid> waters;
     Array<TileStatus> tile_statuss;
-    Array<Entity> entitys;
 
 
 
 // =========================
-// CONSTRUCTOR
+// INIT
 // =========================
 
-  Database(Arena* arena, size_t capacity
+  void init(Arena* arena, size_t capacity
 ) 
-  
 {
 this->capacity = capacity;
-
  
   tileDatas = arena_make_array<TileData>(arena, capacity);
  
@@ -59,8 +58,6 @@ this->capacity = capacity;
  
   tile_statuss = arena_make_array<TileStatus>(arena, capacity);
  
-  entitys = arena_make_array<Entity>(arena, capacity);
- 
 
 }
     // =========================
@@ -69,14 +66,15 @@ this->capacity = capacity;
 
       template <class Archive>
     void serialize(Archive &archive) const
-  {
-         archive(tileDatas,
-altitudes,
-waters,
-tile_statuss,
-entitys);
-    }
+{
 
+           tileDatas.serialize(archive);
+           altitudes.serialize(archive);
+           waters.serialize(archive);
+           tile_statuss.serialize(archive);
+         
+    }
+         
 
 // =========================
 // GETTERS
@@ -94,9 +92,6 @@ return waters[index];
   inline TileStatus& tile_status(const EntityID index) {
 return tile_statuss[index];
   }
-  inline Entity& entity(const EntityID index) {
-return entitys[index];
-  }
 
 
     
@@ -105,12 +100,29 @@ return entitys[index];
 
 
 // @codegen:end database_generation
-	
+
+		void add_generated_tiles(WorldSpawner::TileSpawnBuffer& spawn_buffer);
 	Coord get_nearest_empty_tile(Coord coord, Adjacency adjacency = Adjacency::Any);
     Coord get_nearest_empty_tile_block(Coord coord, size_t length, size_t width = 1);
-  size_t get_index(const Coord coord){return (coord.y * g_world->height_chunks) + (coord.x * g_world->length_chunks);}
-	Coord get_coord(const size_t index){return Coord({static_cast<uint32_t>(index % g_world->length_chunks), static_cast<uint32_t>(index / g_world->height_chunks)});}
+  size_t get_index(const Coord coord){return (coord.y * coord::height_chunks) + (coord.x * coord::length_chunks);}
+	Coord get_coord(const size_t index){return Coord({static_cast<uint32_t>(index % coord::length_chunks), static_cast<uint32_t>(index / coord::height_chunks)});}
   Frame calc_inertia(const Coord coord, bool running);
    Frame calc_inertia(Frame entity_base_frames, const Coord coord);
 };
+}
+
+void tile::Database::add_generated_tiles(WorldSpawner::TileSpawnBuffer& tsb)
+{
+  #if !SHIPPING_BUILD
+	assert(tsb.size != capacity && "Generated tiles not equal to tiles reserved in database.");  
+  #endif
+        for (size_t i = 0; i < tsb.tiles.size(); i++) {
+				tileDatas[i] = tsb.tiles[i];
+				waters[i] = STARTING_WATER[tsb.tiles[i].get<Tile>()];
+				altitudes[i] = tsb.altitudes[i];
+				TileStatus ts;
+				ts.set(VisionStatus::Hidden);
+//				ts.set(tsb.occupieds[i]);
+                tile_statuss[i] = ts;
+        }	
 }

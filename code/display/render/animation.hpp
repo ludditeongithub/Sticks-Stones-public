@@ -1,20 +1,19 @@
 #ifndef ANIMATION_HPP
 #define ANIMATION_HPP
-#include "data/const/unit_data.hpp"
-#include "data/run/camera.hpp"
 #include "texture.hpp"
 #include <SDL2/SDL_rect.h>
 #include <core/containers.hpp>
 #include <core/coord.hpp>
 #include <data/types/entity.hpp>
 #include <cstdint>
-
 #include <data/types/animal.hpp>
 #include <data/types/tile.hpp>
 #include <data/types/time.hpp>
 #include <data/const/animal_tables.hpp>
 #include <data/types/unit.hpp>
 #include <data/types/action.hpp>
+#include "data/const/unit_data.hpp"
+#include "data/run/camera.hpp"
 #include "sprite.hpp"
 // TODO: sex offsets!
 // TODO: perhaps walking frames last for twice as long as running frames
@@ -255,21 +254,24 @@ inline Frame get_next_unit_frame(Unit u, ActState as, Frame frame_number)
 	// 		frame = 0;
 	// 	break;
 	default:
+          break;
 	}
 	return static_cast<Frame>(frame);
 }
 
 //TODO: elderly, skin
-inline SDL_Rect get_unit_rect(Unit unit, ActState state, Direction direction, Frame frame, Time age) {
+inline SDL_Rect get_unit_rect(Unit unit, ActState state, Direction direction, Frame frame, Time age)
+{
+        bool child = false;
 	if (age < MATURITY_AGE)
 	{
-			
+          child = true;
 	} else if (age < ELDER_AGE) {
 
 	}
 	SDL_Rect sprite_set = sprite::units[unit];
 	int x = sprite_set.x;
-	sprite::Info usi = UNIT_SPRITE_INFO;
+	sprite::Info usi = sprite::UNIT_SPRITE_INFO;
 	x += get_action_sprite_offset(usi, state);
 	x += get_direction_sprite_offset(usi, direction, child);
 
@@ -279,7 +281,7 @@ inline SDL_Rect get_unit_rect(Unit unit, ActState state, Direction direction, Fr
 	return {x, y, static_cast<int>(c.x), static_cast<int>(c.y)};
 }
 
-void update_unit_animations(Coord left_corner, EntityRenderBuffer &erd, Array<Time> &ages, Array<FrameData> &frame_datas)
+void update_unit_animations(EntityRenderBuffer &erd, Array<Time> &ages, Array<FrameData> &frame_datas)
 {
 	for (size_t i = 0; i < erd.animal_amount; i++)
 	{

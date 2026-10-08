@@ -1,7 +1,5 @@
 #pragma once
 
-#include <string>
-#include <cstdint>
 #include <SDL_FontCache.h>
 #include <SDL2/SDL_pixels.h>
 #include <SDL2/SDL_rect.h>
@@ -26,9 +24,9 @@ inline FC_AlignEnum cast_align(Alignment alignment) {
     return FC_ALIGN_RIGHT;
     break;
   default:
-    
+    return FC_ALIGN_CENTER;
   }
-
+  return FC_ALIGN_CENTER;;
 }
 
 constexpr int ALIGNMENT_INDENT_RATIO = 26;
@@ -47,14 +45,16 @@ SCoord get_abs_text_alignment_pos(SDL_Rect container, Alignment alignment)
         return {container.x + (container.w / ALIGNMENT_INDENT_RATIO), container.y + (container.h / 2)}; 
         break;
       case Alignment::Center:
-        return {container.x + (container.w / 2), container.y + container.h / 2)};
+        return {container.x + (container.w / 2), container.y + container.h / 2};
         break;
       case Alignment::Right:
-        return {container.x + container.w - (container.w / ALIGNMENT_INDENT_RATIO), container.y + container.h / 2)};
+        return {container.x + container.w - (container.w / ALIGNMENT_INDENT_RATIO), container.y + container.h / 2};
         break;
       default:
+        return {container.x + (container.w / 2), container.y + container.h / 2};
       }
-    }
+return {container.x + (container.w / 2), container.y + container.h / 2};
+}
 
 SCoord get_text_alignment_pos(SCoord dimensions, Alignment alignment) {
   switch (alignment) {
@@ -62,28 +62,30 @@ SCoord get_text_alignment_pos(SCoord dimensions, Alignment alignment) {
         return {(dimensions.x / ALIGNMENT_INDENT_RATIO), (dimensions.y / 2)}; 
         break;
       case Alignment::Center:
-        return {(dimensions.x / 2), dimensions.y / 2)};
+        return {(dimensions.x / 2), dimensions.y / 2};
         break;
       case Alignment::Right:
-        return {dimensions.x - (dimensions.x / ALIGNMENT_INDENT_RATIO), dimensions.y / 2)};
+        return {dimensions.x - (dimensions.x / ALIGNMENT_INDENT_RATIO), dimensions.y / 2};
         break;
       default:
+        break;
       }
 }
 
 struct Text {
 	FC_Font *font;
+        FC_Effect effect;
 	const char *text;
   
 	Text(FC_Font *font, const char *text = "") {}
 
-  void render(const SDL_Rect &viewport, SCoord position, Alignment alignment)
+  void render(const SDL_Rect &viewport, SCoord position)
   {
-    fc_draw_align(font, renderer, position.x, position.y, cast_align(alignment), text);
+    FC_DrawEffect(font, renderer, position.x, position.y, effect, text);
   }
 
-  void render(const SDL_Rect &viewport, SDL_Rect box, Alignment alignment) 
+  void render(SDL_Rect &viewport, SDL_Rect box) 
   {
-    fc_draw_box_align(font, renderer, box, cast_align(alignment), text);
+    FC_DrawBoxEffect(font, renderer, box, effect, text);
   }
 };

@@ -111,7 +111,7 @@ void animal::Database::assign_unassigned_animals()
 
 			// TODO: assign thirsty animals to drink
 			// assign animals that need to breed to find mate
-			uint16_t season_time = season_time(time, get_chunk_index_from_tile(position(i)));
+			uint16_t season_time = season_time(time, tile_to_chunk_index(position(i)));
 
 			if (season_time <= breeding_season_start[a] &&
 			    season_time >= breeding_season_end[a])

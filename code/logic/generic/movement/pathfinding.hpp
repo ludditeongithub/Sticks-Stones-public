@@ -90,7 +90,7 @@ struct NodeData
 std::vector<NodeData> node_data;
 std::vector<float> tile_move_costs;
 
-float heuristic(Coord a, Coord b) { return std::abs(a.x - b.x) + std::abs(a.y - b.y); }
+float heuristic(Coord a, Coord b) { return std::unsigned_abs_diff(a.x , b.x) + std::unsigned_abs_diff(a.y , b.y); }
 
 PathData a_star(Coord start, Coord goal, int width, int height);
 

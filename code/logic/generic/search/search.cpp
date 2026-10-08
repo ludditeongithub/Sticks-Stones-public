@@ -29,7 +29,7 @@ SearchGrid::SearchGrid(World& world, tile::Database& tiles) :  world(world), til
 
 inline GridInfo SearchGrid::get_nth_nearest_chunk(Coord c, uint16_t n)
 {
-		const uint16_t center = get_chunk_index_from_tile(c);
+		const uint16_t center = tile_to_chunk_index(c);
 	const int ha = c.x % chunk_size;
 	const int va = c.y % chunk_size;
 	const int dist_n = va;
@@ -43,7 +43,7 @@ inline GridInfo SearchGrid::get_nth_nearest_chunk(Coord c, uint16_t n)
 		int16_t offset;
 	};
 
-	const int row = world.LENGTH_CHUNKS;
+	const int row = coord::length_chunks;
 
 	Entry neighbors[8] = {{static_cast<uint16_t>(dist_n), -row},
 			      {static_cast<uint16_t>(dist_s), row},
@@ -86,7 +86,7 @@ void SearchGrid::add_active_chunk(uint16_t index)
 
 inline void SearchGrid::insert_entity(Entity type, EntitySearchData data)
 {
-	uint16_t gc = get_chunk_index_from_tile(data.position);
+	uint16_t gc = tile_to_chunk_index(data.position);
 	uint16_t i = get_tile_index_chunk_relative(data.position);
 	if (!(tiles.occupied_tiles[gc])[i])
 	{
@@ -113,7 +113,7 @@ inline bool SearchGrid::check_collision(Coord tile_coord)
 inline EntitySearchData SearchGrid::get_nearest(Entity e, Coord c)
 {
 	// search per chunk, starting with nearest
-	uint16_t ci = get_chunk_index_from_tile(c);
+	uint16_t ci = tile_to_chunk_index(c);
 	Array<SearchGrid::ChunkBucket *> &buckets = active_chunks[ci] ? active_chunk_buckets : chunk_buckets;
 	uint16_t cbi = active_chunks[ci] ? chunk_to_active_chunks[ci] : ci;
 	auto &&es = buckets[cbi]->find(e);
@@ -148,7 +148,7 @@ inline bool check_adjacent(Entity entity, Coord coord)
 
 inline EntitySearchData SearchGrid::get_nth_nearest(uint16_t nearest, Entity e, Coord c)
 {
-	uint16_t ci = get_chunk_index_from_tile(c);
+	uint16_t ci = tile_to_chunk_index(c);
 	Array<SearchGrid::ChunkBucket *> &buckets =
 		active_chunks[ci] ? active_chunk_buckets : chunk_buckets;
 
@@ -212,7 +212,7 @@ inline EntitySearchData SearchGrid::get_nth_nearest(uint16_t nearest, Entity e, 
 EntityRenderBuffer SearchGrid::get_all_in_range(Coord origin, Coord dimensions)
 {
 	EntityRenderBuffer erd;
-	std::vector<uint16_t> chunks_on_screen = get_chunks_from_area(origin, dimensions);
+	std::vector<uint16_t> chunks_on_screen = coord::get_chunks_from_area(origin, dimensions);
 	for (auto i: chunks_on_screen) {
 			Array<SearchGrid::ChunkBucket *> &cb = active_chunks[i] ? active_chunk_buckets : chunk_buckets;
 	uint16_t cbi = active_chunks[i] ? chunk_to_active_chunks[i] : i;
