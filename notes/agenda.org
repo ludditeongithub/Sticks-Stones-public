@@ -3,6 +3,8 @@
 - currently working on dependencies for serialization, ensuring that it can follow a step-by-step order
 * Pre-Alpha 
 ** TODO Logan
+*** Detail all necessary computations
+*** Finish data layout
 *** Prereq core systems to main loop playable
 **** Pathfinding
 *** Main Loop Playable (Paleolithic)
@@ -338,8 +340,6 @@ generated layer under tiles that is indexed-matched to tile above. replaces tile
 ** advanced graphics:
 https://github.com/DiligentGraphics/DiligentEngine
 * Performance
-** Transcendental Function SIMD
-** Chunked Rendering
 ** Emergency memory and resizing when databases (esp item specializations) get full
 * NOTES
 ** Programming
@@ -367,7 +367,24 @@ I have charted the western pathway, chart other possible pathways. perhaps less 
 ** Complex Roles vs Production roles (Social roles)
 Social roles can be tied to production roles (or not), and also have requirements (property, satisfaction, food) that if not met makes unit with that role unhappy.
 ** User-Determined Aesthetic Culture Buffs
-The user can choose certain colours, and certain simple shapes (consider picking common ones from that psychological theorist who posited that our formation of objects is made up of several individual simple shapes, or perhaps it should be angular features (sharpness, curved, etc). The user then is able to get 'inspirations' for that aesthetic-- if a pawn is attacked by a tiger, the user may get an inspiration for the colour orange, with the value 'ferocity'. Every once in a while they may be able to get enough cultural points for a free aesthetic feature -> buff without inspiration points. Whenever the player's tribe builds an artifact or art that has that aesthetic feature, the player's tribe will receive that additional mini-buff. These aesthetic features can be wider kfpmotifs, or materials, as well. 
+The user can choose certain colours, and certain simple shapes (consider picking common ones from that psychological theorist who posited that our formation of objects is made up of several individual simple shapes, or perhaps it should be angular features (sharpness, curved, etc). The user then is able to get 'inspirations' for that aesthetic-- if a pawn is attacked by a tiger, the user may get an inspiration for the colour orange, with the value 'ferocity'. Every once in a while they may be able to get enough cultural points for a free aesthetic feature -> buff without inspiration points. Whenever the player's tribe builds an artifact or art that has that aesthetic feature, the player's tribe will receive that additional mini-buff. These aesthetic features can be wider motifs, or materials, as well. 
+** Extra
+- TODO: water-powered hammers
+- add more trainer classes
+- flesh out leader classes, maybe add more leader classes
+- Advanced farming: soil types, fertilizers, waterlogging, diseases, weeding, specific sunlight sensitivity
+- Advanced Cuisine - Food variety, Different meats and cheeses, more spices, berries
+- Rust and decay (entropy update) (buildings and tools naturally wear)
+- Bamboo
+- Advanced Fishing
+- Ores extended: Brass, Lead, Nickel
+- Materials extended: Hardwoods, softwoods, Hardstones, softstones
+- Natural Dangers: disease, workplace injuries
+- Architecture expanded: Domes, Arches
+- Advanced Water: Dry Areas, Qanats, Ice, Distillation, Treatment, Salt/Freshwater
+- Weeds
+- Advanced Clothing - buffs for clothes, clothes wear, etc
+- Winds: Sailing, jfarming, knocking small objects
 * Possible Updates
 - TODO: water-powered hammers
 - add more trainer classes

@@ -33,7 +33,7 @@ enum class Tag : uint32_t
 	// TODO: add flammable tags
 	Flammable = 1 << 17,
 	TwoHandedTool = 1 << 18,
-        VisibleInHand = 1 << 19,
+	VisibleInHand = 1 << 19,	
 };
 
 inline const LookupTable<Item, Tag> TAGS = []

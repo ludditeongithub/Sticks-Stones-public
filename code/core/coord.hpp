@@ -1,10 +1,12 @@
 #pragma once
 #include "core/math.hpp"
+#include "core/random.hpp"
 #include <cassert>
 #include <cstdint>
 #include <cmath>
 #include <stdexcept>
 #include <array>
+#include <optional>
 
 enum class Adjacency 
 {
@@ -19,14 +21,7 @@ enum class Direction : uint8_t
 	South = 1,
 	East = 2,
 	West = 3
-};
-
-std::array<SCoord, 4> directions = {
-    SCoord{-1, 0},
-    SCoord{1, 0},
-    SCoord{0, -1},
-    SCoord{0, 1}
-  };     
+};     
 
 struct Coord
 {	    
@@ -72,6 +67,13 @@ struct SCoord
 		return SCoord(this->x * s, this->y * s);
 	}
 };
+
+std::array<SCoord, 4> directions = {
+    SCoord{-1, 0},
+    SCoord{1, 0},
+    SCoord{0, -1},
+    SCoord{0, 1}
+  };
 
 inline uint32_t coord_to_index(Coord c) { return c.x + c.y * c.y; }
 

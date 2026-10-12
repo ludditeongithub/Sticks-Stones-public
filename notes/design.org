@@ -1,73 +1,361 @@
-#+title: Waruniverse
-* Hot and Cold Algorithms
-Estimates are based on:
-- chunk size 32x32
-- player is loading roughly 160 active chunks in late game, passively processing 290 chunks from enemy civs covered by fog of war (update speed vastly slowed on passive chunks)
-** ACTIVE
-Tiles: 163840
-Grass: 113000
-Plants: 28800
-Animals: 2000
-Units: 1450
+#+title: Sticks and Stones Game Design Doc
+#+LATEX_HEADER: \usepackage{hyperref}
+#+LATEX_HEADER: \usepackage{titlesec}
+#+LATEX_HEADER: \titleclass{\subsubsubsection}{straight}[\subsubsection]
+#+LATEX_HEADER: \newcounter{subsubsubsection}
+#+LATEX_HEADER: \renewcommand{\thesubsubsubsection}{\thesubsubsection.\arabic{subsubsubsection}}
+#+LATEX_HEADER: \titleformat{\subsubsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsubsection}{1em}{}
+#+LATEX_HEADER: \titlespacing*{\subsubsubsection}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+#+LATEX_HEADER: \makeatletter
+#+LATEX_HEADER: \def\toclevel@subsubsubsection{4}
+#+LATEX_HEADER: \def\l@subsubsubsection{\@dottedtocline{4}{7em}{4em}}
+#+LATEX_HEADER: \makeatother
+#+LATEX_HEADER: \setcounter{secnumdepth}{4}
+#+LATEX_HEADER: \setcounter{tocdepth}{4}
+* Overview
+** Vision
+Good games express a great truth. Great games express it so well they teach it to the player. Awesome games become many great truths and let the player become them as well.
 
-Total Movables: 3450
-** Hottest 1000+ per frame
-- check if units should move (every tick, x2000)
-*** Plant growth/death update (not death by event)
-- require updates ~ every 30 frames, so ~1300 per frame, can be reduced to Hot if every 60 frames
-*** path job, tile checks
-- ~ 2000 movables have pathfinding being calculated, and 4x tiles need to be checked so >8000 per frame (can improve from A*)
-**** Implementation 
-** Hot 100-1000 per frame
-** Medium 10-50 per frame
-- atttacking unit events
-** Cold 1-10 per frame
-*** temperature update for every chunk
-only ~ second, but for >100 chunks
-*** Jobs of any type started/finished/paused (average job takes thousands of ticks)
-[this should really be wrapped up in contiguous event processing], however ~1.5k units could be initiating/ending jobs that take ~5-10 secs per job
-  - job scheduling identity tag per unit, so that if the job was paused, the job over event taken off the stack must match the right unit and its current scheduling identity tag, which changes whenever the job is paused and is started again (a new event with a new identity tag is calculated whenever the job is (re)started
-** Coldest 1 per frame
-* New Core Implementation
-** Bounding Box Chunks, Enemy Detection for Factions
-Each unit (including animals) belong to a faction. Tiles belong to bounding box. Unit is inside a bounding box, bounding box loses 'ownership' of unit when unit leaves and another bounding box gained it. Each faction has a vector which shows identity of all bounding boxes it has currently detected, which means one or more units in that faction can see that box. Whenever a unit enters a new box, it is checked to see if any enemy factions can see that box. If an enemy faction can see the box, algorithm is triggered to manually detect all members of that faction that can see the box (and therefore the enemy unit which has entered it)-- this may be (often is) none. (or perhaps the detecting units are put on a 'high alert state', which can transition into a enemy detected state' where that can choose how to react (kill enemy, alert other units)). Counter-detection options may also be given to the unit that was detected entering the box. This minimizes checking for detection for every move, when the player and enemies are likely at peace, and also allows for better single unit detection and targeting later.
-* New Core Ideas
-** More civilizational development
-I have charted the western pathway, chart other possible pathways. perhaps less focus on specialization, more focus on developing each individual even MORE deeply.
-- also sex relations can be different.
-  - but the player can always choose.
+The truths this game hopes to teach are:
+- Human history is in a complex organic relationship with the physical world.
+- Simulations are an awesome way to learn things about the world.
 
-   - Memes (symbols, images, ideas) which the player can invest points in, sometimes automatically develop, and can syncretize with other symbols. Many developed memes needed to create a religion.
+The experiential truths this game hopes to become are:  
+- Complex logistics that can be changed, yet is complex enough that the player experiences the wholeness of reality and the real, open, subjective nature of decision making in it.
+- The massive, diverse, a priori diet of the world that feeds the iconic, isolated crystallizations, as moments, legends, philosophies, and art.
+- As time progresses, certain new systems (which have their own laws) emerge from the interactions of the previous systems, which creates new forms and qualities of life.
+- The scope of view changes everything, and a true life requires zooming in and zooming out.
+- Human history is made up of a massive amount of details, yet these coalesce into truly revolutionary moments.
 
-     - Each pawn's *actual role mana* differs from their *raw role mana* (it can be less or more). The player's system of government determines how much control they have over the pawn's role mana, and also buffs/debuffs on role mana values, as well as assigning
+In practice, this game hopes to be:
+- A simulation moving in development, technology, and culture from primitive to advanced society, under the player's influence
+- A simulation which can take curated data (often in the form of mods) to immerse the player in an actual, specific historical period
+- A good balance between realism and the complexity goals laid ahead, without being boring
+- A simulation where the NPCs can autonomously produce simulations of the most extreme moments of human life: having and loving tribes and families, making enemies, dying unique deaths, creating art, expressing powerful emotions, having new thoughts and views on life, connecting to wider groups, but at the same time the player having both a role in and a being able to be sensitive witness to these moments.
+- A simulation where complex and interweaving groups that mirror the new world can autonomously arise due to the individual NPCs actions, but at the same time the player having both a role in and a being able to be sensitive witness to the character and actions of these (some of these) groups.
+- A simulation where the player goes 'oh wow! I never expected that something that dramatic could happen, but its so believable!'
+** Description
+'Sticks and Stones' is a 2D [[Tile][Tile]] Colony Simulator, similar to other indie Colony Simulators like 'Rimworld', 'Dwarf Fortress', and 'Song of Syx.' It is set apart by:
 
-       certain systems of government and culture are better at creating high quality goods, others are good at creating owned quality goods fast.
+1. Real-world historicity and immersion, utilizing real-world technological and cultural development to give the player a realistic yet open-ended experience through a human history of their own.
+2. Complex evolving group dynamics. The player is able to engage with and influence groups which evolve in character and merge and split, from the family, tribe, clan, up to higher level formations like cultures, religions, kingdoms, empires, republics.
+3. Complex and evolving technology, logistics, warfare. The detail of the world allows the evolution of culture, alliances, and technology to be seemless and dialectic. What is discovered, what is produced, what is valued by the NPCs, have hard prerequisites yet the order is not set beforehand and the web of technology is so large that every playthrough feels like a unique history.
+4. Unity of both the detail of simulation at the individual level (view of one unit, their skills, satisfaction, values, life experience) and the grand world level (view of massive structures, the interest of society, large factions). The larger comes into being as the game progresses.
+** Technologies
+The engine is coded from scratch using C++, using CMake and clangd, with the help of free software libraries SDL2, cereal, magic_enum, SDL_FontCache, and FastNoiseLite, as well as Jinja2 for Python metaprogramming.
+* World Simulation
+** Generation
+The world is procedurally generated tile-based game. There is some non-determinism due to the way that altitude is currently determined, which affects later terrain generation. The first stage of the generation happens at the chunk level. First, water bodies and land masses are generated, then mountain ranges and other general altitude zones. Then rivers and lakes. Then humidity is determined by distance from water bodies and randomness. Then [[Temperature][Temperature]] is determined by distance from the equator, water bodies, and randomness. Then biomes based on [[Temperature][Temperature]], humidity and distance from mountains and water bodies. Then the second stage zooms into the [[Tile][Tile]] level. [[Tile][Tile]] altitude is determined based on chunk altitude, biomes, and randomness. [[Tiles][Tiles]] are generated in clusters based on biomes, [[Temperature][Temperature]], altitude, and humidity. After generation is finished, the chunk and tile data are transferred to permanent databases. Biome data is eliminated as it has no actual effect but is only an intermediate data step used to generate the world. 
+** Terrain / Tile<<Tile>><<Tiles>>
+There are many different [[Tiles][Tiles]], where different actions can be performed (building, farming, mining). Each [[Tile][Tile]] has its own altitude, and liquid content (comes from precipitation, rivers). 
+** Plant <<Plant>> <<Plants>>
+Grass and [[Plants][Plants]] grows spontaneously on tiles. Grass growth just changes the [[Tile][Tile]] type. Some [[Plants][Plants]] take up more than one tile like large grown trees and grapevines. If plants compete for spaces, one will stop growing. [[Plant][Plant]] growth depends on the tile having enough water, sunlight, [[Temperature][Temperature]]. [[Plants][Plants]] can not grow or die due to any of these factors being unoptimal. [[Plant][Plant]] growth can be boosted by fertilizer. Some [[Plants][Plants]] produce fruit. Some [[Plants][Plants]] hibernate and can last for several years.
+** Animal <<Animal>> <<Animals>>
+[[Animals][Animals]] eat [[Plants][Plants]] and other [[Animals][Animals]]. Some can be domesticated, some easier then others. Some move in packs, some alone. Many can be used for cookable meat and many produce other useful items from their bodies or corpses. [[Animals][Animals]] migrate. Some [[Animals][Animals]] may be Valued by [[Groups][Groups]].
+** Physics
+*** Temperature <<Temperature>> <<Temperatures>>
+Each chunk has its own base level [[Temperature][Temperature]] value, as well as diurnal (daily) [[Temperature][Temperature]] variance and seasonal [[Temperature][Temperature]] variance, to determine the actual [[Temperature][Temperature]].
 
-       player can control multiple tribes/nations/corporations which may also battle with each other, and if too disparate the player may have to choose one or the other to influence. 
-** Complex Roles vs Production roles (Social roles)
-Social roles can be tied to production roles (or not), and also have requirements (property, satisfaction, food) that if not met makes unit with that role unhappy.
-** User-Determined Aesthetic Culture Buffs
-The user can choose certain colours, and certain simple shapes (consider picking common ones from that psychological theorist who posited that our formation of objects is made up of several individual simple shapes, or perhaps it should be angular features (sharpness, curved, etc). The user then is able to get 'inspirations' for that aesthetic-- if a pawn is attacked by a tiger, the user may get an inspiration for the colour orange, with the value 'ferocity'. Every once in a while they may be able to get enough cultural points for a free aesthetic feature -> buff without inspiration points. Whenever the player's tribe builds an artifact or art that has that aesthetic feature, the player's tribe will receive that additional mini-buff. These aesthetic features can be wider kfpmotifs, or materials, as well. 
-* Possible Updates
-- TODO: water-powered hammers
-- add more trainer classes
-- flesh out leader classes, maybe add more leader classes
-- Advanced farming: soil types, fertilizers, waterlogging, diseases, weeding, specific sunlight sensitivity
-- Advanced Cuisine - Food variety, Different meats and cheeses, more spices, berries
-- Rust and decay (entropy update) (buildings and tools naturally wear)
-- Bamboo
-- Advanced Fishing
-- Ores extended: Brass, Lead, Nickel
-- Materials extended: Hardwoods, softwoods, Hardstones, softstones
-- Natural Dangers: disease, workplace injuries
-- Architecture expanded: Domes, Arches
-- Advanced Water: Dry Areas, Qanats, Ice, Distillation, Treatment, Salt/Freshwater
-- Weeds
-- Advanced Clothing - buffs for clothes, clothes wear, etc
-- Winds: Sailing, jfarming, knocking small objects
+[[Tiles][Tiles]] by default take their [[Temperature][Temperature]] from the chunk, but can have exceptions (usually caused by unit buildings, fires, etc.) The chunk factors also determines precipitation, (it precipitates across entire chunks).
+
+[[Weather Events][Weather Events]] can also effect [[Temperature][Temperature]].
+*** Humidity <<Humidity>> <<Humiditys>>
+Each chunk's base [[Humidity][Humidity]] value is determined by the nearness of water bodies, as well as rain shadow effects from mountains. 
+
+[[Tiles][Tiles]] by default take their [[Temperature][Temperature]] from the chunk, but can have exceptions (usually caused by unit buildings, fires, etc.) The chunk factors also determines precipitation, (it precipitates across entire chunks).
+
+[[Weather Events][Weather Events]] can also effect [[Temperature][Temperature]].
+*** Altitude
+Each [[Tile][Tile]] has an Altitude. Altitude effects [[Temperature][Temperature]], but is only modified during World generation as well as the landslide, snowfall, flood, and tsunami [[Weather Events][Weather Events]].
+*** Precipitation <<Precipitation>> <<Precipitations>>
+The event of [[Precipitation][Precipitation]], as well as its severity, happens based on the [[Humidity][Humidity]] of the chunk, a cycle, and randomness. [[Precipitation][Precipitation]] events make [[Liquid][Liquid]] accumulate.
+*** Liquid <<Liquid>> <<Liquids>>
+[[Liquid][Liquid]] flows from high Altitudes to low Altitudes. Certain thresholds of [[Liquid][Liquid]] create certain water [[Tiles][Tiles]] once they have been reached, returning to the underlying [[Tile][Tile]] if they have been removed. 
+*** Weight <<Weight>> <<Weights>>
+All [[Items][Items]] have [[Weights][Weights]]. Units can only carry so much [[Weight][Weight]].
+*** Bulk <<Bulk>> <<Bulks>>
+All [[Items][Items]] have [[Bulks][Bulks]]. Units can only carry so much [[Bulk][Bulk]], but [[Containers][Containers]] can increase the amount of absolute [[Bulk][Bulk]] they can carry. 
+**** Bulk Level
+The hierarchy of [[Bulk][Bulk]] Level is: liquid, fine, semifine, loose, soft, solid, single. Each [[Item][Item]] has a certain [[Bulk][Bulk]] Level, and every [[Container][Container]] (which includes the hands of a Unit) can only have one [[Bulk][Bulk]] Level active at once. The 'single' and 'liquid' [[Bulk][Bulk]] Levels are exclusive: a [[Container][Container]] can only carry one of those [[Items][Items]] at once, and no other [[Items][Items]]. The other levels have limited [[Bulks][Bulks]] depending on the [[Container][Container]] in question, especially limited for Unit hands (a Unit can only carry a handful of fine sand, but a bucket can carry much).
+
+Only certain [[Containers][Containers]] can carry liquid and fine. 
+*** Calories <<Calories>> <<Caloriess>>
+Units and [[Animals][Animals]] require a certain level of [[Calories][Calories]] to survive, and below a certain level accumulate debuffs. [[Plants][Plants]], [[Animals][Animals]], and Food contains calories. 
+*** Weather Event <<Weather Event>> <<Weather Events>>
+In progress 
+* Units and Unit Interaction
+** Unit Basics
+Units have health, hunger, sex, age, skin datas, [[Skills][Skills]], [[Roles][Roles]], Inventories, known [[Places][Places]], and subscribed [[Groups][Groups]].
+*** Inventory and Equipment
+Units have an Underlayer slot for their head, arms, legs, and chest, and an Overlayer slot for these too. They also can several carry [[Containers][Containers]], the amount depending on how much [[Bulk][Bulk]] and [[Weight][Weight]] the Unit can carry, with a max of 8, not counting nested [[Containers][Containers]].
+*** Skills <<Skills>> <<Skillss>>
+- note: plan to be modified to be more accurate to real life, rather than TTRPGs.
+
+Units have [[Skills][Skills]] that affect their performance at certain [[Roles][Roles]] as well as their [[Values][Values]] and allegiance to [[Groups][Groups]]. [[Skills][Skills]] also have passive effects. [[Skills][Skills]] can be increased overtime slowly. Certain [[Roles][Roles]] increase certain [[Skills][Skills]] extremely slowly. [[Skills][Skills]] increase from birth to adulthood but decay in old age.
+**** Strength
+Affects some attacks. Affects max carrying [[Weight][Weight]].
+**** Athleticism
+Affects movement speed and some attacks.
+**** Dexterity
+Affects some attacks.
+**** Intellect
+Affects rate of leveling. 
+**** Memory
+Increases the amount of [[Role][Role]] mana available, as well as skill decay in old age.
+**** Perception
+Natural increase to [[Satisfaction][Satisfaction]], especially in high Comfort zones. However, more receptive to Fear.
+**** Creativity
+Easier to learn [[Roles][Roles]] in different categories, and multiple [[Roles][Roles]].
+**** Charisma
+Increases opinion faster within [[Groups][Groups]] that track opinion. More likely to be given [[Roles][Roles]] that are elected by [[Groups][Groups]]. Can increase or decrease Fear.
+**** Determination
+Affects rate of leveling and general efficiency (affects the most [[Roles][Roles]]), as well as makes Units more actively try to achieve their own [[Goals][Goals]] and [[Group][Group]] [[Goals][Goals]].
+*** Places <<Places>> <<Placess>>
+Units and [[Groups][Groups]] will respect certain [[Places][Places]] for certain activities, which are marked by the player or are created automatically based on certain conditions.
+** Role <<Role>> <<Roles>>
+Each Unit can be assigned [[Roles][Roles]]. Each [[Role][Role]] takes a different amount of [[Role][Role]] Mana, which a Unit has a set amount of. The efficiency of the tasks being performed by a Unit with a [[Role][Role]] depends on the [[Skills][Skills]] which boost that [[Role][Role]], and the value of those [[Skills][Skills]]. The player can assign swap [[Roles][Roles]], but only after a cooldown, and some Units will not want to be assigned or read-assnged new [[Roles][Roles]].
+
+Each [[Role][Role]] can perform certain actions, though actions are not visible to the player.
+
+There are a few categories of [[Roles][Roles]] get [[Resources][Resources]], produce [[Products][Products]] (take [[Resources][Resources]] or other [[Products][Products]] to produce new [[Products][Products]]),
+*** Trainee
+A Trainee is a [[Role][Role]] that is in progress (though the Unit may already have achieved previous [[Roles][Roles]].)
+**** Child
+All units which are born start as Child. Child can assist others in performing tasks but can only add a bonus to the task efficiency and gain some apprentice experience and increase their [[Skills][Skills]]. 
+**** Apprentice
+When a Unit is first assigned a [[Role][Role]] it begins as an Apprentice, and each [[Role][Role]] has a different Apprentice time. The Unit can perform the task at a much slower rate while they are an Apprentice. 
+*** Resource <<Resource>> <<Resources>>
+Certain [[Items][Items]] already exist in the world and only involve a Unit attaining them in some manner. They may require other [[Items][Items]] to be harvested but they do not require another [[Item][Item]] to be consumed to be made. These are handled by [[Resource][Resource]] [[Roles][Roles]], including but not limited to: gathering, fishing, mining, planting, breeding.
+
+Tend to correlate largely to Strength, moderately to Determination, Athleticism, Dexterity, slightly to Perception [[Skills][Skills]].
+*** Product <<Product>> <<Products>>
+Certain [[Items][Items]] require other [[Items][Items]] to be consumed to be made, these are [[Products][Products]]. Most [[Items][Items]] are [[Products][Products]]. However, Producers don't just produce [[Products][Products]], they can also produce [[Buildables][Buildables]] from [[Products][Products]] and [[Resources][Resources]]. 
+
+Tend to correlate largely to Dexterity, moderately to Memory, Perception, Strength, slightly to Intellect, Creativity, Determination and Athleticism [[Skills][Skills]].
+*** Research <<Research>> <<Researchs>>
+Certain [[Roles][Roles]] do not produce anything tangible (at least primarily, as many Researchers are also Producers), but contribute to society's progression by advancing [[Knowledge][Knowledge]].
+
+Tend to correlate largely to Intellect, Memory, moderately to Determination, Creativity and Charisma (diplomats), slightly to Perception (explorers) [[Skills][Skills]].
+*** Art <<Art>> <<Arts>>
+Certain [[Roles][Roles]] produce something that is not used primarily to produce more [[Products][Products]] or [[Buildables][Buildables]] for survival. Some [[Art][Art]] roles produce nothing tangible at all. Regardless, their output is judged more on its Quality then [[Resource][Resource]], [[Product][Product]], or [[Support][Support]] [[Roles][Roles]].
+
+Tend to correlate largely to Creativity, Dexterity, moderately to Memory, Perception, Charisma, Determination, slightly to Intellect [[Skills][Skills]].
+*** Support <<Support>> <<Supports>>
+Certain [[Roles][Roles]] largely boost things like [[Order][Order]] or [[Trade][Trade]], or boost the efficiency of other [[Roles][Roles]]. Some [[Roles][Roles]] may actually be counter-productive to the overall development or [[Order][Order]], even of [[Groups][Groups]] they are a part of (such as Bandit, Zealot, Landowner, and Money Lender roles, depending on the situation), and these fall into this class as well.
+
+Tend to correlate moderately to Charisma, Intellect, and Memory [[Skills][Skills]].
+*** Training <<Training>> <<Trainings>>
+Certain [[Roles][Roles]] train other [[Roles][Roles]]. Oftentimes this will be a secondary category.
+
+[[Training][Training]] is boosted directly by the Charisma, Intellect, Memory, and Perception [[Skills][Skills]], as well as the trainer having high [[Skills][Skills]] relevant to the [[Role][Role]], as well as being in the same [[Groups][Groups]] or having shared [[Values][Values]].
+*** Melee <<Melee>> <<Melees>>
+Tend to correlate highly with Strength, Athleticism, moderately with Dexterity, slightly with Perception, Determination.
+*** Ranged <<Ranged>> <<Rangeds>>
+Tend to correlate highly with Athleticism, Perception, moderately with Dexterity, slightly with Strength, Intellect. 
+*** Leader <<Leader>> <<Leaders>>
+Boosts entire [[Groups][Groups]] or [[Roles][Roles]]. Tend to correlate with highly with Determination, Charisma, slightly with Intellect, Memory, Perception. though also directly correlates to the actual [[Roles][Roles]]' [[Skills][Skills]].
+** Motivations
+*** Basic Motivations
+**** Hunger
+**** Water
+**** Comfort
+**** Fear
+*** Bonus Motivations
+*** Personality Motivations
+**** Moral Perfection
+**** Affection
+**** Status
+**** Uniqueness
+**** Expertise
+**** Security
+**** Excitement
+**** Autonomy
+**** Peace
+** Value<<Value>><<Values>>/Valuable<<Valuable>><<Valuables>>
+A [[Value][Value]] is simply a subjective preference for any [[Valuable][Valuable]]. A [[Valuable][Valuable]] is anything that can be conceptualized with reference to the simulation: certain [[Animals][Animals]], [[Items][Items]], [[Plants][Plants]], [[Buildables][Buildables]], Motivations, Units with certain traits (physical, [[Role][Role]], Personality), and [[Groups][Groups]]. Units can be members of [[Groups][Groups]] and simultaneously negatively [[Value][Value]] them. For the sake of complexity and performance, most [[Values][Values]] will be unset, and thus the Unit will have the default preference for that [[Valuable][Valuable]]. Above a certain threshold of [[Value][Value]], a [[Group][Group]]'s [[Values][Values]] will come to influence a Unit's [[Values][Values]].
+
+There are some very common [[Value][Value]] Patterns. These are abstract formulas for the [[Values][Values]] certain Units or [[Groups][Groups]] are more likely to be generated with or gain over time. For example, Units are more likely to have certain [[Values][Values]] if they have certain [[Roles][Roles]] or Personality traits. Units are also likely to [[Value][Value]] the [[Role][Role]] they have especially if they a [[Group][Group]] which is [[Values][Values]] that [[Role][Role]] is a [[Group][Group]] they [[Value][Value]].
+** Interest<<Interest>><<Interests>>/Goal<<Goal>><<Goals>>
+A [[Goal][Goal]] is tangible task that a Unit or [[Group][Group]] tries to achieve. It can sometimes be a single task, such as 'marry X', 'get X [[Item][Item]]', 'kill X'. [[Groups][Groups]] can also have open-ended versions of [[Goals][Goals]], called [[Interests][Interests]]. An [[Interest][Interest]] is a [[Goal][Goal]] which is usually never achieved but progress can always be made, such as 'establish trade routes', or 'expand territory.'
+** Group <<Group>> <<Groups>>
+[[Groups][Groups]] can grow over time and be small or large. They represent things as narrow as families and tribes and as broad as cultures and empires. A Unit likely belongs to a few or even several [[Groups][Groups]]. [[Groups][Groups]] may have their own Motivations and [[Values][Values]], and even [[Goals][Goals]] and [[Interests][Interests]]. Oftentime a [[Group][Group]] can form around something simple like preferences for a collection of [[Items][Items]] if the prospective members of that [[Group][Group]] value it enough. The makeup and character of [[Groups][Groups]] also depends heavily on the state of other [[Groups][Groups]] and their interrelations. As an example some [[Groups][Groups]] might even form just as an opposition to another [[Group][Group]] and immeadiately dissolve if that [[Group][Group]] is destroyed (for example, a [[Group][Group]] that forms with the sole goal of assassinating
+
+[[Groups][Groups]] make the game highly dynamic and unpredictable, and give the player.
+
+A Unit's [[Satisfaction][Satisfaction]], [[Goals][Goals]], Motivations, and [[Values][Values]] will often be derivative of the [[Groups][Groups]] of which they are a member, especially if they [[Value][Value]] that [[Group][Group]]. Firstly, when given a choice Units are more likely to choose to be a part of [[Groups][Groups]] that share their [[Values][Values]]. 
+
+[[Groups][Groups]] of certain types also have the ability to negotiate with other [[Groups][Groups]]-- for example, families may marry or exchange gifts, tribes and princedoms may make 
+** Event <<Event>> <<Events>>
+[[Groups][Groups]] controlled by the player make the player receive [[Events][Events]] related to that [[Group][Group]]. A player will not receive duplicate [[Events][Events]] if two or more of the [[Groups][Groups]] they control receive the same [[Event][Event]], unless they are opposed in the [[Event][Event]]. (this section is to be expanded).
+* Item <<Item>> <<Items>>
+As mentioned their are two main classes of [[Items][Items]], [[Resources][Resources]] and [[Products][Products]]. However there are certain traits of [[Items][Items]] that serve different functions.  The recipe of new [[Items][Items]] is unlocked through new [[Technology][Technology]].
+** Tool <<Tool>> <<Tools>>
+These are [[Items][Items]] which are required to make other [[Items][Items]] but not consumed in the process of making a single [[Item][Item]] (though some  deteroriate as they are used).
+*** Weapon
+These are [[Tools][Tools]] which can be used to deal additional damage.
+** Art <<Art>> <<Arts>>
+These [[Items][Items]] often do not have a practical production use after they are created but instead give passive bonuses to Units and [[Groups][Groups]].
+** Containers <<Container>> <<Containers>>
+These [[Items][Items]] carry other [[Items][Items]], often managing [[Weight][Weight]] and [[Bulk][Bulk]].
+** Wearable <<Wearable>> <<Wearables>>
+These [[Items][Items]] can be equipped and let Units survive at more extreme [[Temperatures][Temperatures]] or protect Units from attacks.
+** Perishable <<Perishable>> <<Perishables>>
+These [[Items][Items]] can deterioriate without being used at all.
+* Buildables <<Buildable>> <<Buildables>>
+Walls, Roofs, and Stations which can be worked at, made of different materials. Most cannot be moved, only destroyed, and cannot enter Inventories. They are [[Products][Products]].
+* Order <<Order>> <<Orders>>
+Determined by dimensions:
+1. [[Legal][Legal]]
+2. [[Administrative][Administrative]]
+3. [[Cultural][Cultural]]
+4. [[Satisfaction][Satisfaction]]
+5. [[Force][Force]]
+
+[[Order][Order]] applies to [[Groups][Groups]] larger than a certain size, and the amount of [[Order][Order]] required is determined by the Sacrifice required by the [[Group][Group]]. If [[Order][Order]] is low, it is likely certain Units will become criminals or rebels, killing other units, and it is more likely new [[Groups][Groups]] will be formed as Units will be less loyal to current [[Groups][Groups]]. It is also more likely that those [[Groups][Groups]] will be attacked. However the player may choose to support a rebellion against or a transformation of the [[Groups][Groups]] they control.  
+** Legal <<Legal>> <<Legals>>
+This source of [[Order][Order]] is stable and really only hard to keep above a minimum level, or go down quickly, if High [[Leaders][Leaders]] have recently been killed. However, it is hard for it to get to a high level. Raising [[Legal][Legal]] [[Order][Order]] too high also causes [[Satisfaction][Satisfaction]] [[Order][Order]] to decrease, and makes it harder to produce [[Administrative][Administrative]] [[Order][Order]].
+- Produced passively by High [[Leaders][Leaders]]
+- High [[Leaders][Leaders]] have abilities to raise [[Legal][Legal]] [[Order][Order]] immeadiately, leading to lower [[Satisfaction][Satisfaction]]
+- Produced by Priests, High Priests, Lawyers, Judges, Senators
+- Senators can also ensure that [[Legal][Legal]] [[Order][Order]] doesn't increase past a certain amount
+- Reduced when new [[Knowledge][Knowledge]] is discovered
+** Administrative <<Administrative>> <<Administratives>>
+This source of [[Order][Order]] depends on [[Legal][Legal]] [[Order][Order]]. If [[Legal][Legal]] [[Order][Order]] is too low or too high, [[Administrative][Administrative]] [[Order][Order]] will also be harder to create. As [[Legal][Legal]] [[Order][Order]] goes up from a certain point, [[Administrative][Administrative]] [[Order][Order]] will also decrease, at a smaller rate. High [[Administrative][Administrative]] [[Order][Order]] also means that the [[Force][Force]] [[Order][Order]] requirements are lower. [[Administrative][Administrative]] [[Order][Order]] can also be spent to enact certain [[Leader][Leader]] abilities, and is decently easy to create quickly. Low administrative order will also lower the amount of actual taxes that are collected, despite the set tax rate. Most importantly, [[Administrative][Administrative]] [[Order][Order]] affects [[Production][Production]] Command.
+- High [[Leaders][Leaders]] produce large amounts passively, depending on their personality traits
+- Produced by Landowner Subclasses, Bureaucrat, Senator, and Governor
+- Raised by ample Royal wealth
+- Lowered by large debt
+** Cultural <<Cultural>> <<Culturals>>
+This source of [[Order][Order]] is difficult to create rapidly, and depends on many factors. High [[Cultural][Cultural]] [[Order][Order]] gives all Units a passive boost, and also unlocks certain Rituals which give further boosts or abilities. The only downside of having [[Cultural][Cultural]] [[Order][Order]] super high is that captured foreign units will have a larger debuff before they are assimilated.
+- High [[Leaders][Leaders]] produce an amount, depending on their personality traits
+- Mostly produced by [[Art][Art]], especially Artifact Artists, which is multiplied based on the varieties, beauty level, and history of that artform in the nation
+- Also produced by Shamans, Priests, High Priests
+- Modified positively or negatively by the amount of recently discovered Academic [[Knowledge][Knowledge]]
+- Lowered by low [[Value][Value]] adherence, but can get a massive boost if [[Value][Value]] adherence becomes too low or there is a rapid change of [[Values][Values]]
+** Satisfaction <<Satisfaction>> <<Satisfactions>>
+This source of [[Order][Order]] is the easiest kind of [[Order][Order]] to create rapidly, as long as the player has enough resources and certain types of Units. However, if [[Satisfaction][Satisfaction]] is quite low it is also likely that the player is lacking in other crucial resources. High [[Satisfaction][Satisfaction]] also means that the [[Force][Force]] [[Order][Order]] requirements are lower.
+- Depends primarily on meeting Basic Motivations
+- Secondarily on Bonus Motivations, Personality Motivations
+- Tertiarily on environment beauty
+- Lowered by large amounts of soldiers, and somewhat by large amounts of resource workers
+- Lowered by high set taxes
+- Hugely lowered by mass death, especially of civilians
+** Force <<Force>> <<Forces>>
+This source of [[Order][Order]] is also quite difficult to obtain because it is primarily based on army size and unit quality.
+- Calculated by the power of army
+* Knowledge <<Knowledge>> <<Knowledges>>
+The forms of [[Knowledge][Knowledge]] are:
+1. Exploration
+2. [[Technology][Technology]]
+3. Units
+4. Foreign
+5. Academic
+
+New [[Knowledge][Knowledge]] of all forms will be unlocked passively at a certain rate (assuming certain units are doing other tasks), except Exploration, but the main source of [[Knowledge][Knowledge]] is Researchers. [[Knowledge][Knowledge]] itself, also affects other stats such as [[Cultural][Cultural]] [[Order][Order]] and [[Legal][Legal]] [[Order][Order]].
+
+with units that can evolve into other units that have not been discovered randomly having a "Eureka" moment rarely, if the required resources to create that new unit are also available to the player.
+** Exploration
+Explorers discover previously hidden tiles on the map which stay revealed, unlike other units, which will reveal them for a time and then fog of war will reappear. As explorers permanently reveal tiles, Exploration [[Knowledge][Knowledge]] increases. Since the world is infinite, Exploration [[Knowledge][Knowledge]] is always decreasing at a fixed rate. Maps from foreign nations can also be bought, which increases Exploration [[Knowledge][Knowledge]] and reveals areas of the map.
+** Academic
+This [[Knowledge][Knowledge]] functions more like an [[Order][Order]] type. Academic [[Knowledge][Knowledge]] does nothing by itself, but vastly speeds up the production of other types of [[Knowledge][Knowledge]] and [[Order][Order]].
+
+Perhaps the most important function of Academic [[Knowledge][Knowledge]] is that it can be used to create certain roles from Students through Trainers and books, and boost unit and technology research. There are also some technologies which are near impossible to unlock without a certain level of Academic research.
+
+There are four subcategories of Academic [[Research][Research]]:
+1. Natural
+2. Philosophy
+3. Mathematics
+4. History
+
+The rate at which Academic [[Knowledge][Knowledge]] decays is lessened by the production of books.
+*** Natural
+AKA "Natural Philosophy", what we would think of as Science.
+**** Techs which Require
+**** Units which Require
+**** Boosts
+*** Philosophy
+This boosts [[Legal][Legal]] and [[Administrative][Administrative]] [[Order][Order]] and boosts/allows training for [[Order][Order]] Supporters. Also, it is a prerequisite for some [[Order][Order]] Tech/Units. If too low, [[Legal][Legal]] [[Order][Order]] will be set at a minimum.
+*** Mathematics
+This boosts/allows training for Engineering Tech Researchers, Explorers, [[Trade][Trade]], and Structures Producers.
+*** History
+This boosts/allows training for [[Cultural][Cultural]] and [[Legal][Legal]] [[Order][Order]] and Foreign Researchers, as well as a small boost to [[Satisfaction][Satisfaction]]
+** Technology <<Technology>> <<Technologys>>
+The required tools which units need to do their roles. Sometimes, it will unlock a new role immediately (usually when a new level metal is discovered), but sometimes, the new roles need to be discovered independently of the technology they use (e.g: priest, scribe).
+
+There is a small chance new technology can be invented by related classes, usually by the unit that evolves into the unit that uses or makes that technology, if the required resources to craft that technology are nearby. However, the most reliable way to unlock new technologies is by having a tech researcher near the required materials (which often means a large set of materials), where he will start to "work on" the problem, and then after a randomized amount of time will "discover" the new technology. Alternatively, technology researchers can be given related books instead when they become available, and given enough time will unlock related technologies. [[Technology][Technology]] can also be given between [[Groups][Groups]].
+** Role Knowledge
+Closely intertwined with technology, but often unlocking a new technology can unlock no [[Role][Role]], one [[Role][Role]], or many [[Role][Role]], and some [[Roles][Roles]] can be unlocked only ages after the technological requirements have been unlocked. The same discovery processes that apply to tech apply to units, but instead Researchers are assigned to follow around Units which are predecessors to the [[Role][Role]] that needs to be unlocked (though of course, unless the player has played the game before, they do not know what the [[Role][Role]] is). Like technologies, researchers can also be given books.
+** Foreign
+This [[Knowledge][Knowledge]] allows closer relations with friendlies, or advantages in warfare against enemies. It also boosts [[Trade][Trade]].
+
+If a nation is an enemy (at war), only Spies can be sent, but if a nation is a friendly or neutral, all types of Foreign researchers can be sent. If a nation dislikes your nation, the ruler may or may not allow other Foreign Researchers.
+
+If Foreign [[Research][Research]] is high, it will also boost Academic, [[Technology][Technology]], and Unit [[Research][Research]] through [[Knowledge][Knowledge]] sharing, or Exploration [[Research][Research]] by purchasing maps.
+* Economy
+** Production <<Production>> <<Productions>>
+Tab that analyzes what is produced in a [[Group][Group]] and how much. This tab also allows the player to set automatic policies for managing production of that [[Group][Group]] if he has certain [[Roles][Roles]]. These policies automatically lower and raise quotas depending on certain factors. [[Group][Group]] members of certain [[Roles][Roles]] must collect this data for it to be visible, and it can even be inaccurate.
+** Trade <<Trade>> <<Trades>>
+ Only [[Groups][Groups]] of a certain size, with certain [[Interests][Interests]], and with a certain amount of [[Roles][Roles]] can get a [[Trade][Trade]] score. [[Trade][Trade]] does not actually reflect the absolute state of production in a [[Group][Group]]: a [[Group][Group]] can have 0 [[Trade][Trade]] and still produce plenty for its members. [[Group][Group]] members of certain [[Roles][Roles]] must collect this data for it to be visible, and it can even be inaccurate.
+*** Exports
+Amalgam of the /amount of exports/ and /average profit/.
+**** Amount of Exports
+Affected by:
+- Surplus production (production set aside by player, that is not to be made or used by domestic workers)
+- Amount of [[Trade][Trade]](Foreign) produced by Trader Units
+- Tarriff Rate
+- Domestic Opinion of Foreign Nation
+- Foreign Opinion of Domestic Nation
+- [[Knowledge][Knowledge]] (Foreign)
+- [[Trade][Trade]] Deals and Embargos (can set amount to 0)
+- Wars or Previous Wars
+***** Tarriff Rate
+Because tarriffs set by foreign governments are often actually paid by the foreign customers, this affects the amount of exports as well as the profit, since foreign customers are less likely to buy, and domestic traders are les likely to sell.
+***** Trade Deals
+***** Embargos
+Other [[Groups][Groups]] can choose to completely limit foreign exports from your nation.
+**** Average Profit
+Affected by:
+- Demand of Goods
+- Amount of Exports (negatively)
+- Amount of [[Trade][Trade]](Foreign) produced by Trader Units
+- Foreign Opinion of Domestic Nation
+- [[Knowledge][Knowledge]] (Foreign)
+- Tarriff Rate
+- [[Trade][Trade]] Deals
+*** Imports
+The amount of useful imports that are purchased by the [[Group][Group]]. This number matters less, but the actual products you or your Units are buying likely matters more. However, one the scores that affects it, /average savings/, likely does matter and determines whether the [[Group][Group]] will make future imports. Some [[Leaders][Leaders]] can enact Royal Decrees to order quotas of specific imports, or leave it up to Traders based on regular production quotas and Profit [[Value][Value]].
+
+Like Exports, this is an amalgam of /amount of imports/ and /average savings/.
+**** Amount of Imports
+The amount of imports the [[Group][Group]] is buying. Player can see this in a pie-chart view based on certain general classes of goods.
+Affected by:
+- Set Quotas by Royal Decrees
+- Foreign Tarriffs placed by player
+- Foreign Opinion
+- [[Trade][Trade]](Foreign) produced by Trader units
+- Domestic Opinion of Foreign Nation
+- [[Trade][Trade]] Deals/Embargos placed by player
+- War/recent war
+**** Average Savings
+Affected by:
+- Domestic goods production
+- Amount of Imports (positively)
+- Foreign Tarriffs placed by player
+- [[Trade][Trade]](Foreign) produced by Trader units
+- Foreign Opinion
+- [[Trade][Trade]] Deals
+** Taxes <<Taxes>>
+The amount of taxable production and trade by the [[Group][Group]]. Allows player to raise and lower taxes given correct [[Roles][Roles]]. Relies on [[Production][Production]] and [[Trade][Trade]] data.
+* War/Military
+Regular Units can climb over regular walls, but not tall walls. Siege Towers and Siege Ladders allow units to climb over tall walls.
+** Player Control
+Player can either select units manually, and control them, or can get lieutenants to have 'active recruiting' of certain priorities, which means that units with military roles will automatic join up with their lieutenants
+* Balancing
+Balancing [[Goals][Goals]]
 * Time and Age Goals
+These are not hard ages. At most maybe an achievement, does not affect game mechanics at all but is just a tool for dev understanding and communication.
 ** Paleolithic
-~ Goal of how long the age takes in real time at 2x average speed: 5-7 hours
+~ [[Goal][Goal]] of how long the age takes in real time at 2x average speed: 5-7 hours
 - Starting pawns: Childrearer, Scavenger, Child
   - Scavenger quickly discovers Knapper after finding flint or rocks and being idle
   - First scavengers that gather sticks and wood and flint discover fire, or put stick in lighting fire to make a torch, unlocking Firekeeper
@@ -75,900 +363,8 @@ The user can choose certain colours, and certain simple shapes (consider picking
 - Knapper can make primitive spear, discovering Spear Hunter
 - When a fire is made, that unlocks Storyteller
 - Older pawns become Elder or Shaman
-- Elder thinks of Ornamenter from Animals or found bones, Basket Weaver if hemp or flax is found, Woodcutter if have knapped primitive hand axes, Craftsman, or Shelter Builder if have wood and other materials, and Fish Hunter if around Primitive Spearman, exiting the age (at least one original adult must reach maturity in this age)
+- Elder thinks of Ornamenter from [[Animals][Animals]] or found bones, Basket Weaver if hemp or flax is found, Woodcutter if have knapped primitive hand axes, Craftsman, or Shelter Builder if have wood and other materials, and Fish Hunter if around Primitive Spearman, exiting the age (at least one original adult must reach maturity in this age)
 
 ** Mesolithic
-~ Goal of how long the age takes in real time at 2x average speed: 7-12 hours
+~ [[Goal][Goal]] of how long the age takes in real time at 2x average speed: 7-12 hours
 - Starting pawns: All paleolitic (though a few that do not tree to elder may not be discovered)
-* Nature
-** Precipitation
-Corn plant needs roughly 0.1mm of water a day. 7.62mm of water per hour is considered a heavy rain. Rainforest with water body nearby has 
-* Units
-- By default, newly discovered units are intermediary units or viable evolutions who are taught by the researcher who discovered the new technology. The amount of teaching time depends on the new technology.
-** Professional Mana
-Each pawn has a set amount of professional mana, which determines the amount of units it can occupy at once. Some units, which perform simple tasks, cost a low amount of professional mana, so the same pawn can choose to be several of these units. A pawn keeps working on a unit's task until there is nothing left to be done by that unit or if manually switched by the player or another unit's orders. Some units require all the professional mana a pawn has, and thus that pawn can only be that unit.
-** Unit Stats
-*** isSoldier
-*** Class
-***
-** Trainee
-Trainees are basic units, which have not become a specialist yet. For every main class, there is a trainee. Unless otherwise specified, the trainee of a class can evolve into any unit if it has gained enough experience and also has the material requirements to create that unit.
-
-Any trainee can switch to any other trainee unit (except Young Noble, which is automatically created by those birthed to Leader classes), but they will lose all their experience, and will also lose most of their experience if they switch from training to become one subclass versus another. Experience is gained naturally, and is sped up by Trainers.
-*** Child
-All units which are born start as Child. The Child can evolve into any other trainee unit after a set amount of experienced has been gained.
-*** Young Hunter
-Only evolves into Hunters.
-*** Labor Helper
-Evolves into Resource/Hauling Classes
-*** Apprentice
-Evolves into Producer/Artist Classes
-*** Cadet
-Evolves into Melee/Ranged Classes
-** Melee
-** Ranged
-** Support
-** Resource
-** Producer
-** Trainer
-** Researcher
-** Artist
-** Leader
-** Notes
-For which class to list first in sheets.
-
-Leader > Melee > Ranged > Defense > Support > Resource > Producer > Trainer > Researcher > Artist
-* Order
-Determined by dimensions:
-1. Legal
-2. Administrative
-3. Cultural
-4. Satisfaction
-5. Force
-
-If Order is low, it is likely certain units will become criminals or rebels, killing other units, especially Leader units, and captured foreign units will be more likely to desert or rebel. It is also more likely the player will be aggressively attacked by other civilizations.
-
-If Order is high, all units get a passive boost.
-** Legal
-This source of order is stable and really only hard to keep above a minimum level, or go down quickly, if High Leaders have recently been killed. However, it is hard for it to get to a high level. Raising Legal Order too high also causes Satisfaction Order to decrease, and makes it harder to produce Administrative Order.
-- Produced in large amounts passively by High Leaders
-- High Leaders have abilities to raise Legal Order immeadiately
-- Produced by Priests, High Priests, Lawyers, Judges, Senators
-- Senators can also ensure that Legal Order doesn't increase past a certain amount
-- Reduced when New Knowledge is discovered
-** Administrative
-This source of Order depends on Legal Order. If Legal Order is too low or too high, Administrative Order will also be harder to create. As Legal Order goes up from a certain point, Administrative Order will also decrease, at a smaller rate. High Administrative Order also means that the Strength Order requirements are lower. Administrative Order can also be spent to enact certain Leader abilities, and is decently easy to create quickly. Low administrative order will also lower the amount of actual taxes that are collected, despite the set tax rate. Most importantly, Administrative Order affects Production Command.
-- High Leaders produce large amounts passively, depending on their personality traits
-- Produced by Landowner Subclasses, Bureaucrat, Senator, and Governor
-- Raised by ample Royal wealth
-- Lowered by large debt
-** Cultural
-This source of Order is difficult to create rapidly, and depends on many factors. High Cultural Order gives all Units a passive boost, and also unlocks certain Rituals which give further boosts or abilities. The only downside of having Cultural Order super high is that captured foreign units will have a larger debuff before they are assimilated.
-- High Leaders produce an amount, depending on their personality traits
-- Mostly produced by Art, especially Artifact Artists, which is multiplied based on the varieties, beauty level, and history of that artform in the nation.
-- Also produced by Shamans, Priests, High Priests
-- Modified positively or negatively by the amount of recently discovered Academic Knowledge
-** Satisfaction
-This source of Order is the easiest kind of Order to create rapidly, as long as the player has enough resources and units. However, if Satisfaction is quite low it is also likely that the player is lacking in other crucial resources. High Satisfaction also means that the Strength Order requirements are lower.
-- Depends primarily on food supply, shelter supply
-- Secondarily on food variety, art indulgence, art variety, shelter quality, and wealth.
-- Tertiarily on environment beauty
-- Lowered by large amounts of soldiers, and somewhat by large amounts of resource workers
-- Lowered by high set taxes
-- Hugely lowered by mass death, especially of civilians
-** Strength
-This source of Order is also quite difficult to relate because it is primarily based on army size and unit quality.
-- Calculated by the total strength of army
-- Also increased by landowners
-* Knowledge
-The forms of Knowledge are:
-1. Exploration
-2. Technology
-3. Units
-4. Foreign
-5. Academic
-
-New Knowledge of all forms will be unlocked passively at a certain rate (assuming certain units are doing other tasks), except Exploration, but the main source of Knowledge is Researchers. Knowledge itself, also affects other stats such as Cultural Order and Legal Order.
-
-with units that can evolve into other units that have not been discovered randomly having a "Eureka" moment rarely, if the required resources to create that new unit are also available to the player.
-** Exploration
-Explorers discover previously hidden tiles on the map which stay revealed, unlike other units, which will reveal them for a time and then fog of war will reappear. As explorers permanently reveal tiles, Exploration Knowledge increases. Since the world is infinite, Exploration Knowledge is always decreasing at a fixed rate. Maps from foreign nations can also be bought, which increases Exploration Knowledge and reveals areas of the map.
-** Academic
-This Knowledge functions more like an Order type. Academic Knowledge does nothing by itself, but vastly speeds up the production of other types of Knowledge and Order.
-
-Perhaps the most important function of Academic Knowledge is that it can be used to create certain roles from Students through Trainers and books, and boost unit and technology research. There are also some technologies which are near impossible to unlock without a certain level of Academic research.
-
-There are four subcategories of Academic Research:
-1. Natural
-2. Philosophy
-3. Mathematics
-4. History
-
-The rate at which Academic Knowledge decays is lessened by the production of books.
-*** Natural
-AKA "Natural Philosophy", what we would think of as Science.
-**** Techs which Require
-**** Units which Require
-**** Boosts
-*** Philosophy
-This boosts Legal and Administrative Order and boosts/allows training for Order Supporters. Also, it is a prerequisite for some Order Tech/Units. If too low, Legal Order will be set at a minimum.
-*** Mathematics
-This boosts/allows training for Engineering Tech Researchers, Explorers, Trade, and Structures Producers.
-*** History
-This boosts/allows training for Cultural and Legal Order and Foreign Researchers, as well as a small boost to Satisfaction
-** Technology
-The required tools which units need to do their roles. Sometimes, it will unlock a new role immediately (usually when a new level metal is discovered), but sometimes, the new roles need to be discovered independently of the technology they use (e.g: priest, scribe).
-
-There is a small chance new technology can be invented by related classes, usually by the unit that evolves into the unit that uses or makes that technology, if the required resources to craft that technology are nearby. However, the most reliable way to unlock new technologies is by having a tech researcher near the required materials (which often means a large set of materials), where he will start to "work on" the problem, and then after a randomized amount of time will "discover" the new technology. Alternatively, technology researchers can be given related books instead when they become available, and given enough time will unlock related technologies.
-** Units
-Closely intertwined with technology, but often unlocking a new technology can unlock no units, one unit, or many units, and some units can be unlocked only ages after the technological requirements have been unlocked. The same discovery processes that apply to tech apply to units, but instead Researchers are assigned to follow around Units which are predecessors to the Unit that needs to be unlocked (though of course, unless the player has played the game before, they do not know what the unit is). Like technologies, researchers can also be given books.
-** Foreign
-This Knowledge allows closer relations with friendlies, or advantages in warfare against enemies. It also boosts Trade.
-
-If a nation is an enemy (at war), only Spies can be sent, but if a nation is a friendly or neutral, all types of Foreign researchers can be sent. If a nation dislikes your nation, the ruler may or may not allow other Foreign Researchers.
-
-If Foreign Research is high, it will also boost Academic, Technology, and Unit Research through Knowledge sharing, or Exploration Research by purchasing maps.
-* Economy
-** Trade
-Separated into three holistic scores, Foreign (Exports), Foreign (Imports) and Domestic, which are affected respectively by the "Trade" intangibles of each type produced by Trader and Banker class units.
-*** Foreign (Exports)
-Amalgam of the /amount of exports/ and /average profit/.
-**** Amount of Exports
-Affected by:
-- Surplus production (production set aside by player, that is not to be made or used by domestic workers)
-- Amount of Trade(Foreign) produced by Trader Units
-- Tarriff Rate
-- Domestic Opinion of Foreign Nation
-- Foreign Opinion of Domestic Nation
-- Knowledge (Foreign)
-- Trade Deals and Embargos (can set amount to 0)
-- Wars or Previous Wars
-***** Tarriff Rate
-Because tarriffs set by foreign governments are often actually paid by the foreign customers, this affects the amount of exports as well as the profit, since foreign customers are less likely to buy, and domestic traders are les likely to sell.
-***** Trade Deals
-***** Embargos
-Foreign Nations can choose to completely limit foreign exports from your nation.
-**** Average Profit
-Affected by:
-- Demand of Goods
-- Amount of Exports (negatively)
-- Amount of Trade(Foreign) produced by Trader Units
-- Foreign Opinion of Domestic Nation
-- Knowledge (Foreign)
-- Tarriff Rate
-- Trade Deals
-*** Foreign (Imports)
-The amount of useful imports that are purchased by your nation. This number matters less, but the actual products you or your units are buying likely matters more. However, one the scores that affects it, /average savings/, likely does matter and determines whether you will make future imports. You can enact Royal Decrees to order quotas of specific imports, or leave it up to your traders based on your regular production quotas, if you have selected to "substitute imports for production".
-
-Like Exports, this is an amalgam of /amount of imports/ and /average savings/.
-**** Amount of Imports
-The amount of imports you are buying. You can see this in a pie-chart view based on certain general classes of goods.
-Affected by:
-- Set Quotas by Royal Decrees
-- Foreign Tarriffs placed by player
-- Foreign Opinion
-- Trade(Foreign) produced by Trader units
-- Domestic Opinion of Foreign Nation
-- Trade Deals/Embargos placed by player
-- War/recent war
-**** Average Savings
-Affected by:
-- Domestic goods production
-- Amount of Imports (positively)
-- Foreign Tarriffs placed by player
-- Trade(Foreign) produced by Trader units
-- Foreign Opinion
-- Trade Deals
-*** Domestic
-Amount of Profit made domestically. Increases taxes and Order(Satisfaction), or more precisely, the recreation hours needed to increase Order(Satisfaction). Also increases Order generally. Decreases Production Command. Decreases bartering time dramatically.
-
-Affected by:
-- Amount of Bankers
-- Inflation
-- Currency Coverage
-- Production Command (negatively)
-**** Inflation
-Increased when more money is minted.
-**** Currency Coverage
-A rate that increases as more money is minted, and less barter occurs, and increases Order g
-* Items
-** Resources
-*** Farmable
-**** Crops (Seeds)
-***** Grains
-Wheat !
-Oat !
-Corn !
-Unmilled Rice !
-***** Vegetables
-Corn !
-Tomato !
-Onion !
-Potato !
-Cabbage !
-Olive
-Pepper !
-Carrot !
-***** Fruit
-Grape !
-Blueberry
-Strawberry
-***** Herbs
-Lavendar !
-Saffron !
-Aloe Vera !
-Poppy !
-Hemp !
-Rhubarb
-Senna
-****** Spices
-Thyme
-Mint
-Sage
-***** Fiber/Textile
-Flax !
-Cotton !
-Hemp !
-Raw Papyrus !
-***** Flowers
-***** Trees (Wood)
-Deciduous !
-Evergreen !
-Tropical !
-Pioneer !
-Desert
-***** Trees (Fruit)
-Apple !
-Fig !
-Pear !
-Banana
-Mango
-Orange !
-***** Other
-Hay
-**** Animal Products
-Corpses
-Milk
-Goat Milk
-Egg
-Fish
-Honey
-Wax
-Wool
-**** Animals
-Ox
-Horse
-***** Livestock
-Cow !
-Chicken !
-Pig !
-Sheep !
-Goat
-*** Wild
-**** Surface
-Water !
-Trees !
-Log
-Pebbles !
-Rocks !
-Large Rock !
-Boulders !
-Bitumen
-Sand
-Clay
-**** Earth Materials
-Dirt
-Stone
-Flint
-Marble
-Limestone
-Copper Ore
-Tin Ore
-Iron Ore
-Gold Ore
-Silver Ore
-Salt
-***** Gemstones
-Ruby
-Emerald
-Diamond
-Sapphire
-Amethyst
-Garnet
-Topaz
-** Products
-*** Foodstuffs
-**** Ingredients
-***** Incomplete
-Flour (Grain, Corn)
-Grist (Flour)
-Oat
-Animal Fat (Corpse)
-***** Grains
-Bread (Flour, Water)
-Pastry (Flour, Fruit/Sugar, Water)
-Pie (Fruit/Meat, Flour, Water)
-Porridge (Oats, Water)
-Milled Rice (Rice)
-***** Meat
-Fish
-Raw Beef (Cow Corpse)
-Raw Chicken (Chicken Corpse)
-Raw Pork (Pig Corpse)
-Raw Lamb (Sheep Corpse)
-Raw Goat (Goat Corpse)
-Raw Ox (Ox Corpse)
-Raw Duck (Duck Corpse)
-Raw Venison (Deer Corpse)
-***** Animal Products
-Eggs
-Milk
-Goat Milk
-Honey
-****** Cheeses
-Cheese (Milk)
-Goat Cheese (Goat Milk)
-Blue Cheese (Cheese, Salt)
-***** Vegetables
-Corn
-Tomato
-Onion
-Potato
-Cabbage
-Olive
-Pepper
-***** Fruits
-Apple
-Fig
-Pear
-Grape
-***** Preserved
-Pickled Fruit/Vegetable (Vinegar, Fruit/Vegetable)
-Salted Ingredients (Fruit/Vegetable/Meat, Salt)
-Smoked Meat (Meat, Wood, Salt, (Vinegar))
-Vinegar (Wine/Beer/Cider)
-Butter (Animal Fat)
-***** Cooking Oils
-Olive Oil (Olives)
-Vegetable Oil (Vegatables)
-Truffle Oil (Truffle)
-Butter (Animal Fat)
-***** Cheap
-Bread (Flour, Water)
-Porridge (Oat, Water)
-Corn
-Pea
-Potato
-Carrot
-Cabbage
-Pepper
-Ox Meat
-Horse Meat
-Drinking Water
-Vegetable Oil
-Corn Oil
-***** Average
-Tomato
-Onion
-Garlic
-Milk
-Goat Milk
-Fruits
-Eggs
-Cow Meat
-Pork
-Chicken Meat
-Lamb
-Goat Meat
-Beer
-Cider
-Juice
-Butter
-***** Expensive
-Venison Meat (Deer Corpse)
-Duck Meat (Duck Corpse)
-Cheese
-Honey
-Mead
-Wine
-Chili Powder
-Olive Oil
-Preserved Foods
-***** Delicacy
-Shellfish (Shrimp/Oyster/Crab)
-Candied Fruit (Sugar, Fruit)
-Aged Wine (Wine)
-Blue Cheese (Cheese, Salt)
-Pie (Meat/Fruit, Flour, Sugar)
-Truffle Oil (Truffle)
-Peacock (Peacock Corpse)
-Ground Black Pepper (Black peppercorn)
-***** Light
-Chili Powder
-Ground Black Pepper
-Garlic
-Sugar
-Honey
-Salt
-Oils
-***** Drinks
-Drinking Water (Water)
-Wine (Grapes, Water)
-Mead (Honey, Water)
-Juice (Fruit, Water)
-Beer (Wheat, Water)
-Cider (Fruit, Water)
-Aged Wine (Wine)
-**** Consumables
-Bland Meal (All Same Food)
-Cheap Meal (All Cheap Foods/1 Food Group)
-Average Meal (At least 1 Expensive Foods/2 Food Group)
-Good Meal (Cooking Oil,At least 2 Expensive Foods,/3 Food Group)
-Luxurious Meal (Expensive Oil/Delicacy Oil, All Expensive Foods,No Cheap Foods,3 Food Groups)
-Delicacy Meal (Expensive Oil+,No Cheap Foods, 2 Delicacy)
-*** Building/Crafting Materials
-**** Base Materials
-***** Metals
-Copper (Copper Ore, Fuel)
-Bronze (Copper Ore, Tin Ore, Fuel)
-Iron (Iron Ore, Charcoal+)
-Gold (Gold Ore, Fuel)
-Silver (Silver Ore, Fuel)
-Steel (Iron Ore, Charcoal+)
-***** Wood-based
-Wood (Trees, Log)
-Planks (Wood)
-Beams (Wood)
-Log ((Trees))
-Log Beam (Log)
-***** Stone-based
-Cut Stone (Stone)
-Cut Stone Sheet (Stone)
-Cut Marble (Marble)
-Lime (Limestone)
-Paving Stone (Cut Stone Sheet)
-Concrete (Lime,Sand)
-***** Glass
-Pane (Sand, Fuel)
-Colored Pane (Glass Pane,Dyes)
-***** Clay
-Cob (Clay, Sand, Water, Hay)
-Fired Clay (Clay)
-Bricks (Fired Clay, Lime)
-***** Fuel
-Charcoal (Wood)
-***** Animal Products
-Raw Beef (Cow Corpse)
-Raw Chicken (Chicken Corpse)
-Raw Pork (Pig Corpse)
-Raw Lamb (Sheep Corpse)
-Raw Goat (Goat Corpse)
-Raw Ox (Ox Corpse)
-Sinew (Corpse)
-Bone (Corpse)
-Animal Hair (Corpse)
-Feather (Corpse(Bird))
-Animal Hides (Corpse)
-Wool (Corpse)
-***** Other
-Rope (Animal Hair)
-Fiber (Trees, Plants(Any))
-Soot (Wood(Any),Food(Any),Crops(Any))
-Hay (Grass)
-Cured Hides (Animal Hides)
-**** Smithing
-Clips (Bronze+)
-***** Molds
-Spear Head Mold (sand/clay)
-Axe Head Mold (sand/clay)
-Small Blade Mold (sand/clay)
-Large Blade Mold (sand/clay)
-Greataxe Head Mold (sand/clay)
-Halberd Head Mold (sand/clay)
-Pike Head Mold (sand/clay)
-Mallet Head Mold (sand/clay)
-Chisel Head Mold (sand/clay)
-Graver Head Mold (sand/clay)
-Ard Head Mold (sand/clay)
-Scythe Head Mold (sand/clay)
-Hoe Head Mold (sand/clay)
-Pick Head Mold (sand/clay)
-Cutter Head Mold (sand/clay)
-Saw Head Mold (sand/clay)
-Spade Head Mold (sand/clay)
-Shovel Head Mold (sand/clay)
-Circular Sawpiece Mold (ceramic/sand)
-Trigger Mold (ceramic/sand)
-Gear Mold (sand/clay)
-**** Assembly
-Needles (Metals(Any except Copper))
-Lens (Glass)
-Wick (Linen)
-***** Building
-Glue (Milk/Eggs/Bones/Cured Hides)
-Resin (Trees)
-Primitive String (Sinew/Fiber)
-String (Sinew/Thread/Silk)
-Axle (Wood/Metal)
-Large Axle (Log/Metal)
-Gear (Wood/Metal)
-Wheel (Wood/Stone/Metal)
-Nails (Metals(Any))
-Peg (Bone/Wood)
-Wedge (Wood/Metal)
-Socket (Metals)
-Rivet (Nails)
-***** Tool Parts
-Mallet Head (Rock/Metals)
-Chisel Head (Rock/Metals)
-Graver Head (Metals)
-Ard Head (Rock/Metals)
-Scythe Head (Bone/Metals)
-Hoe Head (Rock/Metals)
-Pick Head (Rock/Metals)
-Cutter Head (Bone/Metals)
-Saw Head (Stone/Metals)
-Spade Head (Bone/Metals)
-Shovel Head (Metals)
-Circular Sawpiece (Iron/Steel)
-Brick Mold (Clay/Metal)
-***** Weapon Parts
-Handle (Wood/Stick)
-Arrowhead (Bone/Rock/Metals)
-Spear Head (Bone/Rock/Metals)
-Axe Head (Rock/Metals)
-Small Blade (Bone/Rock/Metals)
-Large Blade (Metals)
-Greataxe Head (Metals)
-Halberd Head (Metals)
-Pike Head (Metals)
-Trigger (Iron/Steel)
-Notch (Bone/Iron/Steel)
-**** Artistic
-***** Textiles
-Linen (Flax)
-Wool
-Silk
-Cloth (Cotton)
-Thread (Fibers(Any))
-***** Dyes
-Red (Madder/Red Ochre)
-Blue (Indigo/Lapis Lazuli)
-Yellow (Saffron)
-Bleach (Lime/White Ash/Vinegar)
-Ink (Soot)
-***** Incense
-Incense (Tree Resin, Lavendar)
-***** Writing Mediums
-****** Permanent
-Stone Tablet (Cut Stone)
-Papyrus (Raw Papyrus,(Bleach))
-Parchment (Cured Hides,(Bleach))
-****** Temporary (Equippable) @
-Wax Tablet (Wax)
-Clay Tablet (Clay)
-*** Disposables
-**** Medicine
-Weak Painkiller (Tree Resin/Tea/Garlic)
-Painkiller (Poppy/Cannabis/Wine)
-Primitive Medicine(Aloe Vera/Sage/Thyme/Mint)
-Theriac (Poppy, Saffron, Mint, Honey, Wine)
-Gilead Balm (Olive Oil, Wax, Incense)
-Elactuarium (Honey, Thyme, Syrup)
-Medicinal Soap (Soot, Animal Fat,Lavendar/Tree Resin)
-Laxative (Rhubarb/Senna/AloeVera)
-Tonic (Dandelion/Turmeric/Ginger/Aloe Vera)
-Bandage (Cloth)
-**** Poison
-Hemlock (Hemlock Plant)
-Arsenic (Arsenic Ore)
-Cyanide (Fruits)
-**** Farming @
-Fertilizer (Bone Meal/Fish Meal/Ash/Lime,Dirt)
-*** Other @
-Unmarked Coins (Metals, Silver, Gold)
-Coins (Unmarked Coins)
-** Equippables
-*** Ammo
-Smoothed Pebbles (Pebbles)
-Javelin (Bone/Stone/Metals)
-Arrow (Arrowhead, Glue, Bone, Wood, Feather)
-*** Weapons
-**** Ranged
-Sling (Handle, Leather)
-Shortbow (Wood,Bone,String)
-Bow (Wood,Bone,String)
-Crossbow (Wood, Trigger, Notch, String)
-Longbow (Wood, Notch x2, String)
-**** Melee
-Spear (Spear Head, Handle, Rivet)
-Axe (Axe Head, Handle, Wedge)
-Sword (Sword Head, Handle, Rivet)
-Greataxe (Greataxe Head, Handle, Socket)
-Halberd (Halberd Head, Handle, Socket)
-Pike (Pike Head, Handle, Socket)
-*** Tools
-**** Production
-Knife (Blade, Handle, Peg)
-Mallet (Mallet Head, Handle, Wedge)
-Chisel (Chisel Head, Handle, Peg)
-Graver (Graver Head, Handle, Peg)
-Cutters (Cutter Head, Handle, Peg)
-Pestle (Rock/Metal)
-Distaff (Wood, Handle)
-Saw (Saw Head, Handle, Peg)
-Shovel (Shovel Head, Handle, Wedge)
-Blowpipe (Bone/Wood)
-Tongs (Metals)
-Cheesecloth (Cloth)
-Die (Sofestone/Metals,Wood)
-Stamp (Gem/Softstone/Metal,Wood)
-Official Stamp (Gem,Wood)
-Spindle (Wood)
-Dies (Stone, Bronze+)
-**** Farming
-Basket (Hemp/Flax)
-Ard (Beam, Plowshare, Handle, Fitting)
-Scythe (Scythe Head, Handle, Wedge)
-Hoe (Hoe Head, Handle, Wedge)
-Pick (Pick Head, Handle, Wedge)
-Spade (Spade Head, Handle, Wedge)
-Heavy Plow (Beam, Plowshare, Moldboard, Colter, x2 Handle, Fitting)
-Shears (Blade, Handle, Peg)
-**** Art
-***** Pens
-Stylus (Bone, Wood, Bronze+)
-Reed Pen (Raw Papyrus)
-Quill Pen (Feather)
-Brush (Animal Hair, Handle)
-***** Musical Instruments
-Drum (Tanned Hide, Wood)
-Lur (Bronze)
-Lyre (Wood, String)
-Pan Flute (Reed)
-**** Measurement and Exploration
-Compass (Steel,Wood,Glass,Papyrus/Parchment)
-Binocular (Lens, Wood/Metal)
-Scale (Sofestone/Metal,Wood/Metal,Peg)
-Abacus (Wood,Wood/Metal,Peg)
-Measuring Tools (Wood/Metal,Rope)
-Surveying Tools (Wood/Metal, Compass, Binocular)
-Diplomatic Letter (Writing Medium)
-*** Clothes
-Basic Clothes (Cloth/Wool/Linen)
-Formal Clothes (Cloth/Silk/Linen/Wool/Fine Linen, Dyes)
-Fancy Clothes  (Silk/Fine Linen/Wool, Dyes, Leather, Jewelery x2)
-Wood Crown (Wood)
-Gold Crown (Gold)
-Royal Crown (Gold, Upper Gemstones x3, Lower Gemstones x5)
-Emperor's Staff (Gold, Upper Gemstones x3)
-**** Jewelry
-Necklace (Bone/Silver/Gold/Gem)
-Ring (Bone/Silver/Gold,(Gem))
-Earring (Bone/Silver/Gold,(Gem)
-**** Armor
-Gambeson (Linen/Wool)
-Chainmail (Iron)
-Helmet (Leather,Metals)
-Breastplate (Leather, Metals)
-Guards (Leather, Metals)
-*** Animal Equipment
-Horse Saddle (Wood, Leather)
-Ox Saddle (Wood, Leather)
-Whip (Leather)
-Horseshoes (Bronze+)
-*** Other
-Books (Leather, Papyrus/Parchment)
-Oil Lamp (Wick, Clay/Metals, Oil)
-Candle (Wax, Wick)
-** Placeables
-*** Walls & Supports
-Tent Sticks (Stick,Primitive String)
-Wattle Walls (Stick,Primitive String, Clay)
-Cob Walls (Cob)
-Wood Wall (Wood)
-Stone Wall (Cut Stone)
-Brick Wall (Bricks, Lime)
-Log Wall (Log)
-Fence (Stick/Wood,Primitive String/String)
-Gate (Stick/Wood, Primitive String/String, Peg)
-Bronze Reinforced Wall (Stone Wall/Wood Wall, Bronze)
-Iron Reinforced Wall (Stone Wall/Wood Wall, Iron)
-Steel Reinforced Wall (Stone Wall/Wood Wall, Steel)
-Pillar (Beam/Marble/Metals/Stone)
-**** City
-Tall Wall (Same as other walls, but 3x as much material)
-City Gate (Wood/Metal, Nails, Wedges, Bolts, Metal)
-*** Floors
-Foundation (Stone/Concrete/Brick)
-Wood Floor (Planks)
-Carpet (Wool,Linen,Cloth,(Dye))
-Stone Floor (Cut Stone)
-Brick Floor (Bricks, Lime)
-Dirt Floor (Wild Area)
-Plowed Dirt (Wild Area)
-*** Roofs
-Tent Cover (Animal Hide)
-Wattle Roof (Stick, Primitive String, Clay)
-Roof Beams (Beam)
-Cob Roof (Cob)
-Wood Roof (Planks)
-Stone Slab Roof (Cut Stone, Clay)
-Clay Tiled Roof (Fired Clay)
-*** Transport
-**** Wheeled
-Cart (Wheel, Plank, Wood, Nails, Axle)
-Wagon (Wheel, Plank, Wood, Nails, Wedge, Leather, Rope, Axle)
-Chariot (Wheel, Plank, Wood, Nails, Wedge, Large Axle, Leather, Rope, (Cloth (for covering)))
-**** Boats
-TODO: have masts be an item
-Canoe (Trees,Wood)
-Sailboat (Planks,Wood,Linen/Hemp/Flax/Cotton,Rope,Nails,Rivets,String)
-Large Sailboat (Planks,Wood,Linen/Hemp/Flax/Cotton,Rope,Nails,Rivets,String)
-Longboat (Trees, Wood,Linen/Hemp/Flax/Cotton,Rope, Nails, Rivets)
-Light Warship (Planks,Wood,Linen/Hemp/Flax/Cotton,Rope,Nails,Rivets,String)
-Heavy Warship (Planks,Wood,Linen/Hemp/Flax/Cotton,Rope,Nails,Rivets,String)
-Cog (Planks,Wood,Linen/Hemp/Flax/Cotton,Rope,Nails,Rivets)
-Freighter (Planks,Wood,Linen/Hemp/Flax/Cotton,Rope,Nails,Rivets,String)
-**** Roads
-Path (Dirt)
-Road (Dirt/Cut Stone Sheet/Brick/Paving Stone/Concrete)
-*** Storage/Process Containers
-{Mash Tun} (Wood, Nails)
-Pot (Clay/Metals)
-Kettle (Clay/Metals)
-Jar (Clay/Glass)
-Crucible (Clay/Bronze+)
-Bucket (Wood/Metals)
-*** Production
-Tabletop (Plank/Cut Stone,Axle,Peg/Nails)
-Stool (Plank,Axle,Peg/Nails)
-Chair (Plank,Axle,Peg/Nails)
-Waterwheel
-{Pulley} (Planks, Beam, Rope, Wood, Bolts, Nails)
-Spinning Wheel
-Backstrap Loom (Wood, Peg, String, Leather)
-Simple Loom (Wood, Peg, String)
-{Vertical Loom} (Wood, Linen, Metal/Bamboo/Reed, Nails)
-Circular Saw (Tabletop, Circular Sawpiece, Fitting x2)
-{Potter's Wheel} (Wheel(Stone) x2, Planks, Axle)
-**** Metalworking
-{Anvil} (Stone/Bronze+)
-{Charcoal Kiln}
-{Furnace}
-{Bloomery Furnace}
-{Forge} (Clay/Stone/Brick}
-Bellows {Wood/Leather/Bolts/Metals}
-Double Bellows {Wood/Leather/Bolts/Metals}
-Water-powered Bellows {Wood/Leather/Bolts/Gear/Waterwheel}
-**** Water
-Siphon
-Pump
-Aqueduct (Cut Stone)
-*** Siege Engines
-Battering Log (Log, (Bronze+, Leather))
-Battering Ram (Log, Steel, Leather, Rope, Planks, Wheel, Axle)
-Trebuchet (Beam, Plank, Nails, Bolt, Gear, Large Rocks, Rope, Leather, Axle)
-Ballista (Wood, Nails, Bolt, Gear, Rope, Trigger, Leather)
-Catapult (Beam, Plank, Nails, Large Rocks, Rope, Wheel, Large Axle)
-Siege Ladder (Axle, Beam)
-Siege Tower (Siege Ladder, Planks, Wheel)
-** Item Levels
-Every resource that can be used as the main resource in making gear items determines the "item level". The item level is what is checked when required items are checked, anything equal to or above the set item level is okay. Often an item level is skipped. There are several item level hierarchies; items (usually placeables) have their own separate item level hierarchy.
-
-Strength/Brittleness Item Levels:
-1. Wood
-2. Bone
-3. Stone
-4. Copper
-5. Bronze
-6. Iron
-7. Steel
-
-Structure Durability Levels:
-1. Sticks/Wattle
-2. Cob
-3. Brick
-4. Stone
-5. Bronze
-6. Iron
-7. Steel
-
-Beauty Item Levels:
-0. Dirt/Wattle
-1. Iron/Clay/Cob
-2. Stone
-3. Bone
-4. Steel
-5. Brick/Wood
-6. Copper/Marble
-7. Bronze
-8. Gemstones (Lower)
-9. Silver
-10. Gold
-11. Gemstones (Upper)
-
-* Units and Items
-** Item Traits
-- Renewable
-- Moves Automatically
-- Grows/Dies
-- ProducesItems
-- Final
-- Edible
-- Placeable
-  - Plantable
-- Heals
-- SupportsRoof
-- Equippable
-  - byAnimals
-  - isWearable
-    - isArmor
-      - *armorType*
-  - isWeapon
-  - isTool
-  - isAmmo
-- canHarvest
-  - *blockType* (array)
-- canProduce
-  - *itemType* (array)
-- *amtMadeOf*
-  (array)
-  - *MadeOf1*
-  - *MadeOf2*
-  - *MadeOf3*
-- *Size* (how many stored in one tile)
-- *Weight*
-**  Unit Traits
-- isAdult
-- canProduce
-  - *produces*
-  - *producesIntangibles*
-- *Consumes*
-- canHarvest
-  - *harvests*
-- *Equips*
-- canBuff
-  - *buffs*
-- canTrain
-  - *train*
-- hasAbilities
-  - *abilities*
-- canMount
-  - *mounts*
-** Automatic Gear
-Units have an inventory, wherein they can carry any type of item. They also have a gear, which is "equipped inventory". The player can control from a panel the default equipped state of each type of unit as a rule, which will globally make it so that units will automatically equip items to their gear that are set by the player if they are available and in their inventory. We use caching of checks, batch processing, and proximity-based checks to ensure minimal overhead, as well as lazy evaluation and event-driven between the inventory and the gear. This might also be something good to multithread. This can also apply to consumable items, i.e: when a carpenter runs out of wood, he will find more algorithmically.
-** Items Lists
-*** Required Items
-Units have a required items list, which they require to even be that unit themselves. If a unit loses their required item, and they are already that unit, they will remain that unit, but will be unable to do work until they fulfill all the required items in their required items list.
-*** Interactible Items List
-Though every unit can haul items, most units can only equip/consume a small number of items.
-*** Producible List
-The list of items a unit can produce.
-* Animals
-** Wild
-Deer
-Boar
-Swan
-Elephant
-Peacock
-** Cattle
-Cow
-Pig
-Sheep
-Chicken
-** Labor/Transport
-Ox
-Horse
-** Pets
-Dog
-Cat
-* War/Military
-Regular Units can climb over regular walls, but not tall walls. Siege Towers and Siege Ladders allow units to climb over tall walls.
-** Player Control
-Player can either select units manually, and control them, or can get lieutenants to have 'active recruiting' of certain priorities, which means that units with military roles will automatic join up with their lieutenants
-* Command
-** Nation and Provinces
-Overtime, provinces will start to develop. If a province has a governor, they can be given provincial decrees, which will give that province a boost of some kind. A similar national boost is available for the entire nation, which is determined by the Monarch at apporpriate times.
-** Production Command
-The player decides how much of each item and units to produce, and the units will affect their production based on this decree, and based on Order (Administrative), the actual units will affect the actual items they produce at this speed.

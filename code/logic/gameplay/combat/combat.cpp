@@ -1,17 +1,21 @@
+
 // TODO: factor in variable distances creating variable chance of hitting
-void update_attacks(float *chances, Weapon* weapons, Stats *stats, Coord *positions, float *healths,
-				   int *targets, Action *actions)
+#include "core/random.hpp"
+#include "data/run/unit_database.hpp"
+#include "data/types/target.hpp"
+void update_attacks(unit::Database db)
 {
 	// precompute attack success and damages
 
 	Arena<bool> attack_success; // ensure arena makes default value
 	Arena<float> damages;
-	for (int i = 0; i < targets.size(); i++)
-	{
-		if (timer(i) <= 0 && action(i) == Action::Attack)
+	for (int i = 0; i < db.targets.size; i++)
+	  {	    	   
+		if (db.inertia(i) <= 0 && db.action(i) == Action::Attack)
 		{
-			auto ti = targets(i);
-			if (hit(chance(i), weapon(i), stat(i), armor(ti), dodge(i), stat(ti)))
+		    auto ti = db.target(i);
+		    Inventory& inventory = db.inventory(i);
+ 		    if (hit(random_chance->next(), get_weapon(i), stat(i), armor(ti), stat(ti)))
 			{
 			}
 		}

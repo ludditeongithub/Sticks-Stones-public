@@ -1,0 +1,45 @@
+* Computations
+** World Simulation
+*** Generation
+*** Climate
+**** Update baseline Temperature
+**** Update baseline humidity
+**** Later: update winds
+*** Weather
+**** Update local temporal temperature
+**** Update local humidity
+**** Update precipitation 
+***** get water/snow added to ground
+***** preciptation state for each tile
+*** Terrain
+**** Flow water on ground
+**** Update tile types
+** Plant Growth
+** Rendering
+*** movable rendering
+**** get all in movables abstract frame buffer
+**** render movables 
+*** chunked rendering
+**** receive changed background render chunks
+from buffer containing moved tile, plant, buildable 
+**** create new background render chunks
+**** render background chunks
+*** UI rendering
+**** get active UI items
+**** render active UI items
+*** Weather effects rendering
+**** lighting
+**** precipitation
+** Nourishment
+** Entity Search
+** Entity Job Selection
+*** Validation
+** Inventory
+** Construction
+** UI
+** Player Progression
+** Event Manager
+** Algorithm Scheduler
+** Combat
+
+

@@ -217,7 +217,6 @@ return inertias[index];
 return coords[index];
   }
 
-
   
 // =========================
 // GENERATION

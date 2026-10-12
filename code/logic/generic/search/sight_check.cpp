@@ -54,9 +54,7 @@ inline int get_new_diamond_edge(std::vector<Coord>& edge_buffer, Coord c, int ra
 				break;
 			}
 			edge_buffer[i] = {x, y};
-                        #if !SHIPPING_BUILD
-                        assert(++edge_size < DIAMOND_EDGE_SCAN_MAX_SIZE);
-                        #endif			
+                        assert(++edge_size < DIAMOND_EDGE_SCAN_MAX_SIZE);                       		
 		}
 	}
 }

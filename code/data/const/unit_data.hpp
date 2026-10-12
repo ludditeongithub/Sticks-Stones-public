@@ -36,6 +36,7 @@ constexpr Health MAX_HEALTH = 1000;
 constexpr Hunger MAX_HUNGER = 1000;
 constexpr uint8_t STAT_MIN = 0;
 constexpr uint8_t STAT_MAX = 100;
+constexpr uint8_t STAT_MID = STAT_MAX - STAT_MIN / 2;
 constexpr uint8_t INITIAL_STAT_MAX = 60;
 constexpr uint8_t STARTING_ROLE_MANA = 10;
 
@@ -43,6 +44,10 @@ constexpr uint16_t MAX_ROLES_PER_TASK = 6;
 constexpr uint16_t ACTION_TOOLS_AMOUNT = 100; // NOTE: likely wrong
 constexpr uint16_t ACTION_MAX_REQUIREMENTS = 7; // NOTE: likely wrong
 constexpr size_t MAX_ROLES = 6;
+
+// Combat
+constexpr float MAX_SKILL_FACTOR = 1.55;
+constexpr float DEFAULT_SKILL_FACTOR = MAX_SKILL_FACTOR * 0.68;
 
 // the total volume of each bulk category hands can maximally carry.
 // where 0.1 is 100mL

@@ -46,98 +46,98 @@ template <typename T> struct RandomMachine
 		{
 			static_assert(std::is_arithmetic_v<T>, "T must be numeric");
 		}
-	}
-};
+// 	}
+// };
 
-/*
-struct RandomSDLColorMachine
-{
-  RandomMachine<uint8_t> red;
-  RandomMachine<uint8_t> green;
-  RandomMachine<uint8_t> blue;
-  RandomMachine<uint8_t> alpha;
+// /*
+// struct RandomSDLColorMachine
+// {
+//   RandomMachine<uint8_t> red;
+//   RandomMachine<uint8_t> green;
+//   RandomMachine<uint8_t> blue;
+//   RandomMachine<uint8_t> alpha;
 
-  RandomSDLColorMachine(std::pair<uint8_t,uint8_t> red_limits, std::pair<uint8_t, uint8_t> green_limits, std::pair<uint8_t, uint8_t> blue_limits)
-  {
-    red = RandomMachine<uint8_t>(red_limits.first, red_limits.second);
-    blue = RandomMachine<uint8_t>(blue_limits.first, blue_limits.second);
-    green = RandomMachine<uint8_t>(green_limits.first, green_limits.second);
-    alpha = 255;
-  }
+//   RandomSDLColorMachine(std::pair<uint8_t,uint8_t> red_limits, std::pair<uint8_t, uint8_t> green_limits, std::pair<uint8_t, uint8_t> blue_limits)
+//   {
+//     red = RandomMachine<uint8_t>(red_limits.first, red_limits.second);
+//     blue = RandomMachine<uint8_t>(blue_limits.first, blue_limits.second);
+//     green = RandomMachine<uint8_t>(green_limits.first, green_limits.second);
+//     alpha = 255;
+//   }
 
-  SDL_Color next()
-  {
-    return {red.next(), green.next(), blue.next(), alpha};
-  }
-};
-*/
+//   SDL_Color next()
+//   {
+//     return {red.next(), green.next(), blue.next(), alpha};
+//   }
+// };
+// */
 
-template <typename E>
-struct RandomEnumMachine
-{
-    using EU = typename std::underlying_type<E>::type; 
-    static constexpr uint16_t PREGENERATED_RANDOM_SIZE = 15000;
-    std::array<EU, PREGENERATED_RANDOM_SIZE> randoms;
-    uint16_t current = 0;
-    std::mt19937 gen{std::random_device{}()};
+// template <typename E>
+// struct RandomEnumMachine
+// {
+//     using EU = typename std::underlying_type<E>::type; 
+//     static constexpr uint16_t PREGENERATED_RANDOM_SIZE = 15000;
+//     std::array<EU, PREGENERATED_RANDOM_SIZE> randoms;
+//     uint16_t current = 0;
+//     std::mt19937 gen{std::random_device{}()};
 
-    RandomEnumMachine(E min, E max)
-    {
-        std::uniform_int_distribution<EU> dis(
-            static_cast<EU>(min),
-            static_cast<EU>(max)
-        );
+//     RandomEnumMachine(E min, E max)
+//     {
+//         std::uniform_int_distribution<EU> dis(
+//             static_cast<EU>(min),
+//             static_cast<EU>(max)
+//         );
 
-        for (size_t i = 0; i < PREGENERATED_RANDOM_SIZE; i++)
-            randoms[i] = dis(gen);
-    }
+//         for (size_t i = 0; i < PREGENERATED_RANDOM_SIZE; i++)
+//             randoms[i] = dis(gen);
+//     }
 
-    RandomEnumMachine()
-    {
-        std::uniform_int_distribution<EU> dis(
-            static_cast<EU>(E::NONE),
-            static_cast<EU>(E::MAX)
-        );
+//     RandomEnumMachine()
+//     {
+//         std::uniform_int_distribution<EU> dis(
+//             static_cast<EU>(E::NONE),
+//             static_cast<EU>(E::MAX)
+//         );
 
-        for (size_t i = 0; i < PREGENERATED_RANDOM_SIZE; i++)
-            randoms[i] = dis(gen);
-    }
+//         for (size_t i = 0; i < PREGENERATED_RANDOM_SIZE; i++)
+//             randoms[i] = dis(gen);
+//     }
 
-    E next()
-    {
-        if (current >= PREGENERATED_RANDOM_SIZE) current = 0;
-        return static_cast<E>(randoms[current++]);
-    }
-};
+//     E next()
+//     {
+//         if (current >= PREGENERATED_RANDOM_SIZE) current = 0;
+//         return static_cast<E>(randoms[current++]);
+//     }
+// };
 
-extern RandomEnumMachine<Direction> random_direction;
+// extern RandomEnumMachine<Direction> random_direction;
 
-struct RandomChanceMachine
-{
-	RandomMachine<float> mac = RandomMachine<float>(0.0, 1.0);
-	RandomChanceMachine() {}
+// struct RandomChanceMachine
+// {
+// 	RandomMachine<float> mac = RandomMachine<float>(0.0, 1.0);
+// 	RandomChanceMachine() {}
 
-	float next() { return mac.next(); }
-};
+// 	float next() { return mac.next(); }
+// };
 
-extern RandomChanceMachine *random_chance;
+// extern RandomChanceMachine *random_chance;
 
-struct RandomBoolMachine
-{
-	RandomMachine<int> mac = RandomMachine<int>(0, 1);
-	bool next() { return mac.next(); }
-};
+// struct RandomBoolMachine
+// {
+// 	RandomMachine<int> mac = RandomMachine<int>(0, 1);
+// 	bool next() { return mac.next(); }
+// };
 
-extern RandomBoolMachine *random_bool;;
+// extern RandomBoolMachine *random_bool;;
 
-inline double rnormal()
-{
-	double u, v, s;
-	do
-	{
-		u = 2.0 * (double)rand() / RAND_MAX - 1.0;
-		v = 2.0 * (double)rand() / RAND_MAX - 1.0;
-		s = u * u + v * v;
-	} while (s >= 1.0 || s == 0.0);
-	return u * sqrt(-2.0 * log(s) / s);
-}
+// inline double rnormal()
+// {
+// 	double u, v, s;
+// 	do
+// 	{
+// 		u = 2.0 * (double)rand() / RAND_MAX - 1.0;
+// 		v = 2.0 * (double)rand() / RAND_MAX - 1.0;
+// 		s = u * u + v * v;
+// 	} while (s >= 1.0 || s == 0.0);
+// 	return u * sqrt(-2.0 * log(s) / s);
+// }

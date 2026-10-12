@@ -7,6 +7,7 @@
 #include <data/types/entity.hpp>
 #include <vector>
 #include <logic/simulation/world_gen.hpp>
+#include <data/run/coord.hpp>
 #include <data/run/world.hpp>
 
 

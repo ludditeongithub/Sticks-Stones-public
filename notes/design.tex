@@ -1,0 +1,570 @@
+% Created 2026-10-10 Sat 23:55
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\titleclass{\subsubsubsection}{straight}[\subsubsection]
+\newcounter{subsubsubsection}
+\renewcommand{\thesubsubsubsection}{\thesubsubsection.\arabic{subsubsubsection}}
+\titleformat{\subsubsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsubsection}{1em}{}
+\titlespacing*{\subsubsubsection}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\makeatletter
+\def\toclevel@subsubsubsection{4}
+\def\l@subsubsubsection{\@dottedtocline{4}{7em}{4em}}
+\makeatother
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+\date{\today}
+\title{Sticks and Stones Game Design Doc}
+\hypersetup{
+ pdfauthor={},
+ pdftitle={Sticks and Stones Game Design Doc},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={},
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{Overview}
+\label{sec:org5fb959e}
+\subsection{Vision}
+\label{sec:org3926264}
+Good games express a great truth. Great games express it so well they teach it to the player. Awesome games become many great truths and let the player become them as well.\\
+
+The truths this game hopes to teach are:\\
+\begin{itemize}
+\item Human history is in a complex organic relationship with the physical world.\\
+\item Simulations are an awesome way to learn things about the world.\\
+\end{itemize}
+
+The experiential truths this game hopes to become are:\\
+\begin{itemize}
+\item Complex logistics that can be changed, yet is complex enough that the player experiences the wholeness of reality and the real, open, subjective nature of decision making in it.\\
+\item The massive, diverse, a priori diet of the world that feeds the iconic, isolated crystallizations, as moments, legends, philosophies, and art.\\
+\item As time progresses, certain new systems (which have their own laws) emerge from the interactions of the previous systems, which creates new forms and qualities of life.\\
+\item The scope of view changes everything, and a true life requires zooming in and zooming out.\\
+\item Human history is made up of a massive amount of details, yet these coalesce into truly revolutionary moments.\\
+\end{itemize}
+
+In practice, this game hopes to be:\\
+\begin{itemize}
+\item A simulation moving in development, technology, and culture from primitive to advanced society, under the player's influence\\
+\item A simulation which can take curated data (often in the form of mods) to immerse the player in an actual, specific historical period\\
+\item A good balance between realism and the complexity goals laid ahead, without being boring\\
+\item A simulation where the NPCs can autonomously produce simulations of the most extreme moments of human life: having and loving tribes and families, making enemies, dying unique deaths, creating art, expressing powerful emotions, having new thoughts and views on life, connecting to wider groups, but at the same time the player having both a role in and a being able to be sensitive witness to these moments.\\
+\item A simulation where complex and interweaving groups that mirror the new world can autonomously arise due to the individual NPCs actions, but at the same time the player having both a role in and a being able to be sensitive witness to the character and actions of these (some of these) groups.\\
+\item A simulation where the player goes 'oh wow! I never expected that something that dramatic could happen, but its so believable!'\\
+\end{itemize}
+\subsection{Description}
+\label{sec:org31bd3ab}
+'Sticks and Stones' is a 2D \hyperref[org938ee1c]{Tile} Colony Simulator, similar to other indie Colony Simulators like 'Rimworld', 'Dwarf Fortress', and 'Song of Syx.' It is set apart by:\\
+
+\begin{enumerate}
+\item Real-world historicity and immersion, utilizing real-world technological and cultural development to give the player a realistic yet open-ended experience through a human history of their own.\\
+\item Complex evolving group dynamics. The player is able to engage with and influence groups which evolve in character and merge and split, from the family, tribe, clan, up to higher level formations like cultures, religions, kingdoms, empires, republics.\\
+\item Complex and evolving technology, logistics, warfare. The detail of the world allows the evolution of culture, alliances, and technology to be seemless and dialectic. What is discovered, what is produced, what is valued by the NPCs, have hard prerequisites yet the order is not set beforehand and the web of technology is so large that every playthrough feels like a unique history.\\
+\item Unity of both the detail of simulation at the individual level (view of one unit, their skills, satisfaction, values, life experience) and the grand world level (view of massive structures, the interest of society, large factions). The larger comes into being as the game progresses.\\
+\end{enumerate}
+\subsection{Technologies}
+\label{sec:org9089a11}
+The engine is coded from scratch using C++, using CMake and clangd, with the help of free software libraries SDL2, cereal, magic\textsubscript{enum}, SDL\textsubscript{FontCache}, and FastNoiseLite, as well as Jinja2 for Python metaprogramming.\\
+\section{World Simulation}
+\label{sec:org72a3098}
+\subsection{Generation}
+\label{sec:org2553fae}
+The world is procedurally generated tile-based game. There is some non-determinism due to the way that altitude is currently determined, which affects later terrain generation. The first stage of the generation happens at the chunk level. First, water bodies and land masses are generated, then mountain ranges and other general altitude zones. Then rivers and lakes. Then humidity is determined by distance from water bodies and randomness. Then \hyperref[org1131659]{Temperature} is determined by distance from the equator, water bodies, and randomness. Then biomes based on \hyperref[org1131659]{Temperature}, humidity and distance from mountains and water bodies. Then the second stage zooms into the \hyperref[org938ee1c]{Tile} level. \hyperref[org938ee1c]{Tile} altitude is determined based on chunk altitude, biomes, and randomness. \hyperref[org5189a7f]{Tiles} are generated in clusters based on biomes, \hyperref[org1131659]{Temperature}, altitude, and humidity. After generation is finished, the chunk and tile data are transferred to permanent databases. Biome data is eliminated as it has no actual effect but is only an intermediate data step used to generate the world.\\
+\subsection{Terrain / Tile\label{org938ee1c}\label{org5189a7f}}
+\label{sec:org50c670f}
+There are many different \hyperref[org5189a7f]{Tiles}, where different actions can be performed (building, farming, mining). Each \hyperref[org938ee1c]{Tile} has its own altitude, and liquid content (comes from precipitation, rivers).\\
+\subsection{Plant \label{org38a7ff2} \label{org6e70fa0}}
+\label{sec:orgfbe1e46}
+Grass and \hyperref[org6e70fa0]{Plants} grows spontaneously on tiles. Grass growth just changes the \hyperref[org938ee1c]{Tile} type. Some \hyperref[org6e70fa0]{Plants} take up more than one tile like large grown trees and grapevines. If plants compete for spaces, one will stop growing. \hyperref[org38a7ff2]{Plant} growth depends on the tile having enough water, sunlight, \hyperref[org1131659]{Temperature}. \hyperref[org6e70fa0]{Plants} can not grow or die due to any of these factors being unoptimal. \hyperref[org38a7ff2]{Plant} growth can be boosted by fertilizer. Some \hyperref[org6e70fa0]{Plants} produce fruit. Some \hyperref[org6e70fa0]{Plants} hibernate and can last for several years.\\
+\subsection{Animal \label{orgdadda30} \label{orgb1f888f}}
+\label{sec:orged2772a}
+\hyperref[orgb1f888f]{Animals} eat \hyperref[org6e70fa0]{Plants} and other \hyperref[orgb1f888f]{Animals}. Some can be domesticated, some easier then others. Some move in packs, some alone. Many can be used for cookable meat and many produce other useful items from their bodies or corpses. \hyperref[orgb1f888f]{Animals} migrate. Some \hyperref[orgb1f888f]{Animals} may be Valued by \hyperref[org21e4d88]{Groups}.\\
+\subsection{Physics}
+\label{sec:org99ab37b}
+\subsubsection{Temperature \label{org1131659} \label{org3ec9870}}
+\label{sec:org595dce1}
+Each chunk has its own base level \hyperref[org1131659]{Temperature} value, as well as diurnal (daily) \hyperref[org1131659]{Temperature} variance and seasonal \hyperref[org1131659]{Temperature} variance, to determine the actual \hyperref[org1131659]{Temperature}.\\
+
+\hyperref[org5189a7f]{Tiles} by default take their \hyperref[org1131659]{Temperature} from the chunk, but can have exceptions (usually caused by unit buildings, fires, etc.) The chunk factors also determines precipitation, (it precipitates across entire chunks).\\
+
+\hyperref[org3b0b756]{Weather Events} can also effect \hyperref[org1131659]{Temperature}.\\
+\subsubsection{Humidity \label{org1479080} \label{orgc2b2f2b}}
+\label{sec:orga8bfae5}
+Each chunk's base \hyperref[org1479080]{Humidity} value is determined by the nearness of water bodies, as well as rain shadow effects from mountains.\\
+
+\hyperref[org5189a7f]{Tiles} by default take their \hyperref[org1131659]{Temperature} from the chunk, but can have exceptions (usually caused by unit buildings, fires, etc.) The chunk factors also determines precipitation, (it precipitates across entire chunks).\\
+
+\hyperref[org3b0b756]{Weather Events} can also effect \hyperref[org1131659]{Temperature}.\\
+\subsubsection{Altitude}
+\label{sec:org810a562}
+Each \hyperref[org938ee1c]{Tile} has an Altitude. Altitude effects \hyperref[org1131659]{Temperature}, but is only modified during World generation as well as the landslide, snowfall, flood, and tsunami \hyperref[org3b0b756]{Weather Events}.\\
+\subsubsection{Precipitation \label{orgf5cfa92} \label{org33fd3d1}}
+\label{sec:orgd30fdd3}
+The event of \hyperref[orgf5cfa92]{Precipitation}, as well as its severity, happens based on the \hyperref[org1479080]{Humidity} of the chunk, a cycle, and randomness. \hyperref[orgf5cfa92]{Precipitation} events make \hyperref[org5860b41]{Liquid} accumulate.\\
+\subsubsection{Liquid \label{org5860b41} \label{orgbbaca6d}}
+\label{sec:org8842a9a}
+\hyperref[org5860b41]{Liquid} flows from high Altitudes to low Altitudes. Certain thresholds of \hyperref[org5860b41]{Liquid} create certain water \hyperref[org5189a7f]{Tiles} once they have been reached, returning to the underlying \hyperref[org938ee1c]{Tile} if they have been removed.\\
+\subsubsection{Weight \label{orgf5aa833} \label{org2af32af}}
+\label{sec:orgb25d010}
+All \hyperref[org4612467]{Items} have \hyperref[org2af32af]{Weights}. Units can only carry so much \hyperref[orgf5aa833]{Weight}.\\
+\subsubsection{Bulk \label{org7af52ad} \label{org0f875af}}
+\label{sec:org4bda77a}
+All \hyperref[org4612467]{Items} have \hyperref[org0f875af]{Bulks}. Units can only carry so much \hyperref[org7af52ad]{Bulk}, but \hyperref[org0f27c43]{Containers} can increase the amount of absolute \hyperref[org7af52ad]{Bulk} they can carry.\\
+\begin{enumerate}
+\item Bulk Level
+\label{sec:org7bab7bf}
+The hierarchy of \hyperref[org7af52ad]{Bulk} Level is: liquid, fine, semifine, loose, soft, solid, single. Each \hyperref[org1f7c3b7]{Item} has a certain \hyperref[org7af52ad]{Bulk} Level, and every \hyperref[orge5316d5]{Container} (which includes the hands of a Unit) can only have one \hyperref[org7af52ad]{Bulk} Level active at once. The 'single' and 'liquid' \hyperref[org7af52ad]{Bulk} Levels are exclusive: a \hyperref[orge5316d5]{Container} can only carry one of those \hyperref[org4612467]{Items} at once, and no other \hyperref[org4612467]{Items}. The other levels have limited \hyperref[org0f875af]{Bulks} depending on the \hyperref[orge5316d5]{Container} in question, especially limited for Unit hands (a Unit can only carry a handful of fine sand, but a bucket can carry much).\\
+
+Only certain \hyperref[org0f27c43]{Containers} can carry liquid and fine.\\
+\end{enumerate}
+\subsubsection{Calories \label{org7e6ab9b} \label{orgcfc2947}}
+\label{sec:orgc7e786a}
+Units and \hyperref[orgb1f888f]{Animals} require a certain level of \hyperref[org7e6ab9b]{Calories} to survive, and below a certain level accumulate debuffs. \hyperref[org6e70fa0]{Plants}, \hyperref[orgb1f888f]{Animals}, and Food contains calories.\\
+\subsubsection{Weather Event \label{org076d8b5} \label{org3b0b756}}
+\label{sec:org55118b0}
+In progress\\
+\section{Units and Unit Interaction}
+\label{sec:orgc59c3cc}
+\subsection{Unit Basics}
+\label{sec:org77e07ff}
+Units have health, hunger, sex, age, skin datas, \hyperref[org58ad070]{Skills}, \hyperref[org080bb13]{Roles}, Inventories, known \hyperref[org6741c08]{Places}, and subscribed \hyperref[org21e4d88]{Groups}.\\
+\subsubsection{Inventory and Equipment}
+\label{sec:orgc8dabae}
+Units have an Underlayer slot for their head, arms, legs, and chest, and an Overlayer slot for these too. They also can several carry \hyperref[org0f27c43]{Containers}, the amount depending on how much \hyperref[org7af52ad]{Bulk} and \hyperref[orgf5aa833]{Weight} the Unit can carry, with a max of 8, not counting nested \hyperref[org0f27c43]{Containers}.\\
+\subsubsection{Skills \label{org58ad070} \label{org4617689}}
+\label{sec:orgbafb52c}
+\begin{itemize}
+\item note: plan to be modified to be more accurate to real life, rather than TTRPGs.\\
+\end{itemize}
+
+Units have \hyperref[org58ad070]{Skills} that affect their performance at certain \hyperref[org080bb13]{Roles} as well as their \hyperref[orge4a3133]{Values} and allegiance to \hyperref[org21e4d88]{Groups}. \hyperref[org58ad070]{Skills} also have passive effects. \hyperref[org58ad070]{Skills} can be increased overtime slowly. Certain \hyperref[org080bb13]{Roles} increase certain \hyperref[org58ad070]{Skills} extremely slowly. \hyperref[org58ad070]{Skills} increase from birth to adulthood but decay in old age.\\
+\begin{enumerate}
+\item Strength
+\label{sec:org1f022a1}
+Affects some attacks. Affects max carrying \hyperref[orgf5aa833]{Weight}.\\
+\item Athleticism
+\label{sec:org71879ae}
+Affects movement speed and some attacks.\\
+\item Dexterity
+\label{sec:org044162f}
+Affects some attacks.\\
+\item Intellect
+\label{sec:orgc671a59}
+Affects rate of leveling.\\
+\item Memory
+\label{sec:org8d86ebb}
+Increases the amount of \hyperref[orgada42dd]{Role} mana available, as well as skill decay in old age.\\
+\item Perception
+\label{sec:orgf066d1e}
+Natural increase to \hyperref[orgda5f73b]{Satisfaction}, especially in high Comfort zones. However, more receptive to Fear.\\
+\item Creativity
+\label{sec:orgf968eb0}
+Easier to learn \hyperref[org080bb13]{Roles} in different categories, and multiple \hyperref[org080bb13]{Roles}.\\
+\item Charisma
+\label{sec:orgae77bdd}
+Increases opinion faster within \hyperref[org21e4d88]{Groups} that track opinion. More likely to be given \hyperref[org080bb13]{Roles} that are elected by \hyperref[org21e4d88]{Groups}. Can increase or decrease Fear.\\
+\item Determination
+\label{sec:org10ac262}
+Affects rate of leveling and general efficiency (affects the most \hyperref[org080bb13]{Roles}), as well as makes Units more actively try to achieve their own \hyperref[org55b3b0b]{Goals} and \hyperref[org3bac9f0]{Group} \hyperref[org55b3b0b]{Goals}.\\
+\end{enumerate}
+\subsubsection{Places \label{org6741c08} \label{orgb5c5154}}
+\label{sec:orga4c8225}
+Units and \hyperref[org21e4d88]{Groups} will respect certain \hyperref[org6741c08]{Places} for certain activities, which are marked by the player or are created automatically based on certain conditions.\\
+\subsection{Role \label{orgada42dd} \label{org080bb13}}
+\label{sec:org0f3a315}
+Each Unit can be assigned \hyperref[org080bb13]{Roles}. Each \hyperref[orgada42dd]{Role} takes a different amount of \hyperref[orgada42dd]{Role} Mana, which a Unit has a set amount of. The efficiency of the tasks being performed by a Unit with a \hyperref[orgada42dd]{Role} depends on the \hyperref[org58ad070]{Skills} which boost that \hyperref[orgada42dd]{Role}, and the value of those \hyperref[org58ad070]{Skills}. The player can assign swap \hyperref[org080bb13]{Roles}, but only after a cooldown, and some Units will not want to be assigned or read-assnged new \hyperref[org080bb13]{Roles}.\\
+
+Each \hyperref[orgada42dd]{Role} can perform certain actions, though actions are not visible to the player.\\
+
+There are a few categories of \hyperref[org080bb13]{Roles} get \hyperref[orgd69054e]{Resources}, produce \hyperref[orgc5e54a9]{Products} (take \hyperref[orgd69054e]{Resources} or other \hyperref[orgc5e54a9]{Products} to produce new \hyperref[orgc5e54a9]{Products}),\\
+\subsubsection{Trainee}
+\label{sec:org4cc58f0}
+A Trainee is a \hyperref[orgada42dd]{Role} that is in progress (though the Unit may already have achieved previous \hyperref[org080bb13]{Roles}.)\\
+\begin{enumerate}
+\item Child
+\label{sec:org2ac0e1a}
+All units which are born start as Child. Child can assist others in performing tasks but can only add a bonus to the task efficiency and gain some apprentice experience and increase their \hyperref[org58ad070]{Skills}.\\
+\item Apprentice
+\label{sec:orgdb7f832}
+When a Unit is first assigned a \hyperref[orgada42dd]{Role} it begins as an Apprentice, and each \hyperref[orgada42dd]{Role} has a different Apprentice time. The Unit can perform the task at a much slower rate while they are an Apprentice.\\
+\end{enumerate}
+\subsubsection{Resource \label{org20641a7} \label{orgd69054e}}
+\label{sec:org61053f2}
+Certain \hyperref[org4612467]{Items} already exist in the world and only involve a Unit attaining them in some manner. They may require other \hyperref[org4612467]{Items} to be harvested but they do not require another \hyperref[org1f7c3b7]{Item} to be consumed to be made. These are handled by \hyperref[org20641a7]{Resource} \hyperref[org080bb13]{Roles}, including but not limited to: gathering, fishing, mining, planting, breeding.\\
+
+Tend to correlate largely to Strength, moderately to Determination, Athleticism, Dexterity, slightly to Perception \hyperref[org58ad070]{Skills}.\\
+\subsubsection{Product \label{org5730b6c} \label{orgc5e54a9}}
+\label{sec:org002ce72}
+Certain \hyperref[org4612467]{Items} require other \hyperref[org4612467]{Items} to be consumed to be made, these are \hyperref[orgc5e54a9]{Products}. Most \hyperref[org4612467]{Items} are \hyperref[orgc5e54a9]{Products}. However, Producers don't just produce \hyperref[orgc5e54a9]{Products}, they can also produce \hyperref[orgb7b8c78]{Buildables} from \hyperref[orgc5e54a9]{Products} and \hyperref[orgd69054e]{Resources}.\\
+
+Tend to correlate largely to Dexterity, moderately to Memory, Perception, Strength, slightly to Intellect, Creativity, Determination and Athleticism \hyperref[org58ad070]{Skills}.\\
+\subsubsection{Research \label{orga5818bf} \label{org58a2cd3}}
+\label{sec:orgcd943db}
+Certain \hyperref[org080bb13]{Roles} do not produce anything tangible (at least primarily, as many Researchers are also Producers), but contribute to society's progression by advancing \hyperref[orgd7203c2]{Knowledge}.\\
+
+Tend to correlate largely to Intellect, Memory, moderately to Determination, Creativity and Charisma (diplomats), slightly to Perception (explorers) \hyperref[org58ad070]{Skills}.\\
+\subsubsection{Art \label{org549cdbd} \label{orgcb02d08}}
+\label{sec:orgaeb9ff9}
+Certain \hyperref[org080bb13]{Roles} produce something that is not used primarily to produce more \hyperref[orgc5e54a9]{Products} or \hyperref[orgb7b8c78]{Buildables} for survival. Some \hyperref[org978f042]{Art} roles produce nothing tangible at all. Regardless, their output is judged more on its Quality then \hyperref[org20641a7]{Resource}, \hyperref[org5730b6c]{Product}, or \hyperref[orgacd3f90]{Support} \hyperref[org080bb13]{Roles}.\\
+
+Tend to correlate largely to Creativity, Dexterity, moderately to Memory, Perception, Charisma, Determination, slightly to Intellect \hyperref[org58ad070]{Skills}.\\
+\subsubsection{Support \label{orgacd3f90} \label{orgc23aaca}}
+\label{sec:org08b3024}
+Certain \hyperref[org080bb13]{Roles} largely boost things like \hyperref[orgd146db7]{Order} or \hyperref[orgdbeaa2d]{Trade}, or boost the efficiency of other \hyperref[org080bb13]{Roles}. Some \hyperref[org080bb13]{Roles} may actually be counter-productive to the overall development or \hyperref[orgd146db7]{Order}, even of \hyperref[org21e4d88]{Groups} they are a part of (such as Bandit, Zealot, Landowner, and Money Lender roles, depending on the situation), and these fall into this class as well.\\
+
+Tend to correlate moderately to Charisma, Intellect, and Memory \hyperref[org58ad070]{Skills}.\\
+\subsubsection{Training \label{orgc2dca89} \label{org307a9c7}}
+\label{sec:orge66d962}
+Certain \hyperref[org080bb13]{Roles} train other \hyperref[org080bb13]{Roles}. Oftentimes this will be a secondary category.\\
+
+\hyperref[orgc2dca89]{Training} is boosted directly by the Charisma, Intellect, Memory, and Perception \hyperref[org58ad070]{Skills}, as well as the trainer having high \hyperref[org58ad070]{Skills} relevant to the \hyperref[orgada42dd]{Role}, as well as being in the same \hyperref[org21e4d88]{Groups} or having shared \hyperref[orge4a3133]{Values}.\\
+\subsubsection{Melee \label{org082746d} \label{org25bdb6e}}
+\label{sec:orgb0ae8c5}
+Tend to correlate highly with Strength, Athleticism, moderately with Dexterity, slightly with Perception, Determination.\\
+\subsubsection{Ranged \label{org14916a2} \label{org054ca37}}
+\label{sec:org480059e}
+Tend to correlate highly with Athleticism, Perception, moderately with Dexterity, slightly with Strength, Intellect.\\
+\subsubsection{Leader \label{org990bdda} \label{org841e9de}}
+\label{sec:org232428b}
+Boosts entire \hyperref[org21e4d88]{Groups} or \hyperref[org080bb13]{Roles}. Tend to correlate with highly with Determination, Charisma, slightly with Intellect, Memory, Perception. though also directly correlates to the actual \hyperref[org080bb13]{Roles}' \hyperref[org58ad070]{Skills}.\\
+\subsection{Motivations}
+\label{sec:org632ae76}
+\subsubsection{Basic Motivations}
+\label{sec:org564be7c}
+\begin{enumerate}
+\item Hunger
+\label{sec:orgca6d0b8}
+\item Water
+\label{sec:orgd254571}
+\item Comfort
+\label{sec:org48f7ffb}
+\item Fear
+\label{sec:org3a2fa03}
+\end{enumerate}
+\subsubsection{Bonus Motivations}
+\label{sec:orgff22821}
+\subsubsection{Personality Motivations}
+\label{sec:orgbe69ac4}
+\begin{enumerate}
+\item Moral Perfection
+\label{sec:orged67049}
+\item Affection
+\label{sec:org9a3fa71}
+\item Status
+\label{sec:org79c2871}
+\item Uniqueness
+\label{sec:org04c97b1}
+\item Expertise
+\label{sec:orgda991e4}
+\item Security
+\label{sec:org33cc739}
+\item Excitement
+\label{sec:org33581ad}
+\item Autonomy
+\label{sec:org1770dc6}
+\item Peace
+\label{sec:org6f8d535}
+\end{enumerate}
+\subsection{Value\label{orgcfc0c4f}\label{orge4a3133}/Valuable\label{orgc4da326}\label{orgc3a1da5}}
+\label{sec:org7eb7be5}
+A \hyperref[orgcfc0c4f]{Value} is simply a subjective preference for any \hyperref[orgc4da326]{Valuable}. A \hyperref[orgc4da326]{Valuable} is anything that can be conceptualized with reference to the simulation: certain \hyperref[orgb1f888f]{Animals}, \hyperref[org4612467]{Items}, \hyperref[org6e70fa0]{Plants}, \hyperref[orgb7b8c78]{Buildables}, Motivations, Units with certain traits (physical, \hyperref[orgada42dd]{Role}, Personality), and \hyperref[org21e4d88]{Groups}. Units can be members of \hyperref[org21e4d88]{Groups} and simultaneously negatively \hyperref[orgcfc0c4f]{Value} them. For the sake of complexity and performance, most \hyperref[orge4a3133]{Values} will be unset, and thus the Unit will have the default preference for that \hyperref[orgc4da326]{Valuable}. Above a certain threshold of \hyperref[orgcfc0c4f]{Value}, a \hyperref[org3bac9f0]{Group}'s \hyperref[orge4a3133]{Values} will come to influence a Unit's \hyperref[orge4a3133]{Values}.\\
+
+There are some very common \hyperref[orgcfc0c4f]{Value} Patterns. These are abstract formulas for the \hyperref[orge4a3133]{Values} certain Units or \hyperref[org21e4d88]{Groups} are more likely to be generated with or gain over time. For example, Units are more likely to have certain \hyperref[orge4a3133]{Values} if they have certain \hyperref[org080bb13]{Roles} or Personality traits. Units are also likely to \hyperref[orgcfc0c4f]{Value} the \hyperref[orgada42dd]{Role} they have especially if they a \hyperref[org3bac9f0]{Group} which is \hyperref[orge4a3133]{Values} that \hyperref[orgada42dd]{Role} is a \hyperref[org3bac9f0]{Group} they \hyperref[orgcfc0c4f]{Value}.\\
+\subsection{Interest\label{orgc8c6317}\label{orgc5a9408}/Goal\label{orgd0c5ba7}\label{org55b3b0b}}
+\label{sec:org882cc66}
+A \hyperref[orgd0c5ba7]{Goal} is tangible task that a Unit or \hyperref[org3bac9f0]{Group} tries to achieve. It can sometimes be a single task, such as 'marry X', 'get X \hyperref[org1f7c3b7]{Item}', 'kill X'. \hyperref[org21e4d88]{Groups} can also have open-ended versions of \hyperref[org55b3b0b]{Goals}, called \hyperref[orgc5a9408]{Interests}. An \hyperref[orgc8c6317]{Interest} is a \hyperref[orgd0c5ba7]{Goal} which is usually never achieved but progress can always be made, such as 'establish trade routes', or 'expand territory.'\\
+\subsection{Group \label{org3bac9f0} \label{org21e4d88}}
+\label{sec:orgd4f165d}
+\hyperref[org21e4d88]{Groups} can grow over time and be small or large. They represent things as narrow as families and tribes and as broad as cultures and empires. A Unit likely belongs to a few or even several \hyperref[org21e4d88]{Groups}. \hyperref[org21e4d88]{Groups} may have their own Motivations and \hyperref[orge4a3133]{Values}, and even \hyperref[org55b3b0b]{Goals} and \hyperref[orgc5a9408]{Interests}. Oftentime a \hyperref[org3bac9f0]{Group} can form around something simple like preferences for a collection of \hyperref[org4612467]{Items} if the prospective members of that \hyperref[org3bac9f0]{Group} value it enough. The makeup and character of \hyperref[org21e4d88]{Groups} also depends heavily on the state of other \hyperref[org21e4d88]{Groups} and their interrelations. As an example some \hyperref[org21e4d88]{Groups} might even form just as an opposition to another \hyperref[org3bac9f0]{Group} and immeadiately dissolve if that \hyperref[org3bac9f0]{Group} is destroyed (for example, a \hyperref[org3bac9f0]{Group} that forms with the sole goal of assassinating\\
+
+\hyperref[org21e4d88]{Groups} make the game highly dynamic and unpredictable, and give the player.\\
+
+A Unit's \hyperref[orgda5f73b]{Satisfaction}, \hyperref[org55b3b0b]{Goals}, Motivations, and \hyperref[orge4a3133]{Values} will often be derivative of the \hyperref[org21e4d88]{Groups} of which they are a member, especially if they \hyperref[orgcfc0c4f]{Value} that \hyperref[org3bac9f0]{Group}. Firstly, when given a choice Units are more likely to choose to be a part of \hyperref[org21e4d88]{Groups} that share their \hyperref[orge4a3133]{Values}.\\
+
+\hyperref[org21e4d88]{Groups} of certain types also have the ability to negotiate with other \hyperref[org21e4d88]{Groups}-- for example, families may marry or exchange gifts, tribes and princedoms may make\\
+\subsection{Event \label{orga67caa8} \label{org18f01fc}}
+\label{sec:org2a721ff}
+\hyperref[org21e4d88]{Groups} controlled by the player make the player receive \hyperref[org18f01fc]{Events} related to that \hyperref[org3bac9f0]{Group}. A player will not receive duplicate \hyperref[org18f01fc]{Events} if two or more of the \hyperref[org21e4d88]{Groups} they control receive the same \hyperref[orga67caa8]{Event}, unless they are opposed in the \hyperref[orga67caa8]{Event}. (this section is to be expanded).\\
+\section{Item \label{org1f7c3b7} \label{org4612467}}
+\label{sec:orgf1eb167}
+As mentioned their are two main classes of \hyperref[org4612467]{Items}, \hyperref[orgd69054e]{Resources} and \hyperref[orgc5e54a9]{Products}. However there are certain traits of \hyperref[org4612467]{Items} that serve different functions.  The recipe of new \hyperref[org4612467]{Items} is unlocked through new \hyperref[org85e435a]{Technology}.\\
+\subsection{Tool \label{orgbc87442} \label{org55856a5}}
+\label{sec:org7a7343d}
+These are \hyperref[org4612467]{Items} which are required to make other \hyperref[org4612467]{Items} but not consumed in the process of making a single \hyperref[org1f7c3b7]{Item} (though some  deteroriate as they are used).\\
+\subsubsection{Weapon}
+\label{sec:org461ded4}
+These are \hyperref[org55856a5]{Tools} which can be used to deal additional damage.\\
+\subsection{Art \label{org978f042} \label{org19e03dc}}
+\label{sec:orgc13e73d}
+These \hyperref[org4612467]{Items} often do not have a practical production use after they are created but instead give passive bonuses to Units and \hyperref[org21e4d88]{Groups}.\\
+\subsection{Containers \label{orge5316d5} \label{org0f27c43}}
+\label{sec:org4a7ad82}
+These \hyperref[org4612467]{Items} carry other \hyperref[org4612467]{Items}, often managing \hyperref[orgf5aa833]{Weight} and \hyperref[org7af52ad]{Bulk}.\\
+\subsection{Wearable \label{org42fe002} \label{org87f51de}}
+\label{sec:orgd24cf05}
+These \hyperref[org4612467]{Items} can be equipped and let Units survive at more extreme \hyperref[org3ec9870]{Temperatures} or protect Units from attacks.\\
+\subsection{Perishable \label{orgf8818b6} \label{orge99079b}}
+\label{sec:orgbda5b4f}
+These \hyperref[org4612467]{Items} can deterioriate without being used at all.\\
+\section{Buildables \label{orgccb7451} \label{orgb7b8c78}}
+\label{sec:org48f3d22}
+Walls, Roofs, and Stations which can be worked at, made of different materials. Most cannot be moved, only destroyed, and cannot enter Inventories. They are \hyperref[orgc5e54a9]{Products}.\\
+\section{Order \label{orgd146db7} \label{orgb77977d}}
+\label{sec:org3d6864d}
+Determined by dimensions:\\
+\begin{enumerate}
+\item \hyperref[org39099d7]{Legal}\\
+\item \hyperref[org6e4ede0]{Administrative}\\
+\item \hyperref[org992a868]{Cultural}\\
+\item \hyperref[orgda5f73b]{Satisfaction}\\
+\item \hyperref[org3090cf7]{Force}\\
+\end{enumerate}
+
+\hyperref[orgd146db7]{Order} applies to \hyperref[org21e4d88]{Groups} larger than a certain size, and the amount of \hyperref[orgd146db7]{Order} required is determined by the Sacrifice required by the \hyperref[org3bac9f0]{Group}. If \hyperref[orgd146db7]{Order} is low, it is likely certain Units will become criminals or rebels, killing other units, and it is more likely new \hyperref[org21e4d88]{Groups} will be formed as Units will be less loyal to current \hyperref[org21e4d88]{Groups}. It is also more likely that those \hyperref[org21e4d88]{Groups} will be attacked. However the player may choose to support a rebellion against or a transformation of the \hyperref[org21e4d88]{Groups} they control.\\
+\subsection{Legal \label{org39099d7} \label{org9481f9c}}
+\label{sec:org7fa5cae}
+This source of \hyperref[orgd146db7]{Order} is stable and really only hard to keep above a minimum level, or go down quickly, if High \hyperref[org841e9de]{Leaders} have recently been killed. However, it is hard for it to get to a high level. Raising \hyperref[org39099d7]{Legal} \hyperref[orgd146db7]{Order} too high also causes \hyperref[orgda5f73b]{Satisfaction} \hyperref[orgd146db7]{Order} to decrease, and makes it harder to produce \hyperref[org6e4ede0]{Administrative} \hyperref[orgd146db7]{Order}.\\
+\begin{itemize}
+\item Produced passively by High \hyperref[org841e9de]{Leaders}\\
+\item High \hyperref[org841e9de]{Leaders} have abilities to raise \hyperref[org39099d7]{Legal} \hyperref[orgd146db7]{Order} immeadiately, leading to lower \hyperref[orgda5f73b]{Satisfaction}\\
+\item Produced by Priests, High Priests, Lawyers, Judges, Senators\\
+\item Senators can also ensure that \hyperref[org39099d7]{Legal} \hyperref[orgd146db7]{Order} doesn't increase past a certain amount\\
+\item Reduced when new \hyperref[orgd7203c2]{Knowledge} is discovered\\
+\end{itemize}
+\subsection{Administrative \label{org6e4ede0} \label{orgcb9c8fe}}
+\label{sec:org7774948}
+This source of \hyperref[orgd146db7]{Order} depends on \hyperref[org39099d7]{Legal} \hyperref[orgd146db7]{Order}. If \hyperref[org39099d7]{Legal} \hyperref[orgd146db7]{Order} is too low or too high, \hyperref[org6e4ede0]{Administrative} \hyperref[orgd146db7]{Order} will also be harder to create. As \hyperref[org39099d7]{Legal} \hyperref[orgd146db7]{Order} goes up from a certain point, \hyperref[org6e4ede0]{Administrative} \hyperref[orgd146db7]{Order} will also decrease, at a smaller rate. High \hyperref[org6e4ede0]{Administrative} \hyperref[orgd146db7]{Order} also means that the \hyperref[org3090cf7]{Force} \hyperref[orgd146db7]{Order} requirements are lower. \hyperref[org6e4ede0]{Administrative} \hyperref[orgd146db7]{Order} can also be spent to enact certain \hyperref[org990bdda]{Leader} abilities, and is decently easy to create quickly. Low administrative order will also lower the amount of actual taxes that are collected, despite the set tax rate. Most importantly, \hyperref[org6e4ede0]{Administrative} \hyperref[orgd146db7]{Order} affects \hyperref[org9bdc7c2]{Production} Command.\\
+\begin{itemize}
+\item High \hyperref[org841e9de]{Leaders} produce large amounts passively, depending on their personality traits\\
+\item Produced by Landowner Subclasses, Bureaucrat, Senator, and Governor\\
+\item Raised by ample Royal wealth\\
+\item Lowered by large debt\\
+\end{itemize}
+\subsection{Cultural \label{org992a868} \label{orgcacd29d}}
+\label{sec:org77ffd07}
+This source of \hyperref[orgd146db7]{Order} is difficult to create rapidly, and depends on many factors. High \hyperref[org992a868]{Cultural} \hyperref[orgd146db7]{Order} gives all Units a passive boost, and also unlocks certain Rituals which give further boosts or abilities. The only downside of having \hyperref[org992a868]{Cultural} \hyperref[orgd146db7]{Order} super high is that captured foreign units will have a larger debuff before they are assimilated.\\
+\begin{itemize}
+\item High \hyperref[org841e9de]{Leaders} produce an amount, depending on their personality traits\\
+\item Mostly produced by \hyperref[org978f042]{Art}, especially Artifact Artists, which is multiplied based on the varieties, beauty level, and history of that artform in the nation\\
+\item Also produced by Shamans, Priests, High Priests\\
+\item Modified positively or negatively by the amount of recently discovered Academic \hyperref[orgd7203c2]{Knowledge}\\
+\item Lowered by low \hyperref[orgcfc0c4f]{Value} adherence, but can get a massive boost if \hyperref[orgcfc0c4f]{Value} adherence becomes too low or there is a rapid change of \hyperref[orge4a3133]{Values}\\
+\end{itemize}
+\subsection{Satisfaction \label{orgda5f73b} \label{orgc4f5275}}
+\label{sec:org308ab23}
+This source of \hyperref[orgd146db7]{Order} is the easiest kind of \hyperref[orgd146db7]{Order} to create rapidly, as long as the player has enough resources and certain types of Units. However, if \hyperref[orgda5f73b]{Satisfaction} is quite low it is also likely that the player is lacking in other crucial resources. High \hyperref[orgda5f73b]{Satisfaction} also means that the \hyperref[org3090cf7]{Force} \hyperref[orgd146db7]{Order} requirements are lower.\\
+\begin{itemize}
+\item Depends primarily on meeting Basic Motivations\\
+\item Secondarily on Bonus Motivations, Personality Motivations\\
+\item Tertiarily on environment beauty\\
+\item Lowered by large amounts of soldiers, and somewhat by large amounts of resource workers\\
+\item Lowered by high set taxes\\
+\item Hugely lowered by mass death, especially of civilians\\
+\end{itemize}
+\subsection{Force \label{org3090cf7} \label{orgc687d6b}}
+\label{sec:orge0fccfe}
+This source of \hyperref[orgd146db7]{Order} is also quite difficult to obtain because it is primarily based on army size and unit quality.\\
+\begin{itemize}
+\item Calculated by the power of army\\
+\end{itemize}
+\section{Knowledge \label{orgd7203c2} \label{orgdeeffd0}}
+\label{sec:org987276b}
+The forms of \hyperref[orgd7203c2]{Knowledge} are:\\
+\begin{enumerate}
+\item Exploration\\
+\item \hyperref[org85e435a]{Technology}\\
+\item Units\\
+\item Foreign\\
+\item Academic\\
+\end{enumerate}
+
+New \hyperref[orgd7203c2]{Knowledge} of all forms will be unlocked passively at a certain rate (assuming certain units are doing other tasks), except Exploration, but the main source of \hyperref[orgd7203c2]{Knowledge} is Researchers. \hyperref[orgd7203c2]{Knowledge} itself, also affects other stats such as \hyperref[org992a868]{Cultural} \hyperref[orgd146db7]{Order} and \hyperref[org39099d7]{Legal} \hyperref[orgd146db7]{Order}.\\
+
+with units that can evolve into other units that have not been discovered randomly having a "Eureka" moment rarely, if the required resources to create that new unit are also available to the player.\\
+\subsection{Exploration}
+\label{sec:orgeaf6b13}
+Explorers discover previously hidden tiles on the map which stay revealed, unlike other units, which will reveal them for a time and then fog of war will reappear. As explorers permanently reveal tiles, Exploration \hyperref[orgd7203c2]{Knowledge} increases. Since the world is infinite, Exploration \hyperref[orgd7203c2]{Knowledge} is always decreasing at a fixed rate. Maps from foreign nations can also be bought, which increases Exploration \hyperref[orgd7203c2]{Knowledge} and reveals areas of the map.\\
+\subsection{Academic}
+\label{sec:orgaa367fa}
+This \hyperref[orgd7203c2]{Knowledge} functions more like an \hyperref[orgd146db7]{Order} type. Academic \hyperref[orgd7203c2]{Knowledge} does nothing by itself, but vastly speeds up the production of other types of \hyperref[orgd7203c2]{Knowledge} and \hyperref[orgd146db7]{Order}.\\
+
+Perhaps the most important function of Academic \hyperref[orgd7203c2]{Knowledge} is that it can be used to create certain roles from Students through Trainers and books, and boost unit and technology research. There are also some technologies which are near impossible to unlock without a certain level of Academic research.\\
+
+There are four subcategories of Academic \hyperref[orga5818bf]{Research}:\\
+\begin{enumerate}
+\item Natural\\
+\item Philosophy\\
+\item Mathematics\\
+\item History\\
+\end{enumerate}
+
+The rate at which Academic \hyperref[orgd7203c2]{Knowledge} decays is lessened by the production of books.\\
+\subsubsection{Natural}
+\label{sec:orgcceb10c}
+AKA "Natural Philosophy", what we would think of as Science.\\
+\begin{enumerate}
+\item Techs which Require
+\label{sec:org13400a9}
+\item Units which Require
+\label{sec:orge1ed0a1}
+\item Boosts
+\label{sec:org5c5752c}
+\end{enumerate}
+\subsubsection{Philosophy}
+\label{sec:org5f9b996}
+This boosts \hyperref[org39099d7]{Legal} and \hyperref[org6e4ede0]{Administrative} \hyperref[orgd146db7]{Order} and boosts/allows training for \hyperref[orgd146db7]{Order} Supporters. Also, it is a prerequisite for some \hyperref[orgd146db7]{Order} Tech/Units. If too low, \hyperref[org39099d7]{Legal} \hyperref[orgd146db7]{Order} will be set at a minimum.\\
+\subsubsection{Mathematics}
+\label{sec:org2b908b3}
+This boosts/allows training for Engineering Tech Researchers, Explorers, \hyperref[orgdbeaa2d]{Trade}, and Structures Producers.\\
+\subsubsection{History}
+\label{sec:orga1859c5}
+This boosts/allows training for \hyperref[org992a868]{Cultural} and \hyperref[org39099d7]{Legal} \hyperref[orgd146db7]{Order} and Foreign Researchers, as well as a small boost to \hyperref[orgda5f73b]{Satisfaction}\\
+\subsection{Technology \label{org85e435a} \label{org7bb99d3}}
+\label{sec:org03cb885}
+The required tools which units need to do their roles. Sometimes, it will unlock a new role immediately (usually when a new level metal is discovered), but sometimes, the new roles need to be discovered independently of the technology they use (e.g: priest, scribe).\\
+
+There is a small chance new technology can be invented by related classes, usually by the unit that evolves into the unit that uses or makes that technology, if the required resources to craft that technology are nearby. However, the most reliable way to unlock new technologies is by having a tech researcher near the required materials (which often means a large set of materials), where he will start to "work on" the problem, and then after a randomized amount of time will "discover" the new technology. Alternatively, technology researchers can be given related books instead when they become available, and given enough time will unlock related technologies. \hyperref[org85e435a]{Technology} can also be given between \hyperref[org21e4d88]{Groups}.\\
+\subsection{Role Knowledge}
+\label{sec:org2237366}
+Closely intertwined with technology, but often unlocking a new technology can unlock no \hyperref[orgada42dd]{Role}, one \hyperref[orgada42dd]{Role}, or many \hyperref[orgada42dd]{Role}, and some \hyperref[org080bb13]{Roles} can be unlocked only ages after the technological requirements have been unlocked. The same discovery processes that apply to tech apply to units, but instead Researchers are assigned to follow around Units which are predecessors to the \hyperref[orgada42dd]{Role} that needs to be unlocked (though of course, unless the player has played the game before, they do not know what the \hyperref[orgada42dd]{Role} is). Like technologies, researchers can also be given books.\\
+\subsection{Foreign}
+\label{sec:org220772e}
+This \hyperref[orgd7203c2]{Knowledge} allows closer relations with friendlies, or advantages in warfare against enemies. It also boosts \hyperref[orgdbeaa2d]{Trade}.\\
+
+If a nation is an enemy (at war), only Spies can be sent, but if a nation is a friendly or neutral, all types of Foreign researchers can be sent. If a nation dislikes your nation, the ruler may or may not allow other Foreign Researchers.\\
+
+If Foreign \hyperref[orga5818bf]{Research} is high, it will also boost Academic, \hyperref[org85e435a]{Technology}, and Unit \hyperref[orga5818bf]{Research} through \hyperref[orgd7203c2]{Knowledge} sharing, or Exploration \hyperref[orga5818bf]{Research} by purchasing maps.\\
+\section{Economy}
+\label{sec:org1edcb03}
+\subsection{Production \label{org9bdc7c2} \label{org4e3993f}}
+\label{sec:orgb83f792}
+Tab that analyzes what is produced in a \hyperref[org3bac9f0]{Group} and how much. This tab also allows the player to set automatic policies for managing production of that \hyperref[org3bac9f0]{Group} if he has certain \hyperref[org080bb13]{Roles}. These policies automatically lower and raise quotas depending on certain factors. \hyperref[org3bac9f0]{Group} members of certain \hyperref[org080bb13]{Roles} must collect this data for it to be visible, and it can even be inaccurate.\\
+\subsection{Trade \label{orgdbeaa2d} \label{org65c2311}}
+\label{sec:org686c8ce}
+Only \hyperref[org21e4d88]{Groups} of a certain size, with certain \hyperref[orgc5a9408]{Interests}, and with a certain amount of \hyperref[org080bb13]{Roles} can get a \hyperref[orgdbeaa2d]{Trade} score. \hyperref[orgdbeaa2d]{Trade} does not actually reflect the absolute state of production in a \hyperref[org3bac9f0]{Group}: a \hyperref[org3bac9f0]{Group} can have 0 \hyperref[orgdbeaa2d]{Trade} and still produce plenty for its members. \hyperref[org3bac9f0]{Group} members of certain \hyperref[org080bb13]{Roles} must collect this data for it to be visible, and it can even be inaccurate.\\
+\subsubsection{Exports}
+\label{sec:org5bc7c73}
+Amalgam of the \emph{amount of exports} and \emph{average profit}.\\
+\begin{enumerate}
+\item Amount of Exports
+\label{sec:org8ef61e2}
+Affected by:\\
+\begin{itemize}
+\item Surplus production (production set aside by player, that is not to be made or used by domestic workers)\\
+\item Amount of \hyperref[orgdbeaa2d]{Trade}(Foreign) produced by Trader Units\\
+\item Tarriff Rate\\
+\item Domestic Opinion of Foreign Nation\\
+\item Foreign Opinion of Domestic Nation\\
+\item \hyperref[orgd7203c2]{Knowledge} (Foreign)\\
+\item \hyperref[orgdbeaa2d]{Trade} Deals and Embargos (can set amount to 0)\\
+\item Wars or Previous Wars\\
+\end{itemize}
+\begin{enumerate}
+\item Tarriff Rate
+\label{sec:orgf9aab45}
+Because tarriffs set by foreign governments are often actually paid by the foreign customers, this affects the amount of exports as well as the profit, since foreign customers are less likely to buy, and domestic traders are les likely to sell.\\
+\item Trade Deals
+\label{sec:org79b0bd2}
+\item Embargos
+\label{sec:orgd52faae}
+Other \hyperref[org21e4d88]{Groups} can choose to completely limit foreign exports from your nation.\\
+\end{enumerate}
+\item Average Profit
+\label{sec:org06143b9}
+Affected by:\\
+\begin{itemize}
+\item Demand of Goods\\
+\item Amount of Exports (negatively)\\
+\item Amount of \hyperref[orgdbeaa2d]{Trade}(Foreign) produced by Trader Units\\
+\item Foreign Opinion of Domestic Nation\\
+\item \hyperref[orgd7203c2]{Knowledge} (Foreign)\\
+\item Tarriff Rate\\
+\item \hyperref[orgdbeaa2d]{Trade} Deals\\
+\end{itemize}
+\end{enumerate}
+\subsubsection{Imports}
+\label{sec:org876635d}
+The amount of useful imports that are purchased by the \hyperref[org3bac9f0]{Group}. This number matters less, but the actual products you or your Units are buying likely matters more. However, one the scores that affects it, \emph{average savings}, likely does matter and determines whether the \hyperref[org3bac9f0]{Group} will make future imports. Some \hyperref[org841e9de]{Leaders} can enact Royal Decrees to order quotas of specific imports, or leave it up to Traders based on regular production quotas and Profit \hyperref[orgcfc0c4f]{Value}.\\
+
+Like Exports, this is an amalgam of \emph{amount of imports} and \emph{average savings}.\\
+\begin{enumerate}
+\item Amount of Imports
+\label{sec:orga424602}
+The amount of imports the \hyperref[org3bac9f0]{Group} is buying. Player can see this in a pie-chart view based on certain general classes of goods.\\
+Affected by:\\
+\begin{itemize}
+\item Set Quotas by Royal Decrees\\
+\item Foreign Tarriffs placed by player\\
+\item Foreign Opinion\\
+\item \hyperref[orgdbeaa2d]{Trade}(Foreign) produced by Trader units\\
+\item Domestic Opinion of Foreign Nation\\
+\item \hyperref[orgdbeaa2d]{Trade} Deals/Embargos placed by player\\
+\item War/recent war\\
+\end{itemize}
+\item Average Savings
+\label{sec:org7a803d2}
+Affected by:\\
+\begin{itemize}
+\item Domestic goods production\\
+\item Amount of Imports (positively)\\
+\item Foreign Tarriffs placed by player\\
+\item \hyperref[orgdbeaa2d]{Trade}(Foreign) produced by Trader units\\
+\item Foreign Opinion\\
+\item \hyperref[orgdbeaa2d]{Trade} Deals\\
+\end{itemize}
+\end{enumerate}
+\subsection{Taxes \label{orgda74c98}}
+\label{sec:org359cd56}
+The amount of taxable production and trade by the \hyperref[org3bac9f0]{Group}. Allows player to raise and lower taxes given correct \hyperref[org080bb13]{Roles}. Relies on \hyperref[org9bdc7c2]{Production} and \hyperref[orgdbeaa2d]{Trade} data.\\
+\section{War/Military}
+\label{sec:org19171ff}
+Regular Units can climb over regular walls, but not tall walls. Siege Towers and Siege Ladders allow units to climb over tall walls.\\
+\subsection{Player Control}
+\label{sec:org2021b81}
+Player can either select units manually, and control them, or can get lieutenants to have 'active recruiting' of certain priorities, which means that units with military roles will automatic join up with their lieutenants\\
+\section{Balancing}
+\label{sec:orgd29f19a}
+Balancing \hyperref[org55b3b0b]{Goals}\\
+\section{Time and Age Goals}
+\label{sec:org58f7442}
+These are not hard ages. At most maybe an achievement, does not affect game mechanics at all but is just a tool for dev understanding and communication.\\
+\subsection{Paleolithic}
+\label{sec:org53bf398}
+\textasciitilde{} \hyperref[orgd0c5ba7]{Goal} of how long the age takes in real time at 2x average speed: 5-7 hours\\
+\begin{itemize}
+\item Starting pawns: Childrearer, Scavenger, Child\\
+\begin{itemize}
+\item Scavenger quickly discovers Knapper after finding flint or rocks and being idle\\
+\item First scavengers that gather sticks and wood and flint discover fire, or put stick in lighting fire to make a torch, unlocking Firekeeper\\
+\item Scavenger can become Scout\\
+\end{itemize}
+\item Knapper can make primitive spear, discovering Spear Hunter\\
+\item When a fire is made, that unlocks Storyteller\\
+\item Older pawns become Elder or Shaman\\
+\item Elder thinks of Ornamenter from \hyperref[orgb1f888f]{Animals} or found bones, Basket Weaver if hemp or flax is found, Woodcutter if have knapped primitive hand axes, Craftsman, or Shelter Builder if have wood and other materials, and Fish Hunter if around Primitive Spearman, exiting the age (at least one original adult must reach maturity in this age)\\
+\end{itemize}
+\subsection{Mesolithic}
+\label{sec:orgc92d7cd}
+\textasciitilde{} \hyperref[orgd0c5ba7]{Goal} of how long the age takes in real time at 2x average speed: 7-12 hours\\
+\begin{itemize}
+\item Starting pawns: All paleolitic (though a few that do not tree to elder may not be discovered)\\
+\end{itemize}
+\end{document}

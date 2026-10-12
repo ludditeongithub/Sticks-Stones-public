@@ -1,3 +1,7 @@
+* Definitions
+Here are non-standard defintions I use, that are not user-visible concepts or types in code.
+
+- camera'd area: areas where the player has put the camera for amount of time, so much so that we suspect they quickly jump the camera back to that area, as well as the area the player's camera is currently covering and a bit beyond.
 * Paradigms
 In general we are using DoD for simplicity and performance. This is not dogmatic. For example many major enitites like animals have their own databases which are fully formed classes, and UI uses full OOP. When using classes we keep class hierarchies minimal and loosely coupled. Two types of functions should be member functions: those which can be performed by passing one or two entity indices and/or an enum value, and those which are using many more member databases and a comparably small number of references to other large modules (coupling). In general if passing too many large references, this should be handled by another system, or broken down into more free functions (procedural).
 * File Organization and Standards
@@ -54,7 +58,6 @@ Changes during individual 'save'/'game'. Also includes basic fetches/getters, th
 - using snake_case functions.
 
 - CAPS is reserved for constants, or pseudo-constants (values set per run of game).
-
 * Public Pitches
 ** Looking for help
 Hi everyone, my name is Logan, I'm an indie developer who has been fully dedicated to a single project I started working on in 03/2025. The project, 'Sticks and Stones', is a 2D Tile deep Colony Simulator, similar to games like 'Rimworld', 'Dwarf Fortress', or 'Song of Syx', but instead meant to mirror the material development of our real world. I have made it and the engine from scratch in C++ (with metaprogramming in Python) and am about 3/5-2/3ths towards an alpha (incuding most of the sprites). I would be looking for someone to collaborate on the code-- the exact nature of compensation is going to be based on how much the candidate is willing to contribute and their experience.

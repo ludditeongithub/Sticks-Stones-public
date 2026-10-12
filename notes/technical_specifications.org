@@ -136,22 +136,52 @@ Animals: 2000
 Units: 1450
 
 Total Movables: 3450
-** Hottest 1000+ per frame
-- check if units should move (every tick, x2000)
-*** Plant growth/death update (not death by event)
-- require updates ~ every 30 frames, so ~1300 per frame, can be reduced to Hot if every 60 frames
-*** path job, tile checks
-- ~ 2000 movables have pathfinding being calculated, and 4x tiles need to be checked so >8000 per frame (can improve from A*)
-**** Implementation 
-** Hot 100-1000 per frame
-** Medium 10-50 per frame
-- atttacking unit events
-** Cold 1-10 per frame
-*** temperature update for every chunk
-only ~ second, but for >100 chunks
-*** Jobs of any type started/finished/paused (average job takes thousands of ticks)
-[this should really be wrapped up in contiguous event processing], however ~1.5k units could be initiating/ending jobs that take ~5-10 secs per job
-  - job scheduling identity tag per unit, so that if the job was paused, the job over event taken off the stack must match the right unit and its current scheduling identity tag, which changes whenever the job is paused and is started again (a new event with a new identity tag is calculated whenever the job is (re)started
-** Coldest 1 per frame
+** Computation Classifications
+should i do ticks instead of frames? YES, probably
+where IC = invocation count, ES = entity specific, EX = every X, S = scheduled, M = minute, F = frame, T = tick
+| Name                          | Operation/System      | Trigger frqy    | IC      | work per inv                         | data access           | current algo      |
+|-------------------------------+-----------------------+-----------------+---------+--------------------------------------+-----------------------+-------------------|
+| birth/death                   | ES                    | ED              | 0-10 EF | some indirection                     | random                |                   |
+| assign new task to pawn       | task assigner         | buffer ET, S    | ET      | scan large array, job list, reorder  | contig. spatial       | scan, heap        |
+| same as above for animal      |                       |                 |         |                                      |                       |                   |
+| validate task reqs            | task assigner         | ED              | 0-5 ET  | some indirection. lots of checks     | search. unorderdmap   |                   |
+| combat mark                   | combat                | buffer ET, S?   | ET      | scan large array                     | contig                |                   |
+| combat process idv            | combat                | S?              | ET      | access entities. apply effects       | contig, sparse        |                   |
+| inventory checks              | inv                   | ED              | 0-20 ET | checks. maybe indirection            | random                |                   |
+| inventory ops (same as above) |                       |                 |         |                                      |                       |                   |
+| 'prowlers' (vicinity search)  | scan/search/ES        | ED? should be S | 1000 ET | scan part of array                   | contig (imperfect)    | step-driven (bad) |
+| pathfinding                   | pathfinding           | S               | 60 EF   | generate new path. scan part of arr  |                       | A*                |
+| mark new paths needed         | pathfinding           | S               | EF      | scan large array                     | contig                |                   |
+| movement                      | movement              | S               | EF      | move all coords from pathfinding bf. | contig                |                   |
+| weather processing (changes)  | WEATHER               | S               | E600F   |                                      | contig, random        |                   |
+| plant growth                  | plant                 | S               | E60F    | large scans                          | contig                |                   |
+| climate processing (changes)  | WEATHER/climate       | S               | E1M     | large scans.                         | contig, random        |                   |
+| visibility updates            | visibility            | ED/S            | 20ET/ET | indirection changes/buffered appli   | random/bufffer sparse |                   |
+| random entity search          | search                | ED              | 15 ET   | unordered map search                 | random                |                   |
+| water flow                    | plant? weather? tile? | S               | ET      | big access, changing values          | contig?               |                   |
+| perishable decay              | perishables           | S (should be L) | 1ET     | large scan                           | contig                |                   |
+
+so many different job systems. organize and settle more.
+
 * Bounding Box Chunks, Enemy Detection for Factions
 Each unit (including animals) belong to a faction. Tiles belong to bounding box. Unit is inside a bounding box, bounding box loses 'ownership' of unit when unit leaves and another bounding box gained it. Each faction has a vector which shows identity of all bounding boxes it has currently detected, which means one or more units in that faction can see that box. Whenever a unit enters a new box, it is checked to see if any enemy factions can see that box. If an enemy faction can see the box, algorithm is triggered to manually detect all members of that faction that can see the box (and therefore the enemy unit which has entered it)-- this may be (often is) none. (or perhaps the detecting units are put on a 'high alert state', which can transition into a enemy detected state' where that can choose how to react (kill enemy, alert other units)). Counter-detection options may also be given to the unit that was detected entering the box. This minimizes checking for detection for every move, when the player and enemies are likely at peace, and also allows for better single unit detection and targeting later.
+* New Core Implementation
+** Bounding Box Chunks, Enemy Detection for Factions
+Each unit (including animals) belong to a faction. Tiles belong to bounding box. Unit is inside a bounding box, bounding box loses 'ownership' of unit when unit leaves and another bounding box gained it. Each faction has a vector which shows identity of all bounding boxes it has currently detected, which means one or more units in that faction can see that box. Whenever a unit enters a new box, it is checked to see if any enemy factions can see that box. If an enemy faction can see the box, algorithm is triggered to manually detect all members of that faction that can see the box (and therefore the enemy unit which has entered it)-- this may be (often is) none. (or perhaps the detecting units are put on a 'high alert state', which can transition into a enemy detected state' where that can choose how to react (kill enemy, alert other units)). Counter-detection options may also be given to the unit that was detected entering the box. This minimizes checking for detection for every move, when the player and enemies are likely at peace, and also allows for better single unit detection and targeting later.
+* New Core Ideas
+** More civilizational development
+I have charted the western pathway, chart other possible pathways. perhaps less focus on specialization, more focus on developing each individual even MORE deeply.
+- also sex relations can be different.
+  - but the player can always choose.
+
+   - Memes (symbols, images, ideas) which the player can invest points in, sometimes automatically develop, and can syncretize with other symbols. Many developed memes needed to create a religion.
+
+     - Each pawn's *actual role mana* differs from their *raw role mana* (it can be less or more). The player's system of government determines how much control they have over the pawn's role mana, and also buffs/debuffs on role mana values, as well as assigning
+
+       certain systems of government and culture are better at creating high quality goods, others are good at creating owned quality goods fast.
+
+       player can control multiple tribes/nations/corporations which may also battle with each other, and if too disparate the player may have to choose one or the other to influence. 
+** Complex Roles vs Production roles (Social roles)
+Social roles can be tied to production roles (or not), and also have requirements (property, satisfaction, food) that if not met makes unit with that role unhappy.
+** User-Determined Aesthetic Culture Buffs
+The user can choose certain colours, and certain simple shapes (consider picking common ones from that psychological theorist who posited that our formation of objects is made up of several individual simple shapes, or perhaps it should be angular features (sharpness, curved, etc). The user then is able to get 'inspirations' for that aesthetic-- if a pawn is attacked by a tiger, the user may get an inspiration for the colour orange, with the value 'ferocity'. Every once in a while they may be able to get enough cultural points for a free aesthetic feature -> buff without inspiration points. Whenever the player's tribe builds an artifact or art that has that aesthetic feature, the player's tribe will receive that additional mini-buff. These aesthetic features can be wider kfpmotifs, or materials, as well. 
