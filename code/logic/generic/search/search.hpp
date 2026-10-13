@@ -5,8 +5,8 @@
 #include <vector>
 
 #include <core/containers.hpp>
-
 #include <data/types/entity.hpp>
+#include <data/types/rendering.hpp>
 #include <core/memory.hpp>
 
 #include <data/types/animal.hpp>
@@ -46,10 +46,9 @@ constexpr size_t DIAMOND_EDGE_SCAN_MAX_SIZE = 100;
 // SearchGrid itself should be an indexed data structure
 struct SearchGrid
 {
-	World &world;
   tile::Database& tiles;
 
-  SearchGrid(World& world, tile::Database& tiles);
+  SearchGrid(tile::Database& tiles);
 
 	using ChunkBucket = std::unordered_map<Entity, std::vector<EntitySearchData>>;
 
@@ -72,37 +71,38 @@ struct SearchGrid
 
 	void add_active_chunk(uint16_t index);
 
-	inline GridInfo get_nth_nearest_chunk(Coord c, uint16_t n);
+	 GridInfo get_nth_nearest_chunk(Coord c, uint16_t n);
 
 	void reset();
 
   //OPTI: only have buckets be per chunk, moving entities only move when moving between chunks 
-        inline void insert_entity(Entity type, EntitySearchData data);
-        inline void remove_entity(Entity type, EntitySearchData data);
-        inline void move_entity(Entity type, EntitySearchData data, Direction direction);
+         void insert_entity(Entity type, EntitySearchData data);
+         void remove_entity(Entity type, EntitySearchData data);
+         void move_entity(Entity type, EntitySearchData data, Direction direction);
 
-	inline bool check_collision(Coord tile_coord);
+	 bool check_collision(Coord tile_coord);
 
-		inline EntitySearchData get_nearest(Entity e, Coord c);
-		inline EntitySearchData get_nth_nearest(uint16_t nearest, Entity e, Coord c);
-	inline EntitySearchData get_nearest_within_range(Entity e, Coord c, uint16_t max_range);
+        EntitySearchData get_nearest(Entity e, Coord c);
+        EntitySearchData get_nth_nearest(uint16_t nearest, Entity e, Coord c);
+	 EntitySearchData get_nearest_within_range(Entity e, Coord c, uint16_t max_range);
 
-	inline Array<EntitySearchData> get_all_of_type_in_range(Entity e, Coord o, Coord d);
+	 Array<EntitySearchData> get_all_of_type_in_range(Entity e, Coord o, Coord d);
 
-	inline EntityRenderBuffer get_all_in_range(Coord origin, Coord dimensions);
+	ChunkRenderBuffer get_non_movables_in_chunk(uint16_t chunk_index);
+	MovablesRenderBuffer get_all_movables_in_area(Rect area);
 
   // =========================
   // ENTITY SCANS
   // =========================
 
   
-	// inline void set_old_entity(Coord tile_coord, uint16_t index) {
+	//  void set_old_entity(Coord tile_coord, uint16_t index) {
 	//   uint16_t gc = tile_to_chunk_index(tile_coord);
 
 	//   fchunk_buckets[gc].size(); i++) if (indices[i] == index) old[i] = 1;
 	// }
 
-	// inline void remove_old_entities() {
+	//  void remove_old_entities() {
 	//   for (int i = 0; i < chunk_buckets.size(); i++) {
 	//     auto* old = chunk_buckets[i].column<1>();
 	//     auto* indices = chunk_buckets[i].column<0>();

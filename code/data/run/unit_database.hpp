@@ -1,12 +1,13 @@
 #pragma once
 #include <data/types/unit.hpp>
 #include <data/types/target.hpp>
-
+#include <data/types/rendering.hpp>
 #include <data/types/action.hpp>
 #include <data/const/unit_data.hpp>
 #include <data/const/unit_tables.hpp>
 #include <data/run/unit_helpers.hpp>
 #include <cstdint>
+#include <stack>
 #include <logic/generic/search/search.hpp>
 
 // TODO: whenever an entity is interacted with, last loop notifies all entities that could have an interaction on that entity (approaching/attacking). combat loop first gets new targets if target is dead.

@@ -1,10 +1,10 @@
 #pragma once
 #include "core/math.hpp"
-#include "core/random.hpp"
+#include "random.hpp"
 #include <cassert>
 #include <cstdint>
+#include <SDL2/SDL_rect.h>
 #include <cmath>
-#include <stdexcept>
 #include <array>
 #include <optional>
 
@@ -47,7 +47,6 @@ struct Coord
 		{
 				return this->x == c.x && this->y == c.y;
 		}
-}
 };
 
 struct Rect
@@ -56,6 +55,11 @@ struct Rect
 		// x, y as top left corner
 };
 
+  template<typename T>
+  SDL_Rect make_sdl_rect(T x, T y, T w, T h)
+   {
+     return {static_cast<int>(x), static_cast<int>(y), static_cast<int>(w), static_cast<int>(h)};
+   }
 
 struct SCoord
 {
@@ -122,6 +126,23 @@ Direction get_random_adj_direction(Direction direction)
 	return Direction::South;
 }
 
+template <typename T> T chebyshev(T x1, T y1, T x2, T y2)
+{
+	return std::max((x2 - x1), (y2 - y1));
+}
+
+template <typename T> inline T euclidean_dist(T x1, T y1, T x2, T y2)
+{
+	return std::sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+}
+
+inline uint32_t manhattan_dist(Coord x, Coord y)
+{
+	return unsigned_abs_diff(x.y , y.y) + unsigned_abs_diff(x.x , y.x);
+}
+
+uint32_t manhattan_dist(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2) { return unsigned_abs_diff(x1 , x2) + unsigned_abs_diff(y1 , y2); }
+
 std::optional<Direction> adj_check_tile(Coord subject, Coord target)
 {
 	if (manhattan_dist(subject, target) > 1)
@@ -137,21 +158,3 @@ std::optional<Direction> adj_check_tile(Coord subject, Coord target)
 	return std::nullopt;
 }
 
-
-
-template <typename T> T chebyshev(T x1, T y1, T x2, T y2)
-{
-	return std::max((x2 - x1), (y2 - y1));
-}
-
-template <typename T> inline T euclidean_dist(T x1, T y1, T x2, T y2)
-{
-	return std::sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-}
-
-inline uint32_t man_dist(Coord x, Coord y)
-{
-	return unsigned_abs_diff(x.y , y.y) + unsigned_abs_diff(x.x , y.x);
-}
-
-uint32_t man_dist(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2) { return unsigned_abs_diff(x1 , x2) + unsigned_abs_diff(y1 , y2); }

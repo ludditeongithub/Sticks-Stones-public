@@ -70,7 +70,7 @@ void MainMenu::main_render(){
 	}
 
 void MainMenu::render(){
-	sprite_sheet_texture.render(g_main_screen_viewport->x, g_main_screen_viewport->y,
+	SDL_RenderCopy(g_main_screen_viewport->x, g_main_screen_viewport->y,
 									&background, g_main_screen_viewport);
 	switch (mode) {
 	case Mode::Main:

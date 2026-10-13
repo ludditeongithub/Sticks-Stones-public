@@ -177,9 +177,6 @@ enum class ActState : uint8_t
         NewPath = 3
 };
 
-//TODO: ensure Frame can be properly packed
-using FrameData = PackedEnum<Field<ActState, 2>, Field<Direction, 2>, Field<Frame, 12>>;
-
 struct ActionRequirement
 {
 	std::variant<Buildable, Item> requirement;

@@ -25,8 +25,8 @@ struct RequirementBox {
 
   inline void render(SDL_Rect& frame, SDL_Rect* viewport)
   {
-	  sprite_sheet_texture.render(pos.x, pos.y, &frame, viewport);
-	  sprite_sheet_texture.render(pos.x, pos.y, &source, viewport);	  
+	  SDL_RenderCopy(pos.x, pos.y, &frame, viewport);
+	  SDL_RenderCopy(pos.x, pos.y, &source, viewport);	  
   }
 };
 
@@ -44,8 +44,8 @@ struct RoleBox {
 
   inline void render(SDL_Rect& frame, SDL_Rect* viewport)
   {
-	  sprite_sheet_texture.render(pos.x, pos.y, &frame, viewport);          
+	  SDL_RenderCopy(pos.x, pos.y, &frame, viewport);          
           SDL_Rect source = sprite::roles[role];
-          sprite_sheet_texture.render(pos.x, pos.y, &source, viewport);
+          SDL_RenderCopy(pos.x, pos.y, &source, viewport);
   }
 };

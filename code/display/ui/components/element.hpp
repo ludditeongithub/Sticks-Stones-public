@@ -13,8 +13,8 @@ struct UIElement
         UIElement(UISprite ui_sprite, SCoord position) : position(position), source(sprite::uis[ui_sprite])
 	{}
 
-        inline void render(SDL_Rect* viewport) { sprite_sheet_texture.render(position.x, position.y, &source, viewport); }
-        inline void render() { sprite_sheet_texture.render(position.x, position.y, &source, g_main_screen_viewport); }
+        inline void render(SDL_Rect* viewport) { SDL_RenderCopy(position.x, position.y, &source, viewport); }
+        inline void render() { SDL_RenderCopy(position.x, position.y, &source, g_main_screen_viewport); }
   
 };
 

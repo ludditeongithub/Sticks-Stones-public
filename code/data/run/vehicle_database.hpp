@@ -211,7 +211,7 @@ return result;
   assert(index <= size);
 
         Coord& pos = coord(index);
-        Coord new_pos = get_pos(frame_data(index).get<Direction>(), pos);
+        Coord new_pos = coord::move(pos, frame_data(index).get<Direction>());
         size_t ti = g_world->get_tile_index_from_coord(new_pos);
 
     if (tiles->tile_statuss[ti].get<OccupiedStatus>() == OccupiedStatus::Vacant)

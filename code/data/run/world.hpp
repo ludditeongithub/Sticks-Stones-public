@@ -1,8 +1,8 @@
 #pragma once
 #include <data/types/geography.hpp>
 #include "core/random.hpp"
-#include <cstdint>
 #include <core/containers.hpp>
+#include <cstdint>
 #include <core/memory.hpp>
 #include <data/const/chunk_data.hpp>
 

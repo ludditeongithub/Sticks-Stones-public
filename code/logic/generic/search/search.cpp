@@ -1,7 +1,10 @@
 #include "search.hpp"
+#include <data/const/chunk_data.hpp>
+#include <data/run/coord.hpp>
 #include "data/types/animal.hpp"
 #include "data/const/tile_data.hpp"
 #include "data/run/tile_database.hpp"
+#include "data/types/rendering.hpp"
 #include <data/types/entity.hpp>
 #include <core/math.hpp>
 #include <cstdint>
@@ -9,9 +12,9 @@
 #include <data/types/unit.hpp>
 #include <data/run/world.hpp>
 
-SearchGrid::SearchGrid(World& world, tile::Database& tiles) :  world(world), tiles(tiles)
+SearchGrid::SearchGrid(tile::Database& tiles)
 {	
-	uint16_t chunk_amount = world.chunk_amount;
+	uint16_t chunk_amount = coord::chunk_amount;
 	chunk_bucket_arena = new Arena((chunk_amount * NATURAL_CHUNK_SEARCH_SIZE));
 
 	active_bucket_arena =
@@ -23,19 +26,18 @@ SearchGrid::SearchGrid(World& world, tile::Database& tiles) :  world(world), til
 		chunk_buckets[i] =
 		   arena_make_array<ChunkBucket*>(chunk_bucket_arena, NATURAL_CHUNK_SEARCH_SIZE);
 		active_chunks[i] = false;
-	}
-    
+	}    
 }
 
 inline GridInfo SearchGrid::get_nth_nearest_chunk(Coord c, uint16_t n)
 {
-		const uint16_t center = tile_to_chunk_index(c);
-	const int ha = c.x % chunk_size;
-	const int va = c.y % chunk_size;
+        const uint16_t center = coord::tile_to_chunk_index(c);
+	const int ha = c.x % CHUNK_SIZE;
+	const int va = c.y % CHUNK_SIZE;
 	const int dist_n = va;
-	const int dist_s = chunk_size - va;
+	const int dist_s = CHUNK_SIZE - va;
 	const int dist_w = ha;
-	const int dist_e = chunk_size - ha;
+	const int dist_e = CHUNK_SIZE - ha;
 
 	struct Entry
 	{
@@ -63,7 +65,7 @@ inline GridInfo SearchGrid::get_nth_nearest_chunk(Coord c, uint16_t n)
 
 	GridInfo result;
 	result.index =
-	    (target >= 0 && target < world->chunk_amount) ? static_cast<uint16_t>(target) : center;
+	  (target >= 0 && target < coord::chunk_amount) ? static_cast<uint16_t>(target) : center;
 	result.distance = neighbors[idx].dist;
 
 	return result;
@@ -107,7 +109,7 @@ inline void SearchGrid::remove_entity(Entity type, EntitySearchData data)
 
 inline bool SearchGrid::check_collision(Coord tile_coord)
 {	
-	return tiles->occupieds[world.get_tile_index_from_coord(tile_coord)];
+  return tiles->occupieds[coord::get_tile_index_from_coord(tile_coord)];
 }
 
 inline EntitySearchData SearchGrid::get_nearest(Entity e, Coord c)
@@ -209,9 +211,83 @@ inline EntitySearchData SearchGrid::get_nth_nearest(uint16_t nearest, Entity e, 
 	return list[best_index];
 }
 
-EntityRenderBuffer SearchGrid::get_all_in_range(Coord origin, Coord dimensions)
+ChunkRenderBuffer SearchGrid::get_non_movables_in_chunk(uint16_t chunk_index)
 {
-	EntityRenderBuffer erd;
+	ChunkRenderBuffer erd;
+	Array<SearchGrid::ChunkBucket *> &cb = active_chunks[i] ? active_chunk_buckets : chunk_buckets;
+	uint16_t cbi =
+	  active_chunks[chunk_index] ? chunk_to_active_chunks[chunk_index] : chunk_index;
+    // iterate through unordered map, get all entities
+    for (auto x : *cb[cbi])
+	{
+std::visit([&](auto&& arg) {
+    using T = std::decay_t<decltype(arg)>;
+    std::vector<EntitySearchData>& objects = x.second;
+    if constexpr (std::is_same_v<T, Plant>)
+    {
+	    for (size_t j = 0; j < objects.size(); j++) {
+		            erd.plants[erd.plant_amount++] = {objects[j].index, objects[j].position, std::move(arg)};
+	    }
+    }
+    else if constexpr (std::is_same_v<T, Animal>)
+    {
+	    for (size_t j = 0; j < objects.size(); j++) {
+		            erd.animals[erd.animal_amount++] = {objects[j].index, objects[j].position, std::move(arg)};
+	    }        
+    }
+    else if constexpr (std::is_same_v<T, Item>) {
+	    for (size_t j = 0; j < objects.size(); j++) {
+		            erd.items[erd.item_amount++] = {objects[j].index, objects[j].position, std::move(arg)};
+	    }
+    }
+    else if constexpr (std::is_same_v<T, Unit>) {
+	    for (size_t j = 0; j < objects.size(); j++) {
+		            erd.items[erd.item_amount++] = {objects[j].index, objects[j].position, std::move(arg)};
+	    }
+    }
+    else if constexpr (std::is_same_v<T, Tool>) {
+	    for (size_t j = 0; j < objects.size(); j++) {
+		            erd.tools[erd.tool_amount++] = {objects[j].index, objects[j].position, std::move(arg)};
+	    }
+    } 
+}, x.first);
+	}		
+	return erd;
+}
+
+MovablesRenderBuffer get_movables_in_area(Rect area)
+{
+  std::vector<uint16_t> chunks_in_area = coord::get_chunks_from_area(area);
+	for (auto i: chunks_in_area) {
+			Array<SearchGrid::ChunkBucket *> &cb = active_chunks[i] ? active_chunk_buckets : chunk_buckets;
+	uint16_t cbi = active_chunks[i] ? chunk_to_active_chunks[i] : i;
+	// iterate through unordered map, get all entities
+	for (auto x : *cb[cbi])
+	  {
+	    std::visit([&](auto&& arg) {
+    using T = std::decay_t<decltype(arg)>;
+    std::vector<EntitySearchData>& objects = x.second;
+    if constexpr (std::is_same_v<T, Animal>)
+    {
+	    for (size_t j = 0; j < objects.size(); j++) {
+		            erd.animals[erd.animal_amount++] = {objects[j].index, objects[j].position, std::move(arg)};
+	    }        
+    }
+    else if constexpr (std::is_same_v<T, Unit>) {
+	    for (size_t j = 0; j < objects.size(); j++) {
+		            erd.items[erd.item_amount++] = {objects[j].index, objects[j].position, std::move(arg)};
+	    }
+    }
+}, x.first);
+	}	
+	return erd;
+	}
+}
+
+/*
+
+get_all_in_range() {
+ChunkRenderBuffer erd;
 	std::vector<uint16_t> chunks_on_screen = coord::get_chunks_from_area(origin, dimensions);
 	for (auto i: chunks_on_screen) {
 			Array<SearchGrid::ChunkBucket *> &cb = active_chunks[i] ? active_chunk_buckets : chunk_buckets;
@@ -253,7 +329,10 @@ std::visit([&](auto&& arg) {
 	}
 	}
 	return erd;
-}
+
+    }
+
+  */
 
 
 Coord ObjectDatabase::find_nearest_liquid_container(int x, int y)

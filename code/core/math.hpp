@@ -28,3 +28,4 @@ inline float lerp(float x1, float x2, float x3, float s1, float s2, float s3)
         throw std::out_of_range("Linear Interpolation setting must be between 0.0 and 1.0");
     return std::lerp(std::lerp(x1, x2, s1), std::lerp(x2, x3, s2), s3);
 }
+

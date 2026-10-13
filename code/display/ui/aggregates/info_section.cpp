@@ -1,7 +1,7 @@
 #include "info_section.hpp"
 
 void RolesSection::render(SDL_Rect &viewport){
-	  sprite_sheet_texture.render(pos.x, pos.y, &frame, viewport);
+	  SDL_RenderCopy(pos.x, pos.y, &frame, viewport);
 
 	  for (auto x: reqs) x.render(frame, viewport);
   }
@@ -15,7 +15,7 @@ RolesSection::RolesSection(){
 
 void InfoSection::render(SDL_Rect& viewport){
     //render frame
-    sprite_sheet_texture.render(display_pos.x, display_pos.y, &frame, viewport);
+    SDL_RenderCopy(display_pos.x, display_pos.y, &frame, viewport);
 
     //render item
                 SDL_Rect r;
@@ -24,7 +24,7 @@ void InfoSection::render(SDL_Rect& viewport){
                 } else if (auto i = get_if<Buildable>(&display)) {
                   r =  sprite::buildable[i];
                 }
-		sprite_sheet_texture.render(display_pos.x + FRAME_BORDER,
+		SDL_RenderCopy(display_pos.x + FRAME_BORDER,
                                             display_pos.y + FRAME_BORDER, &r, viewport);
 
                 title.render(viewport, title_pos, Alignment::Left);

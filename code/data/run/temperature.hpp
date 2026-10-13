@@ -64,5 +64,5 @@ return diurnal_temp_variances[index];
 return seasonal_temp_variances[index];
   }
 
-  // @codegen:end temp
+// @codegen:end temp
 }

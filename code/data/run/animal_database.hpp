@@ -5,6 +5,7 @@
 #include <data/types/time.hpp>
 #include <data/types/target.hpp>
 #include <data/types/action.hpp>
+#include <data/types/rendering.hpp>
 #include <data/const/animal_data.hpp>
 #include <data/const/animal_tables.hpp>
 #include <data/const/time_data.hpp>
@@ -217,6 +218,7 @@ return inertias[index];
 return coords[index];
   }
 
+
   
 // =========================
 // GENERATION
@@ -344,7 +346,7 @@ return result;
   assert(index <= size);
 
         Coord& pos = coord(index);
-        Coord new_pos = get_pos(frame_data(index).get<Direction>(), pos);
+        Coord new_pos = coord::move(pos, frame_data(index).get<Direction>());
         size_t ti = g_world->get_tile_index_from_coord(new_pos);
 
     if (tiles->tile_statuss[ti].get<OccupiedStatus>() == OccupiedStatus::Vacant)

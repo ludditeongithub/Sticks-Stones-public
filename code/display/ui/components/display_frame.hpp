@@ -13,7 +13,7 @@ struct DisplayFrame : UIElement {
   
 	inline void render(const SDL_Rect viewport)
 	{
-          sprite_sheet_texture.render(position.x, position.y, source, viewport);		sprite_sheet_texture.render(position.x, position.y, &entity_sprite, viewport);
+          SDL_RenderCopy(position.x, position.y, source, viewport);		SDL_RenderCopy(position.x, position.y, &entity_sprite, viewport);
 	}
 	inline void change_display(Entity entity) { entity_sprite = sprite::get(entity); }
 };
@@ -33,8 +33,8 @@ struct DoubleDisplayFrame : DisplayFrame
   {
 	  if (second_entity)
 	  {
-		  sprite_sheet_texture.render(position.x, position.y, &second_frame_sprite, viewport);
-		  sprite_sheet_texture.render(position.x, position.y, &second_entity_sprite, viewport);            
+		  SDL_RenderCopy(position.x, position.y, &second_frame_sprite, viewport);
+		  SDL_RenderCopy(position.x, position.y, &second_entity_sprite, viewport);            
 	  }
 	  else
 	  {

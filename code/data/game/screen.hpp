@@ -3,10 +3,11 @@
 #include <core/coord.hpp>
 
 extern SDL_Window *window;
-extern SDL_Renderer *renderer;
 
 extern SDL_Rect main_screen_viewport;
 extern SDL_Rect *g_main_screen_viewport;
+extern SDL_Rect chunk_texture_viewport;
+extern SDL_Rect *g_chunk_texture_viewport;
 
 // TODO: check if should be in WindowSystem
 

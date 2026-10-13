@@ -1,46 +1,92 @@
-* TODO GAME ITEMS TODAY <2026-09-30 Wed +1d>
-- keep debugging
-- currently working on dependencies for serialization, ensuring that it can follow a step-by-step order
+* TODO GAME ITEMS TODAY <2026-10-13 Tue +1d>
+- finish chunked rendering
 * Pre-Alpha 
 ** TODO Logan
-*** Detail all necessary computations
-*** Finish data layout
-*** Prereq core systems to main loop playable
-**** Pathfinding
-*** Main Loop Playable (Paleolithic)
-List the amount each algo needs to be run per frame. Write headers. then use this to organize code. then feed from world gen
-includes:
-**** Unlocking new units
-**** Finding and harvesting resources
-***** queue production
-**** Making products
-**** Hunting
-**** Building
-**** eating
-**** Combat
-**** inventory
-**** check needs- aggregate and individual
-**** receive event warnings
+*** Computations
+from top to bottom in terms of priority
+**** rendering
+***** chunked rendering 
+****** (external) chunks that are in camera'd areas, with changed data, are tracked (scheduled)
+from buffer containing moved tile, plant, buildable 
+****** [1/1] re-render changed chunks (scheduled: F)
+****** [1/1] render background chunks (scheduled: F)
+***** movable rendering (scheduled every frame)
+****** [0/1] determine frame advancement buffer
+****** [0/1] get all in movables abstract frame buffer (state of which frame is in process) (scheduled: F)
+****** [1/1] render movables (scheduled: F)
+***** UI rendering 
+****** get active UI changes from SDL_Events (event)
+****** render UI (scheduled: F)
+**** asset management
+***** load all valid assets
+***** validate that all renderables have assets
+**** World Simulation
+***** world generation
+***** climate
+base temperature, base humidity
+****** modify climate data based on seasons 
+****** modify climate data based on randomness 
+***** weather
+precipitation, temperature, humidity
+****** modify weather data based on day time 
+****** control precipitation based on humidity, cycles and randomness 
+****** write precipitation amount per tile (chunk) into buffer 
+***** terrain
+****** add precipitation to ground
+****** change tile types (event)
+****** water flow (scheduled)
+***** perishable decay
+**** I/O
+***** get and handle click events 
+***** get and handle keyboard events
+**** Plant Growth
+***** factor sunlight
+***** factor water (plants can take humidity from air)
+***** factor temperature
+***** check if plant levels up in visible growth stage. if it does, check if it intersects with another plant
+***** grow plants
+**** UI
+***** main menu
+***** bottom bar
+***** pop up menus
+**** Movement
+***** Pathfinding
+***** tile movement time calculation
+***** animation frame calculation (based on speed) (leave out different speeds for now)
+**** Entity Search
+***** check scans for prowlers
+**** Entity Job management
+***** validate task reqs
+***** receive pawns that need new tasks
+***** assign new tasks
+**** Algorithm Scheduler
+**** Event Manager
+***** player receive event warnings
 - death
 - close to deaths
 - attack
 - mental break
-**** messages (tutorials)
-**** farming
+
+**** Nourishment
+***** hunger decreases
+***** search for food
+***** eating
+**** Inventory
+***** inventory checking
+***** inventory operations
+**** Construction
+**** Player
+***** Unlocking new units
+**** Combat
+**** Progressionn
+***** Visibility updates
+
 *** [1/6] Launch World
 **** Clean up blocking bugs
 **** [1/1] Launch Window
-**** Call all necessary sprites
-***** UI
-***** Tile
-***** Plant
-***** Animal
-***** placeholder
 **** Launch Menu
 **** Generate World
 **** Render World
-*** Finish UI
-**** functional large menus
 *** Wwise audio integration
 *** Movement + Action + NewPath
 first queueReadyActions sees if sub-action is finished. (inertia 0)

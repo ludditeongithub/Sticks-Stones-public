@@ -122,9 +122,9 @@ struct StatusBar
 			SDL_Rect unfilled_clip = {empty_bar.x, empty_bar.y, filled_length, unfixed};
 			SDL_Rect filled_clip = {full_bar.x, full_bar.y, filled_length, unfixed};
 
-			sprite_sheet_texture.render(position.x, position.y, &unfilled_clip,
+			SDL_RenderCopy(position.x, position.y, &unfilled_clip,
 						   viewport);
-			sprite_sheet_texture.render(position.x + unfilled_length, position.y,
+			SDL_RenderCopy(position.x + unfilled_length, position.y,
 						   &filled_clip, viewport);
 		}
 		else
@@ -132,9 +132,9 @@ struct StatusBar
 			SDL_Rect unfilled_clip = {empty_bar.x, empty_bar.y, unfixed, filled_length};
 			SDL_Rect filled_clip = {full_bar.x, full_bar.y, unfixed, filled_length};
 
-			sprite_sheet_texture.render(position.x, position.y, &unfilled_clip,
+			SDL_RenderCopy(position.x, position.y, &unfilled_clip,
 						   viewport);
-			sprite_sheet_texture.render(position.x, position.y + unfilled_length,
+			SDL_RenderCopy(position.x, position.y + unfilled_length,
 						   &filled_clip, viewport);
 		}
 	}

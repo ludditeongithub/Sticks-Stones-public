@@ -57,7 +57,7 @@ struct RequirementsSection
   
   void render(SDL_Rect &viewport)
   {
-	  sprite_sheet_texture.render(pos.x, pos.y, &frame, viewport);
+	  SDL_RenderCopy(pos.x, pos.y, &frame, viewport);
 
 	  for (auto x: reqs) x.render(frame, viewport);
   }
