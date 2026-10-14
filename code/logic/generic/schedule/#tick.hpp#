@@ -1,0 +1,10 @@
+#include "task_scheduing.hpp"
+#include <systems/movement.hpp>
+
+
+
+void on_player_order()
+{
+	// change this: does not need to be so hot
+	update_task_job_priorities(hm, pq, pt);
+}

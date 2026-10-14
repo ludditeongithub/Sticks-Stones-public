@@ -1,10 +1,12 @@
 #include "info_section.hpp"
+#include "display/render/texture.hpp"
+#include <data/run/texture.hpp>
 
-void RolesSection::render(SDL_Rect &viewport){
-	  SDL_RenderCopy(pos.x, pos.y, &frame, viewport);
-
+void RolesSection::render(SDL_Rect &viewport)
+{
+          sprite_sheet_texture.render(pos.x, pos.y, &frame);
 	  for (auto x: reqs) x.render(frame, viewport);
-  }
+}
 
 RolesSection::RolesSection(){
     for (size_t i = 0; i < reqs.size(); i++) {
@@ -24,8 +26,7 @@ void InfoSection::render(SDL_Rect& viewport){
                 } else if (auto i = get_if<Buildable>(&display)) {
                   r =  sprite::buildable[i];
                 }
-		SDL_RenderCopy(display_pos.x + FRAME_BORDER,
-                                            display_pos.y + FRAME_BORDER, &r, viewport);
+		SDL_RenderCopy(display_pos.x + FRAME_BORDER, display_pos.y + FRAME_BORDER, &r, viewport);
 
                 title.render(viewport, title_pos, Alignment::Left);
 

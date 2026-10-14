@@ -1,6 +1,7 @@
 #include "render.hpp"
 #include <data/game/screen.hpp>
 #include <data/run/texture.hpp>
+#include <display/render/sprite.hpp>
 
 // TODO: right now this is only fitted for walk animations. need to make sure
 // all the LOGIC is only fitted for walk animations, for now.
@@ -163,10 +164,10 @@ inline SDL_Rect get_animal_rect(Animal a, FrameData as, Time age, sprite::Info& 
 
 inline Frame get_next_animal_frame(Animal a, ActState as, Frame frame_number, sprite::Info& asi)
 {
-		uint8_t frame = static_cast<uint8_t>(frame_number);
+	uint8_t frame = static_cast<uint8_t>(frame_number);
 	switch (as)
 	{
-					//TODO: act
+        //TODO: act
 	case ActState::Act:
 	case ActState::NewPath:
 		frame = 0;

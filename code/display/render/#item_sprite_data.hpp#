@@ -1,0 +1,31 @@
+#pragma once
+#include <data/types/item.hpp>
+#include <core/tables.hpp>
+#include <core/coord.hpp>
+
+inline constexpr BitsetTable<Item> item_ascending_versions = []
+	{
+		BitsetTable<Item> t{};
+		
+		return t;
+	}();
+
+inline constexpr LookupTable<Item,uint8_t> item_pixel_translations = [] {
+	LookupTable<Item,uint8_t> lt{};
+	using enum Item;
+	
+	return lt;
+}();
+
+
+
+
+inline constexpr LookupTable<Item, uint8_t> item_sprite_variants = []
+{
+	LookupTable<Item,uint8_t> lt{};
+	using enum Item;
+	lt[String] = 2;
+	lt[Hay] = 1;
+	return lt;
+}();
+

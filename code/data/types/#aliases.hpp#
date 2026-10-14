@@ -1,0 +1,29 @@
+#pragma once
+#include <cstdint>
+#include <data/types/item.hpp>
+#include <data/types/buildable.hpp>
+#include <data/types/progression.hpp>
+#include <data/types/plant.hpp>
+#include <data/types/animal.hpp>
+#include <data/types/container.hpp>
+#include <data/types/unit.hpp>
+#include <data/const/unit_data.hpp>
+#include <core/combo_enum.hpp>
+
+using Time = uint32_t;
+using Frame = uint16_t;
+
+// general
+using EntityID = std::size_t;
+
+//consider putting Material into commodity, which will determine possible material variants for all items if applicable. alternatively, pairs which include item and variant int8_t cast from material
+// important: must be initialized in enum order!
+using Commodity = ConcatEnum<Item, Buildable, knowledge::Category, order::Category, Ritual, PlantCategory, Animal>;  
+
+// geography
+
+// unit stats
+
+
+// unit skills
+

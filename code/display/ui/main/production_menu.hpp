@@ -1,6 +1,5 @@
 #pragma once
 #include <SDL2/SDL_events.h>
-
 #include <../extern/magic_enum/magic_enum.hpp>
 #include <display/ui/components/element.hpp>
 #include "display/ui/components/button.hpp"
@@ -11,13 +10,11 @@
 #include <display/ui/aggregates/swipable_menu.hpp>
 #include <display/ui/aggregates/info_section.hpp>
 #include <world/item/tables.hpp>
-
 #include "large_menu.hpp"
 
 // serves for both 'item production' and 'buildables.' one singleton instance for each
 class ProductionMenu : public LargeMenu
 {
-  
 private:
   inline static ProductionMenu *production_instance = nullptr;
   inline static ProductionMenu *buildable_instance = nullptr;
@@ -29,7 +26,7 @@ private:
 
   bool open = false;
   Item current_item = Item::NONE;
-  std::vector<DisplayableInfo> infos;
+  std::vector<InfoSection> infos;
   SwipableMenu catalog;
   public:
   ProductionMenu(std::vector<CustomButtonDecoration>& submenu_selection_menu_decs, std::vector<Item>& products)
@@ -67,8 +64,7 @@ private:
   {
 	  if (buildable_menu)
 	  {
-            // reserve appropriate mem
-    infos.reserve(Buildable::MAX);
+    infos.reserve(static_cast<size_t>(Buildable::MAX));
 
     for (size_t i = 0; i < static_cast<size_t>(Buildable::MAX); i++)
     {
@@ -79,7 +75,7 @@ private:
 	  // reserve appropriate mem
     int count = 0;
     for (size_t i = 0; i < static_cast<size_t>(Item::MAX); i++)
-	    if (!item::TAGS[static_cast<Item>(i)] | item::Tag::Resource) count++;
+      if (!(item::TAGS[static_cast<Item>(i)] | item::Tag::Resource)) count++;
     infos.reserve(count);
 
     for (size_t i = 0; i < static_cast<size_t>(Item::MAX); i++)

@@ -11,16 +11,18 @@ ButtonUI::ButtonUI(ButtonFunctionality function, ButtonSprite sprite, SCoord pos
 
 void ButtonUI::render(){
 		SDL_Rect rect;
-	    rect = sprite::get_button(sprite, state);		
-		SDL_RenderCopy(pos.x, pos.y, &rect, viewport);
+	    rect = sprite::get_button(sprite, state);
+		
+		sprite_sheet_texture.render(pos.x, pos.y, &rect, viewport);
 		//TODO: decoration should appear lower, if button is pressed!
 		if (decoration.has_value()) {
 			SDL_Rect dec_rect = sprite::get_decoration(decoration.value());
 			//TODO: the dec should lower by one pixel if the state is PRESSED.
-		  SDL_RenderCopy(pos.x, pos.y, &dec_rect, viewport);
+		  sprite_sheet_texture.render(pos.x, pos.y, &dec_rect, viewport);
 		}		
 	}
 
+// OPTI: consider handle mouse which takes coords already
 std::optional<ButtonFunctionality> ButtonUI::handle(SDL_Event *e){
 		if( e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP )
 	{
@@ -125,7 +127,7 @@ void CheckboxUI::render(SDL_Rect& viewport){
 		{
 				rect = sprite::get_button(sprite, state);	
 	}
-        SDL_RenderCopy(pos.x, pos.y, &rect, &viewport);
+        sprite_sheet_texture.render(pos.x, pos.y, &rect, &viewport);
     }
 
 CheckboxUI::CheckboxUI(ButtonFunctionality function, ButtonSprite sprite, const SCoord pos, SDL_Rect* viewport,

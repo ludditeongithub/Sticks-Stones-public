@@ -1,0 +1,59 @@
+#include "button_functionality.hpp"
+
+CatalogSelectionBF::CatalogSelectionBF(Entity entity){}
+
+SubmenuSelectionBF::SubmenuSelectionBF(SubmenuType type){
+
+  }
+
+void SlideMenuBF::trigger() override{
+  right ? menu.slide_right() : menu.slide_left(); 
+}
+
+void OpenMenuBF::trigger() override{
+  open_menu(menu);
+}
+
+
+void SaveGameBF::trigger() override{
+  }
+
+SaveGameBF::SaveGameBF (GameSave& save){}
+
+void LoadGameBF::trigger() override{
+    
+  }
+
+LoadGameBF::LoadGameBF(GameSave &save){}
+
+void LoadMenuBF::trigger() override{
+          
+        }
+
+LoadMenuBF::LoadMenuBF(){}
+
+ContinueBF::ContinueBF(){
+          // get most recent game save from binary          
+        }
+
+void NewGameBF::trigger() override{
+		// TODO: player can adjust world gen settings
+        g_game->init_new_world();
+		g_game->new_game();
+		g_main_menu->~MainMenu();
+		g_game->start();
+        }
+
+NewGameBF::NewGameBF(){}
+
+void LaunchBF::trigger() override{
+    
+  }
+
+LaunchBF::LaunchBF(Launches launches) : launches(launches){}
+
+void ChangeScreenDimensionsBF::trigger() override{
+	  screen_dimensions = screen_dimensions;
+	}
+
+ChangeScreenDimensionsBF::ChangeScreenDimensionsBF(Coord screen_dimensions) : screen_dimensions(screen_dimensions){}

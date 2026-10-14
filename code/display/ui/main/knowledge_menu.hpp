@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/tables.hpp"
+#include "data/types/ui.hpp"
 #include "display/ui/components/button.hpp"
 #include "large_menu.hpp"
 #include "display/ui/components/button_functionality.hpp"
@@ -42,11 +43,11 @@ private:
 
   void init_catalog(std::vector<knowledge::Academic>& knowledge)
   {
-	  std::vector<std::unique_ptr<ButtonFunctionality>> button_functionalities(knowledge.size());
+	  std::vector<ButtonFunctionality> button_functionalities(knowledge.size());
     for (size_t i = 0; i < knowledge.size(); i++)
     {
             knowledge::Academic academic = knowledge[i];
-	    button_functionalities[i] = std::make_unique<CatalogSelectionBF>(academic);
+	    button_functionalities[i] = ;
     }
     academic_catalog = SwipableMenu(button_functionalities, ButtonSprite::ElementFrame, knowledge, BUTTONS_PER_COLUMN,  BUTTONS_PER_ROW, catalog_background);
   }

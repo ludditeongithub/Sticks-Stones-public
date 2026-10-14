@@ -50,7 +50,6 @@ namespace sprite
 
   SDL_Rect null_sprite;	
 
-
 std::string to_kebab_case(std::string& s) {
     std::string result;
 
@@ -382,7 +381,7 @@ inline constexpr LookupTable<Plant, std::array<StageInfo, MAX_STAGES>> PLANT_SPR
 	lt[PioneerTree] = {{ }}; //TODO
 	lt[DeciduousTree] = {{StageInfo({1,1},1),StageInfo({1,2},1), StageInfo({3,4},1)}}; //TODO (separate from regular 'tree', possibly, as those are unbarren fruit trees. make sure they are the same as the unbarren fruit trees)
 	lt[EvergreenTree] = {{StageInfo({3,4},1)}}; //TODO: earlier stages
-	lt[TropicalTree] = {{ {{5,3},1} }}; //TODO
+	lt[TropicalTree] = {{ {{5,3},1} }}; 
 	lt[Cactus] = {{ }}; // TODO
 	lt[Grapevine] = {{StageInfo({1,1},2), StageInfo({2,2},2), StageInfo({3,2}, 4)}};
 	lt[Lettuce] = {{ StageInfo({1,1},5)}};

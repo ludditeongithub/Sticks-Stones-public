@@ -25,7 +25,7 @@ namespace bottom_bar
 constexpr SDL_Rect G_VIEWPORT = {0, 305, 640, 55};  
 
 constexpr int width = SCREEN_WIDTH;
-constexpr int height = 55;
+  constexpr int height = 55; 
 
 // =========================
 // BARS/DISPLAY
@@ -148,16 +148,11 @@ std::vector<StatusBar> bars;
     {
         using enum ItemStatusBar::Value;
 
-        bars.emplace_back(
-            ItemStatusBar(Health),
-            SCoord{HEALTH_BAR_X, HEALTH_BAR_Y},
-            true,
-            G_VIEWPORT
-        );
+	bars.emplace_back(ItemStatusBar(Health), SCoord{HEALTH_BAR_X, HEALTH_BAR_Y}, true,
+			  G_VIEWPORT);
 
     }      
     };
-  Entity entity = NullEntity::Null;
   BarsUnit bars_unit = BarsUnit();
     BarsPlant bars_plant = BarsPlant();
     BarsAnimal bars_animal = BarsAnimal();
@@ -176,7 +171,8 @@ void render()
   }
   else if (auto ptr = std::get_if<Item>(&entity)) {
     for (auto x: bars_item.bars) x.render(G_VIEWPORT);
-  }
+  } else assert(true == false && "Passed undisplayable entity to bottom bar.");
+  
 }
   };
 
@@ -185,8 +181,8 @@ struct Display
 {
   // TODO: equipment
 public:
-  TextBox name_tag = TextBox(SCoord{8, 33}, UISprite::WoodTextBox, Text(cagliostro_4, ""));
-  TextBox category_tag = TextBox(SCoord{8, 42}, UISprite::WoodTextBox, Text(cagliostro_4, ""));
+  TextBox name_tag = TextBox(SCoord{8, 33}, UISprite::WoodTextBox, Text(cagliostro, ""));
+  TextBox category_tag = TextBox(SCoord{8, 42}, UISprite::WoodTextBox, Text(cagliostro, ""));
         DisplayFrame display_frame = DisplayFrame(UISprite::EntityDisplayFrame, Unit::Adult, {57, 8});
 
 	void render()
@@ -310,4 +306,30 @@ struct MenuButtons
 	}
 };
 
+  Bars bars;
+      EquipmentDisplay equipment_display;
+  RoleDisplay role_display;
+  MenuButtons menu_buttons;
+  Entity entity = NullEntity::Null;
+
+  void render()
+    {
+	    if (auto ptr = std::get_if<Unit>(&entity))
+	      {
+                role_display.render();
+     equipment_display.render();
+	      }
+            bars.render();
+            menu_buttons.render();
+    }
+
+    void handle(SDL_Event *e)
+    {
+      if (auto ptr = std::get_if<Unit>(&entity))
+	      {
+                equipment_display.handle(e);
+	        role_display.handle(e);
+	      }
+	menu_buttons.handle(e);	
+      }	      
 } // namespace bottom_bar

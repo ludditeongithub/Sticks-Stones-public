@@ -1,0 +1,35 @@
+#include "element.hpp"
+#include "button.hpp"
+#include "render/screen.hpp"
+#include "ui/components/button.hpp"
+#include <SDL2/SDL_events.h>
+struct SwipableMenu
+{
+  bool active = false; 
+  std::vector<ButtonUI> main_buttons;
+  ButtonUI left_arrow;
+  ButtonUI right_arrow;
+  size_t swipe_amount;
+  UIElement background;
+  SwipableMenu(std::vector<ButtonUI> main_buttons,  ButtonUI left_arrow, ButtonUI right_arrow, size_t swipe_amount, UIElement background) : main_buttons(main_buttons), left_arrow(left_arrow), right_arrow(right_arrow), swipe_amount(swipe_amount)
+  {
+    
+  }
+
+  void open() { active = true; }
+
+  void render() {
+	  if (!active)
+		  return;
+	  background.render(g_main_screen_viewport);
+	  for (auto x: main_buttons) x.render(g_main_screen_viewport);
+	  
+  }
+
+  void handle(SDL_Event* event)
+  {
+	  if (!active)
+		  return;
+	  
+  }
+};

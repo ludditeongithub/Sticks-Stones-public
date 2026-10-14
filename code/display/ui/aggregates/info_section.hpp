@@ -20,12 +20,11 @@ struct InfoSection {
   static constexpr SCoord title_pos= {50, 13};
         static constexpr FC_Font** title_font = &cagliostro;
   static constexpr SDL_Rect desc_box = {15, 56, 40, 50};
-  static constexpr FC_Font **desc_font = &cagliostro;
-  SDL_Rect display; 
+  static constexpr FC_Font **desc_font = &cagliostro; 
 	Text title;
 	Text desc;
 
-  InfoSection(SDL_Rect display, const char* title, const char* desc);
+  InfoSection(const char* title, const char* desc);
 
   void render(SDL_Rect& viewport);
 };
@@ -33,7 +32,7 @@ struct InfoSection {
 struct RequirementsSection
 {
   static inline SCoord pos;
-  static inline SDL_Rect frame = sprite::ui[UISprite::RequirementFrame];
+  static inline SDL_Rect frame = sprite::uis[UISprite::RequirementFrame];
   std::vector<RequirementBox> reqs;
 
   RequirementsSection(Displayable display)
@@ -57,15 +56,14 @@ struct RequirementsSection
   
   void render(SDL_Rect &viewport)
   {
-	  SDL_RenderCopy(pos.x, pos.y, &frame, viewport);
-
+	  sprite_sheet_texture.render(pos.x, pos.y, &frame);
 	  for (auto x: reqs) x.render(frame, viewport);
   }
 };
 
 struct RolesSection {
   static inline SCoord pos;
-  static inline SDL_Rect frame = sprite::ui[UISprite::RoleFrame];
+  static inline SDL_Rect frame = sprite::uis[UISprite::RoleFrame];
   static inline std::vector<RoleBox> reqs;
 
   RolesSection();
