@@ -1,0 +1,6 @@
+enum class {{ Specialization }} {
+{% for item in items %}
+  {{ item.name }},
+{% endfor %}
+  MAX
+};

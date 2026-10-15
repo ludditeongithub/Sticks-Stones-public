@@ -1,21 +1,33 @@
 #include "data/types/entity.hpp"
+#include "data/types/ui.hpp"
+#include "data/types/unit.hpp"
 #include "element.hpp"
 #include "display/render/sprite.hpp"
 #include <display/render/screen.hpp>
 struct DisplayFrame : UIElement {
-	SDL_Rect entity_sprite;
+  SDL_Rect entity_sprite;
+  //  SDL_Rect second_entity_sprite;
   // frame sprite is source
 
-  DisplayFrame(UISprite frame, Entity entity, SCoord position) : UIElement(frame, position)
+  DisplayFrame(UISprite frame, Entity entity,
+	       //Entity second_entity,
+	       SCoord position) : UIElement(frame, position)
   {
     entity_sprite = sprite::get(entity);
+ //   second_entity_sprite = sprite::get(second_entity);
   }
   
 	inline void render(const SDL_Rect viewport)
 	{
-          SDL_RenderCopy(position.x, position.y, source, viewport);		SDL_RenderCopy(position.x, position.y, &entity_sprite, viewport);
+          sprite_sheet_texture::render(position.x, position.y, source);
+          sprite_sheet_texture::render(position.x, position.y, entity_sprite);
 	}
-	inline void change_display(Entity entity) { entity_sprite = sprite::get(entity); }
+  inline void change_display(Entity entity) { entity_sprite = sprite::get(entity); }
+  /*
+	inline void switch_display()
+	{
+};
+   */
 };
 
 struct DoubleDisplayFrame : DisplayFrame

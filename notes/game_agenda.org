@@ -1,5 +1,6 @@
-* TODO GAME ITEMS TODAY <2026-10-13 Tue +1d>
+* TODO GAME ITEMS TODAY <2026-10-14 Wed +1d>
 - finish chunked rendering
+- data layout for world 
 * Pre-Alpha 
 ** TODO Logan
 *** Computations

@@ -1,3 +1,4 @@
+#include "data/run/texture.hpp"
 #include "render.hpp"
 #include <data/game/screen.hpp>
 #include <data/run/texture.hpp>
@@ -198,7 +199,7 @@ void update_animal_animations(MovablesRenderBuffer &erd, Array<FrameData> &frame
 		SDL_Rect r = get_animal_rect(ard.animal, fd, ages[ai], asi);
 		SDL_Point p = get_camera_relative_point_from_coord(ard.position);
 		SDL_Rect dst = {p.x, p.y, r.x, r.y};
-		SDL_RenderCopy(renderer, nullptr, &r, &dst);
+		SDL_RenderCopy(renderer, sprite_sheet_texture::texture, &r, &dst);
 		//TODO: may not trigger frame advance. need to be planning animation just like we plan path, in a seperate buffer
 		fd.set<Frame>(get_next_animal_frame(ard.animal, fd.get<ActState>(), fd.get<Frame>(), asi));
 	}
@@ -272,7 +273,7 @@ void update_unit_animations(MovablesRenderBuffer &erd, Array<Time> &ages, Array<
 		SDL_Rect r = get_unit_rect(ard.unit, state, direction, frame, ages[ai]);
 		SDL_Point p = get_camera_relative_point_from_coord(ard.position);
 		SDL_Rect dst = {p.x, p.y, r.x, r.y};
-		SDL_RenderCopy(renderer, nullptr, &r, &dst);
+		SDL_RenderCopy(renderer, sprite_sheet_texture::texture, &r, &dst);
 		// TODO: may not trigger frame advance. need to be planning animation just like we plan path, in a seperate buffer
 		frame_datas[ai].set<Frame>(get_next_unit_frame(ard.unit, state, frame));		
 	}

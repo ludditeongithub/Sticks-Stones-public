@@ -8,9 +8,7 @@ data:
           bulk_level: BulkLevel::Solid
           min_temp: _8.0
           max_temp: 50.0
-          covers:
-            _ BodyArea::LeftLeg
-            _ BodyArea::RightLeg
+          covers: [BodyArea::LeftLeg, BodyArea::RightLeg]
 
         tribalwear:
           toughness: 8.0
@@ -569,8 +567,12 @@ data:
             cooling_effect: 0.80
             fermentable: true            
     container:
-   
+        basket:
+            capacity_weight: 30.8
+            capacity_bulk: 20.5
     art:
-   
+        statue:
+            base_beauty: 0.8
     scavengeable:
-      
+        stone:
+                variant: 1

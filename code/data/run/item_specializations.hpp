@@ -4,40 +4,12 @@
 #include <core/containers.hpp>
 #include <data/types/stats.hpp>
 #include <data/types/item.hpp>
+#include <data/types/item_specialization.hpp>
+#include <data/run/item_database.hpp>
+#include <stack>
 
 namespace item {
 // @codegen:begin wearable
-enum class Wearable {
-  PartTribalwear,
-  Tribalwear,
-  Robe,
-  Tunic,
-  Pants,
-  Dress,
-  Sandles,
-  Boots,
-  Scarf,
-  Headwrap,
-  Mitts,
-  Gloves,
-  Apron,
-  Helmet,
-  Bracers,
-  Guards,
-  Cape,
-  HeavyShirt,
-  HeavyPants,
-  Gambeson,
-  Chainmail,
-  Breastplate,
-  Plate,
-  WoodCrown,
-  GoldCrown,
-  RoyalCrown,
-  Necklace,
-  MAX
-};
-
 inline constexpr LookupTable<Wearable, Health> healths = [] {
 LookupTable<Wearable, Health> lt{};
   using enum Wearable;
@@ -59,9 +31,9 @@ Database& database;
 size_t size = 0;
 std::stack<size_t> free_slots;
 Array<size_t> indices;
-  Array<Health> health;
-  Array<Quality> quality;
-  Array<bool> equipped;
+  Array<Health> healths;
+  Array<Quality> qualitys;
+  Array<bool> equippeds;
 
 // =========================
 // INIT
@@ -69,9 +41,9 @@ Array<size_t> indices;
 
 void init(Arena* arena, size_t capacity)
 {
-  health = arena_make_array<Health>(arena, capacity);
-  quality = arena_make_array<Quality>(arena, capacity);
-  equipped = arena_make_array<bool>(arena, capacity);
+  healths = arena_make_array<Health>(arena, capacity);
+  qualitys = arena_make_array<Quality>(arena, capacity);
+  equippeds = arena_make_array<bool>(arena, capacity);
 }
 
 // =========================
@@ -98,10 +70,11 @@ void spawn_wearable_component(Wearable wearable, , Health health
 )
 {
 Item item = item_to_wearable(wearable);
+size_t i;
 if (free_slots.empty()) {
 //TODO: emergency storage
-size_t i = size++;
-} else size_t i = free_slots.pop();
+i = size++;
+} else i = free_slots.pop();
   health(i) = health;
   quality(i) = quality;
   equipped(i) = equipped;
@@ -137,10 +110,10 @@ database.remove(i);
 // TRANSFER
 // =========================
 
-inline bool transfer_Wearable(size_t i, WearableDatabase &old_db)
+inline bool transfer(size_t i, WearableDatabase &old_db)
 {
   return database.transfer_item(i, old_db);
-  }
+}
 
 // =========================
 // INVENTORY MANAGEMENT
@@ -153,48 +126,12 @@ inventory.add_item(item);
 remove_wearable(wearableID);
 }
 
-inline void drop(EntityID wearableID, Inventory &inventory) { add_entity(); }
-};
+inline void drop(EntityID wearableID, Inventory& inventory) {
+add_entity();
+}
 // @codegen:end wearable
 
 // @codegen:begin perishable
-enum class Perishable {
-  Flour,
-  MilledRice,
-  Bread,
-  Pastry,
-  Pie,
-  Porridge,
-  RawMeat,
-  CookedMeat,
-  AnimalFat,
-  Cheese,
-  GoatCheese,
-  BlueCheese,
-  Beer,
-  Wine,
-  FruitWine,
-  Mead,
-  Vinegar,
-  Butter,
-  OliveOil,
-  CookingOil,
-  Juice,
-  CandiedFruit,
-  AgedAlcoholicDrink,
-  SugarJuice,
-  Sugar,
-  GroundBlackPepper,
-  ChiliPowder,
-  AnimalHair,
-  TanningAgent,
-  Incense,
-  BoneMeal,
-  FishMeal,
-  Fertilizer,
-  MAX
-};
-
 inline constexpr LookupTable<Perishable, float> decays = [] {
 LookupTable<Perishable, float> lt{};
   using enum Perishable;
@@ -211,8 +148,8 @@ Database& database;
 size_t size = 0;
 std::stack<size_t> free_slots;
 Array<size_t> indices;
-  Array<float> decay;
-  Array<PreservationState> preservation_state;
+  Array<float> decays;
+  Array<PreservationState> preservation_states;
 
 // =========================
 // INIT
@@ -220,8 +157,8 @@ Array<size_t> indices;
 
 void init(Arena* arena, size_t capacity)
 {
-  decay = arena_make_array<float>(arena, capacity);
-  preservation_state = arena_make_array<PreservationState>(arena, capacity);
+  decays = arena_make_array<float>(arena, capacity);
+  preservation_states = arena_make_array<PreservationState>(arena, capacity);
 }
 
 // =========================
@@ -244,10 +181,11 @@ void spawn_perishable_component(Perishable perishable, , float decay
 )
 {
 Item item = item_to_perishable(perishable);
+size_t i;
 if (free_slots.empty()) {
 //TODO: emergency storage
-size_t i = size++;
-} else size_t i = free_slots.pop();
+i = size++;
+} else i = free_slots.pop();
   decay(i) = decay;
   preservation_state(i) = preservation_state;
 }
@@ -281,9 +219,9 @@ database.remove(i);
 // TRANSFER
 // =========================
 
-inline bool transfer_Perishable(size_t i, PerishableDatabase &old_db)
+inline bool transfer(size_t i, PerishableDatabase &old_db)
 {
-	return database.transfer_item(i, old_db);
+  return database.transfer_item(i, old_db);
 }
 
 // =========================
@@ -297,21 +235,258 @@ inventory.add_item(item);
 remove_perishable(perishableID);
 }
 
-inline void drop(EntityID perishableID, Inventory &inventory) { add_entity(); }
-
-};
+inline void drop(EntityID perishableID, Inventory& inventory) {
+add_entity();
+}
 // @codegen:end perishable
 
 // @codegen:begin container
-//
+
+struct ContainerDatabase {
+Database& database;
+size_t size = 0;
+std::stack<size_t> free_slots;
+Array<size_t> indices;
+
+// =========================
+// INIT
+// =========================
+
+void init(Arena* arena, size_t capacity)
+{
+}
+
+// =========================
+// GETTERS
+// =========================
+
+
+// =========================
+// SPAWN
+// =========================
+
+void spawn_container_component(Container container, )
+{
+Item item = item_to_container(container);
+size_t i;
+if (free_slots.empty()) {
+//TODO: emergency storage
+i = size++;
+} else i = free_slots.pop();
+}
+
+// =========================
+// REMOVE
+// =========================
+
+inline bool remove(size_t i) {
+free_slots.push(i);
+database.remove(i);
+}
+
+// =========================
+// SERIALIZATION
+// =========================
+
+    template <class Archive>
+    void serialize(Archive &archive) const
+    {
+      archive(size);
+      archive(free_slots);
+      archive(indices);
+     
+    }
+
+
+// =========================
+// TRANSFER
+// =========================
+
+inline bool transfer(size_t i, ContainerDatabase &old_db)
+{
+  return database.transfer_item(i, old_db);
+}
+
+// =========================
+// INVENTORY MANAGEMENT
+// =========================
+
+inline void pick_up(EntityID containerID, Inventory& inventory) {
+ContainerEntity container = get_entity(index);
+Item item = reflect_enum(container.specialization);
+inventory.add_item(item);
+remove_container(containerID);
+}
+
+inline void drop(EntityID containerID, Inventory& inventory) {
+add_entity();
+}
 // @codegen:end container
 
 // @codegen:begin art
-//
+
+struct ArtDatabase {
+Database& database;
+size_t size = 0;
+std::stack<size_t> free_slots;
+Array<size_t> indices;
+
+// =========================
+// INIT
+// =========================
+
+void init(Arena* arena, size_t capacity)
+{
+}
+
+// =========================
+// GETTERS
+// =========================
+
+
+// =========================
+// SPAWN
+// =========================
+
+void spawn_art_component(Art art, )
+{
+Item item = item_to_art(art);
+size_t i;
+if (free_slots.empty()) {
+//TODO: emergency storage
+i = size++;
+} else i = free_slots.pop();
+}
+
+// =========================
+// REMOVE
+// =========================
+
+inline bool remove(size_t i) {
+free_slots.push(i);
+database.remove(i);
+}
+
+// =========================
+// SERIALIZATION
+// =========================
+
+    template <class Archive>
+    void serialize(Archive &archive) const
+    {
+      archive(size);
+      archive(free_slots);
+      archive(indices);
+     
+    }
+
+
+// =========================
+// TRANSFER
+// =========================
+
+inline bool transfer(size_t i, ArtDatabase &old_db)
+{
+  return database.transfer_item(i, old_db);
+}
+
+// =========================
+// INVENTORY MANAGEMENT
+// =========================
+
+inline void pick_up(EntityID artID, Inventory& inventory) {
+ArtEntity art = get_entity(index);
+Item item = reflect_enum(art.specialization);
+inventory.add_item(item);
+remove_art(artID);
+}
+
+inline void drop(EntityID artID, Inventory& inventory) {
+add_entity();
+}
 // @codegen:end art
 
 // @codegen:begin scavengeable
-//
+
+struct ScavengeableDatabase {
+Database& database;
+size_t size = 0;
+std::stack<size_t> free_slots;
+Array<size_t> indices;
+
+// =========================
+// INIT
+// =========================
+
+void init(Arena* arena, size_t capacity)
+{
+}
+
+// =========================
+// GETTERS
+// =========================
+
+
+// =========================
+// SPAWN
+// =========================
+
+void spawn_scavengeable_component(Scavengeable scavengeable, )
+{
+Item item = item_to_scavengeable(scavengeable);
+size_t i;
+if (free_slots.empty()) {
+//TODO: emergency storage
+i = size++;
+} else i = free_slots.pop();
+}
+
+// =========================
+// REMOVE
+// =========================
+
+inline bool remove(size_t i) {
+free_slots.push(i);
+database.remove(i);
+}
+
+// =========================
+// SERIALIZATION
+// =========================
+
+    template <class Archive>
+    void serialize(Archive &archive) const
+    {
+      archive(size);
+      archive(free_slots);
+      archive(indices);
+     
+    }
+
+
+// =========================
+// TRANSFER
+// =========================
+
+inline bool transfer(size_t i, ScavengeableDatabase &old_db)
+{
+  return database.transfer_item(i, old_db);
+}
+
+// =========================
+// INVENTORY MANAGEMENT
+// =========================
+
+inline void pick_up(EntityID scavengeableID, Inventory& inventory) {
+ScavengeableEntity scavengeable = get_entity(index);
+Item item = reflect_enum(scavengeable.specialization);
+inventory.add_item(item);
+remove_scavengeable(scavengeableID);
+}
+
+inline void drop(EntityID scavengeableID, Inventory& inventory) {
+add_entity();
+}
 // @codegen:end scavengeable
   
 }

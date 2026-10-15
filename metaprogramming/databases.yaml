@@ -43,18 +43,25 @@ databases:
         database_references: [unit]
     # plain systems/structs, in allocated_struct.py
 structs:
-    temp:
-        path: data/run/temperature.hpp
+    climate:
+        path: data/run/climate.hpp
         fields:
-                min_temp: float
-                diurnal_temp_variance: float
-                seasonal_temp_variance: float
+                base_temp: Temp
+                seasonal_temp_variance: Temp
+                base_hum: Hum
+                seasonal_hum_variance: Hum
+    weather:
+        path: data/run/weather.hpp
+        fields:
+                diurnal_temp_variance: Temp
+                diurnal_hum_variance: Hum
+                current_precipitation: Precipitation
     terrain:
         path: data/run/terrain.hpp
         fields:
-                altitudes: Alt
-                
-
+                altitude: Alt
+                liquid: Liquid
+                snow: Snow
 trait_data:
   - trait_name: age
     name: age
@@ -184,5 +191,4 @@ extra_arrays:
     name: growth
     type: Time
     newborn_default: 0
-    random_age_default: FULL_MATURITY_AGES[plant] * random_chance->next()
-                
+    random_age_default: FULL_MATURITY_AGES[plant] * random_chance->next()               

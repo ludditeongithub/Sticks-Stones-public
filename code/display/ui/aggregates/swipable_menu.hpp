@@ -8,8 +8,8 @@
 struct SwipableMenu
 {
   SDL_Rect viewport;
-  bool active = false; 
-  std::vector<ButtonUI> buttons;
+  bool active = false;
+  std::vector<ButtonUI> buttons; 
   ButtonUI left_arrow;
   ButtonUI right_arrow;
   //TODO: arrows unpressable state

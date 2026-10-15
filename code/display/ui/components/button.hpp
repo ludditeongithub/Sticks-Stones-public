@@ -5,6 +5,7 @@
 #include <optional>
 #include <chrono>
 #include <data/types/entity.hpp>
+#include "core/coord.hpp"
 #include "data/types/buildable.hpp"
 #include <data/types/ui.hpp>
 #include "text.hpp"
@@ -46,6 +47,12 @@ ButtonUI(ButtonFunctionality function, ButtonSprite sprite, SCoord pos, SDL_Rect
 	void render();
 
     std::optional<ButtonFunctionality> handle(SDL_Event *e);
+};
+
+struct OpenMenuButtonUI : public ButtonUI {
+  OpenMenuButtonUI(ButtonDecoration decor, SCoord pos, SDL_Rect* viewport) : ButtonUI(ButtonFunctionality::OpenMenu, ButtonSprite::OpenMenu, pos, viewport, decor)
+	{
+	}  
 };
 
 struct TextButtonUI : public ButtonUI

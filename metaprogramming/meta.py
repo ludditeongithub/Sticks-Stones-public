@@ -39,7 +39,7 @@ def main():
     database.create_databases()
     font.create_fonts()
     allocated_struct.create_databases()
-#    specialization.create_specializations()
+    specialization.create_specializations()
 
 if __name__ == "__main__":
     main()

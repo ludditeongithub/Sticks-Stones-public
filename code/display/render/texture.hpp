@@ -1,3 +1,5 @@
+#pragma once
+
 // Load and manage textures (spritesheets / atlases), GPU handles, UVs
 #pragma once
 #include <SDL2/SDL_rect.h>

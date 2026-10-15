@@ -1,6 +1,6 @@
 # TODO: application of default values, also in j2
 # OPTI: AoS mode
-specializations:
+schema:
         wearable:
                 layout: aos
                 special_cases:
@@ -37,19 +37,22 @@ specializations:
                 constants:
                         capacity_weight: float
                         capacity_bulk: float
+                fields:
         art:
                 special_cases:
                 constants:
                         base_beauty: float
                         avant_garde_factor: float
                         # TODO: skill ratios
+                fields:
         scavengeable:
                 layout: 
                 special_cases:
                 constants:                       
                         variant: Variant
+                fields:
 
 specialization_fields:
         decay:
                 type: float
-                default: 
+

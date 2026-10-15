@@ -1,11 +1,4 @@
 {# MTODO: specializations for more than items #}
-enum class {{ Specialization }} {
-{% for item in items %}
-  {{ item.name }},
-{% endfor %}
-  MAX
-};
-
 {% for f in fields %}
 inline constexpr LookupTable<{{ Specialization }}, {{ f.type }}> {{ f.name }}s = [] {
 LookupTable<{{ Specialization }}, {{ f.type }}> lt{};

@@ -39,7 +39,7 @@ private:
 
   ProductionMenu(std::vector<CustomButtonDecoration>& submenu_selection_menu_decs, std::vector<Buildable>& buildables)
   {
-          production_instance = this;
+          buildable_instance = this;
           init_info_sections(true);
 	  init_selection_submenu(submenu_selection_menu_decs);
           init_catalog(buildables);
@@ -69,7 +69,7 @@ private:
     for (size_t i = 0; i < static_cast<size_t>(Buildable::MAX); i++)
     {
       Buildable buildable = static_cast<Buildable>(i);
-      infos[i] = InfoSection(magic_enum::enum_name(buildable), buildable::descriptions[buildable]);
+      infos.emplace_back(InfoSection(magic_enum::enum_name(buildable), buildable::descriptions[buildable]));
     }
           } else {
 	  // reserve appropriate mem
@@ -88,11 +88,11 @@ private:
 
     void init_catalog(std::vector<Item>& products)
   {
-	  std::vector<std::unique_ptr<ButtonFunctionality>> button_functionalities(products.size());
+	  std::vector<ButtonFunctionality> button_functionalities(products.size());
     for (size_t i = 0; i < products.size(); i++)
     {
             Entity entity = products[i];
-	    button_functionalities[i] = std::make_unique<CatalogSelectionBF>(entity);
+	    button_functionalities[i] = ;
     }
     catalog = SwipableMenu(button_functionalities, ButtonSprite::ElementFrame, products, BUTTONS_PER_COLUMN,  BUTTONS_PER_ROW, catalog_background);
   }
@@ -120,7 +120,9 @@ private:
   void handle(SDL_Event *e)
   {
     if (open) {
-	  infos.handle(e);
+	  for (auto x: infos) {
+            x.handle(e);
+          }
 	  submenu_selection_menu.handle(e);
 	  catalog.handle(e);
     }

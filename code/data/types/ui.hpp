@@ -20,6 +20,7 @@ enum class UISprite
 	CatalogItemFrame,
 	InfoMenuItemFrame,
 	RequirementFrame,
+	StatusBar,
 	MAX
 };
 
@@ -37,12 +38,13 @@ enum class ButtonSprite : uint8_t
 	OpenMenu,
 	LeftArrow,
 	RightArrow,
-    ElementFrame,
+        ElementFrame,
 	MAX
 };
 
 enum class CustomButtonDecoration : uint8_t
 {
+        MIN,
 	MENU_MIN,
 	ProductionMenu,
 	BuildingMenu,
@@ -84,6 +86,10 @@ enum class ButtonFunctionality : uint8_t
 	SubmenuSelection,
 	CatalogSelection,
 	MAX
+};
+
+enum class Submenu {
+  
 };
 
 //?

@@ -1,78 +1,81 @@
 #pragma once
 #include "SDL_FontCache.h"
 #include "data/types/entity.hpp"
+#include <data/types/item_specialization.hpp>
+#include "data/types/ui.hpp"
 #include "display/render/screen.hpp"
 #include <display/ui/components/button.hpp>
-#include <display/ui/components/button_functionality.hpp>
 #include <display/ui/fonts.hpp>
 #include "data/types/animal.hpp"
 #include <display/ui/components/display_frame.hpp>
 #include <display/ui/components/status_bar.hpp>
 #include <display/ui/components/text_box.hpp>
 #include <display/ui/components/element.hpp>
-
-#include <display/render/animation.hpp>
+#include <display/render/render.hpp>
 #include <display/render/texture.hpp>
 #include <variant>
 #include <string>
 #include <vector>
 #include <../extern/magic_enum/magic_enum.hpp>
+#include <data/types/item_specialization.hpp>
 
 // this is organized from left to right
 // TODO: get clips
 namespace bottom_bar
 {
-constexpr SDL_Rect G_VIEWPORT = {0, 305, 640, 55};  
+inline SDL_Rect VIEWPORT = {0, 305, 640, 55};  
 
 constexpr int width = SCREEN_WIDTH;
-  constexpr int height = 55; 
+constexpr int height = 55;
 
 // =========================
 // BARS/DISPLAY
 // =========================
 
-  struct Bars {
-  static constexpr int BAR_Y = 15;
-  static constexpr int HEALTH_BAR_X = 8;
-  static constexpr int HEALTH_BAR_Y = 9;
-  static constexpr int FIRST_BAR_X = 8;
-  static constexpr int SECOND_BAR_X = 16;
-  static constexpr int THIRD_BAR_X = 24;
+namespace bars
+  {
+    Entity entity;
+  constexpr int BAR_Y = 15;
+  constexpr int HEALTH_BAR_X = 8;
+  constexpr int HEALTH_BAR_Y = 9;
+  constexpr int FIRST_BAR_X = 8;
+  constexpr int SECOND_BAR_X = 16;
+  constexpr int THIRD_BAR_X = 24;
 
 struct BarsUnit
 {
-	std::vector<StatusBar> bars;
+  std::vector<status_bar::Bar> bars;
 
     BarsUnit()
     {
-        using enum UnitStatusBar::Value;
-
-        bars.emplace_back(
-            UnitStatusBar(Health),
+      using enum status_bar::Type;
+      using namespace status_bar;
+        bars.push_back(
+                       Bar(status_bar::Entity::Unit, Health,
             SCoord{HEALTH_BAR_X, HEALTH_BAR_Y},
             true,
-            G_VIEWPORT
+            VIEWPORT)
         );
 
         bars.emplace_back(
-            UnitStatusBar(Hunger),
+                      Bar(status_bar::Entity::Unit, Hunger,
             SCoord{FIRST_BAR_X, BAR_Y},
             false,
-            G_VIEWPORT
+            VIEWPORT)
         );
 
         bars.emplace_back(
-            UnitStatusBar(Thirst),
+                     Bar(status_bar::Entity::Unit, Thirst,
             SCoord{SECOND_BAR_X, BAR_Y},
             false,
-            G_VIEWPORT
+            VIEWPORT)
         );
 
         bars.emplace_back(
-            UnitStatusBar(Satisfaction),
+                          Bar(status_bar::Entity::Unit, Satisfaction,
             SCoord{THIRD_BAR_X, BAR_Y},
             false,
-            G_VIEWPORT
+            VIEWPORT)
         );
     }
 };
@@ -80,31 +83,31 @@ struct BarsUnit
 
 struct BarsAnimal
 {
-    std::vector<StatusBar> bars;
+  std::vector<status_bar::Bar> bars;
 
     BarsAnimal()
     {
-        using enum AnimalStatusBar::Value;
-
+        using enum status_bar::Type;
+        using namespace status_bar;
         bars.emplace_back(
-            AnimalStatusBar(Health),
+            Bar(status_bar::Entity::Animal, Health,
             SCoord{HEALTH_BAR_X, HEALTH_BAR_Y},
             true,
-            G_VIEWPORT
+            VIEWPORT)
         );
 
         bars.emplace_back(
-            AnimalStatusBar(Hunger),
+                          Bar(status_bar::Entity::Animal, Hunger,
             SCoord{FIRST_BAR_X, BAR_Y},
             false,
-            G_VIEWPORT
+            VIEWPORT)
         );
 
         bars.emplace_back(
-            AnimalStatusBar(Thirst),
+                          Bar(status_bar::Entity::Animal, Thirst,
             SCoord{FIRST_BAR_X, BAR_Y},
             false,
-            G_VIEWPORT
+            VIEWPORT)
         );
     }
 };
@@ -112,48 +115,50 @@ struct BarsAnimal
 
 struct BarsPlant
 {
-    std::vector<StatusBar> bars;
+  std::vector<status_bar::Bar> bars;
 
     BarsPlant()
     {
-        using enum PlantStatusBar::Value;
-
+      using enum status_bar::Type;
+        using namespace status_bar;
         bars.emplace_back(
-            PlantStatusBar(Health),
+                          Bar(status_bar::Entity::Plant, Health,
             SCoord{HEALTH_BAR_X, HEALTH_BAR_Y},
             true,
-            G_VIEWPORT
+            VIEWPORT)
         );
 
         bars.emplace_back(
-            PlantStatusBar(Water),
+                          Bar(status_bar::Entity::Plant, Water,
             SCoord{FIRST_BAR_X, BAR_Y},
             false,
-            G_VIEWPORT
+            VIEWPORT)
         );
 
         bars.emplace_back(
-            PlantStatusBar(Sunlight),
+                          Bar(status_bar::Entity::Plant, Sunlight,
             SCoord{FIRST_BAR_X, BAR_Y},
             false,
-            G_VIEWPORT
+            VIEWPORT)
         );
     }
 };
 
     struct BarsItem {
-std::vector<StatusBar> bars;
+      std::vector<status_bar::Bar> bars;
 
     BarsItem()
     {
-        using enum ItemStatusBar::Value;
+      using enum status_bar::Type;
+      using namespace status_bar;
 
-	bars.emplace_back(ItemStatusBar(Health), SCoord{HEALTH_BAR_X, HEALTH_BAR_Y}, true,
-			  G_VIEWPORT);
-
+      bars.emplace_back(
+	                Bar(status_bar::Entity::Item, Health, SCoord{HEALTH_BAR_X, HEALTH_BAR_Y},
+			true, VIEWPORT)
+	);
     }      
     };
-  BarsUnit bars_unit = BarsUnit();
+    BarsUnit bars_unit = BarsUnit();
     BarsPlant bars_plant = BarsPlant();
     BarsAnimal bars_animal = BarsAnimal();
     BarsItem bars_item = BarsItem();
@@ -161,35 +166,34 @@ std::vector<StatusBar> bars;
 void render()
 {
   if (auto ptr = std::get_if<Unit>(&entity)) {
-    for (auto x: bars_unit.bars) x.render(G_VIEWPORT);    
+    for (auto x: bars_unit.bars) x.render(VIEWPORT);    
   }
   else if (auto ptr = std::get_if<Animal>(&entity)) {
-    for (auto x: bars_animal.bars) x.render(G_VIEWPORT);
+    for (auto x: bars_animal.bars) x.render(VIEWPORT);
   }
   else if (auto ptr = std::get_if<Plant>(&entity)) {
-    for (auto x: bars_plant.bars) x.render(G_VIEWPORT);
+    for (auto x: bars_plant.bars) x.render(VIEWPORT);
   }
   else if (auto ptr = std::get_if<Item>(&entity)) {
-    for (auto x: bars_item.bars) x.render(G_VIEWPORT);
-  } else assert(true == false && "Passed undisplayable entity to bottom bar.");
+    for (auto x: bars_item.bars) x.render(VIEWPORT);
+  } else assert(true == false && "Tried to use undisplayble entity on bottom bar.");
   
 }
   };
 
 
-struct Display
+namespace display
 {
   // TODO: equipment
-public:
   TextBox name_tag = TextBox(SCoord{8, 33}, UISprite::WoodTextBox, Text(cagliostro, ""));
   TextBox category_tag = TextBox(SCoord{8, 42}, UISprite::WoodTextBox, Text(cagliostro, ""));
-        DisplayFrame display_frame = DisplayFrame(UISprite::EntityDisplayFrame, Unit::Adult, {57, 8});
+        DisplayFrame display_frame = DisplayFrame(UISprite::EntityDisplayFrame, Unit::BlueEyesBrownHair, {57, 8});
 
 	void render()
 	{
-		name_tag.render(G_VIEWPORT);
-		category_tag.render(G_VIEWPORT);
-		display_frame.render(G_VIEWPORT);                
+		name_tag.render(VIEWPORT);
+		category_tag.render(VIEWPORT);
+		display_frame.render(VIEWPORT);                
 	}
 
 	void change_name_tag(std::string string) { name_tag.text.text = string.c_str(); }
@@ -206,56 +210,61 @@ category_tag.text.text = string.c_str();
 // EQUIPMENT
 // =========================
 
-struct EquipmentDisplay
+namespace equipment_display
 {
-  static constexpr ElementTable frame_table{96, 9, 16, 16, 6, 6, 4, 8};
-  std::array<DisplayFrame, frame_table.FRAME_AMOUNT> frames;
-  ButtonUI view_alternate_button = ButtonUI(ChangeEquipmentViewBF(), ButtonSprite::ChangeEquipmentView, {frame_table.get_end_x() + 1, frame_table.DISPLAY_Y});
+  constexpr int SIZE = 8;
+  constexpr ElementTable frame_table{96, 9, 16, 16, 6, 6, 4, 8};
+  std::vector<DisplayFrame> frames{};
+  ButtonUI view_alternate_button = ButtonUI(ButtonFunctionality::ChangeEquipmentView, ButtonSprite::ChangeEquipmentView, {frame_table.get_end_x() + 1, frame_table.DISPLAY_Y});
 
-  EquipmentDisplay()
+  void init()
   {
+    frames.reserve(frame_table.FRAME_AMOUNT);    
     for (size_t i = 0; i < frame_table.FRAME_AMOUNT; i++) {
-      frames[i] = DoubleDisplayFrame(UISprite::EquipmentFrame, UISprite::EquipmentFrameAlt, NullEntity::Null, NullEntity::Null, frame_table.get_position(i));
+      frames.emplace_back(DoubleDisplayFrame(UISprite::EquipmentFrame, UISprite::EquipmentFrameAlt, NullEntity::Null, NullEntity::Null, frame_table.get_position(i)));
     }
   }
   
-  void change_wearable(Wearable wearable, int frame_number) {
-    #if !SHIPPING_BUILD
+  void change_wearable(item::Wearable wearable, int frame_number) {
     assert(frame_number < 6 && frame_number >= 0);
-    #endif
-    auto wearable_name = magic_enum::enum_name(wearable);    frames[frame_number].change_display(magic_enum::enum_cast<Item>(wearable_name));
+    auto wearable_name = magic_enum::enum_name(wearable);
+    Item item = magic_enum::enum_cast<Item>(wearable_name).value();
+    frames[frame_number].change_display(item);
   }
 
   //MTODO: make Container its own type in container.hpp rather than Item
   void change_container(Item container, int frame_number) {
-    #if !SHIPPING_BUILD
     assert(frame_number < frame_table.FRAME_AMOUNT && frame_number >= 6);
-    #endif
     frames[frame_number].change_display(container);
   }
 
 void render() {
-  for (size_t i = 0; i < frame_table.FRAME_AMOUNT; i++) frames[i].render(G_VIEWPORT);  
+  for (size_t i = 0; i < frame_table.FRAME_AMOUNT; i++) frames[i].render(VIEWPORT);
 }
 
+void handle(SDL_Event *e)
+  {
+    view_alternate_button.handle(e);    
+  }
+
+/*
 void switch_display(int frame_number) {
- #if !SHIPPING_BUILD
-    assert(frame_number < frame_table.FRAME_AMOUNT && frame_number >= 0);
-    #endif
-    frames[frame_number].switch_display();
+  assert(frame_number < frame_table.FRAME_AMOUNT && frame_number >= 0);
+  frames[frame_number].switch_display();
 }
+  */
 };
 
 // =========================
 // ROLE
 // =========================
 
-struct RoleDisplay {
-	static constexpr ElementTable element_table{186, 7, 45, 7, 4, 2, 4, 8};
-	std::array<TextBox, element_table.FRAME_AMOUNT> text_boxes;
-  static inline FC_Font* font = cagliostro_4;
+namespace role_display {
+	constexpr ElementTable element_table{186, 7, 45, 7, 4, 2, 4, 8};
+	std::array<TextBox, element_table.FRAME_AMOUNT> text_boxes{};
+        FC_Font* font = cagliostro;
 
-RoleDisplay()
+        void init()
 {
 	for (size_t i = 0; i < element_table.FRAME_AMOUNT; i++)
 	{
@@ -276,27 +285,45 @@ for (auto x: text_boxes) {
   x.render();
  }
 }
+
+void handle(SDL_Event *e)
+{
+  //TODO
+  }
 };
 
 // =========================
 // MENU BUTTONS
 // =========================
 
-struct MenuButtons
-{
-        static constexpr int size = static_cast<int>(ButtonDecoration::MENU_MAX) - static_cast<int>(ButtonDecoration::MENU_MIN);
-	static constexpr ElementTable element_table
+namespace menu_buttons
+  {
+        constexpr int SIZE = static_cast<int>(CustomButtonDecoration::MENU_MAX) - static_cast<int>(CustomButtonDecoration::MENU_MIN);
+	constexpr ElementTable element_table
 	{
-          297, 19, 23, 25, 2, 0, size, size
+          297, 19, 23, 25, 2, 0, SIZE, SIZE
 	};
-        std::array<ButtonUI, size> buttons;
-	MenuButtons()
+        std::vector<ButtonUI> buttons;
+	void init()
 	{
-          for (size_t i = 0; i < size; i++)
-		{
-                  ButtonDecoration decor = static_cast<ButtonDecoration>(static_cast<int>(ButtonDecoration::MENU_MIN) + i);
-			buttons[i] = ButtonUI(OpenMenuBF(decor), ButtonSprite::OpenMenu, element_table.get_position(i), decor);
-                }
+	  buttons.clear();
+    buttons.reserve(SIZE);
+
+    for (size_t i = 0; i < SIZE; i++)
+    {
+        CustomButtonDecoration decor =
+            static_cast<CustomButtonDecoration>(
+                static_cast<int>(CustomButtonDecoration::MENU_MIN) + i
+            );
+
+        ButtonDecoration bd{decor};
+
+        buttons.emplace_back(
+                OpenMenuButtonUI(bd,
+            element_table.get_position(i),
+            &VIEWPORT)
+        );
+    }
 	}
 	void render()
 	{
@@ -304,32 +331,42 @@ struct MenuButtons
             x.render();
           }
 	}
+
+	void handle(SDL_Event *e)
+	  {
+            for (auto x: buttons) {
+              x.handle(e);
+            }
+	  }
 };
 
-  Bars bars;
-      EquipmentDisplay equipment_display;
-  RoleDisplay role_display;
-  MenuButtons menu_buttons;
-  Entity entity = NullEntity::Null;
+Entity entity = NullEntity::Null;
+
+void init()
+{
+  equipment_display::init();
+  role_display::init();  
+  menu_buttons::init();
+}
 
   void render()
     {
 	    if (auto ptr = std::get_if<Unit>(&entity))
 	      {
-                role_display.render();
-     equipment_display.render();
+                role_display::render();
+                equipment_display::render();
 	      }
-            bars.render();
-            menu_buttons.render();
+            bars::render();
+            menu_buttons::render();
     }
 
     void handle(SDL_Event *e)
     {
       if (auto ptr = std::get_if<Unit>(&entity))
 	      {
-                equipment_display.handle(e);
-	        role_display.handle(e);
+                equipment_display::handle(e);
+	        role_display::handle(e);
 	      }
-	menu_buttons.handle(e);	
+      menu_buttons::handle(e);	
       }	      
 } // namespace bottom_bar
