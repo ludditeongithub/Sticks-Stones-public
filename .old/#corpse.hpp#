@@ -1,7 +1,0 @@
-#ifndef CORPSE_H_
-#define CORPSE_H_
-
-#include "basic.hpp"
-#include "categories.hpp"
-
-#endif // CORPSE_H_

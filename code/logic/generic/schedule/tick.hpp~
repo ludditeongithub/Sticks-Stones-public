@@ -1,5 +1,0 @@
-#include "task_scheduing.hpp"
-
-void tick() {
-  
-}
