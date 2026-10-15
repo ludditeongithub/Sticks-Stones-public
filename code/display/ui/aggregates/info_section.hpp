@@ -4,6 +4,7 @@
 
 #include "SDL_FontCache.h"
 
+#include "data/types/ui.hpp"
 #include "display/render/sprite.hpp"
 #include "display/render/texture.hpp"
 #include "display/ui/aggregates/info_box.hpp"
@@ -11,6 +12,7 @@
 #include "display/ui/components/text.hpp"
 #include "display/ui/fonts.hpp"
 #include "data/types/buildable.hpp"
+#include <SDL_events.h>
 #include <variant>
 
 struct InfoSection {
@@ -26,39 +28,30 @@ struct InfoSection {
 
   InfoSection(const char* title, const char* desc);
 
-  void render(SDL_Rect& viewport);
+        void render();
+	void handle(SDL_Event *e);
 };
 
 struct RequirementsSection
 {
   static inline SCoord pos;
   static inline SDL_Rect frame = sprite::uis[UISprite::RequirementFrame];
+  // TODO: consider array
   std::vector<RequirementBox> reqs;
 
-  RequirementsSection(Displayable display)
+  RequirementsSection(std::vector<Displayable>& requirements)
   {
-    if (auto ptr = std::get_if<Item>(&display)) {
-     reqs[i].req =  
-    }
-    else if (auto ptr = std::get_if<Buildable>(&display)) {
-
-    } else if (auto ptr = if (get_if<knowledge::Academic>(&display)) {
-        
-      }
-
-
-
-    for (size_t i = 0; i < ; i++) {
-	    reqs[i].pos.x = pos.x;
-            reqs[i].pos.y = pos.y + frame.y;
-    }
+    reqs.reserve(requirements.size());
+    int fa = 0;
+	  for (size_t i = 0; i < requirements.size(); i++)
+	    {
+	      reqs.emplace_back(RequirementBox{{pos.x, pos.y + fa}, requirements[i]});
+	      fa += frame.y;
+         }
   }
   
-  void render(SDL_Rect &viewport)
-  {
-	  sprite_sheet_texture.render(pos.x, pos.y, &frame);
-	  for (auto x: reqs) x.render(frame, viewport);
-  }
+  void render();  
+  void handle(SDL_Event *e);
 };
 
 struct RolesSection {
@@ -68,5 +61,6 @@ struct RolesSection {
 
   RolesSection();
 
-  void render(SDL_Rect &viewport);  
+  void render();
+  void handle(SDL_Event *e);
 };

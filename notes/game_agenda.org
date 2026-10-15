@@ -80,6 +80,7 @@ precipitation, temperature, humidity
 **** Combat
 **** Progressionn
 ***** Visibility updates
+*** remove + exclude .cache folders from your repository 
 *** [1/6] Launch World
 **** Clean up blocking bugs
 **** [1/1] Launch Window
@@ -192,6 +193,7 @@ tailor: not modern, modern top as icon, not too compressed
 5. only one dead sprite for each Male, female, child, all facing left. 
 6. delete lone baby and dead files.
 ** TODO Teyah
+[[file:teyah_job.md][teyah todo list]]
 ** TODO Abdullah
 ** Checks/Debugging
 *** verify that 2d arrays are [y][x] indexed

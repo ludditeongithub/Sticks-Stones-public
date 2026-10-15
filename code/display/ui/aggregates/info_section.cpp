@@ -2,11 +2,6 @@
 #include "display/render/texture.hpp"
 #include <data/run/texture.hpp>
 
-void RolesSection::render(SDL_Rect &viewport)
-{
-          sprite_sheet_texture.render(pos.x, pos.y, &frame);
-	  for (auto x: reqs) x.render(frame, viewport);
-}
 
 RolesSection::RolesSection(){
     for (size_t i = 0; i < reqs.size(); i++) {
@@ -15,25 +10,39 @@ RolesSection::RolesSection(){
     }
   }
 
-void InfoSection::render(SDL_Rect& viewport){
-    //render frame
-    SDL_RenderCopy(display_pos.x, display_pos.y, &frame, viewport);
+void RolesSection::render()
+{
+  sprite_sheet_texture::render(pos.x, pos.y, frame);
+	  for (auto x: reqs) x.render(frame);
+}
+}
 
-    //render item
-                SDL_Rect r;
-                if (auto i = get_if<Item>(&display)) {
-                  r = sprite::item[i];
-                } else if (auto i = get_if<Buildable>(&display)) {
-                  r =  sprite::buildable[i];
-                }
-		SDL_RenderCopy(display_pos.x + FRAME_BORDER, display_pos.y + FRAME_BORDER, &r, viewport);
-
-                title.render(viewport, title_pos, Alignment::Left);
-
-		desc.render(viewport, desc_box, Alignment::Left);
-        }
 
 InfoSection::InfoSection(SDL_Rect display, const char* title, const char* desc) {
 		this->title = Text(*title_font, title);
         this->desc = Text(*desc_font, desc);
         }
+
+	void RequirementsSection::render()
+	{
+    sprite_sheet_texture::render(pos.x, pos.y, frame);
+    for (auto x: reqs) x.render(frame);  
+	}
+
+void InfoSection::render(){
+    sprite_sheet_texture::render(display_pos.x, display_pos.y, frame);
+
+                SDL_Rect r;
+                if (auto i = get_if<Item>(&display)) {
+                  r = sprite::items[i];
+                } else if (auto i = get_if<Buildable>(&display)) {
+                  r =  sprite::buildables[i];
+                }
+  sprite_sheet_texture::render(display_pos.x + FRAME_BORDER, display_pos.y + FRAME_BORDER, r);
+
+                title.render(title_pos);
+
+		desc.render(desc_box);
+}
+
+

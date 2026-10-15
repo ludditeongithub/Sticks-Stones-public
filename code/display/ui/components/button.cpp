@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <core/mouse.hpp>
 
-ButtonUI::ButtonUI(ButtonFunctionality function, ButtonSprite sprite, SCoord pos, SDL_Rect* viewport, std::optional<ButtonDecoration> decoration, Sound *pressed_sound)
+ButtonUI::ButtonUI(std::function<void()> function, ButtonSprite sprite, SCoord pos, SDL_Rect* viewport, std::optional<ButtonDecoration> decoration, Sound *pressed_sound)
 		:  function(function), sprite(sprite), viewport(viewport), decoration(decoration), pos(pos), pressed_sound(pressed_sound){
 	}
 
@@ -57,7 +57,7 @@ std::optional<ButtonFunctionality> ButtonUI::handle(SDL_Event *e){
 		return std::nullopt;		
 	}
 
-MainButtonUI::MainButtonUI(ButtonFunctionality function, SCoord left_corner) : ButtonUI(function, ButtonSprite::Main, left_corner, g_main_screen_viewport){}
+MainButtonUI::MainButtonUI(std::function<void()> function, SCoord left_corner) : ButtonUI(function, ButtonSprite::Main, left_corner, g_main_screen_viewport){}
 
 void SaveButtonUI::save(){ last_saved = Clock::now(); }
 

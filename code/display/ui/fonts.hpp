@@ -9,7 +9,7 @@
 
   FC_Font* cagliostro;  
   FC_Font* cantarell;  
-  FC_Font* amble;  
+  FC_Font* amble;
 
 void init_fonts(float scale) {
   fc_load_font_from_ttf(cagliostro, renderer, TTF_OpenFont("assets/fonts/Cagliostro-Regular.ttf", 8 * scale), BLACK);

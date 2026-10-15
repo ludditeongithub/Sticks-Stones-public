@@ -1,5 +1,6 @@
 #pragma once
 
+#include "display/ui/colors.hpp"
 #include <SDL_FontCache.h>
 #include <SDL2/SDL_pixels.h>
 #include <SDL2/SDL_rect.h>
@@ -77,14 +78,14 @@ struct Text {
         FC_Effect effect;
 	const char *text;
   
-	Text(FC_Font *font, const char *text = "") {}
+	Text(FC_Font *font, const char *text = "", FC_Effect effect = {FC_AlignEnum::FC_ALIGN_CENTER, {1.0, 1.0}, DARK_GREY}) {}
 
-  void render(const SDL_Rect &viewport, SCoord position)
+  void render(SCoord position)
   {
     FC_DrawEffect(font, renderer, position.x, position.y, effect, text);
   }
 
-  void render(SDL_Rect &viewport, SDL_Rect box) 
+  void render(SDL_Rect box) 
   {
     FC_DrawBoxEffect(font, renderer, box, effect, text);
   }

@@ -26,6 +26,8 @@ struct MainMenu
 	MainButtonUI load_game_button;
 	MainButtonUI about_button;
 	MainButtonUI options_button;
+
+        
 	
 	SCoord video_left_corner;	
 	SCoord audio_left_corner;
@@ -42,7 +44,8 @@ struct MainMenu
 		Options,
 		Load,
 		Video,
-		Audio
+		Audio,
+		About
 	};
 	
 	Mode mode;
@@ -50,6 +53,7 @@ struct MainMenu
 	MainMenu();
 
 	void activate();
+	void change_mode(Mode mode);
 
 	void render();
 
@@ -65,12 +69,12 @@ struct MainMenu
 	
 	void handle(SDL_Event *e);
 
-	void main_handle(SDL_Event *e, SCoord mouse_position);
+	void main_handle(SDL_Event *e);
 		
-	void load_handle(SDL_Event *e, SCoord mouse_position);
-	void options_handle(SDL_Event *e, SCoord mouse_position);
-	void audio_handle(SDL_Event *e, SCoord mouse_position);
-	void video_handle(SDL_Event *e, SCoord mouse_position);
+	void load_handle(SDL_Event *e);
+	void options_handle(SDL_Event *e);
+	void audio_handle(SDL_Event *e);
+	void video_handle(SDL_Event *e);
 };
 
 MainMenu* g_main_menu;

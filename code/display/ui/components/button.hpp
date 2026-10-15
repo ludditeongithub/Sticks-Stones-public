@@ -12,6 +12,7 @@
 #include "display/ui/components/text.hpp"
 #include <display/ui/sound/sound.hpp>
 #include <display/render/sprite.hpp>
+#include <functional>
 
 constexpr size_t BUTTON_DECORATION_MAX = static_cast<size_t>(CustomButtonDecoration::MAX) + static_cast<size_t>(Buildable::MAX) + static_cast<size_t>(Item::MAX);
 
@@ -34,7 +35,7 @@ static_assert(true, "REACHED BUTTONUI");
 struct ButtonUI
 {
 public:	
-    ButtonFunctionality function;
+  std::function<void()> function;
     ButtonSprite sprite; 
     SDL_Rect* viewport;
 	std::optional<ButtonDecoration> decoration;
@@ -42,7 +43,7 @@ public:
 	Sound* pressed_sound;
 	ButtonState state = ButtonState::Unpressed;
 
-ButtonUI(ButtonFunctionality function, ButtonSprite sprite, SCoord pos, SDL_Rect* viewport = g_main_screen_viewport, std::optional<ButtonDecoration> decoration = std::nullopt, Sound *pressed_sound = nullptr);
+ButtonUI(std::function<void()> function, ButtonSprite sprite, SCoord pos, SDL_Rect* viewport = g_main_screen_viewport, std::optional<ButtonDecoration> decoration = std::nullopt, Sound *pressed_sound = nullptr);
 		
 	void render();
 
@@ -112,7 +113,7 @@ std::string get_last_saved_date();
 
 struct MainButtonUI : public ButtonUI {
 public:
-	MainButtonUI(ButtonFunctionality function, SCoord left_corner);
+  MainButtonUI(std::function<void()> function, SCoord left_corner);
 };
 
 /*

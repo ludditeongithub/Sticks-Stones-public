@@ -1,52 +1,57 @@
 #include "main_menu.hpp"
 #include <data/types/ui.hpp>
+#include <logic/simulation/game.hpp>
 
-MainMenu::MainMenu() : new_game_button(MainButtonUI(ButtonFunctionality::NewGame, new_left_corner)),
-	    load_game_button(MainButtonUI(ButtonFunctionality::LoadMenu, load_left_corner)),
-	    about_button(MainButtonUI(ButtonFunctionality::About, about_left_corner)),
-	    options_button(MainButtonUI(ButtonFunctionality::Options, options_left_corner)),
+MainMenu::MainMenu()
+: new_game_button(
+	          MainButtonUI([]() {g_game->new_game();}, new_left_corner)),
+  load_game_button(MainButtonUI([this]() {change_mode(Mode::Load);}, load_left_corner)),
+  about_button(MainButtonUI([this](){change_mode(Mode::About);}, about_left_corner)),
+  options_button(MainButtonUI([this](){change_mode(Mode::Options);}, options_left_corner)),
 	      video_left_corner({button_left_alignment, 2 * SCREEN_HEIGHT / 6}),
 	      audio_left_corner(button_left_alignment / 2, 3 * SCREEN_HEIGHT / 6),
-	      video_button(MainButtonUI(ButtonFunctionality::Video, video_left_corner)),
-          audio_button(MainButtonUI(ButtonFunctionality::Audio, audio_left_corner)){
-          background = sprite::uis[UISprite::Background];                                        
-          //keybindings_left_corner = {button_left_alignment / 2, 4 * SCREEN_HEIGHT / 6};          
-          //keybindings_button = MainButtonUI(Keybindings(),keybindings_left_corner);
+	      video_button(MainButtonUI([this](){change_mode(Mode::Video);}, video_left_corner)),
+              audio_button(MainButtonUI([this](){change_mode(Mode::Audio);}, audio_left_corner)){
+          background = sprite::uis[UISprite::Background];
+	  // keybindings_left_corner = {button_left_alignment / 2, 4 * SCREEN_HEIGHT / 6};
+	  // keybindings_button = MainButtonUI(Keybindings(),keybindings_left_corner);  
 }
 
-MainMenu::~MainMenu()
-{
-
-}
-
-void MainMenu::main_handle(SDL_Event *e, SCoord mouse_position){
+void MainMenu::main_handle(SDL_Event *e){
 		new_game_button.handle(e);
 		load_game_button.handle(e);
 		about_button.handle(e);
 		options_button.handle(e);
 		video_button.handle(e);
 		audio_button.handle(e);
-	}
+}
+
+void MainMenu::load_handle(SDL_Event *e)
+{
+  
+}
+
+	void options_handle(SDL_Event *e);
+	void audio_handle(SDL_Event *e);
+	void video_handle(SDL_Event *e);
 
 void MainMenu::handle(SDL_Event *e){
-		SCoord mouse_position;
-		SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
 		switch (mode)
 		{
 		case Mode::Main:
-			main_handle(e, mouse_position);
+			main_handle(e);
 			break;
 		case Mode::Load:
-			load_handle(e, mouse_position);
+			load_handle(e);
 			break;
 		case Mode::Options:
-			options_handle(e, mouse_position);
+			options_handle(e);
 			break;
 		case Mode::Video:
-			video_handle(e, mouse_position);
+			video_handle(e);
 			break;
 		case Mode::Audio:
-			audio_handle(e, mouse_position);
+			audio_handle(e);
 			break;
 		}
 	}
@@ -70,8 +75,7 @@ void MainMenu::main_render(){
 	}
 
 void MainMenu::render(){
-	SDL_RenderCopy(g_main_screen_viewport->x, g_main_screen_viewport->y,
-									&background, g_main_screen_viewport);
+  sprite_sheet_texture::render(g_main_screen_viewport->x, g_main_screen_viewport->y, background);
 	switch (mode) {
 	case Mode::Main:
        	    main_render();
